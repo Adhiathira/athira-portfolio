@@ -8,7 +8,7 @@ This file provides guidance to Claude Code when working with this repository.
 
 ## Planning and Implementation
 
-**⚠️ ALWAYS use agent teams when planning and implementing code.**
+**⚠️ ALWAYS use agent teams when implementing code.**
 
 When working on features or tasks:
 1. Use the Task tool to launch specialized agents for planning, implementation, and testing
@@ -22,6 +22,12 @@ When working on features or tasks:
 - Present a unified summary of all changes before requesting commit approval
 
 **Do not attempt solo implementation of complex features** - agent teams provide better results through specialization and parallel work.
+
+## Git Worktrees
+
+**Do NOT use git worktrees.** Work directly on the repository without creating isolated worktrees.
+
+All implementation happens on branches in the main repo. Skip any workflow step that calls for `using-git-worktrees`.
 
 ## Tech Stack
 
