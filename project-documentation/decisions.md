@@ -1,0 +1,1 @@
+- 2026-02-18: [review-reconciler] Accepted pushback on path traversal hardening for `websiteName` output paths. Guidance: do not flag missing sanitization when input is trusted, hand-edited local `sites.json` for this personal dev extractor workflow. Scope: `runner.js`, `lib/writer.js`, local-only execution.
