@@ -1,0 +1,900 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
+// ─── Utilities ───────────────────────────────────────────────────────────────
+
+function esc(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function readJson(filePath) {
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+function isEmpty(data) {
+  if (!data) return true;
+  if (Array.isArray(data)) return data.length === 0;
+  return Object.keys(data).length === 0;
+}
+
+function isExternalSrc(src) {
+  return typeof src === 'string' && (src.startsWith('http://') || src.startsWith('https://'));
+}
+
+function formatPx(v) {
+  const s = String(v);
+  if (s.endsWith('px')) {
+    const n = parseFloat(s);
+    if (!isNaN(n)) return n.toFixed(1) + 'px';
+  }
+  return s;
+}
+
+const ALLOWED_FONT_STYLES = new Set(['normal', 'italic', 'oblique']);
+
+// Strip characters that can break out of a CSS string literal or terminate the <style> block.
+function safeCSSStr(s) {
+  return String(s).replace(/['\\\n\r]/g, '').replace(/<\/style/gi, '');
+}
+
+function buildFontFaceCSS(fontFaces) {
+  return (fontFaces || []).filter(f => isExternalSrc(f.src)).map(f => {
+    const family = safeCSSStr(f.family);
+    const weight = /^\d+$/.test(String(f.weight)) ? String(f.weight) : '400';
+    const style  = ALLOWED_FONT_STYLES.has(String(f.style)) ? String(f.style) : 'normal';
+    const src    = safeCSSStr(f.src);
+    const fmt    = /\.woff2(?:[?#]|$)/.test(src) ? 'woff2' : 'woff';
+    return `@font-face { font-family: '${family}'; font-weight: ${weight}; font-style: ${style}; src: url('${src}') format('${fmt}'); }`;
+  }).join('\n');
+}
+
+// ─── Fonts ───────────────────────────────────────────────────────────────────
+
+function fontLinks() {
+  return `<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">`;
+}
+
+// ─── CSS ─────────────────────────────────────────────────────────────────────
+
+function globalCSS() {
+  return `
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #FAF9F6;
+  --surface:    #FFFFFF;
+  --surface-2:  #F5F4F0;
+  --border:     #E9E8E4;
+  --border-2:   #D4D3CE;
+  --text-1:     #1C1B18;
+  --text-2:     #78776E;
+  --text-3:     #AEADA6;
+  --mono:       #3D6070;
+  --accent:     #B45309;
+  --accent-bg:  #FEF3C7;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-ui:      'DM Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.mono { font-family: var(--font-mono); color: var(--mono); font-size: 12px; }
+.text-2 { color: var(--text-2); }
+.text-3 { color: var(--text-3); }
+
+.badge {
+  display: inline-block;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-2);
+  letter-spacing: 0.01em;
+}
+
+/* ─── Layout ─── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+/* ─── Header ─── */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 52px;
+}
+.header-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--text-1);
+  color: var(--surface);
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+.header-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+.header-sep {
+  color: var(--border-2);
+  font-size: 20px;
+  font-weight: 200;
+  line-height: 1;
+  margin: 0 2px;
+}
+.back-link {
+  font-size: 12px;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--accent); text-decoration: none; }
+
+/* ─── Home Hero ─── */
+.home-hero {
+  padding: 72px 0 56px;
+  border-bottom: 1px solid var(--border);
+}
+.home-hero-kicker {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+.home-hero-title {
+  font-family: var(--font-display);
+  font-size: 58px;
+  font-weight: 500;
+  line-height: 1.08;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+.home-hero-sub {
+  font-size: 15px;
+  color: var(--text-2);
+  font-weight: 300;
+}
+
+/* ─── Site Grid ─── */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.site-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  padding: 44px 0 88px;
+}
+.site-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  animation: cardIn 0.5s ease both;
+  animation-delay: var(--card-delay, 0s);
+}
+.site-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 6px 24px rgba(180,83,9,0.07), 0 1px 4px rgba(0,0,0,0.04);
+  transform: translateY(-2px);
+}
+.site-card a { color: inherit; display: block; }
+.site-card a:hover { text-decoration: none; }
+.site-card-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--text-2);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+.site-card-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.site-card-meta {
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+}
+
+.empty-state {
+  padding: 88px 0;
+  text-align: center;
+  color: var(--text-2);
+}
+.empty-state code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mono);
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* ─── Site Hero ─── */
+.site-hero {
+  padding: 44px 0 32px;
+  border-bottom: 1px solid var(--border);
+}
+.site-hero-kicker {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+.site-hero-name {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 500;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-transform: capitalize;
+}
+
+/* ─── Tab Bar ─── */
+.tab-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.tab-list {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 40px;
+}
+.tab-list::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 400;
+  font-family: var(--font-ui);
+  padding: 14px 18px;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  letter-spacing: -0.01em;
+  position: relative;
+  top: 1px;
+}
+.tab-btn:hover { color: var(--text-1); }
+.tab-btn[aria-selected="true"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 500;
+}
+.tab-btn.empty-tab { color: var(--text-3); }
+.tab-btn.empty-tab:hover { color: var(--text-2); }
+
+/* ─── Tab Panels ─── */
+.tab-panel { padding: 44px 0 88px; }
+.tab-panel[hidden] { display: none; }
+
+/* ─── Section Block ─── */
+.section-block { margin-bottom: 52px; }
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─── Color: Visual Palette ─── */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.color-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.color-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+}
+.color-fill { height: 80px; width: 100%; }
+.color-info { padding: 12px 14px; }
+.color-role {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: 3px;
+}
+.color-hex {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-1);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.color-desc {
+  display: block;
+  font-size: 11px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* ─── Color: Chips ─── */
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.color-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 12px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.color-chip:hover {
+  border-color: var(--border-2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.chip-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+.chip-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-1);
+}
+.chip-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+/* ─── Typography ─── */
+.font-table { width: 100%; border-collapse: collapse; }
+.font-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  padding: 0 16px 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.font-table td {
+  padding: 11px 16px 11px 0;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-1);
+}
+
+.type-scale { display: flex; flex-direction: column; }
+.type-card {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+.type-card:first-child { border-top: 1px solid var(--border); }
+.type-specimen {
+  color: var(--text-1);
+  overflow: hidden;
+  max-height: 160px;
+  margin-bottom: 14px;
+}
+.type-meta {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ─── Spacing ─── */
+.spacing-vars { display: flex; flex-direction: column; gap: 4px; }
+.spacing-var-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 11px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+}
+.var-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  flex: 1;
+}
+.var-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-1);
+}
+
+.element-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+}
+.element-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+}
+.element-name {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: 14px;
+  font-family: var(--font-mono);
+}
+
+/* Box diagram — grid-template-* are set inline per-card for proportional scaling */
+.box-diagram {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.bd-top    { grid-column: 1 / -1; }
+.bd-bottom { grid-column: 1 / -1; }
+.bd-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-2);
+  background: var(--surface-2);
+  padding: 0 6px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.bd-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  background: var(--surface);
+  font-size: 10px;
+  color: var(--border-2);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.extra-badges { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* ─── Empty Section ─── */
+.empty-section {
+  text-align: center;
+  padding: 64px 24px;
+  border: 1.5px dashed var(--border-2);
+  border-radius: 10px;
+  color: var(--text-3);
+  background: var(--surface);
+}
+.empty-icon { font-size: 20px; margin-bottom: 14px; color: var(--border-2); }
+.empty-section p { font-size: 14px; color: var(--text-2); margin-bottom: 6px; }
+.empty-hint { font-size: 12px; color: var(--text-3); font-family: var(--font-mono); }
+`;
+}
+
+// ─── Section Renderers ────────────────────────────────────────────────────────
+
+function renderEmptySection() {
+  return `<div class="empty-section">
+    <div class="empty-icon">○</div>
+    <p>Not yet extracted.</p>
+    <p class="empty-hint">Run the extractor to populate this tab.</p>
+  </div>`;
+}
+
+function renderColorSection(data) {
+  let html = '';
+
+  if (data.visual && data.visual.length > 0) {
+    html += `<div class="section-block">
+      <div class="section-label">Visual Palette</div>
+      <div class="color-grid">`;
+    for (const c of data.visual) {
+      html += `<div class="color-card">
+        <div class="color-fill" style="background:${esc(c.hex)}"></div>
+        <div class="color-info">
+          <span class="color-role">${esc(c.role)}</span>
+          <span class="color-hex">${esc(c.hex)}</span>
+          <span class="color-desc">${esc(c.description)}</span>
+        </div>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  if (!isEmpty(data.cssVars)) {
+    html += `<div class="section-block">
+      <div class="section-label">CSS Variables</div>
+      <div class="chip-row">`;
+    for (const [name, value] of Object.entries(data.cssVars)) {
+      html += `<div class="color-chip">
+        <div class="chip-swatch" style="background:${esc(value)}"></div>
+        <span class="chip-label">--${esc(name)}</span>
+        <span class="chip-value">${esc(value)}</span>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  if (!isEmpty(data.elements)) {
+    html += `<div class="section-block">
+      <div class="section-label">Elements</div>
+      <div class="chip-row">`;
+    for (const [name, value] of Object.entries(data.elements)) {
+      html += `<div class="color-chip">
+        <div class="chip-swatch" style="background:${esc(value)}"></div>
+        <span class="chip-label">${esc(name)}</span>
+        <span class="chip-value">${esc(value)}</span>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  return html || renderEmptySection();
+}
+
+function renderTypographySection(data) {
+  let html = '';
+
+  const externalFonts = (data.fontFaces || []).filter(f => isExternalSrc(f.src));
+  if (externalFonts.length > 0) {
+    html += `<div class="section-block">
+      <div class="section-label">Font Faces</div>
+      <table class="font-table">
+        <thead><tr><th>Family</th><th>Weight</th><th>Style</th></tr></thead>
+        <tbody>`;
+    for (const f of externalFonts) {
+      html += `<tr>
+        <td>${esc(f.family)}</td>
+        <td>${esc(f.weight)}</td>
+        <td>${esc(f.style)}</td>
+      </tr>`;
+    }
+    html += `</tbody></table></div>`;
+  }
+
+  if (data.typeScale && !isEmpty(data.typeScale)) {
+    html += `<div class="section-block">
+      <div class="section-label">Type Scale</div>
+      <div class="type-scale">`;
+    for (const [level, props] of Object.entries(data.typeScale)) {
+      const styleParts = [
+        props.fontFamily   ? `font-family: ${props.fontFamily}` : '',
+        props.fontSize     ? `font-size: ${props.fontSize}` : '',
+        props.fontWeight   ? `font-weight: ${props.fontWeight}` : '',
+        props.lineHeight   ? `line-height: ${props.lineHeight}` : '',
+        props.letterSpacing ? `letter-spacing: ${props.letterSpacing}` : '',
+        props.textDecoration ? `text-decoration: ${props.textDecoration}` : '',
+      ].filter(Boolean).join('; ');
+
+      html += `<div class="type-card">
+        <div class="type-specimen" style="${esc(styleParts)}">The quick brown fox jumps over the lazy dog</div>
+        <div class="type-meta">
+          <span class="badge">${esc(level)}</span>
+          <span class="chip-label">${esc(props.fontFamily || '')}</span>
+          <span class="chip-value">${esc(props.fontSize || '')}</span>
+          <span class="chip-value">weight ${esc(props.fontWeight || '')}</span>
+        </div>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  return html || renderEmptySection();
+}
+
+function renderElementCard(name, props) {
+  const PADDING_KEYS = new Set(['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft']);
+  const extras = Object.entries(props).filter(([k]) => !PADDING_KEYS.has(k));
+
+  const topVal    = parseFloat(props.paddingTop    || '0') || 0;
+  const rightVal  = parseFloat(props.paddingRight  || '0') || 0;
+  const bottomVal = parseFloat(props.paddingBottom || '0') || 0;
+  const leftVal   = parseFloat(props.paddingLeft   || '0') || 0;
+
+  const hasPadding = topVal || rightVal || bottomVal || leftVal;
+
+  // Scale all four values against a single global max so cross-axis proportions
+  // are visually meaningful (a 30px right padding should appear larger than a
+  // 16px top padding, not the same height because it "maxes out" its own axis).
+  const MIN_VIS = 16; // px — minimum size for zero-padding sides
+  const MAX_VIS = 72; // px — maximum size (assigned to the largest value)
+  const MIN_COL = 44; // px — column floor so the label always has room to render
+
+  const globalMax = Math.max(topVal, rightVal, bottomVal, leftVal, 0.001);
+  const scale = v => v === 0
+    ? MIN_VIS
+    : Math.round(MIN_VIS + (v / globalMax) * (MAX_VIS - MIN_VIS));
+
+  const topH    = scale(topVal);
+  const bottomH = scale(bottomVal);
+  const leftW   = Math.max(MIN_COL, scale(leftVal));
+  const rightW  = Math.max(MIN_COL, scale(rightVal));
+
+  const label = v => v > 0 ? formatPx(String(v) + 'px') : '—';
+  const gridStyle = `grid-template-columns: ${leftW}px 1fr ${rightW}px; grid-template-rows: ${topH}px auto ${bottomH}px;`;
+
+  if (!hasPadding) {
+    // No padding at all — skip the box diagram, just show extras
+    return `<div class="element-card">
+    <div class="element-name">${esc(name)}</div>
+    ${extras.length > 0 ? `<div class="extra-badges">${extras.map(([k, v]) => `<span class="badge">${esc(k)}: ${esc(formatPx(v))}</span>`).join('')}</div>` : '<div class="extra-badges"><span class="badge">no padding</span></div>'}
+  </div>`;
+  }
+
+  return `<div class="element-card">
+    <div class="element-name">${esc(name)}</div>
+    <div class="box-diagram" style="${esc(gridStyle)}">
+      <div class="bd-top bd-label">${esc(label(topVal))}</div>
+      <div class="bd-left bd-label">${esc(label(leftVal))}</div>
+      <div class="bd-center">content</div>
+      <div class="bd-right bd-label">${esc(label(rightVal))}</div>
+      <div class="bd-bottom bd-label">${esc(label(bottomVal))}</div>
+    </div>
+    ${extras.length > 0 ? `<div class="extra-badges">${extras.map(([k, v]) => `<span class="badge">${esc(k)}: ${esc(formatPx(v))}</span>`).join('')}</div>` : ''}
+  </div>`;
+}
+
+function renderSpacingSection(data) {
+  let html = '';
+
+  if (!isEmpty(data.cssVars)) {
+    html += `<div class="section-block">
+      <div class="section-label">CSS Variables</div>
+      <div class="spacing-vars">`;
+    for (const [name, value] of Object.entries(data.cssVars)) {
+      html += `<div class="spacing-var-row">
+        <span class="var-name">--${esc(name)}</span>
+        <span class="var-value">${esc(value)}</span>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  if (!isEmpty(data.elements)) {
+    html += `<div class="section-block">
+      <div class="section-label">Elements</div>
+      <div class="element-cards">`;
+    for (const [name, props] of Object.entries(data.elements)) {
+      html += renderElementCard(name, props);
+    }
+    html += `</div></div>`;
+  }
+
+  return html || renderEmptySection();
+}
+
+function renderSectionContent(slug, data) {
+  switch (slug) {
+    case 'color-system':   return renderColorSection(data);
+    case 'type-system':    return renderTypographySection(data);
+    case 'spacing-system': return renderSpacingSection(data);
+    default:               return renderEmptySection();
+  }
+}
+
+// ─── Page Renderers ───────────────────────────────────────────────────────────
+
+export function renderHome(sites, registry) {
+  const cards = sites.length === 0
+    ? `<div class="empty-state"><p>No sites extracted yet. Run <code>npm start</code> to extract design systems.</p></div>`
+    : `<div class="site-grid">${sites.map((name, i) => `
+      <div class="site-card" style="--card-delay: ${(i * 0.06).toFixed(2)}s">
+        <a href="/site/${encodeURIComponent(name)}">
+          <div class="site-card-icon">${esc(name.slice(0, 2))}</div>
+          <div class="site-card-name">${esc(name)}</div>
+          <div class="site-card-meta">${registry.length} categories</div>
+        </a>
+      </div>`).join('')}</div>`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System Browser</title>
+  ${fontLinks()}
+  <style>${globalCSS()}</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-mark">DS</div>
+        <span class="header-title">Design System Browser</span>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="home-hero">
+        <div class="home-hero-kicker">Design System Browser</div>
+        <h1 class="home-hero-title">Extracted Sites</h1>
+        <p class="home-hero-sub">${sites.length} site${sites.length !== 1 ? 's' : ''} ready to inspect</p>
+      </div>
+      ${cards}
+    </div>
+  </main>
+</body>
+</html>`;
+}
+
+export function renderSite(siteName, siteDir, registry) {
+  const sections = registry.map(entry => {
+    const jsonFile = entry.outputFiles.find(f => f.endsWith('.json'));
+    if (!jsonFile) return { entry, data: {} };
+    const data = readJson(path.join(siteDir, entry.slug, jsonFile));
+    return { entry, data };
+  });
+
+  const typSection = sections.find(s => s.entry.slug === 'type-system');
+  const fontFaceCSS = typSection ? buildFontFaceCSS(typSection.data.fontFaces) : '';
+
+  const firstActiveIdx = Math.max(0, sections.findIndex(s => !isEmpty(s.data)));
+
+  const tabs = sections.map((s, i) => {
+    const hasData = !isEmpty(s.data);
+    const isActive = i === firstActiveIdx;
+    return `<button
+      role="tab"
+      id="tab-${i}"
+      aria-selected="${isActive ? 'true' : 'false'}"
+      aria-controls="panel-${i}"
+      class="tab-btn${hasData ? '' : ' empty-tab'}"
+    >${esc(s.entry.displayName)}</button>`;
+  }).join('');
+
+  const panels = sections.map((s, i) => {
+    const hasData = !isEmpty(s.data);
+    const isActive = i === firstActiveIdx;
+    const content = hasData ? renderSectionContent(s.entry.slug, s.data) : renderEmptySection();
+    return `<div
+      role="tabpanel"
+      id="panel-${i}"
+      aria-labelledby="tab-${i}"
+      class="tab-panel container"
+      ${isActive ? '' : 'hidden'}
+    >${content}</div>`;
+  }).join('');
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${esc(siteName)} — Design System Browser</title>
+  ${fontLinks()}
+  ${fontFaceCSS ? `<style>${fontFaceCSS}</style>` : ''}
+  <style>${globalCSS()}</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-mark">DS</div>
+        <a href="/" class="back-link">← All Sites</a>
+        <span class="header-sep">/</span>
+        <span class="header-title">${esc(siteName)}</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="site-hero container">
+    <div class="site-hero-kicker">Design System Reference</div>
+    <h1 class="site-hero-name">${esc(siteName)}</h1>
+  </div>
+
+  <nav class="tab-bar">
+    <div class="tab-list" role="tablist">${tabs}</div>
+  </nav>
+
+  ${panels}
+
+  <script>
+    document.querySelector('[role="tablist"]').addEventListener('click', e => {
+      const btn = e.target.closest('[role="tab"]');
+      if (!btn) return;
+      document.querySelectorAll('[role="tab"]').forEach(t => t.setAttribute('aria-selected', 'false'));
+      document.querySelectorAll('[role="tabpanel"]').forEach(p => { p.hidden = true; });
+      btn.setAttribute('aria-selected', 'true');
+      document.getElementById(btn.getAttribute('aria-controls')).hidden = false;
+    });
+  </script>
+</body>
+</html>`;
+}

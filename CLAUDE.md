@@ -49,9 +49,14 @@ All implementation happens on branches in the main repo. Skip any workflow step 
 ## Development
 
 **Local Server:**
-- Use port **9876** for local development
+- Use port **9876** for local development (static site)
 - Start server: `python3 -m http.server 9876`
 - URL: `http://localhost:9876`
+
+**Design System Browser:**
+- Use port **5509**
+- Start: `npm run browse`
+- URL: `http://localhost:5509`
 
 ## Task Tracker Workflow
 
