@@ -19,6 +19,14 @@ function readJson(filePath) {
   }
 }
 
+function readMarkdown(filePath) {
+  try {
+    return fs.readFileSync(filePath, 'utf8');
+  } catch {
+    return null;
+  }
+}
+
 function isEmpty(data) {
   if (!data) return true;
   if (Array.isArray(data)) return data.length === 0;
@@ -564,6 +572,177 @@ header {
 .empty-icon { font-size: 20px; margin-bottom: 14px; color: var(--border-2); }
 .empty-section p { font-size: 14px; color: var(--text-2); margin-bottom: 6px; }
 .empty-hint { font-size: 12px; color: var(--text-3); font-family: var(--font-mono); }
+
+/* ─── Grid System ─── */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.grid-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.grid-card:hover {
+  border-color: var(--border-2);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.grid-card-name {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+}
+.grid-props { display: flex; flex-direction: column; gap: 6px; }
+.grid-prop-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+}
+.grid-prop-key {
+  color: var(--text-2);
+  font-family: var(--font-mono);
+}
+.grid-prop-value {
+  color: var(--text-1);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  text-align: right;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.container-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+}
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.responsive-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.responsive-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-1);
+}
+.responsive-table tr:last-child td {
+  border-bottom: none;
+}
+
+.visual-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.visual-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  transition: border-color 0.2s;
+}
+.visual-item:hover {
+  border-color: var(--border-2);
+}
+.visual-section {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+}
+.visual-layout {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 4px;
+}
+.visual-desc {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.prose {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 32px;
+  max-width: 800px;
+  line-height: 1.7;
+}
+.prose h1, .prose h2, .prose h3 {
+  font-family: var(--font-display);
+  color: var(--text-1);
+  margin-top: 32px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.prose h1 { font-size: 32px; font-weight: 500; margin-top: 0; }
+.prose h2 { font-size: 24px; font-weight: 500; }
+.prose h3 { font-size: 18px; font-weight: 500; }
+.prose p {
+  color: var(--text-1);
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+.prose ul, .prose ol {
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+.prose li {
+  margin-bottom: 8px;
+  color: var(--text-1);
+  font-size: 14px;
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--mono);
+}
+.prose strong {
+  font-weight: 600;
+  color: var(--text-1);
+}
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 32px 0;
+}
 `;
 }
 
@@ -759,11 +938,132 @@ function renderSpacingSection(data) {
   return html || renderEmptySection();
 }
 
-function renderSectionContent(slug, data) {
+function renderGridSection(data, siteDir) {
+  let html = '';
+
+  // Container
+  if (!isEmpty(data.container)) {
+    html += `<div class="section-block">
+      <div class="section-label">Container</div>
+      <div class="container-box">
+        <div class="grid-props">`;
+    for (const [key, value] of Object.entries(data.container)) {
+      html += `<div class="grid-prop-row">
+        <span class="grid-prop-key">${esc(key)}</span>
+        <span class="grid-prop-value">${esc(value)}</span>
+      </div>`;
+    }
+    html += `</div></div></div>`;
+  }
+
+  // Grid/Flex Layouts
+  if (!isEmpty(data.grids)) {
+    html += `<div class="section-block">
+      <div class="section-label">Grid & Flex Layouts</div>
+      <div class="grid-cards">`;
+    for (const [name, props] of Object.entries(data.grids)) {
+      html += `<div class="grid-card">
+        <div class="grid-card-name">${esc(name)}</div>
+        <div class="grid-props">`;
+      for (const [key, value] of Object.entries(props)) {
+        html += `<div class="grid-prop-row">
+          <span class="grid-prop-key">${esc(key)}</span>
+          <span class="grid-prop-value">${esc(value)}</span>
+        </div>`;
+      }
+      html += `</div></div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  // Responsive Breakpoints
+  if (!isEmpty(data.responsive)) {
+    html += `<div class="section-block">
+      <div class="section-label">Responsive Breakpoints</div>
+      <table class="responsive-table">
+        <thead><tr><th>Breakpoint</th><th>Query</th><th>Changes</th></tr></thead>
+        <tbody>`;
+    for (const [bp, props] of Object.entries(data.responsive)) {
+      const query = props.query || '';
+      const changes = Object.entries(props)
+        .filter(([k]) => k !== 'query')
+        .map(([k, v]) => `${k}: ${v}`)
+        .join(', ');
+      html += `<tr>
+        <td>${esc(bp)}</td>
+        <td>${esc(query)}</td>
+        <td>${esc(changes)}</td>
+      </tr>`;
+    }
+    html += `</tbody></table></div>`;
+  }
+
+  // Visual Observations
+  if (Array.isArray(data.visual) && data.visual.length > 0) {
+    html += `<div class="section-block">
+      <div class="section-label">Visual Layout Observations</div>
+      <div class="visual-list">`;
+    for (const obs of data.visual) {
+      html += `<div class="visual-item">
+        <div class="visual-section">${esc(obs.section || 'section')}</div>
+        <div class="visual-layout">${esc(obs.layout || '')}</div>
+        <div class="visual-desc">${esc(obs.description || '')}</div>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  // CSS Variables
+  if (!isEmpty(data.cssVars)) {
+    html += `<div class="section-block">
+      <div class="section-label">CSS Variables</div>
+      <div class="spacing-vars">`;
+    for (const [name, value] of Object.entries(data.cssVars)) {
+      html += `<div class="spacing-var-row">
+        <span class="var-name">--${esc(name)}</span>
+        <span class="var-value">${esc(value)}</span>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  // Layout Markdown
+  if (siteDir) {
+    const layoutMdPath = path.join(siteDir, 'grid-system', 'layout.md');
+    const layoutMd = readMarkdown(layoutMdPath);
+    if (layoutMd) {
+      // Simple markdown to HTML conversion (basic - just handles headers, paragraphs, lists, bold, code)
+      const mdHtml = layoutMd
+        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+        .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/`(.+?)`/g, '<code>$1</code>')
+        .replace(/^- (.+)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>\n?)+/gs, match => `<ul>${match}</ul>`)
+        .replace(/^([^<\n].+)$/gm, '<p>$1</p>')
+        .replace(/^---$/gm, '<hr>')
+        .replace(/<\/h[123]>\n<p>/g, '</h3>\n')
+        .replace(/<\/p>\n<h[123]>/g, '\n<h3>')
+        .replace(/<\/ul>\n<p>/g, '</ul>\n')
+        .replace(/<\/p>\n<ul>/g, '\n<ul>');
+
+      html += `<div class="section-block">
+        <div class="section-label">Layout Design Brief</div>
+        <div class="prose">${mdHtml}</div>
+      </div>`;
+    }
+  }
+
+  return html || renderEmptySection();
+}
+
+function renderSectionContent(slug, data, siteDir) {
   switch (slug) {
     case 'color-system':   return renderColorSection(data);
     case 'type-system':    return renderTypographySection(data);
     case 'spacing-system': return renderSpacingSection(data);
+    case 'grid-system':    return renderGridSection(data, siteDir);
     default:               return renderEmptySection();
   }
 }
@@ -842,7 +1142,7 @@ export function renderSite(siteName, siteDir, registry) {
   const panels = sections.map((s, i) => {
     const hasData = !isEmpty(s.data);
     const isActive = i === firstActiveIdx;
-    const content = hasData ? renderSectionContent(s.entry.slug, s.data) : renderEmptySection();
+    const content = hasData ? renderSectionContent(s.entry.slug, s.data, siteDir) : renderEmptySection();
     return `<div
       role="tabpanel"
       id="panel-${i}"

@@ -13,7 +13,7 @@ Return ONLY a JSON array (no markdown, no explanation):
 [{ "hex": "#rrggbb", "role": "short-role-slug", "description": "1 sentence" }]
 Common roles: page-background, surface-background, hero-background, primary-action, secondary-action, body-text, heading-text, muted-text, link, border, accent, success, error, warning.`;
 
-export async function extract(page, { outputDir } = {}) {
+export async function extract(page, { outputDir, screenshotsDir } = {}) {
   // Pass 1 + 2: run in browser context
   const { cssVars, elements } = await page.evaluate(() => {
     function toHex(value) {
@@ -90,10 +90,9 @@ export async function extract(page, { outputDir } = {}) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(2000);
 
-  const screenshotDir = outputDir
-    ? path.join(outputDir, 'screenshots')
-    : os.tmpdir();
-  if (outputDir) {
+  const screenshotDir = screenshotsDir ?? (outputDir ? path.join(outputDir, 'screenshots') : os.tmpdir());
+  const persistScreenshots = !!(screenshotsDir || outputDir);
+  if (persistScreenshots) {
     fs.mkdirSync(screenshotDir, { recursive: true });
     // Clear stale screenshots from previous runs (segment count can vary)
     for (const f of fs.readdirSync(screenshotDir)) {
@@ -121,7 +120,7 @@ export async function extract(page, { outputDir } = {}) {
     type: 'image',
     source: { type: 'base64', media_type: 'image/png', data: fs.readFileSync(f).toString('base64') },
   }));
-  if (!outputDir) {
+  if (!persistScreenshots) {
     for (const f of screenshotFiles) {
       try { fs.unlinkSync(f); } catch (_) {}
     }

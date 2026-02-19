@@ -51,7 +51,8 @@ async function run() {
       const page = await newPage(browser, site.url);
       try {
         const outputDir = path.join('design-system', site.name, slug);
-        const data = await extractor.extract(page, { outputDir });
+        const screenshotsDir = path.join('design-system', site.name, 'screenshots');
+        const data = await extractor.extract(page, { outputDir, screenshotsDir });
         await write(site.name, slug, data);
         console.log(`  [${slug}] done`);
       } finally {
