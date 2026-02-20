@@ -658,6 +658,173 @@ header {
   border-bottom: none;
 }
 
+/* ─── Interaction States ─── */
+.interaction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+.interaction-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.interaction-card:hover {
+  border-color: var(--border-2);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.interaction-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.interaction-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+.interaction-selector {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-2);
+  background: var(--surface-2);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  display: inline-block;
+}
+.state-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.state-table th {
+  text-align: left;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  padding: 6px 8px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.state-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-1);
+  vertical-align: top;
+}
+.state-table tr:last-child td {
+  border-bottom: none;
+}
+.state-table .property-name {
+  color: var(--text-2);
+  font-weight: 500;
+}
+.state-table .changed {
+  color: var(--accent);
+  font-weight: 500;
+}
+.color-preview {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.1);
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* ─── Visual Preview Section ─── */
+.interaction-preview-section {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+
+.preview-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.preview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.preview-state-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Isolation & Reset for preview elements */
+.interaction-preview {
+  all: unset;
+  display: inline-block;
+  box-sizing: border-box;
+  pointer-events: none;
+  cursor: default;
+  min-width: 80px;
+  min-height: 32px;
+  padding: 8px 16px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Type-specific sizing */
+.interaction-preview[data-type="buttons"] {
+  min-width: 100px;
+  min-height: 36px;
+  border-radius: 6px;
+}
+
+.interaction-preview[data-type="inputs"] {
+  min-width: 180px;
+  min-height: 36px;
+  border-radius: 4px;
+}
+
+.interaction-preview[data-type="links"] {
+  min-width: 60px;
+  min-height: 20px;
+  padding: 4px 8px;
+}
+
+.interaction-preview[data-type="cards"],
+.interaction-preview[data-type="navigation"] {
+  min-width: 120px;
+  min-height: 60px;
+  border-radius: 8px;
+}
+
 .visual-list {
   display: flex;
   flex-direction: column;
@@ -1058,13 +1225,288 @@ function renderGridSection(data, siteDir) {
   return html || renderEmptySection();
 }
 
+function formatPropertyName(prop) {
+  // Convert camelCase to human-readable (e.g., "backgroundColor" -> "Background Color")
+  return prop
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, str => str.toUpperCase())
+    .trim();
+}
+
+function formatValue(value) {
+  // Truncate long values (especially boxShadow)
+  const str = String(value);
+  if (str.length > 40) {
+    return str.slice(0, 37) + '...';
+  }
+  return str;
+}
+
+function shouldShowStatePreview(defaultState, compareState) {
+  if (!defaultState || !compareState) return false;
+
+  const visualProps = [
+    'color', 'backgroundColor', 'borderColor', 'borderWidth',
+    'opacity', 'boxShadow', 'outlineColor', 'outlineWidth'
+  ];
+
+  return visualProps.some(prop =>
+    defaultState[prop] !== compareState[prop]
+  );
+}
+
+function getElementContent(category) {
+  const contentMap = {
+    'buttons': '',
+    'inputs': '',
+    'links': 'Link',
+    'cards': '',
+    'navigation': ''
+  };
+  return contentMap[category] || '';
+}
+
+function getInverseColor(colorString) {
+  if (!colorString) return 'rgb(240, 240, 240)'; // Default light gray
+
+  // Parse rgb() or rgba() format
+  const rgbMatch = colorString.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+  if (rgbMatch) {
+    const r = 255 - parseInt(rgbMatch[1]);
+    const g = 255 - parseInt(rgbMatch[2]);
+    const b = 255 - parseInt(rgbMatch[3]);
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
+  // For other formats (lab, oklab, hex, etc.), use a neutral gray
+  return 'rgb(240, 240, 240)';
+}
+
+function buildPreviewStyles(stateData) {
+  const styles = ['all: unset', 'display: inline-block', 'box-sizing: border-box'];
+
+  // Add extracted visual properties
+  if (stateData.color) styles.push(`color: ${stateData.color}`);
+  if (stateData.backgroundColor) styles.push(`background-color: ${stateData.backgroundColor}`);
+  if (stateData.borderColor && stateData.borderWidth) {
+    styles.push(`border: ${stateData.borderWidth} solid ${stateData.borderColor}`);
+  }
+  if (stateData.opacity) styles.push(`opacity: ${stateData.opacity}`);
+  if (stateData.boxShadow) styles.push(`box-shadow: ${stateData.boxShadow}`);
+  if (stateData.outlineColor && stateData.outlineWidth) {
+    styles.push(`outline: ${stateData.outlineWidth} solid ${stateData.outlineColor}`);
+  }
+  if (stateData.fontWeight) styles.push(`font-weight: ${stateData.fontWeight}`);
+
+  return styles.join('; ');
+}
+
+function renderStatePreview(category, stateName, stateData) {
+  if (!stateData) return '';
+
+  // Determine element type
+  const elementMap = {
+    'buttons': 'button',
+    'inputs': 'input',
+    'links': 'a',
+    'cards': 'div',
+    'navigation': 'div'
+  };
+  const elementType = elementMap[category] || 'div';
+
+  // Build inline styles
+  const styles = buildPreviewStyles(stateData);
+
+  // Get element content
+  const content = getElementContent(category);
+
+  // Calculate inverse background color for contrast
+  // Prioritize backgroundColor, fallback to color
+  const baseColor = stateData.backgroundColor || stateData.color;
+  const inverseBackground = getInverseColor(baseColor);
+
+  // Build element attributes
+  let attrs = `class="interaction-preview" data-type="${esc(category)}" style="${esc(styles)}"`;
+
+  if (elementType === 'button') {
+    attrs += ' type="button"';
+  } else if (elementType === 'input') {
+    attrs += ' type="text"';
+    // Only add disabled for the disabled state, not for default/focus/hover states
+    if (stateName.toLowerCase() === 'disabled') {
+      attrs += ' disabled';
+    }
+  } else if (elementType === 'a') {
+    attrs += ' href="#"';
+  }
+
+  // Void elements (input) must be self-closing without content
+  const isVoidElement = elementType === 'input';
+  const elementHtml = isVoidElement
+    ? `<${elementType} ${attrs} />`
+    : `<${elementType} ${attrs}>${esc(content)}</${elementType}>`;
+
+  // Generate HTML with inverse background
+  return `<div class="preview-item" style="background: ${esc(inverseBackground)}">
+    ${elementHtml}
+    <div class="preview-state-label">${esc(stateName)}</div>
+  </div>`;
+}
+
+function renderInteractionElement(name, element, category) {
+  const { selector, ...states } = element;
+
+  if (!states || Object.keys(states).length === 0) {
+    return '';
+  }
+
+  // Define the properties we want to display and their order
+  const TRACKED_PROPS = [
+    'color',
+    'backgroundColor',
+    'borderColor',
+    'borderWidth',
+    'opacity',
+    'boxShadow',
+    'outlineColor',
+    'fontWeight'
+  ];
+
+  // Define the state order
+  const STATE_ORDER = ['default', 'hover', 'active', 'focus', 'disabled'];
+
+  // Get available states in our preferred order
+  const availableStates = STATE_ORDER.filter(state => states[state]);
+
+  if (availableStates.length === 0) {
+    return '';
+  }
+
+  // Get the default state as baseline for comparison
+  const defaultState = states.default || states[availableStates[0]];
+
+  // Collect states for preview section
+  const stateNames = Object.keys(states);
+  const statesToPreview = availableStates.filter(stateName => {
+    if (stateName === 'default' || stateName === availableStates[0]) return true; // Always show default
+    return shouldShowStatePreview(defaultState, states[stateName]);
+  });
+
+  // Build table rows for each tracked property
+  let tableRows = '';
+
+  for (const prop of TRACKED_PROPS) {
+    // Check if this property exists in any state
+    const hasProperty = availableStates.some(state => states[state] && states[state][prop] !== undefined);
+
+    if (!hasProperty) continue;
+
+    tableRows += '<tr>';
+    tableRows += `<td class="property-name">${esc(formatPropertyName(prop))}</td>`;
+
+    for (const stateName of availableStates) {
+      const stateData = states[stateName];
+      const value = stateData ? stateData[prop] : undefined;
+      const defaultValue = defaultState[prop];
+
+      if (value === undefined) {
+        tableRows += '<td>—</td>';
+      } else {
+        const isChanged = stateName !== 'default' && value !== defaultValue;
+        const isColorProp = prop.toLowerCase().includes('color');
+
+        let cellContent = '';
+        if (isColorProp && value !== 'transparent' && value !== 'none') {
+          cellContent = `<span class="color-preview" style="background:${esc(value)}"></span>`;
+        }
+        cellContent += `<span class="${isChanged ? 'changed' : ''}">${esc(formatValue(value))}</span>`;
+
+        tableRows += `<td>${cellContent}</td>`;
+      }
+    }
+
+    tableRows += '</tr>';
+  }
+
+  if (!tableRows) {
+    return '';
+  }
+
+  // Build table header
+  let tableHeader = '<tr><th>Property</th>';
+  for (const stateName of availableStates) {
+    tableHeader += `<th>${esc(stateName)}</th>`;
+  }
+  tableHeader += '</tr>';
+
+  // Render visual preview section if we have states to show
+  let previewHtml = '';
+  if (statesToPreview.length > 0 && category) {
+    previewHtml = '<div class="interaction-preview-section">';
+    previewHtml += '<div class="preview-label">Visual Preview</div>';
+    previewHtml += '<div class="preview-row">';
+
+    for (const stateName of statesToPreview) {
+      previewHtml += renderStatePreview(category, stateName, states[stateName]);
+    }
+
+    previewHtml += '</div></div>';
+  }
+
+  return `<div class="interaction-card">
+    <div class="interaction-header">
+      <div class="interaction-name">${esc(name)}</div>
+      ${selector ? `<code class="interaction-selector">${esc(selector)}</code>` : ''}
+    </div>
+    ${previewHtml}
+    <table class="state-table">
+      <thead>${tableHeader}</thead>
+      <tbody>${tableRows}</tbody>
+    </table>
+  </div>`;
+}
+
+function renderInteractionStatesSection(data) {
+  let html = '';
+
+  // Define category order
+  const CATEGORY_ORDER = ['buttons', 'inputs', 'links', 'cards', 'navigation'];
+
+  // Process each category
+  for (const category of CATEGORY_ORDER) {
+    const elements = data[category];
+
+    if (!elements || Object.keys(elements).length === 0) {
+      continue;
+    }
+
+    // Render section for this category
+    const categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
+    html += `<div class="section-block">
+      <div class="section-label">${esc(categoryLabel)}</div>
+      <div class="interaction-grid">`;
+
+    for (const [name, element] of Object.entries(elements)) {
+      const elementHtml = renderInteractionElement(name, element, category);
+      if (elementHtml) {
+        html += elementHtml;
+      }
+    }
+
+    html += '</div></div>';
+  }
+
+  return html || renderEmptySection();
+}
+
 function renderSectionContent(slug, data, siteDir) {
   switch (slug) {
-    case 'color-system':   return renderColorSection(data);
-    case 'type-system':    return renderTypographySection(data);
-    case 'spacing-system': return renderSpacingSection(data);
-    case 'grid-system':    return renderGridSection(data, siteDir);
-    default:               return renderEmptySection();
+    case 'color-system':       return renderColorSection(data);
+    case 'type-system':        return renderTypographySection(data);
+    case 'spacing-system':     return renderSpacingSection(data);
+    case 'grid-system':        return renderGridSection(data, siteDir);
+    case 'interaction-states': return renderInteractionStatesSection(data);
+    default:                   return renderEmptySection();
   }
 }
 
