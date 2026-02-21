@@ -11,6 +11,40 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
+/**
+ * Sanitize CSS content for safe injection into <style> blocks
+ * Prevents XSS by stripping characters that could break out of CSS context
+ * Preserves quotes and backslashes needed for valid CSS (content, font-family, etc.)
+ */
+function sanitizeCSS(str) {
+  return String(str)
+    // Remove </style> tags (case-insensitive) to prevent breaking out of style block
+    .replace(/<\/style>/gi, '')
+    // Strip angle brackets to prevent HTML injection
+    .replace(/[<>]/g, '')
+    // Remove control characters that could break CSS parsing
+    .replace(/[\r\n\x00-\x1F\x7F]/g, '')
+    // Normalize whitespace (preserve single spaces)
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Validate keyframe offset format (should be percentage or 'from'/'to')
+ * Supports comma-separated selectors like "0%, 100%" or "0%, 60%, 100%"
+ */
+function isValidKeyframeOffset(offset) {
+  const sanitized = String(offset).trim();
+
+  // Split by comma for multi-selector support (e.g., "0%, 100%")
+  const selectors = sanitized.split(',').map(s => s.trim());
+
+  // Each selector must be a valid percentage or from/to
+  return selectors.length > 0 && selectors.every(sel =>
+    /^(\d+(\.\d+)?%|from|to)$/.test(sel)
+  );
+}
+
 function readJson(filePath) {
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -62,6 +96,43 @@ function buildFontFaceCSS(fontFaces) {
     const fmt    = /\.woff2(?:[?#]|$)/.test(src) ? 'woff2' : 'woff';
     return `@font-face { font-family: '${family}'; font-weight: ${weight}; font-style: ${style}; src: url('${src}') format('${fmt}'); }`;
   }).join('\n');
+}
+
+function groupKeyframesByPattern(keyframes) {
+  const groups = { fade: [], slide: [], scale: [], rotate: [], other: [] };
+  keyframes.forEach(kf => {
+    const name = kf.name.toLowerCase();
+    if (name.includes('fade')) groups.fade.push(kf);
+    else if (name.includes('slide')) groups.slide.push(kf);
+    else if (name.includes('scale')) groups.scale.push(kf);
+    else if (name.includes('rotate') || name.includes('orbit')) groups.rotate.push(kf);
+    else groups.other.push(kf);
+  });
+  return groups;
+}
+
+// ─── Motion-system helpers ───────────────────────────────────────────────────
+
+function hasVideoData(videos) {
+  return videos && (videos.count > 0 || videos.libraries?.length > 0 || videos.animatedGifs > 0);
+}
+
+function hasScrollData(scroll) {
+  return scroll && (scroll.libraries?.length > 0 || scroll.patterns?.length > 0 || scroll.elements?.length > 0);
+}
+
+function hasMicroInteractionData(micro) {
+  return micro && (
+    micro.buttonTransitions?.length > 0 ||
+    micro.iconAnimations?.length > 0 ||
+    micro.inputFocusAnimations?.length > 0 ||
+    micro.loadingStates?.length > 0
+  );
+}
+
+function truncateUrl(url, maxLength = 40) {
+  if (!url || url.length <= maxLength) return url;
+  return url.substring(0, maxLength - 3) + '...';
 }
 
 // ─── Fonts ───────────────────────────────────────────────────────────────────
@@ -910,6 +981,282 @@ header {
   border-top: 1px solid var(--border);
   margin: 32px 0;
 }
+
+/* ─── Motion System: Performance ─── */
+.perf-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.perf-stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+}
+.perf-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+.perf-stat-value {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1;
+}
+.perf-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 12px 0;
+}
+.perf-badge--light { background: #D1FAE5; color: #065F46; }
+.perf-badge--moderate { background: #FEF3C7; color: #92400E; }
+.perf-badge--heavy { background: #FEE2E2; color: #991B1B; }
+.recommendation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+.recommendation-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+}
+.recommendation-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.recommendation-text {
+  font-size: 13px;
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+/* ─── Motion System: Timing Tokens ─── */
+.timing-subsection {
+  margin-bottom: 24px;
+}
+.timing-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+  margin-bottom: 12px;
+}
+.timing-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 14px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.timing-chip:hover {
+  border-color: var(--border-2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ─── Motion System: Keyframes ─── */
+.keyframe-group {
+  margin-bottom: 32px;
+}
+.keyframe-group-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.keyframe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 12px;
+}
+.keyframe-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.keyframe-card:hover {
+  border-color: var(--border-2);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.keyframe-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.keyframe-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  flex: 1;
+}
+.keyframe-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+.keyframe-table th {
+  text-align: left;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  padding: 6px 8px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.keyframe-table td {
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-1);
+}
+.keyframe-table tr:last-child td {
+  border-bottom: none;
+}
+.property-name {
+  font-weight: 500;
+  color: var(--text-2);
+}
+.keyframe-more {
+  text-align: center;
+  color: var(--text-3);
+  font-size: 11px;
+  padding: 12px;
+}
+
+/* ─── Motion System: Animation Preview ─── */
+.animation-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.preview-box {
+  width: 40px;
+  height: 40px;
+  background: var(--accent);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.preview-control {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  line-height: 1;
+}
+.preview-control:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+/* ─── Motion System: Videos & Media ─── */
+.media-summary {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.library-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+.video-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.video-card--hero {
+  border-color: var(--accent);
+  border-width: 2px;
+}
+.video-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.video-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-1);
+  flex: 1;
+}
+.video-props {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ─── Motion System: Scroll Animations ─── */
+.scroll-libraries,
+.scroll-patterns,
+.scroll-elements {
+  margin-bottom: 20px;
+}
+
+/* ─── Motion System: Micro-interactions ─── */
+.micro-summary {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.micro-features {
+  margin-top: 16px;
+}
 `;
 }
 
@@ -1022,6 +1369,89 @@ function renderTypographySection(data) {
   }
 
   return html || renderEmptySection();
+}
+
+function renderPerformanceSummary(perf) {
+  let html = '<div class="section-block"><div class="section-label">Performance Analysis</div>';
+
+  // Stats grid
+  html += '<div class="perf-stats-grid">';
+  html += `<div class="perf-stat-card">
+    <div class="perf-stat-label">Total Elements</div>
+    <div class="perf-stat-value">${perf.totalAnimatedElements || 0}</div>
+  </div>`;
+  html += `<div class="perf-stat-card">
+    <div class="perf-stat-label">Keyframes</div>
+    <div class="perf-stat-value">${perf.summary?.keyframes || 0}</div>
+  </div>`;
+  html += `<div class="perf-stat-card">
+    <div class="perf-stat-label">Complex Animations</div>
+    <div class="perf-stat-value">${perf.complexAnimations || 0}</div>
+  </div>`;
+  html += `<div class="perf-stat-card">
+    <div class="perf-stat-label">Videos</div>
+    <div class="perf-stat-value">${perf.summary?.videos || 0}</div>
+  </div>`;
+  html += '</div>';
+
+  // Video load badge
+  if (perf.videoLoad && perf.videoLoad !== 'none') {
+    html += `<div class="perf-badge perf-badge--${perf.videoLoad}">
+      ${perf.videoLoad.charAt(0).toUpperCase() + perf.videoLoad.slice(1)} Video Load
+    </div>`;
+  }
+
+  // Recommendations
+  if (perf.recommendations && perf.recommendations.length > 0) {
+    html += '<div class="recommendation-list">';
+    perf.recommendations.forEach(rec => {
+      html += `<div class="recommendation-item">
+        <span class="recommendation-icon">⚠</span>
+        <span class="recommendation-text">${esc(rec)}</span>
+      </div>`;
+    });
+    html += '</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function renderTimingTokens(tokens) {
+  if (!tokens || (!tokens.durations?.length && !tokens.easings?.length)) {
+    return '';
+  }
+
+  let html = '<div class="section-block"><div class="section-label">Timing Tokens</div>';
+
+  // Durations
+  if (tokens.durations && tokens.durations.length > 0) {
+    html += '<div class="timing-subsection">';
+    html += '<div class="timing-label">Durations</div>';
+    html += '<div class="chip-row">';
+    tokens.durations.forEach(duration => {
+      html += `<div class="timing-chip">
+        <span class="chip-label">${esc(duration)}</span>
+      </div>`;
+    });
+    html += '</div></div>';
+  }
+
+  // Easings
+  if (tokens.easings && tokens.easings.length > 0) {
+    html += '<div class="timing-subsection">';
+    html += '<div class="timing-label">Easing Functions</div>';
+    html += '<div class="chip-row">';
+    tokens.easings.forEach(easing => {
+      html += `<div class="timing-chip">
+        <span class="chip-label">${esc(easing)}</span>
+      </div>`;
+    });
+    html += '</div></div>';
+  }
+
+  html += '</div>';
+  return html;
 }
 
 function renderElementCard(name, props) {
@@ -1499,6 +1929,283 @@ function renderInteractionStatesSection(data) {
   return html || renderEmptySection();
 }
 
+function renderVideosAndMedia(videos) {
+  if (!hasVideoData(videos)) {
+    return '';
+  }
+
+  let html = '<div class="section-block"><div class="section-label">Videos & Media</div>';
+
+  // Summary badges
+  html += '<div class="media-summary">';
+  if (videos.count > 0) {
+    html += `<span class="badge">${videos.count} video${videos.count !== 1 ? 's' : ''}</span>`;
+  }
+  if (videos.hasHeroVideo) {
+    html += '<span class="badge">Hero Video</span>';
+  }
+  if (videos.animatedGifs > 0) {
+    html += `<span class="badge">${videos.animatedGifs} animated GIFs</span>`;
+  }
+  html += '</div>';
+
+  // Animation libraries
+  if (videos.libraries && videos.libraries.length > 0) {
+    html += '<div class="library-badges">';
+    videos.libraries.forEach(lib => {
+      html += `<span class="badge">${esc(lib)}</span>`;
+    });
+    html += '</div>';
+  }
+
+  // Video cards
+  if (videos.items && videos.items.length > 0) {
+    html += '<div class="video-grid">';
+    videos.items.slice(0, 5).forEach(video => {
+      const heroClass = video.isHero ? ' video-card--hero' : '';
+      html += `<div class="video-card${heroClass}">`;
+      html += '<div class="video-header">';
+      html += `<div class="video-label">${video.isHero ? 'Hero Video' : 'Video'}</div>`;
+      if (video.attributes.autoplay) html += '<span class="badge">autoplay</span>';
+      if (video.attributes.muted) html += '<span class="badge">muted</span>';
+      html += '</div>';
+      html += '<div class="video-props">';
+      html += `<div class="grid-prop-row">
+        <span class="grid-prop-key">Dimensions</span>
+        <span class="grid-prop-value">${Math.round(video.position.width)} × ${Math.round(video.position.height)}</span>
+      </div>`;
+      if (video.sources && video.sources.length > 0) {
+        html += `<div class="grid-prop-row">
+          <span class="grid-prop-key">Source</span>
+          <span class="grid-prop-value">${esc(truncateUrl(video.sources[0]))}</span>
+        </div>`;
+      }
+      html += '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function renderScrollAnimations(scroll) {
+  if (!hasScrollData(scroll)) {
+    return '';
+  }
+
+  let html = '<div class="section-block"><div class="section-label">Scroll Animations</div>';
+
+  // Libraries
+  if (scroll.libraries && scroll.libraries.length > 0) {
+    html += '<div class="scroll-libraries">';
+    html += '<div class="timing-label">Libraries Detected</div>';
+    html += '<div class="chip-row">';
+    scroll.libraries.forEach(lib => {
+      html += `<span class="badge">${esc(lib)}</span>`;
+    });
+    html += '</div></div>';
+  }
+
+  // Patterns
+  if (scroll.patterns && scroll.patterns.length > 0) {
+    html += '<div class="scroll-patterns">';
+    html += `<div class="timing-label">Animation Patterns (${scroll.patterns.length})</div>`;
+    html += '<div class="chip-row">';
+    scroll.patterns.slice(0, 15).forEach(pattern => {
+      html += `<span class="badge">${esc(pattern)}</span>`;
+    });
+    if (scroll.patterns.length > 15) {
+      html += `<span class="badge">+${scroll.patterns.length - 15} more</span>`;
+    }
+    html += '</div></div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function renderMicroInteractions(micro) {
+  if (!hasMicroInteractionData(micro)) {
+    return '';
+  }
+
+  let html = '<div class="section-block"><div class="section-label">Micro-interactions</div>';
+
+  // Summary
+  html += '<div class="micro-summary">';
+  if (micro.buttonTransitions?.length > 0) {
+    html += `<span class="badge">${micro.buttonTransitions.length} button transitions</span>`;
+  }
+  if (micro.inputFocusAnimations?.length > 0) {
+    html += `<span class="badge">${micro.inputFocusAnimations.length} input animations</span>`;
+  }
+  if (micro.iconAnimations?.length > 0) {
+    html += `<span class="badge">${micro.iconAnimations.length} icon animations</span>`;
+  }
+  html += '</div>';
+
+  // Features
+  if (micro.hasSkeletonScreens || micro.customCursor) {
+    html += '<div class="micro-features">';
+    html += '<div class="timing-label">Features</div>';
+    if (micro.hasSkeletonScreens) {
+      html += '<span class="badge">✓ Skeleton Screens</span>';
+    }
+    if (micro.customCursor) {
+      html += '<span class="badge">✓ Custom Cursor</span>';
+    }
+    html += '</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function renderKeyframeCard(kf, uniqueIndex) {
+  // Generate unique ID for this animation (include index to prevent collisions)
+  const sanitizedName = kf.name.replace(/[^a-zA-Z0-9]/g, '-');
+  const animId = `preview-${uniqueIndex}-${sanitizedName}`;
+
+  // Build @keyframes CSS from steps with sanitization to prevent XSS
+  let keyframeCSS = `@keyframes ${animId} {`;
+  kf.steps.forEach(step => {
+    // Validate and sanitize offset (supports "0%", "50%", "from", "to", "0%, 100%", etc.)
+    const offset = isValidKeyframeOffset(step.offset)
+      ? sanitizeCSS(step.offset)
+      : '0%'; // Fallback to safe default if invalid
+
+    keyframeCSS += `${offset} {`;
+    Object.entries(step.properties).forEach(([prop, value]) => {
+      // Sanitize both property names and values to prevent style-tag breakout
+      const safeProp = sanitizeCSS(prop);
+      const safeValue = sanitizeCSS(value);
+      keyframeCSS += `${safeProp}: ${safeValue};`;
+    });
+    keyframeCSS += `}`;
+  });
+  keyframeCSS += `}`;
+
+  let html = '<div class="keyframe-card">';
+
+  // Header
+  html += '<div class="keyframe-header">';
+  html += `<div class="keyframe-name">${esc(kf.name)}</div>`;
+  html += `<span class="badge">${kf.steps.length} steps</span>`;
+  html += '</div>';
+
+  // Animation Preview
+  html += `<style>${keyframeCSS}</style>`;
+  html += '<div class="animation-preview">';
+  html += `<div class="preview-box" style="animation: ${animId} 2s ease-in-out infinite;"></div>`;
+  html += `<button class="preview-control" onclick="var box = this.previousElementSibling; box.style.animationPlayState = box.style.animationPlayState === 'paused' ? 'running' : 'paused'; this.textContent = box.style.animationPlayState === 'paused' ? '▶' : '⏸';">⏸</button>`;
+  html += '</div>';
+
+  // Property table (show first and last step)
+  if (kf.steps.length >= 2) {
+    const firstStep = kf.steps[0];
+    const lastStep = kf.steps[kf.steps.length - 1];
+
+    html += '<table class="keyframe-table">';
+    html += '<thead><tr><th>Property</th><th>From (' + esc(firstStep.offset) + ')</th><th>To (' + esc(lastStep.offset) + ')</th></tr></thead>';
+    html += '<tbody>';
+
+    // Get unique properties across both steps
+    const allProps = new Set([...Object.keys(firstStep.properties), ...Object.keys(lastStep.properties)]);
+
+    Array.from(allProps).slice(0, 5).forEach(prop => {
+      html += '<tr>';
+      html += `<td class="property-name">${esc(prop)}</td>`;
+      html += `<td>${esc(firstStep.properties[prop] || '-')}</td>`;
+      html += `<td>${esc(lastStep.properties[prop] || '-')}</td>`;
+      html += '</tr>';
+    });
+
+    if (allProps.size > 5) {
+      html += `<tr><td colspan="3" class="keyframe-more">...${allProps.size - 5} more properties</td></tr>`;
+    }
+
+    html += '</tbody></table>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function renderKeyframeAnimations(keyframes) {
+  if (!keyframes || keyframes.length === 0) {
+    return '';
+  }
+
+  const groups = groupKeyframesByPattern(keyframes);
+  const groupNames = { fade: 'Fade Animations', slide: 'Slide Animations', scale: 'Scale Animations', rotate: 'Rotate Animations', other: 'Other Animations' };
+
+  let html = '<div class="section-block"><div class="section-label">Keyframe Animations (' + keyframes.length + ')</div>';
+
+  // Global counter for unique animation IDs across all groups
+  let globalIndex = 0;
+
+  for (const [groupKey, groupKeyframes] of Object.entries(groups)) {
+    if (groupKeyframes.length === 0) continue;
+
+    html += `<div class="keyframe-group">`;
+    html += `<div class="keyframe-group-label">${groupNames[groupKey]} (${groupKeyframes.length})</div>`;
+    html += '<div class="keyframe-grid">';
+
+    // Limit to 20 keyframes per group
+    const displayKeyframes = groupKeyframes.slice(0, 20);
+
+    displayKeyframes.forEach(kf => {
+      html += renderKeyframeCard(kf, globalIndex++);
+    });
+
+    if (groupKeyframes.length > 20) {
+      html += `<div class="keyframe-more">...and ${groupKeyframes.length - 20} more</div>`;
+    }
+
+    html += '</div></div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function renderMotionSection(data) {
+  let html = '';
+
+  // 1. Performance Summary
+  if (data.performance) {
+    html += renderPerformanceSummary(data.performance);
+  }
+
+  // 2. Timing Tokens
+  if (data.cssAnimations?.timingTokens) {
+    html += renderTimingTokens(data.cssAnimations.timingTokens);
+  }
+
+  // 3. Keyframe Animations
+  if (data.cssAnimations?.keyframes?.length > 0) {
+    html += renderKeyframeAnimations(data.cssAnimations.keyframes);
+  }
+
+  // 4. Videos & Media
+  if (hasVideoData(data.videos)) {
+    html += renderVideosAndMedia(data.videos);
+  }
+
+  // 5. Scroll Animations
+  if (hasScrollData(data.scrollAnimations)) {
+    html += renderScrollAnimations(data.scrollAnimations);
+  }
+
+  // 6. Micro-interactions
+  if (hasMicroInteractionData(data.microInteractions)) {
+    html += renderMicroInteractions(data.microInteractions);
+  }
+
+  return html || renderEmptySection();
+}
+
 function renderSectionContent(slug, data, siteDir) {
   switch (slug) {
     case 'color-system':       return renderColorSection(data);
@@ -1506,6 +2213,7 @@ function renderSectionContent(slug, data, siteDir) {
     case 'spacing-system':     return renderSpacingSection(data);
     case 'grid-system':        return renderGridSection(data, siteDir);
     case 'interaction-states': return renderInteractionStatesSection(data);
+    case 'motion-system':      return renderMotionSection(data);
     default:                   return renderEmptySection();
   }
 }
