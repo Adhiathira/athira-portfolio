@@ -19,8 +19,8 @@
 
 ## Current Task
 
-current-task:
+current-task: 47
 
 <!-- When starting a task, set current-task to the task ID, e.g.: current-task: 42 -->
 <!-- When completing a task, clear this field and ask the user what to work on next. -->
-<!-- Task 45 (Interaction States) completed 2026-02-20. Check task tracker for next task. -->
+<!-- Task 46 (Motion & Media System) completed 2026-02-21. Task 47 is [8/8] Design Consistency Notes. -->
