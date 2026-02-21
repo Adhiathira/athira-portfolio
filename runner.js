@@ -48,15 +48,19 @@ async function run() {
       const extractorPath = new URL(`./extractors/${slug}.js`, import.meta.url);
       const extractor = await import(extractorPath);
 
-      const page = await newPage(browser, site.url);
+      // Wrap entire page lifecycle in try/finally to prevent leaks
+      let page;
       try {
+        // newPage() now handles cookie dismissal before warmup scroll
+        page = await newPage(browser, site.url);
+
         const outputDir = path.join('design-system', site.name, slug);
         const screenshotsDir = path.join('design-system', site.name, 'screenshots');
         const data = await extractor.extract(page, { outputDir, screenshotsDir });
         await write(site.name, slug, data);
         console.log(`  [${slug}] done`);
       } finally {
-        await page.close();
+        if (page) await page.close();
       }
     }
   } finally {

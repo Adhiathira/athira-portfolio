@@ -1,204 +1,243 @@
-# Brand Website - Layout System Brief
+# Website Layout System Brief
 
-## Overall Page Structure
+## 1. Overall Page Structure
 
-The site follows a **vertical scroll narrative** with distinct, full-viewport sections that create a cinematic, magazine-editorial experience. Each major section feels like a self-contained "chapter" with generous vertical breathing room between content blocks. The overall flow is:
+The page follows a **classic long-scroll narrative structure** with approximately 8-10 major sections stacked vertically. The design uses a **centered, contained content approach** with strategic full-width moments for visual impact. 
 
-1. Hero (full-bleed background image)
-2. Mission statement (photo-anchored content)
-3. News/announcements (asymmetric card grid)
-4. Section teaser (centered illustration-driven)
-5. Leadership quote (minimal, typography-focused)
-6. Products overview (tabbed interface with hero imagery)
-7. Footer (structured link columns)
+The rhythm alternates between:
+- **Centered, symmetrical sections** (hero, product showcases, credibility)
+- **Asymmetric split-screen layouts** (content features, testimonials)
+- **Grid-based card systems** (offerings, category solutions)
+- **Simple list structures** (FAQ)
 
-The layout emphasizes **whitespace as a design element**, using generous padding and full-width color blocks to separate sections. There's a strong sense of vertical rhythm with alternating content densities—expansive hero spaces followed by tighter editorial sections.
+Each section is generously spaced with substantial vertical padding, creating a luxurious, unhurried reading experience.
 
 ---
 
-## Header/Navigation Layout
+## 2. Header & Navigation Layout
 
-**Fixed-position, minimal header** with three distinct zones:
+**Announcement banner**: Full-width, primary brand color background, centered text with inline CTA link. Dismissible close button on far right.
 
-- **Left zone**: Search icon + input field (subtle, low-contrast)
-- **Center zone**: Brand wordmark (oversized, acts as visual anchor)
-- **Right zone**: Four navigation links in a horizontal row (About, News, Team, Careers) — evenly spaced, right-aligned
-
-The header sits on a **translucent or adaptive background** that allows the hero image to show through while maintaining text legibility. The entire header is quite tall (likely 80-100px) to match the generous proportions of the site.
-
-There's also a **persistent "Accessibility Mode" toggle** in the bottom-left corner of the viewport (not in the header itself) that appears across all sections.
+**Main navigation**: Horizontal bar with white/light background
+- **Left side**: Company logo + brand wordmark
+- **Center**: Primary navigation links (Nav Item 1, Nav Item 2, Nav Item 3, Nav Item 4, Nav Item 5, Nav Item 6) - each with dropdown indicators
+- **Right side**: User account icon
+- Navigation items are evenly spaced, likely using flexbox justify-between pattern
 
 ---
 
-## Hero Section
+## 3. Hero Section
 
-**Full-viewport, full-bleed hero** with these characteristics:
+**Split-screen asymmetric layout** (roughly 45/55 split):
 
-- **Background**: Single large-scale image (gradient background) that fills the entire viewport
-- **Content**: Centered, stacked vertically
-  - Primary headline: Brand tagline in **large italic serif** (likely 80-120px at desktop)
-  - Secondary tagline: Brand mission statement in smaller weight beneath
-- **Alignment**: Perfect center-alignment, creating a calm, confident first impression
-- **Spacing**: Headline sits roughly in the vertical center with ample breathing room above and below
+**Left column**:
+- Eyebrow text: "CATEGORY" in small caps, generous top spacing
+- Large display heading (multi-line, likely 48-60px)
+- Body paragraph (medium weight, ~18-20px, constrained width for readability)
+- Two CTAs in horizontal arrangement:
+  - Primary: Solid button with icon
+  - Secondary: Outlined/ghost button
+- All text left-aligned within the column
 
-No overlapping elements or floating cards—the hero is intentionally pure and minimal, letting typography and the background image do all the work.
+**Right column**:
+- Large hero image with **rounded corners** (12-16px radius)
+- Image contains embedded play button overlay (centered circular control with accent color)
+- Video thumbnail shows professional business context
 
----
-
-## Content Sections
-
-### 1. Mission Statement Section (Two-Column Photo Anchors)
-
-**Asymmetric, edge-anchored photo layout:**
-
-- **Background**: Solid color block (neutral background)
-- **Layout structure**: 
-  - Left edge: Portrait photo (offset from edge, roughly 15% width)
-  - Center: Text block (50-60% width, perfectly centered)
-  - Right edge: Portrait photo (offset from edge, roughly 15% width)
-- **Text hierarchy**: 
-  - Small eyebrow label at top (brand identifier)
-  - Large body text (40-50px) in a refined serif
-  - CTA button below (Primary CTA →)
-- **Vertical rhythm**: Photos appear to sit slightly below the text baseline, creating a grounded feel
-
-The photos act as **visual brackets** framing the central message, while the generous negative space creates an editorial, high-end magazine aesthetic.
+**Spatial relationship**: Columns sit on same baseline. Image slightly larger to create visual weight balance despite having less text content.
 
 ---
 
-### 2. News/Announcements Section (Asymmetric Card Grid)
+## 4. Content Sections
 
-**Two-column, variable-height card grid** with editorial card design:
+### Product Showcase Section
 
-**Layout pattern:**
-- Cards are **not uniform**—each occupies roughly 45% width with a central gutter (~10%)
-- Cards stagger vertically (not aligned to a strict grid), creating visual interest
-- Each row feels like a "curated pair" rather than a rigid grid
+**Structure**: Centered header + multi-column card grid
 
-**Card anatomy:**
-- Large hero image (3:2 or 4:3 aspect ratio)
-- Title (medium-large serif, 28-36px)
-- Metadata row: category tag (pill-shaped) + read time
-- For some cards, the image is a **composite or triptych**
+**Header block** (centered):
+- Eyebrow: "SECTION LABEL" in small caps with generous letterspacing
+- Large heading (centered)
+- Body paragraph (centered, max-width ~700px)
 
-**Spatial rhythm:**
-- Generous inter-card spacing (80-120px between cards)
-- Cards appear to "float" on the white background
-- CTA at bottom (View All CTA →) centered below the grid
+**Card grid**: 
+- **2-column layout** on desktop
+- Cards feature:
+  - Full-bleed image at top (rounded corners)
+  - White content area below
+  - Heading + description text (left-aligned within card)
+  - CTA link with arrow icon
+- **Vertical rhythm**: Cards stack with equal gaps (~24-32px)
+- **Aspect ratio**: Images appear to be 16:9 or 3:2
 
-This section breaks the strict symmetry of earlier sections, introducing **editorial asymmetry** while maintaining balance through careful weight distribution.
-
----
-
-### 3. Section Teaser (Centered Illustration Block)
-
-**Single-column, illustration-driven layout:**
-
-- **Alignment**: Everything center-aligned
-- **Structure**:
-  1. Section heading (large display serif)
-  2. Subheading (two lines of body text)
-  3. Large illustration (60-70% viewport width)
-  4. CTA button (Section CTA →)
-- **Background**: Solid neutral background
-- **Vertical spacing**: Extremely generous—illustration sits well below the heading, creating a slow, contemplative scroll rhythm
-
-This section acts as a **visual palette cleanser**—after the density of the news grid, it returns to minimal, centered composition.
+**Variation**: Some sections show 4 cards in 2x2 grid, maintaining consistent spacing
 
 ---
 
-### 4. Leadership Quote Section (Typography-Dominant)
+### Content Feature Section (Asymmetric Split)
 
-**Minimal, quote-focused layout:**
+**Two-column split** (~40/60 ratio):
 
-- **Background**: Solid neutral background (continuation from previous section)
-- **Structure**: 
-  - Left side (70% width): **Oversized quote text** in serif (60-80px), left-aligned, multiple lines
-  - Right side (30% width): Signature image + attribution text (name and title)
-- **Spacing**: Massive leading (line-height) on the quote text creates dramatic vertical rhythm
-- **Alignment**: Quote baseline roughly aligns with signature baseline
+**Left column**:
+- "Section Title" eyebrow (smaller, colored accent text)
+- Large heading
+- Descriptive paragraph
+- **Numbered list** (1-4) with clear vertical spacing between items
+- Each list item is a clickable element/link
 
-This is the most **typographically expressive** section—the scale of the text turns language itself into a visual element.
+**Right column**:
+- **Collage/grid of overlapping images** showing resource materials
+- Images positioned in a scattered, organic grid (2x2 base grid with slight rotation/overlap)
+- Creates visual interest while showing multiple content types
 
----
-
-### 5. Products Section (Tabbed Interface + Hero)
-
-**Tab-controlled content switcher:**
-
-**Tab bar:**
-- Four tabs in a horizontal row (Product 1, Product 2, Product 3, Product 4)
-- Pills/rounded rectangles with subtle background fill
-- Centered below introductory paragraph
-
-**Content area (per tab):**
-- **Large hero image** (full-width or 90% width, likely 16:9 aspect)
-- **Overlay treatment**: Product name overlaid on image in large display type
-- **Interactive element**: Input box overlaid on bottom-center of image
-- **Description text**: Below image, centered, 60% width
-
-This section introduces **interactivity** and **layered UI elements** (text over images) for the first time in the layout system.
+**Spatial relationship**: Text baseline aligns with top of image collage. Content sits side-by-side with generous gutter (~48-64px).
 
 ---
 
-## Footer Layout
+### Credibility Section
 
-**Multi-column link grid** with clean hierarchy:
+**Centered vertical flow**:
 
-**Structure:**
-- **Left zone**: Brand wordmark (same as header)
-- **Center zone**: Four-column link list
-  - Column 1: Primary site links (About, News, Team, Careers)
-  - Column 2: Social links (LinkedIn, Instagram, X)
-  - Column 3: Legal/utility links (Contact, Privacy & Cookies, Terms, Trademarks, Parent Brand)
-- **Right zone**: Copyright and legal disclaimer text (smaller, secondary hierarchy)
+**Top block** (centered):
+- Large heading
+- Body paragraph (constrained width)
+- Single CTA button (centered)
 
-**Styling:**
-- Links are plain text, likely underlined on hover
-- Generous vertical spacing between link rows
-- Footer is separated from content by solid color background (neutral background)
-- Footer is **tall** (likely 300-400px) to match the site's generous spatial proportions
+**Full-width visual divider**:
+- Large abstract 3D visualization spanning full viewport width
+- Creates visual break and brand moment
 
----
-
-## Notable Layout Patterns
-
-### 1. **Full-Bleed Color Sections**
-Every section uses **edge-to-edge background colors**—no containers or max-widths on the color fields themselves. This creates immersive, cinematic transitions between sections.
-
-### 2. **Content Max-Width Variability**
-While backgrounds are full-bleed, **content width varies by section**:
-- Hero text: ~600-800px centered
-- Mission text: ~700px centered
-- News cards: ~1200px total grid width
-- Footer links: ~1400px spread
-
-### 3. **Edge-Anchored Elements**
-Photos in the mission section are **positioned relative to viewport edges**, not a central grid. This creates tension and visual interest—elements feel "pinned" to the screen rather than floating in a container.
-
-### 4. **Vertical Rhythm via Alternating Density**
-The page alternates between:
-- **Sparse sections** (hero, section teaser, quote) — minimal elements, maximum whitespace
-- **Dense sections** (news grid, products) — multiple content blocks, tighter spacing
-
-This creates a **breathing pattern** that guides scrolling pace.
-
-### 5. **Typography as Layout**
-In several sections (hero, quote), **oversized typography becomes the primary layout element**. The scale is so large that individual words create visual shapes and spatial relationships.
-
-### 6. **Floating Accessibility Controls**
-The "Accessibility Mode" toggle is **position: fixed** in the bottom-left, appearing across all sections. It sits outside the main layout flow entirely.
-
-### 7. **Illustrative Collage Elements**
-The news section and section teaser use **illustrative, artistic imagery** (watercolors, photo collages) rather than standard photography, giving the site a warmer, more human feel. These images often have **irregular shapes or soft edges** (not hard rectangles).
-
-### 8. **No Hard Grids**
-While there's clear structure, this isn't a strict 12-column grid system. Sections use **custom proportions** tailored to their content—sometimes 70/30 splits, sometimes centered 60% blocks, sometimes asymmetric pairs. This flexibility creates a more editorial, less "template-driven" feel.
+**Three-column card grid**:
+- Equal-width columns with generous gutters
+- Each card contains:
+  - Abstract gradient image/visual at top
+  - Heading
+  - Body text
+  - "Learn more" link with arrow
+- Cards appear to have subtle borders or shadows
+- Background uses light gradient/wash for depth
 
 ---
 
-## Design Philosophy Summary
+### Category Solutions Section
 
-This layout system prioritizes **breathing room, editorial asymmetry, and typographic scale** over conventional grid-based web design. It feels more like a **digital magazine or art book** than a standard corporate website. The generous whitespace, oversized type, and full-bleed imagery create a premium, confident aesthetic.
+**Centered header** + **horizontal scrolling carousel**:
 
-The layout uses **restraint** (limited columns, simple alignment, minimal UI chrome) to let content and imagery create impact through scale and proportion rather than complexity.
+**Header** (centered):
+- "CATEGORY LABEL" eyebrow
+- Large heading
+- Description paragraph
+- CTA button
+
+**Carousel**:
+- **Horizontal scroll container** with multiple cards
+- Cards show partial next card (peek pattern to indicate scrollability)
+- Each card: Image top → Heading → Description → CTA
+- **Navigation controls**: Left/right arrow buttons positioned bottom-left of section
+- Cards maintain consistent width (~400-500px)
+- Rounded corners throughout
+
+---
+
+### Content Hub Section
+
+Similar carousel pattern:
+- Centered section heading and description
+- "View Content Hub" CTA button
+- **Horizontal card carousel** below
+- Cards feature:
+  - Large full-bleed images
+  - Headline overlaid or positioned below
+  - "Read more" CTA
+- **Notable**: Card sizes appear varied, not uniform - creating visual rhythm and hierarchy
+
+---
+
+### Testimonial Section
+
+**Asymmetric header**:
+- "Featured Stories" heading (left-aligned)
+- "View All Stories" button (right-aligned)
+- Creates horizontal tension and clear CTAs
+
+**Featured story card** (large, prominent):
+- **Split layout within card** (~35/65):
+  - **Left column**: 
+    - Client logo at top
+    - Story headline (large, multi-line)
+    - Description paragraph
+    - Category badges/chips at bottom (pill-shaped, outlined)
+  - **Right column**: 
+    - Large featured image (presentation/conference scene)
+- Card has rounded corners and subtle shadow/border
+- **Logo carousel** below: Horizontal strip showing other client logos as tabs/navigation
+
+---
+
+## 5. Footer Layout
+
+(Not fully visible in screenshots, but likely follows standard patterns):
+- Multi-column link grid
+- Legal/compliance links at bottom
+- Newsletter signup possible
+- Social media links
+
+---
+
+## 6. Notable Layout Patterns & Design System
+
+### Spatial Rhythm
+- **Generous vertical spacing** between sections (~80-120px)
+- **Consistent internal padding** within cards and containers (~32-48px)
+- **Breathing room** around headings and text blocks
+
+### Rounded Corners
+- **Consistent corner radius** across cards, images, buttons (~12-16px for large elements, ~8px for buttons)
+- Creates softer, more approachable brand feel
+
+### Centered vs. Asymmetric
+- **Alternating rhythm**: Centered sections → Split layouts → Centered sections
+- Creates visual interest while maintaining clear hierarchy
+
+### Card Patterns
+- **Three distinct card types**:
+  1. Image-top vertical cards (product showcase)
+  2. Horizontal split cards (testimonials)
+  3. Icon/visual-top cards (credibility pillars)
+- All maintain consistent corner radius and spacing
+
+### Typography Hierarchy
+- **Eyebrow text**: Small caps, letterspaced, often colored accent
+- **Headings**: Large (48-72px hero, 32-48px section), bold weight
+- **Body**: Medium size (~18-20px), generous line-height (1.6-1.8)
+- **CTAs**: Clear visual weight with button backgrounds or bold links
+
+### Color as Structure
+- **Primary brand color** used strategically for:
+  - Primary CTAs
+  - Accent text
+  - Interactive elements
+  - Navigation highlights
+- Creates visual hierarchy through color contrast
+
+### Overlapping & Layering
+- **Minimal use of overlapping** - design favors clean separation
+- Where used (content collage), adds personality without chaos
+- Generally prefers **clear containers and boundaries**
+
+### Responsive Considerations (implied)
+- Multi-column grids likely collapse to single column on mobile
+- Horizontal carousels maintain on mobile with swipe gestures
+- Split sections stack vertically on smaller screens
+- Generous spacing scales proportionally
+
+---
+
+## Key Takeaways for Implementation
+
+1. **Establish a clear vertical rhythm** with ~100px section spacing
+2. **Use 12-column grid** for flexibility (2-col, 3-col, 4-col divisions)
+3. **Maintain consistent card padding** (32-40px internal)
+4. **Apply corner radius system**: 16px large, 12px medium, 8px small
+5. **Center narrow text blocks** (~700px max-width for readability)
+6. **Create visual breaks** with full-width imagery between sections
+7. **Balance symmetry and asymmetry** to maintain interest across long scroll
