@@ -58,10 +58,36 @@ export async function extract(page) {
       } catch (_) { /* cross-origin sheet — skip */ }
     }
 
+    // Inline CSS vars on <html> (Next.js sets these as inline styles, not in stylesheets)
+    for (const prop of document.documentElement.style) {
+      if (!prop.startsWith('--')) continue;
+      if (!isTypeVar(prop)) continue;
+      const val = document.documentElement.style.getPropertyValue(prop).trim();
+      if (val) cssVars[prop.slice(2)] = val;
+    }
+
+    // Decode Next.js hashed font names: __Inter_f367f3 → "Inter", __Source_Code_Pro_a06722 → "Source Code Pro"
+    function resolveNextJsName(family) {
+      const m = family.match(/^__([A-Za-z][A-Za-z0-9_]*)_[a-f0-9]+$/);
+      if (!m) return null;
+      let name = m[1].replace(/_Fallback$/, '');
+      if (name.includes('_')) {
+        // Underscore-separated: Source_Code_Pro → Source Code Pro
+        return name.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      }
+      // PascalCase: SourceCodePro → Source Code Pro
+      return name.replace(/([A-Z])/g, ' $1').trim();
+    }
+
+    // Annotate fontFaces with resolvedName
+    for (const face of fontFaces) {
+      face.resolvedName = resolveNextJsName(face.family) || face.family;
+    }
+
     // Pass 2: computed element styles on key selectors
     const selectors = [
       ['h1', 'h1'], ['h2', 'h2'], ['h3', 'h3'], ['h4', 'h4'],
-      ['body', 'body'], ['button', 'button'], ['small', 'small'],
+      ['body', 'body'], ['p', 'p'], ['button', 'button'], ['small', 'small'],
       ['link', 'a'], ['nav', 'nav a'],
     ];
     const props = [
@@ -84,6 +110,18 @@ export async function extract(page) {
         entry[prop] = val;
       }
       if (Object.keys(entry).length > 0) typeScale[label] = entry;
+    }
+
+    // Cross-reference typeScale with resolved @font-face names to surface primaryFont
+    const knownFonts = new Set(fontFaces.map(f => f.family.toLowerCase()));
+    const resolvedNames = Object.fromEntries(
+      fontFaces.map(f => [f.family.toLowerCase(), f.resolvedName || f.family])
+    );
+    for (const entry of Object.values(typeScale)) {
+      if (!entry.fontFamily) continue;
+      const tokens = entry.fontFamily.split(',').map(s => s.trim());
+      const match = tokens.find(t => knownFonts.has(t.toLowerCase()));
+      entry.primaryFont = match ? (resolvedNames[match.toLowerCase()] || match) : tokens[0];
     }
 
     return { cssVars, fontFaces, typeScale };

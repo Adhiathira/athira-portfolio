@@ -1,0 +1,53 @@
+{
+  "standardized": [
+    {
+      "area": "color",
+      "observation": "10 distinct color roles defined in the visual pass, indicating a well-developed token vocabulary (page-background, heading-text, body-text, surface-background, accent, ...)."
+    },
+    {
+      "area": "typography",
+      "observation": "Classic 2-family type system: headings use \"Neue Haas Grotesk Display Pro\" and body/nav/link use \"ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji\". This pairing is a well-established design pattern."
+    },
+    {
+      "area": "typography",
+      "observation": "30 @font-face declaration(s) found (Neue Haas Grotesk Display Pro, Inter), indicating explicit font loading control."
+    },
+    {
+      "area": "motion",
+      "observation": "A single easing function is used across all animations (\"cubic-bezier(0.4, 0, 0.2, 1)\"), creating a unified motion feel."
+    },
+    {
+      "area": "layout",
+      "observation": "A single container max-width (1280px) is used consistently across the grid system."
+    }
+  ],
+  "inconsistencies": [
+    {
+      "area": "color",
+      "severity": "low",
+      "observation": "Pure #000000 or #ffffff values appear in computed output for (pageBackground, bodyText, headingText, buttonBackground, buttonText, linkColor, borderColor). These resolve to raw extremes; whether they originate from design tokens or hardcoded values cannot be determined from computed styles alone."
+    },
+    {
+      "area": "typography",
+      "severity": "medium",
+      "observation": "h3 (30px) is not larger than h4 (95px), breaking the expected size hierarchy."
+    },
+    {
+      "area": "spacing",
+      "severity": "medium",
+      "observation": "37 spacing values measured on elements but no spacing CSS variables found in :root. Spacing appears to be hardcoded rather than token-driven."
+    }
+  ],
+  "hierarchy": [
+    {
+      "area": "color",
+      "clarity": "partial",
+      "observation": "Heading and body text share the same computed color, which reduces typographic hierarchy through color contrast."
+    },
+    {
+      "area": "typography",
+      "clarity": "partial",
+      "observation": "1 heading level(s) violate the expected descending size order, resulting in a partially inconsistent typographic hierarchy."
+    }
+  ]
+}

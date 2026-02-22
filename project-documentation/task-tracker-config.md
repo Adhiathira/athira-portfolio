@@ -19,8 +19,9 @@
 
 ## Current Task
 
-current-task: 47
+current-task:
 
 <!-- When starting a task, set current-task to the task ID, e.g.: current-task: 42 -->
 <!-- When completing a task, clear this field and ask the user what to work on next. -->
-<!-- Task 46 (Motion & Media System) completed 2026-02-21. Task 47 is [8/8] Design Consistency Notes. -->
+<!-- Task completed. Run /whats-next to find the next task. -->
+<!-- Task 47 ([8/8] Design Consistency Notes) completed 2026-02-21. All 8 extractors now implemented. -->
