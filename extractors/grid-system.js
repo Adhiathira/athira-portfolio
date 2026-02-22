@@ -3,6 +3,9 @@ export const metadata = { tag: 'grid-system' };
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
+import { createLogger } from '../lib/logger.js';
+
+const log = createLogger('grid-system');
 
 const GRID_VAR_KEYWORDS = [
   'grid', 'column', 'columns', 'container', 'layout', 'gap', 'gutter', 'max-width', 'maxwidth',
@@ -412,13 +415,13 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
       { input: msg, encoding: 'utf8', timeout: 180000, maxBuffer: 50 * 1024 * 1024 }
     );
     if (result.error || result.status !== 0) {
-      console.warn('[grid-system] vision pass failed:', result.error?.message ?? `exit ${result.status}`, result.stderr?.trim() || '');
+      log.minor('Vision pass failed', { error: result.error?.message ?? `exit ${result.status}` });
     } else {
       try {
         const resultLine = result.stdout?.split('\n').find(l => l.includes('"type":"result"'));
         const claudeResult = resultLine ? JSON.parse(resultLine) : null;
         if (claudeResult?.is_error) {
-          console.warn('[grid-system] vision pass API error:', claudeResult.result);
+          log.minor('Vision pass API error', { result: claudeResult.result });
         } else {
           const rawOutput = claudeResult?.result ?? '';
           for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
@@ -427,10 +430,10 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
               if (Array.isArray(parsed) && parsed.length > 0) { visual = parsed; break; }
             } catch (_) { /* not valid JSON, try next */ }
           }
-          if (visual.length === 0) console.warn('[grid-system] vision pass returned no JSON array, ignoring');
+          if (visual.length === 0) log.minor('Vision pass returned no JSON array, ignoring');
         }
       } catch (_) {
-        console.warn('[grid-system] vision pass returned unparseable output, ignoring');
+        log.minor('Vision pass returned unparseable output, ignoring');
       }
     }
   }
@@ -596,14 +599,14 @@ No code, no CSS. Write in clear markdown with section headers.`;
       { input: mdMsg, encoding: 'utf8', timeout: 180000, maxBuffer: 50 * 1024 * 1024 }
     );
     if (mdResult.error || mdResult.status !== 0) {
-      console.warn('[grid-system] markdown brief failed:', mdResult.error?.message ?? `exit ${mdResult.status}`);
+      log.minor('Markdown brief failed', { error: mdResult.error?.message ?? `exit ${mdResult.status}` });
     } else {
       try {
         const resultLine = mdResult.stdout?.split('\n').find(l => l.includes('"type":"result"'));
         const claudeResult = resultLine ? JSON.parse(resultLine) : null;
         if (claudeResult && !claudeResult.is_error) layoutMd = claudeResult.result ?? '';
       } catch (_) {
-        console.warn('[grid-system] markdown brief output unparseable, skipping');
+        log.minor('Markdown brief output unparseable, skipping');
       }
     }
   }
@@ -670,7 +673,7 @@ async function genericizeLayoutMarkdown(layoutMd) {
   );
 
   if (result.error || result.status !== 0) {
-    console.warn('[grid-system] Pass 8 genericization failed:', result.error?.message ?? `exit ${result.status}`);
+    log.minor('Pass 8 genericization failed', { error: result.error?.message ?? `exit ${result.status}` });
     return layoutMd; // FALLBACK: return original
   }
 
@@ -679,7 +682,7 @@ async function genericizeLayoutMarkdown(layoutMd) {
     const claudeResult = resultLine ? JSON.parse(resultLine) : null;
 
     if (claudeResult?.is_error) {
-      console.warn('[grid-system] Pass 8 API error:', claudeResult.result);
+      log.minor('Pass 8 API error', { result: claudeResult.result });
       return layoutMd; // FALLBACK
     }
 
@@ -687,14 +690,14 @@ async function genericizeLayoutMarkdown(layoutMd) {
 
     if (genericized.length < 100) {
       // Suspiciously short response, likely failed
-      console.warn('[grid-system] Pass 8 returned suspiciously short output, using original');
+      log.minor('Pass 8 returned suspiciously short output, using original');
       return layoutMd;
     }
 
     return genericized;
 
   } catch (err) {
-    console.warn('[grid-system] Pass 8 output unparseable:', err.message);
+    log.minor('Pass 8 output unparseable', { error: err.message });
     return layoutMd; // FALLBACK
   }
 }

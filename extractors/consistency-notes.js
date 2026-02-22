@@ -1,7 +1,10 @@
 import fs from 'fs';
 import path from 'path';
+import { createLogger } from '../lib/logger.js';
 
 export const metadata = { tag: 'consistency-notes' };
+
+const log = createLogger('consistency-notes');
 
 // ============================================================================
 // HELPER UTILITIES
@@ -20,7 +23,7 @@ function loadJson(siteDir, slug, filename) {
     return JSON.parse(raw);
   } catch (err) {
     if (err.code !== 'ENOENT') {
-      console.warn(`[consistency-notes] Failed to load ${filePath}: ${err.message}`);
+      log.minor(`Failed to load ${filePath}`, { error: err.message });
     }
     return null;
   }

@@ -1,9 +1,13 @@
+import { createLogger } from '../lib/logger.js';
+
 export const metadata = {
   name: 'Interaction States',
   description: 'Extracts hover, focus, active, disabled states from interactive components',
   version: '1.0.0',
   tag: 'interaction-states'
 };
+
+const log = createLogger('interaction-states');
 
 const MAX_PER_CATEGORY = 5;
 const STATE_TRANSITION_WAIT = 300; // ms
@@ -178,7 +182,7 @@ async function captureElementStates(page, element) {
 
     // Scroll element into view before interactions
     await locator.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {
-      console.warn(`[interaction-states] Could not scroll ${element.selector} into view`);
+      log.minor(`Could not scroll ${element.selector} into view`);
     });
 
     // Helper function for extracting styles from the exact locator element
@@ -211,9 +215,7 @@ async function captureElementStates(page, element) {
       if (!areStatesIdentical(states.default, hoverState)) {
         states.hover = hoverState;
       } else {
-        console.log(`[interaction-states] Hover state identical to default for ${element.selector}`);
-        console.log('  Default:', JSON.stringify(states.default));
-        console.log('  Hover:', JSON.stringify(hoverState));
+        log.debug(`Hover state identical to default for ${element.selector}`, { default: states.default, hover: hoverState });
       }
     }
 
@@ -302,7 +304,7 @@ async function captureElementStates(page, element) {
     }
 
   } catch (err) {
-    console.warn(`[interaction-states] Failed to capture states for ${element.selector}:`, err.message);
+    log.minor(`Failed to capture states for ${element.selector}`, { error: err.message });
   }
 
   return states;

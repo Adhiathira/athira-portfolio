@@ -2,8 +2,11 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { spawnSync } from 'child_process';
+import { createLogger } from '../lib/logger.js';
 
 export const metadata = { tag: 'color-system' };
+
+const log = createLogger('color-system');
 
 const LLM_PROMPT = `You are analyzing screenshots of a website to extract its color system.
 Identify all visually distinct colors that are part of the design system — backgrounds, text, buttons, links, borders, highlights, navigation.
@@ -142,13 +145,13 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
 
   let visual = [];
   if (result.error || result.status !== 0) {
-    console.warn('[color-system] vision pass failed:', result.error?.message ?? `exit ${result.status}`, result.stderr?.trim() || '');
+    log.minor('Vision pass failed', { error: result.error?.message ?? `exit ${result.status}`, stderr: result.stderr?.trim() || '' });
   } else {
     try {
       const resultLine = result.stdout?.split('\n').find(l => l.includes('"type":"result"'));
       const claudeResult = resultLine ? JSON.parse(resultLine) : null;
       if (claudeResult?.is_error) {
-        console.warn('[color-system] vision pass API error:', claudeResult.result);
+        log.minor('Vision pass API error', { result: claudeResult.result });
       } else {
         const rawOutput = claudeResult?.result ?? '';
         // Try each [...] candidate (non-greedy) until one parses as a non-empty array.
@@ -163,11 +166,11 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
           } catch (_) { /* not valid JSON, try next candidate */ }
         }
         if (visual.length === 0) {
-          console.warn('[color-system] vision pass returned no JSON array, ignoring');
+          log.minor('Vision pass returned no JSON array, ignoring');
         }
       }
     } catch (_) {
-      console.warn('[color-system] vision pass returned unparseable output, ignoring');
+      log.minor('Vision pass returned unparseable output, ignoring');
     }
   }
 
