@@ -1629,21 +1629,7 @@ function renderGridSection(data, siteDir) {
     const layoutMdPath = path.join(siteDir, 'grid-system', 'layout.md');
     const layoutMd = readMarkdown(layoutMdPath);
     if (layoutMd) {
-      // Simple markdown to HTML conversion (basic - just handles headers, paragraphs, lists, bold, code)
-      const mdHtml = layoutMd
-        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-        .replace(/^# (.+)$/gm, '<h1>$1</h1>')
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/`(.+?)`/g, '<code>$1</code>')
-        .replace(/^- (.+)$/gm, '<li>$1</li>')
-        .replace(/(<li>.*<\/li>\n?)+/gs, match => `<ul>${match}</ul>`)
-        .replace(/^([^<\n].+)$/gm, '<p>$1</p>')
-        .replace(/^---$/gm, '<hr>')
-        .replace(/<\/h[123]>\n<p>/g, '</h3>\n')
-        .replace(/<\/p>\n<h[123]>/g, '\n<h3>')
-        .replace(/<\/ul>\n<p>/g, '</ul>\n')
-        .replace(/<\/p>\n<ul>/g, '\n<ul>');
+      const mdHtml = markdownToHtml(layoutMd);
 
       html += `<div class="section-block">
         <div class="section-label">Layout Design Brief</div>
@@ -2206,6 +2192,28 @@ function renderMotionSection(data) {
   return html || renderEmptySection();
 }
 
+function markdownToHtml(md) {
+  return md
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/gs, match => `<ul>${match}</ul>`)
+    .replace(/^([^<\n].+)$/gm, '<p>$1</p>')
+    .replace(/^---$/gm, '<hr>')
+    .replace(/<\/(h[123])>\n<p>/g, '</$1>\n')
+    .replace(/<\/p>\n<(h[123])>/g, '\n<$1>')
+    .replace(/<\/ul>\n<p>/g, '</ul>\n')
+    .replace(/<\/p>\n<ul>/g, '\n<ul>');
+}
+
+function renderConceptSummarySection(data) {
+  if (!data.markdown) return renderEmptySection();
+  return `<div class="section-block"><div class="prose">${markdownToHtml(data.markdown)}</div></div>`;
+}
+
 function renderSectionContent(slug, data, siteDir) {
   switch (slug) {
     case 'color-system':       return renderColorSection(data);
@@ -2214,6 +2222,7 @@ function renderSectionContent(slug, data, siteDir) {
     case 'grid-system':        return renderGridSection(data, siteDir);
     case 'interaction-states': return renderInteractionStatesSection(data);
     case 'motion-system':      return renderMotionSection(data);
+    case 'concept-summary':    return renderConceptSummarySection(data);
     default:                   return renderEmptySection();
   }
 }
@@ -2267,9 +2276,16 @@ export function renderHome(sites, registry) {
 export function renderSite(siteName, siteDir, registry) {
   const sections = registry.map(entry => {
     const jsonFile = entry.outputFiles.find(f => f.endsWith('.json'));
-    if (!jsonFile) return { entry, data: {} };
-    const data = readJson(path.join(siteDir, entry.slug, jsonFile));
-    return { entry, data };
+    if (jsonFile) {
+      const data = readJson(path.join(siteDir, entry.slug, jsonFile));
+      return { entry, data };
+    }
+    const mdFile = entry.outputFiles.find(f => f.endsWith('.md'));
+    if (mdFile) {
+      const markdown = readMarkdown(path.join(siteDir, entry.slug, mdFile));
+      return { entry, data: markdown ? { markdown } : {} };
+    }
+    return { entry, data: {} };
   });
 
   const typSection = sections.find(s => s.entry.slug === 'type-system');
