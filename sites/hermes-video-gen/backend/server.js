@@ -2,14 +2,11 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { requireAuth } from './middleware/auth.js';
+import authRouter from './routes/auth.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
-
-// TODO: replace with import from ./routes/auth.js (Task 2)
-const authRouter = express.Router();
-authRouter.all('*', (req, res) => res.status(501).json({ error: 'Not implemented' }));
 
 // TODO: replace with import from ./routes/videos.js (Task 2)
 const videosRouter = express.Router();
