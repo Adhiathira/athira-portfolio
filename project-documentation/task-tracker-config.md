@@ -19,7 +19,7 @@
 
 ## Current Task
 
-**current-task:** 164
+**current-task:** <!-- Task 165 complete - check task tracker or ask for next task -->
 
 <!-- When starting a task, set current-task to the task ID, e.g.: current-task: 42 -->
 <!-- When completing a task, clear this field and ask the user what to work on next. -->
