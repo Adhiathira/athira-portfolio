@@ -2198,7 +2198,7 @@ function markdownToHtml(md) {
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
     .replace(/^# (.+)$/gm, '<h1>$1</h1>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/`(.+?)`/g, (_, code) => `<code>${esc(code)}</code>`)
     .replace(/^- (.+)$/gm, '<li>$1</li>')
     .replace(/(<li>.*<\/li>\n?)+/gs, match => `<ul>${match}</ul>`)
     .replace(/^([^<\n].+)$/gm, '<p>$1</p>')
