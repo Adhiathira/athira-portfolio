@@ -249,3 +249,9 @@ No exceptions. If a tool exists and is not in `tool-index.md`, register it.
 - Hardcode configuration values
 - Add technical implementation details to this file (keep them in `project-documentation/`)
 - Do not create temporary Markdown files (`*.md`) unless explicitly requested.
+
+## Design System
+
+The project uses the `apple` design system.
+All UI work must reference `project-documentation/design-system/`.
+See `website-design` skill for compliance rules.
