@@ -119,6 +119,10 @@ function getFontStatus(fontFamily, fontFaces) {
     return { status: 'no-src', reason: 'Font face found but source URL missing', action: null };
   }
 
+  if (src.startsWith('fonts/')) {
+    return { status: 'loadable', reason: 'Downloaded from Google Fonts (local copy)', action: null };
+  }
+
   if (isExternalSrc(src)) {
     try {
       const domain = new URL(src).hostname;
@@ -153,12 +157,15 @@ function safeCSSStr(s) {
   return String(s).replace(/['\\\n\r]/g, '').replace(/<\/style/gi, '');
 }
 
-function buildFontFaceCSS(fontFaces) {
-  return (fontFaces || []).filter(f => isExternalSrc(f.src)).map(f => {
+function buildFontFaceCSS(fontFaces, siteName) {
+  return (fontFaces || []).filter(f => isExternalSrc(f.src) || (f.src && f.src.startsWith('fonts/'))).map(f => {
     const family = safeCSSStr(f.family);
     const weight = /^\d+$/.test(String(f.weight)) ? String(f.weight) : '400';
     const style  = ALLOWED_FONT_STYLES.has(String(f.style)) ? String(f.style) : 'normal';
-    const src    = safeCSSStr(f.src);
+    const rawSrc = f.src && f.src.startsWith('fonts/')
+      ? `/fonts/${siteName}/${f.src.slice('fonts/'.length)}`
+      : f.src;
+    const src    = safeCSSStr(rawSrc);
     const fmt    = /\.woff2(?:[?#]|$)/.test(src) ? 'woff2' : 'woff';
     return `@font-face { font-family: '${family}'; font-weight: ${weight}; font-style: ${style}; src: url('${src}') format('${fmt}'); }`;
   }).join('\n');
@@ -2455,7 +2462,7 @@ export function renderSite(siteName, siteDir, registry) {
   });
 
   const typSection = sections.find(s => s.entry.slug === 'type-system');
-  const fontFaceCSS = typSection ? buildFontFaceCSS(typSection.data.fontFaces) : '';
+  const fontFaceCSS = typSection ? buildFontFaceCSS(typSection.data.fontFaces, siteName) : '';
 
   const firstActiveIdx = Math.max(0, sections.findIndex(s => !isEmpty(s.data)));
 

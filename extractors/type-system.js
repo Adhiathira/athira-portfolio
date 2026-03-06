@@ -1,3 +1,5 @@
+import { downloadGoogleFonts } from '../lib/font-downloader.js';
+
 export const metadata = { tag: 'type-system' };
 
 const TYPE_VAR_KEYWORDS = ['font', 'type', 'text', 'size', 'weight', 'line-height', 'letter', 'heading', 'body', 'caption'];
@@ -12,8 +14,8 @@ const SKIP_DEFAULTS = {
   fontFeatureSettings: 'normal',
 };
 
-export async function extract(page) {
-  return await page.evaluate(({ keywords, skipDefaults }) => {
+export async function extract(page, { outputDir } = {}) {
+  const data = await page.evaluate(({ keywords, skipDefaults }) => {
     function stripQuotes(s) {
       return s.replace(/['"]/g, '').trim();
     }
@@ -126,4 +128,5 @@ export async function extract(page) {
 
     return { cssVars, fontFaces, typeScale };
   }, { keywords: TYPE_VAR_KEYWORDS, skipDefaults: SKIP_DEFAULTS });
+  return downloadGoogleFonts(data, outputDir);
 }

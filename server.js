@@ -71,6 +71,39 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  const fontMatch = pathname.match(/^\/fonts\/([^/]+)\/(.+)$/);
+  if (fontMatch) {
+    let site, rest;
+    try {
+      site = decodeURIComponent(fontMatch[1]);
+      rest = decodeURIComponent(fontMatch[2]);
+    } catch {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    const filePath = path.resolve(DESIGN_SYSTEM_DIR, site, 'fonts', ...rest.split('/'));
+    if (!filePath.startsWith(DESIGN_SYSTEM_DIR + path.sep)) {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    let stat;
+    try { stat = fs.statSync(filePath); } catch { /* not found */ }
+    if (!stat?.isFile()) {
+      res.writeHead(404);
+      res.end('Not Found');
+      return;
+    }
+    let contentType = 'application/octet-stream';
+    if (filePath.endsWith('.woff2')) contentType = 'font/woff2';
+    else if (filePath.endsWith('.woff')) contentType = 'font/woff';
+    const buffer = fs.readFileSync(filePath);
+    res.writeHead(200, { 'Content-Type': contentType });
+    res.end(buffer);
+    return;
+  }
+
   res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end('<!DOCTYPE html><html><body><h1>404 Not Found</h1></body></html>');
 });
