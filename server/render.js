@@ -1452,8 +1452,8 @@ header {
 }
 .font-catalog-card {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 8px;
   padding: 10px 12px;
   background: #1f2937;
   border: 1px solid #374151;
@@ -1467,9 +1467,8 @@ header {
 }
 .font-catalog-card-meta {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 120px;
+  align-items: baseline;
+  gap: 8px;
 }
 .font-catalog-card-name {
   font-size: 13px;
@@ -1480,11 +1479,14 @@ header {
   color: #6b7280;
 }
 .font-catalog-card-specimen {
-  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.font-catalog-card-specimen-line {
+  font-size: 13px;
   color: #d1d5db;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.4;
 }
 .font-alt-specimen-block {
   margin-top: 10px;
@@ -2723,7 +2725,7 @@ export function renderSite(siteName, siteDir, registry) {
             '<span class="font-catalog-card-name">' + font.name + '</span>' +
             '<span class="font-catalog-card-category">' + font.category + '</span>' +
           '</div>' +
-          '<span class="font-catalog-card-specimen" style="font-family: \\'' + font.name + '\\'">Aa Bb Cc</span>';
+          '<div class="font-catalog-card-specimen" style="font-family: \\'' + font.name + '\\'"><span class="font-catalog-card-specimen-line">THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG</span><span class="font-catalog-card-specimen-line">The quick brown fox jumps over the lazy dog</span></div>';
         card.addEventListener('click', () => selectFont(fontName, font.name, panel));
         grid.appendChild(card);
       });

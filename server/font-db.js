@@ -10,7 +10,7 @@ export function readFontCatalog() {
 }
 
 export function readFontDb(site, designSystemDir) {
-  const dbPath = join(designSystemDir, site, 'font-db.json');
+  const dbPath = join(designSystemDir, site, 'type-system', 'font-db.json');
   try {
     return JSON.parse(readFileSync(dbPath, 'utf8'));
   } catch (err) {
@@ -24,5 +24,5 @@ export function writeFontDb(site, designSystemDir, data) {
   if (!existsSync(siteDir)) {
     throw new Error('Site directory does not exist');
   }
-  writeFileSync(join(siteDir, 'font-db.json'), JSON.stringify(data, null, 2), 'utf8');
+  writeFileSync(join(siteDir, 'type-system', 'font-db.json'), JSON.stringify(data, null, 2), 'utf8');
 }
