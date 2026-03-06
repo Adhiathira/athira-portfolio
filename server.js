@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderHome, renderSite } from './server/render.js';
 import { createLogger } from './lib/logger.js';
+import { readFontCatalog, readFontDb, writeFontDb } from './server/font-db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 5509;
@@ -30,7 +31,7 @@ const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
   const pathname = url.pathname;
 
-  if (req.method !== 'GET') {
+  if (req.method !== 'GET' && req.method !== 'POST') {
     res.writeHead(405);
     res.end('Method Not Allowed');
     return;
@@ -101,6 +102,101 @@ const server = http.createServer((req, res) => {
     const buffer = fs.readFileSync(filePath);
     res.writeHead(200, { 'Content-Type': contentType });
     res.end(buffer);
+    return;
+  }
+
+  // GET /api/font-catalog
+  if (req.method === 'GET' && pathname === '/api/font-catalog') {
+    let catalog;
+    try {
+      catalog = readFontCatalog();
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Failed to load font catalog' }));
+      return;
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(catalog));
+    return;
+  }
+
+  // GET /api/font-db/:site
+  const fontDbGetMatch = req.method === 'GET' && pathname.match(/^\/api\/font-db\/([^/]+)$/);
+  if (fontDbGetMatch) {
+    let site;
+    try {
+      site = decodeURIComponent(fontDbGetMatch[1]);
+    } catch {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    const siteDir = path.resolve(DESIGN_SYSTEM_DIR, site);
+    if (!siteDir.startsWith(DESIGN_SYSTEM_DIR + path.sep)) {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    let db;
+    try {
+      db = readFontDb(site, DESIGN_SYSTEM_DIR);
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: err.message }));
+      return;
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(db));
+    return;
+  }
+
+  // POST /api/font-db/:site
+  const fontDbPostMatch = req.method === 'POST' && pathname.match(/^\/api\/font-db\/([^/]+)$/);
+  if (fontDbPostMatch) {
+    let site;
+    try {
+      site = decodeURIComponent(fontDbPostMatch[1]);
+    } catch {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    const siteDir = path.resolve(DESIGN_SYSTEM_DIR, site);
+    if (!siteDir.startsWith(DESIGN_SYSTEM_DIR + path.sep)) {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      let payload;
+      try {
+        payload = JSON.parse(body);
+      } catch {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Invalid JSON' }));
+        return;
+      }
+      const { originalFont, alternative } = payload;
+      if (!originalFont || !alternative) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Missing originalFont or alternative' }));
+        return;
+      }
+      let db;
+      try {
+        db = readFontDb(site, DESIGN_SYSTEM_DIR);
+        db[originalFont] = { alternative, recommendedByHuman: true, savedAt: new Date().toISOString() };
+        writeFontDb(site, DESIGN_SYSTEM_DIR, db);
+      } catch (err) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message }));
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(db[originalFont]));
+    });
     return;
   }
 

@@ -1403,6 +1403,112 @@ header {
   color: #a5b4fc;
   border: 1px solid #3730a3;
 }
+
+/* ─── Font Alternative Picker ─── */
+.pick-alt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 6px 14px;
+  background: #1a1a2e;
+  color: #818cf8;
+  border: 1px solid #3730a3;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pick-alt-btn:hover {
+  background: #1e1b4b;
+  border-color: #6366f1;
+  color: #a5b4fc;
+}
+.font-picker-panel {
+  margin-top: 12px;
+  padding: 12px;
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  display: none;
+}
+.font-picker-panel.open {
+  display: block;
+}
+.font-picker-label {
+  font-size: 11px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.font-catalog-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.font-catalog-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+.font-catalog-card:hover {
+  background: #374151;
+  border-color: #6366f1;
+}
+.font-catalog-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 120px;
+}
+.font-catalog-card-name {
+  font-size: 13px;
+  color: #f3f4f6;
+}
+.font-catalog-card-category {
+  font-size: 11px;
+  color: #6b7280;
+}
+.font-catalog-card-specimen {
+  font-size: 15px;
+  color: #d1d5db;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.font-alt-specimen-block {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #0f2027;
+  border: 1px solid #166534;
+  border-radius: 6px;
+}
+.font-alt-specimen-text {
+  font-size: 16px;
+  color: #d1fae5;
+  margin-bottom: 6px;
+}
+.font-alt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #86efac;
+  background: #052e16;
+  border: 1px solid #166534;
+  border-radius: 4px;
+  padding: 2px 8px;
+}
 `;
 }
 
@@ -1522,11 +1628,13 @@ function renderTypographySection(data) {
       const fontStatus = getFontStatus(props.fontFamily, data.fontFaces);
       const specimenHtml = fontStatus.status === 'loadable'
         ? `<div class="type-specimen" style="${esc(styleParts)}">The quick brown fox jumps over the lazy dog</div>`
-        : `<div class="font-unavailable-block">
+        : `<div class="font-unavailable-block" data-font-family="${esc(props.fontFamily)}">
             <div class="font-unavailable-icon">⚠</div>
             <div class="font-unavailable-title">Font unavailable — specimen not shown</div>
             <div class="font-unavailable-reason">${esc(fontStatus.reason)}</div>
             ${fontStatus.action ? `<a class="font-unavailable-action" href="${esc(fontStatus.action)}" target="_blank" rel="noopener noreferrer">Search Google Fonts →</a>` : ''}
+            <button class="pick-alt-btn" data-font="${esc(props.fontFamily)}">Pick alternative →</button>
+            <div class="font-picker-panel"></div>
           </div>`;
       html += `<div class="type-card">
         ${specimenHtml}
@@ -2525,6 +2633,8 @@ export function renderSite(siteName, siteDir, registry) {
   ${panels}
 
   <script>
+    const SITE_NAME = ${JSON.stringify(siteName)};
+
     document.querySelector('[role="tablist"]').addEventListener('click', e => {
       const btn = e.target.closest('[role="tab"]');
       if (!btn) return;
@@ -2533,6 +2643,109 @@ export function renderSite(siteName, siteDir, registry) {
       btn.setAttribute('aria-selected', 'true');
       document.getElementById(btn.getAttribute('aria-controls')).hidden = false;
     });
+
+    // Font alternative picker
+    let _catalog = null;
+
+    function renderAltSpecimen(block, entry) {
+      const existing = block.querySelector('.font-alt-specimen-block');
+      if (existing) existing.remove();
+      const div = document.createElement('div');
+      div.className = 'font-alt-specimen-block';
+      div.innerHTML =
+        '<div class="font-alt-specimen-text" style="font-family: \\'' + entry.alternative + '\\'">The quick brown fox jumps over the lazy dog</div>' +
+        '<span class="font-alt-badge">★ Recommended by human</span>';
+      block.appendChild(div);
+      loadGoogleFont(entry.alternative);
+    }
+
+    function loadGoogleFont(name) {
+      const id = 'gf-' + name.replace(/\\s+/g, '-');
+      if (document.getElementById(id)) return;
+      const link = document.createElement('link');
+      link.id = id;
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(name).replace(/%20/g, '+') + ':wght@400;700&display=swap';
+      document.head.appendChild(link);
+    }
+
+    // Pre-load saved selections on page load
+    fetch('/api/font-db/' + encodeURIComponent(SITE_NAME))
+      .then(r => r.ok ? r.json() : {})
+      .then(db => {
+        document.querySelectorAll('.font-unavailable-block[data-font-family]').forEach(block => {
+          const fontName = block.getAttribute('data-font-family');
+          if (db[fontName]) renderAltSpecimen(block, db[fontName]);
+        });
+      })
+      .catch(() => {});
+
+    // Picker open/close
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.pick-alt-btn');
+      if (!btn) return;
+      const fontName = btn.getAttribute('data-font');
+      const block = btn.closest('.font-unavailable-block');
+      const panel = block.querySelector('.font-picker-panel');
+      if (!panel) return;
+
+      const isOpen = panel.classList.contains('open');
+      // Close all other panels
+      document.querySelectorAll('.font-picker-panel.open').forEach(p => p.classList.remove('open'));
+      if (isOpen) return;
+
+      panel.classList.add('open');
+
+      if (_catalog) {
+        renderCatalog(panel, fontName);
+        return;
+      }
+      panel.innerHTML = '<div class="font-picker-label">Loading catalog…</div>';
+      fetch('/api/font-catalog')
+        .then(r => r.json())
+        .then(catalog => {
+          if (!Array.isArray(catalog)) throw new Error('Invalid catalog');
+          _catalog = catalog;
+          renderCatalog(panel, fontName);
+        })
+        .catch(() => { panel.innerHTML = '<div class="font-picker-label">Failed to load catalog</div>'; });
+    });
+
+    function renderCatalog(panel, fontName) {
+      panel.innerHTML = '<div class="font-picker-label">Choose a replacement font</div><div class="font-catalog-grid"></div>';
+      const grid = panel.querySelector('.font-catalog-grid');
+      _catalog.forEach(font => {
+        loadGoogleFont(font.name);
+        const card = document.createElement('div');
+        card.className = 'font-catalog-card';
+        card.innerHTML =
+          '<div class="font-catalog-card-meta">' +
+            '<span class="font-catalog-card-name">' + font.name + '</span>' +
+            '<span class="font-catalog-card-category">' + font.category + '</span>' +
+          '</div>' +
+          '<span class="font-catalog-card-specimen" style="font-family: \\'' + font.name + '\\'">Aa Bb Cc</span>';
+        card.addEventListener('click', () => selectFont(fontName, font.name, panel));
+        grid.appendChild(card);
+      });
+    }
+
+    function selectFont(originalFont, alternative, panel) {
+      panel.classList.remove('open');
+      fetch('/api/font-db/' + encodeURIComponent(SITE_NAME), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ originalFont, alternative })
+      })
+        .then(r => {
+          if (!r.ok) throw new Error('Save failed');
+          return r.json();
+        })
+        .then(entry => {
+          document.querySelectorAll('.font-unavailable-block[data-font-family="' + CSS.escape(originalFont) + '"]')
+            .forEach(block => renderAltSpecimen(block, entry));
+        })
+        .catch(() => {});
+    }
   </script>
 </body>
 </html>`;
