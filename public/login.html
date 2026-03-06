@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>caspers-vid — Log in</title>
+  <!-- Google Fonts: Barlow Condensed (display), Barlow (body) -->
+  <!-- Font substitution note: Barlow and Barlow Condensed are loaded via Google Fonts.
+       If this font fails to load, the browser substitutes a system sans-serif font,
+       which will not match the design specification. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+  <!-- Design system CSS -->
+  <link rel="stylesheet" href="./css/tokens.css">
+  <link rel="stylesheet" href="./css/typography.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/motion.css">
+  <link rel="stylesheet" href="./css/components/nav.css">
+  <style>
+    /* Font diagnostic banner — shown only when Google Fonts fails to load */
+    .font-diagnostic-banner {
+      background: #3d1a1a;
+      border-bottom: 1px solid #7a3a3a;
+      color: #f5f0e8;
+      font-family: monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      padding: 10px 14.08px;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+    .font-diagnostic-banner strong { color: #d4c9b4; }
+    .font-diagnostic-banner .font-name { font-style: italic; }
+    .font-diagnostic-banner a { color: #d4c9b4; }
+
+    /* -------------------------------------------------------------------------
+       Login page layout
+       ------------------------------------------------------------------------- */
+
+    /* Page background */
+    body {
+      background-color: #1a1a1a; /* page-bg */
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    /* Main: full-height centering container + newPage entrance animation */
+    .login-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 70.4px 14.08px; /* section spacing top/bottom, base left/right */
+      box-sizing: border-box;
+
+      /* newPage entrance animation — incoming page rises from bottom half of viewport
+         Source: motion.css @keyframes newPage
+         Duration: var(--duration-cinematic) = 1s (page transitions)
+         Easing: var(--ease-sweep) = cubic-bezier(0.625, 0.05, 0, 1) (page enter) */
+      animation: newPage var(--duration-cinematic) var(--ease-sweep) both;
+    }
+
+    /* Form card — centered, max-width 400px */
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* -------------------------------------------------------------------------
+       Headline
+       font: Barlow Condensed — loaded via Google Fonts (see substitution note above)
+       If Barlow Condensed fails, browser substitutes sans-serif. Not faithful to spec.
+       ------------------------------------------------------------------------- */
+    .login-headline {
+      font-family: 'Barlow Condensed', sans-serif; /* font: Barlow Condensed (not locally installed) — loaded via Google Fonts; browser substitutes sans-serif if load fails */
+      font-size: 42px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: #f5f0e8; /* heading */
+      margin: 0 0 14.08px 0;
+    }
+
+    /* -------------------------------------------------------------------------
+       Subtext
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec.
+       ------------------------------------------------------------------------- */
+    .login-subtext {
+      font-family: 'Barlow', sans-serif; /* font: Barlow (not locally installed) — loaded via Google Fonts; browser substitutes sans-serif if load fails */
+      font-size: 14.08px;
+      font-weight: 400;
+      color: #e8e2d8; /* body */
+      margin: 0 0 28.16px 0; /* spacing-double below subtext before form */
+    }
+
+    /* -------------------------------------------------------------------------
+       Form fields container
+       ------------------------------------------------------------------------- */
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 28.16px; /* spacing-double between fields */
+    }
+
+    .login-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Field label
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec. */
+    .login-label {
+      font-family: 'Barlow', sans-serif; /* font: Barlow (not locally installed) — loaded via Google Fonts; browser substitutes sans-serif if load fails */
+      font-size: 10.56px;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #9e9588; /* muted */
+      margin-bottom: 6px;
+    }
+
+    /* Input
+       Bottom border only — no top, left, or right border.
+       No visible focus state.
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec. */
+    .login-input {
+      font-family: 'Barlow', sans-serif; /* font: Barlow (not locally installed) — loaded via Google Fonts; browser substitutes sans-serif if load fails */
+      font-size: 14.08px;
+      font-weight: 400;
+      color: #f2f2f2; /* input-text */
+      background: transparent;
+      border: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid #4a4540; /* input-border — bottom-only */
+      padding: 14.08px 0; /* vertical padding top/bottom only */
+      width: 100%;
+      box-sizing: border-box;
+      outline: none; /* no outline */
+    }
+
+    /* Focus: no border-color change, no glow, no outline */
+    .login-input:focus {
+      outline: none;
+      border-bottom-color: #4a4540; /* unchanged — no visible focus state */
+      box-shadow: none;
+    }
+
+    /* -------------------------------------------------------------------------
+       Buttons container — below fields, no gap between form and buttons
+       ------------------------------------------------------------------------- */
+    .login-actions {
+      display: flex;
+      flex-direction: column;
+      margin-top: 28.16px; /* spacing-double above button group */
+    }
+
+    /* Primary "Log in" button
+       font: Barlow Condensed — loaded via Google Fonts (see substitution note above)
+       If Barlow Condensed fails, browser substitutes sans-serif. Not faithful to spec. */
+    .login-btn-primary {
+      font-family: 'Barlow Condensed', sans-serif; /* font: Barlow Condensed (not locally installed) — loaded via Google Fonts; browser substitutes sans-serif if load fails */
+      font-size: 14.08px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #f5f0e8; /* heading */
+      background-color: #111111; /* primary-btn-bg */
+      border: none;
+      width: 100%;
+      padding: 28.16px 14.08px; /* 2× base top/bottom, base left/right */
+      cursor: pointer;
+      /* Button micro-interaction: color + bg transition
+         Duration: var(--duration-fast) = 0.15s
+         Easing: var(--ease-standard) = cubic-bezier(0.4, 0, 0.2, 1) */
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+                  background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .login-btn-primary:hover {
+      background-color: #1f1f1f;
+    }
+
+    /* OAuth placeholder "Continue with Google" button
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec. */
+    .login-btn-oauth {
+      font-family: 'Barlow', sans-serif; /* font: Barlow (not locally installed) — loaded via Google Fonts; browser substitutes sans-serif if load fails */
+      font-size: 14.08px;
+      font-weight: 400;
+      color: #f2f2f2; /* input-text */
+      background-color: #3a3530; /* oauth-btn-bg / surface-background */
+      border: none;
+      width: 100%;
+      padding: 14.08px; /* base padding on all sides */
+      cursor: pointer;
+      margin-top: 14.08px; /* spacing-base above oauth button */
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+                  background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .login-btn-oauth:hover {
+      background-color: #443e38;
+    }
+
+    /* -------------------------------------------------------------------------
+       "Create an account →" link
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec.
+       ------------------------------------------------------------------------- */
+    .login-signup-link {
+      font-family: 'Barlow', sans-serif; /* font: Barlow (not locally installed) — loaded via Google Fonts; browser substitutes sans-serif if load fails */
+      font-size: 14.08px;
+      font-weight: 400;
+      color: #f2f2f2; /* input-text — link text base color */
+      text-decoration: none;
+      display: block;
+      margin-top: 28.16px; /* spacing-double above link */
+      /* Hover: full link transitions to link-hover color
+         Duration: var(--duration-fast) = 0.15s
+         Easing: var(--ease-standard) = cubic-bezier(0.4, 0, 0.2, 1) */
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .login-signup-link:hover {
+      color: #202020; /* link-hover — darkens on hover, correct per interactions.json */
+    }
+
+    /* Arrow accent — always accent color, transitions with parent hover */
+    .login-arrow {
+      color: #d4c9b4; /* accent */
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .login-signup-link:hover .login-arrow {
+      color: #202020; /* matches link hover — arrow inherits hover state */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-left">
+      <a href="/explore.html" class="nav-link regular">Explore</a>
+      <a href="/pricing.html" class="nav-link regular">Pricing</a>
+      <a href="/about.html" class="nav-link regular">About</a>
+    </div>
+    <div class="nav-center">
+      <a href="/index.html" class="nav-wordmark" id="nav-wordmark">CASPERS-VID</a>
+    </div>
+    <div class="nav-right">
+      <a href="/login.html" class="nav-link regular">Log in</a>
+      <a href="/signup.html" class="nav-link regular">Sign up</a>
+    </div>
+  </nav>
+
+  <main class="login-page">
+    <div class="login-card">
+
+      <!-- Headline -->
+      <h1 class="login-headline">Welcome Back</h1>
+
+      <!-- Subtext -->
+      <p class="login-subtext">Your work is waiting for you.</p>
+
+      <!-- Login form — email then password, in that order -->
+      <form class="login-form" id="login-form" novalidate>
+
+        <!-- Email field -->
+        <div class="login-field">
+          <label class="login-label" for="email">Email</label>
+          <input
+            class="login-input"
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            placeholder=""
+          >
+        </div>
+
+        <!-- Password field -->
+        <div class="login-field">
+          <label class="login-label" for="password">Password</label>
+          <input
+            class="login-input"
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            placeholder=""
+          >
+        </div>
+
+        <!-- Buttons: primary Log in, then OAuth placeholder -->
+        <div class="login-actions">
+          <button type="submit" class="login-btn-primary">Log in</button>
+          <!-- Visual placeholder — no functionality, no OAuth integration -->
+          <button type="button" class="login-btn-oauth">Continue with Google</button>
+        </div>
+
+      </form>
+
+      <!-- Create account link — "Create an account →" with accent arrow -->
+      <a href="/signup.html" class="login-signup-link">Create an account <span class="login-arrow">→</span></a>
+
+    </div>
+  </main>
+
+  <script type="module">
+    import { initNav } from './js/components/nav.js';
+    import { login, getIntendedAction, clearIntendedAction } from './js/auth.js';
+
+    initNav();
+
+    // Font load diagnostic — detect if Google Fonts failed to load
+    // Pattern: check document.fonts for Barlow and Barlow Condensed after fonts.ready,
+    // prepend a sticky error banner to body if either is missing.
+    (async () => {
+      await document.fonts.ready;
+      const missing = [];
+      if (!document.fonts.check('400 16px "Barlow Condensed"')) missing.push('Barlow Condensed');
+      if (!document.fonts.check('400 16px "Barlow"')) missing.push('Barlow');
+      if (missing.length === 0) return;
+
+      const banner = document.createElement('div');
+      banner.className = 'font-diagnostic-banner';
+
+      const label = document.createElement('strong');
+      label.textContent = 'Font load failure';
+      banner.appendChild(label);
+
+      missing.forEach((fontName, i) => {
+        banner.appendChild(document.createTextNode(i === 0 ? ' \u2014 ' : ' and '));
+        const nameEl = document.createElement('span');
+        nameEl.className = 'font-name';
+        nameEl.textContent = fontName;
+        banner.appendChild(nameEl);
+      });
+
+      banner.appendChild(document.createTextNode(
+        ' could not be loaded from Google Fonts. Typography on this page is not faithful to the design.'
+        + ' Fix: check network connectivity, disable ad blockers that block fonts.googleapis.com,'
+        + ' or install the font locally and restart the browser.'
+      ));
+
+      document.body.prepend(banner);
+    })();
+
+    // Form submit — simulate login and redirect to intended action or studio
+    document.querySelector('.login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      if (!email || !password) return;
+
+      login({ username: email, email });
+
+      const intended = getIntendedAction();
+      if (intended) {
+        // Do NOT clear here — explore.js reads the payload on load and clears it after restoring the card.
+        window.location.href = intended.returnUrl;
+      } else {
+        window.location.href = '/app/studio.html';
+      }
+    });
+  </script>
+
+</body>
+</html>

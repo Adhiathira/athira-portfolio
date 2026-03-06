@@ -5,7 +5,8 @@
  *
  * Exports: getAuth, setAuth, isLoggedIn, login, logout,
  *          setIntendedAction, getIntendedAction, clearIntendedAction,
- *          setSelectedPlan, getSelectedPlan, interceptIfNeeded
+ *          setSelectedPlan, getSelectedPlan, interceptIfNeeded,
+ *          setFirstSession, isFirstSession, clearFirstSession
  */
 
 const AUTH_KEY = 'caspers_vid_auth';
@@ -29,6 +30,7 @@ export function login(user) {
 
 export function logout() {
   sessionStorage.removeItem(AUTH_KEY);
+  sessionStorage.removeItem('caspers_first_session');
 }
 
 export function setIntendedAction(type, returnUrl, payload = null) {
@@ -66,4 +68,19 @@ export function interceptIfNeeded(actionType, returnUrl, payload) {
     return true;
   }
   return false;
+}
+
+// First-session flag — checked by studio.html to show tutorial on first visit.
+// Uses sessionStorage so it only survives the current browser session.
+
+export function setFirstSession() {
+  sessionStorage.setItem('caspers_first_session', '1');
+}
+
+export function isFirstSession() {
+  return sessionStorage.getItem('caspers_first_session') === '1';
+}
+
+export function clearFirstSession() {
+  sessionStorage.removeItem('caspers_first_session');
 }
