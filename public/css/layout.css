@@ -1,0 +1,148 @@
+/* =============================================================================
+   LAYOUT — caspers-vid
+   Source: design-system/grid-system/layout.md
+   All section patterns, column structures, and spacing from token files.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Reset baseline
+   --------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-page-bg);
+  color: var(--color-body);
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Section 1: Hero — full-bleed, full-viewport cinematic
+   layout.md: "Full-bleed hero with cinematic imagery"
+   --------------------------------------------------------------------------- */
+.section-hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--color-hero-bg);
+}
+
+/* ---------------------------------------------------------------------------
+   Section 2: Product Shop Grid — three-column equal-width
+   layout.md: "three-column equal-width grid of large-format product/editorial images"
+   gap: 0 is intentional — editorial image panels tile edge-to-edge (no gutters),
+   matching the luxury-brand full-bleed mosaic pattern in the Caspers-Caviar source.
+   --------------------------------------------------------------------------- */
+.section-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Section 3: Product Spotlight — centered narrow editorial
+   layout.md: "centered single-column or narrow editorial layout"
+   Source: spacing.json section paddingRight/Left = 14.08px, paddingBottom = 70.4px
+   --------------------------------------------------------------------------- */
+.section-spotlight {
+  max-width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  padding: var(--spacing-section) var(--spacing-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Section 4: Sourcing Split — 40/60 asymmetric two-column
+   layout.md: "two-column asymmetric split: left ~40%, right ~60% full-bleed photo"
+   --------------------------------------------------------------------------- */
+.section-split {
+  display: grid;
+  grid-template-columns: 40fr 60fr;
+  gap: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Section 5: Key Message Editorial — full-bleed dramatic text
+   layout.md: "full-bleed dramatic text moment... magazine spread"
+   --------------------------------------------------------------------------- */
+.section-editorial {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Section 6: Newsletter / Community — full-bleed dark, restrained layout
+   layout.md: "full-bleed dark image section... 40% viewport on right side"
+   --------------------------------------------------------------------------- */
+.section-newsletter {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Section 7: Footer — three-column sparse
+   layout.md: "multi-column with sparse content... no heavy visual dividers"
+   Source: spacing.json footer.paddingTop = 70.4px
+   --------------------------------------------------------------------------- */
+.section-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding-top: var(--spacing-section);
+  background: var(--color-page-bg);
+}
+
+/* ---------------------------------------------------------------------------
+   Utility: full-bleed — edge-to-edge, no padding
+   layout.md: "Nearly every section uses edge-to-edge photography as its primary layout element"
+   --------------------------------------------------------------------------- */
+.full-bleed {
+  width: 100%;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive breakpoints
+   Source: CLAUDE.md tech stack: 375px, 768px, 1024px, 1440px
+   --------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .section-split {
+    grid-template-columns: 1fr;
+  }
+
+  .section-grid-3col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section-spotlight {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-grid-3col {
+    grid-template-columns: 1fr;
+  }
+
+  .section-footer {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-base);
+  }
+
+  .section-spotlight {
+    max-width: 100%;
+    padding: var(--spacing-double) var(--spacing-base);
+  }
+}
+
+@media (max-width: 375px) {
+  .section-spotlight {
+    max-width: 100%;
+    padding: var(--spacing-base);
+  }
+}
