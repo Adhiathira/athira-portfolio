@@ -4,7 +4,23 @@ This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
 
-**website-design** - Parent company website for blankcanva.ai — a studio that builds AI-powered video creation tools. Single-page, dark cinematic theme inspired by museumofmoney.com. Modular component architecture, responsive design, coming soon branding. Built with native HTML, CSS, and JS.
+**website-design** — A **platform for building platforms** that generate websites. This repo is not about website content — it is infrastructure and tooling. Any website-related code here exists to serve the platform (e.g., example outputs, test targets, browser UI for inspecting extracted data).
+
+The core problem: AI-generated websites look generic. This platform solves that by extracting real design intelligence from the world's best human-designed sites and making it available to downstream generation pipelines.
+
+> **Important for Claude:** When you see HTML/CSS/JS in this repo, do not assume this is a website project. It is platform code. The domain is website generation tooling, not website content.
+
+### What this platform does
+
+1. **Extract** — Playwright scrapes high-design websites (luxury brands, creative studios, SaaS leaders) and extracts structured design tokens across 8 dimensions: color, typography, grid, spacing, motion, interactions, components, and concept
+2. **Browse** — A local design system browser (Node.js HTTP server) for inspecting extracted tokens per site
+3. **Generate** — (Planned) Feed extracted design intelligence into downstream website generation pipelines that produce human-quality aesthetics instead of generic AI output
+
+### Design philosophy
+
+- **Anti-AI-aesthetic** — The goal is to power generators that produce sites looking crafted by a human designer, not assembled by an algorithm
+- **Source of truth is real human work** — Design decisions are grounded in analysis of Hermes, Cartier, Goyard, Lusion, Linear, Apple, and other benchmark sites
+- **Full design signal** — Motion and interactions are extracted alongside colors/type, because the *feel* of a site is what separates human design from AI design
 
 ## Planning and Implementation
 
@@ -31,32 +47,59 @@ All implementation happens on branches in the main repo. Skip any workflow step 
 
 ## Tech Stack
 
+### Extractor (core pipeline)
+
+| Category | Technology |
+|---|---|
+| **Runtime** | Node.js ESM (`"type": "module"`) |
+| **Scraping** | Playwright — headless browser automation |
+| **Entry point** | `runner.js` — reads `sites.json` queue, runs all extractors per site |
+| **Extractors** | `extractors/` — one file per design dimension (color, type, grid, spacing, motion, interactions, components, concept) |
+| **Registry** | `registry.json` — single source of truth for extractor slugs, display names, output filenames |
+| **Output** | `design-system/<site-name>/<tag>/` — structured JSON tokens per site per dimension |
+| **Writer** | `lib/writer.js` — only module that writes to disk |
+
+### Design System Browser (local inspection)
+
+| Category | Technology |
+|---|---|
+| **Server** | Native Node.js `http` module (no framework) |
+| **Port** | 5509 |
+| **Purpose** | Browse extracted design tokens per site |
+
+### Generated Websites (output target)
+
 | Category | Technology |
 |---|---|
 | **Languages** | HTML5, CSS3, Vanilla JavaScript (no frameworks) |
-| **Architecture** | Modular component architecture (each component gets its own CSS/JS file) |
+| **Architecture** | Modular component architecture |
 | **Layout** | CSS Grid + Flexbox, desktop-first responsive design |
 | **Breakpoints** | 375px, 768px, 1024px, 1440px |
-| **Typography** | CSS `clamp()` for fluid responsive type, Google Fonts (Inter/Manrope for body, Syne/Space Grotesk for headings) |
-| **Animations** | GSAP + ScrollTrigger (via CDN) for scroll animations, parallax, and staggered reveals |
-| **Icons** | Lucide Icons (via CDN) |
-| **Theming** | CSS Custom Properties |
-| **Design Reference** | museumofmoney.com (dark cinematic aesthetic, bold typography, generous spacing, scroll-driven storytelling) |
-| **Hosting** | Vercel or Cloudflare Pages |
-
-**External Dependencies:** GSAP, ScrollTrigger, Lucide Icons (all via CDN)
+| **Typography** | CSS `clamp()` for fluid responsive type |
+| **Animations** | GSAP + ScrollTrigger for scroll animations, parallax, staggered reveals |
 
 ## Development
 
-**Local Server:**
-- Use port **9876** for local development (static site)
-- Start server: `python3 -m http.server 9876`
-- URL: `http://localhost:9876`
+**Run the extractor:**
+```
+node runner.js                    # process first site in sites.json queue
+node runner.js --only color-system  # run a single extractor (by slug)
+```
 
-**Design System Browser:**
-- Use port **5509**
+**Browse extracted design systems:**
 - Start: `npm run browse`
 - URL: `http://localhost:5509`
+
+**Add a site to the queue:**
+- Edit `sites.json` — add an entry to the `queue` array with `name` and `url`
+
+**Add a new extractor dimension:**
+1. Add entry to `registry.json` with `slug`, `displayName`, `outputFiles`
+2. Create `extractors/<slug>.js` with a default export `async (page) => data`
+3. `writer.js` handles the rest automatically
+
+**Local static site server (for testing generated output):**
+- Port **9876**: `python3 -m http.server 9876`
 
 ## Task Tracker Workflow
 
@@ -163,6 +206,18 @@ When using skills like `subagent-driven-development`, `executing-plans`, or agen
 
 `project-documentation/`
 - `task-tracker-config.md` - Task tracker MCP configuration and current task tracking
+
+`tool-commands/`
+- `tool-index.md` - One-line registry of every tool in this platform
+- `<tool-name>.md` - Full description and usage for each tool
+
+### Tool registration rule
+
+**Every time a new tool is added to this platform, you MUST:**
+1. Create `tool-commands/<tool-name>.md` describing what it does and how to run it
+2. Add one line to `tool-commands/tool-index.md` — the filename and a one-liner description only
+
+No exceptions. If a tool exists and is not in `tool-index.md`, register it.
 
 ## Do NOT
 
