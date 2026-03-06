@@ -60,8 +60,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
       { slug: 'spacing-system',     file: 'spacing.json' },
       { slug: 'grid-system',        file: 'grid.json' },
       { slug: 'motion-system',      file: 'motion.json' },
-      { slug: 'component-library',  file: 'components.json' },
-      { slug: 'interaction-states', file: 'interactions.json' },
+{ slug: 'interaction-states', file: 'interactions.json' },
     ];
     for (const { slug, file } of siblings) {
       const data = loadJson(siteDir, slug, file);
