@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>caspers-vid — Sign up</title>
+  <!-- Google Fonts: Barlow Condensed (display), Barlow (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&family=Barlow:wght@300;400&family=Lexend+Giga:wght@400&display=swap" rel="stylesheet">
+  <!-- Design system CSS -->
+  <link rel="stylesheet" href="./css/tokens.css">
+  <link rel="stylesheet" href="./css/typography.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/motion.css">
+  <link rel="stylesheet" href="./css/components/nav.css">
+  <style>
+    /* Inline minimal signup styles — no separate CSS file needed for stub */
+    .signup-page {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: var(--spacing-section) var(--spacing-double);
+    }
+
+    .signup-plan-badge {
+      background: var(--color-surface-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-heading);
+      padding: var(--spacing-base);
+      margin-bottom: var(--spacing-double);
+      /* Barlow — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow', sans-serif;
+      font-size: 14.08px;
+      line-height: 1.5;
+    }
+
+    .signup-plan-badge strong {
+      color: var(--color-accent);
+    }
+
+    .signup-form-group {
+      margin-bottom: var(--spacing-base);
+    }
+
+    .signup-label {
+      display: block;
+      /* Barlow — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow', sans-serif;
+      font-size: 10.56px;
+      font-weight: 400;
+      color: var(--color-muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .signup-input {
+      width: 100%;
+      background: var(--color-surface-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-heading);
+      padding: var(--spacing-base);
+      /* Barlow — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow', sans-serif;
+      font-size: 14.08px;
+      outline: none;
+      transition: border-color var(--duration-fast) var(--ease-standard);
+    }
+
+    .signup-input:focus {
+      border-color: var(--color-accent);
+    }
+
+    .signup-input::placeholder {
+      color: var(--color-overlay);
+    }
+
+    .signup-submit {
+      background: var(--color-primary-action);
+      color: var(--color-heading);
+      border: none;
+      padding: var(--spacing-double) var(--spacing-base);
+      /* Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14.08px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      width: 100%;
+      margin-top: var(--spacing-base);
+      transition: background var(--duration-fast) var(--ease-standard);
+    }
+
+    .signup-submit:hover {
+      background: #2a2a2a;
+    }
+
+    /* Font diagnostic banner — shown only when Google Fonts fails to load */
+    .font-diagnostic-banner {
+      background: #3d1a1a;
+      border-bottom: 1px solid #7a3a3a;
+      color: #f5f0e8;
+      font-family: monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      padding: 10px 14.08px;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+    .font-diagnostic-banner strong { color: #d4c9b4; }
+    .font-diagnostic-banner .font-name { font-style: italic; }
+
+    .signup-heading {
+      /* Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42.24px;
+      font-weight: 400;
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin-bottom: var(--spacing-double);
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-left">
+      <a href="/explore.html" class="nav-link regular">Explore</a>
+      <a href="/pricing.html" class="nav-link regular">Pricing</a>
+      <a href="/about.html" class="nav-link regular">About</a>
+    </div>
+    <div class="nav-center">
+      <a href="/index.html" class="nav-wordmark" id="nav-wordmark">CASPERS-VID</a>
+    </div>
+    <div class="nav-right">
+      <a href="/login.html" class="nav-link regular">Log in</a>
+      <a href="/signup.html" class="nav-link regular">Sign up</a>
+    </div>
+  </nav>
+
+  <main class="signup-page">
+
+    <h1 class="signup-heading">Create your account</h1>
+
+    <!-- Plan badge — populated by JS from sessionStorage via auth.js -->
+    <div class="signup-plan-badge" id="selectedPlanBadge" hidden>
+      You selected the <strong id="selectedPlanName"></strong> plan — complete your account below.
+    </div>
+
+    <form class="signup-form" novalidate>
+      <div class="signup-form-group">
+        <label class="signup-label" for="email">Email</label>
+        <input class="signup-input" type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com">
+      </div>
+      <div class="signup-form-group">
+        <label class="signup-label" for="password">Password</label>
+        <input class="signup-input" type="password" id="password" name="password" autocomplete="new-password" placeholder="At least 8 characters">
+      </div>
+      <button class="signup-submit" type="submit">Create account &rarr;</button>
+    </form>
+
+  </main>
+
+  <script type="module">
+    import { initNav } from './js/components/nav.js';
+    import { getSelectedPlan, login, getIntendedAction } from './js/auth.js';
+
+    initNav();
+
+    // Font load diagnostic — detect if Google Fonts failed to load
+    (async () => {
+      await document.fonts.ready;
+      const missing = [];
+      if (!document.fonts.check('400 16px "Barlow Condensed"')) missing.push('Barlow Condensed');
+      if (!document.fonts.check('400 16px "Barlow"')) missing.push('Barlow');
+      if (missing.length === 0) return;
+
+      const banner = document.createElement('div');
+      banner.className = 'font-diagnostic-banner';
+
+      const label = document.createElement('strong');
+      label.textContent = 'Font load failure';
+      banner.appendChild(label);
+
+      missing.forEach((fontName, i) => {
+        banner.appendChild(document.createTextNode(i === 0 ? ' \u2014 ' : ' and '));
+        const nameEl = document.createElement('span');
+        nameEl.className = 'font-name';
+        nameEl.textContent = fontName;
+        banner.appendChild(nameEl);
+      });
+
+      banner.appendChild(document.createTextNode(
+        ' could not be loaded from Google Fonts. Typography on this page is not faithful to the design.'
+        + ' Fix: check network connectivity, disable ad blockers that block fonts.googleapis.com,'
+        + ' or install the font locally and restart the browser.'
+      ));
+
+      document.body.prepend(banner);
+    })();
+
+    // Display selected plan if one was saved from the pricing page via auth.js
+    const plan = getSelectedPlan();
+    if (plan) {
+      const badge = document.getElementById('selectedPlanBadge');
+      const name = document.getElementById('selectedPlanName');
+      name.textContent = plan;
+      badge.hidden = false;
+    }
+
+    // Handle signup form submission — simulate auth, then redirect to intended destination
+    document.querySelector('.signup-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      if (!email || password.length < 8) return;
+
+      login({ username: email, email });
+
+      // Read returnUrl but do NOT clear intendedAction here.
+      // The destination page (e.g. explore.js) reads and clears it after consuming the full payload.
+      const intended = getIntendedAction();
+      window.location.href = intended?.returnUrl || '/app/studio.html';
+    });
+  </script>
+
+</body>
+</html>

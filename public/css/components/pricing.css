@@ -1,0 +1,296 @@
+/* =============================================================================
+   PRICING PAGE — caspers-vid
+   Scoped to: .pricing-page, .pricing-frame, .pricing-plans,
+              .plan-card, .pricing-enterprise, .pricing-footer-cta
+
+   FONT REQUIREMENT — IMPORTANT:
+   This file requires two typefaces loaded from Google Fonts:
+     • Barlow Condensed (wght 400) — used for all display headings, plan names, prices
+     • Barlow (wght 300, 400)      — used for body text, labels, feature lists
+
+   If either font fails to load (network unavailable, ad blocker, etc.),
+   DO NOT silently fall back to a system font.
+   Show a diagnostic badge explaining which font is missing and how to fix it.
+   Per project rules (CLAUDE.md — "No Silent Visual Fallbacks"):
+     1. Name the missing font exactly (e.g. "Barlow Condensed")
+     2. Explain why (e.g. "Google Fonts request blocked or failed")
+     3. Tell the user what to do (e.g. "Check network, disable ad blocker, or
+        install the font locally and restart the browser")
+   Generic CSS keyword fallbacks like sans-serif or system-ui are NOT acceptable
+   for this platform — they produce unfaithful specimens.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Page wrapper — clear fixed nav height
+   --------------------------------------------------------------------------- */
+.pricing-page {
+  padding-top: var(--spacing-section);
+}
+
+/* ---------------------------------------------------------------------------
+   Section 1: "The Positioning Framed"
+   Full-width introductory frame — no card, no CTA
+   --------------------------------------------------------------------------- */
+.pricing-frame {
+  width: 100%;
+  padding: var(--spacing-section) var(--spacing-double);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pricing-frame-headline {
+  /* Barlow Condensed — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 42.24px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+}
+
+.pricing-frame-body {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  color: var(--color-body);
+  margin-top: var(--spacing-base);
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------------
+   Section 2: "The Plans Laid Clear"
+   Override section-grid-3col gap (intentionally 0 in layout.css for editorial
+   image tiles). Plan cards need breathing room — override here, not in layout.css.
+   --------------------------------------------------------------------------- */
+.pricing-plans.section-grid-3col {
+  gap: var(--spacing-base);
+  padding: var(--spacing-section) var(--spacing-base);
+  align-items: stretch;
+}
+
+/* ---------------------------------------------------------------------------
+   Plan card
+   --------------------------------------------------------------------------- */
+.plan-card {
+  background: var(--color-surface-bg);
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-double);
+  display: flex;
+  flex-direction: column;
+}
+
+.plan-name {
+  /* Barlow Condensed — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 21.12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--spacing-base);
+}
+
+.plan-price {
+  /* Barlow Condensed — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 63.36px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.plan-period {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 400;
+  color: var(--color-muted);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 2px;
+}
+
+.plan-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-base);
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 400;
+  color: var(--color-muted);
+  margin-top: var(--spacing-double);
+  margin-bottom: var(--spacing-double);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.plan-features li::before {
+  content: '— ';
+  color: var(--color-border);
+}
+
+/* ---------------------------------------------------------------------------
+   Plan CTA button — shared between plan cards and footer CTA
+   --------------------------------------------------------------------------- */
+.plan-cta-btn {
+  /* Barlow Condensed — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--color-primary-action);
+  color: var(--color-heading);
+  border: none;
+  padding: var(--spacing-double) var(--spacing-base);
+  cursor: pointer;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+  width: 100%;
+  justify-content: center;
+}
+
+.plan-cta-btn .arrow {
+  color: var(--color-accent);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.plan-cta-btn:hover {
+  background: #2a2a2a;
+}
+
+.plan-cta-btn:hover .arrow {
+  color: var(--color-heading);
+}
+
+/* ---------------------------------------------------------------------------
+   Section 3: "The Team Path Acknowledged" — Enterprise
+   Uses section-spotlight. Plain text only — NO card background, NO border,
+   NO elevated treatment. This is intentional: enterprise is a different motion.
+   --------------------------------------------------------------------------- */
+.pricing-enterprise {
+  border-top: 1px solid var(--color-border);
+}
+
+.pricing-enterprise-headline {
+  /* Barlow Condensed — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 42.24px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--spacing-base);
+}
+
+.pricing-enterprise-body {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-double);
+}
+
+.pricing-enterprise-cta {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  color: var(--color-body);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-border);
+  transition: color var(--duration-fast) var(--ease-standard),
+              text-decoration-color var(--duration-fast) var(--ease-standard);
+}
+
+.pricing-enterprise-cta:hover {
+  color: var(--color-heading);
+  text-decoration-color: var(--color-accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Section 4: "The Final Permission" — Repeat CTA
+   Centered, spacious. Uses same .plan-cta-btn but not full-width here.
+   --------------------------------------------------------------------------- */
+.pricing-footer-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-section) var(--spacing-double);
+  border-top: 1px solid var(--color-border);
+  gap: var(--spacing-double);
+}
+
+.pricing-footer-headline {
+  /* Barlow Condensed — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 42.24px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  letter-spacing: 0.02em;
+}
+
+/* Footer CTA button — not full-width, auto-sized to content */
+.pricing-footer-cta .plan-cta-btn {
+  width: auto;
+  padding: var(--spacing-double) var(--spacing-section);
+  margin-top: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive overrides
+   layout.css handles grid column collapse at 1024px and 768px.
+   Only pricing-specific overrides go here.
+   --------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .pricing-plans.section-grid-3col {
+    /* layout.css collapses to 2col — keep gap consistent */
+    gap: var(--spacing-base);
+  }
+}
+
+@media (max-width: 768px) {
+  .pricing-frame {
+    padding: var(--spacing-double) var(--spacing-base);
+  }
+
+  .pricing-frame-headline {
+    font-size: 32px;
+  }
+
+  .pricing-plans.section-grid-3col {
+    padding: var(--spacing-double) var(--spacing-base);
+    gap: var(--spacing-base);
+  }
+
+  .pricing-footer-cta {
+    padding: var(--spacing-double) var(--spacing-base);
+  }
+
+  .pricing-footer-headline {
+    font-size: 32px;
+  }
+
+  .pricing-footer-cta .plan-cta-btn {
+    width: 100%;
+    padding: var(--spacing-double) var(--spacing-base);
+  }
+}
