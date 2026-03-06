@@ -1,0 +1,145 @@
+/* =============================================================================
+   GRID — caspers-vid
+   Gallery grid and avatar grid component rules.
+   Spacing tokens: base=14.08px, double=28.16px, section=70.4px
+   Color tokens: surface-bg=#3a3530, heading=#f5f0e8, body=#e8e2d8, muted=#9e9588,
+                 accent=#d4c9b4, link=#f2f2f2, border=#4a4540
+   ============================================================================= */
+
+/* font: interstate-condensed (not available) — using Barlow Condensed [concept-matched fallback: condensed grotesque, neutral weight, luxury-dark stamp quality] */
+/* font: interstate (not available) — using Barlow [concept-matched fallback: same family as display fallback, maintains typographic unity] */
+
+/* Override layout.css: task spec requires 14.08px gap (not 0) for creator gallery */
+.section-grid-3col {
+  gap: 14.08px;
+  padding: 0 14.08px 70.4px;
+  animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Section overline: spans full width, floats above gallery */
+.section-overline {
+  grid-column: 1 / -1;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 63.36px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #f5f0e8;
+  line-height: 63.36px;
+  position: relative;
+  margin-bottom: -28.16px;
+  padding-left: 0;
+  letter-spacing: 0;
+}
+
+/* Creator gallery grid: spans full width of section, then has its own 3-col grid */
+.creator-gallery-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14.08px;
+}
+
+
+/* Individual gallery column: stacking context for overlay */
+.gallery-col {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Placeholder thumb — inline styles on the div set background and aspect-ratio;
+   these rules apply shared display behavior */
+.gallery-thumb {
+  display: block;
+  width: 100%;
+}
+
+/* Creator name + project title overlay: positioned bottom-left of the column */
+.gallery-overlay {
+  position: absolute;
+  bottom: 14.08px;
+  left: 14.08px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.creator-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #f5f0e8;
+  letter-spacing: 0;
+}
+
+.project-title {
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: #9e9588;
+}
+
+/* Post-gallery CTA row: spans full width below gallery */
+.post-gallery-cta {
+  grid-column: 1 / -1;
+  padding: 28.16px 14.08px;
+}
+
+/* Shared CTA link style */
+.cta-link {
+  font-family: 'Barlow', sans-serif;
+  font-size: 14.08px;
+  font-weight: 300;
+  color: #f2f2f2;
+  text-decoration: none;
+  opacity: 0.935;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cta-link:hover {
+  opacity: 1;
+}
+
+/* Accent arrow — color is set inline (#d4c9b4) per token spec */
+.cta-arrow {
+  display: inline;
+}
+
+/* Avatar grid: 2x2 inside the asymmetric right column */
+.avatar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14.08px;
+  height: 100%;
+}
+
+.avatar-cell {
+  aspect-ratio: 1 / 1;
+  background: #3a3530;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Avatar overlay: name + points bottom-left */
+.avatar-overlay {
+  position: absolute;
+  bottom: 14.08px;
+  left: 14.08px;
+  display: flex;
+  flex-direction: column;
+}
+
+.avatar-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10.56px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #f5f0e8;
+}
+
+.avatar-pts {
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: #9e9588;
+}
