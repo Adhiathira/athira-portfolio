@@ -107,10 +107,10 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
 
   for (let i = 0; i < numSegments; i++) {
     const filename = outputDir
-      ? `segment-${String(i + 1).padStart(2, '0')}.png`
-      : `color-extract-seg-${i}-${Date.now()}.png`;
+      ? `segment-${String(i + 1).padStart(2, '0')}.jpg`
+      : `color-extract-seg-${i}-${Date.now()}.jpg`;
     const filePath = path.join(screenshotDir, filename);
-    await page.screenshot({ path: filePath });
+    await page.screenshot({ path: filePath, type: 'jpeg', quality: 80 });
     screenshotFiles.push(filePath);
     if (i < numSegments - 1) {
       await page.evaluate(h => window.scrollBy(0, h), Math.round(viewportHeight * 1.15));
@@ -121,7 +121,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
   // Read screenshots as base64; clean up only if using tmp (not the asset dir)
   const imageContent = screenshotFiles.map(f => ({
     type: 'image',
-    source: { type: 'base64', media_type: 'image/png', data: fs.readFileSync(f).toString('base64') },
+    source: { type: 'base64', media_type: 'image/jpeg', data: fs.readFileSync(f).toString('base64') },
   }));
   if (!persistScreenshots) {
     for (const f of screenshotFiles) {
@@ -145,7 +145,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
 
   let visual = [];
   if (result.error || result.status !== 0) {
-    log.minor('Vision pass failed', { error: result.error?.message ?? `exit ${result.status}`, stderr: result.stderr?.trim() || '' });
+    log.minor('Vision pass failed', { error: result.error?.message ?? `exit ${result.status}`, stderr: result.stderr?.trim() || '', stdout: result.stdout?.slice(-2000) || '' });
   } else {
     try {
       const resultLine = result.stdout?.split('\n').find(l => l.includes('"type":"result"'));

@@ -387,8 +387,8 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(1000);
     for (let i = 0; i < numSegments; i++) {
-      const filePath = path.join(tmpDir, `segment-${String(i + 1).padStart(2, '0')}.png`);
-      await page.screenshot({ path: filePath });
+      const filePath = path.join(tmpDir, `segment-${String(i + 1).padStart(2, '0')}.jpg`);
+      await page.screenshot({ path: filePath, type: 'jpeg', quality: 80 });
       screenshotFiles.push(filePath);
       if (i < numSegments - 1) {
         await page.evaluate(h => window.scrollBy(0, h), Math.round(viewportHeight * 1.15));
@@ -400,7 +400,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
   if (screenshotFiles.length > 0) {
     const imageContent = screenshotFiles.map(f => ({
       type: 'image',
-      source: { type: 'base64', media_type: 'image/png', data: fs.readFileSync(f).toString('base64') },
+      source: { type: 'base64', media_type: 'image/jpeg', data: fs.readFileSync(f).toString('base64') },
     }));
     const msg = JSON.stringify({
       type: 'user',
@@ -415,7 +415,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
       { input: msg, encoding: 'utf8', timeout: 180000, maxBuffer: 50 * 1024 * 1024 }
     );
     if (result.error || result.status !== 0) {
-      log.minor('Vision pass failed', { error: result.error?.message ?? `exit ${result.status}` });
+      log.minor('Vision pass failed', { error: result.error?.message ?? `exit ${result.status}`, stderr: result.stderr?.trim() || '', stdout: result.stdout?.slice(0, 500) || '' });
     } else {
       try {
         const resultLine = result.stdout?.split('\n').find(l => l.includes('"type":"result"'));
@@ -584,7 +584,7 @@ No code, no CSS. Write in clear markdown with section headers.`;
   if (screenshotFiles.length > 0) {
     const imageContent = screenshotFiles.map(f => ({
       type: 'image',
-      source: { type: 'base64', media_type: 'image/png', data: fs.readFileSync(f).toString('base64') },
+      source: { type: 'base64', media_type: 'image/jpeg', data: fs.readFileSync(f).toString('base64') },
     }));
     const mdMsg = JSON.stringify({
       type: 'user',
