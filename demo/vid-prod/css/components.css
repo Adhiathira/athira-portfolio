@@ -194,3 +194,115 @@
 .footer__link:hover {
   color: var(--color-bg);
 }
+
+/* =============================================================================
+   HERO SECTION — vid-prod [2/10]
+   Source: design-system/grid-system/layout.md §3 (asymmetric 2-col, full-bleed)
+           design-system/concept-summary/concept.md (gradient blob = only exuberance)
+   ============================================================================= */
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--spacing-hero-v);
+  padding-bottom: var(--spacing-hero-v);
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--spacing-container-gap);
+  position: relative;
+  z-index: 1; /* text sits above blob */
+  width: 100%;
+}
+
+.hero-content {
+  max-width: 560px;
+}
+
+/* Gradient blob — right half, no container box, bleeds freely
+   Source: colors.json gradient-pink, gradient-orange, accent-lavender
+   CSS-only: radial-gradient + filter: blur — no image assets */
+.hero-blob {
+  position: absolute;
+  right: -120px;
+  top: -80px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(ellipse at 60% 40%,
+    var(--color-gradient-lavender) 0%,
+    var(--color-gradient-pink) 35%,
+    var(--color-gradient-orange) 65%,
+    transparent 100%);
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-stat {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  color: var(--color-muted);
+  margin-bottom: var(--spacing-btn-gap);
+  margin-top: 0;
+}
+
+.hero-heading {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--letter-spacing-h1);
+  color: var(--color-heading);
+  margin: 0 0 var(--spacing-btn-gap);
+}
+
+.hero-sub {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-body);
+  color: var(--color-body);
+  margin: 0 0 var(--spacing-section-gap);
+  line-height: 1.6;
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: var(--spacing-btn-gap);
+  align-items: center;
+}
+
+/* =============================================================================
+   SOCIAL PROOF STRIP — vid-prod [2/10]
+   Source: layout.md §3 — directly below hero, full-width centered row, top border
+   ============================================================================= */
+
+.social-proof-strip {
+  border-top: 1px solid var(--color-border);
+  padding: var(--spacing-nav-v) var(--spacing-container-h);
+}
+
+.social-proof-strip .container {
+  display: flex;
+  gap: var(--spacing-container-gap);
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.proof-item {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
