@@ -1,33 +1,41 @@
+It looks like write permissions haven't been granted yet for new files in that path. Please approve the write, or let me know if you'd like me to output the content here instead.
+
+Here's the full concept summary I've written:
+
+---
+
+## Casper's Caviar — Concept Summary
+
 ## Brand Overview
 
-Apple is the world's most valuable consumer technology company, selling hardware (iPhone, Mac, iPad, Apple Watch, AirPods), software, and services (Apple TV+, Music, Arcade, Fitness+) to a global audience of premium-minded consumers. The homepage functions as a rotating editorial stage — equal parts product launch announcement and lifestyle aspiration. Every product is positioned as both tool and cultural artifact.
+Casper's Caviar is a New York-based luxury caviar retailer selling premium sturgeon roe — Ossetra, White Sturgeon, and other varieties — directly to consumers and restaurants via a Shopify storefront. The brand targets high-end food culture: chefs, hosts, and gourmands who treat caviar not as an occasional extravagance but as a recurring pleasure with provenance. Their tagline "WHERE TASTE MEETS RITUAL" signals that the product isn't just food — it's an occasion.
 
 ## Visual Identity
 
-The palette operates as a high-contrast duality: jet black (`#000000`) hero sections for premium hardware launches sit in deliberate tension with `#f5f5f7` off-white and `#e3f0fd` ice-blue for more accessible, everyday products — a visual encoding of product tier. SF Pro Display and SF Pro Text carry the entire typographic weight: a proprietary system font that reads as neutral yet premium, with tight letter-spacing (`-0.374px` on body) giving text a compressed, precision-engineered feel. Motion is restrained and purposeful — `0.32s cubic-bezier(0.4, 0, 0.6, 1)` transitions on nav links, with flyout menus using subtle 8px translate slides rather than dramatic swoops.
+The palette is built entirely from darkness: a deep charcoal (`#1a1a1a`) page background, warm near-black browns (`#2d2b28`, `#3a3530`) derived directly from the caviar photography, and restrained warm off-whites (`#f5f0e8`, `#e8e2d8`) for text — a palette that feels extracted from the product itself rather than designed around it. Typography pairs two licensed typefaces: `interstate-condensed` for massive uppercase display headings (63px, weight 400, line-height 1:1) and `interstate` for all body and navigation — a single typeface family deployed at two optical sizes, creating unity without monotony. Motion is cinematic and layered: Locomotive Scroll drives multi-speed parallax with at least five distinct layer speeds (-0.5, -0.4, -0.3, -0.25, -0.15) operating simultaneously on the hero alone, supplemented by GSAP and a page-transition animation (`oldPage`/`newPage` keyframes) that scales the exiting page to 95% while the incoming page slides up from `clip-path: xywh(0px 50% 100% 100%)`.
 
 ## Emotional Tone
 
-The site feels like walking through a flagship retail store at off-hours — hushed, cool, spotlit. Each product section is a room unto itself. There's a quiet confidence that never shouts; the MacBook Pro hero is pure black silence with white text, trusting the product image to carry emotional weight. The light blue MacBook Air section shifts to breezy and approachable — the same emotional grammar, different temperature. It evokes the feeling of holding something perfectly machined, the slight heaviness of precision.
+Heavy, textural, and quietly opulent. The site moves like a slow pour — unhurried, deliberate, weighted. The hero is a full-bleed photograph of glistening black roe; you feel the cold weight of the tin before reading a word. Warm browns and near-blacks create an atmosphere closer to a candlelit private dining room than an e-commerce storefront. The parchment accent (`#d4c9b4`) on CTA arrows — "SHOP CAVIAR →", "SOURCING →" — has the quality of aged paper or embossed stationery, suggesting heritage and provenance. Nothing is bright; nothing is urgent.
 
 ## Target Audience
 
-Affluent professionals aged 25–55 who have already self-selected into the Apple ecosystem and are evaluating their next upgrade. Secondarily: aspirational buyers in their 20s who associate Apple ownership with membership in a certain cultural class. This is not a site trying to convert skeptics — it speaks entirely to the already-converted, fluent in launch cadence and product naming conventions (Pro, Max, Air as understood shorthand).
+Affluent urban consumers aged 30–55 who purchase caviar intentionally — for dinner parties, restaurant sourcing, or as considered personal luxuries. The $150 starting price for Ossetra and the sourcing-forward narrative ("Exceptional caviar, sourced with care and presented with intention") speak to buyers who want to understand the product's origin, not just its price tier. The brand communicates peer-to-peer with chefs and food professionals, not down to casual shoppers.
 
 ## Design Principles
 
-- **Context-aware backgrounds as product positioning**: Black = flagship/premium (`MacBook Pro`, `Studio Display XDR`), ice blue = accessible/everyday (`MacBook Air`, `iPad Air`), dark = lifestyle/desire (`AirPods Pro lifestyle photo`) — color does the category work so copy doesn't have to.
-- **Typography as hardware**: SF Pro's proprietary nature mirrors Apple's vertical integration — even the font is exclusive, unavailable to competitors. At 40px/600 weight for h3 and 28px/400 for descriptive paragraphs, the scale creates clear command hierarchy without ornament.
-- **Radical restraint in CTAs**: Buttons are pill-shaped (`border-radius: 980px`), just 17px SF Pro Text, padding `11px 21px` — deliberately small for a homepage. The filled blue (`#0071e3`) / ghost outline pairing encodes primary/secondary action without explanation.
-- **The grid as editorial cadence**: Full-width hero → 2-column product pairs → 3-column services — the layout has a rhythm like magazine pagination, each section change a page turn.
-- **Motion as confirmation, not decoration**: The `0.32s` nav transitions and `8px` flyout slides feel like physical feedback, not animation for its own sake. Nothing moves unless touched.
+- **Photography as the design system** — The warm brown-black color palette isn't chosen; it's photographed. Every surface color in the UI (`#2d2b28`, `#3a3530`) is a direct echo of the caviar tin imagery, making the product the literal source of the brand's visual language.
+- **Condensed uppercase at maximum scale** — `interstate-condensed` at 63px with line-height 1:1 and `text-transform: uppercase` produces headings that feel stamped rather than typed — industrial weight applied to luxury content, creating an intentional tension.
+- **Locomotive Scroll as depth engine** — Five parallax layers at different speeds (`-0.5` to `-0.15`) in a single hero simulate physical depth; combined with `data-scroll-event-progress` overlay opacity, scrolling through the hero feels like descending into the image.
+- **Page transitions as brand signature** — The `oldPage`/`newPage` keyframe pair (outgoing page scales to 95%, incoming page rises from the bottom half) is a cinematic reveal borrowed from film editing — navigation feels like a scene change.
+- **Restraint in accent color** — The single warm parchment accent (`#d4c9b4`) appears only on CTA arrow links. No secondary palette, no gradients. All emphasis is structural — size, contrast, and spacing rather than color.
 
 ## Distinctive Qualities
 
-The most distinctive choice is what's **absent**: no hero video, no scroll-triggered GSAP spectacle, no parallax — Apple.com is one of the few premium tech homepages that relies entirely on static photography and CSS transitions. The `motion-system` data confirms zero scroll animation libraries, zero videos on the homepage. This is a deliberate counter-signal in an era of scroll-jacking: stillness as luxury. The proprietary SF Pro font family (loaded across 9 weight variants in both Display and Text cuts) creates a typographic environment impossible to replicate without the font license — brand as infrastructure.
+The most technically unusual choice is the **page transition system** using `clip-path: xywh()` — a 2023 CSS specification that clips the incoming page to its lower half, then expands to full view. Using `xywh()` (rather than `inset()` or `polygon()`) specifically allows percentage-based height offsets during the animation, enabling a smooth "rising curtain" effect without JavaScript. Very few e-commerce sites implement viewport-level page transitions at this level of CSS specificity. Combined with Locomotive Scroll's virtual scroll engine (which intercepts native scroll events entirely), the site achieves a level of scroll control typically reserved for award-winning portfolio sites — applied here to a caviar shop, which makes the product feel exactly as serious as the interaction design treating it.
+
+---
 
 `★ Insight ─────────────────────────────────────`
-- The `border-radius: 980px` on CTAs (effectively `pill`) is a hardcoded large value rather than `50%` — a technique that ensures pill shape regardless of button width without requiring `border-radius: 9999px` magic numbers, showing the precision in Apple's CSS engineering.
-- The dual-font system (SF Pro Display for large display type, SF Pro Text for body/UI) mirrors how print typography historically split display and text typefaces — Apple brought this typographic tradition to the screen with optical-size-aware cuts.
-- Apple's avoidance of scroll animation libraries (confirmed by zero `scrollLibraries` in the motion data) while competitors like Stripe use GSAP heavily is a deliberate performance and aesthetic choice — their product photography is confident enough to not need motion to compel attention.
+The nav hover state is a notable inversion: links default to `#f2f2f2` (near-white) and switch to `rgb(32, 32, 32)` (near-black) on hover — the background doesn't change, only the text. On a dark nav bar this means the text *darkens* toward invisibility rather than brightening, a counterintuitive choice that reads as sophisticated restraint: the link retreats rather than asserts on hover.
 `─────────────────────────────────────────────────`
