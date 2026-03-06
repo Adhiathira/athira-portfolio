@@ -13,7 +13,13 @@ import LocomotiveScroll from 'https://cdn.skypack.dev/locomotive-scroll';
 // ---------------------------------------------------------------------------
 const scrollEl = document.querySelector('[data-scroll-container]');
 if (scrollEl) {
-  new LocomotiveScroll({ el: scrollEl, smooth: true });
+  const locoScroll = new LocomotiveScroll({ el: scrollEl, smooth: true });
+  // Re-emit Locomotive scroll position as a DOM event so nav.js and other
+  // modules can react. window.scrollY stays 0 in smooth mode (Locomotive uses
+  // CSS transforms, not native scroll), so native scroll events are useless.
+  locoScroll.on('scroll', ({ scroll }) => {
+    window.dispatchEvent(new CustomEvent('loco-scroll', { detail: { scrollY: scroll.y } }));
+  });
 }
 
 // ---------------------------------------------------------------------------
