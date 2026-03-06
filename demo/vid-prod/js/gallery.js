@@ -9,8 +9,15 @@
  *   initGallery(containerEl, data, options)
  *     containerEl {HTMLElement} — wrapper element to render into
  *     data        {Array}       — array of creator objects (see data/creators.js for shape)
- *     options     {Object}      — { showFilters: boolean } (default: showFilters true)
+ *     options     {Object}      — {
+ *       showFilters:      boolean        (default: true)
+ *       filtersContainer: HTMLElement    (optional) — render filter bar into this element
+ *                                                     instead of prepending to containerEl
+ *       onCardClick:      Function       (optional) — called with creator object on card click
+ *     }
  */
+
+import { isLoggedIn } from './auth.js';
 
 // ---------------------------------------------------------------------------
 // Badge class mapping
@@ -71,15 +78,16 @@ function renderSkeletons(containerEl, count) {
 /**
  * Builds a single creator card element from a creator data object.
  *
- * @param {Object}      creator
- * @param {string}      creator.username
- * @param {string}      creator.displayName
- * @param {number}      creator.communityPoints
- * @param {string}      creator.mediaType
- * @param {string|null} creator.videoSrc
+ * @param {Object}        creator
+ * @param {string}        creator.username
+ * @param {string}        creator.displayName
+ * @param {number}        creator.communityPoints
+ * @param {string}        creator.mediaType
+ * @param {string|null}   creator.videoSrc
+ * @param {Function|null} [onCardClick]  — optional click handler, called with creator object
  * @returns {HTMLElement}
  */
-function buildCard(creator) {
+function buildCard(creator, onCardClick) {
   const { username, displayName, communityPoints, mediaType, videoSrc } = creator;
 
   const article = document.createElement('article');
@@ -96,7 +104,7 @@ function buildCard(creator) {
 
   mediaDiv.appendChild(placeholder);
 
-  // Overlay: name + points
+  // Overlay: left group (name + points) and follow button on the right
   const overlay = document.createElement('div');
   overlay.className = 'gallery-card__overlay';
 
@@ -108,8 +116,36 @@ function buildCard(creator) {
   pointsSpan.className = 'gallery-card__points';
   pointsSpan.textContent = `${communityPoints.toLocaleString()} pts`;
 
-  overlay.appendChild(nameSpan);
-  overlay.appendChild(pointsSpan);
+  // Left group: name stacked above points
+  const leftGroup = document.createElement('div');
+  leftGroup.className = 'gallery-card__overlay-left';
+  leftGroup.appendChild(nameSpan);
+  leftGroup.appendChild(pointsSpan);
+
+  // Follow button
+  const followBtn = document.createElement('button');
+  followBtn.className = 'gallery-card__follow';
+  followBtn.textContent = 'Follow';
+
+  followBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    if (isLoggedIn()) {
+      followBtn.textContent = 'Following!';
+      followBtn.disabled = true;
+      followBtn.classList.add('gallery-card__follow--following');
+      setTimeout(() => {
+        followBtn.textContent = 'Follow';
+        followBtn.disabled = false;
+        followBtn.classList.remove('gallery-card__follow--following');
+      }, 1500);
+    } else {
+      window.location.href = '/login.html?return=' + encodeURIComponent(window.location.pathname);
+    }
+  });
+
+  overlay.appendChild(leftGroup);
+  overlay.appendChild(followBtn);
 
   // Badge
   const badgeClass = BADGE_CLASS[mediaType] || 'gallery-card__badge--video';
@@ -121,6 +157,13 @@ function buildCard(creator) {
   article.appendChild(overlay);
   article.appendChild(badge);
 
+  // Optional card-level click handler
+  if (typeof onCardClick === 'function') {
+    article.addEventListener('click', () => {
+      onCardClick(creator);
+    });
+  }
+
   // Attach hover/video behaviour (handles null gracefully)
   attachVideoHover(article, videoSrc);
 
@@ -131,10 +174,11 @@ function buildCard(creator) {
  * Clears the existing `.gallery-grid` inside containerEl and renders real
  * creator cards in its place.
  *
- * @param {HTMLElement} containerEl
- * @param {Array}       data
+ * @param {HTMLElement}   containerEl
+ * @param {Array}         data
+ * @param {Function|null} [onCardClick]  — optional click handler passed through to buildCard
  */
-function renderCards(containerEl, data) {
+function renderCards(containerEl, data, onCardClick) {
   const existingGrid = containerEl.querySelector('.gallery-grid');
   const grid = existingGrid || document.createElement('div');
   grid.className = 'gallery-grid';
@@ -143,7 +187,7 @@ function renderCards(containerEl, data) {
   clearElement(grid);
 
   data.forEach((creator) => {
-    const card = buildCard(creator);
+    const card = buildCard(creator, onCardClick);
     grid.appendChild(card);
   });
 
@@ -179,19 +223,23 @@ function applyFilter(containerEl, filterValue) {
 // ---------------------------------------------------------------------------
 
 /**
- * Creates and prepends a `.gallery-filters` bar to containerEl.
- * Applies the default "Video" filter immediately so the initial render
- * matches the active button state.
+ * Creates a `.gallery-filters` bar and mounts it.
+ *
+ * If `filtersEl` is provided, the bar is appended to it (Explore page pattern,
+ * where filters live in a separate section outside the gallery container).
+ * If `filtersEl` is omitted/null, the bar is prepended to `containerEl`
+ * (homepage pattern — existing behaviour, unchanged).
  *
  * Filter buttons:
  *   Video     — active, filters cards to mediaType "Video"
  *   Animation — disabled, coming soon
  *   Film      — disabled, coming soon
  *
- * @param {HTMLElement} containerEl
- * @param {Array}       data  — kept for potential future use; filtering reads live DOM
+ * @param {HTMLElement}       containerEl
+ * @param {Array}             data        — kept for potential future use; filtering reads live DOM
+ * @param {HTMLElement|null}  [filtersEl] — optional separate mount target for the filter bar
  */
-function initFilters(containerEl, data) {
+function initFilters(containerEl, data, filtersEl) {
   const filtersDiv = document.createElement('div');
   filtersDiv.className = 'gallery-filters';
 
@@ -243,8 +291,12 @@ function initFilters(containerEl, data) {
   filtersDiv.appendChild(animationBtn);
   filtersDiv.appendChild(filmBtn);
 
-  // Prepend so filters appear above the grid
-  containerEl.prepend(filtersDiv);
+  // Mount: use the dedicated filtersEl if provided, otherwise prepend to containerEl
+  if (filtersEl) {
+    filtersEl.appendChild(filtersDiv);
+  } else {
+    containerEl.prepend(filtersDiv);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -301,21 +353,24 @@ function attachVideoHover(cardEl, videoSrc) {
  * Sequence:
  *   1. Render skeleton cards immediately (count = data.length)
  *   2. After 300 ms, swap skeletons for real creator cards
- *   3. If options.showFilters !== false, prepend the filter bar
+ *   3. If options.showFilters !== false, mount the filter bar
  *
  * @param {HTMLElement} containerEl
  * @param {Array}       data         - creator objects (see data/creators.js)
  * @param {Object}      [options={}]
  * @param {boolean}     [options.showFilters=true]
+ * @param {HTMLElement} [options.filtersContainer] — if provided, filter bar is appended here
+ *                                                   instead of prepended to containerEl
+ * @param {Function}    [options.onCardClick]      — called with creator object when a card is clicked
  */
 export function initGallery(containerEl, data, options = {}) {
   renderSkeletons(containerEl, data.length);
 
   setTimeout(() => {
-    renderCards(containerEl, data);
+    renderCards(containerEl, data, options.onCardClick);
 
     if (options.showFilters !== false) {
-      initFilters(containerEl, data);
+      initFilters(containerEl, data, options.filtersContainer || null);
     }
 
     // Apply the default active filter so initial render matches the UI state.

@@ -439,6 +439,13 @@
   opacity: 1;
 }
 
+/* On touch/coarse-pointer devices, :hover is unreliable — keep overlay always visible */
+@media (hover: none) {
+  .gallery-card__overlay {
+    opacity: 1;
+  }
+}
+
 /* Overlay text — both name and points use bg color (white) on dark gradient */
 .gallery-card__name,
 .gallery-card__points {
@@ -829,4 +836,89 @@
   font-size: var(--font-size-button);
   text-align: center;
   margin: 0;
+}
+
+/* =============================================================================
+   STICKY CTA BAR — vid-prod [5/10]
+   Source: colors.json heading-text (#0a2540) as bg, motion.json transitionElements
+           cubic-bezier(0.25, 1, 0.5, 1) as easing, spacing.json nav + container tokens
+   Appears after 50% gallery scroll depth — triggered by JS toggling .sticky-cta--visible
+   ============================================================================= */
+
+.sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: var(--color-heading); /* #0a2540 — deep navy, same as footer/final-cta bg */
+  padding: var(--spacing-nav-v) var(--spacing-container-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-section-gap);
+  transform: translateY(100%);
+  opacity: 0;
+  /* motion.json cubic-bezier(0.25, 1, 0.5, 1) — same easing as btn hover */
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+              opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+}
+
+.sticky-cta--visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Label text inside the bar — white on navy */
+.sticky-cta__label {
+  color: var(--color-bg);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+}
+
+/* =============================================================================
+   GALLERY CARD FOLLOW BUTTON — vid-prod [5/10]
+   Source: interactions.json hds-button primary color + secondary border style
+           motion.json --motion-btn for transition
+   Visible in card overlay on hover — auth-gated, stops propagation to card click
+   ============================================================================= */
+
+/* Follow button — ghost/secondary style on dark overlay background */
+.gallery-card__follow {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  font-weight: 400;
+  padding: 4px 10px; /* measured — no token for overlay action button padding */
+  border-radius: var(--spacing-content-radius);
+  border: 1px solid var(--color-bg); /* white border on dark overlay */
+  background: transparent;
+  color: var(--color-bg);
+  cursor: pointer;
+  transition: var(--motion-btn);
+  flex-shrink: 0;
+}
+
+.gallery-card__follow:hover {
+  background: var(--color-bg);
+  color: var(--color-heading); /* navy text on white hover — uses --color-heading */
+}
+
+/* Following state — filled primary bg */
+.gallery-card__follow--following {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-bg);
+  cursor: default;
+}
+
+/* Left group in overlay — name stacked above points */
+.gallery-card__overlay-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* 2px measured — no token for stacked label gap */
 }
