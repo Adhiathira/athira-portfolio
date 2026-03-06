@@ -71,6 +71,72 @@ function isExternalSrc(src) {
   return typeof src === 'string' && (src.startsWith('http://') || src.startsWith('https://'));
 }
 
+// CSS generic font family keywords — these render differently per OS/browser.
+// We surface them as 'generic' so the viewer knows the specimen is imprecise.
+const GENERIC_FONT_FAMILIES = new Set([
+  // CSS generic font family keywords (CSS Fonts Level 3 + 4)
+  'serif', 'sans-serif', 'monospace', 'cursive', 'fantasy',
+  'system-ui', 'ui-serif', 'ui-sans-serif', 'ui-monospace', 'ui-rounded',
+  'emoji', 'math', 'fangsong',
+  // Platform-specific system font aliases
+  '-apple-system', 'blinkmacsystemfont',
+  // CSS global values (inherit/initial/unset mean the actual font is unknown)
+  'inherit', 'initial', 'unset', 'revert',
+]);
+
+function getFontStatus(fontFamily, fontFaces) {
+  // Normalize: strip quotes, take first name in fallback stack
+  const normalized = String(fontFamily || '')
+    .replace(/['"]/g, '')
+    .split(',')[0]
+    .trim()
+    .toLowerCase();
+
+  if (!normalized) return { status: 'no-face', reason: 'No font family specified', action: null };
+
+  if (GENERIC_FONT_FAMILIES.has(normalized)) {
+    return {
+      status: 'generic',
+      reason: `"${normalized}" is a generic CSS keyword — the browser picks any matching system font. Actual rendering varies by OS and browser; this specimen is not a faithful representation.`,
+      action: null,
+    };
+  }
+
+  const faces = fontFaces || [];
+  const match = faces.find(f => String(f.family || '').toLowerCase() === normalized);
+
+  if (!match) {
+    const searchUrl = `https://fonts.google.com/search?query=${encodeURIComponent(normalized)}`;
+    return {
+      status: 'no-face',
+      reason: 'Not captured as @font-face \u2014 may load via stylesheet link',
+      action: searchUrl,
+    };
+  }
+
+  const src = match.src;
+  if (!src) {
+    return { status: 'no-src', reason: 'Font face found but source URL missing', action: null };
+  }
+
+  if (isExternalSrc(src)) {
+    try {
+      const domain = new URL(src).hostname;
+      return { status: 'loadable', reason: `Loading from ${domain}`, action: null };
+    } catch {
+      return { status: 'loadable', reason: 'Loading from external source', action: null };
+    }
+  }
+
+  // local() or relative path
+  const searchUrl = `https://fonts.google.com/search?query=${encodeURIComponent(normalized)}`;
+  return {
+    status: 'local',
+    reason: 'Locally installed font, not web-accessible',
+    action: searchUrl,
+  };
+}
+
 function formatPx(v) {
   const s = String(v);
   if (s.endsWith('px')) {
@@ -1257,6 +1323,79 @@ header {
 .micro-features {
   margin-top: 16px;
 }
+
+/* Font unavailability block — replaces the specimen entirely when font cannot be rendered */
+.font-unavailable-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 24px;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-left: 3px solid #f59e0b;
+  border-radius: 4px;
+  min-height: 80px;
+  justify-content: center;
+}
+.font-unavailable-icon {
+  font-size: 18px;
+  line-height: 1;
+  color: #f59e0b;
+}
+.font-unavailable-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e5e7eb;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.font-unavailable-reason {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+.font-unavailable-action {
+  font-size: 11px;
+  color: #60a5fa;
+  text-decoration: none;
+  align-self: flex-start;
+}
+.font-unavailable-action:hover {
+  text-decoration: underline;
+}
+.font-status-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.font-status-chip--loaded {
+  background: #052e16;
+  color: #86efac;
+  border: 1px solid #166534;
+}
+.font-status-chip--local {
+  background: #451a03;
+  color: #fde68a;
+  border: 1px solid #78350f;
+}
+.font-status-chip--no-src {
+  background: #450a0a;
+  color: #fca5a5;
+  border: 1px solid #991b1b;
+}
+.font-status-chip--no-face {
+  background: #1c1917;
+  color: #9ca3af;
+  border: 1px solid #44403c;
+}
+.font-status-chip--generic {
+  background: #1e1b4b;
+  color: #a5b4fc;
+  border: 1px solid #3730a3;
+}
 `;
 }
 
@@ -1324,18 +1463,36 @@ function renderColorSection(data) {
 function renderTypographySection(data) {
   let html = '';
 
-  const externalFonts = (data.fontFaces || []).filter(f => isExternalSrc(f.src));
-  if (externalFonts.length > 0) {
+  const allFontFaces = data.fontFaces || [];
+  if (allFontFaces.length > 0) {
     html += `<div class="section-block">
       <div class="section-label">Font Faces</div>
       <table class="font-table">
-        <thead><tr><th>Family</th><th>Weight</th><th>Style</th></tr></thead>
+        <thead><tr><th>Family</th><th>Weight</th><th>Style</th><th>Status</th></tr></thead>
         <tbody>`;
-    for (const f of externalFonts) {
+    for (const f of allFontFaces) {
+      const fStatus = getFontStatus(f.family, allFontFaces);
+      const rowStatus = fStatus.status === 'generic' ? 'generic'
+        : !f.src ? 'no-src'
+        : isExternalSrc(f.src) ? 'loadable'
+        : 'local';
+      const chipClass = {
+        loadable: 'font-status-chip--loaded',
+        local: 'font-status-chip--local',
+        'no-src': 'font-status-chip--no-src',
+        generic: 'font-status-chip--generic',
+      }[rowStatus] || '';
+      const chipLabel = {
+        loadable: 'Loaded',
+        local: 'Local only',
+        'no-src': 'No source',
+        generic: 'Generic keyword',
+      }[rowStatus] || rowStatus;
       html += `<tr>
         <td>${esc(f.family)}</td>
         <td>${esc(f.weight)}</td>
         <td>${esc(f.style)}</td>
+        <td><span class="font-status-chip ${esc(chipClass)}">${esc(chipLabel)}</span></td>
       </tr>`;
     }
     html += `</tbody></table></div>`;
@@ -1355,8 +1512,17 @@ function renderTypographySection(data) {
         props.textDecoration ? `text-decoration: ${props.textDecoration}` : '',
       ].filter(Boolean).join('; ');
 
+      const fontStatus = getFontStatus(props.fontFamily, data.fontFaces);
+      const specimenHtml = fontStatus.status === 'loadable'
+        ? `<div class="type-specimen" style="${esc(styleParts)}">The quick brown fox jumps over the lazy dog</div>`
+        : `<div class="font-unavailable-block">
+            <div class="font-unavailable-icon">⚠</div>
+            <div class="font-unavailable-title">Font unavailable — specimen not shown</div>
+            <div class="font-unavailable-reason">${esc(fontStatus.reason)}</div>
+            ${fontStatus.action ? `<a class="font-unavailable-action" href="${esc(fontStatus.action)}" target="_blank" rel="noopener noreferrer">Search Google Fonts →</a>` : ''}
+          </div>`;
       html += `<div class="type-card">
-        <div class="type-specimen" style="${esc(styleParts)}">The quick brown fox jumps over the lazy dog</div>
+        ${specimenHtml}
         <div class="type-meta">
           <span class="badge">${esc(level)}</span>
           <span class="chip-label">${esc(props.fontFamily || '')}</span>

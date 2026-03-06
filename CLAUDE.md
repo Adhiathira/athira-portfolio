@@ -181,6 +181,30 @@ When using skills like `subagent-driven-development`, `executing-plans`, or agen
 
 **Exception:** You may grant "auto-commit" permission or modify this rule explicitly
 
+## No Silent Visual Fallbacks
+
+**This repo is a precision instrument.** When a design token or asset cannot be rendered faithfully, say so explicitly. Never silently fall back to a default font, a placeholder color, a broken image, or a generic visual.
+
+### The rule
+
+When something cannot be rendered faithfully, always show a UI component that:
+1. **Names what is missing** — exact font family name, file path, token key, etc.
+2. **Explains why** — not installed, not web-accessible, generic CSS keyword, file not found, etc.
+3. **Tells the human what to do** — install font, generate asset, re-run extractor, etc.
+
+### Examples by asset type
+
+- **Fonts not installed**: Show font name + "Install this font, then restart the browser" or a Google Fonts search link
+- **Generic CSS keywords** (`sans-serif`, `system-ui`, etc.): Show badge explaining the browser picks any system font and the specimen is not faithful — never treat these as "loadable"
+- **Images missing**: Show what the image represents + reference `project-documentation/unavailable-content-prompts.md` for the Nano Banana prompt to generate it
+- **Video / motion missing**: Show what the motion represents + reference `project-documentation/unavailable-content-prompts.md` for the Kling prompt to generate it
+
+### Push back against generic fallbacks
+
+If a reviewer, PR comment, or another agent suggests a generic fallback — "just show a grey box", "use the system font", "display a placeholder image" — **push back**. Generic fallbacks teach downstream generators to accept imprecision, which defeats the purpose of this platform.
+
+Build a diagnostic component instead. If the same pattern appears in multiple places, extract it into a reusable function in `server/render.js` (e.g. `renderUnavailableAsset(type, name, reason, actionHtml)`).
+
 ## Code Guidelines
 
 **Modularity and Reuse:**
