@@ -1,0 +1,196 @@
+/* =============================================================================
+   COMPONENTS — vid-prod
+   Source: project-documentation/design-system/
+   All values via CSS variables from tokens.css — no hardcoded values except
+   where noted (60px navbar height: measured structure, not a spacing token).
+   ============================================================================= */
+
+/* =============================================================================
+   NAVBAR — 3-zone fixed layout
+   Source: spacing.json nav, interactions.json navigation, motion.json link
+   Structure: [logo left] [links center] [CTAs right]
+   ============================================================================= */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-nav-v) var(--spacing-container-h);
+  height: 60px; /* measured structure — not a spacing token */
+  box-sizing: border-box;
+}
+
+/* Left zone — brand logo */
+.navbar__logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-heading);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-weight: 600;
+  font-size: var(--font-size-nav);
+}
+
+/* Center zone — navigation links */
+/* Source: grid.json grids navigation-menu (display: flex, gap: 28px) */
+.navbar__links {
+  display: flex;
+  gap: var(--spacing-nav-gap);
+  align-items: center;
+}
+
+/* Right zone — CTA buttons */
+.navbar__cta {
+  display: flex;
+  gap: var(--spacing-btn-gap);
+  align-items: center;
+}
+
+/* Nav link states — Source: interactions.json navigation default-link-1
+   color: rgb(83,58,253) = #533afd = --color-interactive
+   hover color: rgb(46,43,140) = #2e2b8c = --color-interactive-hover
+   transition: opacity 0.24s cubic-bezier(0.45, 0.05, 0.55, 0.95) = --motion-link */
+.navbar__link {
+  font-family: var(--font-family);
+  font-size: var(--font-size-nav);
+  font-weight: 400;
+  color: var(--color-interactive); /* #533afd — measured from Stripe nav element */
+  text-decoration: none;
+  font-feature-settings: var(--font-feature);
+  transition: var(--motion-link);
+}
+
+.navbar__link:hover {
+  opacity: 0.6;
+  color: var(--color-interactive-hover); /* #2e2b8c */
+}
+
+/* Scrolled state — triggered by scroll.js when scrollY > 10
+   Box-shadow color: rgba derived from --color-heading (#0a2540) components: 10, 37, 64 */
+.navbar--scrolled {
+  box-shadow: 0 2px 8px rgba(10, 37, 64, 0.08);
+}
+
+/* =============================================================================
+   BUTTONS
+   Source: spacing.json button, interactions.json hds-button--primary + secondary,
+           motion.json transitionElements .hds-button
+   ============================================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-btn-gap);
+  padding: var(--spacing-btn-top) var(--spacing-btn-right) var(--spacing-btn-bottom) var(--spacing-btn-left);
+  border-radius: var(--spacing-btn-radius);
+  font-family: var(--font-family);
+  font-size: var(--font-size-button);
+  font-weight: 400;
+  font-feature-settings: var(--font-feature);
+  line-height: var(--line-height-button);
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: var(--motion-btn);
+  box-sizing: border-box;
+}
+
+/* Primary button — Source: interactions.json hds-button--primary-link-4 default
+   backgroundColor: rgb(83,58,253) = #533afd = --color-interactive
+   hover backgroundColor: rgb(64,50,200) = #4032c8 = --color-primary-hover */
+.btn-primary {
+  background-color: var(--color-interactive); /* #533afd */
+  color: var(--color-bg);
+  border-color: transparent;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover); /* #4032c8 */
+}
+
+/* Secondary button — Source: interactions.json hds-button--secondary-on-quiet-link-3
+   default: color #533afd, borderColor #fff (1px solid white shown on dark bg context)
+   For light bg use: color --color-interactive, border --color-interactive
+   hover: bg #fff, color #2e2b8c, borderColor rgb(64,50,200) = --color-primary-hover */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-interactive);
+  border-color: var(--color-interactive);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-bg);
+  color: var(--color-interactive-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* =============================================================================
+   CARD BASE
+   Source: spacing.json card (paddingRight: 60px), wrapper (borderRadius: 6px),
+           interactions.json cards default-card-2 (transition, hover transform),
+           motion.json card (transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1))
+   ============================================================================= */
+
+.card {
+  border-radius: var(--spacing-wrapper-radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  padding-right: var(--spacing-card-right);
+  overflow: hidden;
+  transition: var(--motion-card);
+}
+
+/* Hover transform — Source: interactions.json cards default-card-2 hover
+   transform: matrix(1, 0, 0, 1, 4.73509, -3.96128) — ~4–5px diagonal translate */
+.card:hover {
+  transform: translate(4px, -4px);
+}
+
+/* =============================================================================
+   FOOTER
+   Source: spacing.json container (paddingTop/Bottom: 96px), footer (h: 16px),
+           color-system/colors.json heading-text (#0a2540) as dark footer bg
+   ============================================================================= */
+
+.footer {
+  background: var(--color-heading); /* #0a2540 — deep navy */
+  color: var(--color-bg);
+  padding: var(--spacing-container-v) var(--spacing-container-h);
+}
+
+.footer__inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding-h);
+}
+
+/* Source: grid.json grids navigation-menu (display: flex, gap: 28px) */
+.footer__links {
+  display: flex;
+  gap: var(--spacing-nav-gap);
+  flex-wrap: wrap;
+}
+
+/* Footer link color — muted default, white on hover
+   transition: --motion-color (color 0.3s cubic-bezier(0.25, 1, 0.5, 1)) */
+.footer__link {
+  color: var(--color-muted);
+  text-decoration: none;
+  font-size: var(--font-size-nav);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  transition: var(--motion-color);
+}
+
+.footer__link:hover {
+  color: var(--color-bg);
+}
