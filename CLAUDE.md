@@ -243,12 +243,6 @@ Build a diagnostic component instead. If the same pattern appears in multiple pl
 
 No exceptions. If a tool exists and is not in `tool-index.md`, register it.
 
-## Design System
-
-The project uses the `caspers-caviar` design system.
-All UI work must reference `project-documentation/design-system/`.
-See `website-design` skill for compliance rules.
-
 ## Do NOT
 
 - Commit code without explicit approval (see Git Workflow section)
