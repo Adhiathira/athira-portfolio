@@ -243,6 +243,12 @@ Build a diagnostic component instead. If the same pattern appears in multiple pl
 
 No exceptions. If a tool exists and is not in `tool-index.md`, register it.
 
+## Design System
+
+The project uses the `caspers-caviar` design system.
+All UI work must reference `project-documentation/design-system/`.
+See `website-design` skill for compliance rules.
+
 ## Do NOT
 
 - Commit code without explicit approval (see Git Workflow section)
@@ -250,8 +256,3 @@ No exceptions. If a tool exists and is not in `tool-index.md`, register it.
 - Add technical implementation details to this file (keep them in `project-documentation/`)
 - Do not create temporary Markdown files (`*.md`) unless explicitly requested.
 
-## Design System
-
-The project uses the `apple` design system.
-All UI work must reference `project-documentation/design-system/`.
-See `website-design` skill for compliance rules.
