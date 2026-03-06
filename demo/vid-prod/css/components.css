@@ -512,3 +512,321 @@
   font-family: var(--font-family);
   font-feature-settings: var(--font-feature);
 }
+
+/* =============================================================================
+   HOW IT WORKS SECTION — vid-prod [4/10]
+   Source: spacing.json (grid-pad, btn-gap, content-radius), colors.json primary
+   3-column step grid, no card borders — white space separates columns.
+   ============================================================================= */
+
+/* Step card — padding via grid-pad token, no border, no background */
+.step-card {
+  padding: var(--spacing-grid-pad);
+}
+
+/* Large numeral step icon — primary color, display-scale weight */
+.step-icon {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h2);
+  color: var(--color-primary);
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--letter-spacing-h2);
+  margin-bottom: var(--spacing-btn-gap);
+}
+
+/* Step heading — h3 scale */
+.step-heading {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-h3);
+  line-height: var(--line-height-h3);
+  letter-spacing: var(--letter-spacing-h3);
+  color: var(--color-heading);
+  margin: 0 0 var(--spacing-btn-gap);
+}
+
+/* Step body copy */
+.step-body {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-body);
+  color: var(--color-body);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =============================================================================
+   COMMUNITY SIGNALS SECTION — vid-prod [4/10]
+   Source: colors.json dark-bg (#1a1a6e), dark-accent (#3d3dcc), muted (#8898aa)
+           spacing.json (container-gap, btn-gap, grid-pad, content-radius)
+   Dark indigo section with oversized stat and creator mini-cards.
+   ============================================================================= */
+
+/* Oversized stat number — display weight 300, dark-accent color
+   font-size: calc h1 * 2.4 — no token for display-scale, multiplier documented here */
+.community-stat {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: calc(var(--font-size-h1) * 2.4); /* display-scale: 2.4× h1 — no token */
+  font-weight: 300;
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--letter-spacing-h1);
+  color: var(--color-dark-accent);
+  margin: 0 0 var(--spacing-btn-gap);
+}
+
+/* Descriptor label below stat */
+.community-stat-label {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-body);
+  color: var(--color-muted);
+  margin: 0 0 var(--spacing-container-gap);
+}
+
+/* 4-column grid container for mini-cards */
+.community-cards-grid {
+  margin-top: var(--spacing-section-gap);
+}
+
+/* Creator mini-card — slightly translucent white on dark bg */
+.creator-mini-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-btn-gap);
+  background: rgba(255, 255, 255, 0.06); /* rgba — no token for translucent overlay on dark bg */
+  border-radius: var(--spacing-wrapper-radius);
+  padding: var(--spacing-grid-pad);
+}
+
+/* Circular avatar placeholder — 56px measured structural value */
+.creator-mini-card__avatar {
+  width: 56px;  /* measured — no spacing token for avatar diameter */
+  height: 56px; /* measured — no spacing token for avatar diameter */
+  border-radius: 50%;
+  background: var(--color-surface);
+  flex-shrink: 0;
+}
+
+/* Info block beside avatar */
+.creator-mini-card__info {
+  min-width: 0; /* allow text truncation if needed */
+}
+
+/* Creator name — white on dark bg */
+.creator-mini-card__name {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  font-weight: 400;
+  color: var(--color-bg);
+  margin: 0 0 4px; /* 4px measured — no token for inter-label gap */
+}
+
+/* Points + project title — muted on dark */
+.creator-mini-card__meta {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  color: var(--color-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* =============================================================================
+   ROADMAP TEASER SECTION — vid-prod [4/10]
+   Source: colors.json surface (#f6f9fc), primary (#635bff), muted (#8898aa)
+           spacing.json (wrapper-radius, grid-pad, content-radius, btn-gap)
+   3-tile grid on white bg. Live tile has accent left border; soon tiles are dimmed.
+   ============================================================================= */
+
+/* Roadmap section heading */
+.roadmap-heading {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h2);
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--letter-spacing-h2);
+  color: var(--color-heading);
+  margin: 0 0 var(--spacing-container-gap);
+}
+
+/* Base roadmap tile — surface bg, radius, internal padding */
+.roadmap-tile {
+  background: var(--color-surface);
+  border-radius: var(--spacing-wrapper-radius);
+  padding: var(--spacing-grid-pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-btn-gap);
+}
+
+/* Live tile — accent left border signals active state */
+.roadmap-tile--live {
+  border-left: 4px solid var(--color-primary);
+}
+
+/* Soon tiles — dimmed, non-interactive */
+.roadmap-tile--soon {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Tile title — h3 scale */
+.roadmap-tile__title {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-h3);
+  line-height: var(--line-height-h3);
+  color: var(--color-heading);
+  margin: 0;
+}
+
+/* Tile description */
+.roadmap-tile__desc {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-body);
+  color: var(--color-body);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Explore link inside live tile */
+.roadmap-tile__link {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-top: auto; /* push to bottom of flex column */
+  transition: var(--motion-color);
+}
+
+.roadmap-tile__link:hover {
+  color: var(--color-primary-hover);
+}
+
+/* Small badge pill — base
+   padding: 4px 8px — measured micro-values, no token for badge padding */
+.tile-badge {
+  display: inline-block;
+  border-radius: var(--spacing-content-radius);
+  padding: 4px 8px; /* measured — no token for badge padding */
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: 11px; /* measured — no token for badge label size */
+  font-weight: 400;
+  line-height: 1;
+  width: fit-content;
+}
+
+/* Live badge — primary bg, white text */
+.tile-badge--live {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+/* Soon badge — bordered surface on white, muted text */
+.tile-badge--soon {
+  background: var(--color-surface);
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+}
+
+/* =============================================================================
+   FINAL CTA SECTION — vid-prod [4/10]
+   Source: colors.json heading-text (#0a2540) as bg, bg (#ffffff) as text
+           spacing.json (container-v, btn-top, btn-right, btn-bottom, btn-left)
+   Minimal emotional close: headline + single CTA button. No other content.
+   ============================================================================= */
+
+/* Dark navy full-bleed section — heading color becomes background */
+.section--final-cta {
+  background: var(--color-heading); /* #0a2540 — deep navy as bg per spec */
+  text-align: center;
+}
+
+/* Large display headline — weight 300, white on navy */
+.final-cta-headline {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h1);
+  font-weight: 300;
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--letter-spacing-h1);
+  color: var(--color-bg);
+  margin: 0 0 var(--spacing-container-gap);
+}
+
+/* Larger padding variant of btn-primary — 50% increase on all padding sides
+   calc() applied so increase stays proportional if base tokens change */
+.btn-primary--large {
+  padding: calc(var(--spacing-btn-top) * 1.5)
+           calc(var(--spacing-btn-right) * 1.5)
+           calc(var(--spacing-btn-bottom) * 1.5)
+           calc(var(--spacing-btn-left) * 1.5);
+}
+
+/* =============================================================================
+   FOOTER MULTI-COLUMN GRID — vid-prod [4/10]
+   Source: spacing.json (container-gap, section-gap, btn-gap), colors.json muted
+           grid.json (4-col = repeat(4, 1fr))
+   Additive alongside existing .footer__links flat pattern — no existing CSS removed.
+   ============================================================================= */
+
+/* 4-column footer link grid */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-container-gap);
+  margin-bottom: var(--spacing-section-gap);
+}
+
+/* Individual column container */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Column heading — white, button-scale, normal weight */
+.footer-col__title {
+  color: var(--color-bg);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  font-weight: 400;
+  margin: 0 0 var(--spacing-btn-gap);
+}
+
+/* Footer column links — muted default, display block, no underline */
+.footer-col a {
+  display: block;
+  color: var(--color-muted);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  text-decoration: none;
+  margin-bottom: 4px; /* 4px measured — no token for inter-link gap */
+  transition: var(--motion-color);
+}
+
+/* Hover — lift to white */
+.footer-col a:hover {
+  color: var(--color-bg);
+}
+
+/* Legal line — centered, muted, button-scale */
+.footer-legal {
+  color: var(--color-muted);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  text-align: center;
+  margin: 0;
+}
