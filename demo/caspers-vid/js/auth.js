@@ -12,6 +12,10 @@
 
 const AUTH_KEY = 'caspers_vid_auth';
 
+// Site root URL — computed from this module's location so it works regardless
+// of which directory depth the page is served from.
+export const SITE_ROOT = new URL('..', import.meta.url).href;
+
 export function getAuth() {
   return JSON.parse(sessionStorage.getItem(AUTH_KEY) || '{}');
 }
@@ -65,7 +69,7 @@ export function getSelectedPlan() {
 export function interceptIfNeeded(actionType, returnUrl, payload) {
   if (!isLoggedIn()) {
     setIntendedAction(actionType, returnUrl, payload);
-    window.location.href = '/signup.html';
+    window.location.href = new URL('signup.html', SITE_ROOT).href;
     return true;
   }
   return false;

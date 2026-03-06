@@ -9,7 +9,7 @@
  *     (logged-out only; CTA removed from DOM for logged-in visitors)
  */
 
-import { isLoggedIn, interceptIfNeeded } from '../auth.js';
+import { isLoggedIn, interceptIfNeeded, SITE_ROOT } from '../auth.js';
 
 // ---------------------------------------------------------------------------
 // Mock creator data — single source of truth for this page
@@ -151,7 +151,7 @@ function wireProfileCta() {
 
   // Wire CTA click — redirect to sign-up and remember intended action
   cta.addEventListener('click', () => {
-    interceptIfNeeded('create', '/app/studio.html');
+    interceptIfNeeded('create', new URL('app/studio.html', SITE_ROOT).href);
   });
 
   // Scroll depth trigger at 70% of portfolio section.

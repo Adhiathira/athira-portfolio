@@ -6,7 +6,7 @@
  *   3. Filter tab click handler — toggle .active + show/hide .card-group
  */
 
-import { interceptIfNeeded, getIntendedAction, clearIntendedAction } from '../auth.js';
+import { interceptIfNeeded, getIntendedAction, clearIntendedAction, SITE_ROOT } from '../auth.js';
 
 // ── 1. Auth return path ───────────────────────────────────────────────────────
 const pending = getIntendedAction();
@@ -65,8 +65,8 @@ document.querySelectorAll('.filter-tab').forEach(tab => {
 const ctaBtn = document.querySelector('.cta-make-your-own');
 if (ctaBtn) {
   ctaBtn.addEventListener('click', () => {
-    if (!interceptIfNeeded('create', '/app/studio.html')) {
-      window.location.href = '/app/studio.html';
+    if (!interceptIfNeeded('create', new URL('app/studio.html', SITE_ROOT).href)) {
+      window.location.href = new URL('app/studio.html', SITE_ROOT).href;
     }
   });
 }
