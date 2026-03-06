@@ -306,3 +306,209 @@
   color: var(--color-muted);
   white-space: nowrap;
 }
+
+/* =============================================================================
+   GALLERY SECTION — vid-prod [3/10]
+   Source: design-system/spacing.json (btn-gap, grid-pad, section-gap, content-radius),
+           interactions.json cards default-card-2 (hover transform, motion-card),
+           motion.json link (opacity transition = --motion-link)
+   ============================================================================= */
+
+/* GALLERY FILTERS
+   ---------------------------------------------------------------------- */
+
+.gallery-filters {
+  display: flex;
+  gap: var(--spacing-btn-gap);
+  margin-bottom: var(--spacing-grid-pad);
+}
+
+/* Filter button — base state
+   padding: 6px 14px — measured micro-values, no spacing token covers filter btn padding */
+.filter-btn {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  padding: 6px 14px; /* measured — no token for filter btn padding */
+  border-radius: var(--spacing-content-radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: var(--motion-link); /* opacity transition for state changes */
+}
+
+/* Active filter — Source: interactions.json primary color highlight */
+.filter-btn--active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-bg);
+}
+
+/* Disabled filter — not-yet-available media types */
+.filter-btn--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* "Coming soon" inline label inside disabled filter buttons
+   font-size: 11px — measured micro-value, no token for sub-label size */
+.coming-soon {
+  font-size: 11px; /* measured — no token for sub-label size */
+  margin-left: 4px; /* measured — no token for inline label offset */
+  opacity: 0.7;
+}
+
+/* GALLERY GRID
+   ---------------------------------------------------------------------- */
+
+/* 4-column grid — Source: grid.json grids (4 equal columns, gap = --spacing-section-gap) */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-section-gap);
+}
+
+/* GALLERY CARD
+   ---------------------------------------------------------------------- */
+
+/* Card base — Source: interactions.json cards default-card-2, motion.json card */
+.gallery-card {
+  position: relative;
+  border-radius: var(--spacing-content-radius);
+  overflow: hidden;
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: var(--motion-card);
+}
+
+/* Hover lift — Source: interactions.json cards default-card-2 hover
+   transform: matrix(1, 0, 0, 1, 4.73509, -3.96128) — ~4–5px diagonal translate */
+.gallery-card:hover {
+  transform: translate(4px, -4px);
+}
+
+/* CARD MEDIA + PLACEHOLDER
+   ---------------------------------------------------------------------- */
+
+/* 16:9 aspect ratio container — no height token needed, ratio enforces it */
+.gallery-card__media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+/* Placeholder shown when video/image is not yet generated
+   padding: --spacing-btn-gap — reuses smallest spacing token for inner breathing room */
+.gallery-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  text-align: center;
+  padding: var(--spacing-btn-gap);
+  box-sizing: border-box;
+}
+
+/* CARD OVERLAY — hover reveal
+   ---------------------------------------------------------------------- */
+
+/* Gradient overlay using rgba from --color-heading (#0a2540) components: 10, 37, 64
+   No CSS variable for rgba — rgba(10, 37, 64, 0.85) matches --color-heading exactly */
+.gallery-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(10, 37, 64, 0.85)); /* rgba derived from --color-heading (#0a2540) */
+  padding: var(--spacing-grid-pad);
+  opacity: 0;
+  transition: var(--motion-link);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.gallery-card:hover .gallery-card__overlay {
+  opacity: 1;
+}
+
+/* Overlay text — both name and points use bg color (white) on dark gradient */
+.gallery-card__name,
+.gallery-card__points {
+  color: var(--color-bg);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+}
+
+/* MEDIA TYPE BADGE
+   ---------------------------------------------------------------------- */
+
+/* Badge — absolute top-right corner
+   top/right: --spacing-btn-gap — smallest token, appropriate for badge inset
+   padding: 4px 8px — measured micro-values, no token for badge padding
+   font-size: 11px — measured micro-value, no token for badge label size */
+.gallery-card__badge {
+  position: absolute;
+  top: var(--spacing-btn-gap);
+  right: var(--spacing-btn-gap);
+  padding: 4px 8px; /* measured — no token for badge padding */
+  border-radius: var(--spacing-content-radius);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: 11px; /* measured — no token for badge label size */
+  font-weight: 400;
+}
+
+/* Video badge — primary color fill, white label */
+.gallery-card__badge--video {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+/* Animation / Film badges — surface fill, muted label */
+.gallery-card__badge--animation,
+.gallery-card__badge--film {
+  background: var(--color-surface);
+  color: var(--color-muted);
+}
+
+/* SKELETON CARD — loading state
+   ---------------------------------------------------------------------- */
+
+/* Skeleton shares aspect ratio with media; pulse animation conveys loading
+   Source: concept.md motion principle — subtle, purposeful animation */
+.gallery-card--skeleton {
+  background: var(--color-surface);
+  border-radius: var(--spacing-content-radius);
+  aspect-ratio: 16 / 9;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+/* GALLERY CTA — "Make your own" section
+   ---------------------------------------------------------------------- */
+
+.gallery-cta {
+  text-align: center;
+}
+
+/* Sub-text below CTA heading — muted, button-scale font */
+.gallery-cta__sub {
+  margin-top: var(--spacing-btn-gap);
+  color: var(--color-muted);
+  font-size: var(--font-size-button);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+}
