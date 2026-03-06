@@ -1,12 +1,21 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { spawnSync } from 'child_process';
+import { LLMRouter, ClaudeCliProvider, OpenRouterProvider } from '../lib/llm/index.js';
 import { createLogger } from '../lib/logger.js';
 
 export const metadata = { tag: 'concept-summary' };
 
 const log = createLogger('concept-summary');
+
+const router = new LLMRouter({
+  providers: {
+    'claude-cli': new ClaudeCliProvider(),
+    'openrouter': new OpenRouterProvider(),
+  },
+  // defaultProvider reads from LLM_DEFAULT_PROVIDER env var, falls back to 'claude-cli'
+  maxAttempts: 2,
+});
 
 const CONCEPT_PROMPT = `You are a brand strategist and creative director analyzing a website.
 
@@ -116,43 +125,33 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
     ? `The following design tokens were extracted from this website:\n\n${dataBlocks}\n\n---\n\n${CONCEPT_PROMPT}`
     : CONCEPT_PROMPT;
 
-  // Step 4: Call claude -p with stream-json (supports vision via base64 content blocks)
-  const msg = JSON.stringify({
-    type: 'user',
-    message: {
-      role: 'user',
-      content: [...imageContent, { type: 'text', text: promptText }],
-    },
-  });
+  // Step 4: Build LLMRouter content blocks and call the router.
+  // Convert imageContent (which uses the Anthropic stream-json shape) to the
+  // internal ImageBlock shape that LLMRouter expects: { type, data, mimeType }.
+  const imageBlocks = imageContent.map(img => ({
+    type: /** @type {'image'} */ ('image'),
+    data: img.source.data,
+    mimeType: /** @type {'image/png'} */ (img.source.media_type),
+  }));
 
-  const result = spawnSync(
-    'claude',
-    ['-p', '--input-format', 'stream-json', '--output-format', 'stream-json', '--verbose', '--allowedTools', ''],
-    { input: msg, encoding: 'utf8', timeout: 180000, maxBuffer: 50 * 1024 * 1024 }
-  );
-
-  if (result.error || result.status !== 0) {
-    log.minor('Concept summary generation failed', {
-      error: result.error?.message ?? `exit ${result.status}`,
-      stderr: result.stderr?.trim() || '',
-    });
-    return `# Concept Summary\n\n*Generation failed — no data available.*\n`;
-  }
+  const userContent = [
+    ...imageBlocks,
+    { type: /** @type {'text'} */ ('text'), text: promptText },
+  ];
 
   let markdownOutput = '';
   try {
-    const resultLine = result.stdout?.split('\n').find(l => l.includes('"type":"result"'));
-    const claudeResult = resultLine ? JSON.parse(resultLine) : null;
-    if (claudeResult?.is_error) {
-      log.minor('Concept summary API error', { result: claudeResult.result });
-      return `# Concept Summary\n\n*API error during generation.*\n`;
-    }
-    markdownOutput = claudeResult?.result ?? '';
-  } catch (_) {
-    log.minor('Concept summary returned unparseable output');
-    return `# Concept Summary\n\n*Output parsing failed.*\n`;
+    log.debug('Calling LLMRouter for concept summary', { imageCount: imageBlocks.length });
+    markdownOutput = await router.complete(
+      [{ role: 'user', content: userContent }],
+      { timeout: 180000 }
+    );
+    log.debug('Concept summary generation complete', { chars: markdownOutput.length });
+  } catch (err) {
+    log.minor('Concept summary generation failed', { error: err instanceof Error ? err.message : String(err) });
+    return `# Concept Summary\n\n*Generation failed — no data available.*\n`;
   }
 
-  // Step 5: Return the markdown string directly
+  // Step 5: Return the markdown string directly.
   return markdownOutput;
 }
