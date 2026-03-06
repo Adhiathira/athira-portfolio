@@ -245,6 +245,10 @@ No exceptions. If a tool exists and is not in `tool-index.md`, register it.
 
 ## Design System
 
+The project uses the `stripe` design system.
+All UI work must reference `project-documentation/design-system/`.
+See `website-design` skill for compliance rules.
+
 Whatever design system is installed in `project-documentation/design-system/` is the active system — regardless of its name. Always use it. Do not reference any other design system by name and do not invent tokens.
 
 All UI work must read tokens from `project-documentation/design-system/` before writing a single line of code. See the `website-design` skill for compliance rules.
