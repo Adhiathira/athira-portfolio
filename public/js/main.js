@@ -31,6 +31,8 @@ if (scrollEl) {
 // ---------------------------------------------------------------------------
 document.querySelectorAll('a[href]').forEach(link => {
   link.addEventListener('click', (e) => {
+    // Yield to element-specific handlers that have already called preventDefault.
+    if (e.defaultPrevented) return;
     // Don't intercept modifier-key clicks (new tab/window intent), non-primary
     // buttons, blank targets, or download links.
     if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;

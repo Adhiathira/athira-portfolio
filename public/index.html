@@ -3,15 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PLATFORM — caspers-vid</title>
+  <title>caspers-vid — AI Video Production</title>
+  <!-- Google Fonts: Barlow Condensed (display), Barlow (body), Lexend Giga (h4) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&family=Barlow:wght@300;400&family=Lexend+Giga:wght@400&display=swap" rel="stylesheet">
+  <!-- Design system CSS — loaded in dependency order -->
   <link rel="stylesheet" href="./css/tokens.css">
   <link rel="stylesheet" href="./css/typography.css">
   <link rel="stylesheet" href="./css/layout.css">
   <link rel="stylesheet" href="./css/motion.css">
   <link rel="stylesheet" href="./css/components/nav.css">
+  <link rel="stylesheet" href="./css/components/hero.css">
 </head>
 <body>
 
+  <!-- NAV — copied exactly from Task 194 output. .nav-center wordmark is opacity:0 at load,
+       fades in when .scrolled class is applied by nav.js on scroll. -->
   <nav class="site-nav" id="site-nav">
     <div class="nav-left">
       <a href="/explore.html" class="nav-link regular">Explore</a>
@@ -19,37 +27,131 @@
       <a href="/about.html" class="nav-link regular">About</a>
     </div>
     <div class="nav-center">
-      <a href="/index.html" class="nav-wordmark" id="nav-wordmark">PLATFORM</a>
+      <a href="/index.html" class="nav-wordmark" id="nav-wordmark">CASPERS-VID</a>
     </div>
     <div class="nav-right">
-      <a href="/login.html" class="nav-link regular">Login</a>
-      <a href="/signup.html" class="nav-link regular">Sign Up</a>
+      <a href="/login.html" class="nav-link regular">Log in</a>
+      <a href="/signup.html" class="nav-link regular">Sign up</a>
     </div>
   </nav>
 
   <main data-scroll-container>
 
-    <div class="section-hero">
-      <p class="type-display">PLATFORM</p>
-    </div>
+    <!-- SECTION 1: HERO — "The Proof Before the Promise"
+         Cinematic 100vh hero. Wordmark upper-center. Copy + CTA bottom-left.
+         Scroll indicator bottom-right. 3-layer Locomotive Scroll parallax. -->
+    <section class="section-hero" data-scroll-section>
 
-    <section class="section-spotlight">
-      <p class="type-body">Scroll down to verify the nav transitions from transparent to solid background and the wordmark fades in.</p>
+      <!-- Layer 1: background video fill — deepest, slowest parallax -->
+      <div class="hero-layer hero-layer--bg" data-scroll data-scroll-speed="-0.5">
+        <!-- PLACEHOLDER: replace with hero-bg.mp4 when generated -->
+        <div class="video-placeholder" style="position:absolute;inset:0;background:#2d2b28;display:flex;align-items:center;justify-content:center;color:#9e9588;font-size:10.56px;font-family:'Barlow',sans-serif;">[hero-bg.mp4]</div>
+      </div>
+
+      <!-- Layer 2: atmospheric overlay — dark scrim, mid-speed -->
+      <div class="hero-layer hero-layer--overlay" data-scroll data-scroll-speed="-0.25"></div>
+
+      <!-- Layer 3: content layer — wordmark + bottom bar, slowest movement -->
+      <div class="hero-layer hero-layer--content" data-scroll data-scroll-speed="-0.15">
+
+        <!-- Wordmark: horizontally centered, upper-center third -->
+        <div class="hero-wordmark">
+          <!-- font: interstate-condensed (not available) — using Barlow Condensed [concept-matched fallback: condensed grotesque, neutral weight, luxury-dark stamp quality] -->
+          <h1 class="wordmark-display">CASPERS-VID</h1>
+        </div>
+
+        <!-- Bottom bar: copy + CTA left, scroll indicator right -->
+        <div class="hero-bottom-bar">
+
+          <!-- Bottom-left: tagline copy + primary CTA -->
+          <div class="hero-bottom-left">
+            <!-- font: interstate (not available) — using Barlow [concept-matched fallback: same family as display fallback, maintains typographic unity] -->
+            <p class="hero-copy">
+              AI video production tools<br>
+              for creators who mean it.
+            </p>
+            <!-- CTA: "Start creating →" — auth intercept handled by <script type="module"> below -->
+            <a href="/signup.html" class="button-hover group hero-cta">Start creating →</a>
+          </div>
+
+          <!-- Bottom-right: scroll indicator -->
+          <div class="hero-bottom-right">
+            <span class="hero-scroll-indicator">SCROLL ↓</span>
+          </div>
+
+        </div><!-- /hero-bottom-bar -->
+
+      </div><!-- /hero-layer--content -->
+
+    </section><!-- /section-hero -->
+
+    <!-- SECTION 2: PRODUCT/CREATOR GRID (3-col) — placeholder shell for Task 4 -->
+    <!-- section-grid-3col: 3-column equal-width, full viewport span,
+         section headline overlapping from scroll -->
+    <section class="section-grid-3col" data-scroll-section>
+      <!-- Task 4 fills this section -->
     </section>
 
-    <section class="section-editorial">
-      <p class="type-body">Additional content for scroll depth.</p>
+    <!-- SECTION 3: FEATURE SPOTLIGHT — placeholder shell for Task 4 -->
+    <!-- section-spotlight: centered single-col, large condensed display type
+         + price/detail, chapter-heading role -->
+    <section class="section-spotlight" data-scroll-section>
+      <!-- Task 4 fills this section -->
     </section>
 
-    <section class="section-newsletter">
-      <p class="type-body">More content below.</p>
+    <!-- SECTION 4: ASYMMETRIC SPLIT — placeholder shell for Task 4 -->
+    <!-- section-split: 40% text col left (headline + body + secondary CTA),
+         60% atmospheric image right, image extends to viewport edge -->
+    <section class="section-split" data-scroll-section>
+      <!-- Task 4 fills this section -->
     </section>
+
+    <!-- SECTION 5: EDITORIAL FULL-BLEED — placeholder shell for Task 4 -->
+    <!-- section-editorial: dark full-bleed bg, massive display type upper left,
+         newsletter/join right-aligned, type IS the visual -->
+    <section class="section-editorial" data-scroll-section>
+      <!-- Task 4 fills this section -->
+    </section>
+
+    <!-- SECTION 6: COMMUNITY/NEWSLETTER — placeholder shell for Task 4 -->
+    <!-- section-newsletter: full-bleed dark image, small-cap headline, body copy,
+         inline input + action button, ~40% viewport width right -->
+    <section class="section-newsletter" data-scroll-section>
+      <!-- Task 4 fills this section -->
+    </section>
+
+    <!-- FOOTER — placeholder shell for Task 4 -->
+    <!-- site-footer: multi-col sparse — tagline far-left, nav center-right,
+         social + credits lower-right, copyright bottom-left -->
+    <footer class="site-footer" data-scroll-section>
+      <!-- Task 4 fills this section -->
+    </footer>
 
   </main>
 
+  <!-- Module scripts: nav init + CTA auth intercept + main (Locomotive Scroll) -->
   <script type="module">
     import { initNav } from './js/components/nav.js';
+    import { interceptIfNeeded, getSelectedPlan } from './js/auth.js';
+
     initNav();
+
+    // CTA auth intercept:
+    //   not logged in → interceptIfNeeded stores intent, navigates to /signup.html
+    //   logged in + plan selected → navigate to /app/studio.html
+    //   logged in + no plan → fallthrough to href="/signup.html" for plan selection
+    const cta = document.querySelector('.hero-cta');
+    if (cta) {
+      cta.addEventListener('click', (e) => {
+        if (interceptIfNeeded('create', '/')) {
+          e.preventDefault();
+        } else if (getSelectedPlan()) {
+          e.preventDefault();
+          window.location.href = '/app/studio.html';
+        }
+        // no plan: browser follows href="/signup.html"
+      });
+    }
   </script>
   <script type="module" src="./js/main.js"></script>
 
