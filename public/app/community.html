@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>caspers-vid — Community</title>
+  <!-- Google Fonts: Barlow Condensed (display), Barlow (body) -->
+  <!-- Font substitution note: Barlow and Barlow Condensed are loaded via Google Fonts.
+       If this font fails to load, the browser substitutes a system sans-serif font,
+       which will not match the design specification. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+  <!-- Design system CSS -->
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/motion.css">
+  <link rel="stylesheet" href="../css/components/nav.css">
+  <link rel="stylesheet" href="../css/components/grid.css">
+  <style>
+    /* Font diagnostic banner — shown only when Google Fonts fails to load */
+    .font-diagnostic-banner {
+      background: #3d1a1a;
+      border-bottom: 1px solid #7a3a3a;
+      color: #f5f0e8;
+      font-family: monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      padding: 10px 14.08px;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+    .font-diagnostic-banner strong { color: #d4c9b4; }
+
+    /* -------------------------------------------------------------------------
+       community-page layout
+       newPage entrance animation — incoming page rises from bottom half of viewport
+       Source: motion.css @keyframes newPage
+       Duration: var(--duration-cinematic) = 1s (page transitions)
+       Easing: var(--ease-sweep) = cubic-bezier(0.625, 0.05, 0, 1) (page enter)
+       ------------------------------------------------------------------------- */
+    .community-page {
+      padding: 70.4px 14.08px;
+      animation: newPage var(--duration-cinematic, 1s) var(--ease-sweep, cubic-bezier(0.625, 0.05, 0, 1)) both;
+    }
+
+    /* -------------------------------------------------------------------------
+       Page header row — flex row, space-between, page top
+       ------------------------------------------------------------------------- */
+    .community-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 28.16px;
+      flex-wrap: wrap;
+      gap: 14.08px;
+    }
+
+    /* -------------------------------------------------------------------------
+       Headline
+       font: Barlow Condensed — loaded via Google Fonts (see substitution note above)
+       If Barlow Condensed fails, browser substitutes sans-serif. Not faithful to spec.
+       ------------------------------------------------------------------------- */
+    .community-headline {
+      font-family: 'Barlow Condensed', sans-serif; /* Font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #f5f0e8;
+      margin: 0 0 8px 0;
+    }
+
+    /* -------------------------------------------------------------------------
+       Subheading
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec.
+       ------------------------------------------------------------------------- */
+    .community-subheading {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      color: #e8e2d8;
+      margin: 0;
+    }
+
+    /* -------------------------------------------------------------------------
+       "Start a new project →" CTA button
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec.
+       ------------------------------------------------------------------------- */
+    .community-cta-btn {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      background: #111111;
+      color: #f5f0e8;
+      border: none;
+      border-radius: 2px;
+      padding: 10px 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      align-self: flex-start;
+      transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .community-cta-btn:hover { background: #1f1f1f; }
+
+    /* -------------------------------------------------------------------------
+       Filter bar — horizontal pill/tab row
+       ------------------------------------------------------------------------- */
+    .community-filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28.16px;
+    }
+
+    /* Filter pill/tab
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec. */
+    .filter-pill {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      color: #9e9588;
+      background: transparent;
+      border: none;
+      padding: 6px 14.08px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .filter-pill.active {
+      background: #3a3530;
+      color: #f5f0e8;
+    }
+
+    /* -------------------------------------------------------------------------
+       Community project card
+       ------------------------------------------------------------------------- */
+    .community-card {
+      background: #3a3530;
+      border: 1px solid #4a4540;
+      padding: 14.08px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .community-card:hover {
+      transform: translateY(-2px);
+      border-color: #5a5550;
+    }
+
+    .community-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    /* Card title
+       font: Barlow Condensed — loaded via Google Fonts (see substitution note above)
+       If Barlow Condensed fails, browser substitutes sans-serif. Not faithful to spec. */
+    .community-card-title {
+      font-family: 'Barlow Condensed', sans-serif; /* Font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #f5f0e8;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    /* Community points badge
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec. */
+    .community-card-pts {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 10.56px;
+      color: #d4c9b4;
+      background: #1c1c1c;
+      padding: 3px 8px;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Creator name
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec. */
+    .community-card-creator {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 12px;
+      color: #d4c9b4;
+      margin: 0;
+    }
+
+    /* Card description
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec. */
+    .community-card-desc {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 12px;
+      color: #e8e2d8;
+      margin: 0;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    /* "Join →" link
+       font: Barlow — loaded via Google Fonts (see substitution note above)
+       If Barlow fails, browser substitutes sans-serif. Not faithful to spec. */
+    .community-card-join {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      color: #f2f2f2;
+      text-decoration: none;
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: auto;
+    }
+
+    .community-card-join:hover {
+      color: #202020;
+    }
+  </style>
+</head>
+<body style="background-color:#1a1a1a;margin:0;min-height:100vh;">
+
+  <!-- WORKSPACE NAV -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-left">
+      <a href="/app/studio.html" class="nav-link regular">Studio</a>
+      <a href="/app/community.html" class="nav-link regular">Community</a>
+    </div>
+    <div class="nav-center">
+      <a href="/index.html" class="nav-wordmark" id="nav-wordmark">CASPERS-VID</a>
+    </div>
+    <div class="nav-right">
+      <a href="/app/profile.html" class="nav-link regular">Profile</a>
+      <button class="nav-link regular" id="logout-btn" style="background:none;border:none;cursor:pointer;color:inherit;">Log out</button>
+    </div>
+  </nav>
+
+  <main class="community-page">
+
+    <!-- Page header row -->
+    <div class="community-header">
+      <div>
+        <h1 class="community-headline">Community</h1>
+        <p class="community-subheading">Join a project. Build your reputation.</p>
+      </div>
+      <button class="community-cta-btn" type="button">Start a new project →</button>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="community-filter-bar">
+      <button class="filter-pill active" type="button">Popular</button>
+      <button class="filter-pill" type="button">Recent</button>
+      <button class="filter-pill" type="button">My Interests</button>
+    </div>
+
+    <!-- Community project card grid -->
+    <section class="section-grid-3col">
+
+      <!-- Card 1: Short Film: Departure -->
+      <article class="community-card">
+        <div class="community-card-header">
+          <h3 class="community-card-title">Short Film: Departure</h3>
+          <span class="community-card-pts">142 pts</span>
+        </div>
+        <p class="community-card-creator">Elena Marsh</p>
+        <p class="community-card-desc">A quiet meditation on leaving. Looking for an editor and colorist.</p>
+        <a href="#" class="community-card-join">Join →</a>
+      </article>
+
+      <!-- Card 2: Music Video: Neon Drift -->
+      <article class="community-card">
+        <div class="community-card-header">
+          <h3 class="community-card-title">Music Video: Neon Drift</h3>
+          <span class="community-card-pts">98 pts</span>
+        </div>
+        <p class="community-card-creator">Marcus Bell</p>
+        <p class="community-card-desc">High-energy neon aesthetic. Seeking a motion graphics artist.</p>
+        <a href="#" class="community-card-join">Join →</a>
+      </article>
+
+      <!-- Card 3: Documentary: The Archive -->
+      <article class="community-card">
+        <div class="community-card-header">
+          <h3 class="community-card-title">Documentary: The Archive</h3>
+          <span class="community-card-pts">215 pts</span>
+        </div>
+        <p class="community-card-creator">Yuki Tanaka</p>
+        <p class="community-card-desc">Restoring lost footage from the 80s. Need a sound designer.</p>
+        <a href="#" class="community-card-join">Join →</a>
+      </article>
+
+      <!-- Card 4: Animation: Bloom Cycle -->
+      <article class="community-card">
+        <div class="community-card-header">
+          <h3 class="community-card-title">Animation: Bloom Cycle</h3>
+          <span class="community-card-pts">67 pts</span>
+        </div>
+        <p class="community-card-creator">Sarah Kim</p>
+        <p class="community-card-desc">Abstract nature animation. Looking for a composer.</p>
+        <a href="#" class="community-card-join">Join →</a>
+      </article>
+
+      <!-- Card 5: Fashion Film: Edge -->
+      <article class="community-card">
+        <div class="community-card-header">
+          <h3 class="community-card-title">Fashion Film: Edge</h3>
+          <span class="community-card-pts">189 pts</span>
+        </div>
+        <p class="community-card-creator">James Li</p>
+        <p class="community-card-desc">Minimalist editorial. Seeking a cinematographer.</p>
+        <a href="#" class="community-card-join">Join →</a>
+      </article>
+
+      <!-- Card 6: Experimental: Static -->
+      <article class="community-card">
+        <div class="community-card-header">
+          <h3 class="community-card-title">Experimental: Static</h3>
+          <span class="community-card-pts">44 pts</span>
+        </div>
+        <p class="community-card-creator">Priya Mehta</p>
+        <p class="community-card-desc">Glitch art and found footage. Open collaboration.</p>
+        <a href="#" class="community-card-join">Join →</a>
+      </article>
+
+      <!-- Card 7: Narrative: Quiet Hours -->
+      <article class="community-card">
+        <div class="community-card-header">
+          <h3 class="community-card-title">Narrative: Quiet Hours</h3>
+          <span class="community-card-pts">310 pts</span>
+        </div>
+        <p class="community-card-creator">Alex Chen</p>
+        <p class="community-card-desc">Short narrative drama. Looking for a lead actor.</p>
+        <a href="#" class="community-card-join">Join →</a>
+      </article>
+
+      <!-- Card 8: Travel: Open Roads -->
+      <article class="community-card">
+        <div class="community-card-header">
+          <h3 class="community-card-title">Travel: Open Roads</h3>
+          <span class="community-card-pts">126 pts</span>
+        </div>
+        <p class="community-card-creator">Nina Osei</p>
+        <p class="community-card-desc">Road trip documentary series. Need a drone operator.</p>
+        <a href="#" class="community-card-join">Join →</a>
+      </article>
+
+    </section>
+
+  </main>
+
+  <script type="module">
+    import { isLoggedIn, getUser } from '../js/auth.js';
+    if (!isLoggedIn()) { window.location.href = '/login.html'; }
+
+    import { initNav } from '../js/components/nav.js';
+    initNav();
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      import('../js/auth.js').then(({ logout }) => {
+        logout();
+        window.location.href = '/login.html';
+      });
+    });
+
+    // CTA button — routes to studio
+    document.querySelector('.community-cta-btn').addEventListener('click', () => {
+      window.location.href = '/app/studio.html';
+    });
+
+    // Filter tabs — toggle active class, pure visual
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+      });
+    });
+
+    // Join links — placeholder alert
+    document.querySelectorAll('.community-card-join').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const title = link.closest('.community-card').querySelector('.community-card-title').textContent;
+        alert('Join project: ' + title);
+      });
+    });
+
+    // Font load diagnostic — detect if Google Fonts failed to load
+    // Pattern: check document.fonts for Barlow and Barlow Condensed after fonts.ready,
+    // prepend a sticky error banner to body if either is missing.
+    (async () => {
+      await document.fonts.ready;
+      const missing = [];
+      if (!document.fonts.check('400 16px "Barlow Condensed"')) missing.push('Barlow Condensed');
+      if (!document.fonts.check('400 16px "Barlow"')) missing.push('Barlow');
+      if (missing.length === 0) return;
+
+      const banner = document.createElement('div');
+      banner.className = 'font-diagnostic-banner';
+
+      const label = document.createElement('strong');
+      label.textContent = 'Font load failure';
+      banner.appendChild(label);
+
+      missing.forEach((fontName, i) => {
+        banner.appendChild(document.createTextNode(i === 0 ? ' \u2014 ' : ' and '));
+        const nameEl = document.createElement('span');
+        nameEl.textContent = fontName;
+        banner.appendChild(nameEl);
+      });
+
+      banner.appendChild(document.createTextNode(
+        ' could not be loaded from Google Fonts. Typography on this page is not faithful to the design.'
+        + ' Fix: check network connectivity, disable ad blockers that block fonts.googleapis.com,'
+        + ' or install the font locally and restart the browser.'
+      ));
+
+      document.body.prepend(banner);
+    })();
+  </script>
+
+</body>
+</html>

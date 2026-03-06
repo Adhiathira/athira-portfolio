@@ -6,7 +6,8 @@
  * Exports: getAuth, setAuth, isLoggedIn, login, logout,
  *          setIntendedAction, getIntendedAction, clearIntendedAction,
  *          setSelectedPlan, getSelectedPlan, interceptIfNeeded,
- *          setFirstSession, isFirstSession, clearFirstSession
+ *          setFirstSession, isFirstSession, clearFirstSession,
+ *          getUser
  */
 
 const AUTH_KEY = 'caspers_vid_auth';
@@ -83,4 +84,8 @@ export function isFirstSession() {
 
 export function clearFirstSession() {
   sessionStorage.removeItem('caspers_first_session');
+}
+
+export function getUser() {
+  return getAuth().user || null;
 }
