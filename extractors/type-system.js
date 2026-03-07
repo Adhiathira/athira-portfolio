@@ -33,7 +33,7 @@ function annotateFontAvailability(data) {
       ])
   );
 
-  const unavailableFonts = [];
+  const proprietaryFonts = [];
   const seen = new Set();
 
   const typeScale = Object.fromEntries(
@@ -43,14 +43,14 @@ function annotateFontAvailability(data) {
       const norm = primary.toLowerCase().trim();
       if (GENERIC_FONT_FAMILIES.has(norm) || localFamilies.has(norm)) return [label, entry];
 
-      // Font is unavailable — annotate
-      const note = `${primary} is not available on Google Fonts. Use /get-fallback-font skill to get a recommended alternative.`;
-      if (!seen.has(primary)) { seen.add(primary); unavailableFonts.push(primary); }
-      return [label, { ...entry, unavailable: true, unavailableNote: note, _note: note }];
+      // Font is proprietary — not downloadable from Google Fonts
+      const note = `${primary} is proprietary and not web-accessible. Use /get-fallback-font skill to get a recommended alternative.`;
+      if (!seen.has(primary)) { seen.add(primary); proprietaryFonts.push(primary); }
+      return [label, { ...entry, webAccessible: false, _note: note }];
     })
   );
 
-  return { ...data, typeScale, unavailableFonts };
+  return { ...data, typeScale, proprietaryFonts };
 }
 
 export async function extract(page, { outputDir } = {}) {
