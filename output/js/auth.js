@@ -33,7 +33,7 @@
     const returning = isReturningUser();
     const destination = returning ? '/login' : '/signup';
     console.info('[auth] CTA clicked:', cta, '— routing to:', destination, '| returning:', returning);
-    // In production: window.location.href = destination;
+    window.location.href = destination;
   }
 
   document.addEventListener('click', function (e) {
@@ -51,8 +51,7 @@
     if (loginTarget) {
       e.preventDefault();
       console.debug('[auth] login CTA clicked — element:', loginTarget.textContent.trim());
-      console.info('[auth] routing directly to /login');
-      // In production: window.location.href = '/login';
+      window.location.href = '/login';
       return;
     }
 
