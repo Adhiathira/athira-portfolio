@@ -151,3 +151,21 @@ function handleOAuthMock(provider) {
   sessionStorage.removeItem('redirectAfterAuth');
   window.location.href = redirect;
 }
+
+/**
+ * guardPage — call as first script action on any gated workspace page.
+ * Redirects unauthenticated visitors to /login.html immediately.
+ * Stores current path in sessionStorage so auth pages can redirect back.
+ *
+ * Usage: guardPage(); // call before any DOM access or rendering
+ */
+function guardPage() {
+  if (!window.__auth) {
+    try {
+      sessionStorage.setItem('redirectAfterAuth', window.location.pathname);
+    } catch (e) {
+      // Storage unavailable — proceed without storing
+    }
+    window.location.href = '/login.html';
+  }
+}

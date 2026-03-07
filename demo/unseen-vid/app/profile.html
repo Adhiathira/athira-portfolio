@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile — unseen-vid</title>
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/components.css">
+
+  <script src="../js/shared.js"></script>
+  <script>guardPage();</script>
+
+  <style>
+    /* ── Page layout ─────────────────────────────────────────────────────────── */
+    .profile-page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px var(--space-header-h) 80px;
+    }
+
+    /* ── Dropdown ────────────────────────────────────────────────────────────── */
+    .ws-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      min-width: 140px;
+      z-index: 200;
+    }
+
+    .ws-dropdown__item {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 10px var(--space-header-h);
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      line-height: var(--type-body-lh);
+      color: var(--color-text-body);
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color var(--duration-fast) var(--ease-standard);
+    }
+
+    .ws-dropdown__item:hover {
+      color: var(--color-text-heading);
+      background: var(--color-bg);
+    }
+
+    /* ── Profile header ──────────────────────────────────────────────────────── */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-header-h);
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--space-button-radius);
+      background: var(--color-action);
+      color: var(--color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-primary);
+      font-size: var(--type-h1);
+      font-weight: var(--type-h1-fw);
+      flex-shrink: 0;
+    }
+
+    .profile-meta {
+      flex: 1;
+    }
+
+    .profile-name {
+      font-family: var(--font-primary);
+      font-size: var(--type-h1);
+      font-weight: var(--type-h1-fw);
+      line-height: var(--type-h1-lh);
+      color: var(--color-text-heading);
+      margin: 0;
+    }
+
+    .profile-handle {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      color: var(--color-text-muted);
+      margin-top: 4px;
+      margin-bottom: 0;
+    }
+
+    .profile-points {
+      display: inline-block;
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-text-muted);
+      margin-top: 6px;
+    }
+
+    .share-btn {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      padding: var(--space-cta-v) var(--space-cta-h);
+      border-radius: var(--space-cta-radius);
+      border: 1px solid var(--color-border);
+      background: none;
+      color: var(--color-text-body);
+      cursor: pointer;
+      transition: color var(--duration-fast) var(--ease-standard),
+                  background var(--duration-fast) var(--ease-standard);
+    }
+
+    .share-btn:hover {
+      background: var(--color-action);
+      color: var(--color-surface);
+      border-color: var(--color-action);
+    }
+
+    .share-confirm {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+    }
+
+    .share-confirm[hidden] {
+      display: none;
+    }
+
+    /* ── Section title ───────────────────────────────────────────────────────── */
+    .profile-section-title {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-text-heading);
+      margin-bottom: var(--space-header-h);
+      margin-top: 0;
+    }
+
+    /* ── Portfolio grid ──────────────────────────────────────────────────────── */
+    .portfolio-grid {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-header-v);
+      margin-bottom: 48px;
+      padding: 0;
+    }
+
+    .portfolio-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .portfolio-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--color-action);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-surface);
+      font-size: var(--type-button);
+      border-radius: 2px;
+    }
+
+    .portfolio-title {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      font-weight: var(--type-button-fw);
+      color: var(--color-text-heading);
+      margin: 0;
+    }
+
+    .portfolio-tag {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+      padding: 2px 8px;
+      display: inline-block;
+    }
+
+    .portfolio-view {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-link);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-standard);
+    }
+
+    .portfolio-view:hover {
+      color: var(--color-text-heading);
+    }
+
+    /* ── Draft list ──────────────────────────────────────────────────────────── */
+    .draft-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 48px;
+      padding: 0;
+    }
+
+    .draft-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-bg);
+    }
+
+    .draft-item__title {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      color: var(--color-text-body);
+    }
+
+    .draft-item__link {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-link);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-standard);
+    }
+
+    .draft-item__link:hover {
+      color: var(--color-text-heading);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar (hardcoded authed state) ──────────────────────────────────── -->
+  <nav class="navbar" role="navigation">
+    <a href="/index.html" class="navbar__brand">unseen-vid</a>
+    <ul class="navbar__links" role="list">
+      <li><a href="/app/studio.html" class="nav-item">Create</a></li>
+      <li><a href="/explore.html" class="nav-item">Explore</a></li>
+      <li><a href="/app/community.html" class="nav-item">Community</a></li>
+    </ul>
+    <div style="position:relative;display:flex;align-items:center;">
+      <button type="button" class="navbar__avatar" id="avatarBtn" aria-label="User menu" aria-expanded="false">A</button>
+      <div class="ws-dropdown" id="avatarDropdown" hidden>
+        <a href="/app/profile.html" class="ws-dropdown__item">Profile</a>
+        <a href="#" class="ws-dropdown__item">Settings</a>
+        <button type="button" class="ws-dropdown__item" id="logoutBtn">Log out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Profile page ──────────────────────────────────────────────────────── -->
+  <main class="profile-page">
+
+    <!-- Profile header -->
+    <header class="profile-header">
+      <!-- Large avatar circle: 80px, near-black bg, first letter of user name -->
+      <div class="profile-avatar" id="profileAvatar">A</div>
+      <div class="profile-meta">
+        <h1 class="profile-name" id="profileName">Alex Chen</h1>
+        <p class="profile-handle" id="profileHandle">@alexchen</p>
+        <span class="profile-points" id="profilePoints">1,240 pts</span>
+      </div>
+      <button type="button" class="share-btn" id="shareBtn">Share my profile</button>
+      <span class="share-confirm" id="shareConfirm" hidden>Link copied!</span>
+    </header>
+
+    <!-- Published projects grid -->
+    <section aria-label="Published projects">
+      <h2 class="profile-section-title">Published</h2>
+      <ul class="portfolio-grid" id="publishedGrid"><!-- populated by JS --></ul>
+    </section>
+
+    <!-- Draft projects -->
+    <section aria-label="Draft projects">
+      <h2 class="profile-section-title">Drafts</h2>
+      <ul class="draft-list" id="draftList"><!-- populated by JS --></ul>
+    </section>
+
+    <!-- New project CTA -->
+    <a href="/app/studio.html" class="cta-primary">Start a new project</a>
+
+  </main>
+
+  <script>
+    // ── Mock data ─────────────────────────────────────────────────────────────
+    var mockProjects = [
+      { id: 1, title: 'Sunrise Campaign',    type: 'video', published: true  },
+      { id: 2, title: 'Product Launch Reel', type: 'video', published: false },
+      { id: 3, title: 'Brand Story Short',   type: 'video', published: true  },
+    ];
+
+    // ── Set user info from auth state ─────────────────────────────────────────
+    var user = window.__auth || { name: 'Alex Chen', communityPoints: 1240 };
+    var username = user.email ? user.email.split('@')[0] : 'creator';
+    var displayName = user.name || 'Creator';
+
+    document.getElementById('profileAvatar').textContent = displayName.charAt(0).toUpperCase();
+    document.getElementById('profileName').textContent = displayName;
+    document.getElementById('profileHandle').textContent = '@' + username;
+    document.getElementById('profilePoints').textContent = (user.communityPoints || 0).toLocaleString() + ' pts';
+
+    // ── Avatar nav button ─────────────────────────────────────────────────────
+    var avatarBtn = document.getElementById('avatarBtn');
+    if (avatarBtn) {
+      avatarBtn.textContent = displayName.charAt(0).toUpperCase();
+    }
+
+    // ── Dropdown toggle ───────────────────────────────────────────────────────
+    var dropdown = document.getElementById('avatarDropdown');
+
+    avatarBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isHidden = dropdown.hasAttribute('hidden');
+      if (isHidden) {
+        dropdown.removeAttribute('hidden');
+        avatarBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        dropdown.setAttribute('hidden', '');
+        avatarBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('click', function () {
+      dropdown.setAttribute('hidden', '');
+      avatarBtn.setAttribute('aria-expanded', 'false');
+    });
+
+    // ── Log out ───────────────────────────────────────────────────────────────
+    document.getElementById('logoutBtn').addEventListener('click', function () {
+      localStorage.removeItem('user');
+      window.__auth = null;
+      window.location.href = '/index.html';
+    });
+
+    // ── Share profile link ────────────────────────────────────────────────────
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      var url = window.location.origin + '/creators/' + username;
+      navigator.clipboard.writeText(url).catch(function () {
+        // Clipboard API unavailable — silent fallback
+      });
+      var confirm = document.getElementById('shareConfirm');
+      confirm.removeAttribute('hidden');
+      setTimeout(function () { confirm.setAttribute('hidden', ''); }, 2000);
+    });
+
+    // ── Render published grid ─────────────────────────────────────────────────
+    var publishedGrid = document.getElementById('publishedGrid');
+    mockProjects.filter(function (p) { return p.published; }).forEach(function (p) {
+      var li = document.createElement('li');
+      li.className = 'portfolio-card';
+
+      // PLACEHOLDER: replace with /assets/[project-slug]-thumb.jpg
+      var thumb = document.createElement('div');
+      thumb.className = 'portfolio-thumb';
+      thumb.textContent = '[video thumbnail]';
+
+      var title = document.createElement('p');
+      title.className = 'portfolio-title';
+      title.textContent = p.title;
+
+      var tag = document.createElement('span');
+      tag.className = 'portfolio-tag';
+      tag.textContent = p.type;
+
+      var view = document.createElement('a');
+      view.href = '#';
+      view.className = 'portfolio-view';
+      view.textContent = 'View';
+
+      li.appendChild(thumb);
+      li.appendChild(title);
+      li.appendChild(tag);
+      li.appendChild(view);
+      publishedGrid.appendChild(li);
+    });
+
+    // ── Render drafts ─────────────────────────────────────────────────────────
+    var draftList = document.getElementById('draftList');
+    mockProjects.filter(function (p) { return !p.published; }).forEach(function (p) {
+      var li = document.createElement('li');
+      li.className = 'draft-item';
+
+      var titleSpan = document.createElement('span');
+      titleSpan.className = 'draft-item__title';
+      titleSpan.textContent = p.title;
+
+      var link = document.createElement('a');
+      link.href = '/app/studio.html';
+      link.className = 'draft-item__link';
+      link.textContent = 'Continue';
+
+      li.appendChild(titleSpan);
+      li.appendChild(link);
+      draftList.appendChild(li);
+    });
+  </script>
+
+</body>
+</html>

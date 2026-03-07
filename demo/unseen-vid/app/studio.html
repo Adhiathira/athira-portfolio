@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio — unseen-vid</title>
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/components.css">
+
+  <script src="../js/shared.js"></script>
+  <script>guardPage();</script>
+
+  <style>
+    /* ── Page reset — workspace fills viewport, no body scroll ───────────── */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    /* body overflow stays default — sticky nav relies on body scroll context  */
+    /* overflow control is on .workspace only                                  */
+
+    /* ── Workspace grid ──────────────────────────────────────────────────── */
+    .workspace {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      height: calc(100vh - var(--nav-height));
+      overflow: hidden;
+    }
+
+    /* ── Dropdown ────────────────────────────────────────────────────────── */
+    .ws-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      min-width: 140px;
+      z-index: 200;
+    }
+
+    .ws-dropdown__item {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 10px var(--space-header-h);
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      line-height: var(--type-body-lh);
+      color: var(--color-text-body);
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color var(--duration-fast) var(--ease-standard);
+    }
+
+    .ws-dropdown__item:hover {
+      color: var(--color-text-heading);
+      background: var(--color-bg);
+    }
+
+    /* ── Left column ─────────────────────────────────────────────────────── */
+    .ws-left {
+      padding: var(--space-header-h);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-header-h);
+      border-right: 1px solid var(--color-border);
+      overflow-y: auto;
+    }
+
+    .ws-title {
+      font-family: var(--font-primary);
+      font-size: var(--type-h1);
+      line-height: var(--type-h1-lh);
+      font-weight: var(--type-h1-fw);
+      color: var(--color-text-heading);
+      background: none;
+      border: none;
+      border-bottom: 1px solid transparent;
+      padding: 4px 0;
+      width: 100%;
+      transition: border-color var(--duration-fast) var(--ease-standard);
+    }
+
+    .ws-title:focus {
+      outline: none;
+      border-bottom-color: var(--color-border);
+    }
+
+    .ws-prompt {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      line-height: var(--type-body-lh);
+      color: var(--color-text-body);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: var(--space-header-v) var(--space-header-h);
+      resize: vertical;
+      min-height: 160px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .ws-prompt:focus {
+      outline: none;
+      border-color: var(--color-action);
+    }
+
+    .ws-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .ws-generate-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-action);
+      color: var(--color-surface);
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      line-height: var(--type-button-lh);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      padding: var(--space-cta-v) var(--space-cta-h);
+      border-radius: var(--space-cta-radius);
+      border: 1px solid var(--color-action);
+      cursor: pointer;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    .ws-generate-btn:hover {
+      opacity: 0.85;
+    }
+
+    .ws-publish-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .ws-section-label {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-text-heading);
+      margin-bottom: var(--space-div-mb);
+    }
+
+    .ws-project-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .ws-project-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-bg);
+      cursor: pointer;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    .ws-project-item:hover {
+      opacity: 0.7;
+    }
+
+    .ws-project-name {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      color: var(--color-text-body);
+    }
+
+    .ws-project-badge {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .ws-project-badge--published {
+      background: var(--color-action);
+      color: var(--color-surface);
+    }
+
+    .ws-project-badge--draft {
+      background: var(--color-bg);
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+    }
+
+    /* ── Right column ────────────────────────────────────────────────────── */
+    .ws-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-action);
+      overflow: hidden;
+    }
+
+    .ws-output-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-div-mb);
+      color: var(--color-surface);
+      text-align: center;
+      padding: var(--space-header-h);
+    }
+
+    .ws-output-label {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      color: var(--color-surface);
+      opacity: 0.6;
+    }
+
+    .ws-output-hint {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-surface);
+      opacity: 0.4;
+      margin: 0;
+    }
+
+    /* ── Tutorial overlay ────────────────────────────────────────────────── */
+    .tutorial-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 16, 16, 0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+    }
+
+    .tutorial-overlay[hidden] {
+      display: none;
+    }
+
+    .tutorial-card {
+      background: var(--color-surface);
+      padding: 40px;
+      max-width: 420px;
+      width: 90%;
+    }
+
+    .tutorial-card__title {
+      font-family: var(--font-primary);
+      font-size: var(--type-h1);
+      font-weight: var(--type-h1-fw);
+      color: var(--color-text-heading);
+      margin-top: 0;
+      margin-bottom: var(--space-header-h);
+    }
+
+    .tutorial-steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-header-h);
+      margin-bottom: var(--space-header-h);
+      padding: 0;
+    }
+
+    .tutorial-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .tutorial-step__num {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      font-weight: var(--type-h1-fw);
+      color: var(--color-text-heading);
+      min-width: 24px;
+    }
+
+    .tutorial-step__heading {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      font-weight: var(--type-button-fw);
+      color: var(--color-text-heading);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tutorial-step__body {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      color: var(--color-text-body);
+      line-height: var(--type-body-lh);
+      margin: 0;
+    }
+
+    .tutorial-card__actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar (hardcoded authed state) ──────────────────────────────────── -->
+  <nav class="navbar" role="navigation">
+    <a href="/index.html" class="navbar__brand">unseen-vid</a>
+    <ul class="navbar__links" role="list">
+      <li><a href="/app/studio.html" class="nav-item">Create</a></li>
+      <li><a href="/explore.html" class="nav-item">Explore</a></li>
+      <li><a href="/app/community.html" class="nav-item">Community</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:var(--space-header-h);position:relative;">
+      <button
+        type="button"
+        class="cta-primary"
+        id="newProjectBtn"
+        style="font-size:var(--type-button);padding:var(--space-cta-v) var(--space-cta-h);"
+      >New project</button>
+      <div style="position:relative;">
+        <button
+          type="button"
+          class="navbar__avatar"
+          id="avatarBtn"
+          aria-label="User menu"
+          aria-expanded="false"
+        >A</button>
+        <div class="ws-dropdown" id="avatarDropdown" hidden>
+          <a href="/app/profile.html" class="ws-dropdown__item">Profile</a>
+          <a href="#" class="ws-dropdown__item">Settings</a>
+          <button type="button" class="ws-dropdown__item" id="logoutBtn">Log out</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Workspace ─────────────────────────────────────────────────────────── -->
+  <div class="workspace">
+
+    <!-- Left column — prompt and controls -->
+    <div class="ws-left">
+
+      <!-- Project title — editable, no visible border until focused -->
+      <input
+        type="text"
+        id="projectTitle"
+        class="ws-title"
+        placeholder="Untitled project"
+        aria-label="Project title"
+      >
+
+      <!-- Prompt area -->
+      <textarea
+        id="promptArea"
+        class="ws-prompt"
+        placeholder="Describe your video..."
+        aria-label="Video generation prompt"
+      ></textarea>
+
+      <!-- Actions -->
+      <div class="ws-actions">
+        <button type="button" class="ws-generate-btn">Generate</button>
+        <button type="button" class="cta-secondary ws-publish-btn" disabled>Publish</button>
+      </div>
+
+      <!-- Projects list -->
+      <div class="ws-projects">
+        <h2 class="ws-section-label">Your projects</h2>
+        <ul class="ws-project-list" id="projectList"></ul>
+      </div>
+
+    </div>
+
+    <!-- Right column — video output zone -->
+    <div class="ws-right">
+      <!-- PLACEHOLDER: replace with <video> element when output exists -->
+      <!-- PLACEHOLDER: replace with /assets/[project-slug]-output.mp4 -->
+      <div class="ws-output-placeholder">
+        <span class="ws-output-label">[video output]</span>
+        <p class="ws-output-hint">Your generated video will appear here</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Tutorial overlay ───────────────────────────────────────────────────── -->
+  <div class="tutorial-overlay" id="tutorialOverlay" hidden>
+    <div class="tutorial-card">
+      <h2 class="tutorial-card__title">Get started with unseen-vid</h2>
+      <ol class="tutorial-steps">
+        <li class="tutorial-step">
+          <span class="tutorial-step__num">1</span>
+          <div>
+            <strong class="tutorial-step__heading">Describe your video</strong>
+            <p class="tutorial-step__body">Type a detailed prompt in the prompt area.</p>
+          </div>
+        </li>
+        <li class="tutorial-step">
+          <span class="tutorial-step__num">2</span>
+          <div>
+            <strong class="tutorial-step__heading">Generate</strong>
+            <p class="tutorial-step__body">Our AI creates your video in seconds.</p>
+          </div>
+        </li>
+        <li class="tutorial-step">
+          <span class="tutorial-step__num">3</span>
+          <div>
+            <strong class="tutorial-step__heading">Publish</strong>
+            <p class="tutorial-step__body">Share with the community and earn points.</p>
+          </div>
+        </li>
+      </ol>
+      <div class="tutorial-card__actions">
+        <button type="button" class="ws-generate-btn" id="tutorialStart">Get started</button>
+        <button type="button" class="cta-secondary" id="tutorialSkip">Skip</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Mock data ─────────────────────────────────────────────────────────────
+    var mockProjects = [
+      { id: 1, title: 'Sunrise Campaign',    type: 'video', published: true  },
+      { id: 2, title: 'Product Launch Reel', type: 'video', published: false },
+      { id: 3, title: 'Brand Story Short',   type: 'video', published: true  },
+    ];
+
+    // ── Avatar initial from auth user ─────────────────────────────────────────
+    var user = window.__auth || { name: 'A', communityPoints: 0 };
+    var avatarBtn = document.getElementById('avatarBtn');
+    if (avatarBtn && user.name) {
+      avatarBtn.textContent = user.name.charAt(0).toUpperCase();
+    }
+
+    // ── Dropdown toggle ───────────────────────────────────────────────────────
+    var dropdown = document.getElementById('avatarDropdown');
+
+    avatarBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isHidden = dropdown.hasAttribute('hidden');
+      if (isHidden) {
+        dropdown.removeAttribute('hidden');
+        avatarBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        dropdown.setAttribute('hidden', '');
+        avatarBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('click', function () {
+      dropdown.setAttribute('hidden', '');
+      avatarBtn.setAttribute('aria-expanded', 'false');
+    });
+
+    // ── Log out ───────────────────────────────────────────────────────────────
+    document.getElementById('logoutBtn').addEventListener('click', function () {
+      localStorage.removeItem('user');
+      window.__auth = null;
+      window.location.href = '/index.html';
+    });
+
+    // ── Render project list (DOM construction — no user-controlled strings) ───
+    var list = document.getElementById('projectList');
+    mockProjects.forEach(function (p) {
+      var li = document.createElement('li');
+      li.className = 'ws-project-item';
+
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'ws-project-name';
+      nameSpan.textContent = p.title;
+
+      var badge = document.createElement('span');
+      badge.className = 'ws-project-badge ws-project-badge--' + (p.published ? 'published' : 'draft');
+      badge.textContent = p.published ? 'Published' : 'Draft';
+
+      li.appendChild(nameSpan);
+      li.appendChild(badge);
+      list.appendChild(li);
+    });
+
+    // ── Tutorial overlay ──────────────────────────────────────────────────────
+    var overlay = document.getElementById('tutorialOverlay');
+    if (!localStorage.getItem('tutorialSeen')) {
+      overlay.removeAttribute('hidden');
+    }
+
+    document.getElementById('tutorialStart').addEventListener('click', function () {
+      localStorage.setItem('tutorialSeen', 'true');
+      overlay.setAttribute('hidden', '');
+    });
+
+    document.getElementById('tutorialSkip').addEventListener('click', function () {
+      overlay.setAttribute('hidden', '');
+    });
+
+    // ── New project button — reset form ───────────────────────────────────────
+    document.getElementById('newProjectBtn').addEventListener('click', function () {
+      document.getElementById('projectTitle').value = '';
+      document.getElementById('promptArea').value = '';
+    });
+  </script>
+
+</body>
+</html>
