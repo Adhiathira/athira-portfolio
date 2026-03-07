@@ -212,3 +212,97 @@ function initGalleryFilters() {
     start();
   }
 })();
+
+
+// ── Community counter animation ───────────────────────────────────────────────
+// Fires once when .community-stat__number scrolls into view.
+// Easing matches --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1) from motion.json.
+// Duration matches --duration-reveal: 1s from tokens.css.
+
+(function initCounterAnimation() {
+  var counterEl = document.querySelector('.community-stat__number');
+  if (!counterEl) { return; }
+
+  var target = parseInt(counterEl.getAttribute('data-target'), 10);
+  var duration = 1000; // 1s — matches --duration-reveal
+
+  // Cubic bezier solver for cubic-bezier(0.16, 1, 0.3, 1) from motion.json.
+  // This is the same easing used for kinetic span reveals (--ease-reveal).
+  // Implements the standard cubic bezier parametric formula:
+  //   P(t) = (1-t)^3*P0 + 3*(1-t)^2*t*P1 + 3*(1-t)*t^2*P2 + t^3*P3
+  // where P0=(0,0), P1=(0.16,1), P2=(0.3,1), P3=(1,1) for the Y axis,
+  // and   P0=(0,0), P1=(0.16,0), P2=(0.3,0), P3=(1,1) for the X axis.
+  // We solve X(t)=progress iteratively to find t, then evaluate Y(t).
+  var P1x = 0.16, P1y = 1.0;
+  var P2x = 0.30, P2y = 1.0;
+
+  function cubicBezierX(t) {
+    var mt = 1 - t;
+    return 3 * mt * mt * t * P1x + 3 * mt * t * t * P2x + t * t * t;
+  }
+
+  function cubicBezierY(t) {
+    var mt = 1 - t;
+    return 3 * mt * mt * t * P1y + 3 * mt * t * t * P2y + t * t * t;
+  }
+
+  // Newton-Raphson solve for t given x — converges quickly for well-behaved curves
+  function solveBezierT(x) {
+    var t = x; // initial guess
+    for (var i = 0; i < 8; i++) {
+      var xCurrent = cubicBezierX(t) - x;
+      var mt = 1 - t;
+      var slope = 3 * mt * mt * P1x + 6 * mt * t * P2x + 3 * t * t;
+      if (Math.abs(slope) < 1e-6) { break; }
+      t -= xCurrent / slope;
+    }
+    return Math.max(0, Math.min(1, t));
+  }
+
+  function easeReveal(progress) {
+    if (progress <= 0) { return 0; }
+    if (progress >= 1) { return 1; }
+    return cubicBezierY(solveBezierT(progress));
+  }
+
+  var announceEl = document.querySelector('.community-stat__announce');
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var started = false;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && !started) {
+        started = true;
+
+        var finalText = target.toLocaleString('en-US');
+
+        if (prefersReduced) {
+          counterEl.textContent = finalText;
+          if (announceEl) { announceEl.textContent = finalText + ' creators making things today'; }
+          observer.unobserve(entry.target);
+          return;
+        }
+
+        var startTime = performance.now();
+
+        function tick(now) {
+          var elapsed = now - startTime;
+          var progress = Math.min(elapsed / duration, 1);
+          var eased = easeReveal(progress);
+          counterEl.textContent = Math.round(eased * target).toLocaleString('en-US');
+          if (progress < 1) {
+            requestAnimationFrame(tick);
+          } else {
+            counterEl.textContent = finalText;
+            if (announceEl) { announceEl.textContent = finalText + ' creators making things today'; }
+          }
+        }
+
+        requestAnimationFrame(tick);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  observer.observe(counterEl);
+})();
