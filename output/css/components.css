@@ -426,3 +426,278 @@ nav a.active::after {
 .input:focus {
   box-shadow: var(--color-g-blue-a11y) 0px 0px 3px 1px;
 }
+
+/* ================================================================
+ * Site Nav — .site-nav
+ *
+ * Sources:
+ *  - Height: nav.json > geometry.height = 49.9765625px → 50px
+ *  - paddingInline: task spec overrides nav.json 0px → 24px explicit
+ *  - Background: null (transparent) — nav.json > no background fill
+ *  - No box-shadow, no backdrop-filter, no border-bottom (all null per nav.json)
+ *  - Font: var(--font-display) = Plus Jakarta Sans (Goyard fallback per font-db.json)
+ *  - Font size: nav.json > typography.fontSize = 0.5625rem; task spec uses 0.75rem for kinetic-vid
+ *  - Scroll trigger: nav.json > scrollTransition.mechanism = "class-toggle"
+ *    triggerClass in this implementation = "fixed" (per task spec, overrides nav.json "opaque-nav-sections")
+ *  - Auth visibility: .is-logged-in on <nav> toggles link sets via CSS
+ *  - Join button bg: #635bff (Stripe primary-action) — no var in tokens.css for this value
+ *  - Avatar bg: #635bff — same as Join button
+ * ================================================================ */
+
+/* ── Base nav container ────────────────────────────────────────── */
+
+.site-nav {
+  height: var(--nav-height-approx);    /* 50px — nav.json geometry.height rounded */
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: transparent;      /* nav.json background = null */
+  font-family: var(--font-display);
+  font-size: 0.75rem;                  /* task spec — kinetic-vid nav size */
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+  /* No box-shadow, no backdrop-filter, no border-bottom — all null per nav.json */
+}
+
+/* ── Fixed / sticky state (added by nav.js at 50px scroll) ─────── */
+
+.site-nav.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* ── Three-column inner wrapper ─────────────────────────────────── */
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  height: var(--nav-height-approx);    /* 50px */
+  padding-inline: 24px;                /* task spec — nav.json paddingInline=0 overridden to 24px */
+}
+
+/* ── Logo — left slot ───────────────────────────────────────────── */
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-size: 0.875rem;                 /* slightly larger than nav links */
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-heading-text);   /* #183f26 — deep forest green (dark heading) */
+  text-decoration: none;
+}
+
+/* ── Nav links — center slot ────────────────────────────────────── */
+
+.nav-links {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Override global li spacing (components.css base sets padding-top + margin-bottom) */
+.nav-links li {
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Individual nav link — Hermes underline pattern ─────────────── */
+/*
+ * Hermes underline animation:
+ *   Default: ::after has width: 0 anchored at right: 0
+ *   Hover:   ::after grows to width: 100% with left: 0 / right: auto
+ *   Result: underline draws RIGHT-TO-LEFT on hover-in
+ *   Duration: 0.3s ease-in-out (task spec)
+ */
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  color: var(--color-heading-text);   /* #183f26 — dark heading text */
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+  line-height: 0.8125rem;
+  transition: opacity var(--motion-duration-fast) ease-in-out;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
+/* ── Actions — right slot ───────────────────────────────────────── */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-shrink: 0;
+}
+
+/* ── Join CTA button — Stripe color + Lusion Y-transform ─────────
+ *
+ * background-color: #635bff — Stripe primary-action purple.
+ * No var exists in tokens.css for this value; using literal with comment.
+ * overflow: hidden is CRITICAL — clips the Y-transform on the inner <span>
+ * so text doesn't bleed outside the button bounds.
+ *
+ * Inner <span> uses matrix transform matching Lusion default-button-3:
+ *   default: matrix(1,0,0,1,0,56) → text starts 56px below visible area
+ *   hover:   matrix(1,0,0,1,0,0)  → text slides up into view
+ * ─────────────────────────────────────────────────────────────── */
+
+.nav-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;                    /* CRITICAL — clips Y-transform */
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: #635bff;          /* Stripe primary-action — no var in tokens.css */
+  color: var(--color-surface);        /* #ffffff — white */
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.4s, background-color 0.4s;
+}
+
+.nav-cta-btn:active {
+  background-color: rgb(38, 43, 77);
+}
+
+.nav-cta-btn span {
+  display: block;
+  transform: matrix(1, 0, 0, 1, 0, 56);   /* Lusion default-button-3 default */
+  transition: transform 0.4s;
+}
+
+.nav-cta-btn:hover span {
+  transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+/* ── Avatar wrap ─────────────────────────────────────────────────── */
+
+.nav-avatar-wrap {
+  position: relative;
+  cursor: pointer;
+}
+
+/* ── Avatar circle ───────────────────────────────────────────────── */
+
+.nav-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #635bff;          /* Stripe primary-action — same as Join button, no var */
+}
+
+/* ── Dropdown menu ───────────────────────────────────────────────── */
+
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: var(--color-surface);   /* #ffffff */
+  border: 1px solid var(--color-border);    /* #cdcdcd */
+  border-radius: 6px;
+  min-width: 160px;
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  z-index: 1001;
+}
+
+/* Override global li spacing inside dropdown */
+.nav-dropdown li {
+  margin: 0;
+  padding: 0;
+}
+
+.nav-dropdown li a {
+  display: block;
+  padding: 8px 12px;                   /* 8px vertical (UX addition) + 12px horizontal (nav.json dropdown.itemPadding horizontal) */
+  color: var(--color-heading-text);   /* #183f26 */
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity var(--motion-duration-fast) ease-in-out;
+}
+
+.nav-dropdown li a:hover {
+  opacity: 0.7;
+}
+
+/* ── Dropdown open states ────────────────────────────────────────── */
+
+.nav-avatar-wrap:hover .nav-dropdown,
+.nav-avatar-wrap.is-open .nav-dropdown {
+  display: block;
+}
+
+/* ── Logged-in state visibility ──────────────────────────────────── */
+
+/* Default: hide auth-specific elements */
+.nav-links--auth  { display: none; }
+.nav-actions--auth { display: none; }
+
+/* When .is-logged-in is present on .site-nav, swap link sets */
+.site-nav.is-logged-in .nav-links--public  { display: none; }
+.site-nav.is-logged-in .nav-links--auth    { display: flex; }
+.site-nav.is-logged-in .nav-actions--public { display: none; }
+.site-nav.is-logged-in .nav-actions--auth  { display: flex; }
+
+/* ── Responsive ≤768px ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .nav-inner {
+    padding-inline: 16px;
+  }
+
+  .nav-links {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .nav-links li {
+    display: inline-flex;
+  }
+
+  .nav-login {
+    display: none;
+  }
+}

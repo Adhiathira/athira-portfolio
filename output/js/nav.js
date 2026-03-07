@@ -1,54 +1,85 @@
 /**
- * nav.js
- * Sticky nav scroll class-toggle.
+ * nav.js — Kinetic-vid nav scroll class-toggle + auth state + dropdown
  *
- * Implements the Hermes/Goyard-style scroll class-toggle from nav.json:
- *   scrollTransition.mechanism = "class-toggle"
- *   scrollTransition.triggerClass = "opaque-nav-sections" (mapped to .is-scrolled here)
- *   scrollTransition.duration = "1s"
- *   scrollTransition.easing = "ease-in"
- *
- * nav.json > background.transition = "1s" — CSS handles the animation,
- * JS only toggles the class. This keeps the JS minimal and the CSS authoritative.
- *
- * nav.json > geometry:
- *   height = 49.9765625px → trigger fires at scrollY > 50 (approx nav height)
- *   position = "absolute" → nav starts above content (not in flow)
- *
- * CSS transition on .is-scrolled is defined in components.css:
- *   background-color: transition 1s ease-in (var(--motion-nav-duration) var(--motion-nav-easing))
- *
- * nav.json > linkHover.transition = "color 0.15s ease-in-out"
- * (CSS already applies this via nav a { transition: var(--motion-nav-link) })
+ * nav.json scrollTransition:
+ *   mechanism: "class-toggle"
+ *   triggerClass: "fixed"
+ *   threshold: 50px (geometry.height)
  */
 
 (function () {
   'use strict';
 
-  const nav = document.querySelector('nav');
+  const nav = document.getElementById('site-nav');
 
   if (!nav) {
-    console.debug('[nav] No <nav> element found — scroll toggle skipped.');
+    console.debug('[nav] No #site-nav found — skipped.');
     return;
   }
 
-  // Trigger threshold: nav.json geometry.height ≈ 50px
+  /* ── Sticky scroll class-toggle ───────────────────────────── */
   const SCROLL_THRESHOLD = 50;
 
-  // Scroll handler — passive listener for performance
   function onScroll() {
-    const isScrolled = window.scrollY > SCROLL_THRESHOLD;
-
-    if (isScrolled !== nav.classList.contains('is-scrolled')) {
-      nav.classList.toggle('is-scrolled', isScrolled);
-      console.debug('[nav] scroll state changed — is-scrolled:', isScrolled, '| scrollY:', window.scrollY);
+    const shouldBeFixed = window.scrollY > SCROLL_THRESHOLD;
+    if (shouldBeFixed !== nav.classList.contains('fixed')) {
+      nav.classList.toggle('fixed', shouldBeFixed);
     }
   }
 
-  // Set initial state without triggering unnecessary class toggling
   onScroll();
-
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  console.debug('[nav] scroll class-toggle initialised — threshold:', SCROLL_THRESHOLD, 'px');
+  /* ── Auth state: is-logged-in ─────────────────────────────── */
+  const authToken = localStorage.getItem('auth_token');
+  if (authToken) {
+    nav.classList.add('is-logged-in');
+    const authLinks    = nav.querySelector('.nav-links--auth');
+    const publicLinks  = nav.querySelector('.nav-links--public');
+    const authActions  = nav.querySelector('.nav-actions--auth');
+    const publicActions = nav.querySelector('.nav-actions--public');
+    if (authLinks)     authLinks.removeAttribute('aria-hidden');
+    if (publicLinks)   publicLinks.setAttribute('aria-hidden', 'true');
+    if (authActions)   authActions.removeAttribute('aria-hidden');
+    if (publicActions) publicActions.setAttribute('aria-hidden', 'true');
+  }
+
+  /* ── Logout ───────────────────────────────────────────────── */
+  const logoutBtn = document.getElementById('nav-logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      localStorage.removeItem('auth_token');
+      window.location.reload();
+    });
+  }
+
+  /* ── Avatar dropdown (hover desktop / click mobile) ──────── */
+  const avatarWrap = nav.querySelector('.nav-avatar-wrap');
+  if (avatarWrap) {
+    avatarWrap.addEventListener('click', function () {
+      const isOpen = avatarWrap.classList.toggle('is-open');
+      avatarWrap.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!avatarWrap.contains(e.target)) {
+        avatarWrap.classList.remove('is-open');
+        avatarWrap.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    avatarWrap.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        avatarWrap.classList.remove('is-open');
+        avatarWrap.setAttribute('aria-expanded', 'false');
+      } else if ((e.key === 'Enter' || e.key === ' ') && e.target === avatarWrap) {
+        e.preventDefault();
+        const isOpen = avatarWrap.classList.toggle('is-open');
+        avatarWrap.setAttribute('aria-expanded', String(isOpen));
+      }
+    });
+  }
+
+  console.debug('[nav] initialised — threshold:', SCROLL_THRESHOLD, 'px');
 }());
