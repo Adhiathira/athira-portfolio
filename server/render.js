@@ -2563,9 +2563,13 @@ export function renderSite(siteName, siteDir, registry) {
       const data = readJson(path.join(siteDir, entry.slug, jsonFile));
       return { entry, data };
     }
-    const mdFile = entry.outputFiles.find(f => f.endsWith('.md'));
-    if (mdFile) {
-      const markdown = readMarkdown(path.join(siteDir, entry.slug, mdFile));
+    const mdFiles = (entry.displayFiles || entry.outputFiles).filter(f => f.endsWith('.md'));
+    if (mdFiles.length > 0) {
+      let markdown = null;
+      for (const mdFile of mdFiles) {
+        markdown = readMarkdown(path.join(siteDir, entry.slug, mdFile));
+        if (markdown) break;
+      }
       return { entry, data: markdown ? { markdown } : {} };
     }
     return { entry, data: {} };
