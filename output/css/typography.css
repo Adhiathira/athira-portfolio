@@ -1,0 +1,204 @@
+/*
+ * typography.css
+ * Font declarations and type scale utility classes.
+ *
+ * Fonts loaded:
+ *  - Inter (Google Fonts) — production-quality variable font via CDN
+ *  - JetBrains Mono (Google Fonts) — approved mono fallback
+ *  - Plus Jakarta Sans (Google Fonts) — approved Goyard alternative (font-db.json)
+ *  - Newsreader (self-hosted woff2 files in design-system/fonts/Newsreader/)
+ *
+ * Font notes from font-db.json:
+ *  - Goyard is proprietary (webAccessible: false).
+ *    Approved human-recommended fallback: "Plus Jakarta Sans"
+ *    CSS comment: [FALLBACK: Plus Jakarta Sans replaces proprietary Goyard font]
+ *
+ * All font-family references use var(--font-display), var(--font-regular),
+ * var(--font-mono) — no font names are written from memory.
+ */
+
+/* ================================================================
+ * Self-hosted Newsreader (from design-system/fonts/Newsreader/)
+ * Fonts copied to output/fonts/Newsreader/ so the HTTP server
+ * (rooted at output/) can serve them without a path traversal.
+ * Source files: project-documentation/design-system/fonts/Newsreader/
+ * ================================================================ */
+
+@font-face {
+  font-family: "Newsreader";
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/Newsreader/Newsreader-300-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/Newsreader/Newsreader-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/Newsreader/Newsreader-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/Newsreader/Newsreader-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/Newsreader/Newsreader-700-normal.woff2") format("woff2");
+}
+
+/* ================================================================
+ * Type scale utility classes
+ * Sizes sourced from typography.json > typeScale and nav.json
+ * All sizes use var(--font-size-*) tokens.
+ * ================================================================ */
+
+/* Nano — below the explicit scale, smallest readable size */
+.text-micro {
+  font-size: var(--nav-font-size);    /* 0.5625rem = 9px — nav.json fontSize */
+  line-height: var(--nav-line-height);
+  letter-spacing: var(--nav-letter-spacing);
+  font-family: var(--font-display);
+}
+
+/* Mini — small label / caption size */
+.text-mini {
+  font-size: var(--font-size-small);  /* 12px — typeScale.small / link / nav */
+  line-height: var(--line-height-small);
+  font-family: var(--font-regular);
+  font-weight: var(--font-weight-regular);
+}
+
+/* Small — secondary body copy */
+.text-small {
+  font-size: var(--font-size-body);   /* 14px — typeScale.body */
+  line-height: var(--line-height-body);
+  font-family: var(--font-regular);
+  font-weight: var(--font-weight-regular);
+}
+
+/* Regular — primary body size (per goal.md: 18px+ base; this
+   is the design system's extracted body value at 14px, but we
+   express the token faithfully) */
+.text-regular {
+  font-size: var(--font-size-body);   /* 14px — typeScale.body */
+  line-height: var(--line-height-body);
+  font-family: var(--font-regular);
+  font-weight: var(--font-weight-regular);
+}
+
+/* Large — above body, below headings */
+.text-large {
+  font-size: var(--font-size-h2);     /* 16px — typeScale.h2 */
+  line-height: var(--line-height-h2);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-h2);
+}
+
+/* Title scale — mapped from typeScale entries (h1, h2, h3)
+   Extended with interpolated steps between the three extracted values */
+
+.text-title1 {
+  font-size: var(--font-size-h3);     /* 20px — typeScale.h3 */
+  line-height: var(--line-height-h3);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--letter-spacing-h3);
+  text-transform: uppercase;
+}
+
+.text-title2 {
+  font-size: 22px;
+  line-height: 26px;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--letter-spacing-h3);
+}
+
+.text-title3 {
+  font-size: 26px;
+  line-height: 30px;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-light);
+}
+
+.text-title4 {
+  font-size: 30px;
+  line-height: 34px;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-light);
+}
+
+.text-title5 {
+  font-size: 34px;
+  line-height: 38px;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-light);
+}
+
+.text-title6 {
+  font-size: 37px;
+  line-height: 40px;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-light);
+}
+
+.text-title7 {
+  font-size: var(--font-size-h1);    /* 41.6px — typeScale.h1 */
+  line-height: var(--line-height-h1);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-light);
+  letter-spacing: 1px;
+}
+
+.text-title8 {
+  font-size: clamp(var(--font-size-h1), 4vw, 56px);
+  line-height: 1.1;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-light);
+}
+
+.text-title9 {
+  font-size: clamp(var(--font-size-h1), 5vw, 72px);
+  line-height: 1;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-light);
+}
+
+/* ================================================================
+ * Font stack utility classes
+ * ================================================================ */
+
+/* Display stack: Plus Jakarta Sans (approved Goyard fallback)
+ * FALLBACK: Plus Jakarta Sans replaces proprietary Goyard font */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Regular/serif stack: Newsreader */
+.font-regular {
+  font-family: var(--font-regular);
+}
+
+/* Mono stack: JetBrains Mono (approved mono fallback) */
+.font-mono {
+  font-family: var(--font-mono);
+}

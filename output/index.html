@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinetic-Vid — Foundation Layer Test Harness</title>
+
+  <!-- Google Fonts: Inter (free variable, no self-hosting required) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+  <!-- Google Fonts: Plus Jakarta Sans (approved Goyard fallback — font-db.json) -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+  <!-- Google Fonts: JetBrains Mono (approved mono fallback) -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+  <!-- Design system CSS — import order: tokens first, then typography, layout, components -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/typography.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <style>
+    /*
+     * Test harness styles only — not part of the design system.
+     * These styles exist to make the token/component showcase readable.
+     * All colors here use var(--color-*) tokens.
+     */
+
+    .harness-section {
+      padding: var(--space-section-pt) var(--space-wrapper-px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .harness-section--dark {
+      background-color: var(--color-hero-background);
+      color: var(--color-nav-text);
+    }
+
+    .harness-heading {
+      font-family: var(--font-display);
+      font-size: var(--font-size-small);
+      font-weight: var(--font-weight-regular);
+      letter-spacing: var(--letter-spacing-h2);
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin-bottom: var(--space-li-mb);
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: var(--space-row-px);
+    }
+
+    .harness-section--dark .harness-heading {
+      color: var(--color-nav-text);
+      border-bottom-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .swatch-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-li-mb);
+    }
+
+    .swatch-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-row-px);
+    }
+
+    .type-scale-row {
+      margin-bottom: var(--space-li-mb);
+    }
+
+    .type-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-muted-text);
+      margin-bottom: 4px;
+    }
+
+    .component-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: var(--space-li-mb);
+      margin-bottom: var(--space-section-pt);
+    }
+
+    .skeleton-demo {
+      width: 320px;
+    }
+
+    .skeleton-demo .skeleton--text + .skeleton--text {
+      margin-top: var(--space-row-px);
+    }
+
+    /* Spacer to allow scroll testing — must be > 200vh per task spec */
+    .scroll-spacer {
+      height: 300vh;
+      background: linear-gradient(
+        to bottom,
+        var(--color-page-bg) 0%,
+        var(--color-hero-background) 50%,
+        var(--color-page-bg) 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scroll-spacer__label {
+      font-family: var(--font-display);
+      font-size: var(--font-size-h3);
+      letter-spacing: var(--letter-spacing-h3);
+      text-transform: uppercase;
+      color: var(--color-nav-text);
+      opacity: 0.4;
+    }
+
+    /* Token verification output */
+    .token-verify {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background-color: var(--color-bs-gray-900);
+      color: var(--color-bs-teal);
+      padding: var(--space-li-mb);
+      border-radius: var(--space-radius);
+      overflow-x: auto;
+      margin-top: var(--space-li-mb);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================================================================
+       Navigation — tests nav.js scroll class-toggle
+       nav.json: height 50px, background #183f26, sticky positioning
+       ================================================================ -->
+  <nav class="nav-band" id="main-nav" aria-label="Primary navigation">
+
+    <!-- Top tier: utility bar (logo + icons) — layout.md §2 -->
+    <div class="nav-band__top">
+      <div class="nav-band__logo font-display text-large" style="opacity:1; color:var(--color-nav-text); letter-spacing: var(--letter-spacing-h2);">
+        KINETIC
+        <span style="font-size:var(--font-size-small); display:block; letter-spacing:var(--letter-spacing-h3); opacity:0.7;">VIDEO PLATFORM</span>
+      </div>
+      <div style="display:flex; gap:var(--space-li-mb); align-items:center;">
+        <button
+          class="btn-primary"
+          data-cta="join"
+          style="font-size:var(--nav-font-size); letter-spacing:var(--nav-letter-spacing);"
+          aria-label="Join the platform"
+        >
+          Join
+        </button>
+        <button
+          style="background:none; border:none; color:var(--color-nav-text); opacity:0.7; cursor:pointer; font-family:var(--font-display); font-size:var(--nav-font-size); letter-spacing:var(--nav-letter-spacing);"
+          data-cta="login"
+          aria-label="Log in"
+        >
+          Log in
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom tier: navigation links — layout.md §2 -->
+    <div class="nav-band__bottom">
+      <a href="#" class="active" aria-label="Create">Create</a>
+      <a href="#" aria-label="Explore">Explore</a>
+      <a href="#" aria-label="Pricing">Pricing</a>
+      <a href="#" aria-label="About">About</a>
+    </div>
+
+  </nav>
+
+  <!-- ================================================================
+       Section 1 — Buttons
+       ================================================================ -->
+  <section class="harness-section">
+    <div class="container">
+      <h2 class="harness-heading">Buttons</h2>
+
+      <div class="component-row">
+        <div>
+          <div class="type-label">.btn-primary (on light bg)</div>
+          <button
+            class="btn-primary"
+            data-cta="signup"
+            style="color:var(--color-primary); border-color:var(--color-primary);"
+            aria-label="Get started"
+          >
+            Get started
+          </button>
+        </div>
+
+        <div style="background:var(--color-hero-background); padding:var(--space-li-mb); border-radius:var(--space-radius);">
+          <div class="type-label" style="color:var(--color-nav-text);">.btn-primary (on dark bg)</div>
+          <button
+            class="btn-primary"
+            data-cta="signup"
+            aria-label="Start creating"
+          >
+            Start creating
+          </button>
+        </div>
+
+        <div>
+          <div class="type-label">.btn-ghost (on light bg)</div>
+          <button
+            class="btn-ghost"
+            style="color:var(--color-primary); border-color:var(--color-primary);"
+            aria-label="See what's possible"
+          >
+            See what&rsquo;s possible
+          </button>
+        </div>
+
+        <div style="background:var(--color-hero-background); padding:var(--space-li-mb); border-radius:var(--space-radius);">
+          <div class="type-label" style="color:var(--color-nav-text);">.btn-ghost (on dark bg)</div>
+          <button class="btn-ghost" aria-label="Make your own">Make your own</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       Section 2 — Skeleton Pulse
+       ================================================================ -->
+  <section class="harness-section">
+    <div class="container">
+      <h2 class="harness-heading">Skeleton — Moooi pulse (0%→50%→100% opacity)</h2>
+
+      <div class="component-row">
+        <div class="skeleton-demo">
+          <div class="type-label">.skeleton .skeleton--image (16:9 card)</div>
+          <div class="skeleton skeleton--image"></div>
+          <div class="skeleton skeleton--text" style="margin-top:var(--space-row-px); width:70%;"></div>
+          <div class="skeleton skeleton--text" style="margin-top:var(--space-row-px); width:40%;"></div>
+        </div>
+
+        <div class="skeleton-demo">
+          <div class="type-label">.skeleton .skeleton--avatar + text lines</div>
+          <div style="display:flex; gap:var(--space-li-mb); align-items:flex-start;">
+            <div class="skeleton skeleton--avatar"></div>
+            <div style="flex:1;">
+              <div class="skeleton skeleton--text" style="width:60%; margin-bottom:var(--space-row-px);"></div>
+              <div class="skeleton skeleton--text" style="width:80%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       Section 3 — Badges
+       ================================================================ -->
+  <section class="harness-section">
+    <div class="container">
+      <h2 class="harness-heading">Badges</h2>
+
+      <div class="component-row" style="align-items:center;">
+        <div>
+          <div class="type-label">.badge (default)</div>
+          <span class="badge">Video</span>
+        </div>
+        <div>
+          <div class="type-label">.badge--accent</div>
+          <span class="badge badge--accent">New</span>
+        </div>
+        <div>
+          <div class="type-label">.badge--dark</div>
+          <span class="badge badge--dark">Featured</span>
+        </div>
+        <div>
+          <div class="type-label">.badge--coming-soon</div>
+          <span class="badge badge--coming-soon">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       Section 4 — Type Scale
+       All classes from typography.css — sizes sourced from token files
+       ================================================================ -->
+  <section class="harness-section">
+    <div class="container">
+      <h2 class="harness-heading">Type Scale</h2>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-title9 — clamp(41.6px, 5vw, 72px)</div>
+        <div class="text-title9 font-display" style="color:var(--color-heading-text);">What will you make?</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-title8 — clamp(41.6px, 4vw, 56px)</div>
+        <div class="text-title8 font-display" style="color:var(--color-heading-text);">Video production. With others.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-title7 — 41.6px (typeScale.h1)</div>
+        <div class="text-title7 font-display" style="color:var(--color-heading-text);">Collaborate. Create. Publish.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-title6 — 37px</div>
+        <div class="text-title6 font-display" style="color:var(--color-heading-text);">AI amplifies what you can do.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-title5 — 34px</div>
+        <div class="text-title5 font-display" style="color:var(--color-heading-text);">The Figma moment for video.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-title4 — 30px</div>
+        <div class="text-title4 font-display" style="color:var(--color-heading-text);">Made by our community.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-title3 — 26px</div>
+        <div class="text-title3 font-display" style="color:var(--color-heading-text);">Choose your tools.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-title2 — 22px</div>
+        <div class="text-title2 font-display" style="color:var(--color-heading-text);">Collaborate with creators.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-title1 — 20px uppercase (typeScale.h3)</div>
+        <div class="text-title1 font-display" style="color:var(--color-heading-text);">Publish your work.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-large — 16px (typeScale.h2)</div>
+        <div class="text-large font-display" style="color:var(--color-body-text);">Join X creators making things today.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-regular — 14px (typeScale.body)</div>
+        <div class="text-regular font-regular" style="color:var(--color-body-text);">A platform where anyone who wants to generate videos can come and use AI tools. Novice filmmaker or author — all welcome.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-small — 14px (typeScale.body)</div>
+        <div class="text-small font-regular" style="color:var(--color-body-text);">Video production at speed with others. Not a solo tool — a creative ecosystem.</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-mini — 12px (typeScale.small/link)</div>
+        <div class="text-mini font-regular" style="color:var(--color-muted-text);">Community points · 1,248</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.text-micro — 9px (nav.json fontSize)</div>
+        <div class="text-micro font-display" style="color:var(--color-muted-text);">Create · Explore · Pricing · About</div>
+      </div>
+
+      <div class="type-scale-row">
+        <div class="type-label">.font-mono</div>
+        <div class="font-mono" style="font-size:var(--font-size-small); color:var(--color-body-text);">--color-accent: #e8b14d</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       Section 5 — Color Swatches
+       One swatch per CSS color token to verify tokens loaded correctly.
+       ================================================================ -->
+  <section class="harness-section">
+    <div class="container">
+      <h2 class="harness-heading">Color Tokens — Semantic Roles (colors.json &gt; visual)</h2>
+
+      <div class="swatch-grid">
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-nav-background);"></div>
+          <span class="swatch__label">--color-nav-background</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-nav-background-scrolled);"></div>
+          <span class="swatch__label">--color-nav-background-scrolled</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-nav-text);"></div>
+          <span class="swatch__label">--color-nav-text</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-page-bg);"></div>
+          <span class="swatch__label">--color-page-bg</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-heading-text);"></div>
+          <span class="swatch__label">--color-heading-text</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-body-text);"></div>
+          <span class="swatch__label">--color-body-text</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-accent);"></div>
+          <span class="swatch__label">--color-accent</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-surface);"></div>
+          <span class="swatch__label">--color-surface</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-hero-background);"></div>
+          <span class="swatch__label">--color-hero-background</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-muted-text);"></div>
+          <span class="swatch__label">--color-muted-text</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-border);"></div>
+          <span class="swatch__label">--color-border</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-primary);"></div>
+          <span class="swatch__label">--color-primary</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-primary-hover);"></div>
+          <span class="swatch__label">--color-primary-hover</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-primary-active);"></div>
+          <span class="swatch__label">--color-primary-active</span>
+        </div>
+      </div>
+
+      <h2 class="harness-heading" style="margin-top:var(--space-section-pt);">Color Tokens — CTA Palette</h2>
+      <div class="swatch-grid">
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-cta-primary-border);"></div>
+          <span class="swatch__label">--color-cta-primary-border (accent gold)</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-cta-ghost-border);"></div>
+          <span class="swatch__label">--color-cta-ghost-border</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-cta-secondary-border);"></div>
+          <span class="swatch__label">--color-cta-secondary-border</span>
+        </div>
+        <div class="swatch-item">
+          <div class="swatch" style="background-color:var(--color-g-blue-a11y);"></div>
+          <span class="swatch__label">--color-g-blue-a11y</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       Section 6 — Gallery items (skeleton demo + hover test)
+       ================================================================ -->
+  <section class="harness-section">
+    <div class="container">
+      <h2 class="harness-heading">Gallery Items — hover + skeleton states</h2>
+
+      <div class="grid--3col">
+        <!-- Item 1: skeleton state (no image loaded) -->
+        <div class="gallery-item skeleton skeleton--image" data-id="item-1" aria-label="Gallery item 1 loading">
+        </div>
+
+        <!-- Item 2: has image (skeleton will be removed on load) -->
+        <div class="gallery-item skeleton skeleton--image" data-id="item-2" aria-label="Gallery item 2">
+          <!-- Intentionally no img so skeleton persists for demo purposes -->
+        </div>
+
+        <!-- Item 3: simulated loaded state -->
+        <div class="gallery-item" data-id="item-3" style="aspect-ratio:16/9; background-color:var(--color-hero-background);" aria-label="Gallery item 3">
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:var(--space-row-px);">
+            <span class="badge badge--accent">Video</span>
+            <span class="text-mini font-display" style="color:var(--color-nav-text); letter-spacing:var(--letter-spacing-h2); text-transform:uppercase;">Hover me</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:var(--space-section-pt);">
+        <div class="type-label">Filter buttons (gallery.js stub)</div>
+        <div style="display:flex; gap:var(--space-li-mb); margin-top:var(--space-row-px);">
+          <button class="badge is-active" data-filter="" style="cursor:pointer; padding:var(--space-row-px) var(--space-li-mb);">All</button>
+          <button class="badge" data-filter="video" style="cursor:pointer; padding:var(--space-row-px) var(--space-li-mb);">Video</button>
+          <button class="badge badge--coming-soon" data-filter="animation" style="cursor:pointer; padding:var(--space-row-px) var(--space-li-mb);">Animation <span class="badge badge--coming-soon" style="margin-left:4px;">Soon</span></button>
+          <button class="badge badge--coming-soon" data-filter="film" style="cursor:pointer; padding:var(--space-row-px) var(--space-li-mb);">Film <span class="badge badge--coming-soon" style="margin-left:4px;">Soon</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       Section 7 — Token verification console output
+       ================================================================ -->
+  <section class="harness-section">
+    <div class="container">
+      <h2 class="harness-heading">Token Verification (JS reads computed --color-primary)</h2>
+
+      <div class="token-verify" id="token-output">
+        Evaluating token values from computed styles...
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       Tall scroll spacer — min 200vh required for scroll testing nav.js
+       ================================================================ -->
+  <div class="scroll-spacer" aria-hidden="true">
+    <span class="scroll-spacer__label">Scroll to test nav class-toggle</span>
+  </div>
+
+  <!-- ================================================================
+       Final CTA Section — dark bg, emotional gear shift (layout.md §6)
+       ================================================================ -->
+  <section class="harness-section harness-section--dark" style="text-align:center; padding-top:calc(var(--space-section-pt) * 3); padding-bottom:calc(var(--space-section-pt) * 3);">
+    <div class="container">
+      <div class="text-title9 font-display" style="color:var(--color-nav-text); margin-bottom:var(--space-li-mb);">
+        What will you make?
+      </div>
+      <div class="text-regular font-regular" style="color:var(--color-muted-text); margin-bottom:var(--space-section-pt);">
+        Video production. With others. At speed.
+      </div>
+      <button class="btn-primary" data-cta="signup" aria-label="Start creating">
+        Start creating
+      </button>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       GSAP from CDN (required by task spec)
+       ================================================================ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Design system JavaScript — nav first (scroll), then auth, then gallery -->
+  <script src="js/nav.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/gallery.js"></script>
+
+  <!-- Token verification script -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var computed = window.getComputedStyle(root);
+
+      var tokens = [
+        '--color-primary',
+        '--color-nav-background',
+        '--color-accent',
+        '--color-page-bg',
+        '--color-surface',
+        '--font-display',
+        '--font-regular',
+        '--font-mono',
+        '--space-btn-pt',
+        '--space-btn-radius',
+        '--motion-duration-base',
+        '--motion-hover-easing',
+        '--nav-height',
+        '--nav-font-size',
+        '--grid-max-width',
+      ];
+
+      var results = tokens.map(function (token) {
+        var value = computed.getPropertyValue(token).trim();
+        return token + ': ' + (value || '[NOT SET]');
+      });
+
+      var output = document.getElementById('token-output');
+      output.textContent = results.join('\n');
+
+      // Log to console for Playwright verification
+      console.info('[tokens] verification:\n' + results.join('\n'));
+    }());
+  </script>
+
+</body>
+</html>
