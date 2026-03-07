@@ -79,3 +79,75 @@ if (document.readyState === 'loading') {
 } else {
   initNav();
 }
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Auth form handlers — used by login.html and signup.html
+// ──────────────────────────────────────────────────────────────────────────────
+
+/**
+ * handleSignup — form submit handler for signup.html
+ * Writes user to localStorage, sets window.__auth, redirects.
+ * Redirect target: sessionStorage.redirectAfterAuth || '/app/studio.html'
+ */
+function handleSignup(event) {
+  event.preventDefault();
+  const form = event.target;
+  const email = form.email.value;
+  const user = {
+    id: Date.now().toString(),
+    email: email,
+    name: email.split('@')[0],
+    communityPoints: 0,
+    isLoggedIn: true
+  };
+  localStorage.setItem('user', JSON.stringify(user));
+  window.__auth = user;
+  const redirect = sessionStorage.getItem('redirectAfterAuth') || '/app/studio.html';
+  sessionStorage.removeItem('redirectAfterAuth');
+  window.location.href = redirect;
+}
+
+/**
+ * handleLogin — form submit handler for login.html
+ * Accepts any credentials (mock — no real backend).
+ * Writes user to localStorage with communityPoints: 1240 (returning creator).
+ * Redirect target: sessionStorage.redirectAfterAuth || '/app/studio.html'
+ */
+function handleLogin(event) {
+  event.preventDefault();
+  const form = event.target;
+  const email = form.email.value;
+  const user = {
+    id: Date.now().toString(),
+    email: email,
+    name: email.split('@')[0],
+    communityPoints: 1240,
+    isLoggedIn: true
+  };
+  localStorage.setItem('user', JSON.stringify(user));
+  window.__auth = user;
+  const redirect = sessionStorage.getItem('redirectAfterAuth') || '/app/studio.html';
+  sessionStorage.removeItem('redirectAfterAuth');
+  window.location.href = redirect;
+}
+
+/**
+ * handleOAuthMock — simulates immediate OAuth success for Google / GitHub.
+ * No real OAuth — mock only. Writes user to localStorage and redirects.
+ *
+ * @param {string} provider - 'google' | 'github'
+ */
+function handleOAuthMock(provider) {
+  const user = {
+    id: Date.now().toString(),
+    email: 'user@' + provider + '.mock',
+    name: 'Creator',
+    communityPoints: 0,
+    isLoggedIn: true
+  };
+  localStorage.setItem('user', JSON.stringify(user));
+  window.__auth = user;
+  const redirect = sessionStorage.getItem('redirectAfterAuth') || '/app/studio.html';
+  sessionStorage.removeItem('redirectAfterAuth');
+  window.location.href = redirect;
+}
