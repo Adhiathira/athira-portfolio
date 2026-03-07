@@ -1,0 +1,212 @@
+/* =============================================================================
+   explore.css — Explore Page Specific Styles
+   Task 255: [goyard-vid][8/12] Explore Page — Filterable Creator Gallery
+
+   Token source: tokens.css (all --var references defined there)
+   Scope:        Explore-page additions only.
+                 DO NOT redefine anything already in gallery.css.
+                 gallery.css owns: .gallery-filter-bar, .filter-btn,
+                 .coming-soon-badge, .gallery-grid, .creator-card,
+                 .card-media, .card-media-placeholder, .placeholder-filename,
+                 .placeholder-note, .card-hover-overlay, .creator-name,
+                 .creator-points, .gallery-coming-soon, .coming-soon-text
+   ============================================================================= */
+
+
+/* -----------------------------------------------------------------------------
+   Sticky filter bar modifier
+   Nav height: utility bar (50px) + primary bar (50px) = 100px total
+   ----------------------------------------------------------------------------- */
+
+.gallery-filter-bar--sticky {
+  position: sticky;
+  top: 100px; /* utility bar (50px) + primary bar (50px) — total nav height */
+  z-index: 100;
+  background-color: var(--color-page-bg);
+  /* padding, gap, border-bottom already defined in .gallery-filter-bar */
+}
+
+
+/* -----------------------------------------------------------------------------
+   Explore page header
+   Sits below 100px sticky nav; generous top padding for breathing room
+   ----------------------------------------------------------------------------- */
+
+.explore-header {
+  background-color: var(--color-page-bg);
+  padding-top: calc(var(--space-section-top) + 24px); /* extra breathing after nav */
+  padding-bottom: var(--space-section-bottom);
+}
+
+.explore-page-title {
+  /* .text-h1 typographic class provides font-family, size, line-height, weight, ls */
+  color: var(--color-heading);
+  margin: 0 0 12px 0;
+}
+
+.explore-page-subtitle {
+  /* .text-body typographic class provides font-family, size, line-height, weight */
+  color: var(--color-body);
+  margin: 0;
+}
+
+
+/* -----------------------------------------------------------------------------
+   Explore gallery section
+   Inherits section spacing via .section class; background from page token
+   ----------------------------------------------------------------------------- */
+
+.explore-gallery-section {
+  background-color: var(--color-page-bg);
+  padding-top: var(--space-section-top);
+  padding-bottom: calc(var(--space-section-top) * 3); /* extra bottom room for persistent CTA */
+}
+
+
+/* -----------------------------------------------------------------------------
+   Card profile link
+   Inside .card-hover-overlay — "View profile →" uppercase small-type link
+   ----------------------------------------------------------------------------- */
+
+.card-profile-link {
+  font-family: var(--font-heading);
+  font-size: var(--type-small-size);
+  font-weight: var(--type-small-fw);
+  color: var(--color-nav-text);
+  text-decoration: none;
+  letter-spacing: var(--type-h2-ls);
+  text-transform: uppercase;
+  margin-top: 6px;
+  transition: color 0.2s;
+  /* Break visibility inheritance from .card-hover-overlay so this link remains
+     focusable by keyboard. When focused, :focus-within on .creator-card fires
+     and the full overlay (visibility: visible, opacity: 1) is revealed. */
+  visibility: visible;
+}
+
+.card-profile-link:hover {
+  color: var(--color-accent);
+}
+
+
+/* -----------------------------------------------------------------------------
+   Persistent CTA
+   Fixed bottom bar; hidden by default via [hidden] + opacity/translateY.
+   JS removes [hidden], then adds .is-visible on next rAF tick to
+   trigger the CSS transition (opacity 0→1, translateY 100%→0).
+   ----------------------------------------------------------------------------- */
+
+.persistent-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background-color: var(--color-page-bg);
+  border-top: 2px solid var(--color-accent); /* amber separator */
+  padding: var(--space-cta-y) var(--space-wrapper-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Entrance animation: JS adds .is-visible to trigger these */
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Shown state — JS adds this class after removing [hidden] */
+.persistent-cta.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Override [hidden] which sets display:none — must be explicit */
+.persistent-cta[hidden] {
+  display: none;
+}
+
+
+/* -----------------------------------------------------------------------------
+   Persistent CTA inner layout
+   ----------------------------------------------------------------------------- */
+
+.persistent-cta-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+.persistent-cta-label {
+  font-family: var(--font-heading);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-h2-fw);
+  color: var(--color-body);
+  letter-spacing: var(--type-h2-ls);
+  text-transform: uppercase;
+}
+
+/* Secondary CTA button — amber border, forest-green text, amber fill on hover.
+   Mirrors .btn-gallery-cta from gallery.css but scoped to persistent CTA. */
+.persistent-cta-btn {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: var(--type-nav-size);
+  font-weight: var(--type-button-fw);
+  letter-spacing: var(--type-h2-ls);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cta-secondary-text);
+  border: 1px solid var(--cta-secondary-border);
+  background: transparent;
+  padding: var(--space-cta-y) var(--space-cta-x);
+  border-radius: var(--radius-button);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.persistent-cta-btn:hover {
+  background-color: var(--color-accent);
+  color: var(--color-nav-text);
+  border-color: var(--color-accent);
+}
+
+
+/* -----------------------------------------------------------------------------
+   Responsive breakpoints
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  /* Sticky filter bar remains sticky; reduce padding to match responsive wrapper */
+  .gallery-filter-bar--sticky {
+    /* top: 100px stays — nav height is same on mobile */
+    padding-bottom: 10px;
+  }
+
+  .explore-header {
+    padding-top: var(--space-section-top);
+  }
+
+  /* Persistent CTA: full-width padding collapses to container-padding at tablet */
+  .persistent-cta {
+    padding-left: var(--space-wrapper-x);
+    padding-right: var(--space-wrapper-x);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Persistent CTA: even tighter horizontal padding on small screens */
+  .persistent-cta {
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+  }
+
+  .persistent-cta-inner {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
