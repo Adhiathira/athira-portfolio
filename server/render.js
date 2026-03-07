@@ -2624,6 +2624,52 @@ function renderConceptSummarySection(data, siteName) {
 </script>`;
 }
 
+function renderNavSystemSection(data) {
+  if (!data || Object.keys(data).length === 0) return renderEmptySection();
+
+  let html = '';
+
+  if (data.characterDescription) {
+    html += `<div class="section-block">
+      <div class="section-label">Character</div>
+      <p style="font-size:14px;line-height:1.6;color:var(--text-1);max-width:600px;margin:0">${esc(data.characterDescription)}</p>
+    </div>`;
+  }
+
+  const SECTION_LABELS = {
+    geometry: 'Geometry', background: 'Background', typography: 'Typography',
+    linkHover: 'Link Hover', linkActive: 'Link Active',
+    scrollTransition: 'Scroll Transition', dropdown: 'Dropdown',
+  };
+
+  function flatProps(obj, prefix) {
+    let rows = '';
+    for (const [k, v] of Object.entries(obj)) {
+      if (v === null || v === undefined) continue;
+      const key = prefix ? `${prefix}.${k}` : k;
+      if (Array.isArray(v)) {
+        rows += `<div class="grid-prop-row"><span class="grid-prop-key">${esc(key)}</span><span class="grid-prop-value">${esc(v.join(', '))}</span></div>`;
+      } else if (typeof v === 'object') {
+        rows += flatProps(v, key);
+      } else {
+        rows += `<div class="grid-prop-row"><span class="grid-prop-key">${esc(key)}</span><span class="grid-prop-value">${esc(String(v))}</span></div>`;
+      }
+    }
+    return rows;
+  }
+
+  for (const [key, value] of Object.entries(data)) {
+    if (key === 'characterDescription' || value === null || value === undefined) continue;
+    const label = SECTION_LABELS[key] || key;
+    if (typeof value === 'object' && !Array.isArray(value)) {
+      const rows = flatProps(value, '');
+      if (rows) html += `<div class="section-block"><div class="section-label">${esc(label)}</div><div class="grid-props">${rows}</div></div>`;
+    }
+  }
+
+  return html || renderEmptySection();
+}
+
 function renderSectionContent(slug, data, siteDir, siteName) {
   switch (slug) {
     case 'color-system':       return renderColorSection(data);
@@ -2633,6 +2679,7 @@ function renderSectionContent(slug, data, siteDir, siteName) {
     case 'interaction-states': return renderInteractionStatesSection(data);
     case 'motion-system':      return renderMotionSection(data);
     case 'concept-summary':    return renderConceptSummarySection(data, siteName);
+    case 'nav-system':         return renderNavSystemSection(data);
     default:                   return renderEmptySection();
   }
 }

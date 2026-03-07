@@ -1,6 +1,6 @@
 # Extractor
 
-Scrapes a website from the `sites.json` queue and extracts structured design tokens across 7 dimensions (color, typography, grid, spacing, motion, interactions, concept). Output is written to `design-system/<site-name>/`.
+Scrapes a website from the `sites.json` queue and extracts structured design tokens across 8 dimensions (color, typography, grid, spacing, motion, interactions, concept, nav-system). Output is written to `design-system/<site-name>/`.
 
 ## Run
 
@@ -32,3 +32,4 @@ Edit `sites.json` and add to the `queue` array:
 | `motion-system` | `extractors/motion-system.js` |
 | `interaction-states` | `extractors/interaction-states.js` |
 | `concept-summary` | `extractors/concept-summary.js` |
+| `nav-system` | `extractors/nav-system.js` |
