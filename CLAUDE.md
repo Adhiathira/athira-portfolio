@@ -107,7 +107,7 @@ node runner.js --only color-system  # run a single extractor (by slug)
 
 **Configuration:** See `project-documentation/task-tracker-config.md`
 
-**Project ID:** 15 (website-design) - always use this for all task queries
+**Project:** Read the project name from `deluluagent/.agent-repo-identity.json`, then use `mcp__task-tracker__list_projects` to find the matching project and get its ID — do not hardcode either value
 
 ### Finding What Task to Work On
 
