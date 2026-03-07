@@ -250,6 +250,11 @@ Whatever design system is installed in `project-documentation/design-system/` is
 
 All UI work must read tokens from `project-documentation/design-system/` before writing a single line of code. See the `website-design` skill for compliance rules.
 
+## Design System
+
+The project uses the `unseen-studio` design system.
+All UI work must reference `project-documentation/design-system/`.
+
 ## Do NOT
 
 - Commit code without explicit approval (see Git Workflow section)
