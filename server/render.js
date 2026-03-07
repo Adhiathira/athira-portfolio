@@ -368,6 +368,7 @@ header {
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   animation: cardIn 0.5s ease both;
   animation-delay: var(--card-delay, 0s);
+  position: relative;
 }
 .site-card:hover {
   border-color: var(--accent);
@@ -376,6 +377,32 @@ header {
 }
 .site-card a { color: inherit; display: block; }
 .site-card a:hover { text-decoration: none; }
+.site-card-delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-3);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s, color 0.15s, border-color 0.15s;
+  z-index: 1;
+}
+.site-card:hover .site-card-delete { opacity: 1; }
+.site-card-delete:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
 .site-card-icon {
   width: 36px;
   height: 36px;
@@ -2696,6 +2723,7 @@ export function renderHome(sites, registry) {
           <div class="site-card-name">${esc(name)}</div>
           <div class="site-card-meta">${registry.length} categories</div>
         </a>
+        <button class="site-card-delete" data-site="${esc(name)}" aria-label="Delete ${esc(name)}" title="Delete ${esc(name)}">×</button>
       </div>`).join('')}</div>`;
 
   return `<!DOCTYPE html>
@@ -2726,6 +2754,30 @@ export function renderHome(sites, registry) {
       ${cards}
     </div>
   </main>
+  <script>
+    document.addEventListener('click', async e => {
+      const btn = e.target.closest('.site-card-delete');
+      if (!btn) return;
+      const site = btn.dataset.site;
+      if (!confirm(\`Delete "\${site}"?\\n\\nThis will permanently remove all extracted design tokens for this site.\`)) return;
+      btn.disabled = true;
+      try {
+        const res = await fetch(\`/api/site/\${encodeURIComponent(site)}\`, { method: 'DELETE' });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          alert(\`Delete failed: \${err.error || res.status}\`);
+          btn.disabled = false;
+          return;
+        }
+        btn.closest('.site-card').remove();
+        const grid = document.querySelector('.site-grid');
+        if (grid && grid.children.length === 0) location.reload();
+      } catch (err) {
+        alert(\`Delete failed: \${err.message}\`);
+        btn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>`;
 }

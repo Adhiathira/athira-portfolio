@@ -31,7 +31,7 @@ const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
   const pathname = url.pathname;
 
-  if (req.method !== 'GET' && req.method !== 'POST') {
+  if (req.method !== 'GET' && req.method !== 'POST' && req.method !== 'DELETE') {
     res.writeHead(405);
     res.end('Method Not Allowed');
     return;
@@ -231,6 +231,40 @@ const server = http.createServer((req, res) => {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ ok: true }));
     });
+    return;
+  }
+
+  // DELETE /api/site/:name
+  const siteDeleteMatch = req.method === 'DELETE' && pathname.match(/^\/api\/site\/([^/]+)$/);
+  if (siteDeleteMatch) {
+    let siteName;
+    try {
+      siteName = decodeURIComponent(siteDeleteMatch[1]);
+    } catch {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    const siteDir = path.resolve(DESIGN_SYSTEM_DIR, siteName);
+    if (!siteDir.startsWith(DESIGN_SYSTEM_DIR + path.sep)) {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    if (!fs.existsSync(siteDir)) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Site not found' }));
+      return;
+    }
+    try {
+      fs.rmSync(siteDir, { recursive: true, force: true });
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: err.message }));
+      return;
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ ok: true }));
     return;
   }
 
