@@ -1055,6 +1055,66 @@ header {
   margin: 32px 0;
 }
 
+/* ─── Concept Summary ─── */
+.concept-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.concept-col-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.concept-col-label {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+}
+.concept-edit-btn {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.concept-edit-btn:hover { color: var(--accent); border-color: var(--accent); }
+.concept-edit-btn.save-btn {
+  color: var(--surface);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.concept-edit-btn.save-btn:hover { opacity: 0.88; }
+.concept-textarea {
+  width: 100%;
+  min-height: 560px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px;
+  color: var(--text-1);
+  resize: vertical;
+}
+.concept-textarea:focus { outline: none; border-color: var(--accent); }
+.concept-edit-actions { display: flex; gap: 8px; margin-top: 10px; }
+.concept-save-status {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-3);
+  margin-top: 8px;
+}
+
 /* ─── Motion System: Performance ─── */
 .perf-stats-grid {
   display: grid;
@@ -2492,12 +2552,79 @@ function markdownToHtml(md) {
     .replace(/<\/p>\n<ul>/g, '\n<ul>');
 }
 
-function renderConceptSummarySection(data) {
-  if (!data.markdown) return renderEmptySection();
-  return `<div class="section-block"><div class="prose">${markdownToHtml(data.markdown)}</div></div>`;
+function renderConceptSummarySection(data, siteName) {
+  const imageHtml = data.imageMarkdown
+    ? markdownToHtml(data.imageMarkdown)
+    : '<p class="text-2">No image analysis available.</p>';
+  const videoHtml = data.videoMarkdown
+    ? markdownToHtml(data.videoMarkdown)
+    : '<p class="text-2">No video analysis yet.</p>';
+
+  return `<div class="section-block">
+  <div class="concept-split">
+    <div class="concept-col">
+      <div class="concept-col-header">
+        <span class="concept-col-label">Image Analysis</span>
+      </div>
+      <div class="prose">${imageHtml}</div>
+    </div>
+    <div class="concept-col">
+      <div class="concept-col-header">
+        <span class="concept-col-label">Video Analysis</span>
+        <button class="concept-edit-btn" id="concept-edit-btn" onclick="conceptEnterEdit()">Edit</button>
+      </div>
+      <div id="concept-video-preview" class="prose">${videoHtml}</div>
+      <div id="concept-video-editor" style="display:none">
+        <textarea class="concept-textarea" id="concept-textarea"></textarea>
+        <div class="concept-edit-actions">
+          <button class="concept-edit-btn save-btn" onclick="conceptSave()">Save</button>
+          <button class="concept-edit-btn" onclick="conceptCancel()">Cancel</button>
+        </div>
+        <div class="concept-save-status" id="concept-save-status"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var _videoRaw = ${JSON.stringify(data.videoMarkdown || '').replace(/<\//g, '<\\/')};
+  var _siteName = ${JSON.stringify(siteName || '').replace(/<\//g, '<\\/')};
+
+  function conceptEnterEdit() {
+    document.getElementById('concept-video-preview').style.display = 'none';
+    document.getElementById('concept-video-editor').style.display = 'block';
+    document.getElementById('concept-edit-btn').style.display = 'none';
+    var ta = document.getElementById('concept-textarea');
+    ta.value = _videoRaw;
+    ta.focus();
+  }
+
+  function conceptCancel() {
+    document.getElementById('concept-video-preview').style.display = '';
+    document.getElementById('concept-video-editor').style.display = 'none';
+    document.getElementById('concept-edit-btn').style.display = '';
+    document.getElementById('concept-save-status').textContent = '';
+  }
+
+  function conceptSave() {
+    var content = document.getElementById('concept-textarea').value;
+    var status = document.getElementById('concept-save-status');
+    status.textContent = 'Saving\u2026';
+    fetch('/api/concept-video/' + encodeURIComponent(_siteName), {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: content
+    }).then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      status.textContent = 'Saved.';
+      setTimeout(function() { window.location.reload(); }, 600);
+    }).catch(function(err) {
+      status.textContent = 'Error: ' + err.message;
+    });
+  }
+</script>`;
 }
 
-function renderSectionContent(slug, data, siteDir) {
+function renderSectionContent(slug, data, siteDir, siteName) {
   switch (slug) {
     case 'color-system':       return renderColorSection(data);
     case 'type-system':        return renderTypographySection(data);
@@ -2505,7 +2632,7 @@ function renderSectionContent(slug, data, siteDir) {
     case 'grid-system':        return renderGridSection(data, siteDir);
     case 'interaction-states': return renderInteractionStatesSection(data);
     case 'motion-system':      return renderMotionSection(data);
-    case 'concept-summary':    return renderConceptSummarySection(data);
+    case 'concept-summary':    return renderConceptSummarySection(data, siteName);
     default:                   return renderEmptySection();
   }
 }
@@ -2558,6 +2685,11 @@ export function renderHome(sites, registry) {
 
 export function renderSite(siteName, siteDir, registry) {
   const sections = registry.map(entry => {
+    if (entry.slug === 'concept-summary') {
+      const imageMarkdown = readMarkdown(path.join(siteDir, 'concept-summary', 'concept_by_image.md'));
+      const videoMarkdown = readMarkdown(path.join(siteDir, 'concept-summary', 'concept_by_video.md'));
+      return { entry, data: (imageMarkdown || videoMarkdown) ? { imageMarkdown, videoMarkdown } : {} };
+    }
     const jsonFile = entry.outputFiles.find(f => f.endsWith('.json'));
     if (jsonFile) {
       const data = readJson(path.join(siteDir, entry.slug, jsonFile));
@@ -2595,7 +2727,7 @@ export function renderSite(siteName, siteDir, registry) {
   const panels = sections.map((s, i) => {
     const hasData = !isEmpty(s.data);
     const isActive = i === firstActiveIdx;
-    const content = hasData ? renderSectionContent(s.entry.slug, s.data, siteDir) : renderEmptySection();
+    const content = hasData ? renderSectionContent(s.entry.slug, s.data, siteDir, siteName) : renderEmptySection();
     return `<div
       role="tabpanel"
       id="panel-${i}"

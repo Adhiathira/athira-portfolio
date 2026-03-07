@@ -200,6 +200,40 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // POST /api/concept-video/:site
+  const conceptVideoPostMatch = req.method === 'POST' && pathname.match(/^\/api\/concept-video\/([^/]+)$/);
+  if (conceptVideoPostMatch) {
+    let site;
+    try {
+      site = decodeURIComponent(conceptVideoPostMatch[1]);
+    } catch {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    const siteDir = path.resolve(DESIGN_SYSTEM_DIR, site);
+    if (!siteDir.startsWith(DESIGN_SYSTEM_DIR + path.sep)) {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      const filePath = path.join(siteDir, 'concept-summary', 'concept_by_video.md');
+      try {
+        fs.writeFileSync(filePath, body, 'utf8');
+      } catch (err) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message }));
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ ok: true }));
+    });
+    return;
+  }
+
   res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end('<!DOCTYPE html><html><body><h1>404 Not Found</h1></body></html>');
 });
