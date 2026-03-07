@@ -1,8 +1,13 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { spawnSync } from 'child_process';
+import { LLMRouter, ClaudeCliProvider } from '../lib/llm/index.js';
 import { createLogger } from '../lib/logger.js';
+
+const router = new LLMRouter({
+  providers: { 'claude-cli': new ClaudeCliProvider() },
+  maxAttempts: 2,
+});
 
 export const metadata = { tag: 'color-system' };
 
@@ -228,65 +233,52 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
     }
   }
 
-  // Call claude via stream-json (supports vision via base64 content blocks)
+  // Call LLMRouter for vision analysis (supports vision via base64 content blocks)
   const buttonCandidatesBlock = {
     type: 'text',
     text: `Button candidates extracted from DOM (deduplicated by visual fingerprint):\n${JSON.stringify(buttonCandidates, null, 2)}\n\nFor EACH button candidate above, assign a role. Valid roles: primary-cta, secondary-cta, ghost, nav-link, utility, other.\nReturn a second JSON array (separate from the color tokens array) with this shape — no markdown, no explanation:\n[{ "bg": "...", "textColor": "...", "border": "...", "role": "..." }]`,
   };
-  const msg = JSON.stringify({
-    type: 'user',
-    message: {
-      role: 'user',
-      content: [...imageContent, buttonCandidatesBlock, { type: 'text', text: LLM_PROMPT }],
-    },
-  });
-  const result = spawnSync(
-    'claude',
-    ['-p', '--input-format', 'stream-json', '--output-format', 'stream-json', '--verbose', '--allowedTools', ''],
-    { input: msg, encoding: 'utf8', timeout: 180000, maxBuffer: 50 * 1024 * 1024 }
+  // imageContent is mixed: text label blocks + image blocks. Translate image blocks to LLM lib shape.
+  const translatedContent = imageContent.map(block =>
+    block.type === 'image'
+      ? { type: 'image', data: block.source.data, mimeType: block.source.media_type }
+      : block
   );
 
   let visual = [];
   let ctaButtons = [];
-  if (result.error || result.status !== 0) {
-    log.minor('Vision pass failed', { error: result.error?.message ?? `exit ${result.status}`, stderr: result.stderr?.trim() || '', stdout: result.stdout?.slice(-2000) || '' });
-  } else {
-    try {
-      const resultLine = result.stdout?.split('\n').find(l => l.includes('"type":"result"'));
-      const claudeResult = resultLine ? JSON.parse(resultLine) : null;
-      if (claudeResult?.is_error) {
-        log.minor('Vision pass API error', { result: claudeResult.result });
-      } else {
-        const rawOutput = claudeResult?.result ?? '';
-        // Scan all [...] candidates and identify each array by shape, not position.
-        // Visual palette items have a `hex` key; CTA button items have a `bg` key.
-        // This is robust to the LLM emitting an empty [] for one array or reordering them.
-        for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
-          try {
-            const parsed = JSON.parse(match[0]);
-            if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.hex !== undefined) {
-              visual = parsed;
-              break;
-            }
-          } catch (_) { /* not valid JSON, try next candidate */ }
+  try {
+    const rawOutput = await router.complete(
+      [{ role: 'user', content: [...translatedContent, buttonCandidatesBlock, { type: 'text', text: LLM_PROMPT }] }],
+      { timeout: 180000 }
+    );
+    // Scan all [...] candidates and identify each array by shape, not position.
+    // Visual palette items have a `hex` key; CTA button items have a `bg` key.
+    // This is robust to the LLM emitting an empty [] for one array or reordering them.
+    for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
+      try {
+        const parsed = JSON.parse(match[0]);
+        if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.hex !== undefined) {
+          visual = parsed;
+          break;
         }
-        if (visual.length === 0) {
-          log.minor('Vision pass returned no JSON array for visual palette, ignoring');
-        }
-
-        for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
-          try {
-            const parsed = JSON.parse(match[0]);
-            if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.bg !== undefined) {
-              ctaButtons = parsed.map(({ label: _l, ...rest }) => rest);
-              break;
-            }
-          } catch (_) { /* not valid JSON, try next candidate */ }
-        }
-      }
-    } catch (_) {
-      log.minor('Vision pass returned unparseable output, ignoring');
+      } catch (_) { /* not valid JSON, try next candidate */ }
     }
+    if (visual.length === 0) {
+      log.minor('Vision pass returned no JSON array for visual palette, ignoring');
+    }
+
+    for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
+      try {
+        const parsed = JSON.parse(match[0]);
+        if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.bg !== undefined) {
+          ctaButtons = parsed.map(({ label: _l, ...rest }) => rest);
+          break;
+        }
+      } catch (_) { /* not valid JSON, try next candidate */ }
+    }
+  } catch (err) {
+    log.minor('Vision pass failed', { error: err instanceof Error ? err.message : String(err) });
   }
 
   return { cssVars, elements, visual, ctaButtons };

@@ -2,8 +2,13 @@ export const metadata = { tag: 'grid-system' };
 
 import fs from 'fs';
 import path from 'path';
-import { spawnSync } from 'child_process';
 import { createLogger } from '../lib/logger.js';
+import { LLMRouter, ClaudeCliProvider } from '../lib/llm/index.js';
+
+const router = new LLMRouter({
+  providers: { 'claude-cli': new ClaudeCliProvider() },
+  maxAttempts: 2,
+});
 
 const log = createLogger('grid-system');
 
@@ -398,43 +403,25 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
   }
 
   if (screenshotFiles.length > 0) {
-    const imageContent = screenshotFiles.map(f => ({
+    const imageBlocks = screenshotFiles.map(f => ({
       type: 'image',
-      source: { type: 'base64', media_type: 'image/jpeg', data: fs.readFileSync(f).toString('base64') },
+      data: fs.readFileSync(f).toString('base64'),
+      mimeType: 'image/jpeg',
     }));
-    const msg = JSON.stringify({
-      type: 'user',
-      message: {
-        role: 'user',
-        content: [...imageContent, { type: 'text', text: GRID_LLM_PROMPT }],
-      },
-    });
-    const result = spawnSync(
-      'claude',
-      ['-p', '--input-format', 'stream-json', '--output-format', 'stream-json', '--verbose', '--allowedTools', ''],
-      { input: msg, encoding: 'utf8', timeout: 180000, maxBuffer: 50 * 1024 * 1024 }
-    );
-    if (result.error || result.status !== 0) {
-      log.minor('Vision pass failed', { error: result.error?.message ?? `exit ${result.status}`, stderr: result.stderr?.trim() || '', stdout: result.stdout?.slice(0, 500) || '' });
-    } else {
-      try {
-        const resultLine = result.stdout?.split('\n').find(l => l.includes('"type":"result"'));
-        const claudeResult = resultLine ? JSON.parse(resultLine) : null;
-        if (claudeResult?.is_error) {
-          log.minor('Vision pass API error', { result: claudeResult.result });
-        } else {
-          const rawOutput = claudeResult?.result ?? '';
-          for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
-            try {
-              const parsed = JSON.parse(match[0]);
-              if (Array.isArray(parsed) && parsed.length > 0) { visual = parsed; break; }
-            } catch (_) { /* not valid JSON, try next */ }
-          }
-          if (visual.length === 0) log.minor('Vision pass returned no JSON array, ignoring');
-        }
-      } catch (_) {
-        log.minor('Vision pass returned unparseable output, ignoring');
+    try {
+      const rawOutput = await router.complete(
+        [{ role: 'user', content: [...imageBlocks, { type: 'text', text: GRID_LLM_PROMPT }] }],
+        { timeout: 180000 }
+      );
+      for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
+        try {
+          const parsed = JSON.parse(match[0]);
+          if (Array.isArray(parsed) && parsed.length > 0) { visual = parsed; break; }
+        } catch (_) { /* not valid JSON, try next */ }
       }
+      if (visual.length === 0) log.minor('Vision pass returned no JSON array, ignoring');
+    } catch (err) {
+      log.minor('Vision pass failed', { error: err instanceof Error ? err.message : String(err) });
     }
   }
 
@@ -582,32 +569,18 @@ No code, no CSS. Write in clear markdown with section headers.`;
 
   let layoutMd = '';
   if (screenshotFiles.length > 0) {
-    const imageContent = screenshotFiles.map(f => ({
+    const imageBlocks = screenshotFiles.map(f => ({
       type: 'image',
-      source: { type: 'base64', media_type: 'image/jpeg', data: fs.readFileSync(f).toString('base64') },
+      data: fs.readFileSync(f).toString('base64'),
+      mimeType: 'image/jpeg',
     }));
-    const mdMsg = JSON.stringify({
-      type: 'user',
-      message: {
-        role: 'user',
-        content: [...imageContent, { type: 'text', text: MARKDOWN_PROMPT }],
-      },
-    });
-    const mdResult = spawnSync(
-      'claude',
-      ['-p', '--input-format', 'stream-json', '--output-format', 'stream-json', '--verbose', '--allowedTools', ''],
-      { input: mdMsg, encoding: 'utf8', timeout: 180000, maxBuffer: 50 * 1024 * 1024 }
-    );
-    if (mdResult.error || mdResult.status !== 0) {
-      log.minor('Markdown brief failed', { error: mdResult.error?.message ?? `exit ${mdResult.status}` });
-    } else {
-      try {
-        const resultLine = mdResult.stdout?.split('\n').find(l => l.includes('"type":"result"'));
-        const claudeResult = resultLine ? JSON.parse(resultLine) : null;
-        if (claudeResult && !claudeResult.is_error) layoutMd = claudeResult.result ?? '';
-      } catch (_) {
-        log.minor('Markdown brief output unparseable, skipping');
-      }
+    try {
+      layoutMd = await router.complete(
+        [{ role: 'user', content: [...imageBlocks, { type: 'text', text: MARKDOWN_PROMPT }] }],
+        { timeout: 180000 }
+      );
+    } catch (err) {
+      log.minor('Markdown brief failed', { error: err instanceof Error ? err.message : String(err) });
     }
   }
 
@@ -655,49 +628,27 @@ async function genericizeLayoutMarkdown(layoutMd) {
     return layoutMd; // nothing to genericize
   }
 
-  const msg = JSON.stringify({
-    type: 'user',
-    message: {
-      role: 'user',
-      content: [
+  let genericized = '';
+  try {
+    genericized = await router.complete(
+      [{ role: 'user', content: [
         { type: 'text', text: GENERICIZE_PROMPT },
         { type: 'text', text: '\n\n---LAYOUT MARKDOWN TO GENERICIZE---\n\n' + layoutMd },
-      ],
-    },
-  });
-
-  const result = spawnSync(
-    'claude',
-    ['-p', '--input-format', 'stream-json', '--output-format', 'stream-json', '--verbose', '--allowedTools', ''],
-    { input: msg, encoding: 'utf8', timeout: 180000, maxBuffer: 50 * 1024 * 1024 }
-  );
-
-  if (result.error || result.status !== 0) {
-    log.minor('Pass 8 genericization failed', { error: result.error?.message ?? `exit ${result.status}` });
+      ] }],
+      { timeout: 180000 }
+    );
+  } catch (err) {
+    log.minor('Pass 8 genericization failed', { error: err instanceof Error ? err.message : String(err) });
     return layoutMd; // FALLBACK: return original
   }
 
-  try {
-    const resultLine = result.stdout?.split('\n').find(l => l.includes('"type":"result"'));
-    const claudeResult = resultLine ? JSON.parse(resultLine) : null;
+  genericized = genericized.trim();
 
-    if (claudeResult?.is_error) {
-      log.minor('Pass 8 API error', { result: claudeResult.result });
-      return layoutMd; // FALLBACK
-    }
-
-    const genericized = claudeResult?.result?.trim() ?? '';
-
-    if (genericized.length < 100) {
-      // Suspiciously short response, likely failed
-      log.minor('Pass 8 returned suspiciously short output, using original');
-      return layoutMd;
-    }
-
-    return genericized;
-
-  } catch (err) {
-    log.minor('Pass 8 output unparseable', { error: err.message });
-    return layoutMd; // FALLBACK
+  if (genericized.length < 100) {
+    // Suspiciously short response, likely failed
+    log.minor('Pass 8 returned suspiciously short output, using original');
+    return layoutMd;
   }
+
+  return genericized;
 }
