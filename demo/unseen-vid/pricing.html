@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — unseen-vid</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/pricing.css">
+</head>
+<body>
+
+  <!-- NavBar -->
+  <nav class="navbar" role="navigation">
+    <div class="navbar__brand">unseen-vid</div>
+    <ul class="navbar__links" role="list">
+      <li><a href="/explore.html" class="nav-item">Explore</a></li>
+      <li><a href="/pricing.html" class="nav-item">Pricing</a></li>
+      <li><a href="/about.html" class="nav-item">About</a></li>
+    </ul>
+    <!-- Logged-out panel (visible by default) -->
+    <div class="navbar__auth navbar__auth--public">
+      <a href="/login.html" class="nav-item">Log in</a>
+      <button class="cta-primary navbar__join" onclick="requireAuth()">Join</button>
+    </div>
+    <!-- Logged-in panel (hidden by default; initNav() reveals when __auth exists) -->
+    <div class="navbar__auth navbar__auth--authed" hidden>
+      <a href="/app/community.html" class="nav-item">Community</a>
+      <button type="button" class="navbar__avatar" aria-label="User menu">A</button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Section 1: Positioning Frame -->
+    <section class="pricing-intro" aria-label="Pricing introduction">
+      <p class="pricing-intro__tagline">Creative tools that grow with you.</p>
+    </section>
+
+    <!-- Section 2: Plan Cards -->
+    <section class="pricing-plans" aria-label="Pricing plans">
+      <!-- Free plan -->
+      <article class="plan-card" aria-label="Free plan">
+        <h2 class="plan-card__name">Free</h2>
+        <div class="plan-card__price-block">
+          <span class="plan-card__price">$0</span><span class="plan-card__price-period">/mo</span>
+        </div>
+        <p class="plan-card__description">Start making. No commitment.</p>
+        <ul class="plan-card__features" aria-label="Free plan features">
+          <li class="plan-card__feature">5 video projects/month</li>
+          <li class="plan-card__feature">Basic AI tools</li>
+          <li class="plan-card__feature">Community access</li>
+          <li class="plan-card__feature">Public portfolio</li>
+        </ul>
+        <button class="cta-primary plan-card__cta" onclick="requireAuth('/app/studio.html')">Get started</button>
+      </article>
+
+      <!-- Creator plan (featured) -->
+      <article class="plan-card plan-card--featured" aria-label="Creator plan">
+        <h2 class="plan-card__name">Creator</h2>
+        <div class="plan-card__price-block">
+          <span class="plan-card__price">$12</span><span class="plan-card__price-period">/mo</span>
+        </div>
+        <p class="plan-card__description">For the creator ready to go deeper.</p>
+        <ul class="plan-card__features" aria-label="Creator plan features">
+          <li class="plan-card__feature">Unlimited projects</li>
+          <li class="plan-card__feature">Full AI tool suite</li>
+          <li class="plan-card__feature">Collaboration on 3 projects</li>
+          <li class="plan-card__feature">Priority rendering</li>
+          <li class="plan-card__feature">Analytics</li>
+        </ul>
+        <button class="cta-primary plan-card__cta" onclick="requireAuth('/app/studio.html')">Get started</button>
+      </article>
+
+      <!-- Studio plan -->
+      <article class="plan-card" aria-label="Studio plan">
+        <h2 class="plan-card__name">Studio</h2>
+        <div class="plan-card__price-block">
+          <span class="plan-card__price">$39</span><span class="plan-card__price-period">/mo</span>
+        </div>
+        <p class="plan-card__description">For teams and serious creators.</p>
+        <ul class="plan-card__features" aria-label="Studio plan features">
+          <li class="plan-card__feature">Everything in Creator</li>
+          <li class="plan-card__feature">Unlimited collaboration</li>
+          <li class="plan-card__feature">Team workspace</li>
+          <li class="plan-card__feature">Custom branding</li>
+          <li class="plan-card__feature">Priority support</li>
+        </ul>
+        <button class="cta-primary plan-card__cta" onclick="requireAuth('/app/studio.html')">Get started</button>
+      </article>
+    </section>
+
+    <!-- Section 3: Enterprise Path -->
+    <div class="pricing-enterprise">
+      <p>Building something larger?</p>
+      <a href="mailto:team@platform.com" class="cta-secondary">Talk to us</a>
+    </div>
+
+    <!-- Section 4: Final Permission CTA -->
+    <div class="pricing-final-cta">
+      <button class="cta-primary" onclick="requireAuth('/app/studio.html')">Get started</button>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer__col">
+      <h3 class="footer__heading">Platform</h3>
+      <ul>
+        <li><a href="/explore.html" class="footer__link">Explore</a></li>
+        <li><a href="/pricing.html" class="footer__link">Pricing</a></li>
+        <li><a href="/about.html" class="footer__link">About</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer__heading">Vision</h3>
+      <ul>
+        <li><a href="#" class="footer__link">Roadmap</a></li>
+        <li><a href="#" class="footer__link">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer__heading">Legal</h3>
+      <ul>
+        <li><a href="#" class="footer__link">Privacy</a></li>
+        <li><a href="#" class="footer__link">Terms</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/shared.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initNav();
+    });
+  </script>
+
+</body>
+</html>
