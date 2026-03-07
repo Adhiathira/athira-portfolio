@@ -81,7 +81,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
       const border = style.borderColor;
       if (bg === 'rgba(0, 0, 0, 0)' && border === 'rgba(0, 0, 0, 0)') continue;
       const textColor = style.color;
-      const bgHex = bg === 'rgba(0, 0, 0, 0)' ? bg : toHex(bg);
+      const bgHex = bg === 'rgba(0, 0, 0, 0)' ? 'transparent' : toHex(bg);
       const textHex = textColor && textColor !== 'rgba(0, 0, 0, 0)' ? toHex(textColor) : textColor;
       const borderHex = border === 'rgba(0, 0, 0, 0)' ? border : toHex(border);
       const fingerprint = `${bgHex}|${textHex}|${borderHex}`;
@@ -97,7 +97,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
     if (navEl) {
       const bg = getComputedStyle(navEl).backgroundColor;
       const col = getComputedStyle(navEl).color;
-      if (bg) elements.navBackground = bg === 'rgba(0, 0, 0, 0)' ? bg : toHex(bg);
+      if (bg) elements.navBackground = bg === 'rgba(0, 0, 0, 0)' ? 'transparent' : toHex(bg);
       if (col && col !== 'rgba(0, 0, 0, 0)') elements.navText = toHex(col);
     }
     if (navLinkEl) {
@@ -125,7 +125,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
     if (navEl) {
       const bg = getComputedStyle(navEl).backgroundColor;
       const col = getComputedStyle(navEl).color;
-      if (bg) result.navBackgroundScrolled = bg === 'rgba(0, 0, 0, 0)' ? bg : toHex(bg);
+      if (bg) result.navBackgroundScrolled = bg === 'rgba(0, 0, 0, 0)' ? 'transparent' : toHex(bg);
       if (col && col !== 'rgba(0, 0, 0, 0)') result.navTextScrolled = toHex(col);
     }
     if (navLinkEl) {
