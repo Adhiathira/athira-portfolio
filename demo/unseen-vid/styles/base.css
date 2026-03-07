@@ -1,0 +1,146 @@
+/* ──────────────────────────────────────────────────────────────────────────────
+   base.css — Reset, font substitution, body defaults, and utility classes
+   for unseen-vid.
+
+   FONT SUBSTITUTION NOTICE
+   ────────────────────────
+   The unseen-studio design system specifies two commercial typefaces:
+
+     1. Neue Montreal (weight 400)
+        Source in design system: /wp-content/themes/unseen/resources/assets/fonts/NeueMontreal-Regular.woff2
+        Status: Commercial font from a WordPress theme — NOT available in this repo.
+        Substitution: Inter → Manrope → sans-serif
+        Concept match: clean / neutral / product-focused grotesque
+        Action required: License "Neue Montreal" from Pangram Pangram Foundry and
+                         place the woff2 file at demo/unseen-vid/assets/fonts/
+                         NeueMontreal-Regular.woff2, then add an @font-face rule.
+
+     2. Saol Display (weight 400, normal + italic)
+        Source in design system: /wp-content/themes/unseen/resources/assets/fonts/SaolDisplay-Light.woff2
+                                  /wp-content/themes/unseen/resources/assets/fonts/SaolDisplay-LightItalic.woff2
+        Status: Commercial font from a WordPress theme — NOT available in this repo.
+        Substitution: Marcellus → Playfair Display → serif
+        Concept match: luxury / refined / classical editorial serif
+        Action required: License "Saol Display" from Schick Toikka and place the
+                         woff2 files at demo/unseen-vid/assets/fonts/, then add
+                         @font-face rules.
+
+   All font-family values are declared in tokens.css as --font-primary and
+   --font-editorial. Browsers will fall through the stack to Inter/Manrope (if
+   installed) or the system sans-serif until the licensed files are available.
+   ────────────────────────────────────────────────────────────────────────────── */
+
+/* ── CSS Reset ───────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+/* ── Body Defaults ───────────────────────────────────────────────────────────── */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-body);
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+}
+
+/* ── Utility Classes ─────────────────────────────────────────────────────────── */
+
+/* Screen-reader-only — visually hidden but accessible to assistive technology */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Display / hero text — maps to typeScale.h2 (84px) */
+.text-display {
+  font-family: var(--font-primary);
+  font-size: var(--type-display);
+  line-height: var(--type-display-lh);
+  font-weight: var(--type-display-fw);
+  color: var(--color-text-heading);
+}
+
+/* Heading — maps to typeScale.h1 (28px) */
+.text-h1 {
+  font-family: var(--font-primary);
+  font-size: var(--type-h1);
+  line-height: var(--type-h1-lh);
+  font-weight: var(--type-h1-fw);
+  color: var(--color-text-heading);
+}
+
+/* Primary CTA — pill button, maps to spacing.elements.cta */
+.cta-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  color: var(--color-action);
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-fw);
+  line-height: var(--type-button-lh);
+  text-transform: uppercase;
+  letter-spacing: var(--type-ls-caps);
+  padding: var(--space-cta-v) var(--space-cta-h);
+  border-radius: var(--space-cta-radius);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard);
+}
+
+.cta-primary:hover {
+  background: var(--color-action);
+  color: var(--color-surface);
+}
+
+/* Secondary CTA — underlined link style */
+.cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  font-weight: var(--type-body-fw);
+  line-height: var(--type-button-lh);
+  text-decoration: underline;
+  text-transform: uppercase;
+  letter-spacing: var(--type-ls-caps);
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.cta-secondary:hover {
+  color: var(--color-text-heading);
+}
