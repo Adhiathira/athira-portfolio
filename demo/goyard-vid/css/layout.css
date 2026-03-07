@@ -1,0 +1,105 @@
+/* =============================================================================
+   layout.css — Structural layout utilities for goyard-vid
+   Depends on: tokens.css (must be loaded before this file)
+   Source: grid.json, spacing.json
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Container — max-width content wrapper
+   Source: grid.json container (max-width 1320px, padding 12px, margin 0 auto)
+   ----------------------------------------------------------------------------- */
+
+.container {
+  max-width:     var(--container-max-width);
+  padding-left:  var(--container-padding);
+  padding-right: var(--container-padding);
+  margin:        0 auto;
+  width:         100%;
+}
+
+/* -----------------------------------------------------------------------------
+   Wrapper — internal section padding with large horizontal gutters
+   Source: spacing.json wrapper (padding-top 49px, padding-left/right 100px)
+   ----------------------------------------------------------------------------- */
+
+.wrapper {
+  padding-top:   var(--space-wrapper-top);
+  padding-left:  var(--space-wrapper-x);
+  padding-right: var(--space-wrapper-x);
+}
+
+/* -----------------------------------------------------------------------------
+   Section — vertical rhythm spacing
+   Source: spacing.json section (padding-top 40px, padding-bottom 22px)
+   ----------------------------------------------------------------------------- */
+
+.section {
+  padding-top:    var(--space-section-top);
+  padding-bottom: var(--space-section-bottom);
+}
+
+/* -----------------------------------------------------------------------------
+   Full bleed — edge-to-edge, no horizontal padding
+   Used for hero, full-width media, and banner sections
+   ----------------------------------------------------------------------------- */
+
+.full-bleed {
+  width:         100%;
+  max-width:     none;
+  padding-left:  0;
+  padding-right: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   3-column equal grid — product grids, feature lists
+   Source: grid.json (3-col pattern with grid-gap)
+   ----------------------------------------------------------------------------- */
+
+.col-3 {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   var(--grid-gap);
+}
+
+/* -----------------------------------------------------------------------------
+   2-column editorial — reversed flex layout (image left, text right reversed)
+   Source: grid.json the-goyard-gazette pattern (flex, row-reverse, gap 80px)
+   ----------------------------------------------------------------------------- */
+
+.col-2-editorial {
+  display:         flex;
+  flex-direction:  row-reverse;
+  gap:             var(--grid-gap);
+  justify-content: center;
+}
+
+/* -----------------------------------------------------------------------------
+   2-column split — text-left / image-right equal halves
+   Source: grid.json (2-col symmetric pattern)
+   ----------------------------------------------------------------------------- */
+
+.col-2-split {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   var(--grid-gap);
+}
+
+/* -----------------------------------------------------------------------------
+   Responsive — stack all multi-col layouts below 768px
+   Source: grid.json responsive breakpoints (max-width 767px)
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .col-3,
+  .col-2-editorial,
+  .col-2-split {
+    grid-template-columns: 1fr;
+    flex-direction:        column;
+    gap:                   24px;
+  }
+
+  .wrapper {
+    padding-left:  20px;
+    padding-right: 20px;
+  }
+}
