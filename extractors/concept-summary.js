@@ -17,29 +17,33 @@ const router = new LLMRouter({
   maxAttempts: 2,
 });
 
-const CONCEPT_PROMPT = `You are a brand strategist and creative director analyzing a website.
+const CONCEPT_PROMPT = `You are a creative director and design analyst examining a website's visual and structural design.
 
-Using the extracted design data and page screenshots provided, write a concept summary for this website in markdown. Be specific, evocative, and concrete — avoid generic descriptions.
+Using the extracted design data and page screenshots provided, write a design analysis for this website in markdown. Be specific, concrete, and precise — focus entirely on design decisions.
 
-## Brand Overview
-[What this company does and who it's for — 2-3 sentences]
+STRICT RULE: Do not include any brand or business content. This means no company descriptions, no target audience statements, no emotional brand positioning, no marketing language, and no mentions of what the company sells or who its customers are. Every sentence must describe a visual or structural design decision — if it could appear in a brand brief or marketing document, remove it.
+
+You are provided multiple screenshots taken at different scroll positions. Do not assume any ordering — instead, visually identify each page zone from the content of each image. The hero is the prominent entry section: large headline type, full-bleed or high-impact background, often a CTA and a scroll indicator. Content sections are the scrolling body between hero and footer: feature grids, editorial columns, product showcases, image/text alternating layouts. The footer is the closing section: small type, multiple link columns, copyright or legal line, subdued palette, often a logo. If none of the screenshots clearly shows a zone, say so rather than fabricating detail.
 
 ## Visual Identity
 [Color palette mood, typographic personality, motion character — 2-3 sentences]
 
-## Emotional Tone
-[The feeling this site evokes — use vivid adjectives and sensory language]
+## Hero Section
+[Above-fold treatment: background type (full-bleed video / parallax image / static color / gradient), viewport coverage (full-height or partial), text position (centered / left-aligned / bottom-anchored), headline scale contrast to body text, CTA count and style (ghost / filled / pill / underlined link), scroll indicator presence and type (animated arrow / "scroll" text / dot / none), and any visible load-in animation — 3-4 sentences]
 
-## Target Audience
-[Who this is clearly designed for — be specific about demographics/mindset]
+## Content Sections
+[Body of the page between hero and footer: layout patterns (editorial columns / full-bleed alternating sections / feature grids / image-text splits), whitespace philosophy (generous and airy / dense and information-rich / rhythmic and modular), image treatment (photography style, contained vs. edge-to-edge, color grading), section rhythm (alternating background colors / hard dividers / seamless continuous scroll), and how typography scales from display to body within these sections — 3-4 sentences]
+
+## Footer Section
+[Footer treatment: column count and link grouping, typographic subduing relative to body (smaller scale, lower weight, case treatment), logo or wordmark presence, newsletter form or CTA presence, social link treatment, legal/copyright text style, and overall visual weight relative to the rest of the page (dark / light / brand color / neutral) — 3-4 sentences]
 
 ## Design Principles
 [3-5 core design decisions that define this site's aesthetic approach, as bullet points]
 
 ## Distinctive Qualities
-[What makes this site stand out — specific unique choices, not generic praise]
+[What makes this site's design stand out — specific unique choices, not generic praise]
 
-Keep each section focused. Use the extracted data to support specific observations (e.g., exact font names, color mood, animation style).`;
+Keep each section focused. Use the extracted data to support specific observations (e.g., exact font names, color values, animation style).`;
 
 /**
  * Safely read and parse a JSON file. Returns null on any error.
@@ -102,6 +106,13 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
   const midPagePath = path.join(screenshotDir, 'concept-mid-page.png');
   await page.screenshot({ path: midPagePath });
   screenshotFiles.push(midPagePath);
+
+  // Bottom-of-page screenshot (footer)
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForTimeout(1000);
+  const footerPath = path.join(screenshotDir, 'concept-footer.png');
+  await page.screenshot({ path: footerPath });
+  screenshotFiles.push(footerPath);
 
   // Read screenshots as base64
   const imageContent = screenshotFiles.map(f => ({
