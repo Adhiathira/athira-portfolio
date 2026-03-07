@@ -50,7 +50,20 @@ function annotateFontAvailability(data) {
     })
   );
 
-  return { ...data, typeScale, proprietaryFonts };
+  // Mark fontFace entries served from the site's CDN that were not downloaded from Google Fonts.
+  // These hashed URLs are inaccessible to downstream generators.
+  const fontFaces = (data.fontFaces || []).map(face => {
+    const src = String(face.src || '');
+    if (src.startsWith('fonts/') || src.startsWith('data:')) return face;
+    const name = String(face.resolvedName || face.family || '');
+    if (!name) return face;
+    const norm = name.toLowerCase().trim();
+    if (GENERIC_FONT_FAMILIES.has(norm) || localFamilies.has(norm)) return face;
+    if (!seen.has(name)) { seen.add(name); proprietaryFonts.push(name); }
+    return { ...face, webAccessible: false };
+  });
+
+  return { ...data, fontFaces, typeScale, proprietaryFonts };
 }
 
 export async function extract(page, { outputDir } = {}) {
