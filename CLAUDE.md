@@ -113,7 +113,7 @@ node runner.js --only color-system  # run a single extractor (by slug)
 
 **Check in this order:**
 1. **First:** Check `current-task` field in `project-documentation/task-tracker-config.md`
-2. **If empty:** Query `mcp__task-tracker__list_actionable_tasks` with project_id=14
+2. **If empty:** Query `mcp__task-tracker__list_actionable_tasks` with the dynamically resolved project ID from the step above
 3. **If no tasks:** Ask me if you should pick the next task (you can recommend one)
 
 ### Starting a Task
