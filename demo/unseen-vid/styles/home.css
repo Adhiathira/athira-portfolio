@@ -156,3 +156,93 @@
     align-self: auto;
   }
 }
+
+
+/* ── Gallery section ─────────────────────────────────────────────────────────
+   Full-bleed — no max-width constraint. Bleeds to page edges.
+   Section padding uses spacing tokens only. ────────────────────────────────── */
+
+.gallery-section {
+  padding: 48px 0;
+  background-color: var(--color-bg);
+}
+
+/* Filter chip bar */
+.gallery-filter {
+  display: flex;
+  gap: var(--space-cta-h);
+  padding: 0 var(--space-header-h);
+  margin-bottom: var(--space-header-h);
+}
+
+.gallery-filter__chip {
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-fw);
+  line-height: var(--type-button-lh);
+  letter-spacing: var(--type-ls-caps);
+  text-transform: uppercase;
+  padding: var(--space-cta-v) var(--space-cta-h);
+  border-radius: var(--space-cta-radius);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-body);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+}
+
+.gallery-filter__chip--active {
+  background: var(--color-action);
+  color: var(--color-surface);
+  border-color: var(--color-action);
+}
+
+.gallery-filter__chip--coming-soon {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.chip-label__coming-soon {
+  font-size: var(--type-button);
+  opacity: 0.8;
+}
+
+/* Gallery grid — 3 columns on desktop */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-header-h);
+  padding: 0 var(--space-header-h);
+}
+
+/* ── Post-gallery CTA ─────────────────────────────────────────────────────────
+   Centered cluster immediately after the gallery grid. ───────────────────────── */
+
+.gallery-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-cta-v);
+  padding: 48px var(--space-header-h);
+  background-color: var(--color-bg);
+  text-align: center;
+}
+
+.gallery-cta__caption {
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ── Responsive — mobile (max-width: 768px) ──────────────────────────────────
+   Stack gallery to single column. ─────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
