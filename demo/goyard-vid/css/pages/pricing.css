@@ -1,0 +1,310 @@
+/* =============================================================================
+   pricing.css — Pricing page styles for goyard-vid
+   All values sourced from tokens.css custom properties.
+   Zero hardcoded hex values. Zero bare pixel values for spacing/type.
+   Transition timing sourced from motion.json transitionElements (0.5s ease).
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Page Wrapper
+   --------------------------------------------------------------------------- */
+
+.pricing-page {
+  background-color: var(--color-page-bg);
+  min-height: 100vh;
+}
+
+/* ---------------------------------------------------------------------------
+   Page Header — centered, minimal
+   --------------------------------------------------------------------------- */
+
+.pricing-header {
+  text-align: center;
+  padding: var(--space-wrapper-top) var(--space-wrapper-x) var(--space-section-top);
+}
+
+.pricing-header-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h3-size);
+  font-weight: var(--type-h3-fw);
+  line-height: var(--type-h3-lh);
+  letter-spacing: var(--type-h3-ls);
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-cta-y);
+}
+
+.pricing-header-sub {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-lh);
+  color: var(--color-body);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Plan Cards Section — 3-column equal grid
+   --------------------------------------------------------------------------- */
+
+.pricing-section {
+  padding: var(--space-section-top) var(--space-wrapper-x);
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-container-gap);
+  align-items: start;
+}
+
+/* ---------------------------------------------------------------------------
+   Card Wrapper — holds badge + card for vertical alignment
+   --------------------------------------------------------------------------- */
+
+.pricing-card-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------------------
+   "Most popular" Badge — above Pro card; spacer for Free/Team
+   --------------------------------------------------------------------------- */
+
+.pricing-badge {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2-size);
+  font-weight: var(--type-h2-fw);
+  line-height: var(--type-h2-lh);
+  letter-spacing: var(--type-h2-ls);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-align: center;
+  padding-bottom: var(--space-cta-y);
+  /* Reserve vertical space on all wrappers so cards align at baseline */
+  min-height: calc(var(--type-h2-lh) + var(--space-cta-y));
+}
+
+/* Free and Team card wrappers get an invisible badge spacer */
+.pricing-card-wrapper:not(.pricing-card-wrapper--featured) .pricing-badge {
+  visibility: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Plan Card Base
+   --------------------------------------------------------------------------- */
+
+.pricing-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-button);
+  padding: var(--space-wrapper-top) var(--space-cta-x);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-section-bottom);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.pricing-card--featured {
+  border-color: var(--color-accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Plan Name — h3 style, uppercase
+   --------------------------------------------------------------------------- */
+
+.pricing-plan-name {
+  font-family: var(--font-heading);
+  font-size: var(--type-h3-size);
+  font-weight: var(--type-h3-fw);
+  line-height: var(--type-h3-lh);
+  letter-spacing: var(--type-h3-ls);
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Price Figure — h1 display style
+   --------------------------------------------------------------------------- */
+
+.pricing-price {
+  line-height: 1;
+}
+
+.pricing-price-figure {
+  font-family: var(--font-heading);
+  font-size: var(--type-h1-size);
+  font-weight: var(--type-h1-fw);
+  line-height: var(--type-h1-lh);
+  letter-spacing: var(--type-h1-ls);
+  color: var(--color-heading);
+}
+
+/* ---------------------------------------------------------------------------
+   Billing Cadence — body / Newsreader serif
+   --------------------------------------------------------------------------- */
+
+.pricing-cadence {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-lh);
+  color: var(--color-muted);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Feature List — CSS ::before dash, no icon library
+   --------------------------------------------------------------------------- */
+
+.pricing-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-cta-y);
+  flex: 1;
+}
+
+.pricing-features li {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-lh);
+  color: var(--color-body);
+  padding-left: var(--space-cta-x);
+  position: relative;
+}
+
+.pricing-features li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+}
+
+/* ---------------------------------------------------------------------------
+   CTA Button — secondary style (dark text on light/card bg)
+   Transition: 0.5s ease per motion.json transitionElements
+   --------------------------------------------------------------------------- */
+
+.pricing-cta {
+  display: block;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: var(--type-small-size);
+  font-weight: var(--type-button-fw);
+  line-height: var(--type-button-lh);
+  letter-spacing: var(--type-h2-ls);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cta-secondary-text);
+  border: 1px solid var(--cta-secondary-border);
+  border-radius: var(--radius-button);
+  padding: var(--space-cta-y) var(--space-cta-x);
+  background: transparent;
+  margin-top: auto;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.pricing-cta:hover {
+  background-color: var(--color-accent);
+  color: var(--color-surface);
+}
+
+/* ---------------------------------------------------------------------------
+   Enterprise Row — below grid, full-width, lighter than plan cards
+   --------------------------------------------------------------------------- */
+
+.pricing-enterprise {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-section-top) var(--space-wrapper-x);
+  margin-top: var(--space-section-top);
+}
+
+.pricing-enterprise-inner {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-cta-y);
+}
+
+.pricing-enterprise-text {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2-size);
+  font-weight: var(--type-h2-fw);
+  line-height: var(--type-h2-lh);
+  letter-spacing: var(--type-h2-ls);
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0;
+}
+
+.pricing-enterprise-cta {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-lh);
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.5s ease;
+}
+
+.pricing-enterprise-cta:hover {
+  opacity: 0.7;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — 1024px breakpoint
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .pricing-section,
+  .pricing-enterprise {
+    padding-left: var(--space-cta-x);
+    padding-right: var(--space-cta-x);
+  }
+
+  .pricing-header {
+    padding-left: var(--space-cta-x);
+    padding-right: var(--space-cta-x);
+  }
+
+  .pricing-grid {
+    gap: var(--space-cta-x);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — 768px breakpoint (2-column)
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Team card spans full width when going to 2-col */
+  .pricing-card-wrapper:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — 480px breakpoint (single column)
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-card-wrapper:last-child {
+    grid-column: auto;
+  }
+}
