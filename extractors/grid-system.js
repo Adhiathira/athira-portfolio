@@ -7,6 +7,7 @@ import { LLMRouter, ClaudeCliProvider } from '../lib/llm/index.js';
 
 const router = new LLMRouter({
   providers: { 'claude-cli': new ClaudeCliProvider() },
+  defaultProvider: 'claude-cli',
   maxAttempts: 2,
 });
 

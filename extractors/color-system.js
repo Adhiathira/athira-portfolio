@@ -6,6 +6,7 @@ import { createLogger } from '../lib/logger.js';
 
 const router = new LLMRouter({
   providers: { 'claude-cli': new ClaudeCliProvider() },
+  defaultProvider: 'claude-cli',
   maxAttempts: 2,
 });
 

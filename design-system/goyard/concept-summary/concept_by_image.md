@@ -1,31 +1,29 @@
-`★ Insight ─────────────────────────────────────`
-Goyard uses a **proprietary typeface** ("Goyard") for all headings and navigation — a hallmark of ultra-luxury brands that commission bespoke type to signal exclusivity and prevent visual imitation. The `Newsreader` serif for body text is an editorial choice, connecting to newspaper/gazette publishing traditions that align with their "Goyard Gazette" editorial section.
-`─────────────────────────────────────────────────`
+Okay, here's a concept summary for the Goyard website based on the design tokens provided:
 
 ## Brand Overview
 
-Goyard is one of the world's oldest luxury Parisian maisons (est. 1853), specializing in handcrafted trunks, luggage, and leather goods. The site serves ultra-high-net-worth individuals who value heritage, discretion, and artisanal craft over conspicuous branding. It is not a shopping destination — it is a cultural archive made navigable.
+Goyard is a heritage Parisian Maison specializing in luxury leather goods known for its iconic Goyardine canvas. The brand caters to discerning clientele who appreciate artisanal craftsmanship, timeless elegance, and subtle expressions of personal style.
 
 ## Visual Identity
 
-The palette centers on a muted sage-green (`#dce4e0`) ground that reads as aged linen or patinated stone — warm without warmth, refined without coldness. Headings use the proprietary **Goyard** typeface at extreme letter-spacing (up to `3.2px`), rendering text more as architectural ornament than readable copy; body text uses **Newsreader**, a contemporary editorial serif that echoes 19th-century broadsheet print. Motion is restrained to opacity fades (`0.5s ease`) and a single looping hero video — nothing announces itself.
+The color palette centers around a deep, rich forest green (#183f26) for the header and footer, coupled with a warm off-white (#f0ede6) for primary page backgrounds, creating a sense of understated luxury. Brand proprietary "Goyard" font headlines are coupled with classic Newsreader serif body text to evoke tradition. Subtle, elegant video and static content featuring luxury craftsmanship and products are the focus, enhanced by simple and subtle UI and interactions.
 
 ## Emotional Tone
 
-Hushed, ceremonial, slightly inaccessible. The sage-green ground feels like entering a quiet room lined with silk wallpaper. Gold (`#b8956a`) appears only as a hairline underline accent — a whisper, not a statement. The site does not perform luxury; it assumes it. Navigation labels like "MAISON GOYARD" and "PERSONALIZATION" float in tracked-out small caps, imparting the reverence of a museum placard. Browsing feels less like shopping and more like being admitted.
+The site aims to evoke a feeling of quiet sophistication, understated elegance, and timeless heritage. The rich green and warm creams create a sense of calm, while the emphasis on craftsmanship and materials suggests quality and enduring value. The overall impression is one of discreet luxury and a connection to a long-standing tradition.
 
 ## Target Audience
 
-Established wealth, 40s–60s, primarily European and East Asian. People who already know Goyard does not advertise — that knowledge is the credential. They are not discovering the brand; they are deepening an existing relationship. Digitally fluent but not digitally native; they expect the internet to behave with the same restraint as a private boutique.
+The site clearly targets affluent individuals (both men and women) who value tradition, craftsmanship, and quiet expressions of luxury over overt displays of wealth, and are interested in quality over quantity when making purchasing decisions. They likely possess a sophisticated aesthetic sense and appreciate brands with a strong heritage and a sense of exclusivity, and are willing to pay a premium for unique brands.
 
 ## Design Principles
 
-- **Restraint as status signal** — no hero CTAs, no promotional banners, no countdown timers; scarcity of information communicates exclusivity
-- **Typography carries the brand weight** — the proprietary Goyard typeface at extreme tracking replaces visual decoration; letters *are* the ornament
-- **Color as material reference** — `#dce4e0` sage evokes aged linen, verdigris, and natural canvas; the palette reads as physical texture, not digital UI
-- **Editorial over commercial** — the "Goyard Gazette" section (reverse-column flex layout with illustrated spreads) frames the site as a publication, not a catalog
-- **Micro-opacity hover** — all interactive elements reduce to `opacity: 0.7` on hover with no color change; feedback is subtle, never flashy
+*   **Subtle Brand Emphasis:** The brand color is strong, but not overwhelming, with product and process photography taking visual precedence.
+*   **Classical Typography:** Pairing a proprietary sans-serif headline face with a serif body text to strike a balance between classic and contemporary design, the strong vertical emphasis of the logo and brand mark provides a strong sense of tradition.
+*   **Quiet Motion:** Gentle video loops and subtle transitions add a touch of modernity without distracting from the overall sense of timelessness.
+*   **Uncluttered Layouts:** Ample whitespace and a 2-3 column grid structure creates a sense of order and sophistication without over emphasis on column structure, particularly on smaller viewports.
+*   **Emphasis on Craftsmanship:** Focus on materials and detail, using high-quality photography and video where possible to communicate the value of goods.
 
 ## Distinctive Qualities
 
-The cookie consent modal — typically the most thoughtless element on any site — is styled with the same `5a7a6e` sage border, centered serif body copy, and gold-underlined agree button as the rest of the design. Most brands treat consent modals as afterthoughts; Goyard treats it as a monogrammed envelope. The hero is a **muted, non-autoplaying video** (unusual — most luxury sites autoplay silently), placing the decision to engage with motion entirely in the visitor's hands. The footer uses **four equal columns** with no visual hierarchy between Customer Service and Legal Information — a democratic flatness that signals the brand has no need to upsell.
+The Goyard site stands out through its understated approach to luxury, which is not a common move with luxury brands. It avoids ostentatious displays of wealth, instead focusing on the brand's heritage and the craftsmanship of its products. The choice of forest green as the primary brand color is unique, lending a sense of quiet sophistication, and using a single highlight ("Warm gold/amber accent for CTA underlines, button borders, link decorations, and key interactive accents throughout") creates visual interest without being loud.

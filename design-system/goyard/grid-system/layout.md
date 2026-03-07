@@ -1,84 +1,119 @@
-# Brand Name — Layout Brief
+`★ Insight ─────────────────────────────────────`
+This genericization task is a design pattern extraction exercise — the goal is to separate *structural vocabulary* (layout, spatial relationships, typographic hierarchy) from *semantic content* (brand identity, product names, industry context). The preserved patterns become reusable templates that any brand can instantiate with their own content.
+`─────────────────────────────────────────────────`
+
+# Brand Name Website Layout Brief
 
 ## 1. Overall Page Structure
 
-The page follows a linear, scroll-driven narrative with approximately 6–7 major sections stacked vertically. The flow moves from a full-screen cinematic hero through alternating editorial product showcases, then into brand storytelling, and concludes with a newsletter capture before a structured footer. The pacing is generous — sections breathe with significant vertical whitespace, giving the experience a slow, deliberate luxury cadence.
+The page is composed of approximately **7–8 distinct vertical sections**, each occupying a full viewport width. The rhythm alternates between immersive full-bleed media moments and light, airy product-display panels. There is a strong sense of *vertical orchestration* — the page breathes slowly, never rushing between sections. Transitions between sections are clean cuts (no overlapping), maintaining dignity and separation between each narrative beat.
 
-A persistent cookie consent modal overlays the entire page throughout all screenshots, rendered as a centered white card with a subtle accent border, sitting above a dimmed/muted background. This suggests it blocks interaction until dismissed.
+General flow from top to bottom:
+1. Persistent utility bar + navigation (two-tier header)
+2. Full-bleed hero video
+3. Product grid (featured items)
+4. Editorial split: feature section
+5. Asymmetric editorial sections with full-bleed photography
+6. Seasonal product grid
+7. Newsletter section
+8. Location carousel
+9. Footer
 
 ---
 
 ## 2. Header / Navigation
 
-The header is minimal and symmetrically balanced — classic luxury restraint:
+The header is **two-tiered**, sitting at the very top of the viewport as a fixed/sticky element:
 
-- **Left:** Two small utility icons (location pin + search/magnifier), horizontally paired
-- **Center:** The Brand Name wordmark — spaced, slightly condensed letterforms, modest in size, optically centered on the full viewport width
-- **Right:** A single account/profile icon, mirroring the left side's weight
+- **Top utility bar** (~40px tall): Dark background. Far-left houses a location icon and a search icon. Centered is the **Brand Name wordmark** in spaced serif caps — this is the visual crown of the nav. Far-right holds a user/account icon. The extreme left-right utility icons with a centered brand mark creates a *tripartite balance*.
+- **Secondary nav bar** (below the utility bar, ~40px): Same or slightly varied hue. Contains four nav items centered as a horizontal list with generous letter-spacing (tracked-out caps). Navigation labels are minimal and carry no visual weight; the spacing is the design.
 
-Below the primary header, a **secondary navigation bar** sits at a lower visual weight — four evenly spaced text links in small, widely tracked caps: Category A / Category B / Category C / Category D. This bar has no background — it floats transparently above whatever content sits below it.
-
-The header appears fixed (sticky), remaining visible across all scroll states. The entire nav zone is very thin — perhaps 50–60px combined — keeping the viewport maximally open for content.
+The two-bar structure gives the header a **proportional depth of ~80px total**, which feels weighty enough to anchor the page without dominating.
 
 ---
 
 ## 3. Hero Section
 
-The hero is **full-bleed, edge-to-edge**, likely 100vh. The background is a muted, desaturated lifestyle photograph. The overall tone is soft and cool — understated.
-
-The cookie consent card floats centered over the hero, but based on the background composition, the hero likely uses a **centered or slightly left-of-center typographic lockup** over the photographic backdrop. The image carries significant visual weight but is rendered at reduced opacity or with a wash, keeping it atmospheric rather than dominant.
-
-Notable: a **small media control bar** (pause + audio icons) appears pinned to the bottom-left corner — indicating the hero contains an autoplaying background video. A decorative illustrated emblem appears fixed to the bottom-right as a persistent brand element.
+- **Full-bleed, edge-to-edge video** that fills the entire viewport. No side margins, no container.
+- A **text overlay** is positioned at the vertical center-right quadrant of the frame — large serif headline in white, widely tracked all-caps, at roughly 4–5rem scale. The text sits over the visual focal point of the imagery.
+- Below the headline, a thin **underlined CTA link** — "Primary CTA" — in small tracked caps with a delicate underline. Quiet, not a button.
+- Bottom-left corner: small **pause and mute controls** for the video — barely visible, respecting immersion.
+- Bottom-right corner: a small circular **promotional badge**, rotating/decorative. Positioned with intentional tension against the corner — a whimsical counterpoint.
+- The overall effect is a **cinematic, full-bleed experience** where typography floats as a semi-transparent layer over live footage.
 
 ---
 
-## 4. Content Sections Below the Hero
+## 4. Content Sections
 
-### Product Grid — Catalogue Section
-A **three-column product grid** with equal-width columns and consistent row heights. Each cell contains a product image (full-bleed within its container) with a small label below — product name in caps, a "See all X colors" subtitle in a lighter weight. Columns are evenly gapped. The grid feels clean and catalog-like, not editorial — systematic rather than expressive.
+### Section: Featured Product Grid
+- **Light warm background** — the transition from the dark video is sharp and deliberate.
+- **3-column equal-width grid** of product photography. Products appear at consistent scale, centered in their columns with generous padding above and below.
+- Below each product: **centered all-caps product name** in small serif, followed by a smaller secondary link in italicized or lighter weight. The typographic hierarchy is minimal — two levels only.
+- The section has a vertical scrollbar hint on the far right edge, suggesting horizontal content overflow (carousel behavior).
+- **No visible grid lines or cards** — pure whitespace delineates columns.
 
-### Editorial / Campaign Section — Two-Column Split
-A **50/50 full-width horizontal split**: one half is a large product campaign image (full-bleed within its half), the other carries brand narrative text or an additional image. The two halves are flush against each other with no gutter — creating a seamless visual pairing. This section uses asymmetric visual weight: one side is image-dominant, the other is typography or detail-focused.
+### Section: Editorial Feature — Split Layout
+- **Two-column split**, roughly 40/60 proportion.
+- Left column: light background with large multi-line serif headline stacked vertically. Below: small spaced-cap subtitle and a thin underlined CTA "Secondary CTA".
+- Right column: full-bleed product photography that **crops to the right edge** of the viewport.
+- The image bleeds fully to the right with no margin — creating an asymmetric, confident layout where the photo escapes its container. The left text block has generous internal padding, giving it breathing room against the image.
 
-### Brand Storytelling Section
-This section breaks from the product grid rhythm into a **text-over-full-bleed-image** layout. Large display type is positioned left-aligned, overlapping a full-width atmospheric image. The type is very large — display size — with generous line height. A small illustrated brand element appears in the lower left, functioning as a decorative editorial element. This section has strong vertical presence — likely 80–100vh.
+### Section: Asymmetric Editorial Pair
+- **Two stacked full-bleed editorial images** in a 50/50 vertical split — each image takes roughly half the viewport width and full viewport height. One image occupies the left half, the other the right, and they are **vertically offset** — the right image begins where the left ends, creating an overlapping staggered rhythm.
+- Overlaid white text sits at the bottom of one image quadrant — quiet, tracked caps.
+- This is the most *spatially complex* section: the horizontal bisection and vertical offset creates dynamic diagonal energy without using actual diagonal elements.
 
-### Product Collection — Multi-Card Horizontal Row
-Another **three-column product grid**, similar to the first, cycling through seasonal or category collections. Consistent visual treatment — equal columns, product imagery top, label text below. Maintains the systematic catalog rhythm.
+### Section: Seasonal Collection — Product Grid
+- Returns to the **light background + 3-column product grid** rhythm established earlier.
+- Large centered all-caps section title with generous margin below.
+- Products float on the light ground at consistent scale. No cards, no frames.
 
-### Newsletter / Email Capture
-A **centered, single-column** form section with minimal UI: a thin input field with an underline border treatment, and a Primary CTA text link below. No container box, no background fill — the form floats on white space, relying entirely on spatial isolation for prominence.
+### Section: Newsletter
+- **Two-column layout**: left side holds text content (headline, description, email input, submit button); right side holds an editorial illustration or brand imagery.
+- The background transitions to white or near-white, giving the section a clean, direct feel.
+- The email input field is centered within the left column and has a simple rectangular outline — functional and unadorned.
+- The brand image is large-scale, occupying the full right column height — playful counterpoint to the formal typographic left.
 
-### Locations Section
-A **full-width image carousel or horizontal scrolling strip** featuring interior photography. Images appear equal-height with the strip extending edge-to-edge. Navigation arrows appear at the far left and right edges for browsing.
+### Section: Location Carousel
+- **Full-bleed dark background** — creates a dramatic shift in visual temperature.
+- A **centered single-card carousel** of location photography. The active (featured) card is large and centered. Partial cards bleed in from left and right edges, signaling scroll/swipe navigation. Left and right chevron arrows float in the dark field.
+- Below each location photo: centered location name in small tracked caps + address in lighter weight.
+- A CTA "Action Button" with a characteristic thin underline sits centered below the card.
+- The full-width dark section creates strong visual contrast with everything above — it feels like a deliberate *emotional register shift* into brand world.
 
 ---
 
 ## 5. Footer
 
-The footer is structured as a **four-column grid**, divided into clear categorical groupings:
-
-- **Column 1:** CUSTOMER SERVICE — stacked text links (Find a location, Contact us, FAQ, etc.)
-- **Column 2:** COMPANY — brand/company links (About, Service A, Service B)
-- **Column 3:** LEGAL INFORMATION — policy links (Cookies, Legal, Accessibility, Privacy)
-- **Column 4:** ACCESSIBILITY — two toggle switches with labels (Decrease animations / Increase contrasts)
-
-Column headers are in small tracked caps, links below in a lighter roman weight. The four columns are evenly distributed across the footer width.
-
-Below the four-column grid, a **thin utility bar** carries: a language/region selector on the far left, and copyright text flush right. An illustrated decorative brand element (large and ghosted) appears centered or slightly left in the background of the footer — functioning as a watermark-style brand motif.
+- **Same dark background** as the location section — the footer reads as an extension of that section's color field, creating a seamless ground-to-base transition.
+- **Four-column grid** of link categories. Column headers in tracked small caps; links below in slightly lighter weight, centered within each column.
+- Below the link columns: a **centered brand monogram + full wordmark lockup** — the brand seal as a footer centerpiece.
+- Below the seal: a horizontal row of **social media icons** — all outline-style circles, evenly spaced.
+- Bottom-left: a **brand mascot or decorative illustration** — scaled large enough to read clearly but not dominating.
+- Bottom-right: small copyright line in lightest possible weight.
+- Bottom locale/language switcher at the very lower left edge.
 
 ---
 
 ## 6. Notable Layout Patterns
 
-**Full-bleed imagery:** Every major section uses edge-to-edge images — no contained image boxes with padding. Images break to the full viewport width consistently.
+### Full-Bleed as Default
+The brand treats full-bleed as the baseline, not the exception. Every hero, every editorial image, every colored section background runs edge-to-edge. Containment is reserved for text and product grids only.
 
-**Floating consent modal:** The cookie overlay uses a centered card with a hairline accent border, layered above a muted/dimmed version of the live page. The background remains visible and legible — it's not fully blocked, just desaturated.
+### Sticky Two-Tier Header
+The header remains fixed over all scroll content. The brand mark is always visible at dead center, regardless of what section is beneath it.
 
-**Persistent media controls:** Bottom-left media playback controls (pause/audio) suggest a fixed or sticky position that follows the user on scroll through the hero, reinforcing the cinematic video-first approach.
+### Centered Typographic Axis
+Almost all body copy, product names, CTAs, and headings are **center-aligned**. This creates a strong vertical spine through the page — the eye always returns to center.
 
-**Sticky decorative emblem:** The illustrated brand emblem in the bottom-right appears consistently across multiple scroll positions — likely a fixed decoration or a scroll-pinned element within the hero's scroll container.
+### Whitespace as Luxury Signal
+The light-background product sections use whitespace so generously that product images feel *curated* rather than displayed. There are no bounding boxes, no drop shadows, no card outlines.
 
-**Typographic hierarchy through tracking:** All caps with extreme letter-spacing is used systematically for navigation, labels, and CTAs — a consistent typographic signature that signals luxury restraint. Body copy shifts to serif with normal tracking, creating a clear hierarchy between UI chrome and content.
+### Restrained CTA Language
+CTAs use thin underlines rather than filled buttons. This is intentional hierarchy: the brand does not need to shout. The call-to-action is present but never aggressive.
 
-**Spatial rhythm:** The alternating sections follow a predictable beat — grid, editorial split, full-bleed story, grid, form, footer. This creates a visual breathing pattern: dense → expressive → dense → quiet → close.
+### Floating Peripheral Elements
+Decorative elements are positioned at viewport edges or corners, outside the main content axis. They provide visual *peripheral richness* without disrupting the central hierarchy.
+
+### Color Zones as Rhythm
+The page uses two primary background states — **light/off-white** (product world) and **dark** (brand world) — and alternates between them to mark major section shifts. This is a macro-level compositional device that signals a transition between product-focused and brand-focused content.
