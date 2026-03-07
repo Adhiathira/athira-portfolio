@@ -19,7 +19,7 @@ Common roles: page-background, surface-background, hero-background, primary-acti
 
 export async function extract(page, { outputDir, screenshotsDir } = {}) {
   // Pass 1 + 2: run in browser context
-  const { cssVars, elements } = await page.evaluate(() => {
+  const { cssVars, elements, buttonCandidates } = await page.evaluate(() => {
     function toHex(value) {
       const m = value.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/);
       if (!m) return value.trim();
@@ -51,13 +51,10 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
 
     // Pass 2: computed element colors
     const targets = [
-      ['pageBackground', 'body',         'backgroundColor'],
-      ['bodyText',        'body',         'color'],
-      ['headingText',     'h1,h2',        'color'],
-      ['buttonBackground','button',       'backgroundColor'],
-      ['buttonText',      'button',       'color'],
-      ['linkColor',       'a',            'color'],
-      ['borderColor',     'button,input', 'borderColor'],
+      ['pageBackground', 'body',  'backgroundColor'],
+      ['bodyText',        'body',  'color'],
+      ['headingText',     'h1,h2', 'color'],
+      ['linkColor',       'a',     'color'],
     ];
     const elements = {};
     for (const [label, sel, prop] of targets) {
@@ -66,6 +63,27 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
         const val = getComputedStyle(el)[prop];
         if (val && val !== 'rgba(0, 0, 0, 0)') elements[label] = toHex(val);
       }
+    }
+
+    // Pass 2 (button scan): full DOM scan for button/CTA candidates
+    const fingerprints = new Map();
+    const buttonCandidates = [];
+    for (const el of document.querySelectorAll('button, a, [role="button"]')) {
+      const rect = el.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) continue;
+      const style = getComputedStyle(el);
+      const bg = style.backgroundColor;
+      const border = style.borderColor;
+      if (bg === 'rgba(0, 0, 0, 0)' && border === 'rgba(0, 0, 0, 0)') continue;
+      const textColor = style.color;
+      const bgHex = bg === 'rgba(0, 0, 0, 0)' ? bg : toHex(bg);
+      const textHex = textColor && textColor !== 'rgba(0, 0, 0, 0)' ? toHex(textColor) : textColor;
+      const borderHex = border === 'rgba(0, 0, 0, 0)' ? border : toHex(border);
+      const fingerprint = `${bgHex}|${textHex}|${borderHex}`;
+      if (fingerprints.has(fingerprint)) continue;
+      fingerprints.set(fingerprint, true);
+      const label = (el.textContent || '').trim().slice(0, 60);
+      buttonCandidates.push({ bg: bgHex, textColor: textHex, border: borderHex, label });
     }
 
     // Pass 2A: nav colors at top-of-page state
@@ -82,7 +100,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
       if (lc && lc !== 'rgba(0, 0, 0, 0)') elements.navLink = toHex(lc);
     }
 
-    return { cssVars, elements };
+    return { cssVars, elements, buttonCandidates };
   });
 
   // Pass 2B: scrolled nav colors — scroll to trigger nav state transition
@@ -211,11 +229,15 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
   }
 
   // Call claude via stream-json (supports vision via base64 content blocks)
+  const buttonCandidatesBlock = {
+    type: 'text',
+    text: `Button candidates extracted from DOM (deduplicated by visual fingerprint):\n${JSON.stringify(buttonCandidates, null, 2)}\n\nFor EACH button candidate above, assign a role. Valid roles: primary-cta, secondary-cta, ghost, nav-link, utility, other.\nReturn a second JSON array (separate from the color tokens array) with this shape — no markdown, no explanation:\n[{ "bg": "...", "textColor": "...", "border": "...", "role": "..." }]`,
+  };
   const msg = JSON.stringify({
     type: 'user',
     message: {
       role: 'user',
-      content: [...imageContent, { type: 'text', text: LLM_PROMPT }],
+      content: [...imageContent, buttonCandidatesBlock, { type: 'text', text: LLM_PROMPT }],
     },
   });
   const result = spawnSync(
@@ -225,6 +247,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
   );
 
   let visual = [];
+  let ctaButtons = [];
   if (result.error || result.status !== 0) {
     log.minor('Vision pass failed', { error: result.error?.message ?? `exit ${result.status}`, stderr: result.stderr?.trim() || '', stdout: result.stdout?.slice(-2000) || '' });
   } else {
@@ -235,19 +258,30 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
         log.minor('Vision pass API error', { result: claudeResult.result });
       } else {
         const rawOutput = claudeResult?.result ?? '';
-        // Try each [...] candidate (non-greedy) until one parses as a non-empty array.
-        // Handles markdown fences, leading notes like "[note: 10 found]", or trailing brackets.
+        // Scan all [...] candidates and identify each array by shape, not position.
+        // Visual palette items have a `hex` key; CTA button items have a `bg` key.
+        // This is robust to the LLM emitting an empty [] for one array or reordering them.
         for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
           try {
             const parsed = JSON.parse(match[0]);
-            if (Array.isArray(parsed) && parsed.length > 0) {
+            if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.hex !== undefined) {
               visual = parsed;
               break;
             }
           } catch (_) { /* not valid JSON, try next candidate */ }
         }
         if (visual.length === 0) {
-          log.minor('Vision pass returned no JSON array, ignoring');
+          log.minor('Vision pass returned no JSON array for visual palette, ignoring');
+        }
+
+        for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
+          try {
+            const parsed = JSON.parse(match[0]);
+            if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.bg !== undefined) {
+              ctaButtons = parsed.map(({ label: _l, ...rest }) => rest);
+              break;
+            }
+          } catch (_) { /* not valid JSON, try next candidate */ }
         }
       }
     } catch (_) {
@@ -255,5 +289,5 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
     }
   }
 
-  return { cssVars, elements, visual };
+  return { cssVars, elements, visual, ctaButtons };
 }
