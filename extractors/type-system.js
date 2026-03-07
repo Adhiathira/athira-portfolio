@@ -1,5 +1,13 @@
 import { downloadGoogleFonts } from '../lib/font-downloader.js';
 
+const GENERIC_FONT_FAMILIES = new Set([
+  'serif', 'sans-serif', 'monospace', 'cursive', 'fantasy',
+  'system-ui', 'ui-serif', 'ui-sans-serif', 'ui-monospace', 'ui-rounded',
+  'emoji', 'math', 'fangsong',
+  '-apple-system', 'blinkmacsystemfont',
+  'inherit', 'initial', 'unset', 'revert',
+]);
+
 export const metadata = { tag: 'type-system' };
 
 const TYPE_VAR_KEYWORDS = ['font', 'type', 'text', 'size', 'weight', 'line-height', 'letter', 'heading', 'body', 'caption'];
@@ -13,6 +21,37 @@ const SKIP_DEFAULTS = {
   textDecoration: 'none',
   fontFeatureSettings: 'normal',
 };
+
+function annotateFontAvailability(data) {
+  // Build set of locally available families (successfully downloaded woff2s have src starting with 'fonts/')
+  const localFamilies = new Set(
+    (data.fontFaces || [])
+      .filter(f => String(f.src || '').startsWith('fonts/'))
+      .flatMap(f => [
+        String(f.family || '').toLowerCase(),
+        String(f.resolvedName || '').toLowerCase(),
+      ])
+  );
+
+  const unavailableFonts = [];
+  const seen = new Set();
+
+  const typeScale = Object.fromEntries(
+    Object.entries(data.typeScale || {}).map(([label, entry]) => {
+      const primary = entry.primaryFont;
+      if (!primary) return [label, entry];
+      const norm = primary.toLowerCase().trim();
+      if (GENERIC_FONT_FAMILIES.has(norm) || localFamilies.has(norm)) return [label, entry];
+
+      // Font is unavailable — annotate
+      const note = `${primary} is not available on Google Fonts. Use /get-fallback-font skill to get a recommended alternative.`;
+      if (!seen.has(primary)) { seen.add(primary); unavailableFonts.push(primary); }
+      return [label, { ...entry, unavailable: true, unavailableNote: note, _note: note }];
+    })
+  );
+
+  return { ...data, typeScale, unavailableFonts };
+}
 
 export async function extract(page, { outputDir } = {}) {
   const data = await page.evaluate(({ keywords, skipDefaults }) => {
@@ -128,5 +167,6 @@ export async function extract(page, { outputDir } = {}) {
 
     return { cssVars, fontFaces, typeScale };
   }, { keywords: TYPE_VAR_KEYWORDS, skipDefaults: SKIP_DEFAULTS });
-  return downloadGoogleFonts(data, outputDir);
+  const downloaded = await downloadGoogleFonts(data, outputDir);
+  return annotateFontAvailability(downloaded);
 }
