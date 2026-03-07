@@ -1,0 +1,136 @@
+/* =============================================================================
+   hero.css — Hero section styles for goyard-vid
+   Layout: full-bleed-overlay-text (full-viewport video bg + centered headline + CTA)
+   Source tokens: tokens.css
+   Motion values: motion.json timingTokens — durations: 1s, 0.5s | easings: ease
+   Interaction values: interactions.json navigation default-link-4/5
+     (nav links on dark bg: default opacity 0.5 → hover opacity 1, transition: all)
+   DO NOT hardcode hex values — use CSS custom properties from tokens.css only.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   .hero — section container
+   Full viewport, clips the video to viewport bounds.
+   --------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--color-hero-bg); /* deep forest green — #183f26 */
+}
+
+/* ---------------------------------------------------------------------------
+   .hero video — real video element (replaces placeholder when file is present)
+   --------------------------------------------------------------------------- */
+
+.hero video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   .hero-video-placeholder — visible diagnostic when no video file is present
+   No silent visual fallbacks: names the missing asset and instructs the user.
+   --------------------------------------------------------------------------- */
+
+.hero-video-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--color-nav-text);         /* white */
+  font-size: var(--type-small-size);    /* 12px */
+  font-family: var(--font-body);        /* Newsreader */
+  text-align: center;
+  z-index: 0;
+  padding: 0 40px;
+}
+
+/* Filename label — slightly dimmed */
+.hero-video-placeholder .placeholder-label {
+  font-size: var(--type-small-size);    /* 12px */
+  opacity: 0.7;
+}
+
+/* Placement instruction — further dimmed */
+.hero-video-placeholder .placeholder-instruction {
+  font-size: var(--type-small-size);    /* 12px */
+  opacity: 0.5;
+}
+
+/* ---------------------------------------------------------------------------
+   .hero-content — overlay wrapper that sits above video
+   --------------------------------------------------------------------------- */
+
+.hero-content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 var(--space-wrapper-x);   /* 0 100px */
+}
+
+/* ---------------------------------------------------------------------------
+   .hero-headline — h1 display heading
+   Starts at opacity: 0 — GSAP animates it to opacity: 1 on entrance.
+   --------------------------------------------------------------------------- */
+
+.hero-headline {
+  font-family: var(--font-heading);     /* Plus Jakarta Sans (substitutes Goyard proprietary) */
+  font-size: var(--type-h1-size);       /* 41.6px */
+  font-weight: var(--type-h1-fw);       /* 300 light */
+  line-height: var(--type-h1-lh);       /* 41.6px */
+  letter-spacing: var(--type-h1-ls);    /* 1px */
+  color: var(--color-nav-text);         /* white */
+  text-transform: uppercase;
+  margin: 0 0 24px 0;
+  opacity: 0;                           /* GSAP entrance: animates to 1 */
+}
+
+/* ---------------------------------------------------------------------------
+   .hero-cta — "Start creating" underlined link
+   Hover interaction sourced from interactions.json navigation default-link-4/5:
+     default opacity 0.5, hover opacity 1, transition: all
+   The nav links on dark backgrounds (white text) use this exact pattern.
+   motion.json timingTokens: 0.5s ease for opacity/element transitions.
+   Starts at opacity: 0 — GSAP animates it to opacity: 1 on entrance.
+   --------------------------------------------------------------------------- */
+
+.hero-cta {
+  color: var(--color-nav-text);                       /* white */
+  font-family: var(--font-heading);                   /* Plus Jakarta Sans */
+  font-size: var(--type-nav-size);                    /* 12px */
+  font-weight: var(--type-button-fw);                 /* 700 bold */
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);         /* golden amber — #e8b14d */
+  text-underline-offset: 4px;
+  padding: var(--space-cta-y) var(--space-cta-x);    /* 7px 15px */
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0;                                         /* GSAP entrance: animates to 1 */
+  transition: opacity 0.5s ease;                      /* motion.json: 0.5s ease */
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* Hover state: interactions.json navigation default-link-4/5
+   On dark bg nav links: default opacity 0.5 → hover opacity 1.
+   After GSAP has revealed the CTA (opacity: 1), hover dims slightly then
+   restores — matching the Goyard nav link interaction exactly. */
+.hero-cta:hover {
+  opacity: 0.7;                                       /* interactions.json: nav hover on dark bg reduces opacity */
+  text-decoration-color: var(--color-nav-text);       /* shift underline to white on hover */
+}
