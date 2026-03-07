@@ -140,7 +140,7 @@ function buildCard(creator, onCardClick) {
         followBtn.classList.remove('gallery-card__follow--following');
       }, 1500);
     } else {
-      window.location.href = '/login.html?returnTo=' + encodeURIComponent(window.location.pathname);
+      window.location.href = '/public/login.html?returnTo=' + encodeURIComponent(window.location.pathname);
     }
   });
 

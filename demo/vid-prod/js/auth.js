@@ -41,17 +41,17 @@ export function getUsername() {
 
 /**
  * routeCTA — route a CTA click based on auth state.
- * Logged out → /signup.html
- * Logged in  → targetPath (default: /app/studio.html)
+ * Logged out → /public/signup.html
+ * Logged in  → targetPath (default: /public/app/studio.html)
  *
  * @param {Event} e - the click event (will be prevented)
- * @param {string} [targetPath='/app/studio.html'] - destination when logged in
+ * @param {string} [targetPath='/public/app/studio.html'] - destination when logged in
  */
-export function routeCTA(e, targetPath = '/app/studio.html') {
+export function routeCTA(e, targetPath = '/public/app/studio.html') {
   e.preventDefault();
   if (isLoggedIn()) {
     window.location.href = targetPath;
   } else {
-    window.location.href = '/signup.html';
+    window.location.href = '/public/signup.html';
   }
 }

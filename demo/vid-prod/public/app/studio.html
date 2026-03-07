@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio — vid-prod</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/typography.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <style>
+    /* -------------------------------------------------------------------------
+       WORKSPACE GRID — sidebar + main content
+       ------------------------------------------------------------------------- */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--color-heading);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-section-gap);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .main-content {
+      background: var(--color-surface);
+      padding: var(--spacing-section-gap);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* -------------------------------------------------------------------------
+       SIDEBAR ELEMENTS
+       ------------------------------------------------------------------------- */
+    .sidebar__wordmark {
+      font-family: var(--font-family);
+      font-size: var(--font-size-nav);
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      display: block;
+    }
+
+    .sidebar__nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-btn-gap);
+    }
+
+    .sidebar__nav-item {
+      display: block;
+      font-family: var(--font-family);
+      font-size: var(--font-size-body);
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: var(--spacing-btn-radius);
+      border-left: 2px solid transparent;
+      transition: var(--motion-color);
+    }
+
+    .sidebar__nav-item--active {
+      background: rgba(255, 255, 255, 0.1);
+      border-left: 2px solid var(--color-primary);
+      color: #ffffff;
+    }
+
+    .sidebar__nav-item:hover:not(.sidebar__nav-item--active) {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+    }
+
+    .sidebar__user {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-btn-gap);
+    }
+
+    .sidebar__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      font-weight: 600;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar__username {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .sidebar__logout {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-muted);
+      text-decoration: none;
+      transition: var(--motion-color);
+    }
+
+    .sidebar__logout:hover {
+      color: #ffffff;
+    }
+
+    /* -------------------------------------------------------------------------
+       STUDIO TOPBAR
+       ------------------------------------------------------------------------- */
+    .studio-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-section-gap);
+    }
+
+    .studio-topbar__title {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-btn-gap);
+      color: var(--color-heading);
+    }
+
+    .studio-topbar__name {
+      font-family: var(--font-family);
+      font-size: var(--font-size-h4);
+      font-weight: var(--font-weight-h4);
+      color: var(--color-heading);
+      margin: 0;
+    }
+
+    .studio-topbar__actions {
+      display: flex;
+      gap: var(--spacing-btn-gap);
+    }
+
+    /* -------------------------------------------------------------------------
+       TUTORIAL OVERLAY
+       ------------------------------------------------------------------------- */
+    .studio-tutorial {
+      position: absolute;
+      inset: 0;
+      background: var(--color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-section-gap);
+      z-index: 10;
+    }
+
+    .studio-tutorial__card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--spacing-wrapper-radius);
+      padding: 48px;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .studio-tutorial__heading {
+      font-family: var(--font-family);
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-h2);
+      color: var(--color-heading);
+      margin: 0 0 var(--spacing-section-gap);
+    }
+
+    .studio-tutorial__steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-section-gap);
+      margin-bottom: var(--spacing-section-gap);
+    }
+
+    .studio-tutorial__step {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--spacing-wrapper-radius);
+      padding: var(--spacing-section-gap);
+    }
+
+    .studio-tutorial__step-label {
+      font-family: var(--font-family);
+      font-size: var(--font-size-h4);
+      font-weight: 600;
+      color: var(--color-heading);
+      margin-bottom: var(--spacing-btn-gap);
+    }
+
+    .studio-tutorial__step-body {
+      font-family: var(--font-family);
+      font-size: var(--font-size-body);
+      color: var(--color-body);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* -------------------------------------------------------------------------
+       STUDIO EDITOR
+       ------------------------------------------------------------------------- */
+    .studio-editor__layout {
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: var(--spacing-section-gap);
+    }
+
+    .studio-timeline__placeholder {
+      width: 100%;
+      height: 200px;
+      background: var(--color-heading);
+      border-radius: var(--spacing-wrapper-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-muted);
+    }
+
+    .studio-tools {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-section-gap);
+    }
+
+    .studio-tools__heading {
+      font-family: var(--font-family);
+      font-size: var(--font-size-h4);
+      font-weight: var(--font-weight-h4);
+      color: var(--color-heading);
+      margin: 0;
+    }
+
+    .studio-tools__assets {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-btn-gap);
+    }
+
+    .studio-tools__asset-card {
+      width: 100%;
+      height: 60px;
+      background: var(--color-border);
+      border-radius: var(--spacing-btn-radius);
+    }
+
+    .studio-tools__generate {
+      width: 100%;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="workspace">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Wordmark -->
+      <a href="/public/index.html" class="sidebar__wordmark">vid-prod</a>
+
+      <!-- Nav -->
+      <nav class="sidebar__nav">
+        <a href="/public/app/studio.html" class="sidebar__nav-item sidebar__nav-item--active">Studio</a>
+        <a href="/public/app/community.html" class="sidebar__nav-item">Community</a>
+        <a href="/public/app/profile.html" class="sidebar__nav-item">Profile</a>
+      </nav>
+
+      <!-- Spacer pushes user block to bottom -->
+      <div style="flex: 1;"></div>
+
+      <!-- User block -->
+      <div class="sidebar__user">
+        <div class="sidebar__avatar" id="sidebar-avatar">--</div>
+        <span class="sidebar__username" id="sidebar-username">@username</span>
+        <a href="#" class="sidebar__logout" id="logout-btn">Log out</a>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <!-- Top bar -->
+      <div class="studio-topbar">
+        <div class="studio-topbar__title">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M1 11.5L1 13H2.5L11.5 4L10 2.5L1 11.5ZM13.5 2.5a1 1 0 000-1.41L12.41 0a1 1 0 00-1.41 0L9.91 1.09 12.41 3.59 13.5 2.5Z" fill="currentColor"/>
+          </svg>
+          <h4 class="studio-topbar__name">Untitled Project</h4>
+        </div>
+        <div class="studio-topbar__actions">
+          <button class="btn btn-secondary">Share</button>
+          <button class="btn btn-primary">Export</button>
+        </div>
+      </div>
+
+      <!-- Tutorial overlay -->
+      <div class="studio-tutorial" id="studio-tutorial">
+        <div class="studio-tutorial__card">
+          <h2 class="studio-tutorial__heading" id="tutorial-heading">Welcome to your studio</h2>
+          <div class="studio-tutorial__steps">
+            <div class="studio-tutorial__step">
+              <div class="studio-tutorial__step-label">1. Describe your video</div>
+              <p class="studio-tutorial__step-body">Type a prompt and our AI writes a production brief in seconds.</p>
+            </div>
+            <div class="studio-tutorial__step">
+              <div class="studio-tutorial__step-label">2. AI generates a draft</div>
+              <p class="studio-tutorial__step-body">Our model turns your brief into a timeline with clips and transitions.</p>
+            </div>
+            <div class="studio-tutorial__step">
+              <div class="studio-tutorial__step-label">3. Collaborate and export</div>
+              <p class="studio-tutorial__step-body">Invite your team, refine in real time, export at full resolution.</p>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="tutorial-start-btn">Let's start</button>
+        </div>
+      </div>
+
+      <!-- Main editor -->
+      <div class="studio-editor" id="studio-editor">
+        <div class="studio-editor__layout">
+          <!-- Timeline area -->
+          <div class="studio-timeline">
+            <div class="studio-timeline__placeholder">
+              [Timeline — vid-prod-studio-timeline.jpg]
+            </div>
+          </div>
+
+          <!-- Tool panel -->
+          <div class="studio-tools">
+            <h4 class="studio-tools__heading">Assets</h4>
+            <div class="studio-tools__assets">
+              <div class="studio-tools__asset-card"></div>
+              <div class="studio-tools__asset-card"></div>
+              <div class="studio-tools__asset-card"></div>
+            </div>
+            <button class="btn btn-primary studio-tools__generate">AI Generate</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { isLoggedIn, getUsername, logout } from '../../js/auth.js';
+
+    // Auth gate — runs before any content renders
+    if (!isLoggedIn()) {
+      window.location.href = '/public/login.html?returnTo=' + encodeURIComponent(window.location.pathname);
+    }
+
+    // Populate sidebar user block
+    const username = getUsername() || 'user';
+    document.getElementById('sidebar-avatar').textContent = username.slice(0, 2).toUpperCase();
+    document.getElementById('sidebar-username').textContent = '@' + username;
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      logout();
+      window.location.href = '/public/index.html';
+    });
+
+    // Tutorial logic
+    const tutorial = document.getElementById('studio-tutorial');
+    const editor = document.getElementById('studio-editor');
+    const tutorialHeading = document.getElementById('tutorial-heading');
+
+    tutorialHeading.textContent = 'Welcome to your studio, ' + username;
+
+    if (localStorage.getItem('studio_visited')) {
+      tutorial.style.display = 'none';
+    } else {
+      editor.style.display = 'none';
+    }
+
+    document.getElementById('tutorial-start-btn').addEventListener('click', () => {
+      localStorage.setItem('studio_visited', '1');
+      tutorial.style.display = 'none';
+      editor.style.display = '';
+    });
+  </script>
+</body>
+</html>
