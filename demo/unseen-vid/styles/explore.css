@@ -1,0 +1,165 @@
+/* ──────────────────────────────────────────────────────────────────────────────
+   explore.css — Explore page styles for unseen-vid
+   All values reference CSS custom properties from tokens.css.
+   No raw hex values, no raw font names, no raw timing values.
+   ────────────────────────────────────────────────────────────────────────────── */
+
+
+/* ── Explore header ──────────────────────────────────────────────────────────
+   Page-specific header section containing the page title and filter chips.
+   Top padding creates breathing room below the sticky navbar. ──────────────── */
+
+.explore-header {
+  padding: 48px var(--space-header-h) var(--space-header-h);
+  background-color: var(--color-bg);
+}
+
+.explore-header__title {
+  font-family: var(--font-primary);
+  font-size: var(--type-h1);
+  font-weight: var(--type-h1-fw);
+  line-height: var(--type-h1-lh);
+  color: var(--color-text-heading);
+  margin: 0 0 var(--space-header-h) 0;
+}
+
+
+/* ── Gallery filter chips ─────────────────────────────────────────────────────
+   Reproduced here from home.css because explore.css replaces home.css on this
+   page. These rules must stay in sync with the home.css definitions. ────────── */
+
+.gallery-filter {
+  display: flex;
+  gap: var(--space-cta-h);
+  padding: 0 var(--space-header-h);
+  margin-bottom: var(--space-header-h);
+}
+
+.gallery-filter__chip {
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-fw);
+  line-height: var(--type-button-lh);
+  letter-spacing: var(--type-ls-caps);
+  text-transform: uppercase;
+  padding: var(--space-cta-v) var(--space-cta-h);
+  border-radius: var(--space-cta-radius);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-body);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+}
+
+.gallery-filter__chip--active {
+  background: var(--color-action);
+  color: var(--color-surface);
+  border-color: var(--color-action);
+}
+
+.gallery-filter__chip--coming-soon {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.chip-label__coming-soon {
+  font-size: var(--type-button);
+  opacity: 0.8;
+}
+
+
+/* ── Gallery grid ─────────────────────────────────────────────────────────────
+   3-column grid on desktop. Reproduced from home.css for the same reason as
+   the filter chips above. ──────────────────────────────────────────────────── */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-header-h);
+  padding: 0 var(--space-header-h);
+}
+
+
+/* ── Explore gallery main ─────────────────────────────────────────────────────
+   Full-bleed background. Bottom padding reserves room so the fixed CTA banner
+   does not overlap the last row of cards when it becomes visible. ──────────── */
+
+.explore-gallery {
+  padding-bottom: 120px;
+  background-color: var(--color-bg);
+}
+
+
+/* ── Sentinel ─────────────────────────────────────────────────────────────────
+   Zero-height invisible element inserted into the grid after the 6th card.
+   Spans all columns so IntersectionObserver fires at the right scroll depth.
+   pointer-events: none ensures it never captures mouse or touch events. ─────── */
+
+.gallery-sentinel {
+  height: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+
+/* ── Creator profile link in overlay ─────────────────────────────────────────
+   Overrides the default .gallery-card__creator span styles to an anchor link.
+   Inherits the same size and colour as the span so the overlay layout stays
+   identical to the home page gallery. ─────────────────────────────────────── */
+
+.gallery-card__creator-link {
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  line-height: var(--type-button-lh);
+  color: var(--color-surface);
+  text-decoration: none;
+}
+
+.gallery-card__creator-link:hover {
+  text-decoration: underline;
+}
+
+
+/* ── CTA banner ───────────────────────────────────────────────────────────────
+   Fixed bottom bar. Hidden on load via translateY(100%) — slides up when JS
+   adds .explore-cta-banner--visible after the sentinel is intersected.
+   z-index: 100 matches the navbar stacking layer. ──────────────────────────── */
+
+.explore-cta-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-action);
+  color: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-cta-v) var(--space-header-h);
+  transform: translateY(100%);
+  transition: transform var(--duration-fast) var(--ease-standard);
+  z-index: 100;
+}
+
+.explore-cta-banner--visible {
+  transform: translateY(0);
+}
+
+.explore-cta-banner__copy {
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+  color: var(--color-bg);
+}
+
+
+/* ── Mobile responsive ────────────────────────────────────────────────────────
+   Single-column gallery on narrow viewports. ─────────────────────────────── */
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}

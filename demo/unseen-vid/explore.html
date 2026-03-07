@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore — unseen-vid</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/explore.css">
+</head>
+<body>
+
+  <!-- NavBar -->
+  <nav class="navbar" role="navigation">
+    <div class="navbar__brand">unseen-vid</div>
+    <ul class="navbar__links" role="list">
+      <li><a href="/explore.html" class="nav-item">Explore</a></li>
+      <li><a href="/pricing.html" class="nav-item">Pricing</a></li>
+      <li><a href="/about.html" class="nav-item">About</a></li>
+    </ul>
+    <!-- Logged-out panel (visible by default) -->
+    <div class="navbar__auth navbar__auth--public">
+      <a href="/login.html" class="nav-item">Log in</a>
+      <button class="cta-primary navbar__join" onclick="requireAuth()">Join</button>
+    </div>
+    <!-- Logged-in panel (hidden by default; initNav() reveals when __auth exists) -->
+    <div class="navbar__auth navbar__auth--authed" hidden>
+      <a href="/app/community.html" class="nav-item">Community</a>
+      <button type="button" class="navbar__avatar" aria-label="User menu">A</button>
+    </div>
+  </nav>
+
+  <header class="explore-header">
+    <h1 class="explore-header__title">Explore</h1>
+    <div class="gallery-filter" role="tablist" aria-label="Media type filter">
+      <button class="gallery-filter__chip gallery-filter__chip--active" data-filter="video" role="tab" aria-selected="true">Video</button>
+      <button class="gallery-filter__chip gallery-filter__chip--coming-soon" role="tab" aria-selected="false" aria-disabled="true" tabindex="-1">Animation <span class="chip-label__coming-soon">Coming Soon</span></button>
+      <button class="gallery-filter__chip gallery-filter__chip--coming-soon" role="tab" aria-selected="false" aria-disabled="true" tabindex="-1">Film <span class="chip-label__coming-soon">Coming Soon</span></button>
+    </div>
+  </header>
+
+  <main class="explore-gallery">
+    <div class="gallery-grid" id="explore-gallery-grid"></div>
+    <!-- Sentinel: placed after the 6th card in JS; triggers the CTA banner -->
+    <div class="gallery-sentinel" aria-hidden="true"></div>
+  </main>
+
+  <!-- CTA banner — hidden on load, slides up after sentinel is intersected -->
+  <div class="explore-cta-banner" aria-hidden="true">
+    <span class="explore-cta-banner__copy">You've seen enough to know.</span>
+    <button class="cta-primary explore-cta-banner__btn" onclick="requireAuth('/app/studio.html')">Make your own</button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer__col">
+      <h3 class="footer__heading">Platform</h3>
+      <ul>
+        <li><a href="/explore.html" class="footer__link">Explore</a></li>
+        <li><a href="/pricing.html" class="footer__link">Pricing</a></li>
+        <li><a href="/about.html" class="footer__link">About</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer__heading">Vision</h3>
+      <ul>
+        <li><a href="#" class="footer__link">Roadmap</a></li>
+        <li><a href="#" class="footer__link">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer__heading">Legal</h3>
+      <ul>
+        <li><a href="#" class="footer__link">Privacy</a></li>
+        <li><a href="#" class="footer__link">Terms</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/shared.js"></script>
+  <script src="js/explore.js"></script>
+
+</body>
+</html>
