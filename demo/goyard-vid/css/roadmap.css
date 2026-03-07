@@ -1,0 +1,128 @@
+/* =============================================================================
+   roadmap.css — Platform Roadmap Teaser Section
+   Task 254: [goyard-vid][7/12] Home — Platform Roadmap Teaser + Final CTA Section
+
+   Token source: tokens.css (all --var references defined there)
+   Layout:       roadmap-grid → repeat(3, 1fr), gap: --grid-gap
+   Motion:       animations.js → ScrollTrigger reveals (.roadmap-card opacity 0 → 1)
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Section
+   ----------------------------------------------------------------------------- */
+
+.roadmap-teaser {
+  background-color: var(--color-page-bg);
+  padding-top: var(--space-section-top);
+  padding-bottom: calc(var(--space-section-bottom) * 2);
+}
+
+/* -----------------------------------------------------------------------------
+   Heading
+   ----------------------------------------------------------------------------- */
+
+.roadmap-teaser .section-heading {
+  margin-bottom: 48px;
+  text-transform: uppercase;
+}
+
+/* -----------------------------------------------------------------------------
+   Grid
+   ----------------------------------------------------------------------------- */
+
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap);
+}
+
+/* -----------------------------------------------------------------------------
+   Card Base
+   ----------------------------------------------------------------------------- */
+
+.roadmap-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  opacity: 0; /* ScrollTrigger initial state — animations.js animates to 1 */
+}
+
+/* -----------------------------------------------------------------------------
+   Icon
+   ----------------------------------------------------------------------------- */
+
+.roadmap-card-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.roadmap-card-icon--active {
+  color: var(--color-accent);
+}
+
+.roadmap-card-icon--muted {
+  color: var(--color-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   Card Title
+   ----------------------------------------------------------------------------- */
+
+.roadmap-card-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h3-size);
+  line-height: var(--type-h3-lh);
+  font-weight: var(--type-h3-fw);
+  letter-spacing: var(--type-h3-ls);
+  color: var(--color-heading);
+  text-transform: uppercase;
+}
+
+/* -----------------------------------------------------------------------------
+   Status Labels
+   ----------------------------------------------------------------------------- */
+
+.roadmap-card-status--active {
+  font-family: var(--font-heading);
+  font-size: var(--type-small-size);
+  line-height: var(--type-small-lh);
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.roadmap-card-status--soon {
+  font-family: var(--font-heading);
+  font-size: var(--type-small-size);
+  line-height: var(--type-small-lh);
+  font-weight: var(--type-small-fw);
+  color: var(--color-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   Responsive
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .roadmap-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .roadmap-teaser .section-heading {
+    margin-bottom: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .roadmap-teaser .section-heading {
+    margin-bottom: 32px;
+  }
+}

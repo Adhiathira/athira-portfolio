@@ -130,4 +130,73 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   });
 
+  // ---------------------------------------------------------------------------
+  // Platform Roadmap Teaser — viewport-triggered reveal
+  // Cards stagger in (0.5s each), heading enters first (1s)
+  // Timing: motion.json timingTokens durations[0]: "1s", durations[1]: "0.5s"
+  // ---------------------------------------------------------------------------
+
+  // Set y offset on heading and roadmap cards
+  gsap.set('.roadmap-teaser .section-heading', { y: 20 });
+  gsap.set('.roadmap-card', { y: 30 });
+
+  // Heading reveal — fires when section reaches 85% from viewport top
+  gsap.to('.roadmap-teaser .section-heading', {
+    y: 0,
+    opacity: 1,
+    duration: 1,          // motion.json durations[0]: "1s" — primary/header element
+    ease: 'power1.out',   // motion.json easings[0]: "ease"
+    scrollTrigger: {
+      trigger: '.roadmap-teaser',
+      start: 'top 85%',
+    },
+  });
+
+  // Roadmap cards stagger reveal — matches community-signals card pattern
+  gsap.to('.roadmap-card', {
+    y: 0,
+    opacity: 1,
+    duration: 0.5,        // motion.json durations[1]: "0.5s" — secondary element
+    ease: 'power1.out',   // motion.json easings[0]: "ease"
+    stagger: 0.15,        // motion.json durations[2]: "0.15s" — stagger between items
+    scrollTrigger: {
+      trigger: '.roadmap-teaser',
+      start: 'top 80%',
+    },
+  });
+
+  // ---------------------------------------------------------------------------
+  // Final CTA — viewport-triggered reveal with kinetic energy
+  // Headline is the primary element (1s), button follows (0.5s, -=0.15 overlap)
+  // Mirrors hero entrance pattern — primary display element gets longest duration
+  // ---------------------------------------------------------------------------
+
+  // Set y offset and opacity on headline and button
+  gsap.set('.final-cta-headline', { y: 30 });
+  gsap.set('.final-cta-btn', { y: 20 });
+
+  // Headline reveal — primary element, 1s
+  gsap.to('.final-cta-headline', {
+    y: 0,
+    opacity: 1,
+    duration: 1,          // motion.json durations[0]: "1s" — primary display headline
+    ease: 'power1.out',   // motion.json easings[0]: "ease"
+    scrollTrigger: {
+      trigger: '.final-cta',
+      start: 'top 75%',   // slightly earlier trigger — section is tall
+    },
+  });
+
+  // CTA button — secondary element, follows headline with overlap
+  gsap.to('.final-cta-btn', {
+    y: 0,
+    opacity: 1,
+    duration: 0.5,        // motion.json durations[1]: "0.5s" — secondary element
+    ease: 'power1.out',   // motion.json easings[0]: "ease"
+    scrollTrigger: {
+      trigger: '.final-cta',
+      start: 'top 70%',   // slightly later than headline to create stagger feel
+    },
+  });
+
 });
