@@ -1,8 +1,9 @@
 import 'dotenv/config';
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { launchBrowser, newPage } from './lib/browser.js';
+import { launchBrowser, newPage, warmupPage, dismissCookieBanners } from './lib/browser.js';
 import { write } from './lib/writer.js';
 import { createLogger } from './lib/logger.js';
 import { createProgress } from './lib/progress.js';
@@ -57,20 +58,49 @@ async function run() {
       const extractorPath = new URL(`./extractors/${slug}.js`, import.meta.url);
       const extractor = await import(extractorPath);
 
-      // Wrap entire page lifecycle in try/finally to prevent leaks
-      let page;
-      try {
-        // newPage() now handles cookie dismissal before warmup scroll
-        page = await newPage(browser, site.url);
+      const outputDir = path.join('design-system', site.name, slug);
+      const screenshotsDir = path.join('design-system', site.name, 'screenshots');
 
-        const outputDir = path.join('design-system', site.name, slug);
-        const screenshotsDir = path.join('design-system', site.name, 'screenshots');
-        const data = await extractor.extract(page, { outputDir, screenshotsDir });
-        await write(site.name, slug, data);
-        extBar.tick(slug);
-      } finally {
-        if (page) await page.close();
+      if (extractor.metadata?.recordVideo) {
+        // Recording extractor: create a single context with recordVideo so only
+        // one browser window opens. The extractor gets this page directly.
+        const videoContext = await browser.newContext({
+          recordVideo: { dir: os.tmpdir(), size: { width: 1280, height: 720 } },
+          viewport: null,
+        });
+        let videoPage;
+        try {
+          videoPage = await videoContext.newPage();
+          await videoPage.goto(site.url, { waitUntil: 'load', timeout: parseInt(process.env.TIMEOUT ?? '30000', 10) });
+          await dismissCookieBanners(videoPage);
+          await warmupPage(videoPage);
+
+          const data = await extractor.extract(videoPage, { outputDir, screenshotsDir });
+          await write(site.name, slug, data);
+
+          // Close page first — Playwright finalizes the .webm on close
+          await videoPage.close();
+          const tmpVideoPath = await videoPage.video().path();
+          const videoOutDir = path.join('extraction-assets', site.name);
+          fs.mkdirSync(videoOutDir, { recursive: true });
+          fs.renameSync(tmpVideoPath, path.join(videoOutDir, 'scroll-recording.webm'));
+        } finally {
+          if (videoPage && !videoPage.isClosed()) await videoPage.close().catch(() => {});
+          await videoContext.close().catch(() => {});
+        }
+      } else {
+        // Normal extractor: standard single page lifecycle
+        let page;
+        try {
+          page = await newPage(browser, site.url);
+          const data = await extractor.extract(page, { outputDir, screenshotsDir });
+          await write(site.name, slug, data);
+        } finally {
+          if (page) await page.close();
+        }
       }
+
+      extBar.tick(slug);
     }
     extBar.done();
   } finally {
