@@ -18,9 +18,17 @@ Identify all visually distinct colors that are part of the design system — bac
 INCLUDE the dominant color of any background image that fills a section or the hero (e.g. a warm orange hero background), because that color is part of the user's visual experience of the brand.
 IGNORE colors that appear only inside content thumbnails, article illustrations, team portrait photos, or product images — these are content, not design tokens.
 The first two images show the navigation bar in two states (top-of-page and after scroll). If the nav colors differ between states, extract tokens for both states.
-Return ONLY a JSON array (no markdown, no explanation):
+Common roles: page-background, surface-background, hero-background, primary-action, secondary-action, body-text, heading-text, muted-text, link, border, accent, success, error, warning, nav-background, nav-text, nav-link, nav-background-scrolled, nav-text-scrolled, nav-link-scrolled.
+
+Return two JSON arrays in this exact order — no markdown, no explanation, no prose:
+
+Array 1 — visual palette (every design-system color you can identify):
 [{ "hex": "#rrggbb", "role": "short-role-slug", "description": "1 sentence" }]
-Common roles: page-background, surface-background, hero-background, primary-action, secondary-action, body-text, heading-text, muted-text, link, border, accent, success, error, warning, nav-background, nav-text, nav-link, nav-background-scrolled, nav-text-scrolled, nav-link-scrolled.`;
+
+Array 2 — button role assignments (one entry per button candidate):
+[{ "bg": "...", "textColor": "...", "border": "...", "role": "..." }]
+
+CTA/accent/action colors MUST appear in Array 1 even if they also appear in Array 2. Do not omit a color from the visual palette just because it is also a button color.`;
 
 export async function extract(page, { outputDir, screenshotsDir } = {}) {
   // Pass 1 + 2: run in browser context
@@ -236,7 +244,7 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
   // Call LLMRouter for vision analysis (supports vision via base64 content blocks)
   const buttonCandidatesBlock = {
     type: 'text',
-    text: `Button candidates extracted from DOM (deduplicated by visual fingerprint):\n${JSON.stringify(buttonCandidates, null, 2)}\n\nFor EACH button candidate above, assign a role. Valid roles: primary-cta, secondary-cta, ghost, nav-link, utility, other.\nReturn a second JSON array (separate from the color tokens array) with this shape — no markdown, no explanation:\n[{ "bg": "...", "textColor": "...", "border": "...", "role": "..." }]`,
+    text: `Button candidates extracted from DOM (deduplicated by visual fingerprint):\n${JSON.stringify(buttonCandidates, null, 2)}\n\nFor EACH button candidate above, assign a role. Valid roles: primary-cta, secondary-cta, ghost, nav-link, utility, other.`,
   };
   // imageContent is mixed: text label blocks + image blocks. Translate image blocks to LLM lib shape.
   const translatedContent = imageContent.map(block =>
