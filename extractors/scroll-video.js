@@ -1,4 +1,5 @@
 import { createLogger } from '../lib/logger.js';
+import { cinematicScroll, settleAtTop } from '../lib/scroll.js';
 
 export const metadata = { tag: 'scroll-video', recordVideo: true };
 
@@ -9,38 +10,12 @@ export async function extract(page) {
   // recorded. Just scroll cinematically and return. Runner.js handles saving
   // the .webm after the page is closed.
 
-  // Settle at top before the cinematic pass
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(2000);
+  // Settle at top — let fonts, images, and JS initialize without consuming
+  // scroll state. Records the true first-scroll experience.
+  await settleAtTop(page);
 
   log.debug('Starting cinematic scroll');
-
-  // Cinematic scroll: 20px every 60ms, stops when page stops moving
-  await page.evaluate(async () => {
-    await new Promise(resolve => {
-      const distance = 20;
-      const delay = 60;
-      const MAX_STEPS = 800;
-      let steps = 0;
-      let noMovement = 0;
-      let lastY = window.scrollY;
-      const timer = setInterval(() => {
-        window.scrollBy(0, distance);
-        steps++;
-        const currentY = window.scrollY;
-        if (Math.abs(currentY - lastY) < 1) {
-          noMovement++;
-        } else {
-          noMovement = 0;
-        }
-        lastY = currentY;
-        if (noMovement >= 3 || steps >= MAX_STEPS) {
-          clearInterval(timer);
-          resolve();
-        }
-      }, delay);
-    });
-  });
+  await cinematicScroll(page);
 
   await page.waitForTimeout(500);
   log.debug('Cinematic scroll complete');

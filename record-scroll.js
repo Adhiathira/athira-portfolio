@@ -19,6 +19,7 @@ import readline from 'readline';
 import { fileURLToPath } from 'url';
 import { chromium } from 'playwright';
 import { dismissCookieBanners } from './lib/browser.js';
+import { cinematicScroll, settleAtTop } from './lib/scroll.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -106,80 +107,20 @@ await new Promise(resolve => {
   });
 });
 
-// Let any post-challenge redirects and animations settle before recording
-await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-await page.waitForTimeout(1000);
-
 // ---------------------------------------------------------------------------
-// Warmup scroll — fast pass to trigger lazy-loaded content and Intersection
-// Observers. This is NOT the recorded focus; it just primes the page before
-// the cinematic pass begins. Mirrors the warmupPage logic in lib/browser.js.
+// Settle at top — let fonts, images, and JS initialize without consuming
+// scroll state. Then record the true first-scroll experience.
 // ---------------------------------------------------------------------------
 
-console.log('Warming up page...');
-await page.evaluate(async () => {
-  await new Promise(resolve => {
-    const distance = 300;
-    const delay = 80;
-    const MAX_STEPS = 60; // ~18 000px max — enough for any normal page
-    let steps = 0;
-    const timer = setInterval(() => {
-      window.scrollBy(0, distance);
-      steps++;
-      const scrollHeight = Math.max(
-        document.body?.scrollHeight ?? 0,
-        document.documentElement?.scrollHeight ?? 0,
-      );
-      const atBottom = window.scrollY + window.innerHeight >= scrollHeight;
-      if (atBottom || steps >= MAX_STEPS) {
-        clearInterval(timer);
-        window.scrollTo(0, 0);
-        resolve();
-      }
-    }, delay);
-  });
-});
-
-// Let network requests triggered by lazy content settle before the recording pass
-await page.waitForTimeout(2000);
+console.log('Settling at top...');
+await settleAtTop(page);
 
 // ---------------------------------------------------------------------------
 // Cinematic scroll — this is the actual recording
 // ---------------------------------------------------------------------------
 
 console.log('Recording cinematic scroll...');
-
-// Return to top and give the page a moment to settle
-await page.evaluate(() => window.scrollTo(0, 0));
-await page.waitForTimeout(1000);
-
-// Slow scroll: 20px every 60ms, stops as soon as scroll position stops changing
-// (3 consecutive no-movement steps = truly at bottom).
-await page.evaluate(async () => {
-  await new Promise(resolve => {
-    const distance = 20;
-    const delay = 60;
-    const MAX_STEPS = 800;
-    let steps = 0;
-    let noMovement = 0;
-    let lastY = window.scrollY;
-    const timer = setInterval(() => {
-      window.scrollBy(0, distance);
-      steps++;
-      const currentY = window.scrollY;
-      if (Math.abs(currentY - lastY) < 1) {
-        noMovement++;
-      } else {
-        noMovement = 0;
-      }
-      lastY = currentY;
-      if (noMovement >= 3 || steps >= MAX_STEPS) {
-        clearInterval(timer);
-        resolve();
-      }
-    }, delay);
-  });
-});
+await cinematicScroll(page);
 
 // Brief hold at bottom before finalizing
 await page.waitForTimeout(500);
