@@ -25,10 +25,10 @@
   // ================================================================
 
   function initHoverStates() {
-    const items = document.querySelectorAll('.gallery-item');
+    const items = document.querySelectorAll('.gallery-card');
 
     if (!items.length) {
-      console.debug('[gallery] No .gallery-item elements found — hover states skipped.');
+      console.debug('[gallery] No .gallery-card elements found — hover states skipped.');
       return;
     }
 
@@ -44,7 +44,7 @@
       });
     });
 
-    console.debug('[gallery] hover states initialised for', items.length, 'items.');
+    console.debug('[gallery] hover states initialised for', items.length, 'cards.');
   }
 
   // ================================================================
@@ -96,8 +96,14 @@
    */
   function filterGallery(tag) {
     console.info('[gallery] filter:', tag || 'all');
-    // Full implementation in task [kinetic-vid][5/12].
-    // Will filter .gallery-item elements by [data-tag] attribute.
+    const items = document.querySelectorAll('.gallery-card[data-tag]');
+    items.forEach(function (item) {
+      if (!tag || item.dataset.tag === tag) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
   }
 
   // ================================================================
@@ -116,15 +122,61 @@
       btn.addEventListener('click', function () {
         const tag = btn.dataset.filter || null;
 
-        // Update active state
-        filterBtns.forEach(function (b) { b.classList.remove('is-active'); });
+        // Update active state + aria-pressed
+        filterBtns.forEach(function (b) {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-pressed', 'false');
+        });
         btn.classList.add('is-active');
+        btn.setAttribute('aria-pressed', 'true');
 
         filterGallery(tag);
       });
     });
 
     console.debug('[gallery] filter buttons wired:', filterBtns.length);
+  }
+
+  // ================================================================
+  // Scroll-depth CTA bar — task [kinetic-vid][5/12]
+  // Appears when the creator gallery section is 50% in viewport.
+  // Implemented via IntersectionObserver (threshold: 0.5).
+  // CTA animates in from below via .is-visible class (gallery.css).
+  // ================================================================
+
+  function initScrollDepthCTA() {
+    var section = document.getElementById('creator-gallery');
+    var ctaBar = document.getElementById('gallery-cta-bar');
+
+    if (!section || !ctaBar) {
+      console.debug('[gallery] scroll-depth CTA: required elements not found — skipped.');
+      return;
+    }
+
+    var triggered = false;   // only trigger once per page load
+
+    // Set initial aria-hidden state — bar is inactive on load
+    ctaBar.setAttribute('aria-hidden', 'true');
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !triggered) {
+          triggered = true;
+          ctaBar.classList.add('is-visible');
+          ctaBar.setAttribute('aria-hidden', 'false');
+          // Layout compensation: measure actual bar height after it becomes visible
+          document.body.style.paddingBottom = ctaBar.offsetHeight + 'px';
+          console.debug('[gallery] scroll-depth CTA: triggered at 50% gallery depth.');
+          // Once triggered, disconnect to avoid re-firing
+          observer.disconnect();
+        }
+      });
+    }, {
+      threshold: 0.5
+    });
+
+    observer.observe(section);
+    console.debug('[gallery] scroll-depth CTA: IntersectionObserver watching #creator-gallery.');
   }
 
   // ================================================================
@@ -135,6 +187,7 @@
     initHoverStates();
     initSkeletonRemoval();
     initFilterButtons();
+    initScrollDepthCTA();
     console.info('[gallery] initialised.');
   }
 
