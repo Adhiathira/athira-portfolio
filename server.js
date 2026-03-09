@@ -27,6 +27,19 @@ function loadRegistry() {
   }
 }
 
+function loadSiteUrls() {
+  try {
+    const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'sites.json'), 'utf8'));
+    const map = new Map();
+    for (const entry of [...(data.queue || []), ...(data.done || [])]) {
+      if (entry.name && entry.url) map.set(entry.name, entry.url);
+    }
+    return map;
+  } catch {
+    return new Map();
+  }
+}
+
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
   const pathname = url.pathname;
@@ -40,8 +53,9 @@ const server = http.createServer((req, res) => {
   if (pathname === '/') {
     const sites = getSiteNames();
     const registry = loadRegistry();
+    const siteUrls = loadSiteUrls();
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(renderHome(sites, registry));
+    res.end(renderHome(sites, registry, siteUrls));
     return;
   }
 
@@ -67,8 +81,9 @@ const server = http.createServer((req, res) => {
       return;
     }
     const registry = loadRegistry();
+    const siteUrl = loadSiteUrls().get(siteName) || null;
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(renderSite(siteName, siteDir, registry));
+    res.end(renderSite(siteName, siteDir, registry, siteUrl));
     return;
   }
 

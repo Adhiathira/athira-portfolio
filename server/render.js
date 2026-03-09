@@ -403,6 +403,32 @@ header {
   border-color: #fca5a5;
   color: #dc2626;
 }
+.site-card-external {
+  position: absolute;
+  top: 10px;
+  right: 38px;
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s, color 0.15s, border-color 0.15s;
+  z-index: 1;
+  text-decoration: none;
+}
+.site-card:hover .site-card-external { opacity: 1; }
+.site-card-external:hover {
+  background: var(--surface-2);
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
 .site-card-icon {
   width: 36px;
   height: 36px;
@@ -467,6 +493,22 @@ header {
   letter-spacing: -0.02em;
   line-height: 1.1;
   text-transform: capitalize;
+}
+.site-hero-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.site-hero-source:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 /* ─── Tab Bar ─── */
@@ -2713,18 +2755,25 @@ function renderSectionContent(slug, data, siteDir, siteName) {
 
 // ─── Page Renderers ───────────────────────────────────────────────────────────
 
-export function renderHome(sites, registry) {
+export function renderHome(sites, registry, siteUrls = new Map()) {
   const cards = sites.length === 0
     ? `<div class="empty-state"><p>No sites extracted yet. Run <code>npm start</code> to extract design systems.</p></div>`
-    : `<div class="site-grid">${sites.map((name, i) => `
+    : `<div class="site-grid">${sites.map((name, i) => {
+      const sourceUrl = siteUrls.get(name);
+      const externalLink = sourceUrl
+        ? `<a class="site-card-external" href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Visit ${esc(name)}" title="Visit ${esc(sourceUrl)}">↗</a>`
+        : '';
+      return `
       <div class="site-card" style="--card-delay: ${(i * 0.06).toFixed(2)}s">
         <a href="/site/${encodeURIComponent(name)}">
           <div class="site-card-icon">${esc(name.slice(0, 2))}</div>
           <div class="site-card-name">${esc(name)}</div>
           <div class="site-card-meta">${registry.length} categories</div>
         </a>
+        ${externalLink}
         <button class="site-card-delete" data-site="${esc(name)}" aria-label="Delete ${esc(name)}" title="Delete ${esc(name)}">×</button>
-      </div>`).join('')}</div>`;
+      </div>`;
+    }).join('')}</div>`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -2782,7 +2831,7 @@ export function renderHome(sites, registry) {
 </html>`;
 }
 
-export function renderSite(siteName, siteDir, registry) {
+export function renderSite(siteName, siteDir, registry, siteUrl = null) {
   const sections = registry.map(entry => {
     if (entry.slug === 'concept-summary') {
       const imageMarkdown = readMarkdown(path.join(siteDir, 'concept-summary', 'concept_by_image.md'));
@@ -2861,6 +2910,7 @@ export function renderSite(siteName, siteDir, registry) {
   <div class="site-hero container">
     <div class="site-hero-kicker">Design System Reference</div>
     <h1 class="site-hero-name">${esc(siteName)}</h1>
+    ${siteUrl ? `<a class="site-hero-source" href="${esc(siteUrl)}" target="_blank" rel="noopener noreferrer">↗ Visit site</a>` : ''}
   </div>
 
   <nav class="tab-bar">
