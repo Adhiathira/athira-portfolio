@@ -256,38 +256,42 @@ export async function extract(page, { outputDir, screenshotsDir } = {}) {
 
   let visual = [];
   let ctaButtons = [];
-  try {
-    const rawOutput = await router.complete(
-      [{ role: 'user', content: [...translatedContent, buttonCandidatesBlock, { type: 'text', text: LLM_PROMPT }] }],
-      { timeout: 180000 }
-    );
-    // Scan all [...] candidates and identify each array by shape, not position.
-    // Visual palette items have a `hex` key; CTA button items have a `bg` key.
-    // This is robust to the LLM emitting an empty [] for one array or reordering them.
-    for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
-      try {
-        const parsed = JSON.parse(match[0]);
-        if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.hex !== undefined) {
-          visual = parsed;
-          break;
-        }
-      } catch (_) { /* not valid JSON, try next candidate */ }
-    }
-    if (visual.length === 0) {
-      log.minor('Vision pass returned no JSON array for visual palette, ignoring');
-    }
+  const visionMaxAttempts = parseInt(process.env.VISION_RETRIES ?? '2', 10) + 1;
+  for (let attempt = 1; attempt <= visionMaxAttempts; attempt++) {
+    if (attempt > 1) log.info(`Vision pass retry (attempt ${attempt}/${visionMaxAttempts})...`);
+    try {
+      const rawOutput = await router.complete(
+        [{ role: 'user', content: [...translatedContent, buttonCandidatesBlock, { type: 'text', text: LLM_PROMPT }] }],
+        { timeout: 180000 }
+      );
+      // Scan all [...] candidates and identify each array by shape, not position.
+      // Visual palette items have a `hex` key; CTA button items have a `bg` key.
+      // This is robust to the LLM emitting an empty [] for one array or reordering them.
+      for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
+        try {
+          const parsed = JSON.parse(match[0]);
+          if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.hex !== undefined) {
+            visual = parsed;
+            break;
+          }
+        } catch (_) { /* not valid JSON, try next candidate */ }
+      }
 
-    for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
-      try {
-        const parsed = JSON.parse(match[0]);
-        if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.bg !== undefined) {
-          ctaButtons = parsed.map(({ label: _l, ...rest }) => rest);
-          break;
-        }
-      } catch (_) { /* not valid JSON, try next candidate */ }
+      for (const match of rawOutput.matchAll(/\[[\s\S]*?\]/g)) {
+        try {
+          const parsed = JSON.parse(match[0]);
+          if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.bg !== undefined) {
+            ctaButtons = parsed.map(({ label: _l, ...rest }) => rest);
+            break;
+          }
+        } catch (_) { /* not valid JSON, try next candidate */ }
+      }
+
+      if (visual.length > 0) break; // success
+      log.major(`Vision pass returned no JSON array for visual palette (attempt ${attempt}/${visionMaxAttempts})`);
+    } catch (err) {
+      log.major(`Vision pass failed (attempt ${attempt}/${visionMaxAttempts}): ${err instanceof Error ? err.message : String(err)}`);
     }
-  } catch (err) {
-    log.minor('Vision pass failed', { error: err instanceof Error ? err.message : String(err) });
   }
 
   return { cssVars, elements, visual, ctaButtons };

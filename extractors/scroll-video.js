@@ -13,7 +13,7 @@ async function discoverNavLinks(page, originUrl) {
   const selectors = ['nav a[href]', 'header a[href]', '[role="navigation"] a[href]'];
 
   for (const selector of selectors) {
-    const hrefs = await page.evaluate((sel, origin, currentUrl) => {
+    const hrefs = await page.evaluate(({ sel, origin, currentUrl }) => {
       const els = Array.from(document.querySelectorAll(sel));
       const seen = new Set();
       const results = [];
@@ -34,7 +34,7 @@ async function discoverNavLinks(page, originUrl) {
         results.push(href);
       }
       return results;
-    }, selector, origin, originUrl);
+    }, { sel: selector, origin, currentUrl: originUrl });
 
     if (hrefs.length > 0) {
       return hrefs.slice(0, NAV_LINK_COUNT);
@@ -72,7 +72,7 @@ export async function extract(page) {
 
         const el = await page.$(`a[href="${href}"]`);
         if (!el) {
-          log.warn('Nav link not found, skipping: ' + href);
+          log.minor('Nav link not found, skipping: ' + href);
           continue;
         }
 
@@ -88,14 +88,14 @@ export async function extract(page) {
           await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
         }
       } catch (err) {
-        log.warn('Error navigating to ' + href + ': ' + err.message);
+        log.minor('Error navigating to ' + href + ': ' + err.message);
         if (page.url() !== originUrl) {
           await page.goto(originUrl, { waitUntil: 'networkidle' }).catch(() => {});
         }
       }
     }
   } catch (err) {
-    log.error('Nav exploration failed: ' + err.message);
+    log.major('Nav exploration failed: ' + err.message);
   }
 
   return { recorded: true, recordedAt: new Date().toISOString() };
