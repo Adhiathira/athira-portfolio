@@ -1,139 +1,126 @@
 `★ Insight ─────────────────────────────────────`
-This task is purely editorial transformation — no code involved. The key challenge is pattern recognition: identifying proper nouns, product names, and industry-specific numbers buried within structural descriptions, without accidentally genericizing layout terminology like "pill-shaped" or "masonry" which are design vocabulary, not brand-specific.
+This task is purely text transformation — no code, no files to read first, no tools needed. The right move is to do the transformation directly and output the result.
 `─────────────────────────────────────────────────`
 
-# Homepage Layout Brief
+# Homepage — Layout Brief
 
 ## Overall Page Structure
 
-The page flows through approximately 10–12 distinct sections, progressing from a centered, editorial hero down through a series of alternating product showcases, social proof bands, feature grids, and a dark-mode integration section before landing on a final CTA and footer. The dominant background is a warm cream/linen tone that unifies the entire scroll — sections don't break into harsh color blocks but instead breathe within this consistent field. A persistent privacy notice floats bottom-left throughout, functioning as an overlay layer independent of the scroll.
+The page flows through approximately 10–12 distinct sections, moving top-to-bottom with a clear narrative arc: attention grab → social proof → feature depth → use cases → integrations → testimonials → enterprise features → support → footer. The spatial rhythm alternates between tight, text-dense sections and expansive, image-forward sections, creating breathing room without losing momentum. A persistent consent banner floats in the lower-left corner throughout the scroll.
 
 ---
 
 ## Header / Navigation
 
-The navigation is a **full-width, centered-content bar** sitting flush against the top of the viewport. It's composed of three distinct zones:
+The header is a full-width sticky bar, light/white background, low in visual weight. It uses a classic three-zone layout:
 
-- **Left:** Wordmark with a small dropdown chevron — minimal, no icon
-- **Center:** Five text navigation items (e.g., Product, Solutions, Pricing, Resources, Sign in), evenly spaced with light weight typography
-- **Right:** Two CTA buttons — Secondary CTA (outlined, pill-shaped) and Primary CTA (solid dark/black, pill-shaped), sitting side by side
+- **Left:** Wordmark + dropdown caret — compact, understated
+- **Center:** Five navigation links with chevrons for dropdowns (Product, Solutions, Pricing, Resources) plus a standalone "Sign in" link — evenly spaced, single-line
+- **Right:** Two CTA buttons — "Secondary CTA" (outlined/ghost) and "Primary CTA" (filled, dark/black pill) — stacked side by side with clear hierarchy between the two actions
 
-The nav feels slim and restrained, with generous negative space on either side. Typography is small and mid-weight. The two-button right cluster creates a clear primary/secondary hierarchy without being loud.
+The nav sits flush to the viewport edges with generous internal padding. Button corners are fully rounded (pill shape), which contrasts with the generally geometric page structure and draws the eye.
 
 ---
 
 ## Hero Section
 
-The hero is **centered, single-column, typographically dominant**. No split layout — everything converges on a central vertical axis:
+The hero is **centered, single-column**, full-width against a warm cream/off-white background. It stacks vertically:
 
-1. **Announcement pill** at top center: a small pill badge labeled with a short category tag followed by a short text line with a right-arrow link. It reads like a floating notification — small, rounded, softly bordered.
-2. **Large display heading** (roughly 80–96px equivalent): Two lines of editorial text. First line renders a key phrase in strikethrough with dark color; a second word or phrase appears in a distinctively styled script/italic typeface in an accent color — a deliberate typographic juxtaposition that serves as the visual focal point.
-3. **Subheading** (2 lines, centered, comfortable reading width ~600px): standard body copy, muted.
-4. **Two CTA buttons** centered, side-by-side: outlined Secondary CTA and solid dark Primary CTA.
-5. **Product UI mockup** below: a large, slightly cropped browser frame showing the product interface — it bleeds past the fold, implying continuity and inviting scroll.
+1. **Announcement pill** — a small rounded badge ("NEW") followed by a short teaser line and a right-arrow, centered, top of section
+2. **Headline** — two-line, very large display type. The second line uses a typographic device: a negative phrase appears in strikethrough in dark type, while a positive counterpart is rendered in a contrasting italic accent color — a visual contrast moment that breaks the geometric grid intentionally
+3. **Subhead** — two lines of body copy, centered, moderate width constraint (~60% of viewport)
+4. **CTA pair** — two pill buttons side by side, centered: "Primary CTA" (outlined) and "Secondary CTA" (filled dark)
+5. **Product mockup** — a large, rounded-corner device screenshot that extends below the fold, cropped at the bottom to invite scrolling. It has a subtle drop shadow and sits inside what appears to be a light inset frame, creating a floating card effect
 
-The hero has substantial vertical padding above and below the text cluster, giving it a calm, unrushed cadence. The floating privacy dialog (bottom-left, fixed) overlaps the product screenshot without disrupting the hierarchy.
-
----
-
-## Content Sections
-
-### Section 2 — Social Proof / Ratings Band
-A **full-width horizontal band** that reads as a footer-within-a-section. Two distinct zones side by side:
-- **Left:** Three rating scores from third-party review platforms in a loose horizontal row — small numeral, small label, visually equal weight
-- **Right:** Three compliance/certification badges displayed as logos/icons with small type
-
-The layout is intentionally low-contrast and modest — it functions as credibility punctuation, not a hero moment. Generous whitespace separates it from sections above and below.
+The hero section occupies roughly 90% of the initial viewport height. The background color is a consistent warm parchment/linen tone that carries through most of the page.
 
 ---
 
-### Section 3 — Logo Parade / Customer Logos
-A single centered headline ("[Stat]+ leading companies trust Brand Name...") above a **horizontal logo strip** — 6–7 company logos evenly spaced across the full width. Logos are monochrome/grayscale, medium size, giving a clean editorial feel. No bounding boxes or cards — logos float on the light background field.
+## Content Sections (Below Hero)
 
-Below this, a **large decorative wave/curve** shape transitions the section into the next — a full-bleed organic curved divider that arches from the light background into a dark background. This is the most dramatic layout moment on the page.
+### Section 2 — Social Proof Bar (Ratings + Logos)
 
----
+A narrow, full-width section still on the cream background. Left-aligned cluster of three rating stats (review platforms) in small type, and right-aligned a row of compliance/certification badges. The visual weight is intentionally light — purely credentialing, not selling.
 
-### Section 4 — Feature Showcase (Left text / Right product mockup)
-Two-column layout, roughly **40% left / 60% right**:
-- Left: stacked list of feature bullets (faint left-border accent, alternating active/inactive state on hover), with the active item slightly bolder
-- Right: large product UI screenshot in a rounded browser frame, elevated with subtle shadow
+Directly below, a centered headline ("[Stat]+ leading companies trust Brand Name…") followed by a single-row logo parade — six partner/customer logos at roughly equal size, horizontally distributed across ~80% of the page width. Logos are rendered in a desaturated/greyscale treatment, unified in weight.
 
-This pattern repeats multiple times throughout the page with content swapped. The proportions consistently favor the product visual — it takes more horizontal real estate than the text.
+### Section 3 — Feature Highlight (Product Screenshot Continuation)
 
----
+The large hero product mockup resolves here — the bottom of the card becomes visible. Below it, a two-column feature callout: left side shows a feature list (interactive, text-based), right side shows a floating testimonial card overlapping the mockup. This floating card (white, rounded, drop shadow) sits outside the mockup boundary — an intentional overlapping layer that breaks the grid and adds depth.
 
-### Section 5 — Full-Width Testimonial Pull Quote
-A large, **centered single testimonial** spanning approximately 60% of page width. Oversized quotation typeset — around 36–48px equivalent — no card boundary, no background box. Just text and attribution (avatar circle + name + title) centered below. Lavish vertical breathing room above and below.
+### Section 4 — Feature Tab Section
 
----
+Centered headline. Below it, a **pill-style horizontal tab bar** — six tabs (Category A, Category B, Category C, Category D, Category E, Browse all) in a single row with rounded pill background. The active tab is highlighted in an accent fill color.
 
-### Section 6 — Dark Section with Integration Constellation
-A dramatic **full-bleed dark panel** introduced by the organic wave from above. Inside:
-- Left: large heading, 2–3 lines, white text describing a key value proposition
-- Floating integration icons: scattered across the right side in a loose, orbiting arrangement — circular icon chips connected by faint dashed lines, suggesting a network/constellation pattern. Icons feel decorative but functional.
+Below the tabs, a **scrollable tag cloud** — smaller pill tags listing item types. Below that, a large product screenshot in a rounded frame, presented as a document preview.
 
-This section is the strongest visual contrast on the page — dark background against the pervasive light background creates a moment of pause.
+### Section 5 — Two-Column Feature Section
 
----
+A **50/50 split layout**: left side is a bulleted feature list (each item on its own line, left-border accent for the active/highlighted item — a thin vertical line treatment that animates as a scroll indicator). Right side is a tall product screenshot card. The left text and right image are vertically centered relative to each other.
 
-### Section 7 — Testimonials Grid (Masonry/Card grid)
-Back to light background. Section heading centered above a **card grid** — approximately 2 columns wide with variable row heights suggesting a **masonry or staggered card layout**:
-- Some cards are taller text-only quote cards
-- One card contains a large metric callout ("[Stat]") — stat displayed at display scale (~80px), label below in small type
-- Cards have white fills, subtle rounded corners, soft shadow — they float above the light field
+This section repeats (or a similar pattern appears) multiple times for different feature categories, creating a consistent rhythm of text-left / visual-right alternation.
 
----
+### Section 6 — Transitional Quote Section
 
-### Section 8 — Case Study List
-Below the testimonials grid, a section heading introduces a **stacked list of case study rows**. Each row is a full-width horizontal card with:
-- Left: company logo mark + company name + "switched from [Product]" label in small caps
-- Center: person name + title
-- Right: "Case study ↗" link text
+A **full-width, centered pull quote** on the cream background — very large display text, no supporting visuals. The quoted phrase is long and spans 3–4 lines at large scale. Attribution appears below in small type with an avatar photo. This is a purely typographic section used as a visual pause.
 
-Rows are separated by visible but subtle borders. The layout has a clean tabular rhythm — it reads like a structured list, not a card grid.
+### Section 7 — Dark Section (Integrations)
 
----
+A **full-bleed section color shift** — the background transitions to a very dark background, creating a dramatic break in the page. The curve transition at the top is a gentle convex arc (not a straight horizontal line), which gives the section a soft, organic entry.
 
-### Section 9 — Feature Grid (Enterprise/Security)
-Dense **3-column card grid** — cards are compact, uniform height, with:
-- Small category tag at top right (color-coded by category type)
-- Icon + feature name
-- Short 2–3 line description
+Inside: a headline on the left, body copy below it. Floating in the dark field are **scattered integration app icons** — circular icon badges at varying sizes and positions, distributed loosely across the right half and background, suggesting a constellation or ecosystem. This is a deliberately non-grid layout for the icons — organic placement rather than rows.
 
-The grid spans full content width. Card density is noticeably higher here than elsewhere — it signals a "comprehensive feature list" rather than a spotlight. Cards have white fills on the light background with soft rounded corners.
+The section exits the same way it entered — with a concave curve back to the cream background.
 
----
+### Section 8 — Testimonials Grid
 
-### Section 10 — Final CTA with Testimonials
-A **two-column asymmetric layout**:
-- Left (~40%): heading, checklist of 5 items with checkmark bullets, two CTA buttons stacked
-- Right (~60%): vertical stack of 3 testimonial cards — white-background quote cards, each with avatar + name + title, stacked with gap
+Back on the cream background. Centered section headline. Below it, a **masonry-style or irregular card grid** of testimonial cards — white cards with rounded corners and subtle shadow. The layout appears to be a 2-column grid on the visible portion, but cards vary slightly in height based on content, giving a staggered feel. Each card contains: quote text, avatar photo, name, title.
 
-Strong left–right visual balance despite the column asymmetry — the testimonials give the right side visual weight to match the bold heading on the left.
+Interspersed with testimonial cards are **stat callout cards** — large numeral with a small descriptor below. These are the same card size but content-only, no avatar, functioning as social proof punctuation within the testimonial stream.
+
+### Section 9 — Case Studies List
+
+Centered headline. Below: a **stacked list layout** — each row is a full-width card with:
+- Left: Brand logo icon (colored, circular) + company name + "SWITCHED FROM…" label in small caps
+- Center: Contact person name and title
+- Right: "Case study ↗" as a text link/CTA
+
+Each row is separated by a thin divider. The rows are visually light and scannable — no images, pure typography and iconography. This is an explicit list/table pattern rather than a card grid.
+
+### Section 10 — Enterprise Features Grid
+
+A **3-column card grid** of feature tiles. Each card contains:
+- Top-right corner: category badge (e.g., "CATEGORY A", "CATEGORY B", "CATEGORY C") — small pill, colored differently per category
+- Icon (line-style)
+- Feature name (bold)
+- Short description (2–3 lines)
+
+Cards have white backgrounds, rounded corners, uniform padding. The grid has consistent gutters. This section uses the most "product marketing" layout language on the page — structured, scannable, comprehensive.
+
+### Section 11 — Support / Success Section
+
+A **50/50 asymmetric two-column layout**: left side contains a section headline, a bulleted checklist (accent checkmarks, 5 items), and two pill CTAs side by side. Right side contains a **stacked column of three testimonial cards** — white cards, no avatar photo, just quote text + name + title. The three cards are full-height of the column and stack vertically with small gaps.
 
 ---
 
 ## Footer
 
-A **multi-column link grid** — approximately 5 columns of navigation links with equal column widths. Link items are standard small-weight type with modest leading. No elaborate design — purely utilitarian, consistent with standard footer conventions.
+A **full-width footer** on the cream background, structured as a multi-column link directory. Visible columns include category labels — each with a bold label and vertically stacked text links below. The footer also repeats the brand tagline on the far left as a brand statement.
 
-Above the link columns: a final brand statement in large display type, centered, continuing the editorial voice of the page.
+The footer uses generous top padding and standard horizontal alignment with the main content column.
 
 ---
 
 ## Notable Layout Patterns
 
-**Floating privacy overlay:** A bottom-left fixed card persists across all scroll states — it has its own white card background, dismiss (×) button, and link. It functions as a fixed layer independent of scroll, overlapping product screenshots without disrupting reading flow.
+**Floating/overlapping elements:** The consent banner is a fixed-position card (white, rounded, shadow) pinned to the lower-left throughout the entire scroll. Testimonial cards near the hero also overlap the product mockup boundary.
 
-**Organic wave dividers:** The transition into and out of the dark section uses large full-bleed SVG/CSS curve shapes — not hard horizontal rules but sweeping arcs that create a sense of dimensional depth, as if the light and dark layers are overlapping surfaces.
+**Organic curve transitions:** Section boundaries are not straight horizontal lines — the dark section uses soft convex/concave SVG curves to transition in and out. This is the most distinctive layout gesture on the page.
 
-**Consistent product mock framing:** Product UI screenshots throughout use rounded browser-chrome frames with soft drop shadows — they read as "windows" floating above the page field rather than flat images. This consistency creates a visual language that distinguishes "product evidence" from "page content."
+**Consistent pill/rounded corner language:** Nearly every contained element — buttons, badges, tabs, cards, mockup frames — uses fully rounded corners. The page has no hard 90° rectangular UI elements at any interactive layer.
 
-**Typographic scale rhythm:** The page uses an unusually wide scale range — from very small label type up to display-scale metric callouts and the hero heading. Each section earns its own scale moment, preventing visual monotony across a long-scroll page.
+**Sticky nav:** The header remains fixed throughout the scroll, always accessible.
 
-**Spatial generosity:** Throughout, sections have substantial vertical padding — the page never feels cramped. Even the dense feature card grid breathes with card-to-card gap. This premium spacing is a core layout choice that signals confidence and calm.
+**Content column width constraint:** Body copy and centered headlines are constrained to roughly 60–65% of the viewport width, while structural/background elements run full-bleed. This creates a layered sense of depth: full-bleed background → constrained content column → floating UI cards at a third layer.
 
-`★ Insight ─────────────────────────────────────`
-A few judgment calls worth noting: (1) "pill-shaped" was kept — it's a design pattern term, not brand-specific. (2) The wave divider description was preserved verbatim except replacing the color names ("cream", "dark charcoal") with role-based equivalents ("light background", "dark background"). (3) The metric in Section 7 ("90% fewer repeated questions") was reduced to `[Stat]` since the number itself is brand-evidence, but the *card layout pattern* it demonstrates was fully preserved.
-`─────────────────────────────────────────────────`
+**Spatial rhythm:** The page alternates between three visual tempos — wide, airy "pause" sections (pull quote, logo bar) / dense feature sections (tab grids, card grids) / cinematic sections (dark band). This rhythm prevents monotony over a very long scroll.

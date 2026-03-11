@@ -82,8 +82,34 @@ const server = http.createServer((req, res) => {
     }
     const registry = loadRegistry();
     const siteUrl = loadSiteUrls().get(siteName) || null;
+    const landingPageFile = path.join(siteDir, 'landing-page', 'index.html');
+    const landingPageUrl = fs.existsSync(landingPageFile) ? `/site/${encodeURIComponent(siteName)}/landing-page/` : null;
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(renderSite(siteName, siteDir, registry, siteUrl));
+    res.end(renderSite(siteName, siteDir, registry, siteUrl, landingPageUrl));
+    return;
+  }
+
+  // Serve landing-page static files: /site/:name/landing-page/...
+  const landingPageMatch = pathname.match(/^\/site\/([^/]+)\/(landing-page|assets)(\/.*)?$/);
+  if (landingPageMatch) {
+    let siteName;
+    try { siteName = decodeURIComponent(landingPageMatch[1]); } catch {
+      res.writeHead(400); res.end('Bad Request'); return;
+    }
+    const subdir = landingPageMatch[2];
+    const restRaw = (landingPageMatch[3] || '').replace(/^\//, '');
+    const fileSegment = restRaw || 'index.html';
+    const filePath = path.resolve(DESIGN_SYSTEM_DIR, siteName, subdir, ...fileSegment.split('/'));
+    if (!filePath.startsWith(DESIGN_SYSTEM_DIR + path.sep)) {
+      res.writeHead(400); res.end('Bad Request'); return;
+    }
+    let stat;
+    try { stat = fs.statSync(filePath); } catch { /* not found */ }
+    if (!stat?.isFile()) { res.writeHead(404); res.end('Not Found'); return; }
+    const ext = path.extname(filePath).toLowerCase();
+    const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'application/javascript', '.json': 'application/json', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.gif': 'image/gif', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.woff2': 'font/woff2', '.woff': 'font/woff' }[ext] || 'application/octet-stream';
+    res.writeHead(200, { 'Content-Type': mime });
+    res.end(fs.readFileSync(filePath));
     return;
   }
 

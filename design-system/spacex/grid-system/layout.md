@@ -1,7 +1,5 @@
-Looking at this task, I need to genericize the SpaceX layout brief by removing all brand/site-specific content while preserving every layout and design structure description.
-
 `★ Insight ─────────────────────────────────────`
-The challenge here is surgical precision — layout vocabulary like "60/40 implicit split", "zigzag reading rhythm", and "diagonal visual momentum" is the *transferable intelligence* worth preserving, while "Starlink", "Dragon", "Mars photograph" are site-specific noise that would confuse a designer applying this template to an unrelated project.
+This task is purely text transformation — no code reading needed, and no skill applies. The brief is self-contained in the prompt, so I can work directly from it.
 `─────────────────────────────────────────────────`
 
 # Brand Name Website — Layout Brief
@@ -10,91 +8,107 @@ The challenge here is surgical precision — layout vocabulary like "60/40 impli
 
 ## 1. Overall Page Structure
 
-The page is a long-scroll cinematic experience composed of roughly **5–6 full-viewport sections**, each occupying the full screen height. There is no traditional paginated structure — sections bleed into one another through full-bleed photography and video, creating a continuous vertical film-reel rhythm. The spatial logic is **immersive first, informational second**: content is sparse and editorial, never competing with the imagery.
+The page is a long-scroll cinematic narrative — roughly 6–8 full-viewport sections stacked vertically. Each section is **full-bleed**, meaning the visual fills 100% of the viewport width and often the full height. The page rhythm alternates between dark/black backgrounds and full-bleed photography, creating a pulsing contrast as you scroll. There is no "content container" in the traditional sense — layout boxes float *on top of* imagery rather than sitting beside it.
 
 ---
 
 ## 2. Header / Navigation
 
-The header is a **fixed, full-width horizontal bar** pinned to the top of the viewport. It sits at very low visual weight against the dark hero — no background fill, no border, just type and logo floating over the image.
+**Fixed, full-width bar** that sits at the top of every section. It is visually transparent or very dark, bleeding into whatever background is beneath it.
 
-- **Left:** Brand wordmark logo, left-aligned with generous left padding
-- **Center:** Horizontal nav links in small-caps, evenly spaced across the center third of the bar — [Nav Item 1], [Nav Item 2], [Nav Item 3], [Nav Item 4], [Nav Item 5], [Nav Item 6], [Nav Item 7]
-- **Right:** A bordered dropdown pill labeled "Primary CTA" — the only interactive UI affordance in the header, given a contained rectangular button treatment to distinguish it from the nav links
+- **Left:** Brand wordmark/logo — small, all-caps, restrained
+- **Center:** Horizontal nav links — 7–8 items, all-caps, small tracking, evenly spaced
+- **Right:** A single outlined dropdown button ("Primary CTA") — acts as a utility CTA, visually distinct from the nav links
 
-The nav links use very tight letter-spacing in a condensed sans-serif. The overall header height is minimal — roughly 40–50px — giving maximum vertical real estate to the hero.
+The header uses **no background fill** — it floats over imagery. Typography is white throughout. This gives the entire page a seamless, immersive feel where the nav doesn't interrupt the visual flow.
 
 ---
 
 ## 3. Hero Section
 
-**Full-bleed, full-viewport** image section. The hero photograph fills 100% of the viewport with no crop borders.
+**Full-viewport, asymmetric split.**
 
-Layout within the hero is an **asymmetric two-zone split**:
-- **Left third:** Content zone — headline, body copy, and CTA button stacked vertically, left-aligned, positioned in the lower-left quadrant of the viewport. This creates a strong diagonal relationship with the visual subject on the right.
-- **Right two-thirds:** Image dominance — the hero subject occupies the right half, centered vertically, slightly cropped at bottom and right edges, giving it an "emerging from the edge" quality.
+- The left ~40% of the viewport holds the text content: a large bold headline (2–3 lines, heavy weight, all-caps), a short descriptor paragraph (~2–3 lines, lighter weight), and a single outlined CTA button ("Primary CTA →")
+- The right ~60% is occupied entirely by a full-bleed, high-resolution hero photograph — no frame, no border, bleeds to the edge
+- Text sits in the lower-left quadrant, roughly vertically centered between midpoint and bottom third
+- The image and text **do not overlap** — the image occupies the right half while text anchors left — but there's no hard visual divider between them; the dark background on the left bleeds seamlessly into the dark area of the photograph
 
-The text is set in bold all-caps condensed type. The CTA ("Primary CTA →") is an outlined rectangular button — minimal, no fill — consistent with the editorial restraint.
-
-No overlapping layers in the traditional sense, but the text floats *over* the image with high contrast (light type on dark background), creating a pseudo-layering effect.
+**Visual weight:** Massive image dominance. Text is minimal but bold. The proportion is roughly 60/40 favoring imagery.
 
 ---
 
-## 4. Content Sections Below the Hero
+## 4. Content Sections Below Hero
 
-### Section 2 — Product Feature A (Full-Bleed Split)
+### Section 2 — Product 1 / "Key Differentiator Headline"
 
-**Full-viewport cinematic image** — a hero product photograph fills the entire screen. Content is positioned in the **right column, upper third**, leaving the dramatic product imagery to breathe on the left.
+**Full-bleed photography with overlaid text, right-aligned.**
 
-This is a **60/40 implicit split**: image dominates the left 60%, text content anchors the right 40% as a floating overlay. The headline is large bold all-caps; body copy is medium weight, readable against the image; CTA button ("Secondary CTA →") uses the same outlined pill treatment as the hero.
+- The section is a full-viewport photograph of the featured product or service in context
+- Text floats in the **upper-right quadrant** — headline (2 lines, large, all-caps white), descriptor paragraph, and an outlined "Secondary CTA →" button
+- The text block has a subtle semi-transparent dark overlay behind it to maintain legibility against the bright background
+- This is the inverse of the hero: text now sits right, image bleeds fully behind
+- **No grid containers** — text is simply positioned over the image
 
-The section transitions into the next via a **color gradient band** — the image dissolves into an accent color strip that acts as a visual bridge, then cuts to dark for the next section.
+### Section 3 — Service A / "Supporting Value Proposition"
 
-### Section 3 — Feature B (Full-Bleed Left-Anchored)
+**Full-bleed photography, text lower-right.**
 
-Another full-viewport image, this time featuring a secondary product or service context. Content anchors to the **left column, lower third** — mirroring the hero's layout but on a lighter toned image. This left-right alternation of content placement creates a **zigzag reading rhythm** across the page.
+- Another full-viewport image showing the brand in action
+- Text returns to **lower-right** of the frame: headline, short paragraph
+- The section below it begins to emerge from the bottom of the frame — a dark panel with a secondary visual is already partially visible at the bottom edge, creating **visual overlap and continuity**
 
-A small vertical progress indicator appears on the far left edge — a thin line element suggesting scroll depth within the section.
+### Section 4 — Feature Detail / Visual Transition
 
-### Section 4 — Feature C / Key Differentiator
+**Split vertical: two stacked full-width crops.**
 
-**Split-screen vertical divide** — two images stacked or butted side-by-side occupying the full viewport:
-- **Top half:** Close-up detail shot — dark background, intimate
-- **Bottom half:** Wide product or environment shot — dark background, technical
+- The viewport is divided horizontally into two equal halves — **a top half and a bottom half**, each showing a different high-contrast photograph
+- Top: extreme close-up detail shot — nearly abstract, very dark
+- Bottom: secondary product or environment shot, dramatically lit
+- Text label ("Feature B Headline") begins to appear at the very bottom of this split, emerging from below — a scroll-triggered reveal
 
-Headline text appears at the **lower right**, light on dark, maintaining the right-column content pattern from Section 2.
+This section is purely visual, no text block. Its purpose is cinematic transition.
 
-### Section 5 — Service A (Full-Bleed Left-Anchored, with Footer)
+### Section 5 — Product 2 / "Feature B Headline"
 
-Full-viewport image of the product or service filling the entire screen. Content follows the **left-column, lower-third** pattern established in earlier sections — large bold all-caps headline, body copy, and outlined CTA button ("Action Button →").
+**Full-bleed image, text left-anchored.**
 
-This section also contains the **footer**, which is embedded at the very bottom of this last image section rather than appearing as a separate zone.
+- Full-viewport photograph of Product 2 or Service A
+- Text sits in **lower-left quadrant**: large all-caps headline (2 lines), descriptor paragraph (~2 sentences), single outlined CTA ("Action Button →")
+- This mirrors the hero's layout almost exactly — left-anchored text, dominant right/center imagery
+- A **small circular close button** floats in the lower-left corner, suggesting this is inside a modal or overlay pane — possibly a product detail lightbox accessed from the main scroll
+- The footer appears at the bottom of this pane
 
 ---
 
 ## 5. Footer
 
-The footer is **integrated into the last content section** rather than existing as a distinct region. It sits at the absolute bottom of the final full-bleed image, maintaining the dark/cinematic atmosphere.
+**Minimal, single-row, dark background.**
 
-- **Layout:** Single horizontal row spanning full width
-- **Left zone:** Small circular icon or brand mark floated to the far left
-- **Center:** Horizontal link row — [Footer Link 1], [Footer Link 2], [Footer Link 3], [Footer Link 4] — evenly spaced, small caps, matching nav typography
-- **Right:** "© [Year] Company Name" copyright notice, right-aligned
+- **Center:** Horizontal list of footer links — all-caps, small, spaced
+- **Far right:** © [Year] Company Name
+- **Far left:** Nothing (or the floating close button belongs to this zone)
+- Very low visual weight — it recedes behind the content intentionally
 
-The footer has no background fill — it reads as text floating on the dark image, consistent with the header treatment. The visual weight is intentionally minimal, keeping the brand experience cinematic to the very last pixel.
+The footer is more of a legal shelf than a navigational destination. It sits at the absolute bottom without decoration.
 
 ---
 
 ## 6. Notable Layout Patterns
 
-**Full-bleed imagery as layout itself** — There are no traditional content containers or cards. Every section *is* the image. Content overlays are positioned floating zones, not boxes.
+### Full-Bleed Sections as the Core Unit
+Every section is a **full-viewport-height, full-width canvas**. There are no content-width containers or card grids. The entire page is essentially a vertical filmstrip of scenes.
 
-**Alternating content anchor rhythm** — Content blocks alternate between left-lower and right-upper quadrants across sections, creating diagonal visual momentum as you scroll.
+### Text-Over-Image Floating Blocks
+Text never sits in a white box or isolated container — it floats directly over photography with legibility maintained through: (a) choosing dark areas of the photo to place text, (b) subtle localized overlay gradients, and (c) high-contrast white type on dark imagery.
 
-**Consistent typographic hierarchy** — Each section uses the same three-level stack: all-caps bold headline (large), regular-weight body paragraph (small, ~2 lines), outlined CTA button. This repetition creates strong visual rhythm and scanability.
+### Alternating Text Anchor Points
+The text position alternates spatially across sections to create visual rhythm: hero → lower-left, Section 2 → upper-right, Section 3 → lower-right, Section 5 → lower-left. This creates a Z-pattern scanning flow across the page.
 
-**No explicit grid columns visible** — The layout appears "free" but is actually structured around a consistent ~35–40% content zone width, always anchored left or right, never centered.
+### Section-to-Section Bleeds
+Sections don't end cleanly — the next section's content is often already visible at the bottom edge of the current viewport, creating **visual continuity and forward momentum**. The page feels like one continuous cinematic strip, not a sequence of discrete pages.
 
-**Sticky header transparency** — The nav floats above all imagery without a background panel, reinforcing the cinematic language.
+### Sticky Navigation
+The header navigation is fixed/sticky throughout the entire scroll — it overlaps every section but remains visually subordinate because of its minimal weight.
 
-**Transition as design element** — The accent color gradient band between sections is a deliberate pacing tool — a momentary visual breath between two dark image sections.
+### Minimal CTA Surface Area
+All call-to-action buttons are **outlined only** (no filled background), giving them a light touch. They don't compete with the imagery — they serve as quiet wayfinding rather than dominant conversion elements.
