@@ -1,89 +1,93 @@
-`★ Insight ─────────────────────────────────────`
-This task is pure content transformation — no code involved. The challenge is surgical: strip brand identity while keeping the structural vocabulary intact. Terms like "Hermès wordmark" must become "brand wordmark/logo lockup", while "4-column equal-width grid" stays verbatim.
-`─────────────────────────────────────────────────`
-
-# Brand Homepage — Layout Brief
+# Brand Name Homepage — Layout Brief
 
 ---
 
 ## 1. Overall Page Structure
 
-The page is organized into five major zones flowing top to bottom:
-
-1. **Fixed navigation bar** — anchored to the top of the viewport
-2. **Full-bleed cinematic hero** — nearly 100vh, immersive video/image
-3. **4-column product category grid** — two rows of equal-weight tiles
-4. **Alternating 2-up editorial panels** — large cinematic images in pairs
-5. **Multi-column footer** — dense, organized, clearly subordinate
-
-The spatial rhythm alternates between tight editorial density (the grid) and generous breathing room (the editorial panels). There is no sidebar, no asymmetric pinning — the page is strictly centered-axis, symmetrical.
+The page is organized as a long-scroll editorial journey with approximately **8–10 distinct sections**. The flow moves from a cinematic full-bleed hero, through a product category grid, into an editorial carousel, then a mixed editorial/image narrative sequence, back to a product image grid, and finally a full-bleed landscape image before the footer. The rhythm alternates between **dense grid moments** (product tiles) and **open, centered editorial moments** (headline + body copy on light background), creating a breathing, magazine-like cadence.
 
 ---
 
 ## 2. Header / Navigation
 
-A clean horizontal bar spanning the full viewport width. It has three distinct zones:
+The header is a **thin, fixed bar** that sits at the very top edge of every screenshot — it never disappears from view, indicating it is sticky. It has three distinct zones:
 
-- **Left:** A minimal search input (icon + short underlined text field) — visually lightweight, recessed
-- **Center:** The brand wordmark + logo lockup — the clear focal point, treated as the page's crown
-- **Right:** Account and Cart icon-text pairs — matched weight to the left zone, creating bilateral balance
+- **Left zone:** A minimal search field (text input + icon), left-aligned
+- **Center zone:** The brand logo mark above the wordmark — this acts as the true optical anchor
+- **Right zone:** Account and Cart icon-links, right-aligned
 
-Below this identity bar sits a **secondary navigation strip** — a single horizontal row of uppercase category labels in a smaller typeface, spaced evenly across the full width. This row acts as a visual separator between the brand identity above and content below. The overall header feels architecturally thin — it occupies minimal vertical real estate, prioritizing content.
+Below this logo bar sits a **secondary navigation row** — a single horizontal strip of all-caps category labels evenly spaced across the full viewport width, with a thin separator before the final label. The two bars together occupy a combined height of roughly 80–90px. The background matches the page body, so the header blends seamlessly rather than feeling like a separate chrome bar.
 
 ---
 
 ## 3. Hero Section
 
-**Full-bleed, edge-to-edge, viewport-height cinematic image.** No columns, no insets, no framing — the image bleeds to all four edges. The subject is positioned center-right, leaving the left third as atmospheric negative space.
+The hero is **full-bleed, edge-to-edge**, with no margins. The image fills 100% of the viewport width and approximately 90% of the viewport height — it dominates. It is a dark, atmospheric image against a deep dark background.
 
-There are **no overlapping text overlays, no floating boxes, no CTAs** inside the hero itself — the image is allowed to breathe completely. This restraint is a deliberate luxury signal: the brand does not need to label what it is showing you. The only text that breaks the silence appears just below the hero fold, as a transitional headline that bridges into the grid.
-
----
-
-## 4. Content Sections Below the Hero
-
-### Section A — 4-Column Product Category Grid
-
-A strict **4-column equal-width grid** presenting product category tiles. Each tile is:
-- A **portrait-oriented image** (slightly taller than wide) sitting flush with its column
-- Below it, a short **uppercase category label** in a tight, small monospaced or condensed typeface — left-aligned beneath the image
-
-Two full rows of four tiles each = 8 categories displayed. The gutter between columns is consistent and moderate — enough separation to read each tile independently, but tight enough that the grid reads as a unified block. There is no hierarchy between tiles; all eight are given identical visual weight. The background behind the grid is a warm off-white, which grounds the editorial photography.
-
-### Section B — 2-Up Editorial Panels (Alternating, Paired)
-
-Below the grid, the layout shifts to **side-by-side pairs of large editorial images**, each pair occupying the full viewport width. The two images in each pair are equal width (~50/50 split), butted together with no gutter — they read as a single panoramic composition.
-
-Multiple rows of these pairs scroll sequentially. The subject matter alternates between product-focused shots (goods against neutral backgrounds) and atmospheric cinematic frames. This creates a visual call-and-response: commercial clarity paired with emotional abstraction.
-
-No text labels appear over these panels — they are purely visual, meant to build atmosphere rather than navigate. One pair at the very bottom of this zone includes native browser **video player controls** visible on the right panel, revealing that some panels are embedded video, not static images.
+- **Text overlay:** A single italic caption sits in the **bottom-left corner**, low in the frame, in light text. The type is small relative to the image, reinforcing image primacy.
+- No buttons, no CTAs, no price callouts. The hero is purely atmospheric.
+- The transition to the next section is a hard, clean edge — the light background of the product grid appears immediately below.
 
 ---
 
-## 5. Footer
+## 4. Content Sections (Below the Hero)
 
-A classically structured **4-column footer** organized by category:
+### Section 2 — Product Category Grid
+A **symmetric 4-column grid** of product category tiles on the light background. Each tile is a square-ish image (roughly 1:1.2 ratio) with an all-caps label beneath it, set in a small spaced-out typeface. The grid shows **two rows of four tiles** in the visible viewport — 8 categories total per page. The spacing between tiles is generous and equal on all sides, giving the grid an airy, non-commercial feel despite being a shop navigation element.
 
-- **Column 1 — Services:** a vertical list of service links (Contact, FAQ, Find a store, etc.)
-- **Column 2 — Orders:** fulfillment-related links (Payment, Shipping, Returns)
-- **Column 3 — Company:** institutional/brand links (Foundation, Sustainability, Careers)
-- **Column 4 — Legal:** compliance links
+### Section 3 — Editorial Carousel
+A **full-bleed horizontal image carousel** — images bleed off both left and right edges, suggesting the set extends beyond the viewport. Three images are visible at once; partial crops of images appear at the left and right edges, communicating lateral scrollability. Below the carousel, a pagination indicator with arrow controls sits **right-aligned**, creating a subtle asymmetric anchor. The images are tall, portrait-format shots with a consistent background treatment.
 
-All columns use the same visual weight — no column is emphasized over another. Column headers are set in small-caps or uppercase, acting as subtle anchors above the link lists.
+### Section 4 — Editorial Narrative (Centered Text)
+A **narrow centered text block** on the light background — headline in large italic serif, body copy in smaller roman text, both center-aligned and constrained to roughly 40–50% of the viewport width. This is a pure typographic moment with generous white space above and below, acting as a pause in the visual rhythm. Below it, a **single large full-width image** (16:9 landscape, inset with left/right margins of roughly 12–15% each side) — it doesn't bleed to the edges, giving it a framed, editorial quality.
 
-Below this 4-column block, a **3-zone secondary footer bar** spans the full width:
-- **Left:** Customer service contact details (left-aligned)
-- **Center:** Newsletter subscription block with a bordered "Primary CTA" button
-- **Right:** Social media follow prompt with platform icons
+### Section 5 — Two-Column Editorial Image Block
+A **two-column symmetric split**, each image filling exactly half the viewport width with a small gutter between them. Both images are tall portrait-format. This layout is paired with another centered body-copy paragraph above it, maintaining the alternating text/image rhythm.
 
-The very bottom is a minimal **global footer strip** — regional/destination indicator (left) and copyright text (right).
+### Section 6 — Product Image Grid
+Returns to the **4-column grid** pattern, this time showing product photography. Two rows of four images each — 8 items visible. The images are portrait-format, slightly taller than the category tiles in Section 2. Labels are replaced by no text — these are pure image tiles. The pagination indicator appears again bottom-right.
+
+### Section 7 — Wide Horizontal Carousel (Detail Shots)
+Another bleed-edge carousel, this time showing **partial crops** at the edges more aggressively — the leftmost and rightmost images are cut significantly, emphasizing that this is a scrollable track. Three images visible, portrait format, with a consistent background treatment.
+
+### Section 8 — Editorial Text Break
+Identical typographic treatment to Section 4 — large italic serif headline, narrow centered body copy, generous vertical spacing. Serves as a narrative chapter heading.
+
+### Section 9 — Full-Bleed Scroll-Video / Landscape Image
+A **full-width, full-viewport-height dark landscape image** — the most immersive visual moment outside the hero. No text overlays. This likely functions as a scroll-triggered video or a pinned parallax image in the live experience.
+
+### Section 10 — CTA Bridge
+Below the landscape image, back on the light background: a single centered text link with a subtle underline. Minimal, isolated in generous space. No button box, no arrow — the link itself is the element.
+
+---
+
+## 5. Footer Layout
+
+The footer has **two horizontal layers** on the light background:
+
+**Upper footer — Link columns:**
+A **4-column grid** of link lists, each with an all-caps column heading and 5–8 body-weight text links beneath. The columns are evenly distributed across the full width with generous internal spacing.
+
+**Lower footer — Three-zone bar:**
+Three distinct blocks in a **1/3 — 1/3 — 1/3** layout:
+- **Left:** CUSTOMER SERVICE — hours, phone number (underlined), email link
+- **Center:** NEWSLETTER — short descriptive text + full-width Primary CTA (outlined, all-caps, spans the center column)
+- **Right:** FOLLOW US — social media icons, large and spaced
+
+At the very bottom: a **region selector** on the left, and a copyright line on the right — a minimal two-element rule closing the page.
 
 ---
 
 ## 6. Notable Layout Patterns
 
-- **Sticky navigation:** The top nav bar appears to remain fixed during scroll — the category labels and logo are always accessible regardless of scroll depth.
-- **Zero padding at image edges (full-bleed):** Both the hero and the editorial panel pairs extend to the absolute edges of the viewport. There are no horizontal margins on any image block — this is a deliberate choice to maximize the cinematic quality of the photography.
-- **No overlapping layers or floating elements:** The layout is strict and stacked — no elements break across section boundaries, no cards float over images. Everything respects its zone. This flatness communicates control and authority.
-- **Alternating rhythm between density and space:** The product grid is relatively compressed; the editorial panels that follow are generous in height. This rhythmic alternation between tight and open prevents visual monotony without breaking the restrained aesthetic.
-- **Typography as punctuation, not decoration:** Text appears only where functionally necessary — labels, nav, footer. It never fights with imagery. Uppercase, wide-tracked, small — letterforms act as quiet spatial markers rather than expressive design elements.
+**Sticky header:** The nav bar is persistent across all scroll positions — always occupies the top of every screenshot.
+
+**Full-bleed vs. inset images:** A deliberate rhythmic alternation — the hero and landscape sections bleed edge-to-edge for maximum impact; the editorial narrative images are deliberately inset with wide margins to feel framed and precious.
+
+**Carousel overflow pattern:** Horizontal carousels intentionally show partial images at both edges, communicating affordance without arrows being the primary signal. Combined with right-aligned pagination counters, this creates a clean but unambiguous swipe/scroll invitation.
+
+**Typographic breathing rooms:** Centered editorial text sections appear at regular intervals as pure negative space — no images, no grid, just type on a light ground. These act as visual rest stops between dense image sections, and they carry the brand's narrative voice.
+
+**Consistent light ground:** The entire non-image page background is a single light tone. This unifies all sections and prevents the page from feeling like disparate modules stacked together — it reads as one continuous surface with imagery applied to it.
+
+**Portrait-image dominance:** Nearly all product and editorial imagery is portrait-format, which reinforces the vertical reading experience and allows tall images to coexist in grid columns without awkward cropping.

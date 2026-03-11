@@ -1,29 +1,39 @@
-`★ Insight ─────────────────────────────────────`
-Stripe's design system is a masterclass in "trustworthy sophistication" — the `sohne-var` variable font with `font-feature-settings: "ss01"` activates alternate letterforms that feel more humanist than typical grotesques, giving technical content warmth. Their motion uses exclusively `cubic-bezier` easings (no `ease-in-out` shortcuts), signaling deliberate craft over defaults.
-`─────────────────────────────────────────────────`
+No applicable skills match this task — this is a pure design analysis/writing task with no implementation, debugging, or code generation involved.
 
 ---
 
-# Stripe — Concept Summary
-
-## Brand Overview
-Stripe is the financial infrastructure layer for the internet, offering payment processing, embedded finance, and revenue tooling to businesses from solo founders to Fortune 100 enterprises. It positions itself not as a vendor but as a foundational utility — the invisible backbone that makes commerce possible at scale. Its audience spans scrappy startups and platform companies building entire financial operating systems on top of Stripe's APIs.
-
 ## Visual Identity
-The palette is clean authority: a primary white canvas anchored by deep navy (`#0a2540`) and slate (`#425466`) text that feels precise without being cold, punctuated by Stripe's signature indigo-purple (`#635bff`) as the sole chromatic accent — confident, technological, and slightly electric. The hero disrupts this restraint with a hand-painted-feeling gradient bloom of soft pink, warm orange, and lavender, creating an unexpected moment of expansiveness. Typography is set entirely in `sohne-var`, a variable grotesque used at light weight (300) for large display text with tight negative letter-spacing (`-0.864px`), giving headlines a quiet editorial authority rather than tech-bro loudness. Interactions are silky: button transitions run at `0.3s cubic-bezier(0.25, 1, 0.5, 1)` — a fast-out-slow-in curve that feels like physical material settling, not a UI toggle.
 
-## Emotional Tone
-Stripe evokes the feeling of standing in a well-designed bank branch that also happens to have a startup's energy — **reassured confidence with latent momentum**. There's a hush to the white space, a sense that nothing is rushed or improvised. The colorful hero gradient is the one moment of exuberance, like a skylight in an otherwise deliberate interior. Scrolling the page feels like reading a well-edited annual report: dense with substance, never cluttered, always purposeful.
+The palette centers on a deep navy (`#0a2540`) for headings and a vivid violet-blue (`#533afd`) as the singular brand accent, set against an almost clinical white (`#ffffff`) base — a high-contrast, trust-forward combination that lets the gradient illustration do all the warmth-work. Typography is monolithic: every text role from `h1` to `nav` uses `sohne-var` at weights 300–400 with negative letter-spacing (`-0.96px` at h1), producing a lean, geometric character with no serif counterpoint. Motion is restrained and utility-first — button transitions at `0.3s cubic-bezier(0.25, 1, 0.5, 1)` and link opacity fades at `0.24s` dominate, with a single 90s marquee scroll as the only ambient animation.
 
-## Target Audience
-Technical founders and CTOs at growth-stage startups, alongside VP-level decision-makers at enterprise platforms. These are people who read API documentation for fun, who distrust anything that looks "salesy," and who measure trust through design quality as a proxy for engineering quality. They want to feel like they're choosing infrastructure, not software.
+`★ Insight ─────────────────────────────────────`
+The `sohne-var` variable font uses `"ss01"` feature settings across every text role — this OpenType stylistic set typically activates alternate single-story letterforms (notably `a` and `g`), which is why the type feels optically clean and geometric rather than humanist, even at low weights. Variable axes allow the same font file to handle the full weight spectrum from 300–400 without multiple file requests.
+`─────────────────────────────────────────────────`
+
+## Hero Section
+
+The hero is a partial-height split layout — roughly 55% left / 45% right — where the left column anchors a left-aligned headline at `48px / 300 weight / -0.96px letter-spacing` with a secondary descriptive line at `32px / 300 weight`, followed by two CTAs stacked horizontally: a primary filled violet button (`#533afd` bg, white text, `4px` border-radius) and a secondary ghost button with a `#b9b9f9` border. The right side is a full-bleed **static gradient mesh illustration** — not a video or parallax image — composed of flowing ribbon shapes in orange (`#f97316`), pink-magenta (`#ec4899`), purple (`#a855f7`), and blue (`#60a5fa`) that bleeds to the viewport right edge without containment. There is no scroll indicator. A small live ticker line ("Global GDP running on Stripe: 1.61248757%") sits above the headline in a smaller weight, acting as a visual accent without competing typographically. No visible load-in animation was detectable from the static frames.
+
+## Content Sections
+
+The body follows a strict **modular rhythm** alternating between full-width text headers and grid-based content blocks, with section padding consistently at `96px` top/bottom and gaps of `64px` — this produces an airy, generous whitespace system that prevents density even when content is dense. Layout patterns cycle through: 12-column grids (`88px × 12 cols, 16px gap`), asymmetric 2-column splits (40/60 text-to-UI), 4-column card grids, and full-width graphic sections (the dark navy developer section at `#0d1b3e`). The dark section creates a hard, high-contrast visual break — not a soft gradient transition — functioning as a section divider through background color switch alone, with white and light-grey text replacing navy-on-white. Product UI screenshots and mockups are **contained within cards** with rounded corners (`5–6px`), never bleeding edge-to-edge, maintaining a controlled product-demo aesthetic rather than an immersive editorial one.
+
+`★ Insight ─────────────────────────────────────`
+The 12-column grid uses fixed `88px` column widths rather than fractional `fr` units — this is likely a max-width container (1298px) divided precisely: 12 × 88px = 1056px + 11 × 16px gaps = 1232px, fitting inside the 1298px container with ~33px padding per side (close to the extracted 18px). Fixed pixel columns maintain exact typographic alignment across breakpoints until a threshold triggers reflow.
+`─────────────────────────────────────────────────`
+
+## Footer Section
+
+The footer is **light-weight and neutral** — it sits on a near-white background (`#f6f9fc` or white), using the same `sohne-var` typeface at reduced scale with normal weight (not bold), organized into 4 primary column groups: Products and Pricing, Solutions, Integrations / Company, and Resources / Developers / Support. Link text is rendered in a subdued slate (`#425466` / `#7d8ba4`) with no color on hover captured, creating a deliberately low-contrast, index-card reading experience. There is no newsletter form, no social link row, and no logo lockup visible in the footer zone — the bottom closes with a horizontal divider, a locale selector ("United States (English)"), and a minimal copyright line ("© 2026 Stripe, LLC.") in small grey type. The footer's visual weight is markedly lighter than the body sections, achieved entirely through typographic scaling and color desaturation rather than background differentiation.
 
 ## Design Principles
-- **Restraint as signal:** The palette nearly eliminates color except for the single indigo-purple action hue — visual noise is treated as a credibility risk, not a styling choice.
-- **Weight as hierarchy:** Stripe achieves typographic structure through `font-weight` variation within a single typeface family rather than font pairing, reinforcing a unified, controlled voice.
-- **Gradient as humanity:** The multicolor hero blob (`#e8a4c0`, `#f4a261`, `#a78bfa`) is the only moment of visual warmth — strategically placed to soften what would otherwise be a purely corporate identity.
-- **Motion at human speed:** All transitions cluster between `0.24s`–`0.3s`, never rushed into imperceptibility, never slow enough to feel sluggish — timed to match natural blink and reach rhythms.
-- **12-column rigor:** Every content section snaps to a strict 12-column grid at `86.5px` columns, giving the impression of engineered precision even in editorial sections.
+
+- **Monofont system at variable weight** — all typographic differentiation is achieved through scale and weight shifts within a single variable font (`sohne-var`), never through serif/sans pairing or display typeface contrast
+- **Violet as the sole chromatic signal** — `#533afd` appears exclusively on interactive elements (CTAs, links, borders), making every violet pixel immediately scannable as "clickable"
+- **Illustration as the only expressive canvas** — photographic imagery is replaced entirely by gradient mesh illustrations and diagrammatic UI mockups, keeping all expressive color work non-representational
+- **Hard section breaks over gradual transitions** — the white-to-dark-navy section flip is a sharp cut, not a fade or gradient blend, using background color alone as the transition mechanism
+- **4px / 6px radius discipline** — buttons use `4px`, cards and wrappers use `5–6px`, maintaining a tight, consistent rounding system that reads as precise rather than playful
 
 ## Distinctive Qualities
-The most distinctive choice is the **gradient hero illustration used as pure atmosphere** — it has no information content, carries no iconography, and makes no product claim. It exists solely to create emotional register, functioning more like a painting in a lobby than a web hero image. The second standout decision is using `font-feature-settings: "ss01"` universally — this activates Söhne's alternate 'a' and 'g' glyphs, making every word feel subtly bespoke without the viewer knowing exactly why. Finally, the card hover states use a slight `transform: matrix()` shift (approximately 4–5px diagonal) rather than scale or shadow — an almost-invisible motion that rewards attention and implies depth without any drop shadow theatrics.
+
+The most singular design choice is the **gradient ribbon illustration** in the hero: rather than a photograph, a video loop, or a solid color, the page opens with a hand-crafted flowing mesh of warm-to-cool hues that reads as kinetic but is actually static — suggesting motion without requiring it, and avoiding the performance cost of autoplay video. This is reinforced by the use of `cubic-bezier(0.25, 1, 0.5, 1)` ("ease-out-quint") for all button transitions, a curve that accelerates quickly and decelerates sharply — it communicates responsiveness and precision rather than ease. The live-updating percentage ticker above the hero headline is a structural anomaly: it injects a data-as-design element directly into the typographic hierarchy, functioning as real-time social proof rendered as editorial notation rather than as a badge or callout widget.

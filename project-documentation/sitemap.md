@@ -1,4 +1,7 @@
-# Sitemap — AI Video Production Platform
+# griting.ai — Site Architecture
+
+**Generated:** 2026-03-09
+**Source:** project-documentation/goal.md
 
 ---
 
@@ -6,236 +9,187 @@
 
 ```
 Public
- ├── Home (/)
- ├── Explore (/explore)
- ├── Pricing (/pricing)
- └── About (/about)
+ ├── / (Homepage)
+ ├── /partners/gritme-auditable
+ │   └── [contact form → confirmation state]
+ └── /partners/gritme-incubation
+     └── [contact form → confirmation state]
 
-Authentication
- ├── Login (/login)
- └── Sign Up (/signup)
-
-In-Product (Logged-In)
- └── Workspace (/app)
-     ├── Studio (/app/studio)            ← creation tools
-     ├── Community Feed (/app/community) ← peer activity, projects
-     └── Creator Profile (/app/profile)  ← own profile, points, history
+External Destinations (linked from homepage, not hosted on domain)
+ ├── Gritme Mentorship → [external URL, opens new tab]
+ ├── Grithub → [coming soon — no link, in development]
+ └── Grit Lab → [coming soon — no link, in development]
 ```
 
-Public creator profiles (read-only) are accessible without login at `/creators/:username`.
+**Authentication area:** None. No login, no sign-up, no account system on this domain. All pages are publicly accessible.
 
 ---
 
 ## 2. Access Control Structure
 
 **Public Access Pages**
-- Home (`/`)
-- Explore (`/explore`) — browse-only, no interaction
-- Pricing (`/pricing`)
-- About (`/about`)
-- Login (`/login`)
-- Sign Up (`/signup`)
-- Public creator profiles (`/creators/:username`) — portfolio view only
+- `/` — Homepage: all visitors, no restriction
+- `/partners/gritme-auditable` — Auditable partner page: all visitors, no restriction
+- `/partners/gritme-incubation` — Incubation partner page: all visitors, no restriction
 
 **Engagement Without Login**
-- Explore page allows full gallery browsing and media-type filtering without login
-- Gallery hover states (video preview, creator name, community points) are visible
-- Strategically justified: letting visitors see real work and real creator reputations is the primary trust mechanism — gating this would break the conversion logic
+Not applicable. No login mechanism exists on this domain. Form submission requires no account — name, company, email, product interest, and message only.
 
 **Trigger Points That Require Login**
-- Clicking "Make your own" or "Start creating" CTAs anywhere on the site
-- Attempting to follow a creator or save a project from the Explore page
-- Clicking "Get started" on the Pricing page
+None. The contact form is the conversion point; depth comes in the follow-up. No content is withheld behind authentication.
 
 **Fully Gated Tools / Features**
-- Studio creation workspace (`/app/studio`)
-- Community feed (`/app/community`)
-- Own creator profile, points, and project history (`/app/profile`)
-- Submitting or publishing work
-- Collaborating on another creator's project
+None at launch. The site is a lead-generation and B2C routing instrument — a gateless architecture is the correct call at this stage.
 
 ---
 
 ## 3. Page Purpose Breakdown
 
-### Home (`/`)
-- **Primary goal:** Drive signups by moving visitors from cold discovery through trust to action in a single session
-- **Target user segment:** Cold visitors from ads; warm visitors from search; returning unconverted visitors
-- **Primary CTA:** "Start creating" (hero, post-gallery, closing section)
-- **Secondary CTA:** "Explore" (nav, mid-page) / "Join" (persistent nav)
-- **Login required:** No
+### Homepage — `/`
+
+| Field | Value |
+|---|---|
+| **Primary goal** | Orient cold visitors to Griting's company identity and route each audience type — enterprise partners and individual builders — to their respective track |
+| **Target user segment** | Cold visitors: enterprise decision-makers (CHROs, CTOs, Operations leads at mid-size organizations) and individuals building AI careers |
+| **Primary CTA** | "Talk to us about Gritme Auditable" / "Talk to us about Gritme Incubation" — B2B, visually dominant, appears only in the second half of the page |
+| **Secondary CTA** | "Visit Gritme Mentorship" — B2C, directional, opens external site in new tab |
+| **Login required** | No |
 
 ---
 
-### Explore (`/explore`)
-- **Primary goal:** Let visitors witness the creative output of the community firsthand — converting passive browsers into platform believers
-- **Target user segment:** Visitors who need proof before committing; creators evaluating community quality
-- **Primary CTA:** "Make your own" (persistent, triggered after scroll depth)
-- **Secondary CTA:** Creator profile links → `/creators/:username`
-- **Login required:** No (browse only); Yes (interact, follow, save)
+### Gritme Auditable Partner Page — `/partners/gritme-auditable`
+
+| Field | Value |
+|---|---|
+| **Primary goal** | Create sufficient clarity and institutional credibility about the Auditable system to make contact form submission the visitor's natural next step — not to fully explain the product |
+| **Target user segment** | Enterprise decision-makers evaluating AI talent verification and accountability infrastructure for their organization |
+| **Primary CTA** | "Send your inquiry" — contact form submission, with "We respond within 24 hours" adjacent to submit |
+| **Secondary CTA** | None — single-conversion-point page by design |
+| **Login required** | No |
 
 ---
 
-### Pricing (`/pricing`)
-- **Primary goal:** Resolve commitment hesitation for warm visitors who have decided they want in but need to understand the cost
-- **Target user segment:** Warm comparison shoppers; returning visitors in final decision stage
-- **Primary CTA:** "Get started" (per plan)
-- **Secondary CTA:** "Talk to us" (for enterprise or team queries)
-- **Login required:** No (view); Yes (initiating a plan purchase)
+### Gritme Incubation Partner Page — `/partners/gritme-incubation`
 
----
-
-### About (`/about`)
-- **Primary goal:** Convert skeptics and mission-aligned visitors by articulating the founding vision, the "Figma for AI video" positioning, and the platform roadmap
-- **Target user segment:** Skeptics needing narrative conviction; professionals evaluating the long-term platform bet; journalists and potential partners
-- **Primary CTA:** "Join us"
-- **Secondary CTA:** "Explore what's been made"
-- **Login required:** No
-
----
-
-### Login (`/login`)
-- **Primary goal:** Authenticate returning users with zero friction
-- **Target user segment:** Existing members
-- **Primary CTA:** "Continue" (form submit)
-- **Secondary CTA:** "Create an account" (for visitors who landed here first)
-- **Login required:** No (it is the login page)
-
----
-
-### Sign Up (`/signup`)
-- **Primary goal:** Complete account creation with minimal friction, immediately unlocking the workspace
-- **Target user segment:** New visitors completing the conversion funnel
-- **Primary CTA:** "Start creating" (form submit)
-- **Secondary CTA:** OAuth options (Google, GitHub)
-- **Login required:** No
-
----
-
-### Workspace — Studio (`/app/studio`)
-- **Primary goal:** Deliver the creation experience — the product promise fulfilled
-- **Target user segment:** All logged-in users at all skill levels
-- **Primary CTA:** "Publish" / "Collaborate"
-- **Secondary CTA:** In-product tutorial prompts (first session only)
-- **Login required:** Yes
-
----
-
-### Workspace — Community Feed (`/app/community`)
-- **Primary goal:** Surface peer activity, collaborative opportunities, and reputation signals to drive ongoing engagement
-- **Target user segment:** Active platform members; users seeking collaborators
-- **Primary CTA:** "Join this project" / "Start a new project"
-- **Secondary CTA:** Follow creator
-- **Login required:** Yes
-
----
-
-### Workspace — Creator Profile (`/app/profile`)
-- **Primary goal:** Show the logged-in user their own creative identity — work published, points earned, community standing
-- **Target user segment:** All logged-in users
-- **Primary CTA:** "Start a new project"
-- **Secondary CTA:** "Share my profile"
-- **Login required:** Yes
-
----
-
-### Public Creator Profile (`/creators/:username`)
-- **Primary goal:** Showcase a specific creator's portfolio to drive inspiration-to-signup conversion among visitors who arrive via referral links or shared work
-- **Target user segment:** Referred visitors; community members viewing peers
-- **Primary CTA:** "Make your own" (for logged-out visitors) / "Follow" (for logged-in visitors)
-- **Secondary CTA:** View individual project detail
-- **Login required:** No (view); Yes (follow, collaborate)
+| Field | Value |
+|---|---|
+| **Primary goal** | Create sufficient clarity and institutional credibility about the Incubation system to make contact form submission the visitor's natural next step |
+| **Target user segment** | Enterprise decision-makers building or scaling internal AI capability programs |
+| **Primary CTA** | "Send your inquiry" — contact form submission, with "We respond within 24 hours" adjacent to submit |
+| **Secondary CTA** | None — single-conversion-point page by design |
+| **Login required** | No |
 
 ---
 
 ## 4. Navigation Structure
 
-**Top Navigation — Public**
-- Create
-- Explore
-- Pricing
-- About
+**Top Navigation (Public)**
+- Griting wordmark — links to `/`
+- "For Partners" — anchor to the partner product section on the homepage
+- "For Individuals" — anchor to the individual product section on the homepage
+- No CTA in the navigation bar — consistent with the first-half CTA-free rule on the homepage
 
-**Utility Navigation — Public (right-aligned)**
-- Log in
-- Join (primary accent button)
-
-**Top Navigation — Logged-In**
-- Create
-- Explore
-- Community
-
-**Utility Navigation — Logged-In (right-aligned)**
-- Creator avatar → dropdown (Profile, Settings, Log out)
+**Logged-In Navigation**
+Not applicable — no authenticated state exists on this domain.
 
 **Footer Navigation**
-- Platform: Explore · Pricing · About
-- Vision: Roadmap · Blog
-- Legal: Privacy · Terms
-- Social: (platform social links)
+- Partners: Gritme Auditable (`/partners/gritme-auditable`) · Gritme Incubation (`/partners/gritme-incubation`)
+- Individuals: Gritme Mentorship (external link) · Grithub (labeled "In development") · Grit Lab (labeled "In development")
+- Company: contact email address
+
+**Utility Navigation**
+None — no login, sign-up, dashboard, or account management on this domain. The utility layer is deliberately absent; wayfinding is purely audience-track-based.
 
 ---
 
 ## 5. Conversion Flow Mapping
 
-**Primary — Cold visitor reaching action**
+**Primary — B2B, Gritme Auditable:**
 ```
-Ad / Search → Home (hero) → Gallery scroll → "Make your own" CTA → Sign Up → /app/studio
-```
-
-**Primary — Warm visitor fast path**
-```
-Search → Home (hero) → "Start creating" CTA (hero) → Sign Up → /app/studio
-```
-
-**Secondary — Explore-led conversion**
-```
-Home → Explore → Creator gallery browse → specific creator output inspires → "Make your own" → Sign Up → /app/studio
+Homepage (cold arrival)
+  → Company identity + infrastructure framing [no CTA]
+  → Track Fork — visitor self-selects "For Partners"
+  → Gritme Auditable card: "Talk to us about Gritme Auditable"
+  → /partners/gritme-auditable
+  → Contact form submission
+  → Confirmation state: "Got it. We'll be in touch within 24 hours."
 ```
 
-**Secondary — Pricing-led conversion**
+**Primary — B2B, Gritme Incubation:**
 ```
-Home → Pricing → Plan decision made → "Get started" → Sign Up → /app/studio
-```
-
-**Secondary — About-led conversion**
-```
-Home → About → Mission resonates → "Join us" → Sign Up → /app/studio
-```
-
-**Secondary — Referral-led conversion**
-```
-Shared creator video link → /creators/:username → work inspires → "Make your own" → Sign Up → /app/studio
+Homepage (cold arrival)
+  → Company identity + infrastructure framing [no CTA]
+  → Track Fork — visitor self-selects "For Partners"
+  → Gritme Incubation card: "Talk to us about Gritme Incubation"
+  → /partners/gritme-incubation
+  → Contact form submission
+  → Confirmation state: "Got it. We'll be in touch within 24 hours."
 ```
 
-**Returning User**
+**Secondary — B2C, Gritme Mentorship:**
 ```
-Log in → /app/community or /app/studio → Resume or start project
+Homepage (cold arrival)
+  → Company identity + infrastructure framing [no CTA]
+  → Track Fork — visitor self-selects "For Individuals"
+  → Gritme Mentorship card: "Visit Gritme Mentorship"
+  → [External site opens in new tab]
+```
+
+**Dead-end flows (by design):**
+```
+Homepage → Grithub card → "In development" [no action, no link, intentional]
+Homepage → Grit Lab card → "In development" [no action, no link, intentional]
+```
+
+**Direct navigation (returning or referred visitor):**
+```
+/partners/gritme-auditable → Contact form → Confirmation state
+/partners/gritme-incubation → Contact form → Confirmation state
 ```
 
 ---
 
 ## 6. Homepage Section Architecture
 
+Ordered sections, each with purpose. Zero CTAs in sections 1–4.
+
 ```
-Navigation Bar
-– Establishes creator vocabulary positioning before a word of marketing is read
+1. Navigation
+   Purpose: Persistent audience-track orientation — logo, "For Partners", "For Individuals" only.
+   No CTA. Sets wayfinding language before visitor reads a word of body copy.
 
-Hero — Split-Screen, No Traditional Headline
-– Delivers outcome proof wordlessly; cold visitors discover what is possible; warm visitors confirm intent
+2. Identity Field
+   Purpose: Company name + exact positioning claim ("Talent trust and readiness infrastructure
+   for the AI capital") + bridge sub-line ("For organizations building AI teams. For individuals
+   building AI careers."). Particle canvas animation behind. Text renders before particles complete.
+   No CTA. The full weight of the brand identity lands here before any ask is made.
 
-Creator Gallery — Full-Width UGC Showcase
-– Resolves AI quality skepticism through real outputs; filterable by media type; community points visible on hover
+3. Infrastructure Diagnosis
+   Purpose: 1–2 sentences naming the fragmentation problem the visitor already lives with,
+   followed immediately by Griting as the consolidation answer. Not a "pain section" —
+   a positioning bridge. No CTA. Earns the right to present products.
 
-How It Works — 3-Step, Icon-Led
-– Provides process reassurance for visitors who need it without slowing committed visitors
+4. Track Fork
+   Purpose: Visual and structural separation of "For Partners" and "For Individuals" tracks.
+   Frames the next section as a visitor-made choice, not a product catalog.
+   No CTA. Visitor chooses their path before any product is named.
 
-Community Signals — Creator Cards + Live Platform Stat
-– Makes the community feel real, active, and meritocratic; converts "tool interest" into "belonging interest"
+5. Partner Products
+   Purpose: Gritme Auditable + Gritme Incubation — each card using the fixed template:
+   product name + one-sentence description + three specific capability statements +
+   "who this is not for" + CTA. B2B track receives visual hierarchy advantage.
+   First CTA appearance on the page.
 
-Platform Roadmap Teaser — Coming Attractions
-– Signals long-term vision; creates anticipation; rewards early adopters with a sense of founding membership
+6. Individual Products
+   Purpose: Gritme Mentorship (live, external CTA) + Grithub (coming soon) + Grit Lab (coming soon).
+   Coming-soon cards carry "In development" label and one forward-looking description sentence.
+   No CTA on coming-soon cards — no waitlist, no email capture.
 
-Final CTA Section — Distinct Emotional Gear Shift
-– Tonally and visually separate from everything above; produces the "I want to make something right now" emotional exit that drives return visits and referrals
+7. Commitment Statement
+   Purpose: One declarative sentence naming what Griting is building toward. No urgency language.
+   No CTA. The restraint is the signal — this is the emotional close that produces quiet confidence.
+
+8. Footer
+   Purpose: Company name, partner page links, individual product links, contact.
+   Nothing decorative. The precision of the footer is consistent with the precision of the site.
 ```

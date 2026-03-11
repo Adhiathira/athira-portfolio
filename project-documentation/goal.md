@@ -1,8 +1,8 @@
-# Website Goal — AI Video Production Platform
+# griting.ai — Strategic Website Plan
 
-**Original Goal:** A platform where anyone who wants to generate videos can come and use AI tools to generate their videos. The goal is for e.g. a novice filmmaker or an author trying to promote their book coming to our platform, connecting with other like-minded people and using our collaborative AI tool to get video production done.
+**Original goal:** griting.ai is a talent trust and readiness infrastructure for AI capital. It operates three product lines (Gritme, Grithub, Grit Lab) with five total products — two B2B (Gritme Auditable, Gritme Incubation), three B2C (Gritme Mentorship, Grithub, Grit Lab). This is the parent company website: it establishes Griting's identity, routes business partners to on-domain contact pages, and routes individuals to external B2C product websites.
 
-**Date:** 2026-03-06
+**Date:** 2026-03-09
 
 ---
 
@@ -12,253 +12,259 @@
 
 ### Factor 1 — Primary Business Objective
 
-**Interpretation:** This is a dual-growth SaaS platform where tool adoption and community growth reinforce each other — the community is not a separate product, it is the retention and differentiation layer built into it. The primary objective is platform signups, with community engagement as the flywheel that keeps users active and referring others. The site must drive one action (signup) that unlocks two rewards (access to AI tools + membership in a creative community).
+**Interpretation:** The primary commercial objective is B2B lead generation — capturing qualified enterprise contacts for Gritme's Auditable and Incubation systems via on-domain contact forms. B2C routing (directing individuals to external product websites) is a real job the site must perform, but it is secondary in commercial urgency. The site must treat the partner path as architecturally premium — not a tab buried in a navigation bar, but a distinct, confident track with visual hierarchy advantage over the B2C track.
 
-**Why it matters strategically:** A site that tries to grow a tool user base and a community simultaneously will fail if its architecture treats them as parallel goals. They must be presented as a single integrated offer — signup is the gateway to both. The CTA must never read as "join a tool" or "join a community" but as "enter a creative ecosystem."
+**Why it matters strategically:** Enterprise contacts are harder to acquire and more commercially valuable than individual signups. A site that buries the B2B path in a neutral two-column layout fails the higher-stakes audience.
 
-**Layout & Page Structure Impact:** Every section of the homepage feeds a single signup gateway. The CTA copy across all touchpoints reads as access-granting, not form-submitting. The hero does not open with the product promise — it opens with the result a creator achieved using the platform, then pulls back to reveal how (Level 2 twist: outcome first, explanation second).
+**Layout & Page Structure Impact:** Partner CTAs receive visual hierarchy advantage on the landing page. The B2B track leads to dedicated on-domain partner pages with contact forms — not modal popups, not footer forms. These partner pages are full-weight pages, not thin landing shells.
 
 ---
 
 ### Factor 2 — Target Audience
 
-**Interpretation:** Deliberately broad across skill levels. The platform's community value depends on mixing expertise: novices learn from experts, experts build reputation and following. Three distinct visitor archetypes: (1) the task-driven novice — needs a video now, doesn't know how; (2) the skill-curious intermediate — has some experience, wants better tools and peers; (3) the collaborative professional — wants like-minded co-creators. All three must feel the site is for them, but for different reasons.
+**Interpretation:** The majority of first-time visitors arrive in discovery mode — without prior product knowledge, needing to understand what Griting is as a company before they can meaningfully engage with any individual product. Two distinct visitor types exist: B2B enterprises (CHROs, CTOs, Operations leads at mid-size organizations) and B2C individuals (people building AI careers, looking for mentorship, knowledge, and research access). These audiences have different vocabulary, different decision timelines, and different next steps — the site must orient both without collapsing them into a generic "everyone" message.
 
-**Why it matters strategically:** A "who are you?" audience selector page would fragment the experience and undermine the community premise. The design itself — not copy — must do the audience filtering. Novices see accessibility and ease; experts see depth and community credibility. Both feel welcomed by the same visual language.
+**Why it matters strategically:** A product-first homepage fails discovery visitors — they land, see product names they don't recognize, and leave. A company-first opening orients them before asking for any action.
 
-**Layout & Page Structure Impact:** No audience segmentation page. Visual language and copy self-select: clean UI, friendly CTA wording, and real user work visible at every scroll depth. The creator gallery shows diverse output — beginner projects alongside polished professional work — making the audience range visible and inviting.
+**Layout & Page Structure Impact:** The homepage opens with a company-level identity statement — one sentence naming what Griting is, for whom, and why — before any product is shown. The product section comes second, clearly segmented into two tracks: Partners (B2B) and Individuals (B2C). The segmentation is structural, not just visual — different CTAs, different destinations, different tones within the same page.
 
 ---
 
 ### Factor 3 — User Intent Level
 
-**Interpretation:** Two distinct intent streams arrive simultaneously: (a) warm visitors from search ("AI video maker") who are actively comparing tools and close to a decision, and (b) cold visitors from ads who are discovering the concept for the first time. The site must serve both without compromise — it cannot assume prior knowledge, but it also cannot be slow for the visitor ready to sign up now.
+**Interpretation:** Both audience types arrive cold. B2B visitors likely do not have established vocabulary for "AI auditable systems" or "AI incubation systems" — the category itself requires introduction before the product can be evaluated. B2C visitors may carry more category familiarity (AI mentorship, AI knowledge platforms) but still need Griting's company context before they'll trust the product link they're about to follow. The homepage must move visitors across intent levels — cold → oriented → ready to act — without them leaving.
 
-**Why it matters strategically:** Mismatch between design and intent is the most common reason platforms fail. A site designed only for warm visitors alienates cold arrivals; a site designed only for cold visitors loses warm ones to a competitor's faster path. The architecture must move visitors through intent levels within a single session.
+**Why it matters strategically:** The most common reason sites fail to convert cold visitors is that they ask for action before they've earned the right. Every CTA that appears before orientation is friction, not momentum.
 
-**Layout & Page Structure Impact:** The homepage is designed as a progressive intent journey — cold → warm → hot — without visitors ever leaving the page. Section 1: demonstrate the outcome in motion (cold: "I didn't know AI could do this"). Section 2: surface the tool and the community in action (warm: "I could use this"). Section 3: community signals and platform ambition (hot: "I want in — where do I start?"). The signup CTA appears at each transition point — not just at top and bottom. Warm visitors skip ahead naturally; cold visitors are carried through (Level 8 twist).
+**Layout & Page Structure Impact:** **Layout twist (Level 6):** The first half of the homepage contains zero CTAs. It is entirely context-building — company identity, plain-language translation of the positioning, and the framing of two audience paths the visitor can choose. CTAs appear only in the second half, after visitors have self-selected their track. This pacing prevents the common failure of asking for action before visitors know what they're acting on.
 
 ---
 
 ### Factor 4 — Value Proposition Clarity
 
-**Interpretation:** The core value proposition is not "AI makes videos for you" — it is "AI amplifies what you can already do, and collaboration multiplies your output speed." This is an empowerment and acceleration platform, not a replacement tool. The positioning is additive to human skill, which directly addresses AI quality skepticism by keeping the human in control. Speed ("deliver something very fast") and collaboration ("with others") are the two dimensions of the value claim.
+**Interpretation:** The company's own articulation — "Griting is a talent trust and readiness infrastructure for the AI capital" — is precise and differentiated. It names a real gap: AI talent that is not just present but trustworthy, verified, and ready. The challenge is that "AI capital" is a category abstraction that will stop cold visitors. The phrase is used verbatim (it is the canonical positioning claim) but requires a single explanatory bridge line immediately below it to translate for each audience: organizations building AI teams, and individuals building AI careers.
 
-**Why it matters strategically:** "AI video generator" is a commodity phrase. "Collaborate with others and use your skills to deliver something very fast" is a distinct positioning that competitors cannot claim because they are all solo tools. Leading with empowerment rather than automation changes who the site attracts — and how they feel about their output.
+**Why it matters strategically:** A value proposition that requires decoding loses cold visitors in the first 5 seconds. The bridge line does translation work without replacing the precision of the original claim.
 
-**Layout & Page Structure Impact:** The hero communicates value wordlessly through a split-screen before/after — left: a solo creator, slow, limited; right: the same creator on this platform, collaborating, finished (Level 5 twist). No traditional headline. A brief sub-headline appears beneath: something like "Video production. With others. At speed." The word "AI" is secondary — the human skill + speed + community is primary.
+**Layout & Page Structure Impact:** The hero section carries the exact phrase: "Talent trust and readiness infrastructure for the AI capital." A single sub-line immediately follows: "For organizations building AI teams. For individuals building AI careers." This two-layer structure — positioning claim + plain-language bridge — appears at the top of the homepage and in abbreviated form on each partner page.
 
 ---
 
 ### Factor 5 — Trust Requirements
 
-**Interpretation:** Real video outputs are the primary trust signal — not testimonials, not logos, not case studies. Visitors arrive with AI quality skepticism (their mental reference is uncanny, low-quality output), and that skepticism must be resolved before any signup ask. The site needs a live, scrollable gallery of actual outputs showing diversity of style, genre, and creator skill level. Quality proof comes before any ask.
+**Interpretation:** Griting has no proof assets at launch — no case studies, no named clients, no media coverage, no published research. This is an early-stage constraint that cannot be papered over with placeholder testimonial blocks or greyed-out logo bars. Trust must be built through four available mechanisms: (1) specificity of language — vague companies have vague sites, specific companies have specific sites; (2) quality and intentionality of design — the site's precision is itself the credential; (3) process transparency — showing exactly what happens after a form is submitted; (4) portfolio coherence — five distinct products with clear categorical logic signals a company that has thought through its offer.
 
-**Why it matters strategically:** In a crowded category, the fastest trust signal is evidence. Every second spent on marketing copy before showing real output is a second in which a skeptical visitor is forming a negative prior. The gallery is the trust mechanism, not a feature showcase.
+**Why it matters strategically:** Empty trust signals — placeholder logos, generic "trusted by" text — actively damage credibility by signaling that the brand knows it should have proof but doesn't. Absence is better than performance of presence.
 
-**Layout & Page Structure Impact:** A full-width creator showcase appears in the second major section — after the hero establishes the value proposition, but before any signup CTA. The gallery shows real videos made on the platform, filtered by media type (Video / Animation / Film — teasing future categories). Creator names and community points are visible, making the community feel alive and meritocratic.
+**Layout & Page Structure Impact:** **Layout twist (Level 8):** No social proof section exists anywhere on the site. No testimonials placeholder, no logo bar, no case study links. Trust is built entirely through specificity of copy, design quality, and process transparency. The 24-hour response commitment, visible directly on every contact form, does the work that a full trust section would otherwise do.
 
 ---
 
 ### Factor 6 — Conversion Friction
 
-**Interpretation:** Login is required from the start — intentional friction chosen for product and community reasons. This is acceptable because the platform needs user identity for collaboration and community features. The friction must be managed through: strong pre-login proof (the gallery earns the ask), frictionless signup mechanics (single sign-on options, minimal form fields), and CTA copy that frames login as gaining access rather than submitting a form.
+**Interpretation:** The B2B conversion path is intentionally simple: landing page → partner product page → contact form → 24-hour response. The form captures just enough to route the inquiry: name, company, email, product interest, and message. One defined commitment exists (24-hour response) — this is surfaced visibly adjacent to every submit button, not buried in copy. The form IS the conversion; depth comes in the follow-up call.
 
-**Why it matters strategically:** The required login is a deliberate positioning choice — it signals "this is a real platform with real community members," not a throwaway tool. The key is ensuring visitors feel confident enough in what they're about to access that the login step feels like a threshold, not a barrier.
+**Why it matters strategically:** For early-stage B2B, over-engineering the form (too many fields, multi-step qualification) kills conversion rate before a relationship begins. A simple, fast form with a concrete response promise is the right call.
 
-**Layout & Page Structure Impact:** CTAs throughout read as access-granting: "Start creating" not "Sign up." The final CTA before the login form is the gallery or a specific output that makes the visitor think "I want to make that." The signup modal is minimal: email + password or single OAuth option. After signup, immediate entry into the tool — no onboarding wall.
+**Layout & Page Structure Impact:** Each B2B partner page has one contact form. Fields: Name, Company, Email, Interest (pre-filled with the product name), Message. The line "We respond within 24 hours" appears directly above the submit button, in body copy weight — not a badge, not fine print. The form occupies the lower section of each partner page, reachable without deep scrolling.
 
 ---
 
 ### Factor 7 — Competitive Positioning
 
-**Interpretation:** Challenger brand. The differentiator is structural: this platform adds a human layer — community, collaboration, peer learning — on top of AI generation that none of the major competitors (Runway, Pika, Sora, HeyGen) have built. All of those are solo experiences designed for professionals or technically sophisticated users. This platform is the Figma moment for video: a professional-grade tool democratised through collaboration and accessibility, built for the ordinary person.
+**Interpretation:** Griting's real competition is not other AI talent platforms — it is the current industry default: multiple disconnected manual systems (separate ATS tools, LinkedIn talent searches, internal training programs, ad-hoc assessments, unconnected incubation processes) that organizations have stitched together without accountability, consistency, or trust signals. Griting's positioning is consolidation vs. fragmentation — one unified infrastructure that replaces the current patchwork. This is a stronger frame than "we're better than X" because it names the problem the buyer already lives with.
 
-**Why it matters strategically:** "Figma for AI video" is a positioning shorthand that immediately communicates: what you know is possible in design tools is now possible in video production. Figma disrupted a professional tool by making it multiplayer and accessible. This platform claims the same disruption in a different medium.
+**Why it matters strategically:** Positioning against inertia and fragmentation is more persuasive than positioning against named competitors — because every B2B buyer recognizes their own fragmented systems when you describe them accurately.
 
-**Layout & Page Structure Impact:** The navigation labels are written in creator vocabulary, not software vocabulary — "Create / Explore / Pricing / About" and "Join" instead of "Product / Features / Docs / Sign Up" (Level 5 twist). The nav itself signals the positioning before a single word of marketing copy is read. Visitors arriving from Runway or Pika immediately sense they are somewhere different.
+**Layout & Page Structure Impact:** **Layout twist (Level 5):** The homepage navigation labels use operational language the buyer already knows ("For Partners," "For Individuals") rather than internal product taxonomy as the primary wayfinding signal. Within the homepage's first half, a brief framing section names the fragmentation problem in the buyer's own language before presenting Griting as the consolidation answer. This is not a "pain section" — it is a 1–2 line acknowledgment embedded in the company narrative.
 
 ---
 
 ### Factor 8 — Brand Personality
 
-**Interpretation:** Figma's brand DNA is the blueprint — collaborative-first, approachable to beginners while powerful for professionals, clean without being sterile, warm without being cute, democratic without being dumbed-down. Applied to AI video: the platform feels like an active creative workspace alive with other people's work — inviting participation, confident but never intimidating. Not the dark moody aesthetic of Runway (signals "for professionals only"). Not the corporate blue of HeyGen (signals "business tool"). Creative energy + professional capability + human warmth.
+**Interpretation:** Brand personality is inferred from context rather than stated directly — the user redirected the personality question back to functional description, which suggests function IS the personality. Given the infrastructure positioning, multi-product scope, and mixed B2B/B2C audience, the brand personality is: **precise, institutional, quietly confident** — the visual and tonal equivalent of serious infrastructure software. Not cold or exclusive (because B2C individuals are a core audience). Not startup-loud or hype-driven (because trust is the core product). The reference model is infrastructure software brands (Stripe, Linear) — functional precision that earns trust through specificity and design quality, not through claims or spectacle.
 
-**Why it matters strategically:** Brand personality is what makes a creative platform feel like a community worth joining vs. a utility to use and forget. The Figma-like warmth creates belonging — visitors want to be part of it, not just extract value from it.
+**Why it matters strategically:** With no proof assets, the design itself is the brand credential. Generic "clean and professional" is indistinguishable from every other early-stage AI company. Precise and institutional is differentiated.
 
-**Layout & Page Structure Impact:** Clean but populated UI — the interface feels lived-in because real user work is visible throughout. Color palette: bold but not loud, with accent colors carrying creative energy (not the safe blue-grey of enterprise SaaS). Typography: confident, modern, legible at all sizes. CTA wording carries personality — "Start making" not "Sign up," "See what's possible" not "View features."
+**Layout & Page Structure Impact:** The layout expresses precision through structure — clean typographic hierarchy, mathematical spacing, a deliberate column grid. CTAs use operational language ("Explore Gritme," "Talk to us about partnerships") not urgency language ("Get started now," "Join today"). No decorative elements that don't serve a structural purpose. The personality is embedded in specificity of copy and restraint of design — not in personality flourishes.
 
 ---
 
 ### Factor 9 — Information Depth
 
-**Interpretation:** Learn-as-you-go model. Depth is delivered through in-product tutorials post-login, not pre-signup explanation on the marketing site. The homepage does not need to teach visitors how the tool works — it needs to show what the tool produces and how the community functions. A brief "how it works" section (3 steps) provides process reassurance for visitors who want it, but it is not the primary information weight.
+**Interpretation:** B2B partner pages require high-level descriptions only — the contact form is the conversion point, and the follow-up conversation delivers depth. This means each B2B product page is architecturally lean: product name, one-sentence description, what category of problem it solves, who it's for, and a contact form. The page's job is to create enough clarity and credibility to make submitting the form feel like the logical next step — not to fully explain the product.
 
-**Why it matters strategically:** Over-informing before signup delays commitment. The platform's learn-as-you-go model is actually a selling point — it signals low barrier to entry. The tutorial is a feature, not a remediation.
+**Why it matters strategically:** Over-informing on a contact-form-driven page delays conversion without increasing lead quality. The buyer who understands the product at high level and submits is a better lead than a buyer who read everything and still didn't submit.
 
-**Layout & Page Structure Impact:** Homepage stays lean and outcome-focused. "How it works" is a 3-step, icon-led section: "Choose your tools → Collaborate with creators → Publish your work." No feature deep-dives, no UI walkthroughs, no "watch a 5-minute demo" gate. The tutorial lives inside the product.
+**Layout & Page Structure Impact:** Each B2B product page is three sections maximum: (1) Product identity — name, one-sentence description, what category of organizational need it addresses. (2) Who it's for — 2–3 bullets naming the type of organization or role this is built for. (3) Contact form with the 24-hour response promise. No scrolling past the fold required to reach the form.
 
 ---
 
 ### Factor 10 — Content Type
 
-**Interpretation:** User-generated content is simultaneously the trust signal and the growth engine. When existing users refer friends, they share videos they made on the platform — meaning every output is a potential acquisition channel. "Community points" reveals a planned gamification/reputation system (karma, badges, leaderboard). The most powerful content on this site is not brand-produced marketing copy — it is creator-produced work, surfaced and celebrated.
+**Interpretation:** A founding document exists as the canonical source for product articulation. Website copy should be distilled from that document rather than invented fresh — this ensures copy quality is high from day one and prevents vague improvisation. Content type is precision institutional prose: short paragraphs, clear declarative statements, no filler adjectives. No video walkthroughs, no interactive demos, no case studies at launch. A fixed content template is applied across all products: one sentence of what it is, three specific capability statements (exact-action, not feature bullets), and one statement of who it is NOT for — the last item being a differentiating trust signal.
 
-**Why it matters strategically:** UGC-powered platforms are the hardest to replicate because the moat is the community itself. Making UGC central to the site architecture from day one signals confidence in the community and invites participation from the first visit.
+**Why it matters strategically:** Specificity of exclusion builds more credibility than universal claims. A product page that says "this is not for organizations looking for off-the-shelf solutions" signals a level of deliberateness that generic descriptions cannot.
 
-**Layout & Page Structure Impact:** The creator showcase is a browsable, sortable feed — not a passive gallery but an interactive exploration experience (Level 7 twist). Visitors can filter by style, media type (Video / Animation / Film), or creator reputation. The showcase IS the product demonstration. Community points and creator profiles are visible on every card — making the reputation system tangible and desirable before signup.
+**Layout & Page Structure Impact:** **Layout twist (Level 4):** Each product — on both the homepage cards and individual partner pages — uses a fixed, non-standard template: (1) Product name + one-sentence description. (2) Three specific capability statements beginning with an action verb. (3) "Who this is not for" — one sentence. This template is applied consistently across all 5 products, creating coherence across a multi-product portfolio without visual monotony.
 
 ---
 
 ### Factor 11 — Scalability
 
-**Interpretation:** This is not a single-product site — it is a platform with expanding media type ambitions: video now, animation next, film and beyond. The architecture must support a growing suite of community-driven creative tools, with video as the founding anchor. The navigation and content structure must accommodate media type taxonomy from day one, even if only video is live at launch.
+**Interpretation:** The portfolio is stable at five products, but Grithub and Grit Lab are not yet live — they are in active development. The architecture must handle two coming-soon states gracefully: as intentional design choices that signal portfolio ambition and forward momentum, not as gaps or placeholder boxes. No CMS needed, no blog publishing infrastructure, no research section at launch. The site is a precision instrument for a defined scope — adding CMS complexity would undermine its lean clarity.
 
-**Why it matters strategically:** Launching with a scalable architecture signals vision and builds anticipation. "Coming Soon" states for Animation and Film on day one tell early adopters they are joining something larger. The community-driven model means the platform's content scales with users, not with the brand's production capacity.
+**Why it matters strategically:** Two of five products being in development is a feature, not a bug — it signals that Griting is actively building, not standing still. The framing of "In development" communicates ambition. Hidden or greyed-out cards without context communicate incompleteness.
 
-**Layout & Page Structure Impact:** Navigation and the creator gallery both include media type categories from launch — "Video / Animation / Film / ..." with clear "Coming Soon" indicators for future tools. A dedicated "Platform Roadmap" section on the homepage shows the expanding vision: preview cards for upcoming media types that build excitement without over-promising.
+**Layout & Page Structure Impact:** Modular product cards on the homepage — structurally identical, independently renderable. Each card switches between full-state and coming-soon state through a single visual property. Coming-soon cards for Grithub and Grit Lab use a muted visual treatment with an "In development" label and a one-sentence description of what the product will do. This framing is forward-looking, not apologetic.
 
 ---
 
 ### Factor 12 — Device Priority
 
-**Interpretation:** Desktop-first. Mobile deferred to future versions. Video production is a seated, focused activity — the full creation experience lives on desktop. The site can embrace the full canvas: rich multi-column layouts, hover interactions, split-screen sections, wide-format galleries. No mobile compromises needed at v1.
+**Interpretation:** Desktop is the primary design canvas. Enterprise B2B research happens at a desk; the site's information density suits a larger viewport. Responsive mobile is required — individuals in the B2C track may arrive via social link on their phones — but mobile is the secondary experience. The design uses desktop's full canvas (multi-column grids, generous whitespace, multi-element sections) while collapsing gracefully to single-column on mobile without losing essential content or CTAs.
 
-**Why it matters strategically:** Desktop-first allows richer, more immersive layouts that better communicate the platform's depth and capability. Designing for 1440px wide as the primary viewport gives maximum creative freedom.
+**Why it matters strategically:** A desktop-first design that genuinely works on mobile is better than a mobile-first design compromised by desktop requirements. The audience mix justifies the priority order.
 
-**Layout & Page Structure Impact:** Full-canvas desktop layouts throughout. Video gallery spans the full width. Split-screen sections use the horizontal real estate meaningfully. Hover states reveal creator information in the gallery. Navigation is a full horizontal bar — no hamburger menu.
+**Layout & Page Structure Impact:** Desktop layout leads all design decisions — column grids, typographic scale, spacing ratios are set at desktop width. Mobile adaptation: navigation collapses to minimal, product card grid stacks vertically, forms remain full-width and functional. No content is hidden on mobile — all product cards, all CTAs, all form fields are accessible at every breakpoint.
 
 ---
 
 ### Factor 13 — Accessibility Requirements
 
-**Interpretation:** WCAG AA minimum as the default standard — not as compliance overhead, but as a natural expression of the "for the ordinary person" positioning. Large base type (18px+), high contrast, clear focus states, keyboard-navigable CTAs. The Figma-like clean design philosophy already tends toward accessible defaults.
+**Interpretation:** No specific accessibility requirements stated beyond standard compliance. WCAG 2.1 AA is the applied standard. The precision-institutional design direction — high contrast, clean typographic hierarchy, generous spacing — naturally produces accessible output. Particle hero animation includes a reduced-motion alternative for users with vestibular sensitivity.
 
-**Why it matters strategically:** Accessible design in this context is better design — clearer hierarchy, more legible type, more intentional color. It also aligns with the democratic creative positioning: a platform "for anyone" must be usable by anyone.
+**Why it matters strategically:** Accessible design is cleaner design. The same choices that produce WCAG compliance (high contrast, legible type, clear hierarchy) produce the "serious and precise" brand personality Griting is targeting.
 
-**Layout & Page Structure Impact:** High-contrast text throughout, accessible color pairings for all CTAs, skip-nav links for keyboard users. Focus states styled to match brand personality (not the default browser blue ring). Base font size 18px minimum.
+**Layout & Page Structure Impact:** Minimum 4.5:1 contrast ratio on all text. Keyboard-navigable contact forms with visible focus states. The particle hero animation respects `prefers-reduced-motion` — displaying a static gradient background instead when motion is reduced. All interactive elements have accessible labels.
 
 ---
 
 ### Factor 14 — Performance Expectations
 
-**Interpretation:** Progressive loading — fast first render, videos load in background. The creator showcase is video-heavy, but the initial page render must be instant. Skeleton states hold layout while content loads progressively. This preserves the immersive visual experience without sacrificing first-impression speed. Critical for ad landing page quality scores and SEO.
+**Interpretation:** The site is intentionally lightweight at launch — no heavy image galleries, no social proof sections, no embedded third-party widgets. Two planned elements add visual weight: scroll-triggered animations and a particle hero effect. Both are implemented without performance cost: the particle effect uses a CSS/canvas animation (not a video file), GPU-accelerated, color-matched to the brand palette. Scroll animations are Intersection Observer-triggered CSS transitions, not per-frame JavaScript.
 
-**Why it matters strategically:** A slow first load kills trust before a single frame of video content can prove quality. The order of trust is: page loads instantly → layout communicates quality → videos load and confirm → CTA appears. Break that order and the trust chain breaks too.
+**Why it matters strategically:** A fast-loading site signals engineering competence. For an infrastructure company making trust claims, a slow or janky experience would directly contradict the brand.
 
-**Layout & Page Structure Impact:** Static layout and text render immediately. Video thumbnails use branded skeleton states (not generic grey). No layout shift after load. Videos play on hover (desktop), not on load. First Contentful Paint target: sub-1.5s. Video assets served via CDN with adaptive streaming.
+**Layout & Page Structure Impact:** **Layout twist (Level 5):** Text content renders instantly on first load with zero layout shift — the particle hero animates in after core content is painted. The site is readable and navigable before the visual effect completes. Particle animation is purely additive — it never blocks content. Scroll animations trigger on element entry (Intersection Observer), not on every scroll event. No web fonts with large FOIT windows — font loading is managed to prevent layout shift.
 
 ---
 
 ### Factor 15 — Emotional Outcome
 
-**Interpretation:** "I want to make something right now." Creative urgency — the most action-oriented emotional exit possible. Not passive inspiration, not casual curiosity — an active pull toward creation. Every section of the homepage builds toward this state, and the closing section lands it as a distinct emotional beat, tonally and visually different from everything above it.
+**Interpretation:** The target exit emotion is quiet confidence: "I know exactly what this is and it's serious." Not excitement, not urgency, not curiosity — the specific feeling of encountering an organization that knows what it's doing before it has anything to prove. This is the highest-ROI emotional outcome for an early-stage brand: visitors who leave with this feeling become passive ambassadors, referencing Griting when the relevant conversation comes up in their professional network.
 
-**Why it matters strategically:** The emotional exit is the word-of-mouth trigger. "I want to make something right now" produces return visits, referrals, and signups from people who weren't ready the first time. It's the emotion that turns a browsing session into a creative commitment.
+**Why it matters strategically:** Word-of-mouth from non-converters is driven by how the site made them feel, not by what it listed. "I came across this company called Griting — serious infrastructure for AI talent" is the outcome. That conversation starts on the site.
 
-**Layout & Page Structure Impact:** The final section of the homepage is a distinct emotional beat (Level 4 twist): darker background, larger and bolder typography, subtle kinetic energy (motion, animation). The headline is a direct creative challenge: "What will you make?" The CTA reads "Start creating." No feature bullets, no reassurance copy, no social proof — pure activation energy. This section works like a visual gear shift: the rest of the page earns the emotion; this section releases it.
+**Layout & Page Structure Impact:** The closing section of the homepage is a distinct emotional beat — a single clean statement of what Griting is building toward, without urgency language. The footer is minimal and precise — company name, product links, contact. No countdown timers, no "limited spots" language, no "join X other companies." The restraint is the signal. The confirmation state after a contact form submission is also deliberate: a specific, human sentence acknowledging the submission and restating the 24-hour commitment — not a generic "Thank you for your message."
 
 ---
 
 ## Part B — Page Recommendation
 
-**User's stated preference:** You decide.
+**User's stated preference:** "A landing page" with partner pages on the same domain.
 
-**Final recommendation: 4 pages**
+**Final recommendation: 3 pages**
 
-The platform's ambition is large (expanding media hub), but the v1 launch should be tight and confident — 4 pages that do everything needed without diluting focus. The homepage carries the primary conversion weight; the other three pages serve specific visitor needs without fragmenting the experience.
+A lean, focused 3-page architecture matches the early-stage brief, the lightweight content strategy, and the "precision instrument" design philosophy. Adding pages for B2C products is unnecessary — those link externally. Adding a partners hub page creates an extra click with no content payoff. Three pages is the minimum that serves all functional requirements without over-building.
 
-| Page | Purpose |
-|------|---------|
-| **Homepage** | Full conversion journey: outcome proof → creator gallery → how it works (brief) → community signals → platform roadmap → energized CTA |
-| **Explore** | Browsable UGC creator showcase — filterable by media type, creator reputation, style. The community made visible. |
-| **Pricing** | Transparent plan options. Required for comparison shoppers and warm visitors who want to know the commitment before signing up. |
-| **About / Manifesto** | The "Figma for AI video" story. The mission. "For the ordinary person." The founding team. The platform roadmap vision. Converts skeptics. |
+| # | Page | Purpose |
+|---|------|---------|
+| 1 | **Homepage** `/` | Company identity, full product portfolio segmented by Partners / Individuals, entry point for all CTAs |
+| 2 | **Gritme Auditable Partner Page** `/partners/gritme-auditable` | High-level product description, who it's for, contact form + 24h promise |
+| 3 | **Gritme Incubation Partner Page** `/partners/gritme-incubation` | High-level product description, who it's for, contact form + 24h promise |
+
+**B2C product destinations (external):**
+- Gritme Mentorship → external website (link out from homepage card)
+- Grithub → coming soon (card visible, no link yet)
+- Grit Lab → coming soon (card visible, no link yet)
 
 ---
 
 ## Part C — Strategic Site Architecture
 
-### Full Sitemap
+### Sitemap
 
 ```
-/ (Homepage)
-├── /explore        (Creator Gallery — filterable UGC showcase)
-├── /pricing        (Plans + transparent pricing)
-└── /about          (Mission / Manifesto / Team)
-
-Auth (functional, not marketing pages):
-├── /login
-└── /signup
-
-In-product (post-auth, not part of marketing site):
-└── /app (creation tools + community space)
+griting.ai/
+├── / (Homepage)
+│   ├── → /partners/gritme-auditable   [B2B CTA from Gritme Auditable card]
+│   ├── → /partners/gritme-incubation  [B2B CTA from Gritme Incubation card]
+│   ├── ↗ [external] Gritme Mentorship website  [B2C CTA]
+│   ├── ↗ [coming soon] Grithub                 [no link, "In development"]
+│   └── ↗ [coming soon] Grit Lab               [no link, "In development"]
+├── /partners/gritme-auditable
+│   └── [contact form] → confirmation state
+└── /partners/gritme-incubation
+    └── [contact form] → confirmation state
 ```
 
 ### Page-to-Page Flow
 
 ```
-Ad / Search
-    ↓
-Homepage
-    ├──→ Explore  ──→ [inspired by creator work] ──→ Signup CTA
-    ├──→ Pricing  ──→ [plan decision made]        ──→ Signup CTA
-    ├──→ About    ──→ [skepticism resolved]        ──→ Signup CTA
-    └──→ Signup   ──→ /app (tool + community)
+Cold visitor lands on /
+  ↓
+Company identity statement (no CTAs)
+  ↓
+Fragmentation framing + Griting-as-solution (no CTAs)
+  ↓
+Visitor self-selects: Partner or Individual
+  ↓
+[Partner path]                    [Individual path]
+Gritme Auditable card → CTA      Gritme Mentorship card → external
+Gritme Incubation card → CTA     Grithub card → coming soon
+                                 Grit Lab card → coming soon
+  ↓
+/partners/gritme-[product]
+  ↓
+Product identity + Who it's for + Contact form
+  ↓
+Form submission → confirmation ("We'll be in touch within 24 hours.")
 ```
 
-### Primary Conversion Path
+### Primary Conversion Paths
 
-```
-Homepage hero (outcome seen wordlessly)
-    ↓
-Creator gallery (real outputs, community signals visible)
-    ↓
-"Start creating" CTA
-    ↓
-Signup modal (minimal friction)
-    ↓
-/app — immediate access to creation tools + tutorial
-```
+**Path 1 — B2B (primary):**
+Homepage → Partner product card CTA → Partner page → Contact form submission → 24h follow-up
 
-### Secondary Conversion Paths
-
-- Explore page → inspiring creator output → "Make your own" CTA → Signup
-- Pricing page → plan selected → "Get started" → Signup
-- About page → mission resonates → "Join us" → Signup
+**Path 2 — B2C (secondary):**
+Homepage → Individual product card CTA → External B2C product website
 
 ### Recommended Homepage Section Order
 
-1. **Navigation** — Creator vocabulary labels: "Create / Explore / Pricing / About" + "Join" button (right-aligned, bold accent color)
-
-2. **Hero — Split-screen, no traditional headline** — Left side: a solo creator, limited by tools, working alone. Right side: the same creator on this platform — collaborating, faster, finished. Small sub-headline: "Video production. With others. At speed." Signup CTA below.
-
-3. **Creator Gallery** — Full-width, browsable UGC showcase. Real videos from real users. Filterable by: Video / Animation / Film (future types visible as "Coming Soon"). Creator names, community points on hover. Auto-plays on hover. Skeleton states on load. Caption: "Made by our community."
-
-4. **How It Works** — 3 steps, icon-led, brief. "1. Choose your tools → 2. Collaborate with creators → 3. Publish your work." No mechanics. Just the process, simply stated.
-
-5. **Community Signals** — Creator profile cards with names, points, featured projects. A live counter or community stat ("Join X creators making things today"). The community feels real, meritocratic, and active.
-
-6. **Platform Roadmap Teaser** — "Video is just the beginning." Preview cards for Animation, Film, Audio — "Coming Soon" states. Communicates ambition, builds anticipation, signals the platform's long-term vision.
-
-7. **Final CTA Section (distinct emotional beat)** — Dark background shift. Large, bold typography: "What will you make?" Single CTA: "Start creating." No feature list, no reassurance copy, no testimonials. Pure creative urgency. This section's visual weight and tone is intentionally different from everything above — a gear shift that produces the "I want to make something right now" emotional exit.
+| # | Section | CTA present? | Notes |
+|---|---------|-------------|-------|
+| 1 | Navigation | No | Logo + "For Partners" + minimal links. No CTA in nav. |
+| 2 | Hero | No | Particle background, company name + exact positioning phrase, bridge sub-line. No button. |
+| 3 | Company framing | No | 1–2 sentences translating "AI capital" + brief fragmentation acknowledgment. Still no CTA. |
+| 4 | Track selector | No | Visual separation of "For Partners" and "For Individuals" tracks — framed as a choice the visitor makes. Introduces the two paths without asking for action yet. |
+| 5 | Partner product cards (B2B) | **Yes** | Gritme Auditable + Gritme Incubation. Each card: name, one-sentence description, 3 capability statements, who it's not for, CTA → partner page. |
+| 6 | Individual product cards (B2C) | **Yes (where applicable)** | Gritme Mentorship (CTA → external), Grithub (coming soon), Grit Lab (coming soon). |
+| 7 | Closing statement | No | One sentence of what Griting is building toward. No urgency. The restraint is intentional. |
+| 8 | Footer | No | Company name, product links, contact email or link. Minimal. |
 
 ### CTA Placement Strategy
 
-| Location | CTA Text | Context |
-|----------|----------|---------|
-| Navigation (persistent) | "Join" | Always visible, low-pressure |
-| Below hero split-screen | "Start creating" | First moment of intent |
-| After creator gallery | "Make your own" | Inspiration peak — highest conversion likelihood |
-| Pricing page | "Get started" | Decision confirmed |
-| About page | "Join us" | Mission alignment |
-| Final closing section | "Start creating" | Emotional urgency peak |
+**Rule:** No CTA appears before section 5 (the partner product cards). The first half of the homepage is CTA-free by design.
 
-### Brand & Design Direction Summary
+**B2B CTAs:** "Talk to us about [Product Name]" — operational, not urgent. Located on product card and repeated at top of each partner page.
 
-- **Visual:** Clean, populated, Figma-like. Creator work visible at every scroll depth. Not minimal — alive.
-- **Color:** Bold accent colors with a creative energy. Not safe enterprise blue-grey.
-- **Typography:** Confident, modern, large base size (18px+). Statement headlines.
-- **Navigation language:** Creator vocabulary throughout — "Explore" not "Gallery," "Create" not "Product," "Join" not "Sign Up."
-- **Interaction:** Hover-activated video previews in the gallery. Smooth scroll between sections. Progressive loading with branded skeleton states.
-- **Closing section:** Tonally distinct — darker, bolder, kinetic — producing creative urgency as the last emotional impression.
+**B2C CTAs:** "Visit [Product Name]" — directional. Opens external site in new tab.
+
+**Coming-soon cards:** No CTA. Label: "In development." A one-sentence description of what the product will do. No email capture, no waitlist — this is not a growth mechanic at this stage.
+
+**Contact form CTA:** "Send your inquiry" or "Get in touch" — not "Submit," not "Send." Adjacent line: "We respond within 24 hours."
+
+**Confirmation state:** "Got it. We'll be in touch within 24 hours." — human, specific, no generic thank-you language.
+
+### Design Constraints Summary (for implementation reference)
+
+- **No social proof sections anywhere** — no testimonials, no logo bars, no "trusted by" badges
+- **No CTAs in the first half of the homepage** — enforced by section order above
+- **Fixed product content template:** one sentence + 3 capability bullets + who it's not for
+- **Coming-soon cards visible but muted** — present as portfolio signal, not hidden
+- **Particle hero:** CSS/canvas animation, not video file; respects prefers-reduced-motion
+- **Text loads before particles** — no layout shift, content-first rendering
+- **24-hour response promise** visible above every submit button — not optional copy
+- **Operational CTA language** — no urgency words ("now", "today", "limited", "free")
+- **Desktop-first layout** — responsive down to 375px without content loss

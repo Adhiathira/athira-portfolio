@@ -1,102 +1,69 @@
 import { createLogger } from '../lib/logger.js';
-import { cinematicScroll, settleAtTop, scrollBackToTop, shortCinematicScroll } from '../lib/scroll.js';
 
-export const metadata = { tag: 'scroll-video', recordVideo: true };
+export const metadata = { tag: 'scroll-video' };
 
 const log = createLogger('scroll-video');
 
-const NAV_LINK_COUNT = 4;      // how many nav links to visit
-const PER_PAGE_MAX_STEPS = 300; // scroll depth per sub-page
-
-async function discoverNavLinks(page, originUrl) {
-  const origin = new URL(originUrl).origin;
-  const selectors = ['nav a[href]', 'header a[href]', '[role="navigation"] a[href]'];
-
-  for (const selector of selectors) {
-    const hrefs = await page.evaluate(({ sel, origin, currentUrl }) => {
-      const els = Array.from(document.querySelectorAll(sel));
-      const seen = new Set();
-      const results = [];
-      for (const el of els) {
-        const href = el.getAttribute('href');
-        if (!href) continue;
-        if (href.startsWith('#')) continue;
-        let absolute;
-        try {
-          absolute = new URL(href, window.location.href).href;
-        } catch {
-          continue;
-        }
-        if (new URL(absolute).origin !== origin) continue;
-        if (absolute === currentUrl) continue;
-        if (seen.has(absolute)) continue;
-        seen.add(absolute);
-        results.push(href);
-      }
-      return results;
-    }, { sel: selector, origin, currentUrl: originUrl });
-
-    if (hrefs.length > 0) {
-      return hrefs.slice(0, NAV_LINK_COUNT);
-    }
-  }
-  return [];
-}
+const EXEC_URL = 'http://localhost:9123/exec_claude_code_skills';
+const POLL_URL = 'http://localhost:9123/poll_claude_code_skills';
+const WORKSPACE = '/Users/delusionalmakubex/Desktop/scratchpad/website-flow-video-cli';
+const TIMEOUT_SECONDS = 1200; // 20 minutes
+const POLL_INTERVAL_MS = 5000;
 
 export async function extract(page) {
-  // The recording context is created by runner.js — this page is already being
-  // recorded. Just scroll cinematically and return. Runner.js handles saving
-  // the .webm after the page is closed.
+  const siteUrl = page.url();
+  log.info(`Requesting video recording for ${siteUrl}`);
 
-  // Settle at top — let fonts, images, and JS initialize without consuming
-  // scroll state. Records the true first-scroll experience.
-  await settleAtTop(page);
-
-  log.debug('Starting cinematic scroll');
-  await cinematicScroll(page);
-
-  await page.waitForTimeout(500);
-  log.debug('Cinematic scroll complete');
-
+  let postRes;
   try {
-    log.debug('Scrolling back to top');
-    await scrollBackToTop(page);
-
-    const originUrl = page.url();
-    const navLinks = await discoverNavLinks(page, originUrl);
-    log.debug(`Discovered ${navLinks.length} nav links`);
-
-    for (const href of navLinks) {
-      try {
-        await page.evaluate(() => window.scrollTo(0, 0));
-
-        const el = await page.$(`a[href="${href}"]`);
-        if (!el) {
-          log.minor('Nav link not found, skipping: ' + href);
-          continue;
-        }
-
-        await el.hover();
-        await page.waitForTimeout(1500);
-        const preClickUrl = page.url();
-        await el.click();
-        await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
-        await page.waitForTimeout(2000);
-        await shortCinematicScroll(page, PER_PAGE_MAX_STEPS);
-        if (page.url() !== preClickUrl) {
-          await page.goBack();
-          await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-        }
-      } catch (err) {
-        log.minor('Error navigating to ' + href + ': ' + err.message);
-        if (page.url() !== originUrl) {
-          await page.goto(originUrl, { waitUntil: 'networkidle' }).catch(() => {});
-        }
-      }
-    }
+    postRes = await fetch(EXEC_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        skill: 'website-flow-video-cli',
+        workspace: WORKSPACE,
+        args: siteUrl,
+        timeout: TIMEOUT_SECONDS,
+      }),
+    });
   } catch (err) {
-    log.major('Nav exploration failed: ' + err.message);
+    throw new Error(`Cannot reach theDeluluAgency at ${EXEC_URL}: ${err.message}`);
   }
 
-  return { recorded: true, recordedAt: new Date().toISOString() };
+  if (!postRes.ok) {
+    const body = await postRes.text().catch(() => '');
+    throw new Error(`POST ${EXEC_URL} returned HTTP ${postRes.status}: ${body}`);
+  }
+
+  const { session_id } = await postRes.json();
+  log.debug(`Session started: ${session_id}`);
+
+  while (true) {
+    await new Promise(resolve => setTimeout(resolve, POLL_INTERVAL_MS));
+
+    let pollRes;
+    try {
+      pollRes = await fetch(`${POLL_URL}/${session_id}`);
+    } catch (err) {
+      throw new Error(`Poll request failed: ${err.message}`);
+    }
+
+    if (!pollRes.ok) {
+      throw new Error(`GET ${POLL_URL}/${session_id} returned HTTP ${pollRes.status}`);
+    }
+
+    const { status, message } = await pollRes.json();
+    log.debug(`Poll status: ${status}`);
+
+    if (status === 'complete') {
+      log.info('Video recording complete');
+      return { recorded: true, recordedAt: new Date().toISOString() };
+    }
+
+    if (status === 'failed') {
+      throw new Error(`Skill execution failed: ${message}`);
+    }
+
+    // pending or running — keep polling
+  }
 }

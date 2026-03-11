@@ -1,10 +1,9 @@
 import 'dotenv/config';
 import fs from 'fs';
-import os from 'os';
 import path from 'path';
 import readline from 'readline';
 import { fileURLToPath } from 'url';
-import { launchBrowser, newPage, warmupPage, dismissCookieBanners } from './lib/browser.js';
+import { launchBrowser, newPage } from './lib/browser.js';
 import { write } from './lib/writer.js';
 import { createLogger } from './lib/logger.js';
 import { createProgress } from './lib/progress.js';
@@ -20,53 +19,29 @@ function ask(question) {
 const _retriesParsed = parseInt(process.env.EXTRACTOR_RETRIES ?? '2', 10);
 const MAX_RETRIES = Math.max(0, isNaN(_retriesParsed) ? 2 : _retriesParsed);
 
-async function runExtractor(browser, extractor, site, outputDir, screenshotsDir) {
+async function runExtractor(browserRef, extractor, site, outputDir, screenshotsDir) {
   let lastError;
   for (let attempt = 1; attempt <= MAX_RETRIES + 1; attempt++) {
-    if (attempt > 1) log.info(`Retrying (attempt ${attempt}/${MAX_RETRIES + 1})...`);
-
-    if (extractor.metadata?.recordVideo) {
-      let videoContext;
-      let videoPage;
-      try {
-        videoContext = await browser.newContext({
-          recordVideo: { dir: os.tmpdir(), size: { width: 1280, height: 720 } },
-          viewport: null,
-        });
-        videoPage = await videoContext.newPage();
-        await videoPage.goto(site.url, { waitUntil: 'load', timeout: parseInt(process.env.TIMEOUT ?? '30000', 10) });
-        await dismissCookieBanners(videoPage);
-        await warmupPage(videoPage);
-
-        const data = await extractor.extract(videoPage, { outputDir, screenshotsDir });
-        await write(site.name, extractor.slug ?? path.basename(outputDir), data);
-
-        await videoPage.close();
-        const tmpVideoPath = await videoPage.video().path();
-        const videoOutDir = path.join('extraction-assets', site.name);
-        fs.mkdirSync(videoOutDir, { recursive: true });
-        fs.renameSync(tmpVideoPath, path.join(videoOutDir, 'scroll-recording.webm'));
-        return; // success
-      } catch (err) {
-        lastError = err;
-        log.info(`Extractor failed: ${err.message}`);
-      } finally {
-        if (videoPage && !videoPage.isClosed()) await videoPage.close().catch(() => {});
-        if (videoContext) await videoContext.close().catch(() => {});
+    if (attempt > 1) {
+      log.info(`Retrying (attempt ${attempt}/${MAX_RETRIES + 1})...`);
+      if (!browserRef.current.isConnected()) {
+        log.info('Browser crashed, relaunching...');
+        await browserRef.current.close().catch(() => {});
+        browserRef.current = await launchBrowser();
       }
-    } else {
-      let page;
-      try {
-        page = await newPage(browser, site.url);
-        const data = await extractor.extract(page, { outputDir, screenshotsDir });
-        await write(site.name, path.basename(outputDir), data);
-        return; // success
-      } catch (err) {
-        lastError = err;
-        log.info(`Extractor failed: ${err.message}`);
-      } finally {
-        if (page) await page.close().catch(() => {});
-      }
+    }
+
+    let page;
+    try {
+      page = await newPage(browserRef.current, site.url);
+      const data = await extractor.extract(page, { outputDir, screenshotsDir });
+      await write(site.name, path.basename(outputDir), data);
+      return; // success
+    } catch (err) {
+      lastError = err;
+      log.info(`Extractor failed: ${err.message}`);
+    } finally {
+      if (page) await page.close().catch(() => {});
     }
   }
   throw lastError;
@@ -75,7 +50,7 @@ async function runExtractor(browser, extractor, site, outputDir, screenshotsDir)
 async function processSite(site, registry, sitesPath) {
   log.info(`Processing: ${site.name} (${site.url})`);
 
-  const browser = await launchBrowser();
+  const browserRef = { current: await launchBrowser() };
   const siteBar = createProgress('sites', { total: 1 });
   siteBar.start();
 
@@ -92,12 +67,12 @@ async function processSite(site, registry, sitesPath) {
       const outputDir = path.join('design-system', site.name, slug);
       const screenshotsDir = path.join('design-system', site.name, 'screenshots');
 
-      await runExtractor(browser, extractor, site, outputDir, screenshotsDir);
+      await runExtractor(browserRef, extractor, site, outputDir, screenshotsDir);
       extBar.tick(slug);
     }
     extBar.done();
   } finally {
-    await browser.close();
+    await browserRef.current.close().catch(() => {});
   }
 
   siteBar.tick(site.name);
