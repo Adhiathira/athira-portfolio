@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Griting</title>
+  <meta name="description" content="Learn about Griting's mission to build trusted talent infrastructure for the AI Capital era.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* ── PAGE BASE ── */
+    body {
+      background-color: var(--color-page-bg);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    #site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 72px;
+      background: transparent;
+      border-bottom: none;
+      transition: background 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    #site-nav.site-header--stuck {
+      background: #ffffff;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    #nav-inner {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-inline: 22px;
+    }
+    #nav-logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+      margin-right: auto;
+    }
+    #nav-logo-g, #nav-logo-riting {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 600;
+      letter-spacing: -1.61px;
+      color: #ffffff;
+      line-height: 1;
+      transition: color 0.3s;
+    }
+    #site-nav.site-header--stuck #nav-logo-g,
+    #site-nav.site-header--stuck #nav-logo-riting {
+      color: #000000;
+    }
+    #nav-links {
+      display: flex;
+      align-items: center;
+      gap: 45px;
+      margin-right: 45px;
+    }
+    .nav-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #ffffff;
+      text-decoration: none;
+      transition: opacity 0.45s cubic-bezier(0.455,0.03,0.515,0.955);
+    }
+    .nav-link:hover { opacity: 0.7; }
+    .nav-link.nav-link--active { opacity: 0.45; pointer-events: none; }
+    #site-nav.site-header--stuck .nav-link { color: #455451; }
+    #nav-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 18px 16px;
+      background: #00693e;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      border-radius: 8px;
+      border: 1px solid #003620;
+      box-shadow: 0px 1px 2px -1px rgba(9,6,63,0.4), inset 0px 1px 0px 0px rgba(255,255,255,0.16);
+      transition: background-color 0.45s cubic-bezier(0.165,0.84,0.44,1);
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    #nav-cta-btn:hover { background: #008050; }
+
+    /* ── SECTION 2: HERO ── */
+    #about-hero {
+      position: relative;
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #003620;
+      overflow: hidden;
+      padding-top: 72px;
+      padding-bottom: 120px;
+    }
+    /* Subtle radial glow for depth — no flat surfaces */
+    #about-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0, 105, 62, 0.35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding-inline: 22px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    #hero-headline {
+      font-family: 'Helvetica Neue', 'Inter', Arial, sans-serif;
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 400;
+      letter-spacing: -3.6px;
+      line-height: 1.08;
+      color: #ffffff;
+      white-space: pre-line;
+      margin: 0;
+    }
+    #hero-headline .hero-line {
+      display: block;
+    }
+
+    /* ── SECTION 3: PHOTO MOSAIC ── */
+    #photo-mosaic {
+      background: #f5f6f5;
+      padding-block: 0;
+      /* Top shadow creating visual continuity from dark hero */
+      box-shadow: inset 0 6px 24px -6px rgba(0, 54, 32, 0.18);
+    }
+    #mosaic-grid {
+      display: grid;
+      grid-template-columns: 45% 55%;
+      grid-template-rows: auto auto;
+      gap: 6px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .mosaic-tile {
+      position: relative;
+      overflow: hidden;
+      background: #003620;
+      transition: box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .mosaic-tile:hover {
+      box-shadow: 0 12px 40px -8px rgba(0, 54, 32, 0.4);
+      z-index: 2;
+    }
+    .mosaic-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .mosaic-tile:hover img {
+      transform: scale(1.03);
+    }
+
+    /* Tile layout — asymmetric staggered */
+    #mosaic-tile-1 {
+      grid-column: 1;
+      grid-row: 1 / 2;
+      height: 480px;
+      margin-top: 60px;
+    }
+    #mosaic-tile-2 {
+      grid-column: 2;
+      grid-row: 1 / 2;
+      height: 420px;
+    }
+    #mosaic-tile-3 {
+      grid-column: 1;
+      grid-row: 2;
+      height: 380px;
+    }
+    #mosaic-tile-4 {
+      grid-column: 2;
+      grid-row: 2;
+      height: 440px;
+      margin-top: -40px;
+    }
+
+    /* Branded placeholder fallback — G-mark in tile center */
+    .mosaic-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #003620;
+      color: rgba(255,255,255,0.12);
+      font-family: 'Helvetica Neue', 'Inter', sans-serif;
+      font-size: clamp(5rem, 12vw, 10rem);
+      font-weight: 400;
+      letter-spacing: -4px;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* ── SECTION 4: MISSION ── */
+    #mission-section {
+      background: #f5f6f5;
+      padding-block: 140px 120px;
+      /* Top edge shadow from previous section */
+      box-shadow: inset 0 8px 32px -8px rgba(0, 0, 0, 0.06);
+    }
+    #mission-inner {
+      max-width: 925px;
+      margin: 0 auto;
+      padding-inline: 22px;
+    }
+    #mission-heading {
+      font-family: 'Helvetica Neue', 'Inter', Arial, sans-serif;
+      font-size: clamp(2rem, 4vw, 3.0625rem);
+      font-weight: 400;
+      letter-spacing: -1.2px;
+      line-height: 1.167;
+      color: #031f18;
+      margin-bottom: 60px;
+    }
+    #mission-body {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+    .mission-paragraph {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1rem, 1.5vw, 1.375rem);
+      font-weight: 500;
+      line-height: 1.6;
+      color: #455451;
+    }
+    #mission-accent {
+      border-left: 3px solid #00693e;
+      padding-left: 28px;
+      margin-top: 12px;
+    }
+    #mission-accent-text {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+      font-weight: 500;
+      line-height: 1.5;
+      color: #00693e;
+      font-style: italic;
+    }
+
+    /* ── SECTION 5: BORN TO CREATE ── */
+    #born-section {
+      background: #ffffff;
+      padding-block: 140px 120px;
+    }
+    #born-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: 22px;
+      display: grid;
+      grid-template-columns: 40% 60%;
+      gap: 0;
+      align-items: start;
+    }
+    #born-left {
+      padding-right: 60px;
+      position: sticky;
+      top: 120px;
+    }
+    #born-heading {
+      font-family: 'Helvetica Neue', 'Inter', Arial, sans-serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      font-weight: 400;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: #031f18;
+    }
+    #born-right {
+      padding-left: 60px;
+      /* Subtle column divider */
+      border-left: 1px solid rgba(69, 84, 81, 0.15);
+    }
+    #born-body {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-bottom: 56px;
+    }
+    .born-paragraph {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1rem, 1.4vw, 1.25rem);
+      font-weight: 400;
+      line-height: 1.7;
+      color: #455451;
+    }
+    #principles-strip {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(69, 84, 81, 0.15);
+    }
+    .principle-item {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #00693e;
+    }
+    .principle-sep {
+      font-size: 0.8125rem;
+      color: rgba(69, 84, 81, 0.4);
+      font-weight: 400;
+    }
+
+    /* ── SECTION 6: GLOBE CTA ── */
+    #globe-cta {
+      position: relative;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #003620;
+    }
+    #globe-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* Gradient overlay for text readability */
+    #globe-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 54, 32, 0.45) 0%,
+        rgba(0, 54, 32, 0.25) 40%,
+        rgba(0, 54, 32, 0.55) 100%
+      );
+      pointer-events: none;
+    }
+    #globe-cta-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding-inline: 22px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    #globe-cta-heading {
+      font-family: 'Helvetica Neue', 'Inter', Arial, sans-serif;
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      font-weight: 400;
+      letter-spacing: -2.8px;
+      line-height: 1.1;
+      color: #ffffff;
+      white-space: pre-line;
+    }
+    /* Fallback for missing video */
+    #globe-video-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 40px;
+    }
+    #globe-video-fallback.visible {
+      display: flex;
+    }
+    .asset-fallback-badge {
+      background: rgba(0, 105, 62, 0.2);
+      border: 1px solid rgba(0, 105, 62, 0.5);
+      border-radius: 6px;
+      padding: 12px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      max-width: 420px;
+    }
+    .asset-fallback-badge strong {
+      display: block;
+      color: #ffffff;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    /* Mosaic image fallback */
+    .mosaic-img-error {
+      display: none;
+    }
+
+    /* ── RESPONSIVE: 900px ── */
+    @media (max-width: 900px) {
+      #about-hero {
+        min-height: 60vh;
+        padding-bottom: 80px;
+      }
+      #hero-headline {
+        letter-spacing: -2px;
+      }
+
+      #mosaic-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+      }
+      #mosaic-tile-1 {
+        margin-top: 30px;
+        height: 320px;
+      }
+      #mosaic-tile-2 { height: 280px; }
+      #mosaic-tile-3 { height: 260px; }
+      #mosaic-tile-4 {
+        margin-top: -20px;
+        height: 300px;
+      }
+
+      #mission-section { padding-block: 100px 80px; }
+      #mission-heading { margin-bottom: 44px; }
+
+      #born-section { padding-block: 100px 80px; }
+      #born-inner {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+      #born-left {
+        position: static;
+        padding-right: 0;
+      }
+      #born-right {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid rgba(69, 84, 81, 0.15);
+        padding-top: 40px;
+      }
+
+      #globe-cta { min-height: 60vh; }
+      #globe-cta-heading { letter-spacing: -1.8px; }
+    }
+
+    /* ── RESPONSIVE: 600px ── */
+    @media (max-width: 600px) {
+      #about-hero {
+        min-height: 55vh;
+        padding-bottom: 60px;
+      }
+      #hero-headline {
+        font-size: clamp(2.2rem, 9vw, 3rem);
+        letter-spacing: -1.4px;
+        line-height: 1.1;
+      }
+
+      #mosaic-grid {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      #mosaic-tile-1 { margin-top: 0; height: 260px; grid-row: 1; }
+      #mosaic-tile-2 { height: 220px; grid-row: 2; grid-column: 1; }
+      #mosaic-tile-3 { height: 220px; grid-row: 3; }
+      #mosaic-tile-4 { margin-top: 0; height: 240px; grid-row: 4; }
+
+      #mission-section { padding-block: 80px 60px; }
+      #mission-heading { letter-spacing: -0.6px; }
+      #mission-accent { padding-left: 20px; }
+
+      #born-section { padding-block: 80px 60px; }
+      #born-heading { letter-spacing: -0.8px; }
+      #principles-strip { flex-wrap: wrap; gap: 10px 14px; }
+
+      #globe-cta { min-height: 55vh; }
+      #globe-cta-heading {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+        letter-spacing: -1.2px;
+      }
+
+      #nav-links { gap: 24px; margin-right: 20px; }
+      .nav-link { font-size: 14px; }
+      #nav-cta-btn { font-size: 15px; padding: 14px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── SECTION 1: NAVIGATION ── -->
+  <header id="site-nav">
+    <div id="nav-inner">
+      <a href="index.html" id="nav-logo-link">
+        <span id="nav-logo-g">G</span><span id="nav-logo-riting">riting</span>
+      </a>
+      <nav id="nav-links" aria-label="Main navigation">
+        <a href="index.html" class="nav-link" id="nav-product">Product</a>
+        <a href="about-us.html" class="nav-link nav-link--active" id="nav-about">About</a>
+        <a href="index.html#cta-banner" class="nav-link" id="nav-contact">Contact</a>
+        <a href="blog-index.html" class="nav-link" id="nav-blog">Blog</a>
+      </nav>
+      <a href="index.html#cta-banner" id="nav-cta-btn">Get in Touch</a>
+    </div>
+  </header>
+
+  <!-- ── SECTION 2: HERO ── -->
+  <section id="about-hero" aria-label="About Griting hero">
+    <div id="hero-content">
+      <h1 id="hero-headline">
+        <span class="hero-line">Find your Path and Peace</span>
+        <span class="hero-line">with Griting</span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: PHOTO MOSAIC ── -->
+  <section id="photo-mosaic" aria-label="Griting team and product photos">
+    <div id="mosaic-grid">
+
+      <div class="mosaic-tile" id="mosaic-tile-1">
+        <div class="mosaic-placeholder" aria-hidden="true">G</div>
+        <img
+          src="assets/about-mosaic-1.jpeg"
+          alt="Griting team collaborating on AI talent platform"
+          id="mosaic-img-1"
+          onerror="this.style.display='none'; document.getElementById('mosaic-placeholder-1').style.opacity='1';"
+          loading="lazy"
+        >
+        <div class="mosaic-placeholder" id="mosaic-placeholder-1" aria-hidden="true" style="opacity:0; transition: opacity 0.3s;">G</div>
+      </div>
+
+      <div class="mosaic-tile" id="mosaic-tile-2">
+        <div class="mosaic-placeholder" aria-hidden="true">G</div>
+        <img
+          src="assets/about-mosaic-2.jpeg"
+          alt="GritMe product interface showing candidate evaluation dashboard"
+          id="mosaic-img-2"
+          onerror="this.style.display='none'; document.getElementById('mosaic-placeholder-2').style.opacity='1';"
+          loading="lazy"
+        >
+        <div class="mosaic-placeholder" id="mosaic-placeholder-2" aria-hidden="true" style="opacity:0; transition: opacity 0.3s;">G</div>
+      </div>
+
+      <div class="mosaic-tile" id="mosaic-tile-3">
+        <div class="mosaic-placeholder" aria-hidden="true">G</div>
+        <img
+          src="assets/about-mosaic-3.jpeg"
+          alt="Griting team members in Silicon Valley office"
+          id="mosaic-img-3"
+          onerror="this.style.display='none'; document.getElementById('mosaic-placeholder-3').style.opacity='1';"
+          loading="lazy"
+        >
+        <div class="mosaic-placeholder" id="mosaic-placeholder-3" aria-hidden="true" style="opacity:0; transition: opacity 0.3s;">G</div>
+      </div>
+
+      <div class="mosaic-tile" id="mosaic-tile-4">
+        <div class="mosaic-placeholder" aria-hidden="true">G</div>
+        <img
+          src="assets/about-mosaic-4.jpeg"
+          alt="Griting research whiteboard session"
+          id="mosaic-img-4"
+          onerror="this.style.display='none'; document.getElementById('mosaic-placeholder-4').style.opacity='1';"
+          loading="lazy"
+        >
+        <div class="mosaic-placeholder" id="mosaic-placeholder-4" aria-hidden="true" style="opacity:0; transition: opacity 0.3s;">G</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SECTION 4: MISSION ── -->
+  <section id="mission-section" aria-labelledby="mission-heading">
+    <div id="mission-inner">
+
+      <h2 id="mission-heading">
+        What would be possible if talent readiness could be verified, not guessed?
+      </h2>
+
+      <div id="mission-body">
+        <p class="mission-paragraph" id="mission-para-1">
+          In every critical system of the modern economy, verification exists.
+        </p>
+        <p class="mission-paragraph" id="mission-para-2">
+          Yet when it comes to talent, the most important resource in the AI era — readiness is still largely guessed.
+        </p>
+        <p class="mission-paragraph" id="mission-para-3">
+          We are building systems that evaluate, incubate, and connect exceptional AI talent across the global innovation ecosystem.
+        </p>
+      </div>
+
+      <div id="mission-accent" role="blockquote">
+        <p id="mission-accent-text">
+          Our mission is to enable a future where talent trust and readiness are measurable, transparent, and universally accessible.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SECTION 5: BORN TO CREATE ── -->
+  <section id="born-section" aria-labelledby="born-heading">
+    <div id="born-inner">
+
+      <div id="born-left">
+        <h2 id="born-heading">Born to<br>Create</h2>
+      </div>
+
+      <div id="born-right">
+        <div id="born-body">
+          <p class="born-paragraph" id="born-para-1">
+            Our team brings together deep experience across algorithms, systems, engineering, and go-to-market execution. We've built and operated technology across startups, AI labs, and global organizations including Supermicro (SMCI), EY, and Oracle.
+          </p>
+          <p class="born-paragraph" id="born-para-2">
+            At Griting, we operate as a small, high-ownership team. Everyone works across the stack — from systems and infrastructure to product and ecosystem development. Every system we build and every interaction we design contributes to a larger mission: creating trusted infrastructure for talent readiness in the AI economy.
+          </p>
+          <p class="born-paragraph" id="born-para-3">
+            Our work is guided by three principles: humanity, clarity, and feedback.
+          </p>
+        </div>
+
+        <div id="principles-strip" aria-label="Guiding principles">
+          <span class="principle-item">Humanity</span>
+          <span class="principle-sep" aria-hidden="true">·</span>
+          <span class="principle-item">Clarity</span>
+          <span class="principle-sep" aria-hidden="true">·</span>
+          <span class="principle-item">Feedback</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SECTION 6: GLOBE CTA ── -->
+  <section id="globe-cta" aria-labelledby="globe-cta-heading">
+    <video
+      id="globe-video"
+      src="assets/globe-network.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      aria-hidden="true"
+      onerror="
+        this.style.display='none';
+        document.getElementById('globe-video-fallback').classList.add('visible');
+      "
+    ></video>
+
+    <div id="globe-overlay" aria-hidden="true"></div>
+
+    <!-- Diagnostic fallback — shown only if video fails to load -->
+    <div id="globe-video-fallback" aria-hidden="true">
+      <div class="asset-fallback-badge">
+        <strong>Video asset missing: globe-network.mp4</strong>
+        File not found at <code>assets/globe-network.mp4</code>.<br>
+        Generate with Kling using the prompt in <code>project-documentation/unavailable-content-prompts.md</code>.
+      </div>
+    </div>
+
+    <div id="globe-cta-content">
+      <h2 id="globe-cta-heading">Ready to build connections&#10;that shape your Future?</h2>
+    </div>
+  </section>
+
+  <!-- ── SCRIPTS ── -->
+  <script>
+    /* Nav scroll behavior */
+    (function() {
+      const nav = document.getElementById('site-nav');
+      function updateNav() { nav.classList.toggle('site-header--stuck', window.scrollY > 80); }
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+    })();
+  </script>
+
+  <script>
+    /* GSAP Animations */
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ── Hero headline: two-line dramatic reveal ── */
+    const heroLines = document.querySelectorAll('.hero-line');
+    gsap.fromTo(
+      heroLines,
+      { y: 80, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.9,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        stagger: 0.15,
+        delay: 0.1
+      }
+    );
+
+    /* ── Photo mosaic: tiles fade in with stagger on scroll ── */
+    const mosaicTiles = document.querySelectorAll('.mosaic-tile');
+    gsap.fromTo(
+      mosaicTiles,
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: '#photo-mosaic',
+          start: 'top 80%',
+          once: true
+        }
+      }
+    );
+
+    /* ── Mission heading: large y:60 reveal with scale ── */
+    gsap.fromTo(
+      '#mission-heading',
+      { y: 60, opacity: 0, scale: 0.97 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.85,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        scrollTrigger: {
+          trigger: '#mission-section',
+          start: 'top 75%',
+          once: true
+        }
+      }
+    );
+
+    /* ── Mission body paragraphs: staggered fade up ── */
+    const missionParas = document.querySelectorAll('.mission-paragraph');
+    gsap.fromTo(
+      missionParas,
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.65,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: '#mission-body',
+          start: 'top 80%',
+          once: true
+        }
+      }
+    );
+
+    /* ── Mission accent ── */
+    gsap.fromTo(
+      '#mission-accent',
+      { y: 24, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        scrollTrigger: {
+          trigger: '#mission-accent',
+          start: 'top 85%',
+          once: true
+        }
+      }
+    );
+
+    /* ── Born to create: left column slides from left, right from right ── */
+    gsap.fromTo(
+      '#born-left',
+      { x: -40, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        scrollTrigger: {
+          trigger: '#born-section',
+          start: 'top 75%',
+          once: true
+        }
+      }
+    );
+    gsap.fromTo(
+      '#born-right',
+      { x: 40, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        scrollTrigger: {
+          trigger: '#born-section',
+          start: 'top 75%',
+          once: true
+        }
+      }
+    );
+
+    /* ── Globe CTA: heading fades up from y:40 ── */
+    gsap.fromTo(
+      '#globe-cta-heading',
+      { y: 40, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.9,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        scrollTrigger: {
+          trigger: '#globe-cta',
+          start: 'top 70%',
+          once: true
+        }
+      }
+    );
+  </script>
+
+</body>
+</html>
