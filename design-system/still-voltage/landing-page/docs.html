@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs — Volt Studio</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--color-page-bg); color: var(--color-body); font-family: var(--font-body); font-size: var(--type-body); line-height: var(--leading-body); overflow-x: hidden; }
+
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 99; transition: background var(--duration-medium) var(--ease-standard), backdrop-filter var(--duration-medium) var(--ease-standard); }
+    #nav-inner { display: flex; align-items: center; justify-content: center; height: 60px; max-width: var(--grid-max-width); margin: 0 auto; padding: 0 40px; position: relative; }
+    #nav-logo { position: absolute; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 1.125rem; font-weight: var(--weight-bold); color: var(--color-heading); text-decoration: none; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    #nav-logo-mark { width: 22px; height: 22px; background: var(--color-accent); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+    #nav-left { display: flex; align-items: center; gap: 28px; margin-right: auto; }
+    #nav-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+    .nav-link { font-family: var(--font-body); font-size: 0.9375rem; font-weight: var(--weight-medium); color: var(--color-muted); text-decoration: none; transition: color var(--duration-medium) var(--ease-hover); }
+    .nav-link:hover, .nav-link.active { color: var(--color-heading); }
+    #nav-cta { background: var(--btn-primary-bg); color: var(--btn-primary-text); font-family: var(--font-body); font-size: 0.875rem; font-weight: var(--weight-semibold); padding: var(--btn-padding-v) 20px; border-radius: var(--btn-radius); text-decoration: none; transition: box-shadow var(--duration-medium) var(--ease-smooth), transform var(--duration-base) var(--ease-standard); }
+    #nav-cta:hover { box-shadow: var(--shadow-accent-glow); transform: translateY(-1px); }
+    #nav.scrolled { background: rgba(25,25,28,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+
+    /* Docs layout */
+    #docs-layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; padding-top: 60px; }
+
+    /* Sidebar */
+    #docs-sidebar {
+      position: sticky; top: 60px; height: calc(100vh - 60px); overflow-y: auto;
+      border-right: 1px solid var(--color-border);
+      padding: 32px 0;
+      background: var(--color-page-bg);
+      scrollbar-width: thin; scrollbar-color: var(--color-surface-3) transparent;
+    }
+    #docs-sidebar::-webkit-scrollbar { width: 4px; }
+    #docs-sidebar::-webkit-scrollbar-thumb { background: var(--color-surface-3); border-radius: 2px; }
+
+    #docs-search-wrapper { padding: 0 20px 24px; }
+    #docs-search {
+      width: 100%; background: var(--color-surface-2); border: 1px solid var(--color-border);
+      border-radius: 8px; padding: 9px 14px; font-family: var(--font-body); font-size: 0.875rem;
+      color: var(--color-body); outline: none;
+      transition: border-color var(--duration-base) var(--ease-standard);
+    }
+    #docs-search::placeholder { color: var(--color-muted); opacity: 0.7; }
+    #docs-search:focus { border-color: rgba(253,53,110,0.35); }
+
+    .sidebar-section { margin-bottom: 28px; }
+    .sidebar-section-title { font-size: 0.7rem; font-weight: var(--weight-bold); color: var(--color-muted); letter-spacing: 0.12em; text-transform: uppercase; padding: 0 20px 10px; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 20px; font-size: 0.9rem; color: var(--color-muted); text-decoration: none;
+      border-left: 2px solid transparent; margin-left: 0;
+      transition: color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard), background var(--duration-base) var(--ease-standard);
+    }
+    .sidebar-link:hover { color: var(--color-body); background: rgba(255,255,255,0.03); }
+    .sidebar-link.active { color: var(--color-accent); border-left-color: var(--color-accent); background: rgba(253,53,110,0.05); font-weight: var(--weight-medium); }
+
+    /* Main docs area */
+    #docs-main { padding: 48px 64px 80px; max-width: 900px; }
+
+    /* Breadcrumb */
+    #breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; color: var(--color-muted); margin-bottom: 32px; }
+    #breadcrumb span { color: var(--color-heading); }
+    #breadcrumb a { color: var(--color-muted); text-decoration: none; transition: color var(--duration-base) var(--ease-standard); }
+    #breadcrumb a:hover { color: var(--color-accent); }
+    #breadcrumb-sep { opacity: 0.4; }
+
+    /* Doc content */
+    #doc-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: var(--weight-extrabold); color: var(--color-heading); letter-spacing: -0.028em; line-height: 1.06; margin-bottom: 20px; }
+    #doc-intro { font-size: 1.125rem; color: var(--color-muted); line-height: 1.65; margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid var(--color-border); }
+
+    .doc-section { margin-bottom: 56px; }
+    .doc-h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: var(--weight-bold); color: var(--color-heading); letter-spacing: -0.02em; margin-bottom: 16px; padding-top: 8px; position: relative; }
+    .doc-h2::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); width: 3px; height: 20px; background: var(--color-accent); border-radius: 2px; opacity: 0; transition: opacity var(--duration-base) var(--ease-standard); }
+    .doc-h2:hover::before { opacity: 1; }
+    .doc-h3 { font-family: var(--font-body); font-size: 1.0625rem; font-weight: var(--weight-semibold); color: var(--color-body); letter-spacing: -0.01em; margin: 24px 0 10px; }
+    .doc-p { font-size: 0.9375rem; color: var(--color-muted); line-height: 1.7; margin-bottom: 16px; }
+    .doc-p a { color: var(--color-accent); text-decoration: none; border-bottom: 1px solid rgba(253,53,110,0.3); transition: border-color var(--duration-base) var(--ease-standard); }
+    .doc-p a:hover { border-color: var(--color-accent); }
+
+    /* Code block */
+    .code-block { background: var(--color-hero-bg); border: 1px solid var(--color-border); border-radius: 10px; overflow: hidden; margin: 20px 0; }
+    .code-block-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: rgba(44,44,48,0.8); border-bottom: 1px solid var(--color-border); }
+    .code-block-lang { font-size: 0.75rem; color: var(--color-muted); font-weight: var(--weight-medium); letter-spacing: 0.04em; }
+    .code-block-copy { font-size: 0.75rem; color: var(--color-muted); background: transparent; border: 1px solid var(--color-border); border-radius: 4px; padding: 3px 10px; cursor: pointer; transition: all var(--duration-base) var(--ease-standard); font-family: var(--font-body); }
+    .code-block-copy:hover { color: var(--color-body); border-color: rgba(228,228,231,0.3); }
+    .code-block-copy.copied { color: var(--color-accent); border-color: rgba(253,53,110,0.3); }
+    .code-block pre { padding: 20px; overflow-x: auto; }
+    .code-block code { font-family: 'SF Mono', 'Fira Code', 'Fira Mono', monospace; font-size: 0.875rem; color: #e4e4e7; line-height: 1.65; white-space: pre; }
+
+    /* Syntax highlighting (manual) */
+    .tok-keyword { color: #fd356e; }
+    .tok-string { color: #a3e635; }
+    .tok-comment { color: #555560; font-style: italic; }
+    .tok-fn { color: #7dd3fc; }
+    .tok-num { color: #f59e0b; }
+    .tok-prop { color: #c084fc; }
+
+    /* Callout boxes */
+    .callout { border-radius: 10px; padding: 16px 20px; margin: 20px 0; border-left: 3px solid; }
+    .callout-info { background: rgba(125, 211, 252, 0.06); border-color: rgba(125, 211, 252, 0.4); }
+    .callout-tip { background: rgba(163, 230, 53, 0.06); border-color: rgba(163, 230, 53, 0.4); }
+    .callout-warning { background: rgba(253, 53, 110, 0.06); border-color: rgba(253, 53, 110, 0.4); }
+    .callout-label { font-size: 0.75rem; font-weight: var(--weight-bold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .callout-info .callout-label { color: #7dd3fc; }
+    .callout-tip .callout-label { color: #a3e635; }
+    .callout-warning .callout-label { color: var(--color-accent); }
+    .callout p { font-size: 0.9rem; color: var(--color-muted); line-height: 1.6; }
+
+    /* Step list */
+    .step-list { list-style: none; counter-reset: steps; display: flex; flex-direction: column; gap: 16px; margin: 20px 0; }
+    .step-item { counter-increment: steps; display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: start; }
+    .step-item::before { content: counter(steps); width: 28px; height: 28px; background: rgba(253,53,110,0.12); border: 1px solid rgba(253,53,110,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8125rem; font-weight: var(--weight-bold); color: var(--color-accent); flex-shrink: 0; margin-top: 1px; }
+    .step-item-content { font-size: 0.9375rem; color: var(--color-body); line-height: 1.6; }
+    .step-item-content strong { color: var(--color-heading); font-weight: var(--weight-semibold); display: block; margin-bottom: 4px; }
+
+    /* Doc image */
+    .doc-image { border-radius: 12px; overflow: hidden; border: 1px solid var(--color-border); margin: 24px 0; position: relative; }
+    .doc-image img { width: 100%; display: block; }
+    .doc-image .doc-img-placeholder { display: none; padding: 40px; background: var(--color-surface-2); text-align: center; font-size: 0.85rem; color: var(--color-muted); opacity: 0.5; }
+    .doc-image figcaption { padding: 10px 16px; font-size: 0.8125rem; color: var(--color-muted); border-top: 1px solid var(--color-border); }
+
+    /* Next/prev navigation */
+    #doc-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--color-border); }
+    .doc-nav-card { background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: 12px; padding: 18px 20px; text-decoration: none; transition: all var(--duration-medium) var(--ease-smooth); }
+    .doc-nav-card:hover { border-color: rgba(253,53,110,0.2); transform: translateY(-2px); box-shadow: var(--shadow-card); }
+    .doc-nav-direction { font-size: 0.75rem; color: var(--color-muted); font-weight: var(--weight-medium); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .doc-nav-title { font-family: var(--font-display); font-size: 1rem; font-weight: var(--weight-semibold); color: var(--color-heading); letter-spacing: -0.01em; }
+
+    /* Table of contents */
+    #toc { position: sticky; top: 80px; float: right; width: 200px; margin-left: 40px; margin-bottom: 40px; display: none; }
+    @media (min-width: 1400px) { #toc { display: block; } }
+    #toc-title { font-size: 0.7rem; font-weight: var(--weight-bold); color: var(--color-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .toc-link { display: block; font-size: 0.8125rem; color: var(--color-muted); text-decoration: none; padding: 5px 0; border-left: 2px solid transparent; padding-left: 10px; transition: all var(--duration-base) var(--ease-standard); }
+    .toc-link:hover, .toc-link.active { color: var(--color-accent); border-left-color: var(--color-accent); }
+
+    /* Footer */
+    #footer { background: var(--color-footer-bg); border-top: 1px solid var(--color-border); padding: 48px 40px 32px; }
+    #footer-inner { max-width: var(--grid-container); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    #footer-logo { font-family: var(--font-display); font-size: 1rem; font-weight: var(--weight-bold); color: var(--color-heading); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    #footer-logo-mark { width: 18px; height: 18px; background: var(--color-accent); border-radius: 4px; }
+    #footer-links-row { display: flex; gap: 24px; }
+    #footer-links-row a { font-size: 0.875rem; color: var(--color-footer-text); text-decoration: none; transition: color var(--duration-base) var(--ease-standard); }
+    #footer-links-row a:hover { color: var(--color-heading); }
+    #footer-copy { font-size: 0.8rem; color: var(--color-footer-text); }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div id="nav-inner">
+      <div id="nav-left">
+        <a href="features.html" class="nav-link">Features</a>
+        <a href="showcase.html" class="nav-link">Showcase</a>
+      </div>
+      <a href="index.html" id="nav-logo">
+        <div id="nav-logo-mark">
+          <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="1.8" width="12" height="12">
+            <path d="M6 1L10 6L6 11L2 6L6 1Z"/>
+          </svg>
+        </div>
+        Volt Studio
+      </a>
+      <div id="nav-right">
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="docs.html" class="nav-link active">Docs</a>
+        <a href="pricing.html" id="nav-cta">Get started free</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="docs-layout">
+
+    <!-- Sidebar -->
+    <aside id="docs-sidebar">
+      <div id="docs-search-wrapper">
+        <input id="docs-search" type="text" placeholder="Search docs..." />
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Getting Started</div>
+        <a href="#" class="sidebar-link active">Quick Start</a>
+        <a href="#" class="sidebar-link">Installation</a>
+        <a href="#" class="sidebar-link">Core Concepts</a>
+        <a href="#" class="sidebar-link">Your First Scene</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Scene Editor</div>
+        <a href="#" class="sidebar-link">Overview</a>
+        <a href="#" class="sidebar-link">Node Graph</a>
+        <a href="#" class="sidebar-link">Transforms &amp; Gizmos</a>
+        <a href="#" class="sidebar-link">Importing Assets</a>
+        <a href="#" class="sidebar-link">Lighting</a>
+        <a href="#" class="sidebar-link">Camera Controls</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Motion System</div>
+        <a href="#" class="sidebar-link">Timeline Editor</a>
+        <a href="#" class="sidebar-link">Easing Presets</a>
+        <a href="#" class="sidebar-link">Stagger Choreography</a>
+        <a href="#" class="sidebar-link">Scroll Triggers</a>
+        <a href="#" class="sidebar-link">Physics Springs</a>
+        <a href="#" class="sidebar-link">Reduced Motion</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Export</div>
+        <a href="#" class="sidebar-link">HTML + CSS Export</a>
+        <a href="#" class="sidebar-link">GSAP Export</a>
+        <a href="#" class="sidebar-link">Three.js Export</a>
+        <a href="#" class="sidebar-link">React / Vue / Svelte</a>
+        <a href="#" class="sidebar-link">Deployment</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Integrations</div>
+        <a href="#" class="sidebar-link">Figma Plugin</a>
+        <a href="#" class="sidebar-link">Design Tokens</a>
+        <a href="#" class="sidebar-link">Vercel</a>
+        <a href="#" class="sidebar-link">Netlify</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Reference</div>
+        <a href="#" class="sidebar-link">Keyboard Shortcuts</a>
+        <a href="#" class="sidebar-link">API Reference</a>
+        <a href="#" class="sidebar-link">Changelog</a>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main id="docs-main">
+      <nav id="breadcrumb">
+        <a href="#">Docs</a>
+        <span id="breadcrumb-sep">›</span>
+        <a href="#">Getting Started</a>
+        <span id="breadcrumb-sep">›</span>
+        <span>Quick Start</span>
+      </nav>
+
+      <h1 id="doc-title">Quick Start</h1>
+      <p id="doc-intro">
+        Get your first 3D web experience live in under 10 minutes. This guide walks you through
+        creating a scene, adding motion, previewing, and exporting to production-ready HTML.
+      </p>
+
+      <!-- Section 1: Create a project -->
+      <div class="doc-section" id="section-create">
+        <h2 class="doc-h2">1. Create a project</h2>
+        <p class="doc-p">
+          Open Volt Studio at <a href="#">app.voltstudio.io</a> and click <strong>New Project</strong>.
+          Give your project a name — this becomes the export filename prefix.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-label">Tip</div>
+          <p>If you're coming from Figma, install the <a href="#">Volt Studio Figma Plugin</a> first. It syncs your design tokens automatically so you skip the manual setup step.</p>
+        </div>
+
+        <ol class="step-list">
+          <li class="step-item">
+            <div class="step-item-content">
+              <strong>Choose your projection mode</strong>
+              Select Isometric for a fixed-angle 3D look, or Perspective for a more natural camera. You can switch at any time — your scene adapts automatically.
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-item-content">
+              <strong>Set your canvas dimensions</strong>
+              Volt defaults to 1440×900px. For a full-viewport hero, set width to 100vw and height to 100vh — the editor will show breakpoint markers.
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-item-content">
+              <strong>Import your design tokens</strong>
+              Paste a CSS custom properties block or connect your Figma file. Volt maps your colors, type, and spacing tokens to the scene editor controls automatically.
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Section 2: Build your scene -->
+      <div class="doc-section" id="section-scene">
+        <h2 class="doc-h2">2. Build your scene</h2>
+        <p class="doc-p">
+          The Scene Editor uses a node graph. Every element in your scene is a node — shapes,
+          imported 3D objects, lights, and camera rigs all connect in the graph.
+        </p>
+
+        <div class="doc-image">
+          <img
+            src="assets/docs-scene-node-graph.jpeg"
+            alt="Volt Studio node graph showing connected scene objects: platform mesh, directional light, camera rig, and cherry blossom tree GLTF import on dark background"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          >
+          <div class="doc-img-placeholder">→ assets/docs-scene-node-graph.jpeg</div>
+          <figcaption>The node graph view — drag to connect, click to inspect properties.</figcaption>
+        </div>
+
+        <h3 class="doc-h3">Adding objects</h3>
+        <p class="doc-p">
+          Press <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;color:var(--color-heading);">A</code> to open the Add Object panel. You can add primitive shapes (cube, sphere, cylinder, torus), import GLTF/OBJ files, or place a Figma frame as a flat 3D object.
+        </p>
+
+        <h3 class="doc-h3">Transform controls</h3>
+        <p class="doc-p">
+          Select any node and use the transform gizmo: <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;color:var(--color-heading);">G</code> = grab/move, <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;color:var(--color-heading);">R</code> = rotate, <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;color:var(--color-heading);">S</code> = scale. Add an axis constraint: <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;color:var(--color-heading);">G + X</code> constrains move to X axis.
+        </p>
+      </div>
+
+      <!-- Section 3: Add motion -->
+      <div class="doc-section" id="section-motion">
+        <h2 class="doc-h2">3. Add motion</h2>
+        <p class="doc-p">
+          Open the Motion panel with <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;color:var(--color-heading);">M</code>. The timeline shows a horizontal strip per node.
+          Click a node's strip to add keyframes or choose from the preset library.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-label">Note</div>
+          <p>The Motion System requires the Pro plan. On the Free plan, you can use basic CSS transitions, but the visual timeline and GSAP export are Pro features.</p>
+        </div>
+
+        <h3 class="doc-h3">Using easing presets</h3>
+        <p class="doc-p">
+          Volt ships with the same easing curves used across top-tier design systems. The default is
+          <strong style="color:var(--color-heading)">Material Standard</strong> — <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;color:var(--color-heading);">cubic-bezier(0.4, 0, 0.2, 1)</code>.
+        </p>
+
+        <div class="code-block" id="code-easing">
+          <div class="code-block-header">
+            <span class="code-block-lang">CSS</span>
+            <button class="code-block-copy" data-target="code-easing">Copy</button>
+          </div>
+          <pre><code><span class="tok-comment">/* Volt easing tokens — available as CSS custom properties */</span>
+<span class="tok-prop">--ease-standard</span>: <span class="tok-fn">cubic-bezier</span>(<span class="tok-num">0.4</span>, <span class="tok-num">0</span>, <span class="tok-num">0.2</span>, <span class="tok-num">1</span>);   <span class="tok-comment">/* Material Standard */</span>
+<span class="tok-prop">--ease-decelerate</span>: <span class="tok-fn">cubic-bezier</span>(<span class="tok-num">0.0</span>, <span class="tok-num">0.0</span>, <span class="tok-num">0.2</span>, <span class="tok-num">1</span>);  <span class="tok-comment">/* Enter / expand */</span>
+<span class="tok-prop">--ease-accelerate</span>: <span class="tok-fn">cubic-bezier</span>(<span class="tok-num">0.4</span>, <span class="tok-num">0</span>, <span class="tok-num">1</span>, <span class="tok-num">1</span>);    <span class="tok-comment">/* Exit / collapse */</span>
+<span class="tok-prop">--ease-smooth</span>: <span class="tok-fn">cubic-bezier</span>(<span class="tok-num">0.165</span>, <span class="tok-num">0.84</span>, <span class="tok-num">0.44</span>, <span class="tok-num">1</span>); <span class="tok-comment">/* Smooth entry */</span></code></pre>
+        </div>
+
+        <h3 class="doc-h3">Stagger choreography</h3>
+        <p class="doc-p">
+          Select multiple nodes and choose <strong style="color:var(--color-heading)">Stagger</strong> from the Motion presets.
+          Set the stagger step — Volt defaults to 0.1s per element. The timeline shows all staggered
+          keyframes offset as a visual cascade.
+        </p>
+
+        <div class="code-block" id="code-stagger">
+          <div class="code-block-header">
+            <span class="code-block-lang">JavaScript (GSAP export)</span>
+            <button class="code-block-copy" data-target="code-stagger">Copy</button>
+          </div>
+          <pre><code><span class="tok-comment">// Volt GSAP stagger export — generated automatically</span>
+<span class="tok-fn">gsap</span>.<span class="tok-fn">from</span>(<span class="tok-string">'#features-grid .card'</span>, {
+  <span class="tok-prop">scrollTrigger</span>: { <span class="tok-prop">trigger</span>: <span class="tok-string">'#features-grid'</span>, <span class="tok-prop">start</span>: <span class="tok-string">'top 80%'</span> },
+  <span class="tok-prop">y</span>: <span class="tok-num">40</span>,
+  <span class="tok-prop">opacity</span>: <span class="tok-num">0</span>,
+  <span class="tok-prop">duration</span>: <span class="tok-num">0.7</span>,
+  <span class="tok-prop">stagger</span>: <span class="tok-num">0.1</span>,
+  <span class="tok-prop">ease</span>: <span class="tok-string">'cubic-bezier(0.4, 0, 0.2, 1)'</span>
+});</code></pre>
+        </div>
+      </div>
+
+      <!-- Section 4: Preview -->
+      <div class="doc-section" id="section-preview">
+        <h2 class="doc-h2">4. Preview your experience</h2>
+        <p class="doc-p">
+          Press <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;color:var(--color-heading);">⌘ P</code> to open the live preview. The preview uses the identical WebGL render context
+          as the exported output — what you see here is exactly what ships.
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-label">Important</div>
+          <p>Volt's preview always renders at your machine's native DPI. The export adds <code style="background:rgba(253,53,110,0.1);padding:1px 5px;border-radius:3px;font-size:0.9em;">devicePixelRatio</code> detection automatically for crisp renders on high-density displays.</p>
+        </div>
+
+        <p class="doc-p">
+          Use the breakpoint toolbar to test responsive behavior. Volt shows 375px, 768px, 1024px,
+          and 1440px by default — matching the four standard breakpoints in the export.
+        </p>
+      </div>
+
+      <!-- Section 5: Export -->
+      <div class="doc-section" id="section-export">
+        <h2 class="doc-h2">5. Export to production</h2>
+        <p class="doc-p">
+          Press <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;font-size:0.85em;color:var(--color-heading);">⌘ ⇧ E</code> to open the Export panel. Choose your export target:
+        </p>
+        <ul class="step-list">
+          <li class="step-item">
+            <div class="step-item-content">
+              <strong>HTML + CSS</strong>
+              Self-contained file. No runtime. Works in any browser. ~0.5kb overhead.
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-item-content">
+              <strong>GSAP + ScrollTrigger</strong>
+              Standard HTML + a small JavaScript file. Requires public GSAP CDN (free). ~2.3kb overhead.
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-item-content">
+              <strong>Three.js Scene</strong>
+              Full-fidelity 3D. Requires Three.js CDN. ~8kb overhead for the Volt scene loader.
+            </div>
+          </li>
+        </ul>
+
+        <div class="code-block" id="code-embed">
+          <div class="code-block-header">
+            <span class="code-block-lang">HTML (GSAP export — drop-in)</span>
+            <button class="code-block-copy" data-target="code-embed">Copy</button>
+          </div>
+          <pre><code><span class="tok-comment">&lt;!-- Drop the exported files anywhere in your project --&gt;</span>
+<span class="tok-keyword">&lt;link</span> <span class="tok-prop">rel</span>=<span class="tok-string">"stylesheet"</span> <span class="tok-prop">href</span>=<span class="tok-string">"volt-scene.css"</span><span class="tok-keyword">&gt;</span>
+<span class="tok-keyword">&lt;script</span> <span class="tok-prop">src</span>=<span class="tok-string">"https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"</span><span class="tok-keyword">&gt;&lt;/script&gt;</span>
+<span class="tok-keyword">&lt;script</span> <span class="tok-prop">src</span>=<span class="tok-string">"https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"</span><span class="tok-keyword">&gt;&lt;/script&gt;</span>
+<span class="tok-keyword">&lt;script</span> <span class="tok-prop">src</span>=<span class="tok-string">"volt-scene.js"</span><span class="tok-keyword">&gt;&lt;/script&gt;</span>
+
+<span class="tok-comment">&lt;!-- Place the scene container in your HTML --&gt;</span>
+<span class="tok-keyword">&lt;div</span> <span class="tok-prop">id</span>=<span class="tok-string">"volt-hero-scene"</span> <span class="tok-prop">class</span>=<span class="tok-string">"volt-scene"</span> <span class="tok-prop">data-volt-scene</span>=<span class="tok-string">"hero"</span><span class="tok-keyword">&gt;&lt;/div&gt;</span></code></pre>
+        </div>
+      </div>
+
+      <!-- Next / Prev nav -->
+      <nav id="doc-nav">
+        <a href="#" class="doc-nav-card">
+          <div class="doc-nav-direction">← Previous</div>
+          <div class="doc-nav-title">Installation</div>
+        </a>
+        <a href="#" class="doc-nav-card">
+          <div class="doc-nav-direction">Next →</div>
+          <div class="doc-nav-title">Core Concepts</div>
+        </a>
+      </nav>
+    </main>
+
+  </div>
+
+  <footer id="footer">
+    <div id="footer-inner">
+      <a href="index.html" id="footer-logo">
+        <div id="footer-logo-mark"></div>
+        Volt Studio
+      </a>
+      <div id="footer-links-row">
+        <a href="features.html">Features</a>
+        <a href="showcase.html">Showcase</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="docs.html">Docs</a>
+      </div>
+      <div id="footer-copy">© 2026 Volt Studio</div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-standard').trim();
+    const EASE_S = getComputedStyle(document.documentElement).getPropertyValue('--ease-smooth').trim();
+    const DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-enter')) || 0.7;
+    const ST = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stagger-step')) || 0.1;
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Entrance
+    gsap.from('#breadcrumb, #doc-title, #doc-intro', { y: 20, opacity: 0, duration: DUR * 0.85, ease: EASE, stagger: ST * 1.5 });
+
+    // Section reveals
+    document.querySelectorAll('.doc-section').forEach(sec => {
+      gsap.from(sec, { scrollTrigger: { trigger: sec, start: 'top 85%' }, y: 20, opacity: 0, duration: 0.55, ease: EASE_S });
+    });
+
+    // Code copy
+    document.querySelectorAll('.code-block-copy').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const block = btn.closest('.code-block');
+        const code = block.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+        });
+      });
+    });
+
+    // Sidebar active highlighting on scroll
+    const sections = document.querySelectorAll('.doc-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>

@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Collection — Maison Cendre</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+    /* ─────────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--line-height-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    /* ─────────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────────── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 71.5px;
+      padding: 0;
+      height: 24px;
+      background: transparent;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.5s ease;
+      
+    }
+
+    #nav.nav--scrolled {
+      border-bottom: 1px solid currentcolor;
+    }
+
+    #nav.nav--hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    #nav-logo {
+      font-family: var(--font-heading);
+      font-size: 0.8125rem;
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.22em;
+      color: var(--color-heading);
+      text-transform: uppercase;
+            white-space: nowrap;
+    }
+
+    .nav-link {
+      font-size: 0.9375rem;
+      letter-spacing: 0.5px;
+      color: var(--color-nav-text);
+      transition: color var(--transition-base);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      opacity: 0.6;
+    }
+
+    .nav-link--active {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* ─────────────────────────────────────────────
+       PAGE LAYOUT
+    ───────────────────────────────────────────── */
+    #page-wrapper {
+      background: var(--color-page-bg);
+      min-height: 100vh;
+      padding-top: 24px;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 var(--container-inline);
+    }
+
+    /* ─────────────────────────────────────────────
+       PAGE HEADER
+    ───────────────────────────────────────────── */
+    #page-header {
+      padding: var(--space-4xl) var(--container-inline) var(--space-3xl);
+      max-width: 1320px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(253, 53, 110, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #page-header-kicker {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--font-letter-spacing-label);
+      color: var(--color-accent);
+      text-transform: uppercase;
+      margin-bottom: var(--space-lg);
+      opacity: 0;
+    }
+
+    #page-header-headline {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-heading);
+      text-transform: uppercase;
+      line-height: var(--line-height-heading);
+      clip-path: inset(0 100% 0 0);
+      margin-bottom: var(--space-lg);
+    }
+
+    #page-header-sub {
+      font-family: var(--font-body);
+      font-size: var(--type-body-lg);
+      font-weight: var(--weight-light);
+      color: var(--color-body-text);
+      max-width: 520px;
+      line-height: 1.7;
+      opacity: 0;
+    }
+
+    #page-header-rule {
+      width: 56px;
+      height: 1px;
+      background: var(--color-accent);
+      margin-top: var(--space-xl);
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    /* ─────────────────────────────────────────────
+       CATEGORY SECTION
+    ───────────────────────────────────────────── */
+    .product-section {
+      padding: var(--space-3xl) var(--container-inline);
+      max-width: 1320px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .product-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: var(--container-inline);
+      right: var(--container-inline);
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .category-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .category-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--font-letter-spacing-label);
+      color: var(--color-accent);
+      text-transform: uppercase;
+      opacity: 0;
+    }
+
+    .category-count {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.5;
+    }
+
+    /* ─────────────────────────────────────────────
+       CAVIAR GRID — 3-column
+    ───────────────────────────────────────────── */
+    #caviar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl) var(--space-lg);
+    }
+
+    .product-card {
+      position: relative;
+      cursor: pointer;
+      opacity: 0;
+    }
+
+    .product-card:hover .product-card-image-wrap img {
+      transform: scale(1.03);
+    }
+
+    .product-card:hover .product-card-enquire {
+      color: var(--color-heading);
+    }
+
+    .product-card:hover .product-card-enquire::after {
+      width: 100%;
+    }
+
+    .product-card-image-wrap {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-surface-2);
+      margin-bottom: var(--space-lg);
+    }
+
+    .product-card-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        transparent 55%,
+        rgba(25, 25, 28, 0.28) 100%
+      );
+      pointer-events: none;
+    }
+
+    .product-card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      transition: transform 0.9s var(--ease-smooth);
+      display: block;
+    }
+
+    .product-card-image-wrap.caviar-ratio {
+      aspect-ratio: 4 / 5;
+    }
+
+    .product-card-image-fallback {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-surface-2);
+      aspect-ratio: 4 / 5;
+      flex-direction: column;
+      gap: var(--space-sm);
+      padding: var(--space-lg);
+    }
+
+    .product-card-image-fallback-inner {
+      text-align: center;
+    }
+
+    .fallback-path {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.5;
+      display: block;
+      margin-bottom: var(--space-xs);
+    }
+
+    .fallback-label {
+      font-family: var(--font-heading);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      color: var(--color-body-text);
+      opacity: 0.35;
+      text-transform: uppercase;
+    }
+
+    .product-card-body {
+      padding: 0 2px;
+    }
+
+    .product-card-name {
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      font-weight: var(--weight-medium);
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+      margin-bottom: var(--space-xs);
+      text-transform: uppercase;
+    }
+
+    .product-card-origin {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.7;
+      margin-bottom: var(--space-sm);
+      font-style: italic;
+    }
+
+    .product-card-sizes {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.5;
+      letter-spacing: 0.02em;
+      margin-bottom: var(--space-md);
+    }
+
+    .product-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-card-price {
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      font-weight: var(--weight-medium);
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+    }
+
+    .product-card-price-unit {
+      font-weight: var(--weight-light);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.6;
+      margin-left: 4px;
+    }
+
+    .product-card-enquire {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      letter-spacing: 0.08em;
+      color: var(--color-body-text);
+      text-transform: uppercase;
+      position: relative;
+      transition: color var(--transition-base);
+    }
+
+    .product-card-enquire::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--color-accent);
+      transition: width var(--duration-base) var(--ease-smooth);
+    }
+
+    /* ─────────────────────────────────────────────
+       CONSERVAS GRID — 2-column editorial
+    ───────────────────────────────────────────── */
+    #conservas-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-xl) var(--space-lg);
+    }
+
+    .conservas-card {
+      position: relative;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .conservas-card:hover .conservas-card-image-wrap img {
+      transform: scale(1.03);
+    }
+
+    .conservas-card:hover .product-card-enquire {
+      color: var(--color-heading);
+    }
+
+    .conservas-card:hover .product-card-enquire::after {
+      width: 100%;
+    }
+
+    .conservas-card-image-wrap {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-surface-2);
+      aspect-ratio: 3 / 2;
+      margin-bottom: var(--space-lg);
+    }
+
+    .conservas-card-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        transparent 50%,
+        rgba(25, 25, 28, 0.32) 100%
+      );
+      pointer-events: none;
+    }
+
+    .conservas-card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      transition: transform 0.9s var(--ease-smooth);
+    }
+
+    .conservas-card-image-fallback {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-surface-2);
+      aspect-ratio: 3 / 2;
+      flex-direction: column;
+      gap: var(--space-sm);
+      padding: var(--space-lg);
+    }
+
+    .conservas-card-body {
+      padding: 0 2px;
+    }
+
+    .conservas-card-name {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-medium);
+      letter-spacing: 0.05em;
+      color: var(--color-heading);
+      margin-bottom: var(--space-xs);
+      text-transform: uppercase;
+    }
+
+    .conservas-card-origin {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      color: var(--color-body-text);
+      opacity: 0.7;
+      margin-bottom: var(--space-md);
+      font-style: italic;
+    }
+
+    .conservas-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─────────────────────────────────────────────
+       EDITORIAL INTERSTITIAL
+    ───────────────────────────────────────────── */
+    #editorial-interstitial {
+      padding: var(--space-4xl) var(--container-inline);
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(
+        180deg,
+        var(--color-page-bg) 0%,
+        #1e1e22 40%,
+        #1e1e22 60%,
+        var(--color-page-bg) 100%
+      );
+    }
+
+    #editorial-interstitial::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--color-border-strong),
+        transparent
+      );
+    }
+
+    #editorial-interstitial::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--color-border-strong),
+        transparent
+      );
+    }
+
+    #editorial-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    #editorial-eyebrow {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--font-letter-spacing-label);
+      color: var(--color-accent);
+      text-transform: uppercase;
+      margin-bottom: var(--space-xl);
+      opacity: 0.7;
+    }
+
+    #editorial-pullquote {
+      font-family: var(--font-heading);
+      font-size: var(--type-display);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-accent);
+      text-transform: uppercase;
+      line-height: 0.95;
+      transform: translateX(-80px);
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+
+    #editorial-note {
+      margin-top: var(--space-xl);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-style: italic;
+      color: var(--color-body-text);
+      opacity: 0;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    #editorial-ornament {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-heading);
+      font-size: clamp(8rem, 16vw, 18rem);
+      font-weight: var(--weight-bold);
+      color: var(--color-accent);
+      opacity: 0.04;
+      letter-spacing: -0.04em;
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    /* ─────────────────────────────────────────────
+       BOTANICALS ROW — horizontal editorial
+    ───────────────────────────────────────────── */
+    #botanicals-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .botanical-card {
+      position: relative;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .botanical-card:hover .botanical-card-image-wrap img {
+      transform: scale(1.03);
+    }
+
+    .botanical-card:hover .product-card-enquire {
+      color: var(--color-heading);
+    }
+
+    .botanical-card:hover .product-card-enquire::after {
+      width: 100%;
+    }
+
+    .botanical-card-image-wrap {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-surface-2);
+      aspect-ratio: 1 / 1;
+      margin-bottom: var(--space-lg);
+    }
+
+    .botanical-card-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        transparent 55%,
+        rgba(25, 25, 28, 0.3) 100%
+      );
+      pointer-events: none;
+    }
+
+    .botanical-card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      transition: transform 0.9s var(--ease-smooth);
+    }
+
+    .botanical-card-image-fallback {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-surface-2);
+      aspect-ratio: 1 / 1;
+      flex-direction: column;
+      gap: var(--space-sm);
+      padding: var(--space-lg);
+    }
+
+    .botanical-card-body {
+      padding: 0 2px;
+    }
+
+    .botanical-card-name {
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      font-weight: var(--weight-medium);
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+      margin-bottom: var(--space-xs);
+      text-transform: uppercase;
+    }
+
+    .botanical-card-notes {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.55;
+      margin-bottom: var(--space-xs);
+      font-style: italic;
+    }
+
+    .botanical-card-origin {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.45;
+      margin-bottom: var(--space-md);
+    }
+
+    .botanical-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─────────────────────────────────────────────
+       PAGE FOOTER
+    ───────────────────────────────────────────── */
+    #page-footer {
+      padding: var(--space-3xl) var(--container-inline) var(--space-2xl);
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-2xl);
+      position: relative;
+    }
+
+    #page-footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: var(--container-inline);
+      right: var(--container-inline);
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .footer-col-brand {
+      grid-column: 1;
+    }
+
+    .footer-logo {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.22em;
+      color: var(--color-heading);
+      text-transform: uppercase;
+      margin-bottom: var(--space-md);
+    }
+
+    .footer-tagline {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.5;
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    .footer-col-nav {
+      grid-column: 2;
+    }
+
+    .footer-nav-label {
+      font-family: var(--font-heading);
+      font-size: 0.6875rem;
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--font-letter-spacing-label);
+      color: var(--color-body-text);
+      text-transform: uppercase;
+      opacity: 0.4;
+      margin-bottom: var(--space-md);
+    }
+
+    .footer-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .footer-nav-list a {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.6;
+      transition: opacity var(--transition-base), color var(--transition-base);
+    }
+
+    .footer-nav-list a:hover {
+      opacity: 1;
+      color: var(--color-heading);
+    }
+
+    .footer-col-note {
+      grid-column: 3;
+    }
+
+    .footer-note-text {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.4;
+      line-height: 1.7;
+    }
+
+    #footer-bottom {
+      padding: var(--space-lg) var(--container-inline);
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .footer-copyright {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: var(--color-body-text);
+      opacity: 0.3;
+    }
+
+    .footer-accent-line {
+      width: 32px;
+      height: 1px;
+      background: var(--color-accent);
+      opacity: 0.4;
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      #caviar-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      #page-header,
+      .product-section,
+      #editorial-interstitial,
+      #page-footer,
+      #footer-bottom {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      #page-footer {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-col-note {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #nav {
+        padding: 0 24px;
+      }
+
+      #page-header,
+      .product-section,
+      #editorial-interstitial,
+      #page-footer,
+      #footer-bottom {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      #caviar-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #conservas-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #botanicals-row {
+        grid-template-columns: 1fr;
+      }
+
+      #editorial-pullquote {
+        font-size: clamp(2rem, 9vw, 3.5rem);
+      }
+
+      #page-footer {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-col-brand,
+      .footer-col-nav,
+      .footer-col-note {
+        grid-column: 1;
+      }
+    }
+
+    @media (max-width: 375px) {
+      #page-header,
+      .product-section,
+      #editorial-interstitial,
+      #page-footer,
+      #footer-bottom {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ──────────────────────────────────────────
+       NAV
+  ─────────────────────────────────────────── -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <a href="journal.html" class="nav-link">Journal</a>
+    <a href="collection.html" class="nav-link nav-link--active">Collection</a>
+
+    <a href="index.html" id="nav-logo" aria-label="Maison Cendre — Home">MAISON CENDRE</a>
+    <a href="atelier.html" class="nav-link">Atelier</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- ──────────────────────────────────────────
+       PAGE
+  ─────────────────────────────────────────── -->
+  <div id="page-wrapper">
+
+    <!-- PAGE HEADER -->
+    <header id="page-header" role="banner">
+      <p id="page-header-kicker">Maison Cendre</p>
+      <h1 id="page-header-headline">The Collection</h1>
+      <p id="page-header-sub">Each preparation made once, by hand, in season.</p>
+      <div id="page-header-rule"></div>
+    </header>
+
+    <!-- ────────────────────────────────────────
+         SECTION 1: CAVIAR & ROE
+    ──────────────────────────────────────────── -->
+    <section id="section-caviar" class="product-section" aria-label="Caviar and Roe">
+      <div class="category-header">
+        <span class="category-label" id="label-caviar">Caviar &amp; Roe</span>
+        <span class="category-count">6 preparations</span>
+      </div>
+
+      <div id="caviar-grid">
+
+        <!-- Product 1: Osciètre Reserve -->
+        <article id="product-oscietre" class="product-card">
+          <div class="product-card-image-wrap caviar-ratio">
+            <img
+              src="assets/product-caviar-1.jpeg"
+              alt="Osciètre Reserve caviar"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="product-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:4/5;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-caviar-1.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-name">Osciètre Reserve</h3>
+            <p class="product-card-origin">Caspian coast, aged 18 months</p>
+            <p class="product-card-sizes">50g / 100g / 250g</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">$285 <span class="product-card-price-unit">/ 50g</span></span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 2: Siberian Baeri -->
+        <article id="product-baeri" class="product-card">
+          <div class="product-card-image-wrap caviar-ratio">
+            <img
+              src="assets/product-caviar-2.jpeg"
+              alt="Siberian Baeri caviar"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="product-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:4/5;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-caviar-2.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-name">Siberian Baeri</h3>
+            <p class="product-card-origin">Siberia region, cold press process</p>
+            <p class="product-card-sizes">50g / 100g</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">$195 <span class="product-card-price-unit">/ 50g</span></span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 3: Golden Trout -->
+        <article id="product-golden-trout" class="product-card">
+          <div class="product-card-image-wrap caviar-ratio">
+            <img
+              src="assets/product-caviar-3.jpeg"
+              alt="Golden Trout caviar"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="product-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:4/5;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-caviar-3.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-name">Golden Trout</h3>
+            <p class="product-card-origin">Alpine rivers, late autumn harvest</p>
+            <p class="product-card-sizes">50g / 100g</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">$125 <span class="product-card-price-unit">/ 50g</span></span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 4: Lumpfish Pearl -->
+        <article id="product-lumpfish" class="product-card">
+          <div class="product-card-image-wrap caviar-ratio">
+            <img
+              src="assets/product-caviar-4.jpeg"
+              alt="Lumpfish Pearl caviar"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="product-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:4/5;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-caviar-4.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-name">Lumpfish Pearl</h3>
+            <p class="product-card-origin">North Atlantic, salt-cured</p>
+            <p class="product-card-sizes">100g</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">$65 <span class="product-card-price-unit">/ 100g</span></span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 5: Sevruga -->
+        <article id="product-sevruga" class="product-card">
+          <div class="product-card-image-wrap caviar-ratio">
+            <img
+              src="assets/product-sevruga.jpeg"
+              alt="Sevruga caviar"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="product-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:4/5;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-sevruga.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-name">Sevruga</h3>
+            <p class="product-card-origin">Caspian basin, wild</p>
+            <p class="product-card-sizes">30g / 50g</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">$340 <span class="product-card-price-unit">/ 30g</span></span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 6: Caviar Sampler -->
+        <article id="product-sampler" class="product-card">
+          <div class="product-card-image-wrap caviar-ratio">
+            <img
+              src="assets/product-sampler.jpeg"
+              alt="Caviar Sampler"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="product-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:4/5;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-sampler.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-name">Caviar Sampler</h3>
+            <p class="product-card-origin">Three expressions, one sitting</p>
+            <p class="product-card-sizes">3 × 15g</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">$195</span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────
+         SECTION 2: CONSERVAS & PRESERVES
+    ──────────────────────────────────────────── -->
+    <section id="section-conservas" class="product-section" aria-label="Conservas and Preserves">
+      <div class="category-header">
+        <span class="category-label" id="label-conservas">Conservas &amp; Preserves</span>
+        <span class="category-count">4 preparations</span>
+      </div>
+
+      <div id="conservas-grid">
+
+        <!-- Product: Sardine -->
+        <article id="product-sardine" class="conservas-card">
+          <div class="conservas-card-image-wrap">
+            <img
+              src="assets/product-sardine.jpeg"
+              alt="Sardine in Spring Oil"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="conservas-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:3/2;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-sardine.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="conservas-card-body">
+            <h3 class="conservas-card-name">Sardine in Spring Oil</h3>
+            <p class="conservas-card-origin">Galician coast, cold-pressed olive oil</p>
+            <div class="conservas-card-footer">
+              <span class="product-card-price">$38</span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product: Bonito -->
+        <article id="product-bonito" class="conservas-card">
+          <div class="conservas-card-image-wrap">
+            <img
+              src="assets/product-bonito.jpeg"
+              alt="Bonito del Norte"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="conservas-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:3/2;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-bonito.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="conservas-card-body">
+            <h3 class="conservas-card-name">Bonito del Norte</h3>
+            <p class="conservas-card-origin">Cantabrian Sea, July catch</p>
+            <div class="conservas-card-footer">
+              <span class="product-card-price">$52</span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product: Razor Clams -->
+        <article id="product-clams" class="conservas-card">
+          <div class="conservas-card-image-wrap">
+            <img
+              src="assets/product-clams.jpeg"
+              alt="Razor Clams"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="conservas-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:3/2;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-clams.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="conservas-card-body">
+            <h3 class="conservas-card-name">Razor Clams</h3>
+            <p class="conservas-card-origin">Galician rias, hand-harvested</p>
+            <div class="conservas-card-footer">
+              <span class="product-card-price">$44</span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product: Cockles -->
+        <article id="product-cockles" class="conservas-card">
+          <div class="conservas-card-image-wrap">
+            <img
+              src="assets/product-cockles.jpeg"
+              alt="Cockles en Escabèche"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="conservas-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:3/2;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-cockles.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="conservas-card-body">
+            <h3 class="conservas-card-name">Cockles en Escabèche</h3>
+            <p class="conservas-card-origin">Briny, acidic, year-round</p>
+            <div class="conservas-card-footer">
+              <span class="product-card-price">$36</span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────
+         EDITORIAL INTERSTITIAL
+    ──────────────────────────────────────────── -->
+    <div id="editorial-interstitial" role="presentation">
+      <div id="editorial-inner">
+        <p id="editorial-eyebrow">Seasonal philosophy</p>
+        <h2 id="editorial-pullquote">The Season Decides.</h2>
+        <p id="editorial-note">Our catalogue changes with the harvest. These preparations are available while the season allows.</p>
+        <span id="editorial-ornament" aria-hidden="true">S</span>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────────────────
+         SECTION 3: BOTANICALS & TINCTURES
+    ──────────────────────────────────────────── -->
+    <section id="section-botanicals" class="product-section" aria-label="Botanicals and Tinctures">
+      <div class="category-header">
+        <span class="category-label" id="label-botanicals">Botanicals</span>
+        <span class="category-count">3 preparations</span>
+      </div>
+
+      <div id="botanicals-row">
+
+        <!-- Product: Tincture No. 7 -->
+        <article id="product-tincture-7" class="botanical-card">
+          <div class="botanical-card-image-wrap">
+            <img
+              src="assets/product-tincture-7.jpeg"
+              alt="Tincture No. 7"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="botanical-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:1/1;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-tincture-7.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="botanical-card-body">
+            <h3 class="botanical-card-name">Tincture No. 7</h3>
+            <p class="botanical-card-notes">cedar, wormwood, gentian</p>
+            <p class="botanical-card-origin">Alsatian forest, October</p>
+            <div class="botanical-card-footer">
+              <span class="product-card-price">$85</span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product: Bitters Reserve -->
+        <article id="product-bitters" class="botanical-card">
+          <div class="botanical-card-image-wrap">
+            <img
+              src="assets/product-bitters.jpeg"
+              alt="Bitters Reserve"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="botanical-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:1/1;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-bitters.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="botanical-card-body">
+            <h3 class="botanical-card-name">Bitters Reserve</h3>
+            <p class="botanical-card-notes">citrus, cardamom, wild cherry bark</p>
+            <p class="botanical-card-origin">Alpine meadow, late summer</p>
+            <div class="botanical-card-footer">
+              <span class="product-card-price">$72</span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product: Forest Syrup -->
+        <article id="product-syrup" class="botanical-card">
+          <div class="botanical-card-image-wrap">
+            <img
+              src="assets/product-syrup.jpeg"
+              alt="Forest Syrup"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="botanical-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:var(--color-surface-2);aspect-ratio:1/1;flex-direction:column;gap:var(--space-sm);padding:var(--space-lg);">
+              <div class="product-card-image-fallback-inner">
+                <span class="fallback-path">assets/product-syrup.jpeg</span>
+                <span class="fallback-label">Image not found</span>
+              </div>
+            </div>
+          </div>
+          <div class="botanical-card-body">
+            <h3 class="botanical-card-name">Forest Syrup</h3>
+            <p class="botanical-card-notes">Douglas fir, pine resin, birch</p>
+            <p class="botanical-card-origin">Vosges region, spring tap</p>
+            <div class="botanical-card-footer">
+              <span class="product-card-price">$58</span>
+              <a href="contact.html" class="product-card-enquire">Enquire →</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────
+         PAGE FOOTER
+    ──────────────────────────────────────────── -->
+    <footer id="page-footer" role="contentinfo">
+      <div class="footer-col-brand">
+        <div class="footer-logo">Maison Cendre</div>
+        <p class="footer-tagline">Preserved by hand.<br>Aged to presence.</p>
+      </div>
+
+      <div class="footer-col-nav">
+        <p class="footer-nav-label">Navigate</p>
+        <ul class="footer-nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="collection.html">Collection</a></li>
+          <li><a href="atelier.html">Atelier</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col-note">
+        <p class="footer-note-text">
+          All preparations are made in limited quantities. Availability changes with each harvest season. Enquiries are responded to within 48 hours.
+        </p>
+      </div>
+    </footer>
+
+    <div id="footer-bottom">
+      <span class="footer-copyright">&copy; 2024 Maison Cendre. All rights reserved.</span>
+      <div class="footer-accent-line"></div>
+    </div>
+
+  </div><!-- /#page-wrapper -->
+
+  <!-- ──────────────────────────────────────────
+       JS: NAV BEHAVIOR + GSAP ANIMATIONS
+  ─────────────────────────────────────────── -->
+  <script>
+    /* ─────────────────────────────────────────
+       NAV: hide on scroll down, show on scroll up
+       transparent → dark on scroll
+    ──────────────────────────────────────────── */
+    (function () {
+      const nav = document.getElementById('nav');
+      let lastY = 0;
+      let ticking = false;
+
+      function onScroll() {
+        const y = window.scrollY;
+
+        if (y > 48) {
+          nav.classList.add('nav--scrolled');
+        } else {
+          nav.classList.remove('nav--scrolled');
+        }
+
+        if (y > lastY && y > 120) {
+          nav.classList.add('nav--hidden');
+        } else {
+          nav.classList.remove('nav--hidden');
+        }
+
+        lastY = y;
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
+
+
+    /* ─────────────────────────────────────────
+       GSAP ANIMATIONS
+    ──────────────────────────────────────────── */
+    (function () {
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* ── PAGE HEADER: clip-path reveal on headline ── */
+      const tl = gsap.timeline({ delay: 0.15 });
+
+      tl.to('#page-header-kicker', {
+        opacity: 1,
+        duration: 0.5,
+        ease: 'power2.out'
+      })
+      .to('#page-header-headline', {
+        clipPath: 'inset(0 0% 0 0)',
+        duration: 0.9,
+        ease: 'power3.out'
+      }, '-=0.2')
+      .to('#page-header-sub', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out'
+      }, '-=0.4')
+      .to('#page-header-rule', {
+        scaleX: 1,
+        duration: 0.7,
+        ease: 'power3.inOut'
+      }, '-=0.3');
+
+      /* ── CATEGORY LABELS: fade in ── */
+      ['#label-caviar', '#label-conservas', '#label-botanicals'].forEach(function (id) {
+        gsap.to(id, {
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: id,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
+
+      /* ── CAVIAR GRID: staggered card reveals ── */
+      gsap.to('#caviar-grid .product-card', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#caviar-grid',
+          start: 'top 82%',
+          toggleActions: 'play none none none'
+        },
+        onStart: function () {
+          /* also animate images from scale 1.05 → 1 */
+          gsap.to('#caviar-grid .product-card-image-wrap img', {
+            scale: 1,
+            duration: 1.0,
+            stagger: 0.1,
+            ease: 'power2.out'
+          });
+        }
+      });
+
+      /* initial y state for caviar cards */
+      gsap.set('#caviar-grid .product-card', { y: 40 });
+
+      /* ── CONSERVAS GRID: staggered card reveals ── */
+      gsap.set('#conservas-grid .conservas-card', { y: 40 });
+
+      gsap.to('#conservas-grid .conservas-card', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#conservas-grid',
+          start: 'top 82%',
+          toggleActions: 'play none none none'
+        },
+        onStart: function () {
+          gsap.to('#conservas-grid .conservas-card-image-wrap img', {
+            scale: 1,
+            duration: 1.0,
+            stagger: 0.12,
+            ease: 'power2.out'
+          });
+        }
+      });
+
+      /* ── EDITORIAL INTERSTITIAL: horizontal slide ── */
+      gsap.to('#editorial-pullquote', {
+        x: 0,
+        opacity: 1,
+        duration: 1.0,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#editorial-interstitial',
+          start: 'top 75%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      gsap.to('#editorial-note', {
+        opacity: 0.75,
+        duration: 0.8,
+        ease: 'power2.out',
+        delay: 0.3,
+        scrollTrigger: {
+          trigger: '#editorial-interstitial',
+          start: 'top 75%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      /* ── BOTANICALS ROW: staggered card reveals ── */
+      gsap.set('#botanicals-row .botanical-card', { y: 40 });
+
+      gsap.to('#botanicals-row .botanical-card', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#botanicals-row',
+          start: 'top 82%',
+          toggleActions: 'play none none none'
+        },
+        onStart: function () {
+          gsap.to('#botanicals-row .botanical-card-image-wrap img', {
+            scale: 1,
+            duration: 1.0,
+            stagger: 0.12,
+            ease: 'power2.out'
+          });
+        }
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

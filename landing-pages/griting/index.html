@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Griting — Talent Trust and Readiness Infrastructure for the AI Capital</title>
+  <meta name="description" content="We build products, foster community, and create opportunities that help you learn, grow, and make an impact.">
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      color: var(--color-body-text);
+      background-color: var(--color-page-bg);
+      line-height: var(--line-height-normal);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Container ── */
+    .container {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding-left: var(--grid-container-padding);
+      padding-right: var(--grid-container-padding);
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: var(--type-button);
+      font-weight: var(--font-weight-subheading);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: var(--button-border-radius);
+      padding: var(--button-padding);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background var(--duration-fast) var(--ease-primary),
+                  color var(--duration-fast) var(--ease-primary),
+                  border-color var(--duration-fast) var(--ease-primary),
+                  transform var(--duration-fast) var(--ease-primary);
+      white-space: nowrap;
+    }
+    .btn:focus-visible {
+      outline: var(--focus-outline);
+      outline-offset: var(--focus-outline-offset);
+    }
+    .btn-primary {
+      background: var(--color-primary-cta-bg);
+      color: var(--color-primary-cta-text);
+      border-color: var(--color-primary-cta-bg);
+    }
+    .btn-primary:hover {
+      background: var(--color-primary);
+      border-color: var(--color-border-strong);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active { background: #0D3B1C; transform: translateY(0); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-ghost-cta-text);
+      border-color: var(--color-ghost-cta-border);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); }
+    .btn-secondary {
+      background: var(--color-primary);
+      color: var(--color-surface);
+      border-color: var(--color-border-strong);
+    }
+    .btn-secondary:hover { background: var(--color-accent); border-color: var(--color-accent); }
+
+    /* ── Light section button variants ── */
+    .btn-primary-light {
+      background: var(--color-text-on-light);
+      color: var(--color-surface);
+      border-color: var(--color-text-on-light);
+    }
+    .btn-primary-light:hover { background: var(--color-accent); border-color: var(--color-accent); transform: translateY(-1px); }
+    .btn-ghost-light {
+      background: transparent;
+      color: var(--color-text-on-light);
+      border-color: var(--color-text-on-light);
+    }
+    .btn-ghost-light:hover { background: rgba(10,36,16,0.08); }
+
+    /* ── Section padding ── */
+    .section-dark {
+      background: var(--color-page-bg);
+      padding: var(--section-padding) 0;
+    }
+    .section-light {
+      background: var(--color-light-background);
+      padding: var(--section-padding) 0;
+    }
+
+    /* ── Typography helpers ── */
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-subheading);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-4);
+    }
+    .section-label-light { color: var(--color-accent); }
+
+    /* ── Cards (dark) ── */
+    .card-dark {
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-border-radius);
+      padding: var(--card-padding);
+      transition: transform var(--duration-fast) var(--ease-primary),
+                  box-shadow var(--duration-fast) var(--ease-primary),
+                  border-color var(--duration-fast) var(--ease-primary);
+    }
+    .card-dark:hover {
+      transform: var(--card-hover-lift);
+      box-shadow: var(--card-hover-shadow);
+      border-color: var(--color-border-strong);
+    }
+
+    /* ── Cards (light) ── */
+    .card-light {
+      background: var(--color-surface);
+      border: 1px solid rgba(10,36,16,0.12);
+      border-radius: var(--card-border-radius);
+      padding: var(--card-padding);
+      transition: transform var(--duration-fast) var(--ease-primary),
+                  box-shadow var(--duration-fast) var(--ease-primary);
+    }
+    .card-light:hover {
+      transform: var(--card-hover-lift);
+      box-shadow: 0 8px 24px rgba(10,36,16,0.12);
+    }
+
+    /* ── Visibility for scroll animation init ── */
+    .gsap-hidden { opacity: 0; }
+
+    /* ─────────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────────── */
+    #nav-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: var(--color-nav-background);
+      border-bottom: none;
+      box-shadow: none;
+      backdrop-filter: none;
+      transition: height var(--duration-nav) var(--ease-nav),
+                  border-bottom var(--duration-nav) var(--ease-nav),
+                  box-shadow var(--duration-nav) var(--ease-nav),
+                  backdrop-filter var(--duration-nav) var(--ease-nav);
+    }
+    #nav-bar.nav--scrolled {
+      height: 60px;
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: 0 1px 0 rgba(26,75,42,0.5);
+      backdrop-filter: blur(12px);
+    }
+    #nav-inner {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      gap: var(--space-8);
+      padding: 0 var(--grid-container-padding);
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+    }
+    #nav-logo-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    #nav-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--color-accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    #nav-logo-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: #ffffff;
+    }
+    #nav-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-nav-text);
+      letter-spacing: 0.04em;
+    }
+    #nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      list-style: none;
+    }
+    #nav-links li a {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--font-letter-spacing-nav);
+      color: var(--color-nav-text);
+      text-decoration: none;
+      position: relative;
+      transition: color var(--duration-fast) var(--ease-primary),
+                  opacity var(--duration-fast) var(--ease-primary);
+    }
+    #nav-links li a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 1px;
+      background: var(--color-muted-text);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.26s var(--ease-primary);
+    }
+    #nav-links li a:hover { color: var(--color-muted-text); }
+    #nav-links li a:hover::after { transform: scaleX(1); }
+    #nav-cta-zone {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    #nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--space-2);
+    }
+    #nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--color-nav-text);
+      margin: 4px 0;
+      transition: transform var(--duration-fast) var(--ease-primary),
+                  opacity var(--duration-fast) var(--ease-primary);
+    }
+
+    /* ─────────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background: var(--color-page-bg);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: calc(var(--nav-height) + var(--hero-padding));
+      padding-bottom: var(--hero-padding);
+    }
+    #hero-bg-gradient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 75% 50%, rgba(30,126,69,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(21,85,39,0.18) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    #hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+    #hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-heading);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-subheading);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-6);
+    }
+    #hero-label-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      flex-shrink: 0;
+    }
+    #hero-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-hero);
+      font-weight: var(--font-weight-heading);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: var(--color-heading-text);
+      margin-bottom: var(--space-8);
+      max-width: 820px;
+    }
+    #hero-body {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.4vw, 1.25rem);
+      font-weight: 400;
+      line-height: var(--line-height-relaxed);
+      color: var(--color-muted-text);
+      margin-bottom: var(--space-10);
+      max-width: 540px;
+      letter-spacing: -0.01em;
+    }
+    #hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    #hero-scroll-indicator {
+      position: absolute;
+      bottom: var(--space-10);
+      left: var(--grid-container-padding);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-subtle-text);
+    }
+    #hero-scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--color-border-strong);
+    }
+
+    /* ─────────────────────────────────────────────
+       ABOUT — A New Infrastructure for the AI Talent Era
+    ───────────────────────────────────────────── */
+    #about {
+      background: var(--color-light-background);
+      padding: var(--section-padding) 0;
+      position: relative;
+    }
+    #about-inner {
+      position: relative;
+      z-index: 1;
+    }
+    #about-header {
+      max-width: 760px;
+      margin-bottom: clamp(3rem, 6vw, 5rem);
+    }
+    #about-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-heading);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--color-text-on-light);
+      margin-bottom: var(--space-6);
+    }
+    #about-subheading {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.125rem);
+      font-weight: 400;
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary-on-light);
+      max-width: 620px;
+    }
+    #about-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+    .about-card {
+      background: var(--color-surface);
+      border: 1px solid rgba(10,36,16,0.1);
+      border-radius: var(--card-border-radius);
+      padding: var(--card-padding);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--duration-fast) var(--ease-primary),
+                  box-shadow var(--duration-fast) var(--ease-primary);
+    }
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-accent), transparent);
+    }
+    .about-card:hover {
+      transform: var(--card-hover-lift);
+      box-shadow: 0 8px 24px rgba(10,36,16,0.1);
+    }
+    .about-card-number {
+      font-family: var(--font-heading);
+      font-size: var(--type-small);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--color-accent);
+      margin-bottom: var(--space-4);
+    }
+    .about-card-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--color-text-on-light);
+      margin-bottom: var(--space-3);
+    }
+    .about-card-body {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary-on-light);
+    }
+
+    /* ─────────────────────────────────────────────
+       ECOSYSTEM
+    ───────────────────────────────────────────── */
+    #ecosystem {
+      background: var(--color-page-bg);
+      padding: var(--section-padding) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    #ecosystem-bg-texture {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, transparent 0%, rgba(21,85,39,0.05) 50%, transparent 100%);
+      pointer-events: none;
+    }
+    #ecosystem-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto clamp(3rem, 6vw, 5rem);
+    }
+    #ecosystem-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-heading);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--color-heading-text);
+      margin-bottom: var(--space-6);
+    }
+    #ecosystem-subheading {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.125rem);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-muted-text);
+    }
+    #ecosystem-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    .ecosystem-card {
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-border-radius);
+      padding: 40px var(--card-padding);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--duration-fast) var(--ease-primary),
+                  box-shadow var(--duration-fast) var(--ease-primary),
+                  border-color var(--duration-fast) var(--ease-primary);
+    }
+    .ecosystem-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--color-border-strong), transparent);
+    }
+    .ecosystem-card:hover {
+      transform: var(--card-hover-lift);
+      box-shadow: var(--card-hover-shadow);
+      border-color: var(--color-border-strong);
+    }
+    .ecosystem-card-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(30,126,69,0.15);
+      border: 1px solid rgba(30,126,69,0.3);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ecosystem-card-icon svg { width: 22px; height: 22px; stroke: var(--color-accent); fill: none; stroke-width: 1.5; }
+    .ecosystem-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--color-heading-text);
+    }
+    .ecosystem-card-body {
+      font-family: var(--font-body);
+      font-size: 0.975rem;
+      line-height: var(--line-height-relaxed);
+      color: var(--color-muted-text);
+      flex: 1;
+    }
+    .ecosystem-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-heading);
+      font-size: var(--type-small);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: gap var(--duration-fast) var(--ease-primary),
+                  color var(--duration-fast) var(--ease-primary);
+    }
+    .ecosystem-card-link:hover { gap: var(--space-3); color: #FFFFFF; }
+    .ecosystem-card-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* ─────────────────────────────────────────────
+       GRITME AUDIT — split left text / right UI
+    ───────────────────────────────────────────── */
+    #gritme-audit {
+      background: var(--color-light-background);
+      padding: var(--section-padding) 0;
+      overflow: hidden;
+    }
+    #gritme-audit-inner {
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      gap: var(--space-16);
+      align-items: center;
+    }
+    #gritme-audit-text { }
+    #gritme-audit-product-tag {
+      display: inline-block;
+      background: rgba(30,126,69,0.12);
+      border: 1px solid rgba(30,126,69,0.3);
+      border-radius: 4px;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      padding: 4px 10px;
+      margin-bottom: var(--space-6);
+    }
+    #gritme-audit-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-heading);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--color-text-on-light);
+      margin-bottom: var(--space-6);
+    }
+    #gritme-audit-body {
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary-on-light);
+      margin-bottom: var(--space-8);
+    }
+    #gritme-audit-steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-10);
+    }
+    #gritme-audit-steps li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-text-on-light);
+    }
+    #gritme-audit-steps li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      flex-shrink: 0;
+    }
+    #gritme-audit-cta-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    #gritme-audit-ui {
+      position: relative;
+    }
+    #gritme-audit-ui-card {
+      background: var(--color-page-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--space-8);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(6,41,20,0.25), inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    #gritme-audit-ui-card::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 24px;
+      right: 24px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    }
+    #audit-ui-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+    }
+    #audit-ui-title {
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--color-muted-text);
+    }
+    #audit-ui-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(30,126,69,0.2);
+      border: 1px solid rgba(30,126,69,0.4);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-accent);
+      padding: 4px 10px;
+    }
+    #audit-ui-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+    #audit-feature-card {
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: var(--space-6);
+      margin-bottom: var(--space-4);
+    }
+    #audit-feature-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-heading-text);
+      margin-bottom: var(--space-2);
+      letter-spacing: -0.01em;
+    }
+    #audit-feature-body {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--color-muted-text);
+    }
+    #audit-metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+    }
+    .audit-metric {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: var(--space-4);
+      text-align: center;
+    }
+    .audit-metric-value {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      letter-spacing: -0.02em;
+    }
+    .audit-metric-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-subtle-text);
+      margin-top: 2px;
+    }
+
+    /* ─────────────────────────────────────────────
+       GRITME INCUBATION — split left text / right items
+    ───────────────────────────────────────────── */
+    #gritme-incubation {
+      background: var(--color-light-background);
+      padding: var(--section-padding) 0;
+      border-top: 1px solid rgba(10,36,16,0.08);
+    }
+    #gritme-incubation-inner {
+      display: grid;
+      grid-template-columns: 45fr 55fr;
+      gap: var(--space-16);
+      align-items: start;
+    }
+    #gritme-incubation-product-tag {
+      display: inline-block;
+      background: rgba(30,126,69,0.12);
+      border: 1px solid rgba(30,126,69,0.3);
+      border-radius: 4px;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      padding: 4px 10px;
+      margin-bottom: var(--space-6);
+    }
+    #gritme-incubation-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-heading);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--color-text-on-light);
+      margin-bottom: var(--space-6);
+    }
+    #gritme-incubation-body {
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary-on-light);
+      margin-bottom: var(--space-8);
+    }
+    #gritme-incubation-cta-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    #gritme-incubation-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .incubation-item {
+      background: var(--color-surface);
+      border: 1px solid rgba(10,36,16,0.1);
+      border-radius: var(--card-border-radius);
+      padding: var(--space-6);
+      display: flex;
+      gap: var(--space-4);
+      align-items: flex-start;
+      transition: transform var(--duration-fast) var(--ease-primary),
+                  box-shadow var(--duration-fast) var(--ease-primary);
+    }
+    .incubation-item:hover {
+      transform: translateX(4px);
+      box-shadow: -4px 0 0 var(--color-accent), 0 4px 16px rgba(10,36,16,0.08);
+    }
+    .incubation-item-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(30,126,69,0.1);
+      border: 1px solid rgba(30,126,69,0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .incubation-item-icon svg { width: 18px; height: 18px; stroke: var(--color-accent); fill: none; stroke-width: 1.5; }
+    .incubation-item-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--color-text-on-light);
+      margin-bottom: var(--space-2);
+    }
+    .incubation-item-body {
+      font-size: 0.9rem;
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary-on-light);
+    }
+
+    /* ─────────────────────────────────────────────
+       GRITME MENTORSHIP — full width 4 column grid
+    ───────────────────────────────────────────── */
+    #gritme-mentorship {
+      background: var(--color-light-background);
+      padding: var(--section-padding) 0;
+      border-top: 1px solid rgba(10,36,16,0.08);
+    }
+    #gritme-mentorship-header {
+      max-width: 780px;
+      margin-bottom: clamp(3rem, 5vw, 5rem);
+    }
+    #gritme-mentorship-product-tag {
+      display: inline-block;
+      background: rgba(30,126,69,0.12);
+      border: 1px solid rgba(30,126,69,0.3);
+      border-radius: 4px;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      padding: 4px 10px;
+      margin-bottom: var(--space-6);
+    }
+    #gritme-mentorship-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-heading);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--color-text-on-light);
+      margin-bottom: var(--space-6);
+    }
+    #gritme-mentorship-body {
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary-on-light);
+      margin-bottom: var(--space-8);
+    }
+    #gritme-mentorship-cta {
+      margin-bottom: 0;
+    }
+    #gritme-mentorship-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+    .mentorship-step-card {
+      background: var(--color-surface);
+      border: 1px solid rgba(10,36,16,0.1);
+      border-radius: var(--card-border-radius);
+      padding: var(--space-8) var(--card-padding);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--duration-fast) var(--ease-primary),
+                  box-shadow var(--duration-fast) var(--ease-primary);
+    }
+    .mentorship-step-card:hover {
+      transform: var(--card-hover-lift);
+      box-shadow: 0 8px 24px rgba(10,36,16,0.1);
+    }
+    .mentorship-step-num {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1;
+      color: rgba(30,126,69,0.15);
+      margin-bottom: var(--space-4);
+      letter-spacing: -0.04em;
+    }
+    .mentorship-step-title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--color-text-on-light);
+      margin-bottom: var(--space-3);
+    }
+    .mentorship-step-body {
+      font-size: 0.9rem;
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary-on-light);
+    }
+
+    /* ─────────────────────────────────────────────
+       EXPANDING — dark 2-column cards
+    ───────────────────────────────────────────── */
+    #expanding {
+      background: var(--color-page-bg);
+      padding: var(--section-padding) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    #expanding-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(26,75,42,0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,75,42,0.12) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+    }
+    #expanding-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto clamp(3rem, 6vw, 5rem);
+    }
+    #expanding-badge {
+      display: inline-block;
+      background: rgba(30,126,69,0.15);
+      border: 1px solid rgba(30,126,69,0.4);
+      border-radius: 20px;
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      padding: 5px 14px;
+      margin-bottom: var(--space-6);
+    }
+    #expanding-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-heading);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--color-heading-text);
+      margin-bottom: var(--space-6);
+    }
+    #expanding-subheading {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.125rem);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-muted-text);
+    }
+    #expanding-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+    .expanding-card {
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-border-radius);
+      padding: 40px var(--card-padding);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--duration-fast) var(--ease-primary),
+                  box-shadow var(--duration-fast) var(--ease-primary),
+                  border-color var(--duration-fast) var(--ease-primary);
+    }
+    .expanding-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-accent), var(--color-border-strong), transparent);
+    }
+    .expanding-card:hover {
+      transform: var(--card-hover-lift);
+      box-shadow: var(--card-hover-shadow);
+      border-color: var(--color-border-strong);
+    }
+    .expanding-card-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-heading-text);
+      margin-bottom: var(--space-4);
+    }
+    .expanding-card-body {
+      font-size: 0.975rem;
+      line-height: var(--line-height-relaxed);
+      color: var(--color-muted-text);
+      margin-bottom: var(--space-8);
+    }
+    .expanding-card-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .expanding-card-features li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-muted-text);
+    }
+    .expanding-card-features li::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--color-border-strong);
+      flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────────────────────
+       TESTIMONIALS — scrolling carousel
+    ───────────────────────────────────────────── */
+    #testimonials {
+      background: var(--color-light-background);
+      padding: var(--section-padding) 0;
+      overflow: hidden;
+    }
+    #testimonials-header {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto clamp(3rem, 5vw, 4.5rem);
+    }
+    #testimonials-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-heading);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--color-text-on-light);
+      margin-bottom: var(--space-4);
+    }
+    #testimonials-subheading {
+      font-size: clamp(0.95rem, 1.1vw, 1rem);
+      color: var(--color-text-secondary-on-light);
+      line-height: var(--line-height-relaxed);
+    }
+    #testimonials-track-outer {
+      overflow: hidden;
+      position: relative;
+    }
+    #testimonials-track-outer::before,
+    #testimonials-track-outer::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    #testimonials-track-outer::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--color-light-background), transparent);
+    }
+    #testimonials-track-outer::after {
+      right: 0;
+      background: linear-gradient(-90deg, var(--color-light-background), transparent);
+    }
+    #testimonials-track {
+      display: flex;
+      gap: var(--space-6);
+      width: max-content;
+      animation: testimonialScroll 40s linear infinite;
+    }
+    #testimonials-track:hover { animation-play-state: paused; }
+    @keyframes testimonialScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .testimonial-card {
+      width: 360px;
+      flex-shrink: 0;
+      background: var(--color-surface);
+      border: 1px solid rgba(10,36,16,0.1);
+      border-radius: var(--card-border-radius);
+      padding: var(--card-padding);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      box-shadow: 0 2px 16px rgba(10,36,16,0.06);
+    }
+    .testimonial-quote-mark {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      line-height: 1;
+      color: var(--color-accent);
+      opacity: 0.4;
+    }
+    .testimonial-quote {
+      font-size: 0.975rem;
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-on-light);
+      flex: 1;
+      font-style: italic;
+    }
+    .testimonial-attribution {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      border-top: 1px solid rgba(10,36,16,0.08);
+      padding-top: var(--space-4);
+    }
+    .testimonial-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+    .testimonial-name {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--color-text-on-light);
+      letter-spacing: -0.01em;
+    }
+    .testimonial-role {
+      font-size: 0.8rem;
+      color: var(--color-text-secondary-on-light);
+      margin-top: 1px;
+    }
+
+    /* ─────────────────────────────────────────────
+       CTA FULL
+    ───────────────────────────────────────────── */
+    #cta-section {
+      background: var(--color-page-bg);
+      padding: var(--section-padding) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta-bg-radial {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(30,126,69,0.2) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    #cta-inner {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    #cta-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-heading);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--color-heading-text);
+      margin-bottom: var(--space-10);
+    }
+    #cta-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    /* ─────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────── */
+    #site-footer {
+      background: var(--color-page-bg);
+      padding: var(--space-20) 0 var(--space-12);
+      border-top: 1px solid var(--color-border);
+    }
+    #footer-main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: var(--space-8);
+      margin-bottom: var(--space-16);
+    }
+    #footer-brand-col { }
+    #footer-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      text-decoration: none;
+      margin-bottom: var(--space-6);
+    }
+    #footer-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--color-accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #footer-brand-icon svg { width: 20px; height: 20px; fill: #ffffff; }
+    #footer-brand-name {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-heading-text);
+      letter-spacing: 0.04em;
+    }
+    #footer-cta-block {
+      margin-top: var(--space-6);
+    }
+    #footer-cta-heading {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-heading-text);
+      margin-bottom: var(--space-4);
+    }
+    .footer-link-col { }
+    .footer-col-heading {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin-bottom: var(--space-4);
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .footer-links li a {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 400;
+      color: var(--color-subtle-text);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-primary);
+    }
+    .footer-links li a:hover { color: var(--color-heading-text); }
+    #footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border);
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    #footer-legal {
+      font-size: 0.8rem;
+      color: var(--color-subtle-text);
+    }
+    #footer-legal-links {
+      display: flex;
+      gap: var(--space-6);
+      list-style: none;
+    }
+    #footer-legal-links li a {
+      font-size: 0.8rem;
+      color: var(--color-subtle-text);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-primary);
+    }
+    #footer-legal-links li a:hover { color: var(--color-muted-text); }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      #gritme-audit-inner, #gritme-incubation-inner { grid-template-columns: 1fr; gap: var(--space-12); }
+      #gritme-mentorship-grid { grid-template-columns: repeat(2, 1fr); }
+      #ecosystem-cards-grid { grid-template-columns: 1fr; }
+      #footer-main-grid { grid-template-columns: 1fr 1fr 1fr; }
+      #footer-brand-col { grid-column: 1 / -1; }
+    }
+    @media (max-width: 768px) {
+      :root { --section-padding: 64px; --hero-padding: 80px; }
+      #nav-links, #nav-cta-zone { display: none; }
+      #nav-hamburger { display: flex; flex-direction: column; }
+      #about-cards-grid { grid-template-columns: 1fr; }
+      #gritme-mentorship-grid { grid-template-columns: 1fr 1fr; }
+      #expanding-cards-grid { grid-template-columns: 1fr; }
+      #footer-main-grid { grid-template-columns: 1fr 1fr; }
+      #footer-brand-col { grid-column: 1 / -1; }
+      .testimonial-card { width: 300px; }
+    }
+    @media (max-width: 375px) {
+      :root { --section-padding: 48px; --hero-padding: 64px; --grid-container-padding: 20px; }
+      #gritme-mentorship-grid { grid-template-columns: 1fr; }
+      #footer-main-grid { grid-template-columns: 1fr; }
+      #footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─────────────────────────────────────────
+       NAV
+  ───────────────────────────────────────────── -->
+  <header id="nav-bar" role="banner">
+    <div id="nav-inner">
+      <a id="nav-logo-group" href="index.html" aria-label="Griting home">
+        <div id="nav-logo-icon" aria-hidden="true">
+          <!-- Stylized G icon -->
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8c3.54 0 6.56-2.3 7.6-5.48H10V9.6h9.4c.08.45.12.91.12 1.4 0 5.19-3.81 9-9.52 9C4.77 20 0 15.52 0 10S4.77 0 10 0c2.72 0 5.16 1.04 7 2.74L15.2 4.56A7.34 7.34 0 0010 2z" transform="scale(1)"/>
+          </svg>
+        </div>
+        <span id="nav-wordmark">Griting</span>
+      </a>
+      <nav id="nav-links-wrapper" aria-label="Primary navigation">
+        <ul id="nav-links">
+          <li><a href="#about" class="nav-link">Product</a></li>
+          <li><a href="#ecosystem" class="nav-link">About</a></li>
+          <li><a href="#testimonials" class="nav-link">Contact</a></li>
+          <li><a href="#expanding" class="nav-link">Blog</a></li>
+        </ul>
+      </nav>
+      <div id="nav-cta-zone">
+        <a href="#cta-section" class="btn btn-primary">Get in Touch</a>
+      </div>
+      <button id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ─────────────────────────────────────────
+         HERO
+    ───────────────────────────────────────────── -->
+    <section id="hero" aria-labelledby="hero-heading">
+      <div id="hero-bg-gradient" aria-hidden="true"></div>
+      <div class="container">
+        <div id="hero-content">
+          <div id="hero-label" aria-hidden="true">
+            <span id="hero-label-dot"></span>
+            Talent Infrastructure
+          </div>
+          <h1 id="hero-heading" class="hero-headline">
+            Talent Trust and Readiness Infrastructure for the AI Capital
+          </h1>
+          <p id="hero-body" class="hero-subhead">
+            We build products, foster community, and create opportunities that help you learn, grow, and make an impact.
+          </p>
+          <div id="hero-cta-group" class="hero-cta">
+            <a href="#cta-section" class="btn btn-primary">Get in Touch</a>
+            <a href="#about" class="btn btn-ghost">Learn More</a>
+          </div>
+        </div>
+      </div>
+      <div id="hero-scroll-indicator" aria-hidden="true">
+        <span id="hero-scroll-line"></span>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────
+         ABOUT — A New Infrastructure for the AI Talent Era
+    ───────────────────────────────────────────── -->
+    <section id="about" class="section-light" aria-labelledby="about-heading">
+      <div class="container">
+        <div id="about-inner">
+          <div id="about-header">
+            <p class="section-label section-label-light">Why Now</p>
+            <h2 id="about-heading">A New Infrastructure for the AI Talent Era</h2>
+            <p id="about-subheading">AI is transforming work into workflows. Organizations need a new way to verify capability, develop talent, and build trusted human capital systems.</p>
+          </div>
+          <div id="about-cards-grid">
+
+            <div class="about-card gsap-hidden">
+              <div class="about-card-number">01</div>
+              <h3 class="about-card-title">Work Is Becoming Workflow-Based</h3>
+              <p class="about-card-body">AI transforms traditional job roles into dynamic workflows where execution, decision-making, and ownership matter more than static credentials.</p>
+            </div>
+
+            <div class="about-card gsap-hidden">
+              <div class="about-card-number">02</div>
+              <h3 class="about-card-title">Trust Must Be Verifiable</h3>
+              <p class="about-card-body">Hiring signals today rely on resumes, interviews, and static tests. In the AI era, organizations need traceable and auditable signals of real capability.</p>
+            </div>
+
+            <div class="about-card gsap-hidden">
+              <div class="about-card-number">03</div>
+              <h3 class="about-card-title">Capability Is New Talent Metric</h3>
+              <p class="about-card-body">Companies are shifting from hiring individuals for roles to building internal capability systems. Continuous evaluation, learning, and feedback create measurable human capital.</p>
+            </div>
+
+            <div class="about-card gsap-hidden">
+              <div class="about-card-number">04</div>
+              <h3 class="about-card-title">Human Capital Becomes Infrastructure</h3>
+              <p class="about-card-body">AI talent needs its own infrastructure — one that verifies execution, builds capability, and connects people across research, industry, and mentorship.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────
+         ECOSYSTEM
+    ───────────────────────────────────────────── -->
+    <section id="ecosystem" class="section-dark" aria-labelledby="ecosystem-heading">
+      <div id="ecosystem-bg-texture" aria-hidden="true"></div>
+      <div class="container" style="position:relative;z-index:1;">
+        <div id="ecosystem-header">
+          <p class="section-label">Platform</p>
+          <h2 id="ecosystem-heading">Explore the Griting Ecosystem</h2>
+          <p id="ecosystem-subheading">A platform designed to verify capability, develop talent, and connect the AI ecosystem across enterprise, research, and mentorship.</p>
+        </div>
+        <div id="ecosystem-cards-grid">
+
+          <div class="ecosystem-card gsap-hidden">
+            <div class="ecosystem-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M17.5 14v6M14.5 17h6"/></svg>
+            </div>
+            <h3 class="ecosystem-card-title">For Businesses</h3>
+            <p class="ecosystem-card-body">To discover, evaluate, and develop AI-ready talent for the future.</p>
+            <a href="#gritme-audit" class="ecosystem-card-link">
+              Learn More
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <div class="ecosystem-card gsap-hidden">
+            <div class="ecosystem-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <h3 class="ecosystem-card-title">For Individuals</h3>
+            <p class="ecosystem-card-body">To grow faster in the AI era with mentorship, community, and incubation support.</p>
+            <a href="#gritme-mentorship" class="ecosystem-card-link">
+              Learn More
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <div class="ecosystem-card gsap-hidden">
+            <div class="ecosystem-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <h3 class="ecosystem-card-title">For Community</h3>
+            <p class="ecosystem-card-body">To collaborate on building a global ecosystem for AI innovation and growth.</p>
+            <a href="#expanding" class="ecosystem-card-link">
+              Learn More
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────
+         GRITME AUDIT
+    ───────────────────────────────────────────── -->
+    <section id="gritme-audit" class="section-light" aria-labelledby="gritme-audit-heading">
+      <div class="container">
+        <div id="gritme-audit-inner">
+          <div id="gritme-audit-text">
+            <div id="gritme-audit-product-tag">GritMe</div>
+            <h2 id="gritme-audit-heading">GritMe: Auditable Talent System</h2>
+            <p id="gritme-audit-body">An enterprise evidence-based talent evaluation system that provides structured assessments with traceable reasoning and auditable records.</p>
+            <ul id="gritme-audit-steps">
+              <li>01 Talent outcomes</li>
+              <li>02 Outputs by multi-dimension</li>
+              <li>03 Simulates with real project</li>
+            </ul>
+            <div id="gritme-audit-cta-group">
+              <a href="#cta-section" class="btn btn-primary-light">Get in Touch</a>
+              <a href="#cta-section" class="btn btn-ghost-light">Book Demo</a>
+            </div>
+          </div>
+          <div id="gritme-audit-ui" class="gsap-hidden">
+            <div id="gritme-audit-ui-card">
+              <div id="audit-ui-header">
+                <span id="audit-ui-title">Talent Evaluation Report</span>
+                <span id="audit-ui-badge">Auditable</span>
+              </div>
+              <div id="audit-feature-card">
+                <h4 id="audit-feature-title">Evidence-Based Talent Evaluation</h4>
+                <p id="audit-feature-body">Access skills with observable evidence to produce auditable reports.</p>
+              </div>
+              <div id="audit-metrics-row">
+                <div class="audit-metric">
+                  <div class="audit-metric-value">3×</div>
+                  <div class="audit-metric-label">Dimensions</div>
+                </div>
+                <div class="audit-metric">
+                  <div class="audit-metric-value">100%</div>
+                  <div class="audit-metric-label">Traceable</div>
+                </div>
+                <div class="audit-metric">
+                  <div class="audit-metric-value">Live</div>
+                  <div class="audit-metric-label">Projects</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────
+         GRITME INCUBATION
+    ───────────────────────────────────────────── -->
+    <section id="gritme-incubation" aria-labelledby="gritme-incubation-heading">
+      <div class="container">
+        <div id="gritme-incubation-inner">
+          <div id="gritme-incubation-text">
+            <div id="gritme-incubation-product-tag">GritMe</div>
+            <h2 id="gritme-incubation-heading">GritMe: AI Incubation System</h2>
+            <p id="gritme-incubation-body">An enterprise platform designed to develop talent through structured learning, real-world projects, and guided capability building.</p>
+            <div id="gritme-incubation-cta-group">
+              <a href="#cta-section" class="btn btn-primary-light">Get in Touch</a>
+              <a href="#cta-section" class="btn btn-ghost-light">Book Demo</a>
+            </div>
+          </div>
+          <div id="gritme-incubation-items">
+
+            <div class="incubation-item gsap-hidden">
+              <div class="incubation-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+              </div>
+              <div>
+                <h3 class="incubation-item-title">Workflow-Based Skill Mapping</h3>
+                <p class="incubation-item-body">Map real-world workflows into structured skill graphs to identify capability gaps and learning priorities across roles.</p>
+              </div>
+            </div>
+
+            <div class="incubation-item gsap-hidden">
+              <div class="incubation-item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              </div>
+              <div>
+                <h3 class="incubation-item-title">Personalized Learning Roadmap</h3>
+                <p class="incubation-item-body">Generate personalized development paths that adapt to performance while aligning progress with defined skill benchmarks.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────
+         GRITME MENTORSHIP
+    ───────────────────────────────────────────── -->
+    <section id="gritme-mentorship" aria-labelledby="gritme-mentorship-heading">
+      <div class="container">
+        <div id="gritme-mentorship-header">
+          <div id="gritme-mentorship-product-tag">GritMe</div>
+          <h2 id="gritme-mentorship-heading">GritMe: Global Growth Mentorship with Physical AI</h2>
+          <p id="gritme-mentorship-body">A mentorship-driven platform powered by a global mentor network and Physical AI to support talent growth.</p>
+          <div id="gritme-mentorship-cta">
+            <a href="#cta-section" class="btn btn-primary-light">Try It Now</a>
+          </div>
+        </div>
+        <div id="gritme-mentorship-grid">
+
+          <div class="mentorship-step-card gsap-hidden">
+            <div class="mentorship-step-num" aria-hidden="true">01</div>
+            <h3 class="mentorship-step-title">Match</h3>
+            <p class="mentorship-step-body">AI pairs mentees with the right mentors based on skills, goals, and experience.</p>
+          </div>
+
+          <div class="mentorship-step-card gsap-hidden">
+            <div class="mentorship-step-num" aria-hidden="true">02</div>
+            <h3 class="mentorship-step-title">Connect</h3>
+            <p class="mentorship-step-body">Seamless scheduling, chat, and video calls keep mentorship accessible anywhere.</p>
+          </div>
+
+          <div class="mentorship-step-card gsap-hidden">
+            <div class="mentorship-step-num" aria-hidden="true">03</div>
+            <h3 class="mentorship-step-title">Grow</h3>
+            <p class="mentorship-step-body">Achieve career milestones with personalized guidance and hand-on support.</p>
+          </div>
+
+          <div class="mentorship-step-card gsap-hidden">
+            <div class="mentorship-step-num" aria-hidden="true">04</div>
+            <h3 class="mentorship-step-title">Thrive</h3>
+            <p class="mentorship-step-body">Join a global community, share experiences, and unlock long-term success.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────
+         EXPANDING
+    ───────────────────────────────────────────── -->
+    <section id="expanding" class="section-dark" aria-labelledby="expanding-heading">
+      <div id="expanding-bg-grid" aria-hidden="true"></div>
+      <div class="container" style="position:relative;z-index:1;">
+        <div id="expanding-header">
+          <div id="expanding-badge">Coming Soon</div>
+          <h2 id="expanding-heading">Expanding the Ecosystem</h2>
+          <p id="expanding-subheading">Research infrastructure and AI knowledge networks powering the next layer of the Griting platform.</p>
+        </div>
+        <div id="expanding-cards-grid">
+
+          <div class="expanding-card gsap-hidden">
+            <h3 class="expanding-card-title">GritLab: Research Lab and IP Engine</h3>
+            <p class="expanding-card-body">An invite-only AI community in Silicon Valley that brings together top talents across research, engineering, and startups.</p>
+            <ul class="expanding-card-features">
+              <li>AI System &amp; Optimization</li>
+              <li>Memory Governance Models</li>
+              <li>Vertical Benchmarks &amp; Agentic Architecture</li>
+            </ul>
+          </div>
+
+          <div class="expanding-card gsap-hidden">
+            <h3 class="expanding-card-title">GritHub: AI Knowledge &amp; Signal Platform</h3>
+            <p class="expanding-card-body">An invite-only AI community in Silicon Valley that brings together top talents across research, engineering, and startups.</p>
+            <ul class="expanding-card-features">
+              <li>Aggregates frontier AI Research</li>
+              <li>Connects talent, mentors, and enterprises</li>
+              <li>Captures context across domains in the AI wave</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────
+         TESTIMONIALS
+    ───────────────────────────────────────────── -->
+    <section id="testimonials" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <div id="testimonials-header">
+          <h2 id="testimonials-heading">Words from those who trust us</h2>
+          <p id="testimonials-subheading">Trusted voices sharing their experiences with our platform and organization.</p>
+        </div>
+      </div>
+      <div id="testimonials-track-outer">
+        <!-- Track is duplicated for seamless infinite scroll -->
+        <div id="testimonials-track" aria-label="Testimonials carousel">
+
+          <!-- Set 1 -->
+          <article class="testimonial-card" aria-label="Testimonial from Sebastiaan Debrouwere">
+            <div class="testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
+            <blockquote class="testimonial-quote">"The structure is so intuitive that even in demo form, I knew exactly where to go. It feels like they've anticipated friction points and designed around them."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true">SD</div>
+              <div>
+                <div class="testimonial-name">Sebastiaan Debrouwere</div>
+                <div class="testimonial-role">Senior engineer</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" aria-label="Testimonial from Krishna">
+            <div class="testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
+            <blockquote class="testimonial-quote">"Turning research into product has always been a gap. If GritLab delivers on its promise, it could be a breakthrough for applied AI innovation."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true">Kr</div>
+              <div>
+                <div class="testimonial-name">Krishna</div>
+                <div class="testimonial-role">University Professor</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" aria-label="Testimonial from Alon">
+            <div class="testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
+            <blockquote class="testimonial-quote">"I was impressed seeing how mentors are showing interest so early on. It makes me confident that it will be vibrant."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true">Al</div>
+              <div>
+                <div class="testimonial-name">Alon</div>
+                <div class="testimonial-role">Startup Founder</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" aria-label="Testimonial from Jono Bacon">
+            <div class="testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
+            <blockquote class="testimonial-quote">"From what I've seen so far, this is shaping up to be a game-changer. The matching process feels promising, and the final product delivers on this."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true">JB</div>
+              <div>
+                <div class="testimonial-name">Jono Bacon</div>
+                <div class="testimonial-role">Senior AI researcher</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" aria-label="Testimonial from Dimitry Gershenson">
+            <div class="testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
+            <blockquote class="testimonial-quote">"GritHub looks like it could become the go-to AI community."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true">DG</div>
+              <div>
+                <div class="testimonial-name">Dimitry Gershenson</div>
+                <div class="testimonial-role">Senior designer</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" aria-label="Testimonial from Sri">
+            <div class="testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
+            <blockquote class="testimonial-quote">"The model Griting is building feels like the missing piece in the AI ecosystem. The way they combine mentorship, innovation, and community has huge potential."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true">Sr</div>
+              <div>
+                <div class="testimonial-name">Sri</div>
+                <div class="testimonial-role">Venture Capitalist</div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Set 2 — duplicate for seamless loop -->
+          <article class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote-mark">&ldquo;</div>
+            <blockquote class="testimonial-quote">"The structure is so intuitive that even in demo form, I knew exactly where to go. It feels like they've anticipated friction points and designed around them."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar">SD</div>
+              <div>
+                <div class="testimonial-name">Sebastiaan Debrouwere</div>
+                <div class="testimonial-role">Senior engineer</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote-mark">&ldquo;</div>
+            <blockquote class="testimonial-quote">"Turning research into product has always been a gap. If GritLab delivers on its promise, it could be a breakthrough for applied AI innovation."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar">Kr</div>
+              <div>
+                <div class="testimonial-name">Krishna</div>
+                <div class="testimonial-role">University Professor</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote-mark">&ldquo;</div>
+            <blockquote class="testimonial-quote">"I was impressed seeing how mentors are showing interest so early on. It makes me confident that it will be vibrant."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar">Al</div>
+              <div>
+                <div class="testimonial-name">Alon</div>
+                <div class="testimonial-role">Startup Founder</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote-mark">&ldquo;</div>
+            <blockquote class="testimonial-quote">"From what I've seen so far, this is shaping up to be a game-changer. The matching process feels promising, and the final product delivers on this."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar">JB</div>
+              <div>
+                <div class="testimonial-name">Jono Bacon</div>
+                <div class="testimonial-role">Senior AI researcher</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote-mark">&ldquo;</div>
+            <blockquote class="testimonial-quote">"GritHub looks like it could become the go-to AI community."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar">DG</div>
+              <div>
+                <div class="testimonial-name">Dimitry Gershenson</div>
+                <div class="testimonial-role">Senior designer</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote-mark">&ldquo;</div>
+            <blockquote class="testimonial-quote">"The model Griting is building feels like the missing piece in the AI ecosystem. The way they combine mentorship, innovation, and community has huge potential."</blockquote>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar">Sr</div>
+              <div>
+                <div class="testimonial-name">Sri</div>
+                <div class="testimonial-role">Venture Capitalist</div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────
+         CTA SECTION
+    ───────────────────────────────────────────── -->
+    <section id="cta-section" class="section-dark" aria-labelledby="cta-heading">
+      <div id="cta-bg-radial" aria-hidden="true"></div>
+      <div class="container">
+        <div id="cta-inner">
+          <h2 id="cta-heading">Ready to build connections that shape your future?</h2>
+          <div id="cta-buttons">
+            <a href="#gritme-audit" class="btn btn-primary">Explore GritMe</a>
+            <a href="#testimonials" class="btn btn-ghost">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─────────────────────────────────────────
+       FOOTER
+  ───────────────────────────────────────────── -->
+  <footer id="site-footer" role="contentinfo">
+    <div class="container">
+      <div id="footer-main-grid">
+
+        <div id="footer-brand-col">
+          <a id="footer-brand-logo" href="index.html" aria-label="Griting home">
+            <div id="footer-brand-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8c3.54 0 6.56-2.3 7.6-5.48H10V9.6h9.4c.08.45.12.91.12 1.4 0 5.19-3.81 9-9.52 9C4.77 20 0 15.52 0 10S4.77 0 10 0c2.72 0 5.16 1.04 7 2.74L15.2 4.56A7.34 7.34 0 0010 2z"/>
+              </svg>
+            </div>
+            <span id="footer-brand-name">Griting</span>
+          </a>
+          <div id="footer-cta-block">
+            <p id="footer-cta-heading">Ready to grow?</p>
+            <a href="#cta-section" class="btn btn-primary" style="margin-top: var(--space-3);">Join The waitlist</a>
+          </div>
+        </div>
+
+        <div class="footer-link-col">
+          <h3 class="footer-col-heading">Product</h3>
+          <ul class="footer-links">
+            <li><a href="#gritme-audit">GritMe</a></li>
+            <li><a href="#expanding">GritHub</a></li>
+            <li><a href="#expanding">GritLab</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-link-col">
+          <h3 class="footer-col-heading">Company</h3>
+          <ul class="footer-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#cta-section">Careers</a></li>
+            <li><a href="#expanding">Blog</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-link-col">
+          <h3 class="footer-col-heading">Contact</h3>
+          <ul class="footer-links">
+            <li><a href="#cta-section">Email</a></li>
+            <li><a href="#cta-section">Phone</a></li>
+            <li><a href="#cta-section">Address</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-link-col">
+          <h3 class="footer-col-heading">Support</h3>
+          <ul class="footer-links">
+            <li><a href="#cta-section">Talk to an expert</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div id="footer-bottom">
+        <p id="footer-legal">© 2026 Griting. All rights reserved.</p>
+        <ul id="footer-legal-links">
+          <li><a href="#cta-section">Terms &amp; Conditions</a></li>
+          <li><a href="#cta-section">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─────────────────────────────────────────
+       SCRIPTS
+  ───────────────────────────────────────────── -->
+  <script>
+    // ── Register GSAP plugins ──
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── Read motion tokens from CSS vars ──
+    const rootStyles = getComputedStyle(document.documentElement);
+    const BASE_DURATION = parseFloat(rootStyles.getPropertyValue('--duration-base').trim()) || 0.52;
+    const SLOW_DURATION = parseFloat(rootStyles.getPropertyValue('--duration-slow').trim()) || 0.65;
+    const EASE_PRIMARY  = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    const EASE_MATERIAL = 'cubic-bezier(0.4, 0, 0.2, 1)';
+
+    // ── Utility: stagger reveal ──
+    function staggerReveal(targets, options = {}) {
+      const {
+        trigger,
+        start = 'top 80%',
+        y = 40,
+        duration = BASE_DURATION,
+        stagger = 0.13,
+        ease = EASE_PRIMARY,
+        delay = 0
+      } = options;
+      gsap.from(targets, {
+        scrollTrigger: { trigger: trigger || targets, start, toggleActions: 'play none none none' },
+        y, opacity: 0,
+        duration, stagger, ease, delay
+      });
+    }
+
+    // ── Hero entrance cascade ──
+    (function initHero() {
+      const tl = gsap.timeline({ defaults: { ease: EASE_PRIMARY } });
+      tl.from('#hero-label',      { y: 16, opacity: 0, duration: 0.4 })
+        .from('#hero-heading',    { y: 24, opacity: 0, duration: BASE_DURATION }, '-=0.18')
+        .from('#hero-body',       { y: 20, opacity: 0, duration: BASE_DURATION }, '-=0.30')
+        .from('#hero-cta-group',  { y: 16, opacity: 0, duration: BASE_DURATION }, '-=0.26')
+        .from('#hero-scroll-indicator', { opacity: 0, duration: 0.5 }, '-=0.1');
+    })();
+
+    // ── Nav scroll behavior ──
+    (function initNav() {
+      const nav = document.getElementById('nav-bar');
+      if (!nav) return;
+      ScrollTrigger.create({
+        start: 80,
+        onEnter:     () => nav.classList.add('nav--scrolled'),
+        onLeaveBack: () => nav.classList.remove('nav--scrolled')
+      });
+    })();
+
+    // ── About cards — stagger from bottom ──
+    staggerReveal('#about-cards-grid .about-card', {
+      trigger: '#about-cards-grid',
+      start: 'top 75%',
+      y: 32,
+      stagger: 0.1,
+      duration: SLOW_DURATION
+    });
+
+    // ── Ecosystem — section heading + cards cascade ──
+    gsap.from('#ecosystem-header', {
+      scrollTrigger: { trigger: '#ecosystem-header', start: 'top 80%' },
+      y: 32, opacity: 0, duration: SLOW_DURATION, ease: EASE_MATERIAL
+    });
+    staggerReveal('#ecosystem-cards-grid .ecosystem-card', {
+      trigger: '#ecosystem-cards-grid',
+      start: 'top 75%',
+      y: 40,
+      stagger: 0.14,
+      duration: SLOW_DURATION
+    });
+
+    // ── GritMe Audit — text left reveals left, UI right scales in ──
+    gsap.from('#gritme-audit-text', {
+      scrollTrigger: { trigger: '#gritme-audit', start: 'top 75%' },
+      x: -32, opacity: 0, duration: SLOW_DURATION, ease: EASE_PRIMARY
+    });
+    gsap.from('#gritme-audit-ui', {
+      scrollTrigger: { trigger: '#gritme-audit', start: 'top 70%' },
+      scale: 0.95, opacity: 0, duration: SLOW_DURATION, ease: EASE_PRIMARY, delay: 0.18
+    });
+
+    // ── GritMe Incubation — items stagger from right ──
+    gsap.from('#gritme-incubation-text', {
+      scrollTrigger: { trigger: '#gritme-incubation', start: 'top 78%' },
+      x: -24, opacity: 0, duration: SLOW_DURATION, ease: EASE_PRIMARY
+    });
+    staggerReveal('#gritme-incubation-items .incubation-item', {
+      trigger: '#gritme-incubation-items',
+      start: 'top 78%',
+      y: 24,
+      stagger: 0.15,
+      duration: SLOW_DURATION
+    });
+
+    // ── GritMe Mentorship header + grid ──
+    gsap.from('#gritme-mentorship-header', {
+      scrollTrigger: { trigger: '#gritme-mentorship', start: 'top 80%' },
+      y: 28, opacity: 0, duration: SLOW_DURATION, ease: EASE_MATERIAL
+    });
+    staggerReveal('#gritme-mentorship-grid .mentorship-step-card', {
+      trigger: '#gritme-mentorship-grid',
+      start: 'top 78%',
+      y: 36,
+      stagger: 0.12,
+      duration: SLOW_DURATION
+    });
+
+    // ── Expanding — clip-path wipe reveal on cards ──
+    gsap.from('#expanding-header', {
+      scrollTrigger: { trigger: '#expanding-header', start: 'top 80%' },
+      y: 32, opacity: 0, duration: SLOW_DURATION, ease: EASE_MATERIAL
+    });
+    document.querySelectorAll('.expanding-card').forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: { trigger: card, start: 'top 82%' },
+        clipPath: 'inset(0 100% 0 0)',
+        opacity: 0,
+        duration: 0.7,
+        ease: EASE_PRIMARY,
+        delay: i * 0.16
+      });
+    });
+
+    // ── CTA section ──
+    gsap.from('#cta-heading', {
+      scrollTrigger: { trigger: '#cta-section', start: 'top 80%' },
+      y: 24, opacity: 0, duration: SLOW_DURATION, ease: EASE_MATERIAL
+    });
+    gsap.from('#cta-buttons', {
+      scrollTrigger: { trigger: '#cta-section', start: 'top 75%' },
+      y: 20, opacity: 0, duration: BASE_DURATION, ease: EASE_PRIMARY, delay: 0.2
+    });
+
+    // ── Footer ──
+    gsap.from('#footer-main-grid', {
+      scrollTrigger: { trigger: '#site-footer', start: 'top 90%' },
+      y: 24, opacity: 0, duration: SLOW_DURATION, ease: EASE_MATERIAL
+    });
+
+    // ── Mobile nav toggle ──
+    (function initMobileNav() {
+      const hamburger = document.getElementById('nav-hamburger');
+      const linksWrapper = document.getElementById('nav-links-wrapper');
+      const ctaZone = document.getElementById('nav-cta-zone');
+      if (!hamburger) return;
+
+      let open = false;
+      hamburger.addEventListener('click', () => {
+        open = !open;
+        hamburger.setAttribute('aria-expanded', open);
+        if (open) {
+          linksWrapper.style.cssText = `
+            display: flex; flex-direction: column; position: fixed;
+            top: var(--nav-height); left: 0; right: 0;
+            background: var(--color-page-bg);
+            border-top: 1px solid var(--color-border);
+            padding: var(--space-6) var(--grid-container-padding);
+            z-index: 99; gap: var(--space-4);
+          `;
+          linksWrapper.querySelector('#nav-links').style.cssText = `
+            display: flex; flex-direction: column; gap: var(--space-4);
+          `;
+          ctaZone.style.cssText = `
+            display: flex; padding: var(--space-4) var(--grid-container-padding);
+            position: fixed; top: calc(var(--nav-height) + 220px); left: 0; right: 0;
+            background: var(--color-page-bg); z-index: 99;
+            border-bottom: 1px solid var(--color-border);
+          `;
+        } else {
+          linksWrapper.style.cssText = '';
+          linksWrapper.querySelector('#nav-links').style.cssText = '';
+          ctaZone.style.cssText = '';
+        }
+      });
+
+      // Close on nav link click
+      document.querySelectorAll('#nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (open) hamburger.click();
+        });
+      });
+    })();
+
+    // ── Refresh ScrollTrigger on load ──
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+  </script>
+
+</body>
+</html>

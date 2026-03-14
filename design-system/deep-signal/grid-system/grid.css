@@ -1,0 +1,191 @@
+/* =============================================================================
+   deep-signal — Grid System
+   Source: ochre-tempo (fluid grid structure)
+   Twist: Container max-width expanded to 1440px (intensity 3)
+   Sub-Phase B: Adjusted per Figma layout hints (1440px frames, split layouts, 3-col grids)
+   ============================================================================= */
+
+:root {
+  --grid-container-max-width: 1440px;
+  --grid-container-padding: 32px;
+  --grid-columns: 12;
+  --grid-column-gap: 24px;
+  --grid-row-gap: 32px;
+
+  /* Section spacing — fluid using clamp */
+  --grid-section-spacing-sm: clamp(3rem, 5vw, 5rem);
+  --grid-section-spacing-md: clamp(4rem, 8vw, 9rem);
+  --grid-section-spacing-lg: clamp(5rem, 10vw, 15rem);
+  --grid-section-spacing-xl: clamp(6rem, 12vw, 28rem);
+}
+
+/* =============================================================================
+   Container
+   ============================================================================= */
+
+.container,
+.container-fluid {
+  width: 100%;
+  max-width: var(--grid-container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--grid-container-padding);
+  padding-right: var(--grid-container-padding);
+  box-sizing: border-box;
+}
+
+/* =============================================================================
+   Base 12-column grid
+   ============================================================================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--grid-column-gap);
+  row-gap: var(--grid-row-gap);
+}
+
+/* =============================================================================
+   Named grid layouts (from Figma section hints)
+   ============================================================================= */
+
+/* Split 50/50 — features-editorial, about sections */
+.grid-split-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 32px;
+  align-items: center;
+}
+
+/* Split 60/40 — product-feature (text left, UI right) */
+.grid-split-feature {
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  column-gap: 32px;
+  align-items: center;
+}
+
+/* 3-column cards — ecosystem overview, product grids */
+.grid-cards-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--grid-column-gap);
+  row-gap: var(--grid-column-gap);
+}
+
+/* 4-column grid — mentorship section */
+.grid-cards-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: var(--grid-column-gap);
+  row-gap: var(--grid-column-gap);
+}
+
+/* 2-column dark cards — expanding section */
+.grid-cards-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: var(--grid-column-gap);
+  row-gap: var(--grid-column-gap);
+}
+
+/* 5-column footer */
+.grid-footer {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  column-gap: 32px;
+  align-items: start;
+}
+
+/* Nav row */
+.nav-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+
+/* =============================================================================
+   Section spacing utilities
+   ============================================================================= */
+
+.section-sm   { padding-top: var(--grid-section-spacing-sm); padding-bottom: var(--grid-section-spacing-sm); }
+.section-md   { padding-top: var(--grid-section-spacing-md); padding-bottom: var(--grid-section-spacing-md); }
+.section-lg   { padding-top: var(--grid-section-spacing-lg); padding-bottom: var(--grid-section-spacing-lg); }
+.section-xl   { padding-top: var(--grid-section-spacing-xl); padding-bottom: var(--grid-section-spacing-xl); }
+
+/* =============================================================================
+   Responsive breakpoints
+   ============================================================================= */
+
+@media (max-width: 1024px) {
+  :root {
+    --grid-container-padding: 24px;
+    --grid-column-gap: 20px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  .grid-split-2col,
+  .grid-split-feature {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+
+  .grid-cards-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-footer {
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --grid-container-padding: 20px;
+    --grid-column-gap: 16px;
+    --grid-row-gap: 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid-cards-3,
+  .grid-cards-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid-cards-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid-footer {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 24px;
+  }
+}
+
+@media (max-width: 375px) {
+  :root {
+    --grid-container-padding: 20px;
+    --grid-column-gap: 0;
+  }
+
+  .grid,
+  .grid-cards-3,
+  .grid-cards-2,
+  .grid-cards-4 {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+
+  .grid-footer {
+    grid-template-columns: 1fr;
+  }
+}

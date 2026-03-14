@@ -4,7 +4,7 @@
 **Save to:** `ochre-tempo/assets/hero-product.jpg`
 **Type:** Image
 **Dimensions:** 1920×1080
-**AI Tool:** Midjourney / DALL-E 3
+**AI Tool:** Nano Banana Pro
 
 ## Prompt
 

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- FONT NOTICE: proprietary display font → Space Grotesk (geometric sans, closest match for display weight) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technology — Lacuna Grade</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--leading-normal);
+      overflow-x: hidden;
+    }
+
+    /* ── Navigation ── */
+    #site-nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: var(--z-nav); height: 160px;
+      display: flex; align-items: center;
+      padding: 0 var(--grid-container-padding);
+      background: var(--color-nav-bg-scrolled);
+      transition: height var(--duration-base) var(--ease-standard);
+    }
+    #site-nav.scrolled { height: 80px; }
+    #nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: 1440px; margin: 0 auto;
+    }
+    #nav-logo {
+      font-family: var(--font-heading); font-weight: var(--font-weight-medium);
+      font-size: 0.875rem; letter-spacing: var(--tracking-wide);
+      color: var(--color-nav-text); text-decoration: none; text-transform: uppercase;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+    #nav-logo:hover { opacity: var(--hover-opacity); }
+    #nav-links { display: flex; align-items: center; gap: 12px; list-style: none; }
+    #nav-links a {
+      font-family: var(--font-heading); font-weight: var(--font-weight-regular);
+      font-size: 0.75rem; letter-spacing: var(--tracking-wide);
+      color: var(--color-body-text); text-decoration: none; text-transform: uppercase;
+      border: 1px solid var(--color-border-subtle); border-radius: var(--radius-pill);
+      padding: 8px 20px; transition: var(--transition-base);
+    }
+    #nav-links a:hover, #nav-links a.active { color: var(--color-white); border-color: var(--color-white); }
+
+    /* ── Product Hero ── */
+    #tech-hero {
+      position: relative; overflow: hidden;
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 200px var(--grid-container-padding) 120px;
+    }
+    #tech-hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 60%, #2c2f31 0%, #0a0a0a 65%);
+      z-index: 0;
+    }
+    #tech-hero-content {
+      position: relative; z-index: var(--z-content);
+      max-width: 1280px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    #tech-hero-copy { max-width: 560px; }
+    #tech-hero-eyebrow {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text); text-transform: uppercase;
+      margin-bottom: 32px; display: block;
+    }
+    #tech-hero-title {
+      font-family: var(--font-heading); font-size: var(--type-h1);
+      font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-tight);
+      color: var(--color-heading); line-height: var(--leading-tight);
+      margin-bottom: 32px;
+    }
+    #tech-hero-body {
+      font-family: var(--font-body); font-size: var(--type-body-lg);
+      font-weight: 300; color: var(--color-body-text); line-height: var(--leading-relaxed);
+    }
+    #tech-hero-device-panel {
+      position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    #tech-device-bg-glow {
+      position: absolute; inset: -40px;
+      background: radial-gradient(ellipse at center, rgba(2,11,68,0.4) 0%, transparent 70%);
+      z-index: 0;
+    }
+    #tech-device-img-wrap {
+      position: relative; z-index: var(--z-content); width: 100%;
+    }
+    #tech-device-img {
+      width: 100%; height: auto; display: block;
+    }
+    #tech-device-placeholder {
+      display: none; align-items: center; justify-content: center;
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--color-surface-2); color: var(--color-muted-text);
+      font-size: 0.85rem; font-family: var(--font-body); opacity: 0.5;
+      border-radius: var(--radius-md);
+    }
+
+    /* ── Specs ── */
+    #tech-specs {
+      position: relative; padding: 120px var(--grid-container-padding);
+    }
+    #tech-specs-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #0a0a0a 0%, #111111 40%, #0a0a0a 100%);
+      z-index: 0;
+    }
+    #tech-specs-inner {
+      position: relative; z-index: var(--z-content);
+      max-width: 1280px; margin: 0 auto;
+    }
+    #specs-section-label {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text); text-transform: uppercase;
+      margin-bottom: 60px; display: block;
+    }
+    #specs-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: rgba(94,98,102,0.2);
+      border: 1px solid rgba(94,98,102,0.2); border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .spec-cell {
+      background: var(--color-surface-1);
+      padding: 40px 36px;
+      position: relative;
+    }
+    .spec-cell::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(2,11,68,0.8), transparent);
+    }
+    .spec-cell-label {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text); text-transform: uppercase;
+      margin-bottom: 16px; display: block;
+    }
+    .spec-cell-value {
+      font-family: var(--font-heading); font-size: var(--type-h2);
+      font-weight: var(--font-weight-bold); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight); line-height: var(--leading-snug);
+      display: block; margin-bottom: 8px;
+    }
+    .spec-cell-desc {
+      font-family: var(--font-body); font-size: var(--type-small);
+      color: var(--color-muted-text); line-height: var(--leading-relaxed);
+    }
+
+    /* ── Architecture deep-dive ── */
+    #tech-architecture {
+      position: relative; padding: 100px var(--grid-container-padding);
+    }
+    #tech-architecture-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0a0a0a 0%, #111111 100%);
+      z-index: 0;
+    }
+    #architecture-inner {
+      position: relative; z-index: var(--z-content);
+      max-width: 1280px; margin: 0 auto;
+    }
+    #architecture-header {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      margin-bottom: 80px; align-items: start;
+    }
+    #architecture-title {
+      font-family: var(--font-heading); font-size: var(--type-h2);
+      font-weight: var(--font-weight-bold); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight); line-height: var(--leading-snug);
+    }
+    #architecture-body {
+      font-family: var(--font-body); font-size: var(--type-body-lg);
+      font-weight: 300; color: var(--color-body-text);
+      line-height: var(--leading-relaxed); padding-top: 8px;
+    }
+    #architecture-diagram {
+      position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(94,98,102,0.25);
+      background: var(--color-surface-1);
+    }
+    #architecture-diagram img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    #architecture-diagram-placeholder {
+      display: none; align-items: center; justify-content: center;
+      position: absolute; inset: 0;
+      background: var(--color-surface-2); color: var(--color-muted-text);
+      font-size: 0.85rem; font-family: var(--font-body); opacity: 0.5;
+    }
+
+    /* ── Layer list ── */
+    #tech-layers {
+      position: relative; padding: 100px var(--grid-container-padding);
+    }
+    #tech-layers-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #0a0a0a 0%, #0d1033 100%);
+      z-index: 0;
+    }
+    #layers-inner {
+      position: relative; z-index: var(--z-content);
+      max-width: 1280px; margin: 0 auto;
+    }
+    #layers-label {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: rgba(255,255,255,0.3); text-transform: uppercase;
+      margin-bottom: 80px; display: block;
+    }
+    #layers-list { list-style: none; border-top: 1px solid rgba(255,255,255,0.06); }
+    .layer-item {
+      display: grid; grid-template-columns: 60px 1fr 1fr;
+      gap: 40px; align-items: center;
+      padding: 36px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background var(--duration-fast) var(--ease-standard);
+    }
+    .layer-item:hover { background: rgba(255,255,255,0.02); }
+    .layer-number {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: rgba(255,255,255,0.2); text-transform: uppercase;
+    }
+    .layer-name {
+      font-family: var(--font-heading); font-size: var(--type-h3);
+      font-weight: var(--font-weight-bold); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight);
+    }
+    .layer-desc {
+      font-family: var(--font-body); font-size: var(--type-body);
+      color: var(--color-body-text); line-height: var(--leading-relaxed);
+    }
+
+    /* ── Footer ── */
+    #site-footer {
+      padding: 40px var(--grid-container-padding);
+      background: #0a0a0a; border-top: 1px solid rgba(94,98,102,0.2);
+    }
+    #footer-inner {
+      max-width: 1440px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    #footer-logo {
+      font-family: var(--font-heading); font-size: 0.75rem;
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wide);
+      color: rgba(255,255,255,0.3); text-transform: uppercase;
+    }
+    #footer-copy { font-family: var(--font-body); font-size: var(--type-label); color: rgba(255,255,255,0.2); }
+
+    @media (max-width: 1024px) {
+      #site-nav, #tech-hero, #tech-specs, #tech-architecture, #tech-layers { padding-left: 32px; padding-right: 32px; }
+      #tech-hero-content { grid-template-columns: 1fr; }
+      #architecture-header { grid-template-columns: 1fr; gap: 32px; }
+      #specs-grid { grid-template-columns: 1fr 1fr; }
+      .layer-item { grid-template-columns: 40px 1fr; }
+      .layer-desc { display: none; }
+    }
+    @media (max-width: 768px) {
+      #site-nav { height: 80px; padding-left: 20px; padding-right: 20px; }
+      #tech-hero { padding: 140px 20px 80px; }
+      #tech-specs, #tech-architecture, #tech-layers { padding: 60px 20px; }
+      #specs-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="site-nav" role="navigation" aria-label="Main navigation">
+    <div id="nav-inner">
+      <a id="nav-logo" href="index.html">Lacuna Grade</a>
+      <ul id="nav-links">
+        <li><a href="work.html">Work</a></li>
+        <li><a href="technology.html" class="active">Technology</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Tech Hero -->
+  <section id="tech-hero" aria-label="Technology overview">
+    <div id="tech-hero-bg"></div>
+    <div id="tech-hero-content">
+      <div id="tech-hero-copy">
+        <span id="tech-hero-eyebrow">Architecture</span>
+        <h1 id="tech-hero-title">Designed from the signal path outward.</h1>
+        <p id="tech-hero-body">Every component in Lacuna Grade begins with a single constraint: add zero latency to the signal you are measuring. The result is an instrument, not a processor — one that observes without interfering.</p>
+      </div>
+      <div id="tech-hero-device-panel">
+        <div id="tech-device-bg-glow"></div>
+        <div id="tech-device-img-wrap">
+          <img
+            id="tech-device-img"
+            src="assets/tech-device-detail.jpg"
+            alt="Lacuna Grade signal analyzer close-up showing circuit board internals with precision analog and digital components visible through transparent panel"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          >
+          <div id="tech-device-placeholder">→ assets/tech-device-detail.jpg</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specs -->
+  <section id="tech-specs" aria-label="Technical specifications">
+    <div id="tech-specs-bg"></div>
+    <div id="tech-specs-inner">
+      <span id="specs-section-label">Specifications — Grade Series 1</span>
+      <div id="specs-grid">
+        <div id="spec-latency" class="spec-cell">
+          <span class="spec-cell-label">Measurement Latency</span>
+          <span class="spec-cell-value">&lt;0.1ms</span>
+          <span class="spec-cell-desc">Signal path observation with no added processing delay. Passthrough architecture maintains source integrity.</span>
+        </div>
+        <div id="spec-channels" class="spec-cell">
+          <span class="spec-cell-label">Max Channels</span>
+          <span class="spec-cell-value">512</span>
+          <span class="spec-cell-desc">Expandable per-rack-unit channel allocation via daisy-chained Grade expansion modules.</span>
+        </div>
+        <div id="spec-resolution" class="spec-cell">
+          <span class="spec-cell-label">Spectral Resolution</span>
+          <span class="spec-cell-value">0.1dB</span>
+          <span class="spec-cell-desc">Sub-decibel noise floor measurement across the full audible spectrum from 20Hz to 20kHz.</span>
+        </div>
+        <div id="spec-form" class="spec-cell">
+          <span class="spec-cell-label">Form Factor</span>
+          <span class="spec-cell-value">1U</span>
+          <span class="spec-cell-desc">Standard rack-unit chassis in machined aluminum. Ships with rack ears and detachable carry grip.</span>
+        </div>
+        <div id="spec-interface" class="spec-cell">
+          <span class="spec-cell-label">Monitoring Interface</span>
+          <span class="spec-cell-value">Browser</span>
+          <span class="spec-cell-desc">Zero-install web dashboard accessible from any device on the local network over standard Ethernet.</span>
+        </div>
+        <div id="spec-power" class="spec-cell">
+          <span class="spec-cell-label">Power Draw</span>
+          <span class="spec-cell-value">18W</span>
+          <span class="spec-cell-desc">Efficient low-heat design with passive cooling on analog stages and single active fan for digital processing.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section id="tech-architecture" aria-label="Signal architecture">
+    <div id="tech-architecture-bg"></div>
+    <div id="architecture-inner">
+      <div id="architecture-header">
+        <h2 id="architecture-title">A passthrough architecture with zero insertion loss.</h2>
+        <p id="architecture-body">The core innovation in Grade is a differential tap circuit that reads the signal without joining the signal chain. Your source flows unaltered from input to output while Grade observes on a separate measurement path that never touches the master signal.</p>
+      </div>
+      <div id="architecture-diagram">
+        <img
+          src="assets/tech-architecture-diagram.jpg"
+          alt="Signal flow architecture diagram showing differential tap circuit separating measurement path from source signal path on white-background technical illustration"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <div id="architecture-diagram-placeholder">→ assets/tech-architecture-diagram.jpg</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Layer list -->
+  <section id="tech-layers" aria-label="Technology layers">
+    <div id="tech-layers-bg"></div>
+    <div id="layers-inner">
+      <span id="layers-label">System Layers</span>
+      <ul id="layers-list">
+        <li id="layer-analog" class="layer-item">
+          <span class="layer-number">01</span>
+          <span class="layer-name">Analog Front End</span>
+          <span class="layer-desc">Differential tap circuit with &gt;120dB CMRR. Captures signal characteristics without introducing any electrical load on the source path.</span>
+        </li>
+        <li id="layer-adc" class="layer-item">
+          <span class="layer-number">02</span>
+          <span class="layer-name">ADC Stage</span>
+          <span class="layer-desc">32-bit high-speed analog-to-digital conversion at 192kHz with precision clocking. Temperature-compensated reference voltage for drift-free measurement.</span>
+        </li>
+        <li id="layer-dsp" class="layer-item">
+          <span class="layer-number">03</span>
+          <span class="layer-name">DSP Analysis</span>
+          <span class="layer-desc">FPGA-based real-time spectral analysis, latency mapping, and anomaly detection running at full channel capacity without approximation.</span>
+        </li>
+        <li id="layer-network" class="layer-item">
+          <span class="layer-number">04</span>
+          <span class="layer-name">Network Layer</span>
+          <span class="layer-desc">Gigabit Ethernet with an embedded web server. Streams measurement data to the browser dashboard at 60fps with configurable alert webhook support.</span>
+        </li>
+        <li id="layer-ui" class="layer-item">
+          <span class="layer-number">05</span>
+          <span class="layer-name">Dashboard UI</span>
+          <span class="layer-desc">Zero-install browser interface with per-channel signal meters, spectral visualization, and configurable alert thresholds. No app required.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <span id="footer-logo">Lacuna Grade</span>
+      <span id="footer-copy">© 2026 Lacuna Grade. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const rootStyle = getComputedStyle(document.documentElement);
+    const DUR_SLOW = parseFloat(rootStyle.getPropertyValue('--duration-slow')) || 0.9;
+    const DUR_BASE = parseFloat(rootStyle.getPropertyValue('--duration-base')) || 0.54;
+    const EASE_PRIMARY = rootStyle.getPropertyValue('--ease-primary').trim() || 'cubic-bezier(0.19,1,0.22,1)';
+
+    const nav = document.getElementById('site-nav');
+    ScrollTrigger.create({
+      start: 'top -80px',
+      onEnter: () => nav.classList.add('scrolled'),
+      onLeaveBack: () => nav.classList.remove('scrolled'),
+    });
+
+    // Hero entrance
+    const heroTl = gsap.timeline({ delay: 0.3 });
+    heroTl
+      .from('#tech-hero-eyebrow', { opacity: 0, y: 16, duration: DUR_BASE, ease: EASE_PRIMARY })
+      .from('#tech-hero-title', { clipPath: 'inset(0 100% 0 0)', duration: DUR_SLOW * 1.4, ease: EASE_PRIMARY }, '-=0.2')
+      .from('#tech-hero-body', { opacity: 0, y: 24, duration: DUR_SLOW, ease: EASE_PRIMARY }, '-=0.6')
+      .from('#tech-device-img-wrap', { opacity: 0, scale: 0.9, duration: DUR_SLOW * 1.2, ease: EASE_PRIMARY }, 0.4);
+
+    // Specs stagger
+    gsap.from('.spec-cell', {
+      scrollTrigger: { trigger: '#specs-grid', start: 'top 80%' },
+      y: 40, opacity: 0, duration: DUR_SLOW, stagger: 0.1, ease: EASE_PRIMARY,
+    });
+
+    // Architecture
+    gsap.from('#architecture-title', {
+      scrollTrigger: { trigger: '#tech-architecture', start: 'top 75%' },
+      clipPath: 'inset(0 100% 0 0)', duration: DUR_SLOW * 1.3, ease: EASE_PRIMARY,
+    });
+    gsap.from('#architecture-body', {
+      scrollTrigger: { trigger: '#tech-architecture', start: 'top 70%' },
+      opacity: 0, y: 20, duration: DUR_SLOW, ease: EASE_PRIMARY,
+    });
+    gsap.from('#architecture-diagram', {
+      scrollTrigger: { trigger: '#architecture-diagram', start: 'top 85%' },
+      scale: 0.97, opacity: 0, duration: DUR_SLOW * 1.2, ease: EASE_PRIMARY,
+    });
+
+    // Layers horizontal slide
+    gsap.utils.toArray('.layer-item').forEach((item, i) => {
+      gsap.from(item, {
+        scrollTrigger: { trigger: item, start: 'top 85%' },
+        x: -30, opacity: 0,
+        duration: DUR_SLOW, delay: i * 0.06, ease: EASE_PRIMARY,
+      });
+    });
+  </script>
+</body>
+</html>

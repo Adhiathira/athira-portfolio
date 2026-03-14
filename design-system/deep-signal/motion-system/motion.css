@@ -1,0 +1,152 @@
+/* =============================================================================
+   deep-signal — Motion System
+   Source: linear | Twist: Duration scaling (slower) ×1.3 at intensity 2
+   ============================================================================= */
+
+:root {
+  /* Duration scale — all ×1.3 from linear source (intensity 2 slower) */
+  --motion-duration-micro:   0.13s;   /* was 0.10s → ×1.3 */
+  --motion-duration-fast:    0.21s;   /* was 0.16s → ×1.3 */
+  --motion-duration-base:    0.26s;   /* was 0.20s → ×1.3 */
+  --motion-duration-medium:  0.52s;   /* was 0.40s → ×1.3 */
+  --motion-duration-slow:    1.625s;  /* was 1.25s → ×1.3 */
+  --motion-duration-ambient: 2.73s;   /* was 2.10s → ×1.3 */
+
+  /* Easing */
+  --motion-ease-standard: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --motion-ease-material:  cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-out:       ease-out;
+  --motion-ease-linear:    linear;
+}
+
+/* =============================================================================
+   Keyframe animations
+   ============================================================================= */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes revealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =============================================================================
+   Animation utility classes
+   ============================================================================= */
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--motion-duration-medium) var(--motion-ease-standard) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--motion-duration-medium) var(--motion-ease-standard) forwards;
+}
+
+.animate-reveal-left {
+  animation: revealLeft var(--motion-duration-medium) var(--motion-ease-standard) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--motion-duration-medium) var(--motion-ease-standard) forwards;
+}
+
+/* Stagger delays for card grids */
+.stagger-1 { animation-delay: 0s; }
+.stagger-2 { animation-delay: var(--motion-duration-micro); }
+.stagger-3 { animation-delay: calc(var(--motion-duration-micro) * 2); }
+.stagger-4 { animation-delay: calc(var(--motion-duration-micro) * 3); }
+.stagger-5 { animation-delay: calc(var(--motion-duration-micro) * 4); }
+
+/* Initial state for scroll-triggered animations */
+.will-animate {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.will-animate.animated {
+  animation: fadeInUp var(--motion-duration-medium) var(--motion-ease-standard) forwards;
+}
+
+/* =============================================================================
+   Micro-interaction transitions
+   ============================================================================= */
+
+button,
+.btn,
+[role="button"] {
+  transition:
+    background var(--motion-duration-fast) var(--motion-ease-standard),
+    color var(--motion-duration-fast) var(--motion-ease-standard),
+    border-color var(--motion-duration-fast) var(--motion-ease-standard),
+    transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+a,
+.nav-link {
+  transition:
+    color var(--motion-duration-fast) var(--motion-ease-standard),
+    opacity var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.card {
+  transition:
+    transform var(--motion-duration-base) var(--motion-ease-standard),
+    box-shadow var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+input:focus,
+textarea:focus {
+  transition:
+    border-color var(--motion-duration-fast) var(--motion-ease-standard),
+    box-shadow var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+/* =============================================================================
+   Reduced motion support
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .will-animate {
+    opacity: 1;
+    transform: none;
+  }
+}

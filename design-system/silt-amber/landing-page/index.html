@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maison Cendré — From cold water. Nothing more.</title>
+  <meta name="description" content="Single-origin Atlantic caviar and rare marine cures, harvested from the cold tidal waters of the Basque coast." />
+
+  <!-- Design system tokens (Google Fonts + CSS custom properties) -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ─────────────────────────────────────────
+       BASE OVERRIDES & LAYOUT PRIMITIVES
+    ───────────────────────────────────────── */
+
+    body {
+      background-color: var(--color-page-bg);
+      overflow-x: hidden;
+    }
+
+    /* ── Grid container ── */
+    .container {
+      max-width: var(--grid-max-width);
+      padding-inline: var(--grid-margin);
+      margin-inline: auto;
+    }
+
+    /* ── Section label (DM Sans, uppercase, muted) ── */
+    .section-label {
+      font-family: var(--font-ui);
+      font-size: var(--type-nav);
+      font-weight: var(--fw-medium);
+      letter-spacing: var(--ls-nav);
+      text-transform: uppercase;
+      color: var(--color-muted);
+      display: block;
+      margin-bottom: 40px;
+    }
+
+    /* ── Text link CTA ── */
+    .text-link {
+      font-family: var(--font-ui);
+      font-size: var(--type-link);
+      font-weight: var(--fw-semibold);
+      letter-spacing: var(--ls-nav);
+      text-transform: uppercase;
+      color: var(--color-muted);
+      text-decoration: none;
+      transition: color var(--transition-link-hover);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .text-link:hover {
+      color: var(--color-heading);
+      opacity: 1;
+    }
+
+    /* ── Media placeholder (onerror fallback) ── */
+    .media-fallback {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      background: var(--color-surface-2);
+      color: var(--color-muted);
+      font-family: var(--font-ui);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 24px;
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+    }
+
+    .media-fallback span {
+      color: var(--color-accent);
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    /* ─────────────────────────────────────────
+       1. NAV — SPLIT-WING STICKY
+    ───────────────────────────────────────── */
+
+    #site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: var(--color-nav-bg);
+      transition: var(--nav-transition);
+      display: flex;
+      align-items: center;
+    }
+
+    #site-nav.scrolled {
+      height: var(--nav-height-scrolled);
+      background: var(--color-nav-bg-scrolled);
+      -webkit-backdrop-filter: var(--nav-backdrop-scrolled);
+      backdrop-filter: var(--nav-backdrop-scrolled);
+      border-bottom: var(--nav-border-scrolled);
+    }
+
+    .nav-inner {
+      max-width: var(--grid-max-width);
+      padding-inline: var(--nav-padding-inline);
+      margin-inline: auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: var(--nav-item-gap);
+    }
+
+    .nav-left,
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: var(--nav-item-gap);
+    }
+
+    .nav-right {
+      justify-content: flex-end;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: var(--fw-regular);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-heading);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity var(--transition-link-hover);
+    }
+
+    .nav-logo:hover {
+      opacity: var(--hover-opacity);
+    }
+
+    .nav-link {
+      font-family: var(--font-ui);
+      font-size: var(--type-nav);
+      font-weight: var(--fw-medium);
+      letter-spacing: var(--ls-nav);
+      text-transform: uppercase;
+      color: var(--color-nav-text);
+      text-decoration: none;
+      transition: opacity var(--transition-link-hover);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      opacity: var(--hover-opacity);
+    }
+
+    /* ─────────────────────────────────────────
+       2. HERO
+    ───────────────────────────────────────── */
+
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 640px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    #hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.2) 40%,
+        rgba(0, 0, 0, 0.65) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding-bottom: 72px;
+      padding-inline: var(--grid-margin);
+      max-width: var(--grid-max-width);
+      margin-inline: auto;
+      width: 100%;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 6vw, 5.8rem);
+      font-weight: var(--fw-regular);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-heading);
+      line-height: 0.88;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .hero-headline .word {
+      display: inline-block;
+      margin-right: 0.22em;
+      will-change: transform, opacity;
+    }
+
+    .hero-subline {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-style: italic;
+      font-weight: var(--fw-regular);
+      color: var(--color-muted);
+      line-height: 1.5;
+      margin-bottom: 52px;
+    }
+
+    .hero-nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    /* ─────────────────────────────────────────
+       3. EDITORIAL PRODUCT SPLIT
+    ───────────────────────────────────────── */
+
+    #product-split {
+      padding-block: var(--space-section-gap);
+      background: var(--color-page-bg);
+      position: relative;
+    }
+
+    /* Subtle depth gradient so section isn't flat */
+    #product-split::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(45,43,39,0.35) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .product-split-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: var(--grid-column-gap);
+      align-items: center;
+    }
+
+    .product-split-left {
+      padding-right: 40px;
+    }
+
+    .product-label {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: var(--fw-regular);
+      letter-spacing: var(--ls-h2);
+      color: var(--color-heading);
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .product-origin-badge {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: var(--fw-medium);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      border: 1px solid var(--color-border);
+      padding: 6px 14px;
+      display: inline-block;
+      margin-bottom: 32px;
+    }
+
+    .product-price {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: var(--fw-regular);
+      letter-spacing: 0.1em;
+      color: var(--color-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .product-copy {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: var(--fw-regular);
+      line-height: var(--lh-body);
+      color: var(--color-muted);
+      margin-bottom: 40px;
+      max-width: 320px;
+    }
+
+    .product-split-right {
+      position: relative;
+      overflow: hidden;
+      clip-path: inset(0 0 0 0);
+    }
+
+    #product-video {
+      width: 100%;
+      height: 580px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-video-fallback {
+      width: 100%;
+      height: 580px;
+    }
+
+    /* ─────────────────────────────────────────
+       4. COLLECTION PREVIEW
+    ───────────────────────────────────────── */
+
+    #collection {
+      padding-block: var(--space-section-gap);
+      background: var(--color-surface);
+      position: relative;
+    }
+
+    /* Depth: subtle radial vignette on the collection bg */
+    #collection::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(61,58,52,0.4) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .collection-header {
+      margin-bottom: 72px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--grid-column-gap);
+      position: relative;
+      z-index: 1;
+    }
+
+    .product-card {
+      will-change: transform, opacity;
+      cursor: pointer;
+    }
+
+    .product-card-media {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 28px;
+      aspect-ratio: 3/4;
+    }
+
+    .product-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--duration-cinematic) var(--ease-expo);
+      display: block;
+    }
+
+    .product-card:hover .product-card-media img {
+      transform: scale(1.04);
+    }
+
+    .product-card-img-fallback {
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+    }
+
+    .product-card-species {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+      font-weight: var(--fw-regular);
+      color: var(--color-heading);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .product-card-origin {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: var(--fw-medium);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 10px;
+    }
+
+    .product-card-price {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--color-muted);
+      text-transform: uppercase;
+    }
+
+    /* ─────────────────────────────────────────
+       5. MANIFESTO / PROVENANCE
+    ───────────────────────────────────────── */
+
+    #manifesto {
+      position: relative;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    #manifesto-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+
+    .manifesto-scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 1;
+    }
+
+    /* Extra depth: gradient from bottom to prevent text from floating in void */
+    .manifesto-depth {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,26,24,0.7) 0%, transparent 50%);
+      z-index: 2;
+    }
+
+    .manifesto-content {
+      position: relative;
+      z-index: 3;
+      padding-block: 120px;
+      width: 100%;
+    }
+
+    .manifesto-headline {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: var(--fw-regular);
+      letter-spacing: var(--ls-h1);
+      color: var(--color-heading);
+      line-height: 0.9;
+      max-width: 900px;
+      margin-bottom: 48px;
+    }
+
+    .manifesto-paragraph {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-style: italic;
+      font-weight: var(--fw-regular);
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.78);
+      max-width: 480px;
+      will-change: opacity, transform;
+    }
+
+    /* Brand stamp — CSS circle with MC text */
+    .brand-stamp {
+      position: absolute;
+      bottom: -40px;
+      right: 80px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 1px solid rgba(177, 173, 167, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 4;
+      will-change: transform;
+    }
+
+    .brand-stamp-monogram {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: var(--fw-regular);
+      letter-spacing: 0.14em;
+      color: rgba(177, 173, 167, 0.8);
+      text-transform: uppercase;
+    }
+
+    .brand-stamp-tagline {
+      font-family: var(--font-ui);
+      font-size: 7px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(177, 173, 167, 0.55);
+    }
+
+    /* ─────────────────────────────────────────
+       6. CONVERSION / EMAIL SIGNUP
+    ───────────────────────────────────────── */
+
+    #conversion {
+      padding-block: var(--space-section-gap);
+      background: var(--color-page-bg);
+      position: relative;
+    }
+
+    /* Depth: very subtle inner glow at top */
+    #conversion::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent 0%, var(--color-border) 50%, transparent 100%);
+    }
+
+    .conversion-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 120px;
+      align-items: center;
+    }
+
+    .conversion-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
+      font-weight: var(--fw-regular);
+      letter-spacing: var(--ls-h2);
+      color: var(--color-heading);
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .conversion-copy {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: var(--lh-body);
+      color: var(--color-muted);
+      max-width: 360px;
+    }
+
+    .email-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .email-form-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: var(--fw-medium);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .email-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--color-border);
+      padding: 14px 0;
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--color-body-text);
+      outline: none;
+      transition: border-color var(--transition-input-focus);
+      caret-color: var(--color-accent);
+    }
+
+    .email-input::placeholder {
+      color: rgba(177, 173, 167, 0.45);
+      font-style: italic;
+    }
+
+    .email-input:focus {
+      border-bottom-color: var(--color-accent);
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-text);
+      font-family: var(--font-ui);
+      font-size: var(--type-button);
+      font-weight: var(--fw-medium);
+      letter-spacing: var(--ls-button);
+      padding: var(--space-cta-v) var(--space-cta-h);
+      border: 1px solid var(--color-btn-primary-border);
+      cursor: pointer;
+      transition:
+        background var(--transition-btn-enter),
+        color var(--transition-btn-enter),
+        border-color var(--transition-btn-enter);
+      text-align: center;
+      margin-top: 8px;
+      align-self: flex-start;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-surface-2);
+      border-color: var(--color-muted);
+      opacity: 1;
+    }
+
+    /* ─────────────────────────────────────────
+       7. FOOTER
+    ───────────────────────────────────────── */
+
+    #site-footer {
+      background: var(--color-page-bg);
+      padding-top: 100px;
+      padding-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* MC watermark stamp — fades in at 70% opacity */
+    .footer-watermark {
+      position: absolute;
+      bottom: -60px;
+      right: -40px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      border: 1px solid rgba(177, 173, 167, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 500ms ease-in-out;
+    }
+
+    .footer-watermark.visible {
+      opacity: 0.7;
+    }
+
+    .footer-watermark-text {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: var(--fw-regular);
+      letter-spacing: 0.2em;
+      color: rgba(177, 173, 167, 0.15);
+      text-transform: uppercase;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 80px;
+      margin-bottom: 72px;
+    }
+
+    .footer-col {
+      will-change: opacity;
+    }
+
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: var(--fw-regular);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin-bottom: 16px;
+    }
+
+    .footer-brand-desc {
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--color-muted);
+      max-width: 240px;
+    }
+
+    .footer-col-heading {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: var(--fw-semibold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 24px;
+      opacity: 0.7;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: var(--fw-regular);
+      letter-spacing: 0.04em;
+      color: var(--color-muted);
+      text-decoration: none;
+      transition: color var(--transition-link-hover);
+    }
+
+    .footer-links a:hover {
+      color: var(--color-heading);
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .footer-copyright {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--color-muted);
+      opacity: 0.6;
+      text-transform: uppercase;
+    }
+
+    .footer-social-link {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: var(--fw-medium);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      text-decoration: none;
+      transition: color var(--transition-link-hover);
+    }
+
+    .footer-social-link:hover {
+      color: var(--color-heading);
+      opacity: 1;
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE — ≤900px
+    ───────────────────────────────────────── */
+
+    @media (max-width: 900px) {
+
+      .nav-inner {
+        grid-template-columns: auto 1fr;
+        gap: 24px;
+      }
+
+      .nav-left {
+        display: none;
+      }
+
+      .nav-right {
+        gap: 20px;
+      }
+
+      .hero-headline {
+        font-size: clamp(2.4rem, 6vw, 4rem);
+      }
+
+      .product-split-grid {
+        grid-template-columns: 1fr;
+        gap: 56px;
+      }
+
+      .product-split-left {
+        padding-right: 0;
+        order: 2;
+      }
+
+      .product-split-right {
+        order: 1;
+      }
+
+      #product-video,
+      .product-video-fallback {
+        height: 420px;
+      }
+
+      .collection-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      .manifesto-headline {
+        font-size: clamp(2.4rem, 5.5vw, 4.5rem);
+      }
+
+      .conversion-grid {
+        grid-template-columns: 1fr;
+        gap: 64px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+      }
+
+      .footer-col:first-child {
+        grid-column: span 2;
+      }
+
+      #product-split,
+      #collection,
+      #conversion {
+        padding-block: 120px;
+      }
+
+      .brand-stamp {
+        width: 100px;
+        height: 100px;
+        right: 24px;
+      }
+
+      .brand-stamp-monogram {
+        font-size: 18px;
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE — ≤600px
+    ───────────────────────────────────────── */
+
+    @media (max-width: 600px) {
+
+      .nav-inner {
+        grid-template-columns: 1fr auto;
+        padding-inline: 20px;
+      }
+
+      .nav-right {
+        gap: 14px;
+      }
+
+      .nav-right .nav-link:not(:last-child) {
+        display: none;
+      }
+
+      .hero-headline {
+        font-size: clamp(2rem, 8vw, 3rem);
+      }
+
+      .hero-subline {
+        font-size: 15px;
+      }
+
+      .hero-nav-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .hero-content {
+        padding-inline: 24px;
+        padding-bottom: 48px;
+      }
+
+      .container {
+        padding-inline: 24px;
+      }
+
+      .collection-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .manifesto-headline {
+        font-size: clamp(2rem, 7vw, 3rem);
+      }
+
+      .manifesto-paragraph {
+        font-size: 16px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .footer-col:first-child {
+        grid-column: span 1;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      #product-split,
+      #collection,
+      #conversion {
+        padding-block: 80px;
+      }
+
+      .btn-primary {
+        width: 100%;
+        text-align: center;
+        align-self: stretch;
+      }
+
+      .footer-watermark {
+        width: 220px;
+        height: 220px;
+        bottom: -40px;
+        right: -30px;
+      }
+
+      .footer-watermark-text {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─────────────────────────────────────────
+       NAV — SPLIT-WING STICKY
+  ───────────────────────────────────────── -->
+  <nav id="site-nav" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="collection.html" class="nav-link">Product</a>
+        <a href="provenance.html" class="nav-link">Provenance</a>
+      </div>
+
+      <a href="/" class="nav-logo" aria-label="Maison Cendré — Home">Maison Cendré</a>
+
+      <div class="nav-right">
+        <a href="atelier.html" class="nav-link">Atelier</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─────────────────────────────────────────
+       1. HERO
+  ───────────────────────────────────────── -->
+  <section id="hero" aria-label="Hero">
+
+    <video
+      id="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      src="assets/hero-bg.mp4"
+      aria-hidden="true"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div class="media-fallback" aria-hidden="true" style="position:absolute;inset:0;min-height:100%;">
+      <div>Video asset unavailable</div>
+      <span>→ assets/hero-bg.mp4</span>
+    </div>
+
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <h1 class="hero-headline" id="hero-headline" aria-label="Maison Cendré">
+        <span class="word">Maison</span><span class="word">Cendré</span>
+      </h1>
+      <p class="hero-subline" id="hero-subline">"From cold water. Nothing more."</p>
+      <div class="hero-nav-bar">
+        <a href="collection.html" class="text-link" id="hero-cta-discover">Discover the Collection →</a>
+        <a href="#collection" class="text-link" id="hero-cta-caviar">Caviar ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────
+       2. EDITORIAL PRODUCT SPLIT
+  ───────────────────────────────────────── -->
+  <section id="product-split" aria-label="Oscietra Reserve">
+    <div class="container">
+      <div class="product-split-grid">
+
+        <div class="product-split-left" id="product-split-text">
+          <span class="section-label">Selection</span>
+          <h2 class="product-label">Oscietra<br>Reserve</h2>
+          <span class="product-origin-badge">Basque Coast — Atlantic</span>
+          <p class="product-price">125g / €380 &nbsp;·&nbsp; 250g / €740</p>
+          <p class="product-copy">
+            Harvested from first-generation broodstock.
+            Grain the colour of pewter, finish long and marine.
+            No blending. No correction.
+          </p>
+          <a href="collection.html" class="text-link">Order a Reserve →</a>
+        </div>
+
+        <div class="product-split-right" id="product-split-video">
+          <video
+            id="product-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            src="assets/product-feature.mp4"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          ></video>
+          <div class="media-fallback product-video-fallback">
+            <div>Video asset unavailable</div>
+            <span>→ assets/product-feature.mp4</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────
+       3. COLLECTION PREVIEW
+  ───────────────────────────────────────── -->
+  <section id="collection" aria-label="The Collection">
+    <div class="container">
+
+      <div class="collection-header">
+        <span class="section-label">The Collection</span>
+      </div>
+
+      <div class="collection-grid" id="collection-grid">
+
+        <article class="product-card" id="card-oscietra">
+          <div class="product-card-media">
+            <img
+              src="assets/product-1.jpeg"
+              alt="Oscietra Reserve caviar tin on dark slate"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            />
+            <div class="media-fallback product-card-img-fallback">
+              <div>Image unavailable</div>
+              <span>→ assets/product-1.jpeg</span>
+            </div>
+          </div>
+          <p class="product-card-species">Oscietra Reserve</p>
+          <p class="product-card-origin">Basque Coast — Atlantic</p>
+          <p class="product-card-price">From €380</p>
+        </article>
+
+        <article class="product-card" id="card-siberian">
+          <div class="product-card-media">
+            <img
+              src="assets/product-2.jpeg"
+              alt="Siberian Caviar presented in a shell"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            />
+            <div class="media-fallback product-card-img-fallback">
+              <div>Image unavailable</div>
+              <span>→ assets/product-2.jpeg</span>
+            </div>
+          </div>
+          <p class="product-card-species">Siberian Caviar</p>
+          <p class="product-card-origin">Bay of Biscay — Wild</p>
+          <p class="product-card-price">From €240</p>
+        </article>
+
+        <article class="product-card" id="card-marine-cures">
+          <div class="product-card-media">
+            <img
+              src="assets/product-3.jpeg"
+              alt="Marine Cures selection — salt-cured anchovy and sea urchin"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            />
+            <div class="media-fallback product-card-img-fallback">
+              <div>Image unavailable</div>
+              <span>→ assets/product-3.jpeg</span>
+            </div>
+          </div>
+          <p class="product-card-species">Marine Cures</p>
+          <p class="product-card-origin">Atlantic — Seasonal</p>
+          <p class="product-card-price">From €95</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────
+       4. MANIFESTO / PROVENANCE
+  ───────────────────────────────────────── -->
+  <section id="manifesto" aria-label="Provenance">
+
+    <video
+      id="manifesto-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      src="assets/manifesto-ambient.mp4"
+      aria-hidden="true"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div class="media-fallback" aria-hidden="true" style="position:absolute;inset:0;min-height:80vh;">
+      <div>Video asset unavailable</div>
+      <span>→ assets/manifesto-ambient.mp4</span>
+    </div>
+
+    <div class="manifesto-scrim" aria-hidden="true"></div>
+    <div class="manifesto-depth" aria-hidden="true"></div>
+
+    <div class="manifesto-content">
+      <div class="container" style="position:relative;">
+        <h2 class="manifesto-headline" id="manifesto-headline">
+          Atlantic.<br>Cold.<br>Singular.
+        </h2>
+        <p class="manifesto-paragraph" id="manifesto-paragraph">
+          We hold one provenance. One species family. One method of harvest.
+          The Basque coast gives what no farm can manufacture —
+          salt, cold, and geological time. We ask nothing more of it.
+        </p>
+
+        <!-- Brand stamp: CSS-only circle -->
+        <div class="brand-stamp" id="brand-stamp" aria-hidden="true">
+          <span class="brand-stamp-monogram">MC</span>
+          <span class="brand-stamp-tagline">Basque · Atlantic</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─────────────────────────────────────────
+       5. CONVERSION / EMAIL SIGNUP
+  ───────────────────────────────────────── -->
+  <section id="conversion" aria-label="Stay in season">
+    <div class="container">
+      <div class="conversion-grid">
+
+        <div id="conversion-copy">
+          <h2 class="conversion-headline">Stay<br>in season.</h2>
+          <p class="conversion-copy">
+            Allocation is monthly and limited. We notify those on the list
+            before the harvest opens to the public. One email per season.
+            Nothing more.
+          </p>
+        </div>
+
+        <div id="conversion-form">
+          <form class="email-form" action="#" method="post" aria-label="Email signup">
+            <label class="email-form-label" for="email-input">Your address</label>
+            <input
+              id="email-input"
+              class="email-input"
+              type="email"
+              name="email"
+              placeholder="name@domain.com"
+              required
+              autocomplete="email"
+            />
+            <button type="submit" class="btn-primary">Request Allocation</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────
+       6. FOOTER
+  ───────────────────────────────────────── -->
+  <footer id="site-footer" aria-label="Site footer">
+
+    <!-- MC watermark -->
+    <div class="footer-watermark" id="footer-watermark" aria-hidden="true">
+      <span class="footer-watermark-text">MC</span>
+    </div>
+
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="footer-grid" id="footer-grid">
+
+        <div class="footer-col" id="footer-col-brand">
+          <p class="footer-brand-name">Maison Cendré</p>
+          <p class="footer-brand-desc">
+            Single-origin Atlantic caviar and rare marine cures
+            from the cold tidal waters of the Basque coast.
+            One product family. One provenance. No compromise.
+          </p>
+        </div>
+
+        <div class="footer-col" id="footer-col-pages">
+          <p class="footer-col-heading">Pages</p>
+          <ul class="footer-links">
+            <li><a href="collection.html">Product</a></li>
+            <li><a href="provenance.html">Provenance</a></li>
+            <li><a href="atelier.html">Atelier</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col" id="footer-col-products">
+          <p class="footer-col-heading">Collection</p>
+          <ul class="footer-links">
+            <li><a href="collection.html#oscietra">Oscietra Reserve</a></li>
+            <li><a href="collection.html#siberian">Siberian Caviar</a></li>
+            <li><a href="collection.html#marine-cures">Marine Cures</a></li>
+            <li><a href="collection.html#gifting">Gifting</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2026 Maison Cendré. All rights reserved.</p>
+        <a href="https://instagram.com" class="footer-social-link" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─────────────────────────────────────────
+       JAVASCRIPT — NAV + GSAP ANIMATIONS
+  ───────────────────────────────────────── -->
+  <script>
+    // ── Nav scroll handler ──────────────────────────────────────────
+    (function () {
+      const nav = document.getElementById('site-nav');
+      const SCROLL_THRESHOLD = 60;
+      let ticking = false;
+      let lastScrollY = 0;
+
+      function handleNavScroll() {
+        if (lastScrollY > SCROLL_THRESHOLD) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function () {
+        lastScrollY = window.scrollY;
+        if (!ticking) {
+          requestAnimationFrame(handleNavScroll);
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
+
+    // ── Footer watermark visibility ─────────────────────────────────
+    (function () {
+      const watermark = document.getElementById('footer-watermark');
+      if (!watermark) return;
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            watermark.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(document.getElementById('site-footer'));
+    })();
+
+    // ── GSAP Animations ─────────────────────────────────────────────
+    (function () {
+      // Guard: if GSAP or ScrollTrigger failed to load, exit gracefully
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ── 1. Hero headline: vertical lift per word ──
+      const heroWords = document.querySelectorAll('.hero-headline .word');
+      if (heroWords.length > 0) {
+        gsap.set(heroWords, { y: 20, opacity: 0 });
+        gsap.to(heroWords, {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.15,
+          ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          delay: 0.25
+        });
+      }
+
+      // Fade in hero subline after words settle
+      const heroSubline = document.getElementById('hero-subline');
+      if (heroSubline) {
+        gsap.set(heroSubline, { opacity: 0, y: 12 });
+        gsap.to(heroSubline, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          delay: 0.65
+        });
+      }
+
+      // ── 2. Product split video: clip-path wipe left → right ──
+      const productVideoEl = document.getElementById('product-split-video');
+      if (productVideoEl) {
+        gsap.set(productVideoEl, { clipPath: 'inset(0 100% 0 0)' });
+        gsap.to(productVideoEl, {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 1.1,
+          ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          scrollTrigger: {
+            trigger: '#product-split',
+            start: 'top 75%',
+            toggleActions: 'play none none none'
+          }
+        });
+
+        // Also fade in the left text column
+        const productText = document.getElementById('product-split-text');
+        if (productText) {
+          gsap.set(productText, { opacity: 0, y: 24 });
+          gsap.to(productText, {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+            delay: 0.35,
+            scrollTrigger: {
+              trigger: '#product-split',
+              start: 'top 75%',
+              toggleActions: 'play none none none'
+            }
+          });
+        }
+      }
+
+      // ── 3. Collection cards: scaleReveal stagger ──
+      const cards = document.querySelectorAll('#collection-grid .product-card');
+      if (cards.length > 0) {
+        gsap.set(cards, { scale: 0.92, opacity: 0 });
+        gsap.to(cards, {
+          scale: 1,
+          opacity: 1,
+          duration: 1.1,
+          stagger: 0.15,
+          ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          scrollTrigger: {
+            trigger: '#collection-grid',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+      // ── 4. Manifesto paragraph: fadeSlideUp with 0.9s delay ──
+      const manifestoPara = document.getElementById('manifesto-paragraph');
+      if (manifestoPara) {
+        gsap.set(manifestoPara, { opacity: 0, y: 28 });
+        gsap.to(manifestoPara, {
+          opacity: 1,
+          y: 0,
+          duration: 1.0,
+          ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          scrollTrigger: {
+            trigger: '#manifesto',
+            start: 'top 65%',
+            toggleActions: 'play none none none',
+            onEnter: function (self) {
+              // 0.9s delay after section enters
+              gsap.delayedCall(0.9, function () {
+                gsap.to(manifestoPara, {
+                  opacity: 1,
+                  y: 0,
+                  duration: 1.0,
+                  ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+                });
+              });
+            }
+          }
+        });
+        // Reset and let onEnter handle it
+        gsap.set(manifestoPara, { opacity: 0, y: 28 });
+      }
+
+      // ── 5. Brand stamp: scroll-parallax into conversion section ──
+      const brandStamp = document.getElementById('brand-stamp');
+      if (brandStamp) {
+        gsap.to(brandStamp, {
+          y: '80%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#manifesto',
+            endTrigger: '#conversion',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1.2
+          }
+        });
+      }
+
+      // ── 6. Footer columns: stagger opacity fade ──
+      const footerCols = document.querySelectorAll('#footer-grid .footer-col');
+      if (footerCols.length > 0) {
+        gsap.set(footerCols, { opacity: 0 });
+        gsap.to(footerCols, {
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'ease-in-out',
+          scrollTrigger: {
+            trigger: '#site-footer',
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

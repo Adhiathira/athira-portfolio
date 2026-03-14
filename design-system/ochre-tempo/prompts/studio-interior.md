@@ -4,7 +4,7 @@
 **Save to:** `ochre-tempo/assets/studio-interior.jpg`
 **Type:** Image
 **Dimensions:** 960×1200
-**AI Tool:** Midjourney / DALL-E 3
+**AI Tool:** Nano Banana Pro
 
 ## Prompt
 

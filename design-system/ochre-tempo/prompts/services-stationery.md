@@ -4,7 +4,7 @@
 **Save to:** `ochre-tempo/assets/services-stationery.jpg`
 **Type:** Image
 **Dimensions:** 640×480
-**AI Tool:** Midjourney / DALL-E 3
+**AI Tool:** Nano Banana Pro
 
 ## Prompt
 

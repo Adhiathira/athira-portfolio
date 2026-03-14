@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- FONT NOTICE: proprietary display font → Space Grotesk (geometric sans, closest match for display weight) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lacuna Grade — Precision Signal Analysis</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--leading-normal);
+      overflow-x: hidden;
+    }
+
+    /* ── Navigation ── */
+    #site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: var(--z-nav);
+      height: 160px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--grid-container-padding);
+      background: var(--color-nav-bg);
+      transition: background var(--duration-base) var(--ease-standard),
+                  height var(--duration-base) var(--ease-standard);
+    }
+    #site-nav.scrolled {
+      background: var(--color-nav-bg-scrolled);
+      height: 80px;
+    }
+    #nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    #nav-logo {
+      font-family: var(--font-heading);
+      font-weight: var(--font-weight-medium);
+      font-size: 0.875rem;
+      letter-spacing: var(--tracking-wide);
+      color: var(--color-nav-text);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+    #nav-logo:hover { opacity: var(--hover-opacity); }
+    #nav-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      list-style: none;
+    }
+    #nav-links a {
+      font-family: var(--font-heading);
+      font-weight: var(--font-weight-regular);
+      font-size: 0.75rem;
+      letter-spacing: var(--tracking-wide);
+      color: var(--color-nav-text);
+      text-decoration: none;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: var(--radius-pill);
+      padding: 8px 20px;
+      transition: var(--transition-base);
+    }
+    #nav-links a:hover {
+      border-color: var(--color-white);
+      color: var(--color-white);
+    }
+    #site-nav.scrolled #nav-links a {
+      color: var(--color-body-text);
+      border-color: var(--color-border-subtle);
+    }
+    #site-nav.scrolled #nav-links a:hover {
+      color: var(--color-white);
+      border-color: var(--color-white);
+    }
+
+    /* ── Hero ── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+    #hero-bg-container {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    #hero-bg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #hero-bg-placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 60% 40%, #1a1a1a 0%, #0a0a0a 70%);
+      color: var(--color-muted-text);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+    }
+    #hero-bg-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 30%, #3a3f42 0%, #0a0a0a 65%);
+      pointer-events: none;
+    }
+    #hero-device-container {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-52%);
+      z-index: var(--z-media);
+      width: 45%;
+      max-width: 700px;
+    }
+    #hero-device-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    #hero-device-placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--color-surface-2);
+      color: var(--color-muted-text);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      opacity: 0.5;
+      border-radius: var(--radius-md);
+    }
+    #hero-content {
+      position: relative;
+      z-index: var(--z-content);
+      width: 100%;
+      padding: 0 var(--grid-container-padding) var(--space-xl) var(--grid-container-padding);
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    #hero-kicker {
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: block;
+    }
+    #hero-headline-group {
+      overflow: hidden;
+    }
+    #hero-headline {
+      font-family: var(--font-heading);
+      font-size: var(--type-hero);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-heading);
+      white-space: nowrap;
+      /* Overflow intentionally to the right — environmental signage */
+      overflow: visible;
+      display: block;
+    }
+    #hero-tagline {
+      font-family: var(--font-body);
+      font-size: var(--type-body-lg);
+      font-weight: var(--font-weight-light);
+      color: var(--color-body-text);
+      margin-top: 24px;
+      max-width: 420px;
+      line-height: var(--leading-relaxed);
+      letter-spacing: 0.02em;
+    }
+    #hero-cta-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      align-items: center;
+    }
+    .btn-primary {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-medium);
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border: 1px solid var(--btn-primary-bg);
+      border-radius: var(--radius-pill);
+      padding: 17.28px 43.2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: var(--transition-base);
+    }
+    .btn-primary:hover { background: var(--btn-primary-hover-bg); border-color: var(--btn-primary-hover-bg); }
+    .btn-ghost {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-regular);
+      background: var(--btn-ghost-bg);
+      color: var(--btn-ghost-text);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: var(--radius-pill);
+      padding: 17.28px 43.2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: var(--transition-base);
+    }
+    .btn-ghost:hover { border-color: var(--color-white); }
+    #hero-scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      right: var(--grid-container-padding);
+      z-index: var(--z-content);
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #hero-scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--color-border-subtle);
+    }
+
+    /* ── Product Statement ── */
+    #product-statement {
+      position: relative;
+      width: 100%;
+      padding: 140px var(--grid-container-padding);
+      overflow: hidden;
+    }
+    #statement-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, #1a1a1a 0%, #0a0a0a 75%);
+      z-index: 0;
+    }
+    #statement-content {
+      position: relative;
+      z-index: var(--z-content);
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #statement-eyebrow {
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text);
+      text-transform: uppercase;
+      margin-bottom: 48px;
+      display: block;
+    }
+    #statement-headline {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-light);
+      line-height: var(--leading-snug);
+      letter-spacing: -0.01em;
+      color: var(--color-heading);
+      overflow: hidden;
+    }
+    #statement-headline-inner {
+      display: block;
+    }
+    #statement-subtext {
+      font-family: var(--font-body);
+      font-size: var(--type-body-lg);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-body-text);
+      margin-top: 40px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: var(--leading-relaxed);
+    }
+    #statement-divider {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--color-border-subtle), transparent);
+      margin: 60px auto 0;
+    }
+
+    /* ── Features ── */
+    #features {
+      position: relative;
+      padding: 120px var(--grid-container-padding);
+      overflow: hidden;
+    }
+    #features-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #0a0a0a 0%, #111111 50%, #0a0a0a 100%);
+      z-index: 0;
+    }
+    #features-inner {
+      position: relative;
+      z-index: var(--z-content);
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    #features-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 80px;
+    }
+    #features-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text);
+      text-transform: uppercase;
+    }
+    #features-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-heading);
+      line-height: var(--leading-snug);
+      max-width: 540px;
+    }
+    #features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--grid-gutter);
+    }
+    .feature-card {
+      position: relative;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2c2f31 100%);
+      border: 1px solid rgba(94,98,102,0.3);
+      border-radius: var(--radius-md);
+      padding: 40px;
+      overflow: hidden;
+      transition: border-color var(--duration-base) var(--ease-standard),
+                  transform var(--duration-base) var(--ease-primary);
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    }
+    .feature-card:hover {
+      border-color: rgba(94,98,102,0.7);
+      transform: translateY(-4px);
+    }
+    .feature-card-number {
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-border-subtle);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .feature-card-image-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      margin-bottom: 28px;
+      background: #0a0a0a;
+    }
+    .feature-card-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .feature-card-placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background: var(--color-surface-2);
+      color: var(--color-muted-text);
+      font-size: 0.75rem;
+      font-family: var(--font-body);
+      opacity: 0.5;
+      position: absolute;
+      inset: 0;
+    }
+    .feature-card-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-heading);
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--leading-snug);
+      margin-bottom: 16px;
+    }
+    .feature-card-desc {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-body-text);
+      line-height: var(--leading-relaxed);
+    }
+
+    /* ── Use Cases ── */
+    #use-cases {
+      position: relative;
+      overflow: hidden;
+    }
+    .usecase-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 35fr 65fr;
+      min-height: 600px;
+    }
+    .usecase-row.reverse {
+      grid-template-columns: 65fr 35fr;
+    }
+    .usecase-copy {
+      position: relative;
+      padding: 80px var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: var(--z-content);
+    }
+    .usecase-row:not(.reverse) .usecase-copy {
+      background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%);
+    }
+    .usecase-row.reverse .usecase-copy {
+      background: linear-gradient(225deg, #111111 0%, #1a1a1a 100%);
+      order: 2;
+    }
+    .usecase-row.reverse .usecase-image-col {
+      order: 1;
+    }
+    .usecase-index {
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-border-subtle);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .usecase-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-heading);
+      line-height: var(--leading-snug);
+      letter-spacing: var(--tracking-tight);
+      margin-bottom: 24px;
+    }
+    .usecase-desc {
+      font-family: var(--font-body);
+      font-size: var(--type-body-lg);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-body-text);
+      line-height: var(--leading-relaxed);
+      margin-bottom: 36px;
+    }
+    .usecase-link {
+      font-family: var(--font-heading);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-wide);
+      color: var(--color-heading);
+      text-decoration: none;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 4px;
+      transition: border-color var(--duration-fast) var(--ease-standard),
+                  opacity var(--duration-fast) var(--ease-standard);
+    }
+    .usecase-link:hover { border-color: rgba(255,255,255,0.8); opacity: 0.9; }
+    .usecase-image-col {
+      position: relative;
+      overflow: hidden;
+    }
+    .usecase-image-col img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .usecase-image-placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      min-height: 600px;
+      background: var(--color-surface-2);
+      color: var(--color-muted-text);
+      font-size: 0.85rem;
+      font-family: var(--font-body);
+      opacity: 0.5;
+      position: absolute;
+      inset: 0;
+    }
+    .usecase-image-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .usecase-row:not(.reverse) .usecase-image-overlay {
+      background: linear-gradient(90deg, rgba(10,10,10,0.3) 0%, transparent 40%);
+    }
+    .usecase-row.reverse .usecase-image-overlay {
+      background: linear-gradient(270deg, rgba(10,10,10,0.3) 0%, transparent 40%);
+    }
+
+    /* ── Contact ── */
+    #contact {
+      position: relative;
+      padding: 160px var(--grid-container-padding);
+      overflow: hidden;
+    }
+    #contact-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #0a0a0a 0%, #020b44 60%, #020b44 100%);
+      z-index: 0;
+    }
+    #contact-content {
+      position: relative;
+      z-index: var(--z-content);
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #contact-eyebrow {
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-wider);
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      margin-bottom: 48px;
+      display: block;
+    }
+    #contact-headline {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-heading);
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--leading-snug);
+      margin-bottom: 32px;
+    }
+    #contact-subtext {
+      font-family: var(--font-body);
+      font-size: var(--type-body-lg);
+      color: rgba(255,255,255,0.5);
+      line-height: var(--leading-relaxed);
+      margin-bottom: 60px;
+    }
+    #contact-cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-ghost-navy {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-regular);
+      background: transparent;
+      color: var(--color-white);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: var(--radius-pill);
+      padding: 17.28px 43.2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: var(--transition-base);
+    }
+    .btn-ghost-navy:hover { border-color: var(--color-white); }
+    #contact-email-link {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: var(--font-weight-light);
+      color: var(--color-white);
+      text-decoration: none;
+      display: block;
+      letter-spacing: -0.01em;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+    #contact-email-link:hover { opacity: 0.7; }
+
+    /* ── Footer ── */
+    #site-footer {
+      position: relative;
+      padding: 40px var(--grid-container-padding);
+      background: #020b44;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    #footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #footer-logo {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-wide);
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+    }
+    #footer-copy {
+      font-family: var(--font-body);
+      font-size: var(--type-label);
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ── Reveal utility (pre-animation state) ── */
+    .reveal-clip {
+      clip-path: inset(0 100% 0 0);
+    }
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      #site-nav { padding: 0 32px; }
+      #hero-content { padding: 0 32px var(--space-xl) 32px; }
+      #hero-device-container { width: 50%; right: 2%; }
+      #features { padding: 80px 32px; }
+      #features-grid { grid-template-columns: 1fr; gap: 20px; }
+      .usecase-row, .usecase-row.reverse { grid-template-columns: 1fr; }
+      .usecase-row.reverse .usecase-copy { order: 1; }
+      .usecase-row.reverse .usecase-image-col { order: 2; }
+      .usecase-image-col { min-height: 380px; }
+      #product-statement, #contact { padding: 100px 32px; }
+    }
+    @media (max-width: 768px) {
+      #site-nav { height: 80px; padding: 0 20px; }
+      #hero-headline { font-size: clamp(2.5rem, 10vw, 5rem); }
+      #hero-device-container { display: none; }
+      #features-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+      #features { padding: 60px 20px; }
+      #product-statement, #contact { padding: 80px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav id="site-nav" role="navigation" aria-label="Main navigation">
+    <div id="nav-inner">
+      <a id="nav-logo" href="index.html">Lacuna Grade</a>
+      <ul id="nav-links">
+        <li><a href="work.html">Work</a></li>
+        <li><a href="technology.html">Technology</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section id="hero" aria-label="Hero">
+    <div id="hero-bg-container">
+      <img
+        id="hero-bg-img"
+        src="assets/hero-bg.jpg"
+        alt="Dark gradient background for hero section"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      >
+      <div id="hero-bg-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:radial-gradient(ellipse at 60% 40%,#1a1a1a 0%,#0a0a0a 70%);color:#666;font-family:var(--font-body);font-size:0.85rem;opacity:0.5;">
+        → assets/hero-bg.jpg
+      </div>
+      <div id="hero-bg-gradient"></div>
+    </div>
+
+    <div id="hero-device-container">
+      <img
+        id="hero-device-img"
+        src="assets/hero-device.png"
+        alt="Lacuna Grade signal analyzer device, machined aluminum chassis with circuit board internals, tilted at 15 degrees on dark field"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      >
+      <div id="hero-device-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;aspect-ratio:4/3;background:var(--color-surface-2);color:var(--color-muted-text);font-size:0.85rem;font-family:var(--font-body);opacity:0.5;border-radius:var(--radius-md);">
+        → assets/hero-device.png
+      </div>
+    </div>
+
+    <div id="hero-content">
+      <span id="hero-kicker">Signal Intelligence</span>
+      <div id="hero-headline-group">
+        <span id="hero-headline">Lacuna Grade.</span>
+      </div>
+      <p id="hero-tagline">Precision signal analysis.<br>Nothing escapes detection.</p>
+      <div id="hero-cta-group">
+        <a href="technology.html" class="btn-primary">Explore Technology</a>
+        <a href="work.html" class="btn-ghost">View Case Studies</a>
+      </div>
+    </div>
+
+    <div id="hero-scroll-indicator" aria-hidden="true">
+      <div id="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ── Product Statement ── -->
+  <section id="product-statement" aria-label="Product statement">
+    <div id="statement-bg"></div>
+    <div id="statement-content">
+      <span id="statement-eyebrow">The Standard</span>
+      <h2 id="statement-headline">
+        <span id="statement-headline-inner">The instrument that catches<br>what others miss.</span>
+      </h2>
+      <p id="statement-subtext">
+        Built for broadcast engineers operating in live production, Lacuna Grade delivers
+        measurement-grade signal analysis in a 1U rack chassis — capturing latency deviations,
+        spectral anomalies, and sync drift before they reach air.
+      </p>
+      <div id="statement-divider"></div>
+    </div>
+  </section>
+
+  <!-- ── Features ── -->
+  <section id="features" aria-label="Core capabilities">
+    <div id="features-bg"></div>
+    <div id="features-inner">
+      <div id="features-header">
+        <span id="features-label">Capabilities — 01</span>
+        <h2 id="features-title">Engineered for signal confidence at every frequency.</h2>
+      </div>
+
+      <div id="features-grid">
+        <!-- Card 1 -->
+        <article id="feature-card-signal" class="feature-card">
+          <span class="feature-card-number">01 — Signal</span>
+          <div class="feature-card-image-container">
+            <img
+              src="assets/feature-signal.jpg"
+              alt="Oscilloscope waveform visualization on dark monitor, precision signal measurement display"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            >
+            <div class="feature-card-placeholder">→ assets/feature-signal.jpg</div>
+          </div>
+          <h3 class="feature-card-title">Spectrum Analysis</h3>
+          <p class="feature-card-desc">Full-band spectral monitoring with 0.1dB resolution across the entire audible range. Detect noise floor anomalies in real time.</p>
+        </article>
+
+        <!-- Card 2 -->
+        <article id="feature-card-latency" class="feature-card">
+          <span class="feature-card-number">02 — Timing</span>
+          <div class="feature-card-image-container">
+            <img
+              src="assets/feature-latency.jpg"
+              alt="Precision timing diagram showing circuit trace paths and signal propagation delays"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            >
+            <div class="feature-card-placeholder">→ assets/feature-latency.jpg</div>
+          </div>
+          <h3 class="feature-card-title">Latency Mapping</h3>
+          <p class="feature-card-desc">Sub-millisecond delay measurement across multi-channel signal paths. Identify drift before it becomes audible.</p>
+        </article>
+
+        <!-- Card 3 -->
+        <article id="feature-card-dashboard" class="feature-card">
+          <span class="feature-card-number">03 — Remote</span>
+          <div class="feature-card-image-container">
+            <img
+              src="assets/feature-dashboard.jpg"
+              alt="Web-based monitoring dashboard with dark theme showing signal meters and frequency charts"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            >
+            <div class="feature-card-placeholder">→ assets/feature-dashboard.jpg</div>
+          </div>
+          <h3 class="feature-card-title">Live Dashboard</h3>
+          <p class="feature-card-desc">Browser-based monitoring interface with configurable alert thresholds. Access signal state from any device on the local network.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Use Cases ── -->
+  <section id="use-cases" aria-label="Use cases">
+
+    <!-- Row 1 -->
+    <div id="usecase-row-broadcast" class="usecase-row">
+      <div class="usecase-copy">
+        <span class="usecase-index">Use Case — 01</span>
+        <h3 class="usecase-title">Live Broadcast<br>Production</h3>
+        <p class="usecase-desc">When air time is non-negotiable, Lacuna Grade monitors every signal path across your routing matrix — flagging anomalies before the director calls for a cut.</p>
+        <a href="work.html" class="usecase-link">Read case study →</a>
+      </div>
+      <div id="usecase-broadcast-image" class="usecase-image-col">
+        <img
+          src="assets/usecase-broadcast.jpg"
+          alt="Broadcast production control room with live video walls displaying multiple signal feeds, dark professional environment"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <div class="usecase-image-placeholder">→ assets/usecase-broadcast.jpg</div>
+        <div class="usecase-image-overlay"></div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div id="usecase-row-studio" class="usecase-row reverse">
+      <div class="usecase-copy">
+        <span class="usecase-index">Use Case — 02</span>
+        <h3 class="usecase-title">Recording<br>Studio Routing</h3>
+        <p class="usecase-desc">High-output studio environments demand signal clarity across every path. Grade gives your team a complete picture of the routing matrix at a glance.</p>
+        <a href="work.html" class="usecase-link">Read case study →</a>
+      </div>
+      <div id="usecase-studio-image" class="usecase-image-col">
+        <img
+          src="assets/usecase-studio.jpg"
+          alt="Professional recording studio showing signal processing racks and patch bay equipment under studio lighting"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <div class="usecase-image-placeholder">→ assets/usecase-studio.jpg</div>
+        <div class="usecase-image-overlay"></div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div id="usecase-row-events" class="usecase-row">
+      <div class="usecase-copy">
+        <span class="usecase-index">Use Case — 03</span>
+        <h3 class="usecase-title">Live Event<br>Remote Production</h3>
+        <p class="usecase-desc">Temporary installations in outdoor venues demand portable, rack-ready analysis that deploys in minutes and monitors from a single browser tab.</p>
+        <a href="work.html" class="usecase-link">Read case study →</a>
+      </div>
+      <div id="usecase-events-image" class="usecase-image-col">
+        <img
+          src="assets/usecase-events.jpg"
+          alt="Live outdoor event with temporary broadcast truck in parking area, daylight with equipment visible through open doors"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <div class="usecase-image-placeholder">→ assets/usecase-events.jpg</div>
+        <div class="usecase-image-overlay"></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── Contact ── -->
+  <section id="contact" aria-label="Contact">
+    <div id="contact-bg"></div>
+    <div id="contact-content">
+      <span id="contact-eyebrow">Get In Touch</span>
+      <h2 id="contact-headline">Ready to grade your signal?</h2>
+      <p id="contact-subtext">Talk to our signal engineering team. We'll scope your installation, assess your signal paths, and tell you exactly what Grade can add to your workflow.</p>
+      <div id="contact-cta-row">
+        <a href="contact.html" class="btn-ghost-navy">Request a Demo</a>
+        <a id="contact-email-link" href="mailto:signal@lacunagrade.com">signal@lacunagrade.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── */
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <span id="footer-logo">Lacuna Grade</span>
+      <span id="footer-copy">© 2026 Lacuna Grade. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Read motion tokens from CSS vars
+    const rootStyle = getComputedStyle(document.documentElement);
+    const DUR_BASE = parseFloat(rootStyle.getPropertyValue('--duration-base')) || 0.54;
+    const DUR_SLOW = parseFloat(rootStyle.getPropertyValue('--duration-slow')) || 0.9;
+    const DUR_MEDIUM = parseFloat(rootStyle.getPropertyValue('--duration-medium')) || 0.72;
+    const EASE_PRIMARY = rootStyle.getPropertyValue('--ease-primary').trim() || 'cubic-bezier(0.19,1,0.22,1)';
+
+    // ── Nav scroll behavior ──
+    const nav = document.getElementById('site-nav');
+    ScrollTrigger.create({
+      start: 'top -80px',
+      onEnter: () => nav.classList.add('scrolled'),
+      onLeaveBack: () => nav.classList.remove('scrolled'),
+    });
+
+    // ── Hero entrance ──
+    const heroTl = gsap.timeline({ delay: 0.2 });
+
+    heroTl
+      .from('#hero-kicker', {
+        opacity: 0,
+        y: 20,
+        duration: DUR_BASE,
+        ease: EASE_PRIMARY,
+      })
+      .from('#hero-headline', {
+        clipPath: 'inset(0 100% 0 0)',
+        duration: DUR_SLOW * 1.5,
+        ease: EASE_PRIMARY,
+      }, '-=0.2')
+      .from('#hero-tagline', {
+        opacity: 0,
+        y: 30,
+        duration: DUR_SLOW,
+        ease: EASE_PRIMARY,
+      }, '-=0.8')
+      .from('#hero-cta-group', {
+        opacity: 0,
+        y: 20,
+        duration: DUR_BASE,
+        ease: EASE_PRIMARY,
+      }, '-=0.5')
+      .from('#hero-device-container', {
+        opacity: 0,
+        x: 60,
+        rotationY: -15,
+        duration: DUR_SLOW * 1.4,
+        ease: EASE_PRIMARY,
+      }, 0.3)
+      .from('#hero-scroll-indicator', {
+        opacity: 0,
+        duration: DUR_BASE,
+        ease: EASE_PRIMARY,
+      }, '-=0.4');
+
+    // ── Hero device parallax ──
+    gsap.to('#hero-device-container', {
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1.5,
+      },
+      y: '18%',
+      ease: 'none',
+    });
+
+    // ── Hero headline horizontal drift ──
+    gsap.to('#hero-headline', {
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 2,
+      },
+      x: '-4%',
+      ease: 'none',
+    });
+
+    // ── Product statement clip-path reveal ──
+    gsap.from('#statement-headline-inner', {
+      scrollTrigger: {
+        trigger: '#product-statement',
+        start: 'top 75%',
+      },
+      clipPath: 'inset(0 100% 0 0)',
+      duration: DUR_SLOW * 1.6,
+      ease: EASE_PRIMARY,
+    });
+
+    gsap.from('#statement-eyebrow', {
+      scrollTrigger: { trigger: '#product-statement', start: 'top 80%' },
+      opacity: 0,
+      y: 16,
+      duration: DUR_BASE,
+      ease: EASE_PRIMARY,
+    });
+
+    gsap.from('#statement-subtext', {
+      scrollTrigger: { trigger: '#product-statement', start: 'top 65%' },
+      opacity: 0,
+      y: 24,
+      duration: DUR_SLOW,
+      ease: EASE_PRIMARY,
+    });
+
+    gsap.from('#statement-divider', {
+      scrollTrigger: { trigger: '#product-statement', start: 'top 60%' },
+      scaleY: 0,
+      transformOrigin: 'top center',
+      duration: DUR_SLOW,
+      ease: EASE_PRIMARY,
+    });
+
+    // ── Features staggered reveal ──
+    gsap.from('#features-label', {
+      scrollTrigger: { trigger: '#features', start: 'top 80%' },
+      opacity: 0,
+      x: -20,
+      duration: DUR_BASE,
+      ease: EASE_PRIMARY,
+    });
+
+    gsap.from('#features-title', {
+      scrollTrigger: { trigger: '#features', start: 'top 75%' },
+      opacity: 0,
+      y: 30,
+      duration: DUR_SLOW,
+      ease: EASE_PRIMARY,
+    });
+
+    gsap.from('.feature-card', {
+      scrollTrigger: {
+        trigger: '#features-grid',
+        start: 'top 80%',
+      },
+      y: 50,
+      opacity: 0,
+      duration: DUR_SLOW,
+      stagger: 0.15,
+      ease: EASE_PRIMARY,
+    });
+
+    // ── Use cases horizontal slide-in ──
+    gsap.utils.toArray('.usecase-copy').forEach((el, i) => {
+      const dir = i % 2 === 0 ? -40 : 40;
+      gsap.from(el, {
+        scrollTrigger: { trigger: el.closest('.usecase-row'), start: 'top 75%' },
+        x: dir,
+        opacity: 0,
+        duration: DUR_SLOW,
+        ease: EASE_PRIMARY,
+      });
+    });
+
+    gsap.utils.toArray('.usecase-image-col').forEach((el) => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el.closest('.usecase-row'), start: 'top 80%' },
+        scale: 1.05,
+        opacity: 0,
+        duration: DUR_SLOW * 1.2,
+        ease: EASE_PRIMARY,
+      });
+    });
+
+    // ── Contact scale-from-center ──
+    gsap.from('#contact-content', {
+      scrollTrigger: { trigger: '#contact', start: 'top 75%' },
+      scale: 0.95,
+      opacity: 0,
+      duration: DUR_SLOW,
+      ease: EASE_PRIMARY,
+    });
+  </script>
+
+</body>
+</html>

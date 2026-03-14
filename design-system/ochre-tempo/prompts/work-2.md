@@ -4,7 +4,7 @@
 **Save to:** `ochre-tempo/assets/work-2.jpg`
 **Type:** Image
 **Dimensions:** 720×720
-**AI Tool:** Midjourney / DALL-E 3
+**AI Tool:** Nano Banana Pro
 
 ## Prompt
 

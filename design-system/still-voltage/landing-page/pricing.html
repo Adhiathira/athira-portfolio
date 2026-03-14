@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Volt Studio</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--color-page-bg); color: var(--color-body); font-family: var(--font-body); font-size: var(--type-body); line-height: var(--leading-body); overflow-x: hidden; }
+
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 99; transition: background var(--duration-medium) var(--ease-standard), backdrop-filter var(--duration-medium) var(--ease-standard); }
+    #nav-inner { display: flex; align-items: center; justify-content: center; height: 60px; max-width: var(--grid-max-width); margin: 0 auto; padding: 0 40px; position: relative; }
+    #nav-logo { position: absolute; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 1.125rem; font-weight: var(--weight-bold); color: var(--color-heading); text-decoration: none; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    #nav-logo-mark { width: 22px; height: 22px; background: var(--color-accent); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+    #nav-left { display: flex; align-items: center; gap: 28px; margin-right: auto; }
+    #nav-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+    .nav-link { font-family: var(--font-body); font-size: 0.9375rem; font-weight: var(--weight-medium); color: var(--color-muted); text-decoration: none; transition: color var(--duration-medium) var(--ease-hover); }
+    .nav-link:hover, .nav-link.active { color: var(--color-heading); }
+    #nav-cta { background: var(--btn-primary-bg); color: var(--btn-primary-text); font-family: var(--font-body); font-size: 0.875rem; font-weight: var(--weight-semibold); padding: var(--btn-padding-v) 20px; border-radius: var(--btn-radius); text-decoration: none; transition: box-shadow var(--duration-medium) var(--ease-smooth), transform var(--duration-base) var(--ease-standard); }
+    #nav-cta:hover { box-shadow: var(--shadow-accent-glow); transform: translateY(-1px); }
+    #nav.scrolled { background: rgba(25,25,28,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+
+    /* Page header */
+    #page-header { padding: 140px 40px 60px; text-align: center; background: linear-gradient(180deg, var(--color-hero-bg) 0%, var(--color-page-bg) 100%); position: relative; overflow: hidden; }
+    #page-header::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(253,53,110,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(253,53,110,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 60%); -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 60%); }
+    #page-title { font-family: var(--font-display); font-size: var(--type-h1); font-weight: var(--weight-extrabold); color: var(--color-heading); letter-spacing: -0.028em; line-height: 1.06; max-width: 680px; margin: 0 auto 20px; position: relative; z-index: 1; }
+    #page-subtitle { font-size: clamp(1rem, 1.8vw, 1.2rem); color: var(--color-muted); line-height: 1.6; max-width: 480px; margin: 0 auto 36px; position: relative; z-index: 1; }
+
+    /* Billing toggle */
+    #billing-toggle { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; position: relative; z-index: 1; }
+    .toggle-label { font-size: 0.9375rem; color: var(--color-muted); }
+    .toggle-label.active { color: var(--color-heading); font-weight: var(--weight-medium); }
+    #toggle-switch { width: 44px; height: 24px; background: var(--color-surface-3); border-radius: 12px; position: relative; cursor: pointer; border: 1px solid var(--color-border); transition: background var(--duration-base) var(--ease-standard); }
+    #toggle-switch.on { background: var(--color-accent); }
+    #toggle-knob { width: 18px; height: 18px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 3px; transition: transform var(--duration-base) var(--ease-standard); box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+    #toggle-switch.on #toggle-knob { transform: translateX(20px); }
+    .save-badge { background: rgba(253,53,110,0.12); border: 1px solid rgba(253,53,110,0.25); border-radius: var(--btn-radius); padding: 2px 10px; font-size: 0.75rem; color: var(--color-accent); font-weight: var(--weight-semibold); }
+
+    /* Pricing cards */
+    #pricing-section { padding: 60px 40px var(--space-3xl); }
+    #pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1060px; margin: 0 auto; align-items: start; }
+
+    .pricing-card { background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: 20px; padding: 36px 32px 40px; position: relative; overflow: hidden; transition: transform var(--duration-medium) var(--ease-smooth), box-shadow var(--duration-medium) var(--ease-standard); }
+    .pricing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-elevated); }
+    .pricing-card.featured { border-color: rgba(253,53,110,0.35); background: linear-gradient(160deg, rgba(253,53,110,0.06) 0%, var(--color-surface-2) 50%); transform: scale(1.03); z-index: 1; }
+    .pricing-card.featured:hover { transform: scale(1.03) translateY(-4px); }
+
+    /* Top accent on featured */
+    .pricing-card.featured::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--color-accent) 30%, var(--color-accent) 70%, transparent); }
+
+    .plan-badge { display: inline-block; background: rgba(253,53,110,0.12); border: 1px solid rgba(253,53,110,0.25); border-radius: 4px; padding: 3px 10px; font-size: 0.7rem; font-weight: var(--weight-bold); color: var(--color-accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
+    .plan-name { font-family: var(--font-display); font-size: 1.375rem; font-weight: var(--weight-bold); color: var(--color-heading); letter-spacing: -0.02em; margin-bottom: 8px; }
+    .plan-desc { font-size: 0.9rem; color: var(--color-muted); line-height: 1.55; margin-bottom: 28px; }
+
+    .plan-price { margin-bottom: 8px; display: flex; align-items: flex-end; gap: 4px; }
+    .price-amount { font-family: var(--font-display); font-size: 3rem; font-weight: var(--weight-extrabold); color: var(--color-heading); letter-spacing: -0.04em; line-height: 1; }
+    .price-currency { font-size: 1.125rem; font-weight: var(--weight-semibold); color: var(--color-muted); margin-bottom: 8px; }
+    .price-period { font-size: 0.875rem; color: var(--color-muted); margin-bottom: 6px; margin-left: 2px; }
+    .price-annual-note { font-size: 0.8rem; color: var(--color-muted); margin-bottom: 28px; min-height: 20px; }
+    .price-annual-note.savings { color: var(--color-accent); }
+
+    .plan-divider { height: 1px; background: var(--color-border); margin: 0 0 28px; }
+
+    .plan-cta { display: block; text-align: center; padding: 12px var(--btn-padding-h); border-radius: var(--btn-radius); font-family: var(--font-body); font-size: 0.9375rem; font-weight: var(--weight-semibold); text-decoration: none; margin-bottom: 28px; transition: all var(--duration-medium) var(--ease-standard); }
+    .plan-cta-primary { background: var(--btn-primary-bg); color: var(--btn-primary-text); }
+    .plan-cta-primary:hover { box-shadow: var(--shadow-accent-glow); transform: translateY(-2px); }
+    .plan-cta-secondary { background: transparent; color: var(--color-body); border: 1px solid rgba(228,228,231,0.2); }
+    .plan-cta-secondary:hover { border-color: rgba(228,228,231,0.45); color: var(--color-heading); }
+
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .plan-feature-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--color-body); line-height: 1.5; }
+    .plan-feature-check { width: 16px; height: 16px; min-width: 16px; background: rgba(253,53,110,0.1); border: 1px solid rgba(253,53,110,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .plan-feature-check svg { width: 9px; height: 9px; stroke: var(--color-accent); fill: none; stroke-width: 2.5; }
+    .plan-feature-item.muted-feature { color: var(--color-muted); }
+    .plan-feature-item.muted-feature .plan-feature-check { background: rgba(172,172,175,0.08); border-color: rgba(172,172,175,0.15); }
+    .plan-feature-item.muted-feature .plan-feature-check svg { stroke: var(--color-muted); opacity: 0.5; }
+
+    /* Comparison table */
+    #comparison { padding: 0 40px var(--space-3xl); max-width: 1060px; margin: 0 auto; }
+    #comparison-title { font-family: var(--font-display); font-size: var(--type-h2); font-weight: var(--weight-bold); color: var(--color-heading); letter-spacing: -0.022em; text-align: center; margin-bottom: 48px; }
+    #comparison-table { width: 100%; border-collapse: collapse; }
+    #comparison-table th, #comparison-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid var(--color-border); }
+    #comparison-table th { font-family: var(--font-body); font-size: 0.8125rem; font-weight: var(--weight-semibold); color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.08em; background: transparent; }
+    #comparison-table th:not(:first-child) { text-align: center; }
+    #comparison-table td { font-size: 0.9375rem; color: var(--color-body); }
+    #comparison-table td:not(:first-child) { text-align: center; color: var(--color-muted); }
+    #comparison-table tr:last-child td { border-bottom: none; }
+    .check-icon { color: var(--color-accent); font-size: 1.1rem; font-weight: var(--weight-bold); }
+    .dash-icon { color: var(--color-surface-3); }
+    .row-section { font-family: var(--font-display); font-size: 0.8125rem; font-weight: var(--weight-semibold); color: var(--color-accent); letter-spacing: 0.08em; text-transform: uppercase; background: rgba(253,53,110,0.05) !important; }
+    .row-section td { padding-top: 20px; padding-bottom: 8px; }
+    #comparison-table tr:hover td { background: rgba(44,44,48,0.4); }
+
+    /* FAQ */
+    #faq { padding: 0 40px var(--space-3xl); max-width: 800px; margin: 0 auto; }
+    #faq-title { font-family: var(--font-display); font-size: var(--type-h2); font-weight: var(--weight-bold); color: var(--color-heading); letter-spacing: -0.022em; text-align: center; margin-bottom: 48px; }
+    .faq-item { border-bottom: 1px solid var(--color-border); }
+    .faq-q { width: 100%; text-align: left; padding: 20px 0; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: var(--font-body); font-size: 1rem; font-weight: var(--weight-medium); color: var(--color-heading); transition: color var(--duration-base) var(--ease-standard); }
+    .faq-q:hover { color: var(--color-accent); }
+    .faq-icon { width: 20px; height: 20px; flex-shrink: 0; background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform var(--duration-base) var(--ease-standard), background var(--duration-base) var(--ease-standard); }
+    .faq-icon svg { width: 10px; height: 10px; stroke: var(--color-muted); fill: none; stroke-width: 2; transition: stroke var(--duration-base) var(--ease-standard); }
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(253,53,110,0.1); border-color: rgba(253,53,110,0.2); }
+    .faq-item.open .faq-icon svg { stroke: var(--color-accent); }
+    .faq-a { font-size: 0.9375rem; color: var(--color-muted); line-height: 1.65; max-height: 0; overflow: hidden; transition: max-height var(--duration-slow) var(--ease-standard), padding var(--duration-base) var(--ease-standard); }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
+
+    /* Enterprise CTA */
+    #enterprise-cta { padding: 80px 40px; margin: 0 40px; border-radius: 20px; background: linear-gradient(135deg, rgba(253,53,110,0.08) 0%, rgba(44,44,48,0.6) 50%, rgba(58,58,63,0.4) 100%); border: 1px solid rgba(253,53,110,0.15); display: flex; align-items: center; justify-content: space-between; gap: 40px; max-width: 1060px; margin-left: auto; margin-right: auto; margin-bottom: 80px; }
+    #enterprise-text h2 { font-family: var(--font-display); font-size: var(--type-h2); font-weight: var(--weight-bold); color: var(--color-heading); letter-spacing: -0.022em; margin-bottom: 12px; }
+    #enterprise-text p { font-size: var(--type-p); color: var(--color-muted); line-height: 1.6; max-width: 440px; }
+    .btn-primary { background: var(--btn-primary-bg); color: var(--btn-primary-text); font-family: var(--font-body); font-size: var(--type-button); font-weight: var(--weight-semibold); padding: 12px var(--btn-padding-h); border-radius: var(--btn-radius); text-decoration: none; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: box-shadow var(--duration-medium) var(--ease-smooth), transform var(--duration-base) var(--ease-standard); white-space: nowrap; }
+    .btn-primary:hover { box-shadow: var(--shadow-accent-glow); transform: translateY(-2px); }
+
+    #footer { background: var(--color-footer-bg); border-top: 1px solid var(--color-border); padding: 48px 40px 32px; }
+    #footer-inner { max-width: var(--grid-container); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    #footer-logo { font-family: var(--font-display); font-size: 1rem; font-weight: var(--weight-bold); color: var(--color-heading); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    #footer-logo-mark { width: 18px; height: 18px; background: var(--color-accent); border-radius: 4px; }
+    #footer-links-row { display: flex; gap: 24px; }
+    #footer-links-row a { font-size: 0.875rem; color: var(--color-footer-text); text-decoration: none; transition: color var(--duration-base) var(--ease-standard); }
+    #footer-links-row a:hover { color: var(--color-heading); }
+    #footer-copy { font-size: 0.8rem; color: var(--color-footer-text); }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div id="nav-inner">
+      <div id="nav-left">
+        <a href="features.html" class="nav-link">Features</a>
+        <a href="showcase.html" class="nav-link">Showcase</a>
+      </div>
+      <a href="index.html" id="nav-logo">
+        <div id="nav-logo-mark">
+          <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="1.8" width="12" height="12">
+            <path d="M6 1L10 6L6 11L2 6L6 1Z"/>
+          </svg>
+        </div>
+        Volt Studio
+      </a>
+      <div id="nav-right">
+        <a href="pricing.html" class="nav-link active">Pricing</a>
+        <a href="docs.html" class="nav-link">Docs</a>
+        <a href="pricing.html" id="nav-cta">Get started free</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="page-header">
+    <h1 id="page-title">Simple pricing. Serious capabilities.</h1>
+    <p id="page-subtitle">Start free, scale when you need to. No hidden fees, no surprise overages.</p>
+    <div id="billing-toggle">
+      <span class="toggle-label active" id="label-monthly">Monthly</span>
+      <div id="toggle-switch"><div id="toggle-knob"></div></div>
+      <span class="toggle-label" id="label-annual">Annual</span>
+      <span class="save-badge">Save 20%</span>
+    </div>
+  </header>
+
+  <section id="pricing-section">
+    <div id="pricing-grid">
+
+      <!-- Free -->
+      <div class="pricing-card" id="card-free">
+        <div class="plan-name">Free</div>
+        <p class="plan-desc">For solo designers exploring 3D web design for the first time.</p>
+        <div class="plan-price">
+          <span class="price-currency">$</span>
+          <span class="price-amount" data-monthly="0" data-annual="0">0</span>
+          <span class="price-period">/mo</span>
+        </div>
+        <p class="price-annual-note">Forever free, no credit card required.</p>
+        <div class="plan-divider"></div>
+        <a href="#" class="plan-cta plan-cta-secondary">Get started free</a>
+        <ul class="plan-features">
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> 3 active projects</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Scene Editor with isometric mode</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> HTML + CSS export</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Community access</li>
+          <li class="plan-feature-item muted-feature"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Volt branding on export</li>
+          <li class="plan-feature-item muted-feature"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> No GSAP export</li>
+        </ul>
+      </div>
+
+      <!-- Pro (featured) -->
+      <div class="pricing-card featured" id="card-pro">
+        <div class="plan-badge">Most popular</div>
+        <div class="plan-name">Pro</div>
+        <p class="plan-desc">For interaction designers shipping real 3D experiences to production.</p>
+        <div class="plan-price">
+          <span class="price-currency">$</span>
+          <span class="price-amount" data-monthly="49" data-annual="39">49</span>
+          <span class="price-period">/mo</span>
+        </div>
+        <p class="price-annual-note" id="pro-annual-note"> </p>
+        <div class="plan-divider"></div>
+        <a href="#" class="plan-cta plan-cta-primary">Start Pro free trial</a>
+        <ul class="plan-features">
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Unlimited projects</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Full Motion System with timeline</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> GSAP + ScrollTrigger export</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Three.js scene export</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Custom domain previews</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> No Volt branding</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Priority support</li>
+        </ul>
+      </div>
+
+      <!-- Team -->
+      <div class="pricing-card" id="card-team">
+        <div class="plan-name">Team</div>
+        <p class="plan-desc">For design teams building and shipping together at scale.</p>
+        <div class="plan-price">
+          <span class="price-currency">$</span>
+          <span class="price-amount" data-monthly="89" data-annual="72">89</span>
+          <span class="price-period">/seat/mo</span>
+        </div>
+        <p class="price-annual-note" id="team-annual-note"> </p>
+        <div class="plan-divider"></div>
+        <a href="#" class="plan-cta plan-cta-secondary">Start Team trial</a>
+        <ul class="plan-features">
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Everything in Pro</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Real-time multiplayer collaboration</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Shared component library</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Team design token sync</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> SSO / SAML</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Advanced analytics</li>
+          <li class="plan-feature-item"><span class="plan-feature-check"><svg viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2"/></svg></span> Dedicated success manager</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section id="comparison">
+    <h2 id="comparison-title">Compare plans in detail</h2>
+    <table id="comparison-table">
+      <thead>
+        <tr>
+          <th style="width:40%">Feature</th>
+          <th>Free</th>
+          <th style="color:var(--color-accent)">Pro</th>
+          <th>Team</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-section"><td colspan="4">Projects &amp; Storage</td></tr>
+        <tr><td>Active projects</td><td>3</td><td>Unlimited</td><td>Unlimited</td></tr>
+        <tr><td>3D asset storage</td><td>500MB</td><td>10GB</td><td>100GB</td></tr>
+        <tr><td>CDN hosting</td><td>—</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr class="row-section"><td colspan="4">Scene Editor</td></tr>
+        <tr><td>Isometric &amp; perspective modes</td><td class="check-icon">✓</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr><td>GLTF / OBJ import</td><td>—</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr><td>Figma plugin</td><td>—</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr class="row-section"><td colspan="4">Motion</td></tr>
+        <tr><td>Basic transitions</td><td class="check-icon">✓</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr><td>Visual timeline editor</td><td>—</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr><td>Scroll trigger zones</td><td>—</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr><td>Physics spring simulator</td><td>—</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr class="row-section"><td colspan="4">Export</td></tr>
+        <tr><td>HTML + CSS export</td><td class="check-icon">✓</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr><td>GSAP + ScrollTrigger</td><td>—</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr><td>Three.js scene export</td><td>—</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr><td>React / Vue / Svelte wrappers</td><td>—</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr><td>Volt branding removed</td><td>—</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr class="row-section"><td colspan="4">Collaboration</td></tr>
+        <tr><td>Shareable preview links</td><td class="check-icon">✓</td><td class="check-icon">✓</td><td class="check-icon">✓</td></tr>
+        <tr><td>Real-time multiplayer</td><td>—</td><td>—</td><td class="check-icon">✓</td></tr>
+        <tr><td>Shared component library</td><td>—</td><td>—</td><td class="check-icon">✓</td></tr>
+        <tr><td>SSO / SAML</td><td>—</td><td>—</td><td class="check-icon">✓</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2 id="faq-title">Questions &amp; answers</h2>
+
+    <div class="faq-item">
+      <button class="faq-q">
+        Do I need to know WebGL or Three.js to use Volt Studio?
+        <span class="faq-icon"><svg viewBox="0 0 10 10"><path d="M2 5h6M5 2v6"/></svg></span>
+      </button>
+      <p class="faq-a">Not at all. Volt Studio is designed specifically for interaction designers who want 3D without code. The visual editor handles all the WebGL — you design, it renders.</p>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">
+        What happens to my projects if I downgrade?
+        <span class="faq-icon"><svg viewBox="0 0 10 10"><path d="M2 5h6M5 2v6"/></svg></span>
+      </button>
+      <p class="faq-a">Your projects are never deleted. If you downgrade from Pro to Free, projects beyond the 3-project limit become read-only until you upgrade or archive extras.</p>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">
+        Can the exported code really run without any Volt dependency?
+        <span class="faq-icon"><svg viewBox="0 0 10 10"><path d="M2 5h6M5 2v6"/></svg></span>
+      </button>
+      <p class="faq-a">Yes. The HTML + CSS export is fully self-contained. The GSAP export requires only the public GSAP CDN (free license). There is no Volt runtime SDK, no phone-home, no API key.</p>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">
+        Does the free plan expire or have a time limit?
+        <span class="faq-icon"><svg viewBox="0 0 10 10"><path d="M2 5h6M5 2v6"/></svg></span>
+      </button>
+      <p class="faq-a">The Free plan is free forever. No trial period, no credit card. You can use Volt Studio on the Free plan indefinitely.</p>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">
+        What's included in the 14-day Pro trial?
+        <span class="faq-icon"><svg viewBox="0 0 10 10"><path d="M2 5h6M5 2v6"/></svg></span>
+      </button>
+      <p class="faq-a">Full Pro access — unlimited projects, GSAP export, Three.js export, motion timeline, and custom domain previews. No credit card required to start the trial.</p>
+    </div>
+  </section>
+
+  <!-- Enterprise CTA -->
+  <div id="enterprise-cta">
+    <div id="enterprise-text">
+      <h2>Need enterprise terms?</h2>
+      <p>Custom contracts, security reviews, dedicated infrastructure, and volume pricing for teams over 50. Talk to us.</p>
+    </div>
+    <a href="#" class="btn-primary">
+      Contact sales
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+    </a>
+  </div>
+
+  <footer id="footer">
+    <div id="footer-inner">
+      <a href="index.html" id="footer-logo">
+        <div id="footer-logo-mark"></div>
+        Volt Studio
+      </a>
+      <div id="footer-links-row">
+        <a href="features.html">Features</a>
+        <a href="showcase.html">Showcase</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="docs.html">Docs</a>
+      </div>
+      <div id="footer-copy">© 2026 Volt Studio</div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-standard').trim();
+    const EASE_S = getComputedStyle(document.documentElement).getPropertyValue('--ease-smooth').trim();
+    const DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-enter')) || 0.7;
+    const ST = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stagger-step')) || 0.1;
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    gsap.from('#page-title, #page-subtitle, #billing-toggle', { y: 30, opacity: 0, duration: DUR, ease: EASE, stagger: ST * 1.5 });
+
+    gsap.from('.pricing-card', {
+      scrollTrigger: { trigger: '#pricing-grid', start: 'top 78%' },
+      y: 40, opacity: 0, duration: DUR * 1.1, ease: EASE_S, stagger: ST * 1.8
+    });
+
+    gsap.from('#comparison-title, #comparison-table', {
+      scrollTrigger: { trigger: '#comparison', start: 'top 80%' },
+      y: 24, opacity: 0, duration: DUR, ease: EASE_S, stagger: ST * 2
+    });
+
+    gsap.from('.faq-item', {
+      scrollTrigger: { trigger: '#faq', start: 'top 80%' },
+      x: -20, opacity: 0, duration: 0.5, ease: EASE, stagger: ST * 1.2
+    });
+
+    gsap.from('#enterprise-cta', {
+      scrollTrigger: { trigger: '#enterprise-cta', start: 'top 80%' },
+      y: 24, opacity: 0, duration: DUR, ease: EASE_S
+    });
+
+    // Billing toggle
+    const toggle = document.getElementById('toggle-switch');
+    const amounts = document.querySelectorAll('.price-amount');
+    const labelMonthly = document.getElementById('label-monthly');
+    const labelAnnual = document.getElementById('label-annual');
+    const proNote = document.getElementById('pro-annual-note');
+    const teamNote = document.getElementById('team-annual-note');
+    let isAnnual = false;
+
+    toggle.addEventListener('click', () => {
+      isAnnual = !isAnnual;
+      toggle.classList.toggle('on', isAnnual);
+      labelMonthly.classList.toggle('active', !isAnnual);
+      labelAnnual.classList.toggle('active', isAnnual);
+      amounts.forEach(el => {
+        el.textContent = isAnnual ? el.dataset.annual : el.dataset.monthly;
+      });
+      proNote.textContent = isAnnual ? 'Billed $468/yr — save $120/yr' : '\u00a0';
+      proNote.classList.toggle('savings', isAnnual);
+      teamNote.textContent = isAnnual ? 'Billed $864/yr per seat — save $204/yr' : '\u00a0';
+      teamNote.classList.toggle('savings', isAnnual);
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+/*
+ * griting-voltage — Interaction States
+ *
+ * Base: griting (brand colors, typography, component structure kept verbatim)
+ * Enrichment: still-voltage (transition easing, bottom-border underline pattern,
+ *             inset-shadow fill technique, opacity disabled state, navigation hover pattern)
+ *
+ * still-voltage's electric blue (srgb 0.0745341 0.399346 0.886564 / approx #146EF5)
+ * is replaced throughout by griting brand green #00693e.
+ *
+ * Color palette (griting):
+ *   Primary brand:    #00693e
+ *   Background deep:  #003620
+ *   Surface light:    #f5f6f5
+ *   Text deep:        #031f18
+ *   Text secondary:   #455451
+ *   Text meta:        #84848a
+ *   Text UI:          #202b38
+ *   Text date:        #9f9fa9
+ *   Search placeholder: #71717b
+ *   Share btn bg:     #f3f4f3
+ *   Card border:      rgba(209,213,219,0.5)
+ *   Divider:          #d1d5db
+ *   Filter pill border: #e4e4e7
+ *
+ * Typography (griting, unchanged):
+ *   Font family: Inter Variable / Inter
+ *   Font weight: 500 (medium) / 400 (regular)
+ *   Font size: 18px (primary CTA), 17px (outline), 16px (nav/links)
+ *   Letter spacing: -0.18px (primary CTA)
+ */
+
+/* =========================================================
+   BUTTONS — Primary
+   ========================================================= */
+
+.btn-primary {
+  background: linear-gradient(90deg, #00693e, #00693e);
+  color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #003620;
+  box-shadow:
+    0px 1px 2px -1px rgba(9, 6, 63, 0.4),
+    0px 0px 0px 1px #003620,
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.16);
+  font-size: 18px;
+  font-family: "Inter Variable", Inter, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.18px;
+  cursor: pointer;
+  /* Transition timing from still-voltage ease-out snap */
+  transition:
+    background-color 0.45s cubic-bezier(0.165, 0.84, 0.44, 1),
+    box-shadow 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #008050, #008050);
+  color: #ffffff;
+}
+
+.btn-primary:active {
+  background: linear-gradient(90deg, #003620, #003620);
+  color: #ffffff;
+}
+
+/* =========================================================
+   BUTTONS — Outline (on dark)
+   ========================================================= */
+
+.btn-outline {
+  background: rgba(0, 105, 62, 0.06);
+  color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #00693e;
+  box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.02);
+  font-size: 17px;
+  font-family: "Inter Variable", Inter, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  /* Snap easing from still-voltage */
+  transition:
+    background-color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    border 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.btn-outline:hover {
+  background: rgba(0, 105, 62, 0.12);
+  border-color: #00693e;
+}
+
+.btn-outline:active {
+  background: rgba(0, 105, 62, 0.20);
+}
+
+/* =========================================================
+   BUTTONS — Outline (on light)
+   ========================================================= */
+
+.btn-outline-on-light {
+  background: rgba(0, 105, 62, 0.06);
+  color: #000000;
+  border-radius: 8px;
+  border: 1px solid #00693e;
+  box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.02);
+  font-size: 17px;
+  font-family: "Inter Variable", Inter, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    border 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.btn-outline-on-light:hover {
+  background: rgba(0, 105, 62, 0.12);
+  color: #000000;
+}
+
+.btn-outline-on-light:active {
+  background: rgba(0, 105, 62, 0.20);
+}
+
+/* =========================================================
+   BUTTONS — Social share icon
+   ========================================================= */
+
+.btn-share-icon {
+  background: #f3f4f3;
+  border: 1px solid rgba(209, 213, 219, 0.5);
+  border-radius: 40px;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  transition: background-color 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.btn-share-icon:hover {
+  background: #e5e7e5;
+}
+
+/* =========================================================
+   BUTTONS — Filter pills
+   ========================================================= */
+
+.filter-pill--active {
+  background: #00693e;
+  color: #ffffff;
+  border-radius: 9999px;
+  height: 36px;
+  padding-inline: 16px;
+  cursor: pointer;
+  transition: background-color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.filter-pill--active:hover {
+  background: #004d2e;
+  color: #ffffff;
+}
+
+.filter-pill--active:active {
+  background: #003d25;
+  color: #ffffff;
+}
+
+.filter-pill--inactive {
+  background: #f3f4f3;
+  color: #000000;
+  border-radius: 9999px;
+  border: 1px solid #e4e4e7;
+  height: 36px;
+  padding-inline: 16px;
+  cursor: pointer;
+  transition: background-color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.filter-pill--inactive:hover {
+  background: #e8e8e8;
+  color: #031f18;
+}
+
+.filter-pill--inactive:active {
+  background: #d4d4d4;
+  color: #031f18;
+}
+
+/* =========================================================
+   BUTTONS — Underline nav toggle
+   (still-voltage bottom-border-only pattern, griting colors)
+   ========================================================= */
+
+.btn-underline-toggle {
+  background-color: transparent;
+  color: #031f18;
+  border-color: transparent transparent #031f18;
+  border-width: 0px 0px 2px;
+  border-style: none none solid;
+  outline-width: 0px;
+  font-weight: 500;
+  font-family: "Inter Variable", Inter, sans-serif;
+  cursor: pointer;
+  transition:
+    border 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.btn-underline-toggle:hover {
+  color: #00693e;
+  border-color: transparent transparent #00693e;
+}
+
+/* =========================================================
+   BUTTONS — Media control
+   (still-voltage video playback pattern, griting surface colors)
+   ========================================================= */
+
+.btn-media-control {
+  background-color: #f3f4f3;
+  color: #031f18;
+  border-width: 0px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.btn-media-control:hover {
+  background-color: #e5e7e5;
+}
+
+/* =========================================================
+   BUTTONS — Circle navigation button
+   (still-voltage carousel nav pattern, griting colors)
+   ========================================================= */
+
+.btn-circle-nav {
+  background-color: #003620;
+  color: #ffffff;
+  border-width: 0px;
+  font-weight: 400;
+  cursor: pointer;
+  transition:
+    background-color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    box-shadow 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    border 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.btn-circle-nav:hover {
+  background-color: #00693e;
+  color: #ffffff;
+}
+
+.btn-circle-nav:disabled,
+.btn-circle-nav[disabled],
+.btn-circle-nav.is-disabled {
+  background-color: #003620;
+  color: #ffffff;
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* =========================================================
+   LINKS — Navigation (on dark / hero)
+   ========================================================= */
+
+.link-nav {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: Inter, sans-serif;
+  cursor: pointer;
+  transition:
+    border 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.link-nav:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* =========================================================
+   LINKS — Navigation (on light)
+   ========================================================= */
+
+.link-nav-on-light {
+  color: #455451;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: Inter, sans-serif;
+  cursor: pointer;
+  transition:
+    border 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.link-nav-on-light:hover {
+  color: #031f18;
+  text-decoration: none;
+}
+
+/* =========================================================
+   LINKS — Back button
+   ========================================================= */
+
+.link-back {
+  color: #202b38;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.link-back:hover {
+  color: #031f18;
+}
+
+/* =========================================================
+   LINKS — Article title
+   ========================================================= */
+
+.link-article-title {
+  color: #031f18;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.link-article-title:hover {
+  color: #00693e;
+  text-decoration: underline;
+}
+
+/* =========================================================
+   LINKS — Nav banner
+   (still-voltage inset-shadow fill technique, griting primary green)
+   ========================================================= */
+
+.link-nav-banner {
+  background-color: #00693e;
+  color: #ffffff;
+  border-width: 0px;
+  font-weight: 500;
+  cursor: pointer;
+  /* Inset shadow expands on hover — still-voltage technique */
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 100px inset;
+  transition: box-shadow 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.link-nav-banner:hover {
+  background-color: #00693e;
+  color: #ffffff;
+  /* Inset shadow darkens the button surface without color change */
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 100px inset;
+}
+
+/* =========================================================
+   LINKS — Footer link
+   (still-voltage footer nav pattern, griting text colors)
+   ========================================================= */
+
+.link-footer {
+  color: #455451;
+  border-width: 0px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.link-footer:hover {
+  color: #031f18;
+}
+
+/* =========================================================
+   INPUTS — Search
+   ========================================================= */
+
+.input-search {
+  background: #f3f4f3;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  height: 40px;
+  color: #031f18;
+}
+
+.input-search::placeholder {
+  color: #71717b;
+}
+
+.input-search:focus {
+  outline: none;
+  border-color: #00693e;
+}
+
+/* =========================================================
+   NAVIGATION — Primary nav link
+   (still-voltage transition pattern, griting colors)
+   ========================================================= */
+
+.nav-link-primary {
+  color: #031f18;
+  border-width: 0px;
+  font-weight: 500;
+  font-family: "Inter Variable", Inter, sans-serif;
+  cursor: pointer;
+  transition:
+    border 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.nav-link-primary:hover {
+  color: #00693e;
+}
+
+/* =========================================================
+   NAVIGATION — Secondary nav link
+   ========================================================= */
+
+.nav-link-secondary {
+  color: #455451;
+  border-width: 0px;
+  font-weight: 500;
+  font-family: "Inter Variable", Inter, sans-serif;
+  cursor: pointer;
+  transition:
+    border 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.nav-link-secondary:hover {
+  color: #00693e;
+}
+
+/* =========================================================
+   NAVIGATION — Footer nav link
+   ========================================================= */
+
+.nav-link-footer {
+  color: #84848a;
+  border-width: 0px;
+  font-weight: 400;
+  font-family: "Inter Variable", Inter, sans-serif;
+  cursor: pointer;
+  transition: color 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.nav-link-footer:hover {
+  color: #031f18;
+}

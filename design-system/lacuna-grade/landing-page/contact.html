@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- FONT NOTICE: proprietary display font → Space Grotesk (geometric sans, closest match for display weight) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Lacuna Grade</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--leading-normal);
+      overflow-x: hidden;
+    }
+
+    /* ── Navigation ── */
+    #site-nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: var(--z-nav); height: 160px;
+      display: flex; align-items: center;
+      padding: 0 var(--grid-container-padding);
+      background: var(--color-nav-bg-scrolled);
+      transition: height var(--duration-base) var(--ease-standard);
+    }
+    #site-nav.scrolled { height: 80px; }
+    #nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: 1440px; margin: 0 auto;
+    }
+    #nav-logo {
+      font-family: var(--font-heading); font-weight: var(--font-weight-medium);
+      font-size: 0.875rem; letter-spacing: var(--tracking-wide);
+      color: var(--color-nav-text); text-decoration: none; text-transform: uppercase;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+    #nav-logo:hover { opacity: var(--hover-opacity); }
+    #nav-links { display: flex; align-items: center; gap: 12px; list-style: none; }
+    #nav-links a {
+      font-family: var(--font-heading); font-weight: var(--font-weight-regular);
+      font-size: 0.75rem; letter-spacing: var(--tracking-wide);
+      color: var(--color-body-text); text-decoration: none; text-transform: uppercase;
+      border: 1px solid var(--color-border-subtle); border-radius: var(--radius-pill);
+      padding: 8px 20px; transition: var(--transition-base);
+    }
+    #nav-links a:hover, #nav-links a.active { color: var(--color-white); border-color: var(--color-white); }
+
+    /* ── Contact Hero ── */
+    #contact-hero {
+      position: relative; overflow: hidden;
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 160px var(--grid-container-padding);
+    }
+    #contact-hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #020b44 0%, #0a0a0a 50%, #0a0a0a 100%);
+      z-index: 0;
+    }
+    #contact-hero-bg-texture {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0.03;
+      background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    #contact-hero-content {
+      position: relative; z-index: var(--z-content);
+      max-width: 1280px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 120px; align-items: start;
+    }
+    #contact-copy { padding-top: 16px; }
+    #contact-eyebrow {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: rgba(255,255,255,0.3); text-transform: uppercase;
+      margin-bottom: 40px; display: block;
+    }
+    #contact-headline {
+      font-family: var(--font-heading); font-size: var(--type-h1);
+      font-weight: var(--font-weight-bold); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight); line-height: var(--leading-snug);
+      margin-bottom: 32px;
+    }
+    #contact-subtext {
+      font-family: var(--font-body); font-size: var(--type-body-lg);
+      font-weight: 300; color: rgba(255,255,255,0.5);
+      line-height: var(--leading-relaxed); margin-bottom: 48px;
+    }
+    #contact-direct-links { display: flex; flex-direction: column; gap: 20px; }
+    .contact-direct-link {
+      display: flex; align-items: center; gap: 16px;
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: rgba(255,255,255,0.4); text-transform: uppercase; text-decoration: none;
+    }
+    .contact-direct-link-value {
+      font-family: var(--font-body); font-size: var(--type-body-lg);
+      font-weight: var(--font-weight-regular); color: var(--color-white); letter-spacing: 0;
+      text-transform: none; transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+    .contact-direct-link:hover .contact-direct-link-value { opacity: 0.6; }
+
+    /* ── Contact Form ── */
+    #contact-form-panel {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2c2f31 100%);
+      border: 1px solid rgba(94,98,102,0.3);
+      border-radius: var(--radius-md); padding: 60px 48px;
+      position: relative; overflow: hidden;
+    }
+    #contact-form-panel::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    }
+    #form-title {
+      font-family: var(--font-heading); font-size: var(--type-h3);
+      font-weight: var(--font-weight-bold); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight); margin-bottom: 8px;
+    }
+    #form-subtitle {
+      font-family: var(--font-body); font-size: var(--type-body);
+      color: var(--color-muted-text); margin-bottom: 40px;
+    }
+    #contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-field { display: flex; flex-direction: column; gap: 8px; }
+    .form-label {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text); text-transform: uppercase;
+    }
+    .form-input, .form-textarea, .form-select {
+      font-family: var(--font-body); font-size: var(--type-body);
+      color: var(--color-heading);
+      background: rgba(10,10,10,0.6);
+      border: 1px solid rgba(94,98,102,0.4);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color var(--duration-fast) var(--ease-standard);
+      width: 100%;
+    }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: rgba(255,255,255,0.5);
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--color-muted-text); }
+    .form-select option { background: #1a1a1a; color: var(--color-heading); }
+    #form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    #form-submit {
+      font-family: var(--font-body); font-size: var(--type-body);
+      font-weight: var(--font-weight-medium);
+      background: var(--btn-primary-bg); color: var(--btn-primary-text);
+      border: 1px solid var(--btn-primary-bg); border-radius: var(--radius-pill);
+      padding: 17.28px 43.2px; cursor: pointer; width: 100%;
+      transition: var(--transition-base); margin-top: 12px;
+    }
+    #form-submit:hover { background: #000000; border-color: #000000; }
+
+    /* ── Locations ── */
+    #locations {
+      position: relative; padding: 120px var(--grid-container-padding);
+    }
+    #locations-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #0a0a0a 0%, #111111 50%, #0a0a0a 100%);
+      z-index: 0;
+    }
+    #locations-inner {
+      position: relative; z-index: var(--z-content);
+      max-width: 1280px; margin: 0 auto;
+    }
+    #locations-label {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text); text-transform: uppercase;
+      margin-bottom: 60px; display: block;
+    }
+    #locations-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+    }
+    .location-card {
+      padding: 40px 36px;
+      background: linear-gradient(135deg, #1a1a1a, #111111);
+      border: 1px solid rgba(94,98,102,0.2);
+      border-radius: var(--radius-md);
+      position: relative; overflow: hidden;
+    }
+    .location-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    }
+    .location-city {
+      font-family: var(--font-heading); font-size: var(--type-h3);
+      font-weight: var(--font-weight-bold); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight); margin-bottom: 8px;
+    }
+    .location-country {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text); text-transform: uppercase; margin-bottom: 20px;
+    }
+    .location-address {
+      font-family: var(--font-body); font-size: var(--type-small);
+      color: var(--color-body-text); line-height: var(--leading-relaxed);
+      margin-bottom: 20px;
+    }
+    .location-role {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: rgba(2,11,68,0.8);
+      background: rgba(255,255,255,0.08); border-radius: var(--radius-pill);
+      padding: 4px 12px; display: inline-block; font-size: 10px; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── Footer ── */
+    #site-footer {
+      padding: 40px var(--grid-container-padding);
+      background: #0a0a0a; border-top: 1px solid rgba(94,98,102,0.2);
+    }
+    #footer-inner {
+      max-width: 1440px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    #footer-logo {
+      font-family: var(--font-heading); font-size: 0.75rem;
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wide);
+      color: rgba(255,255,255,0.3); text-transform: uppercase;
+    }
+    #footer-copy { font-family: var(--font-body); font-size: var(--type-label); color: rgba(255,255,255,0.2); }
+
+    @media (max-width: 1024px) {
+      #site-nav, #contact-hero, #locations { padding-left: 32px; padding-right: 32px; }
+      #contact-hero-content { grid-template-columns: 1fr; gap: 60px; }
+      #locations-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      #site-nav { height: 80px; padding-left: 20px; padding-right: 20px; }
+      #contact-hero { padding: 140px 20px 80px; }
+      #locations { padding: 60px 20px; }
+      #locations-grid { grid-template-columns: 1fr; }
+      #form-row-2 { grid-template-columns: 1fr; }
+      #contact-form-panel { padding: 40px 28px; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="site-nav" role="navigation" aria-label="Main navigation">
+    <div id="nav-inner">
+      <a id="nav-logo" href="index.html">Lacuna Grade</a>
+      <ul id="nav-links">
+        <li><a href="work.html">Work</a></li>
+        <li><a href="technology.html">Technology</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contact Hero -->
+  <section id="contact-hero" aria-label="Contact Lacuna Grade">
+    <div id="contact-hero-bg"></div>
+    <div id="contact-hero-bg-texture"></div>
+    <div id="contact-hero-content">
+      <div id="contact-copy">
+        <span id="contact-eyebrow">Get In Touch</span>
+        <h1 id="contact-headline">Talk to the signal engineering team.</h1>
+        <p id="contact-subtext">We scope installations, answer technical questions, and discuss your specific signal environment before anything is sold. If Grade doesn't fit your use case, we'll tell you.</p>
+        <div id="contact-direct-links">
+          <a id="contact-email" class="contact-direct-link" href="mailto:signal@lacunagrade.com">
+            <span class="contact-direct-link-label">Email</span>
+            <span class="contact-direct-link-value">signal@lacunagrade.com</span>
+          </a>
+          <a id="contact-phone" class="contact-direct-link" href="tel:+14155550192">
+            <span class="contact-direct-link-label">Phone</span>
+            <span class="contact-direct-link-value">+1 415 555 0192</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="contact-form-panel">
+        <h2 id="form-title">Request a Demo</h2>
+        <p id="form-subtitle">We'll follow up within one business day.</p>
+        <form id="contact-form" action="#" method="post">
+          <div id="form-row-2">
+            <div class="form-field">
+              <label class="form-label" for="form-name">Name</label>
+              <input id="form-name" class="form-input" type="text" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="form-company">Company</label>
+              <input id="form-company" class="form-input" type="text" name="company" placeholder="Studio / Network" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="form-email">Email</label>
+            <input id="form-email" class="form-input" type="email" name="email" placeholder="signal@yourcompany.com" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="form-environment">Environment</label>
+            <select id="form-environment" class="form-select" name="environment">
+              <option value="">Select your production environment</option>
+              <option value="broadcast">Broadcast / Television</option>
+              <option value="studio">Recording Studio</option>
+              <option value="live">Live Events</option>
+              <option value="postprod">Post Production</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="form-message">Tell us about your signal environment</label>
+            <textarea id="form-message" class="form-textarea" name="message" placeholder="Channel count, routing system, existing monitoring setup..."></textarea>
+          </div>
+          <button id="form-submit" type="submit">Request Demo →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Locations -->
+  <section id="locations" aria-label="Office locations">
+    <div id="locations-bg"></div>
+    <div id="locations-inner">
+      <span id="locations-label">Locations</span>
+      <div id="locations-grid">
+        <div id="location-sf" class="location-card">
+          <span class="location-city">San Francisco</span>
+          <span class="location-country">United States</span>
+          <p class="location-address">349 Brannan Street, Suite 420<br>San Francisco, CA 94107</p>
+          <span class="location-role">HQ & Engineering</span>
+        </div>
+        <div id="location-london" class="location-card">
+          <span class="location-city">London</span>
+          <span class="location-country">United Kingdom</span>
+          <p class="location-address">The Metal Box Factory<br>30 Great Guildford Street<br>London SE1 0HS</p>
+          <span class="location-role">EMEA Sales</span>
+        </div>
+        <div id="location-tokyo" class="location-card">
+          <span class="location-city">Tokyo</span>
+          <span class="location-country">Japan</span>
+          <p class="location-address">Minami-Aoyama 5-4-27<br>Minato-ku, Tokyo 107-0062</p>
+          <span class="location-role">APAC Sales</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <span id="footer-logo">Lacuna Grade</span>
+      <span id="footer-copy">© 2026 Lacuna Grade. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const rootStyle = getComputedStyle(document.documentElement);
+    const DUR_SLOW = parseFloat(rootStyle.getPropertyValue('--duration-slow')) || 0.9;
+    const DUR_BASE = parseFloat(rootStyle.getPropertyValue('--duration-base')) || 0.54;
+    const EASE_PRIMARY = rootStyle.getPropertyValue('--ease-primary').trim() || 'cubic-bezier(0.19,1,0.22,1)';
+
+    const nav = document.getElementById('site-nav');
+    ScrollTrigger.create({
+      start: 'top -80px',
+      onEnter: () => nav.classList.add('scrolled'),
+      onLeaveBack: () => nav.classList.remove('scrolled'),
+    });
+
+    // Hero entrance
+    const heroTl = gsap.timeline({ delay: 0.3 });
+    heroTl
+      .from('#contact-eyebrow', { opacity: 0, y: 16, duration: DUR_BASE, ease: EASE_PRIMARY })
+      .from('#contact-headline', { clipPath: 'inset(0 100% 0 0)', duration: DUR_SLOW * 1.4, ease: EASE_PRIMARY }, '-=0.2')
+      .from('#contact-subtext', { opacity: 0, y: 24, duration: DUR_SLOW, ease: EASE_PRIMARY }, '-=0.6')
+      .from('#contact-direct-links', { opacity: 0, y: 20, duration: DUR_BASE, ease: EASE_PRIMARY }, '-=0.4')
+      .from('#contact-form-panel', { opacity: 0, x: 40, duration: DUR_SLOW, ease: EASE_PRIMARY }, 0.4);
+
+    // Location cards
+    gsap.from('.location-card', {
+      scrollTrigger: { trigger: '#locations-grid', start: 'top 80%' },
+      y: 40, opacity: 0, duration: DUR_SLOW, stagger: 0.15, ease: EASE_PRIMARY,
+    });
+  </script>
+</body>
+</html>

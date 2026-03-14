@@ -2466,8 +2466,9 @@ function renderKeyframeCard(kf, uniqueIndex) {
   const animId = `preview-${uniqueIndex}-${sanitizedName}`;
 
   // Build @keyframes CSS from steps with sanitization to prevent XSS
+  const steps = Array.isArray(kf.steps) ? kf.steps : [];
   let keyframeCSS = `@keyframes ${animId} {`;
-  kf.steps.forEach(step => {
+  steps.forEach(step => {
     // Validate and sanitize offset (supports "0%", "50%", "from", "to", "0%, 100%", etc.)
     const offset = isValidKeyframeOffset(step.offset)
       ? sanitizeCSS(step.offset)
@@ -2489,7 +2490,7 @@ function renderKeyframeCard(kf, uniqueIndex) {
   // Header
   html += '<div class="keyframe-header">';
   html += `<div class="keyframe-name">${esc(kf.name)}</div>`;
-  html += `<span class="badge">${kf.steps.length} steps</span>`;
+  html += `<span class="badge">${steps.length} steps</span>`;
   html += '</div>';
 
   // Animation Preview
@@ -2500,9 +2501,9 @@ function renderKeyframeCard(kf, uniqueIndex) {
   html += '</div>';
 
   // Property table (show first and last step)
-  if (kf.steps.length >= 2) {
-    const firstStep = kf.steps[0];
-    const lastStep = kf.steps[kf.steps.length - 1];
+  if (steps.length >= 2) {
+    const firstStep = steps[0];
+    const lastStep = steps[steps.length - 1];
 
     html += '<table class="keyframe-table">';
     html += '<thead><tr><th>Property</th><th>From (' + esc(firstStep.offset) + ')</th><th>To (' + esc(lastStep.offset) + ')</th></tr></thead>';

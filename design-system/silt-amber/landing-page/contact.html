@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Maison Cendré</title>
+  <meta name="description" content="Request an allocation of single-origin Atlantic caviar and rare marine cures from the Basque coast.">
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <style>
+    /* ── Page-level resets ── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--lh-body);
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: rgba(0, 0, 0, 0);
+      border-bottom: 1px solid transparent;
+      transition: var(--nav-transition);
+      display: flex;
+      align-items: center;
+    }
+
+    #nav.scrolled {
+      height: var(--nav-height-scrolled);
+      background: var(--color-nav-bg-scrolled);
+      backdrop-filter: var(--nav-backdrop-scrolled);
+      -webkit-backdrop-filter: var(--nav-backdrop-scrolled);
+      border-bottom: var(--nav-border-scrolled);
+    }
+
+    .nav-inner {
+      max-width: var(--grid-max-width);
+      padding-inline: var(--grid-margin);
+      margin-inline: auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-left,
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: var(--nav-item-gap);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: var(--fw-medium);
+      letter-spacing: 0.12em;
+      color: var(--color-heading);
+      text-transform: uppercase;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-link {
+      font-family: var(--font-ui);
+      font-size: var(--type-nav);
+      font-weight: var(--fw-regular);
+      letter-spacing: var(--ls-nav);
+      color: var(--color-nav-text);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: opacity var(--transition-link-hover);
+    }
+
+    .nav-link:hover { opacity: var(--hover-opacity); }
+    .nav-link.active {
+      opacity: 0.5;
+      pointer-events: none;
+      position: relative;
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0; right: 0;
+      height: 1px;
+      background: currentColor;
+    }
+
+    /* ── Container ── */
+    .container {
+      max-width: var(--grid-max-width);
+      padding-inline: var(--grid-margin);
+      margin-inline: auto;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: var(--fw-semibold);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    /* ── PAGE HEADER ── */
+    #page-header {
+      background: var(--color-page-bg);
+      padding-top: 120px;
+      padding-bottom: 80px;
+    }
+
+    .page-header-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    #page-header-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 5.5rem);
+      font-weight: var(--fw-regular);
+      color: var(--color-heading);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+
+    #page-header-subline {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 16px;
+      color: var(--color-muted);
+      line-height: 1.5;
+      margin-bottom: 40px;
+    }
+
+    #page-header-rule {
+      border: none;
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* ── ALLOCATION FORM SECTION ── */
+    #allocation-section {
+      padding-block: 96px;
+      background: var(--color-page-bg);
+    }
+
+    .allocation-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    #allocation-left {
+      position: sticky;
+      top: calc(var(--nav-height-scrolled) + 32px);
+    }
+
+    .allocation-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      font-weight: var(--fw-regular);
+      color: var(--color-heading);
+      line-height: 1.15;
+      letter-spacing: var(--ls-h2);
+      margin-bottom: 28px;
+    }
+
+    .allocation-body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--color-body-text);
+      margin-bottom: 32px;
+    }
+
+    .allocation-note {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: var(--fw-medium);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      padding: 14px 0;
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* ── Form ── */
+    #allocation-form {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .form-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: var(--fw-semibold);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    .form-label em {
+      font-style: italic;
+      font-weight: 300;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--color-muted);
+      border-radius: 0;
+      color: var(--color-body-text);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      font-weight: var(--fw-regular);
+      padding: 10px 0 12px;
+      width: 100%;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: border-color var(--duration-quick) var(--ease-standard);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: rgba(177, 173, 167, 0.4);
+      font-style: italic;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-bottom-color: var(--color-heading);
+    }
+
+    .form-select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23b1ada7' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 2px center;
+      padding-right: 24px;
+    }
+
+    .form-select option {
+      background: var(--color-surface);
+      color: var(--color-body-text);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 96px;
+      line-height: 1.65;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    #form-submit {
+      background: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-text);
+      border: 1px solid var(--color-btn-primary-border);
+      border-radius: 0;
+      font-family: var(--font-ui);
+      font-size: 15px;
+      font-weight: var(--fw-medium);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 18px 24px;
+      width: 100%;
+      cursor: pointer;
+      transition:
+        background var(--transition-btn-enter),
+        color var(--transition-btn-enter),
+        border-color var(--transition-btn-enter);
+    }
+
+    #form-submit:hover {
+      background: var(--color-heading);
+      color: var(--color-page-bg);
+      border-color: var(--color-heading);
+    }
+
+    #form-submit:active {
+      background: var(--color-muted);
+      transition: background var(--transition-btn-active);
+    }
+
+    /* ── VISIT SECTION ── */
+    #visit-section {
+      padding-block: 96px;
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .visit-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    #visit-left {
+      padding-top: 4px;
+    }
+
+    .address-block {
+      margin-top: 24px;
+      margin-bottom: 28px;
+    }
+
+    .address-block p {
+      font-family: var(--font-ui);
+      font-size: 15px;
+      font-weight: var(--fw-regular);
+      color: var(--color-body-text);
+      line-height: 2;
+      letter-spacing: 0.01em;
+    }
+
+    .visit-hours {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--color-muted);
+      margin-bottom: 16px;
+    }
+
+    .visit-phone {
+      font-family: var(--font-ui);
+      font-size: 15px;
+      font-weight: var(--fw-medium);
+      letter-spacing: 0.08em;
+      color: var(--color-heading);
+      text-decoration: none;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .visit-phone:hover { opacity: var(--hover-opacity); }
+
+    /* ── Visit image ── */
+    #visit-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visit-image-wrap {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--color-surface-2);
+    }
+
+    .visit-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .visit-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(45, 43, 39, 0.55) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    /* ── Missing asset fallback ── */
+    .asset-missing {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 32px;
+      gap: 12px;
+    }
+
+    .asset-missing-label {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: var(--fw-semibold);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    .asset-missing-path {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--color-heading);
+      word-break: break-all;
+    }
+
+    .asset-missing-reason {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--color-muted);
+    }
+
+    .asset-missing-divider {
+      border: none;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .asset-missing-action {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: var(--fw-medium);
+      letter-spacing: 0.08em;
+      color: var(--color-muted);
+    }
+
+    /* ── TRADE SECTION ── */
+    #trade-section {
+      padding-block: 96px;
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+    }
+
+    .trade-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 2.8vw, 2.8rem);
+      font-weight: var(--fw-regular);
+      color: var(--color-heading);
+      line-height: 1.15;
+      letter-spacing: var(--ls-h2);
+      margin-bottom: 56px;
+    }
+
+    .trade-facts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--color-border);
+      margin-bottom: 56px;
+    }
+
+    .trade-fact {
+      background: var(--color-surface);
+      padding: 40px 48px;
+    }
+
+    .trade-fact p {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--color-body-text);
+      text-align: left;
+    }
+
+    .trade-email-wrap {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    .trade-email-wrap p {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 16px;
+    }
+
+    .trade-email-link {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 20px;
+      color: var(--color-heading);
+      text-decoration: underline;
+      text-decoration-color: rgba(242, 242, 242, 0.25);
+      text-underline-offset: 4px;
+      transition:
+        text-decoration-color var(--transition-link-hover),
+        opacity var(--transition-link-hover);
+    }
+
+    .trade-email-link:hover {
+      opacity: 1;
+      text-decoration-color: var(--color-heading);
+    }
+
+    /* ── FOOTER ── */
+    #footer {
+      background: var(--color-page-bg);
+      border-top: 1px solid var(--color-border);
+      padding-block: 80px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-stamp {
+      position: absolute;
+      right: 80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(242, 242, 242, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.7;
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+
+    .footer-stamp-inner {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: var(--fw-regular);
+      color: rgba(242, 242, 242, 0.25);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 64px;
+      margin-bottom: 64px;
+    }
+
+    .footer-col-label {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: var(--fw-semibold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 20px;
+    }
+
+    .footer-brand-desc {
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--color-muted);
+    }
+
+    .footer-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-nav-list a {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: var(--fw-regular);
+      letter-spacing: 0.04em;
+      color: var(--color-muted);
+      text-decoration: none;
+      transition: color var(--transition-link-hover);
+    }
+
+    .footer-nav-list a:hover {
+      color: var(--color-heading);
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--color-border);
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copyright {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-instagram {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      text-decoration: none;
+      transition: color var(--transition-link-hover);
+    }
+
+    .footer-instagram:hover {
+      color: var(--color-heading);
+      opacity: 1;
+    }
+
+    /* ── GSAP animation targets (initially hidden) ── */
+    .anim-ready { opacity: 0; }
+
+    /* ── Responsive: max-width 900px ── */
+    @media (max-width: 900px) {
+      .allocation-grid {
+        grid-template-columns: 1fr;
+        gap: 56px;
+      }
+
+      #allocation-left {
+        position: static;
+      }
+
+      .visit-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .trade-facts-grid {
+        grid-template-columns: 1fr;
+        gap: 1px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+      }
+
+      .footer-stamp {
+        display: none;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+
+    /* ── Responsive: max-width 600px ── */
+    @media (max-width: 600px) {
+      #page-header {
+        padding-top: 108px;
+        padding-bottom: 56px;
+      }
+
+      #page-header-heading {
+        font-size: clamp(2.2rem, 12vw, 3.2rem);
+      }
+
+      .nav-left,
+      .nav-right {
+        display: none;
+      }
+
+      .nav-inner {
+        justify-content: center;
+      }
+
+      .allocation-grid,
+      .visit-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      #allocation-section,
+      #visit-section,
+      #trade-section {
+        padding-block: 64px;
+      }
+
+      .trade-facts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .trade-fact {
+        padding: 28px 24px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .container {
+        padding-inline: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body id="page-contact">
+
+  <!-- ── NAV ── -->
+  <nav id="nav" role="navigation" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="collection.html" class="nav-link">Product</a>
+        <a href="provenance.html" class="nav-link">Provenance</a>
+      </div>
+
+      <a href="index.html" class="nav-logo" aria-label="Maison Cendré — home">MC</a>
+
+      <div class="nav-right">
+        <a href="atelier.html" class="nav-link">Atelier</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── 1. PAGE HEADER ── -->
+  <header id="page-header" role="banner">
+    <div class="container">
+      <div class="page-header-inner">
+        <h1 id="page-header-heading" class="anim-ready">Contact</h1>
+        <p id="page-header-subline" class="anim-ready">By allocation only. Limited production.</p>
+        <hr id="page-header-rule" class="anim-ready">
+      </div>
+    </div>
+  </header>
+
+  <!-- ── 2. ALLOCATION INQUIRY FORM ── -->
+  <section id="allocation-section" aria-labelledby="allocation-heading">
+    <div class="container">
+      <div class="allocation-grid">
+
+        <!-- Left: editorial context -->
+        <div id="allocation-left" class="anim-ready">
+          <span class="section-label">Place an Order</span>
+          <h2 id="allocation-heading" class="allocation-heading">Request an allocation.</h2>
+          <p class="allocation-body">
+            Production is limited to 600 tins per year. Each tin is numbered and allocated by
+            request — no public stock. Response within 48 hours.
+          </p>
+          <p class="allocation-note">Current season: March 2026 — 48 tins remaining.</p>
+        </div>
+
+        <!-- Right: form -->
+        <div id="allocation-right" class="anim-ready">
+          <form id="allocation-form" action="#" method="post" novalidate>
+
+            <div class="form-field" id="field-name">
+              <label class="form-label" for="input-name">Full Name</label>
+              <input
+                class="form-input"
+                type="text"
+                id="input-name"
+                name="full_name"
+                autocomplete="name"
+                placeholder="Your full name"
+                required
+              >
+            </div>
+
+            <div class="form-field" id="field-email">
+              <label class="form-label" for="input-email">Email Address</label>
+              <input
+                class="form-input"
+                type="email"
+                id="input-email"
+                name="email"
+                autocomplete="email"
+                placeholder="your@email.com"
+                required
+              >
+            </div>
+
+            <div class="form-field" id="field-company">
+              <label class="form-label" for="input-company">
+                Company / Restaurant <em>(optional)</em>
+              </label>
+              <input
+                class="form-input"
+                type="text"
+                id="input-company"
+                name="company"
+                autocomplete="organization"
+                placeholder="Restaurant, institution, or individual"
+              >
+            </div>
+
+            <div class="form-field" id="field-product">
+              <label class="form-label" for="input-product">Product Interest</label>
+              <select
+                class="form-select"
+                id="input-product"
+                name="product_interest"
+                required
+              >
+                <option value="" disabled selected>Select a product</option>
+                <option value="oscietra">Oscietra Reserve</option>
+                <option value="siberian">Siberian Caviar</option>
+                <option value="beluga">Beluga Selection</option>
+                <option value="marine-cures">Marine Cures</option>
+                <option value="all">All</option>
+              </select>
+            </div>
+
+            <div class="form-row" id="field-row-qty">
+              <div class="form-field">
+                <label class="form-label" for="input-quantity">Quantity</label>
+                <input
+                  class="form-input"
+                  type="number"
+                  id="input-quantity"
+                  name="quantity"
+                  min="1"
+                  placeholder="Number of tins"
+                >
+              </div>
+            </div>
+
+            <div class="form-field" id="field-message">
+              <label class="form-label" for="input-message">Message</label>
+              <textarea
+                class="form-textarea"
+                id="input-message"
+                name="message"
+                rows="4"
+                placeholder="Occasion, delivery requirements, or any questions."
+              ></textarea>
+            </div>
+
+            <div class="form-field" id="field-submit">
+              <button id="form-submit" type="submit">
+                Request Allocation
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. VISIT INFORMATION ── -->
+  <section id="visit-section" aria-labelledby="visit-heading">
+    <div class="container">
+      <div class="visit-grid">
+
+        <!-- Left: address + hours -->
+        <div id="visit-left" class="anim-ready">
+          <span id="visit-heading" class="section-label">The Atelier</span>
+
+          <div class="address-block" id="visit-address">
+            <p>Maison Cendré</p>
+            <p>Chemin du Bassin, Quartier Nivelle</p>
+            <p>64500 St-Jean-de-Luz</p>
+            <p>Pays Basque, France</p>
+          </div>
+
+          <p id="visit-hours" class="visit-hours">Visits by appointment only.</p>
+
+          <a id="visit-phone" class="visit-phone" href="tel:+33559XXXXXX">
+            +33 5 59 XX XX XX
+          </a>
+        </div>
+
+        <!-- Right: atelier exterior image -->
+        <div id="visit-right" class="anim-ready">
+          <div class="visit-image-wrap" id="visit-image-wrap">
+            <img
+              id="visit-image"
+              src="assets/atelier-exterior.jpeg"
+              alt="Atelier exterior at Maison Cendré, evening light — Basque coast facility"
+              loading="lazy"
+            >
+            <div class="visit-image-overlay" aria-hidden="true"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4. TRADE INQUIRIES ── -->
+  <section id="trade-section" aria-labelledby="trade-heading">
+    <div class="container">
+
+      <span class="section-label">Wholesale &amp; Trade</span>
+      <h2 id="trade-heading" class="trade-heading anim-ready">
+        For restaurants, retailers, and importers.
+      </h2>
+
+      <div class="trade-facts-grid anim-ready" id="trade-facts">
+        <div class="trade-fact" id="trade-fact-left">
+          <p>Minimum order 6 tins. White-label not offered. Allocation pricing on request.</p>
+        </div>
+        <div class="trade-fact" id="trade-fact-right">
+          <p>
+            Partner restaurants: L&rsquo;Ostal (Paris), Mugaritz (Errenteria),
+            Restaurant de l&rsquo;H&ocirc;tel de Ville (Crissier).
+          </p>
+        </div>
+      </div>
+
+      <div class="trade-email-wrap" id="trade-email-wrap">
+        <p>General &amp; trade enquiries</p>
+        <a
+          class="trade-email-link"
+          href="mailto:contact@maisoncendre.fr"
+          id="trade-email-link"
+        >contact@maisoncendre.fr</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 5. FOOTER ── -->
+  <footer id="footer" role="contentinfo">
+    <div class="container" style="position:relative;">
+
+      <!-- MC watermark stamp -->
+      <div class="footer-stamp" id="footer-stamp" aria-hidden="true">
+        <span class="footer-stamp-inner">MC</span>
+      </div>
+
+      <!-- Three-column grid -->
+      <div class="footer-grid">
+
+        <!-- Col 1: Brand description -->
+        <div id="footer-col-brand" class="anim-ready">
+          <p class="footer-col-label">Maison Cendré</p>
+          <p class="footer-brand-desc">
+            Single-origin Atlantic caviar and rare marine cures from the Basque coast.
+            Produced in limited batches. Allocated by request.
+          </p>
+        </div>
+
+        <!-- Col 2: Navigation links -->
+        <div id="footer-col-nav" class="anim-ready">
+          <p class="footer-col-label">Navigation</p>
+          <ul class="footer-nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="collection.html">Product</a></li>
+            <li><a href="provenance.html">Provenance</a></li>
+            <li><a href="atelier.html">Atelier</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Product links -->
+        <div id="footer-col-products" class="anim-ready">
+          <p class="footer-col-label">Products</p>
+          <ul class="footer-nav-list">
+            <li><a href="collection.html">Oscietra Reserve</a></li>
+            <li><a href="collection.html">Siberian Caviar</a></li>
+            <li><a href="collection.html">Beluga Selection</a></li>
+            <li><a href="collection.html">Marine Cures</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="footer-bottom" id="footer-bottom">
+        <span class="footer-copyright">
+          &copy; 2026 Maison Cendré. All rights reserved.
+        </span>
+        <a
+          class="footer-instagram"
+          href="https://instagram.com/maisoncendre"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Maison Cendré on Instagram"
+        >@maisoncendre</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ── GSAP ── -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    /* ── Missing image fallback: safe DOM construction, no innerHTML ── */
+    function buildMissingAssetNode(path, description) {
+      var wrap = document.createElement('div');
+      wrap.className = 'asset-missing';
+
+      var labelEl = document.createElement('span');
+      labelEl.className = 'asset-missing-label';
+      labelEl.textContent = 'Image unavailable';
+
+      var pathEl = document.createElement('span');
+      pathEl.className = 'asset-missing-path';
+      pathEl.textContent = path;
+
+      var reasonEl = document.createElement('span');
+      reasonEl.className = 'asset-missing-reason';
+      reasonEl.textContent = description + ' — file not found';
+
+      var divider = document.createElement('hr');
+      divider.className = 'asset-missing-divider';
+
+      var actionEl = document.createElement('span');
+      actionEl.className = 'asset-missing-action';
+      actionEl.textContent =
+        'Generate using Kling or place the file at ' + path +
+        ', then reload. See project-documentation/unavailable-content-prompts.md for the prompt.';
+
+      wrap.appendChild(labelEl);
+      wrap.appendChild(pathEl);
+      wrap.appendChild(reasonEl);
+      wrap.appendChild(divider);
+      wrap.appendChild(actionEl);
+
+      return wrap;
+    }
+
+    /* ── Atelier image: attach onerror via JS to avoid hook on inline attr ── */
+    (function attachImageFallback() {
+      var img = document.getElementById('visit-image');
+      if (!img) return;
+
+      img.addEventListener('error', function handleImageError() {
+        var wrap = document.getElementById('visit-image-wrap');
+        if (!wrap) return;
+
+        /* Remove all children first */
+        while (wrap.firstChild) {
+          wrap.removeChild(wrap.firstChild);
+        }
+
+        var fallback = buildMissingAssetNode(
+          'assets/atelier-exterior.jpeg',
+          'Atelier exterior photograph — evening light, Basque coast facility'
+        );
+        wrap.appendChild(fallback);
+      }, { once: true });
+    })();
+
+    /* ── Nav scroll behavior ── */
+    (function initNav() {
+      var nav = document.getElementById('nav');
+      var ticking = false;
+
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            nav.classList.toggle('scrolled', window.scrollY > 24);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    /* ── GSAP Animations ── */
+    (function initAnimations() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+      /* 1. Header: stagger lift — heading first, rule second, subline third */
+      gsap.timeline({ defaults: { ease: ease, duration: 0.9 } })
+        .fromTo('#page-header-heading',
+          { opacity: 0, y: 28 },
+          { opacity: 1, y: 0 }
+        )
+        .fromTo('#page-header-rule',
+          { opacity: 0, scaleX: 0, transformOrigin: 'left center' },
+          { opacity: 1, scaleX: 1, duration: 0.7 },
+          '-=0.5'
+        )
+        .fromTo('#page-header-subline',
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.7 },
+          '-=0.45'
+        );
+
+      /* 2. Form section: left fades up, right slides in from x:40 */
+      var formScrollTrigger = {
+        trigger: '#allocation-section',
+        start: 'top 75%',
+        once: true
+      };
+
+      gsap.fromTo('#allocation-left',
+        { opacity: 0, y: 32 },
+        { opacity: 1, y: 0, duration: 0.9, ease: ease, scrollTrigger: formScrollTrigger }
+      );
+
+      gsap.fromTo('#allocation-right',
+        { opacity: 0, x: 40 },
+        { opacity: 1, x: 0, duration: 0.9, ease: ease, delay: 0.1, scrollTrigger: formScrollTrigger }
+      );
+
+      /* 3. Visit info: fade up both columns, 0.1s stagger */
+      gsap.fromTo('#visit-left',
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1, y: 0, duration: 0.5, ease: ease,
+          scrollTrigger: { trigger: '#visit-section', start: 'top 78%', once: true }
+        }
+      );
+
+      gsap.fromTo('#visit-right',
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1, y: 0, duration: 0.5, ease: ease, delay: 0.1,
+          scrollTrigger: { trigger: '#visit-section', start: 'top 78%', once: true }
+        }
+      );
+
+      /* 4. Atelier image: clip-path wipe */
+      gsap.fromTo('#visit-image-wrap',
+        { clipPath: 'inset(0 100% 0 0)' },
+        {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 1.1,
+          ease: ease,
+          scrollTrigger: { trigger: '#visit-right', start: 'top 80%', once: true }
+        }
+      );
+
+      /* 5. Trade section: scale reveal 0.96 -> 1.0 */
+      gsap.fromTo('#trade-section',
+        { opacity: 0, scale: 0.96, transformOrigin: 'center top' },
+        {
+          opacity: 1, scale: 1, duration: 0.9, ease: ease,
+          scrollTrigger: { trigger: '#trade-section', start: 'top 80%', once: true }
+        }
+      );
+
+      gsap.fromTo('#trade-heading',
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1, y: 0, duration: 0.8, ease: ease,
+          scrollTrigger: { trigger: '#trade-heading', start: 'top 82%', once: true }
+        }
+      );
+
+      gsap.fromTo('#trade-facts',
+        { opacity: 0, y: 16 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: ease, delay: 0.15,
+          scrollTrigger: { trigger: '#trade-facts', start: 'top 85%', once: true }
+        }
+      );
+
+      /* 6. Footer: stagger opacity columns left-to-right */
+      gsap.fromTo(
+        ['#footer-col-brand', '#footer-col-nav', '#footer-col-products'],
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: ease, stagger: 0.12,
+          scrollTrigger: { trigger: '#footer', start: 'top 88%', once: true }
+        }
+      );
+
+    })();
+  </script>
+
+</body>
+</html>

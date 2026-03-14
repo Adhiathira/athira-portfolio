@@ -1,0 +1,127 @@
+:root {
+  /* --- Asymmetric Column Weighting Twist (intensity 3) --- */
+  /* Base grid tokens */
+  --grid-columns: 12;
+  --grid-gutter: 24px;
+  --grid-margin: 48px;
+  --grid-column-gap: 24px;
+  --grid-row-gap: 48px;
+  --grid-container-max: 1280px;
+
+  /* Asymmetric split templates — derived from 40/60 and 60/40 visual layout patterns */
+  --grid-asymmetric-left: 5fr 7fr;
+  --grid-asymmetric-right: 7fr 5fr;
+
+  /* Dense content variant */
+  --grid-dense-columns: 4;
+}
+
+/* Container — 12-column base, centered, max 1280px */
+.container {
+  max-width: var(--grid-container-max);
+  padding-inline: var(--grid-margin);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: var(--grid-column-gap);
+}
+
+/* Full-width span — hero, screenshot, CTA band */
+.grid-full {
+  grid-column: 1 / -1;
+}
+
+/* Asymmetric left: ~40% text / ~60% product UI */
+.grid-asymmetric-left {
+  display: grid;
+  grid-template-columns: var(--grid-asymmetric-left);
+  column-gap: var(--grid-column-gap);
+}
+
+/* Asymmetric right: ~60% product UI / ~40% text */
+.grid-asymmetric-right {
+  display: grid;
+  grid-template-columns: var(--grid-asymmetric-right);
+  column-gap: var(--grid-column-gap);
+}
+
+/* Dense 4-column — feature icons, card grids */
+.grid-dense-4 {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-dense-columns), 1fr);
+  column-gap: var(--grid-column-gap);
+  row-gap: 24px;
+}
+
+/* Footer 5-column — wide brand + 4 link columns */
+.grid-footer-5 {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  column-gap: var(--grid-column-gap);
+}
+
+/* --- Responsive overrides --- */
+
+/* Tablet and below: stack asymmetric splits */
+@media (max-width: 767px) {
+  .container {
+    padding-inline: 24px;
+    grid-template-columns: 1fr;
+  }
+
+  .grid-asymmetric-left,
+  .grid-asymmetric-right {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-dense-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-footer-5 {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+  }
+}
+
+/* Mobile: single column everything */
+@media (max-width: 425px) {
+  .container {
+    padding-inline: 16px;
+    display: block;
+  }
+
+  .grid-asymmetric-left,
+  .grid-asymmetric-right,
+  .grid-dense-4,
+  .grid-footer-5 {
+    display: block;
+  }
+}
+
+/* Narrow mobile breakpoint (≤530px): force block layout */
+@media only screen and (max-width: 530px) {
+  .grid-asymmetric-left,
+  .grid-asymmetric-right {
+    display: block;
+  }
+}
+
+/* Mid-range tablet (426px–896px): constrain container width */
+@media only screen and (min-width: 426px) and (max-width: 896px) {
+  .container {
+    max-width: 94%;
+  }
+}
+
+/* Tablet+ (≥812px): restore 2-column asymmetric grids */
+@media screen and (min-width: 812px) {
+  .grid-asymmetric-left,
+  .grid-asymmetric-right {
+    display: grid;
+  }
+
+  .grid-dense-4 {
+    grid-template-columns: repeat(var(--grid-dense-columns), 1fr);
+  }
+}

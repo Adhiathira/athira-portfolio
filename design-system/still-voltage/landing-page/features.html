@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features — Volt Studio</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--color-page-bg);
+      color: var(--color-body);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--leading-body);
+      letter-spacing: var(--tracking-body);
+      overflow-x: hidden;
+    }
+
+    /* ── Nav (shared) ── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 99;
+      transition: background var(--duration-medium) var(--ease-standard),
+                  backdrop-filter var(--duration-medium) var(--ease-standard);
+    }
+    #nav-inner {
+      display: flex; align-items: center; justify-content: center;
+      height: 60px; max-width: var(--grid-max-width);
+      margin: 0 auto; padding: 0 40px; position: relative;
+    }
+    #nav-logo {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-display); font-size: 1.125rem;
+      font-weight: var(--weight-bold); color: var(--color-heading);
+      text-decoration: none; letter-spacing: -0.02em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    #nav-logo-mark {
+      width: 22px; height: 22px; background: var(--color-accent);
+      border-radius: 5px; display: flex; align-items: center; justify-content: center;
+    }
+    #nav-left { display: flex; align-items: center; gap: 28px; margin-right: auto; }
+    #nav-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+    .nav-link {
+      font-family: var(--font-body); font-size: 0.9375rem; font-weight: var(--weight-medium);
+      color: var(--color-muted); text-decoration: none; letter-spacing: var(--tracking-normal);
+      transition: color var(--duration-medium) var(--ease-hover);
+    }
+    .nav-link:hover, .nav-link.active { color: var(--color-heading); }
+    #nav-cta {
+      background: var(--btn-primary-bg); color: var(--btn-primary-text);
+      font-family: var(--font-body); font-size: 0.875rem; font-weight: var(--weight-semibold);
+      padding: var(--btn-padding-v) 20px; border-radius: var(--btn-radius); text-decoration: none;
+      transition: box-shadow var(--duration-medium) var(--ease-smooth), transform var(--duration-base) var(--ease-standard);
+    }
+    #nav-cta:hover { box-shadow: var(--shadow-accent-glow); transform: translateY(-1px); }
+    #nav.scrolled {
+      background: rgba(25, 25, 28, 0.92); backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px); box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    /* ── Page Header ── */
+    #page-header {
+      padding: 140px 40px 80px;
+      background: linear-gradient(180deg, var(--color-hero-bg) 0%, var(--color-page-bg) 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #page-header-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(253,53,110,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(253,53,110,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 65%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 65%);
+    }
+    #page-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(253,53,110,0.1); border: 1px solid rgba(253,53,110,0.2);
+      border-radius: var(--btn-radius); padding: 6px 16px;
+      font-size: 0.8125rem; font-weight: var(--weight-medium);
+      color: var(--color-accent); letter-spacing: 0.04em; text-transform: uppercase;
+      margin-bottom: 24px; position: relative; z-index: 1;
+    }
+    #page-title {
+      font-family: var(--font-display); font-size: var(--type-h1);
+      font-weight: var(--weight-extrabold); color: var(--color-heading);
+      letter-spacing: -0.028em; line-height: 1.06; margin-bottom: 20px;
+      position: relative; z-index: 1; max-width: 760px; margin-left: auto; margin-right: auto;
+    }
+    #page-subtitle {
+      font-size: clamp(1rem, 1.8vw, 1.2rem); color: var(--color-muted);
+      line-height: 1.6; max-width: 560px; margin: 0 auto 40px;
+      position: relative; z-index: 1;
+    }
+
+    /* ── Feature Sections ── */
+    .feature-section {
+      padding: var(--space-3xl) 40px;
+      position: relative; overflow: hidden;
+    }
+    .feature-section-inner {
+      max-width: var(--grid-container); margin: 0 auto;
+      display: grid; gap: 80px; align-items: center;
+    }
+    .feature-section-inner.left { grid-template-columns: 45fr 55fr; }
+    .feature-section-inner.right { grid-template-columns: 55fr 45fr; }
+
+    .feature-section-bg-1 { background: var(--color-page-bg); }
+    .feature-section-bg-2 {
+      background: linear-gradient(135deg, rgba(44,44,48,0.5) 0%, var(--color-page-bg) 100%);
+    }
+    .feature-section-bg-3 {
+      background: radial-gradient(ellipse at 30% 50%, rgba(253,53,110,0.05) 0%, transparent 60%),
+                  var(--color-page-bg);
+    }
+    .feature-section-bg-4 {
+      background: linear-gradient(135deg, rgba(58,58,63,0.3) 0%, var(--color-page-bg) 60%);
+    }
+
+    .section-eyebrow {
+      font-size: 0.75rem; font-weight: var(--weight-semibold); color: var(--color-accent);
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: var(--type-h2);
+      font-weight: var(--weight-bold); color: var(--color-heading);
+      line-height: 1.1; letter-spacing: -0.022em; margin-bottom: 20px;
+    }
+    .section-body {
+      font-size: var(--type-p); color: var(--color-muted); line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    /* Capability list */
+    .capability-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .capability-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.9375rem; color: var(--color-body); line-height: 1.5;
+    }
+    .capability-check {
+      width: 18px; height: 18px; min-width: 18px;
+      background: rgba(253,53,110,0.1); border: 1px solid rgba(253,53,110,0.25);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin-top: 1px; flex-shrink: 0;
+    }
+    .capability-check svg { width: 10px; height: 10px; stroke: var(--color-accent); fill: none; stroke-width: 2.5; }
+
+    /* Feature image panels */
+    .feature-image-panel {
+      position: relative; border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08); overflow: hidden;
+      box-shadow: var(--shadow-elevated);
+    }
+    .feature-image-panel.tall { aspect-ratio: 4 / 5; }
+    .feature-image-panel.wide { aspect-ratio: 16 / 10; }
+    .feature-image-panel.square { aspect-ratio: 1 / 1; }
+    .feature-image-panel img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .feature-image-panel .img-placeholder {
+      display: none; align-items: center; justify-content: center;
+      width: 100%; height: 100%;
+      background: var(--color-surface-2); color: var(--color-muted);
+      font-size: 0.8rem; opacity: 0.5;
+    }
+    /* Directional gradient overlay on images */
+    .feature-image-panel .img-overlay-left {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(25,25,28,0.85) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .feature-image-panel .img-overlay-right {
+      position: absolute; inset: 0;
+      background: linear-gradient(270deg, rgba(25,25,28,0.85) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .feature-image-panel .img-overlay-bottom {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(25,25,28,0.9) 100%);
+      pointer-events: none;
+    }
+
+    /* Floating annotation card */
+    .annotation-card {
+      position: absolute; background: var(--color-surface-2);
+      border: 1px solid var(--color-border); border-radius: 12px;
+      padding: 14px 18px; box-shadow: var(--shadow-card); z-index: 2;
+    }
+    .annotation-card-label { font-size: 0.7rem; color: var(--color-accent); font-weight: var(--weight-semibold); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+    .annotation-card-value { font-family: var(--font-display); font-size: 1.25rem; font-weight: var(--weight-bold); color: var(--color-heading); letter-spacing: -0.02em; }
+
+    /* ── Feature Cards Grid ── */
+    #micro-features {
+      padding: var(--space-3xl) 40px;
+      background: linear-gradient(180deg, var(--color-page-bg) 0%, rgba(44,44,48,0.25) 50%, var(--color-page-bg) 100%);
+    }
+    #micro-features-header { text-align: center; max-width: 600px; margin: 0 auto 64px; }
+    #micro-features-title {
+      font-family: var(--font-display); font-size: var(--type-h2);
+      font-weight: var(--weight-bold); color: var(--color-heading);
+      letter-spacing: -0.022em; margin-bottom: 16px;
+    }
+    #micro-features-subtitle { font-size: var(--type-p); color: var(--color-muted); line-height: 1.6; }
+
+    #micro-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      max-width: var(--grid-container); margin: 0 auto;
+    }
+    .micro-card {
+      background: var(--color-surface-2); border: 1px solid var(--color-border);
+      border-radius: 14px; padding: 24px;
+      transition: transform var(--duration-medium) var(--ease-smooth),
+                  border-color var(--duration-medium) var(--ease-standard);
+      position: relative; overflow: hidden;
+    }
+    .micro-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(253,53,110,0.4), transparent);
+      opacity: 0; transition: opacity var(--duration-medium) var(--ease-standard);
+    }
+    .micro-card:hover { transform: translateY(-3px); border-color: rgba(253,53,110,0.15); }
+    .micro-card:hover::after { opacity: 1; }
+    .micro-card-icon {
+      font-size: 1.5rem; margin-bottom: 14px;
+      width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    }
+    .micro-card-title { font-family: var(--font-display); font-size: 0.9375rem; font-weight: var(--weight-semibold); color: var(--color-heading); letter-spacing: -0.01em; margin-bottom: 8px; }
+    .micro-card-desc { font-size: 0.875rem; color: var(--color-muted); line-height: 1.55; }
+
+    /* ── CTA Banner ── */
+    #features-cta {
+      padding: var(--space-3xl) 40px; text-align: center;
+      background: radial-gradient(ellipse at 50% 50%, rgba(253,53,110,0.1) 0%, transparent 65%);
+    }
+    #features-cta-title { font-family: var(--font-display); font-size: var(--type-h2); font-weight: var(--weight-extrabold); color: var(--color-heading); letter-spacing: -0.025em; margin-bottom: 16px; }
+    #features-cta-sub { font-size: var(--type-p); color: var(--color-muted); line-height: 1.6; margin-bottom: 36px; }
+    .btn-primary {
+      background: var(--btn-primary-bg); color: var(--btn-primary-text);
+      font-family: var(--font-body); font-size: var(--type-button); font-weight: var(--weight-semibold);
+      padding: 12px var(--btn-padding-h); border-radius: var(--btn-radius); text-decoration: none; border: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: box-shadow var(--duration-medium) var(--ease-smooth), transform var(--duration-base) var(--ease-standard);
+    }
+    .btn-primary:hover { box-shadow: var(--shadow-accent-glow); transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent; color: var(--color-body);
+      font-family: var(--font-body); font-size: var(--type-button); font-weight: var(--weight-medium);
+      padding: 12px var(--btn-padding-h); border-radius: var(--btn-radius); text-decoration: none;
+      border: 1px solid rgba(228,228,231,0.2); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: border-color var(--duration-medium) var(--ease-standard), color var(--duration-base) var(--ease-standard);
+    }
+    .btn-secondary:hover { border-color: rgba(228,228,231,0.5); color: var(--color-heading); }
+    .cta-group { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+    /* ── Footer ── */
+    #footer { background: var(--color-footer-bg); border-top: 1px solid var(--color-border); padding: 48px 40px 32px; }
+    #footer-inner { max-width: var(--grid-container); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    #footer-logo { font-family: var(--font-display); font-size: 1rem; font-weight: var(--weight-bold); color: var(--color-heading); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    #footer-logo-mark { width: 18px; height: 18px; background: var(--color-accent); border-radius: 4px; }
+    #footer-links-row { display: flex; gap: 24px; }
+    #footer-links-row a { font-size: 0.875rem; color: var(--color-footer-text); text-decoration: none; transition: color var(--duration-base) var(--ease-standard); }
+    #footer-links-row a:hover { color: var(--color-heading); }
+    #footer-copy { font-size: 0.8rem; color: var(--color-footer-text); }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div id="nav-inner">
+      <div id="nav-left">
+        <a href="features.html" class="nav-link active">Features</a>
+        <a href="showcase.html" class="nav-link">Showcase</a>
+      </div>
+      <a href="index.html" id="nav-logo">
+        <div id="nav-logo-mark">
+          <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="1.8" width="12" height="12">
+            <path d="M6 1L10 6L6 11L2 6L6 1Z"/>
+          </svg>
+        </div>
+        Volt Studio
+      </a>
+      <div id="nav-right">
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="docs.html" class="nav-link">Docs</a>
+        <a href="pricing.html" id="nav-cta">Get started free</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header id="page-header">
+    <div id="page-header-grid"></div>
+    <div id="page-eyebrow">What's included</div>
+    <h1 id="page-title">Built for interaction designers who think in motion.</h1>
+    <p id="page-subtitle">Every tool in Volt Studio is designed around a single premise: the person who designs the experience should be the person who controls it.</p>
+  </header>
+
+  <!-- Feature: Scene Editor -->
+  <section class="feature-section feature-section-bg-1" id="feature-scene-editor">
+    <div class="feature-section-inner left">
+      <div id="scene-editor-text">
+        <p class="section-eyebrow">Scene Editor</p>
+        <h2 class="section-title">A canvas that thinks in three dimensions.</h2>
+        <p class="section-body">
+          Position, scale, and rotate elements across X, Y, and Z axes with the same precision
+          as a 2D design tool. The Scene Editor uses a node graph for composition, so complex
+          3D structures stay organized — no scene tree anxiety.
+        </p>
+        <ul class="capability-list">
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Isometric and perspective projection modes
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Real-time shadows and ambient occlusion
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Import GLTF, OBJ, and Figma frames as 3D objects
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Nested composition groups with independent transform origins
+          </li>
+        </ul>
+      </div>
+      <div id="scene-editor-visual">
+        <div class="feature-image-panel wide">
+          <img
+            src="assets/feature-scene-editor-full.jpeg"
+            alt="Volt Studio 3D scene editor full interface showing isometric island composition with node graph overlay, dark #19191c interface with pink-red accent gizmos"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="img-placeholder" style="display:none">→ assets/feature-scene-editor-full.jpeg</div>
+          <div class="img-overlay-right"></div>
+          <div class="annotation-card" style="bottom: 20px; right: 20px;">
+            <div class="annotation-card-label">Render time</div>
+            <div class="annotation-card-value">16ms</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature: Motion System -->
+  <section class="feature-section feature-section-bg-2" id="feature-motion">
+    <div class="feature-section-inner right">
+      <div id="motion-visual">
+        <div class="feature-image-panel tall">
+          <img
+            src="assets/feature-motion-system.jpeg"
+            alt="Volt Studio motion timeline panel showing stagger sequence curves, Material Standard easing graph cubic-bezier(0.4,0,0.2,1), scroll trigger zones in dark editor"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="img-placeholder" style="display:none">→ assets/feature-motion-system.jpeg</div>
+          <div class="img-overlay-bottom"></div>
+          <div class="annotation-card" style="top: 20px; left: 20px;">
+            <div class="annotation-card-label">Easing preset</div>
+            <div class="annotation-card-value">Material Standard</div>
+          </div>
+        </div>
+      </div>
+      <div id="motion-text">
+        <p class="section-eyebrow">Motion System</p>
+        <h2 class="section-title">Choreography tools for the kinetically obsessed.</h2>
+        <p class="section-body">
+          Volt Studio's motion layer treats time like a first-class design dimension. Build stagger
+          sequences, scroll-scrubbed parallax, and physics spring behaviors — all from a visual
+          timeline, all compiled to minimal GSAP output.
+        </p>
+        <ul class="capability-list">
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Visual easing curve editor with preset library
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Stagger choreography with per-element delay offsets
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Scroll trigger zones with scrub and pin controls
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Physics spring simulator for bounce and inertia
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature: Live Preview -->
+  <section class="feature-section feature-section-bg-3" id="feature-preview">
+    <div class="feature-section-inner left">
+      <div id="preview-text">
+        <p class="section-eyebrow">Live Preview</p>
+        <h2 class="section-title">What you design is exactly what ships.</h2>
+        <p class="section-body">
+          The preview canvas in Volt Studio is the same WebGL context that gets exported.
+          There is no "translate to code" step where something gets lost in translation.
+          Every shadow, every easing curve, every scroll behavior renders identically in production.
+        </p>
+        <ul class="capability-list">
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Breakpoint preview across 375px, 768px, 1024px, 1440px
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Shareable preview URL — no install required for reviewers
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Scroll simulation and device frame overlays
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            FPS monitor and performance budget indicators
+          </li>
+        </ul>
+      </div>
+      <div id="preview-visual">
+        <div class="feature-image-panel wide">
+          <img
+            src="assets/feature-preview-panel.jpeg"
+            alt="Volt Studio live preview showing a 3D web experience rendered across iPhone, iPad, and desktop frames side by side, dark editor surround"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="img-placeholder" style="display:none">→ assets/feature-preview-panel.jpeg</div>
+          <div class="img-overlay-left"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature: Export -->
+  <section class="feature-section feature-section-bg-4" id="feature-export">
+    <div class="feature-section-inner right">
+      <div id="export-visual">
+        <div class="feature-image-panel wide">
+          <img
+            src="assets/feature-export-panel.jpeg"
+            alt="Volt Studio export dialog showing clean HTML output, JavaScript bundle size 2.3kb, with code syntax highlighting on dark interface"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="img-placeholder" style="display:none">→ assets/feature-export-panel.jpeg</div>
+          <div class="img-overlay-bottom"></div>
+          <div class="annotation-card" style="top: -16px; right: -16px;">
+            <div class="annotation-card-label">Bundle size</div>
+            <div class="annotation-card-value">2.3kb</div>
+          </div>
+        </div>
+      </div>
+      <div id="export-text">
+        <p class="section-eyebrow">Export pipeline</p>
+        <h2 class="section-title">Your engineers will ask you to use it on everything.</h2>
+        <p class="section-body">
+          Volt Studio produces clean, standards-compliant HTML5 with CSS custom properties and
+          minimal JavaScript. No framework dependencies. No bundler config. Drop it into any project.
+        </p>
+        <ul class="capability-list">
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            HTML5 + CSS custom properties — framework-agnostic
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            GSAP export with ScrollTrigger pre-wired
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            Three.js scene export for full-fidelity 3D
+          </li>
+          <li class="capability-item">
+            <span class="capability-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></span>
+            React, Vue, and Svelte component wrappers
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Micro Features Grid -->
+  <section id="micro-features">
+    <div id="micro-features-header">
+      <h2 id="micro-features-title">More tools, less friction.</h2>
+      <p id="micro-features-subtitle">Every feature in Volt Studio earns its place by solving a real problem interaction designers face.</p>
+    </div>
+    <div id="micro-grid">
+      <div class="micro-card">
+        <div class="micro-card-icon">🎨</div>
+        <h4 class="micro-card-title">Design Tokens</h4>
+        <p class="micro-card-desc">Import your Figma design tokens. All colors, type, and spacing sync automatically.</p>
+      </div>
+      <div class="micro-card">
+        <div class="micro-card-icon">📐</div>
+        <h4 class="micro-card-title">Smart Guides</h4>
+        <p class="micro-card-desc">Spatial alignment guides that understand 3D — snap to depth planes and scene bounds.</p>
+      </div>
+      <div class="micro-card">
+        <div class="micro-card-icon">⚡</div>
+        <h4 class="micro-card-title">Keyboard First</h4>
+        <p class="micro-card-desc">Every action has a keyboard shortcut. Build complex scenes without touching the mouse.</p>
+      </div>
+      <div class="micro-card">
+        <div class="micro-card-icon">🔗</div>
+        <h4 class="micro-card-title">Version History</h4>
+        <p class="micro-card-desc">Every save point is a named version. Branch, compare, and restore with one click.</p>
+      </div>
+      <div class="micro-card">
+        <div class="micro-card-icon">👥</div>
+        <h4 class="micro-card-title">Multiplayer</h4>
+        <p class="micro-card-desc">Real-time collaboration with cursor presence. Design with your team in the same scene.</p>
+      </div>
+      <div class="micro-card">
+        <div class="micro-card-icon">🌐</div>
+        <h4 class="micro-card-title">CDN Assets</h4>
+        <p class="micro-card-desc">Volt hosts your 3D assets on a global CDN. Sub-100ms load time worldwide.</p>
+      </div>
+      <div class="micro-card">
+        <div class="micro-card-icon">📱</div>
+        <h4 class="micro-card-title">Responsive 3D</h4>
+        <p class="micro-card-desc">Define breakpoint-specific scene configurations. Your 3D adapts, not just resizes.</p>
+      </div>
+      <div class="micro-card">
+        <div class="micro-card-icon">♿</div>
+        <h4 class="micro-card-title">a11y Ready</h4>
+        <p class="micro-card-desc">Reduced-motion support and ARIA labels baked into the export pipeline automatically.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="features-cta">
+    <h2 id="features-cta-title">Ready to build your first 3D experience?</h2>
+    <p id="features-cta-sub">Start free. No credit card. No WebGL expertise needed.</p>
+    <div class="cta-group">
+      <a href="pricing.html" class="btn-primary">
+        Get started free
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+      </a>
+      <a href="showcase.html" class="btn-secondary">Browse examples</a>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div id="footer-inner">
+      <a href="index.html" id="footer-logo">
+        <div id="footer-logo-mark"></div>
+        Volt Studio
+      </a>
+      <div id="footer-links-row">
+        <a href="features.html">Features</a>
+        <a href="showcase.html">Showcase</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="docs.html">Docs</a>
+      </div>
+      <div id="footer-copy">© 2026 Volt Studio</div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const EASE_S = getComputedStyle(document.documentElement).getPropertyValue('--ease-smooth').trim() || 'cubic-bezier(0.165,0.84,0.44,1)';
+    const EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-standard').trim() || 'cubic-bezier(0.4,0,0.2,1)';
+    const DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-enter')) || 0.7;
+    const ST = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stagger-step')) || 0.1;
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    gsap.from('#page-eyebrow, #page-title, #page-subtitle', {
+      y: 30, opacity: 0, duration: DUR, ease: EASE, stagger: ST * 1.5
+    });
+
+    document.querySelectorAll('.feature-section-inner.left, .feature-section-inner.right').forEach(section => {
+      const [colA, colB] = section.children;
+      const isLeft = section.classList.contains('left');
+      gsap.from(colA, { scrollTrigger: { trigger: section, start: 'top 72%' }, x: isLeft ? -40 : 40, opacity: 0, duration: DUR * 1.1, ease: EASE_S });
+      gsap.from(colB, { scrollTrigger: { trigger: section, start: 'top 72%' }, x: isLeft ? 40 : -40, opacity: 0, duration: DUR * 1.1, ease: EASE_S, delay: 0.12 });
+    });
+
+    gsap.from('.micro-card', {
+      scrollTrigger: { trigger: '#micro-grid', start: 'top 80%' },
+      y: 24, opacity: 0, duration: 0.5, ease: EASE, stagger: ST * 0.8
+    });
+
+    gsap.from('#features-cta-title, #features-cta-sub, #features-cta .cta-group', {
+      scrollTrigger: { trigger: '#features-cta', start: 'top 78%' },
+      y: 24, opacity: 0, duration: DUR, ease: EASE_S, stagger: ST * 1.5
+    });
+  </script>
+</body>
+</html>
