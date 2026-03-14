@@ -1640,6 +1640,84 @@ header {
   border-radius: 4px;
   padding: 2px 8px;
 }
+
+/* ─── Content Section ─── */
+.ct-tabbar {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.ct-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 9px 18px;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  transition: color 0.15s, border-color 0.15s;
+  text-transform: capitalize;
+  letter-spacing: -0.01em;
+}
+.ct-tab:hover { color: var(--text-1); }
+.ct-tab--active { color: var(--text-1); border-bottom-color: var(--text-1); }
+.ct-panel--hidden { display: none; }
+.ct-body { max-width: 700px; }
+.ct-h1 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0 0 6px;
+  letter-spacing: -0.02em;
+}
+.ct-h2 {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-3);
+  margin: 28px 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+}
+.ct-h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 16px 0 4px;
+}
+.ct-h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin: 10px 0 3px;
+}
+.ct-hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 22px 0;
+}
+.ct-p {
+  font-size: 14px;
+  color: var(--text-1);
+  line-height: 1.65;
+  margin: 3px 0;
+}
+.ct-list {
+  padding-left: 18px;
+  margin: 6px 0;
+}
+.ct-li {
+  font-size: 14px;
+  color: var(--text-1);
+  line-height: 1.6;
+  margin: 2px 0;
+}
 `;
 }
 
@@ -2740,6 +2818,93 @@ function renderNavSystemSection(data) {
   return html || renderEmptySection();
 }
 
+// ─── Content Section ─────────────────────────────────────────────────────────
+
+function ctInline(text) {
+  // Escape HTML, then convert **bold** and *italic*
+  let s = esc(text);
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/(?<!\*)\*(?!\*)([^*\n]+)\*(?!\*)/g, '<em>$1</em>');
+  return s;
+}
+
+function contentMarkdownToHtml(md) {
+  const lines = md.split('\n');
+  let html = '';
+  let inList = false;
+  let buffer = '';
+
+  function flushBuffer() {
+    if (buffer.trim()) html += `<p class="ct-p">${ctInline(buffer.trim())}</p>`;
+    buffer = '';
+  }
+
+  for (const rawLine of lines) {
+    const trimmed = rawLine.trim();
+    const h1 = trimmed.match(/^# (.+)/);
+    const h2 = trimmed.match(/^## (.+)/);
+    const h3 = trimmed.match(/^### (.+)/);
+    const h4 = trimmed.match(/^#### (.+)/);
+
+    if (h1 || h2 || h3 || h4) {
+      if (inList) { html += '</ul>'; inList = false; }
+      flushBuffer();
+      if (h1) html += `<h2 class="ct-h1">${ctInline(h1[1])}</h2>`;
+      else if (h2) html += `<h3 class="ct-h2">${ctInline(h2[1])}</h3>`;
+      else if (h3) html += `<h4 class="ct-h3">${ctInline(h3[1])}</h4>`;
+      else if (h4) html += `<h5 class="ct-h4">${ctInline(h4[1])}</h5>`;
+      continue;
+    }
+
+    if (trimmed === '---') {
+      if (inList) { html += '</ul>'; inList = false; }
+      flushBuffer();
+      html += '<hr class="ct-hr">';
+      continue;
+    }
+
+    const listItem = trimmed.match(/^[-*] (.+)/);
+    if (listItem) {
+      flushBuffer();
+      if (!inList) { html += '<ul class="ct-list">'; inList = true; }
+      html += `<li class="ct-li">${ctInline(listItem[1])}</li>`;
+      continue;
+    }
+
+    if (inList) { html += '</ul>'; inList = false; }
+
+    if (trimmed === '') {
+      flushBuffer();
+      continue;
+    }
+
+    buffer += (buffer ? ' ' : '') + trimmed;
+  }
+
+  flushBuffer();
+  if (inList) html += '</ul>';
+  return html;
+}
+
+function renderContentSection(contentPages) {
+  if (!contentPages || contentPages.length === 0) return renderEmptySection();
+
+  const subTabs = contentPages.map((page, i) =>
+    `<button class="ct-tab${i === 0 ? ' ct-tab--active' : ''}" data-ct-idx="${i}">${esc(page.name)}</button>`
+  ).join('');
+
+  const subPanels = contentPages.map((page, i) =>
+    `<div class="${i === 0 ? '' : 'ct-panel--hidden'}" data-ct-panel="${i}">
+      <div class="ct-body">${contentMarkdownToHtml(page.markdown)}</div>
+    </div>`
+  ).join('');
+
+  return `<div class="ct-container">
+    <div class="ct-tabbar">${subTabs}</div>
+    ${subPanels}
+  </div>`;
+}
+
 function renderSectionContent(slug, data, siteDir, siteName) {
   switch (slug) {
     case 'color-system':       return renderColorSection(data);
@@ -2750,6 +2915,7 @@ function renderSectionContent(slug, data, siteDir, siteName) {
     case 'motion-system':      return renderMotionSection(data);
     case 'concept-summary':    return renderConceptSummarySection(data, siteName);
     case 'nav-system':         return renderNavSystemSection(data);
+    case 'content':            return renderContentSection(data.pages);
     default:                   return renderEmptySection();
   }
 }
@@ -2838,6 +3004,19 @@ export function renderSite(siteName, siteDir, registry, siteUrl = null, landingP
       const imageMarkdown = readMarkdown(path.join(siteDir, 'concept-summary', 'concept_by_image.md'));
       const videoMarkdown = readMarkdown(path.join(siteDir, 'concept-summary', 'concept_by_video.md'));
       return { entry, data: (imageMarkdown || videoMarkdown) ? { imageMarkdown, videoMarkdown } : {} };
+    }
+    if (entry.slug === 'content') {
+      // Read all .md files from the content/ directory
+      const contentDir = path.join(siteDir, 'content');
+      if (fs.existsSync(contentDir)) {
+        const mdFiles = fs.readdirSync(contentDir).filter(f => f.endsWith('.md')).sort();
+        const pages = mdFiles.map(f => ({
+          name: f.replace(/\.md$/, '').replace(/-/g, ' '),
+          markdown: readMarkdown(path.join(contentDir, f)) || '',
+        })).filter(p => p.markdown);
+        if (pages.length > 0) return { entry, data: { pages } };
+      }
+      return { entry, data: {} };
     }
     const jsonFile = entry.outputFiles.find(f => f.endsWith('.json'));
     if (jsonFile) {
@@ -2931,6 +3110,19 @@ export function renderSite(siteName, siteDir, registry, siteUrl = null, landingP
       document.querySelectorAll('[role="tabpanel"]').forEach(p => { p.hidden = true; });
       btn.setAttribute('aria-selected', 'true');
       document.getElementById(btn.getAttribute('aria-controls')).hidden = false;
+    });
+
+    // Content section sub-tabs
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.ct-tab');
+      if (!btn) return;
+      const container = btn.closest('.ct-container');
+      if (!container) return;
+      const idx = btn.getAttribute('data-ct-idx');
+      container.querySelectorAll('.ct-tab').forEach(t => t.classList.remove('ct-tab--active'));
+      container.querySelectorAll('[data-ct-panel]').forEach(p => p.classList.add('ct-panel--hidden'));
+      btn.classList.add('ct-tab--active');
+      container.querySelector('[data-ct-panel="' + idx + '"]').classList.remove('ct-panel--hidden');
     });
 
     // Font alternative picker

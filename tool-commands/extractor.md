@@ -33,3 +33,4 @@ Edit `sites.json` and add to the `queue` array:
 | `interaction-states` | `extractors/interaction-states.js` |
 | `concept-summary` | `extractors/concept-summary.js` |
 | `nav-system` | `extractors/nav-system.js` |
+| `content` | `extractors/content.js` |
