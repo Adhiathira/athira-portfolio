@@ -1,0 +1,25 @@
+# GritMe Mentorship Mentor Cards UI
+
+**File:** assets/gritme-mentorship-ui.jpeg
+**Save to:** `landing-page/assets/gritme-mentorship-ui.jpeg`
+**Type:** Image
+**Dimensions:** 640×480
+**Aspect ratio:** 4:3
+**AI Tool:** Higgsfield Nano Banana Pro
+**Page:** index.html
+**Section:** #gritme-mentorship
+
+## Context from code
+- **Alt text:** "GritMe Mentorship Mentor Cards UI"
+- **Nearest heading:** "Global Growth Mentorship with Physical AI"
+- **Section purpose:** GritMe Mentorship product panel — shows mentor recommendation cards with names, ratings, and experience
+- **Background:** Light section, white cards, conversational UI tone
+
+## Prompt
+
+A high-fidelity UI screenshot showing three mentor recommendation cards on a white #ffffff surface, each card 200px wide with a circular avatar photo, name in 16px Inter semibold, star rating in #00693e, review count, and years of experience. The cards read: "Rachel Green — 4.9★ · 12 yrs," "Michael Chen — 4.8★ · 9 yrs," "Aisha Kapoor — 4.7★ · 11 yrs." Above the cards, a conversational message in Inter Regular reads "These are the mentors for you to get started!!" in #455451. Cards have 12px radius, thin border (#d1d5db), and a soft drop shadow from the upper-left. The avatar circles are filled with warm brand-green avatar gradients (rgb(0, 212, 146) to rgb(0, 187, 167)). Natural cast shadow beneath the card group, subject sharp, background gently defocused in #f5f6f5.
+
+## Usage
+
+Used in `index.html` inside `#gritme-mentorship` as the mentor recommendation card UI product mockup.
+HTML: `<img src="assets/gritme-mentorship-ui.jpeg" alt="GritMe Mentorship Mentor Cards UI">`

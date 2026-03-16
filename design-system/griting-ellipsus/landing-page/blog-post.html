@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The First Agentic Career Mentorship System — Griting Blog</title>
+  <meta name="description" content="Every idea begins with a spark. We built Griting, the first Agentic Career Mentorship Platform born in Silicon Valley.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--color-page-bg);
+      color: var(--color-text-heading);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV (on-light) + back button ── */
+    #site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: #ffffff;
+      border-bottom: 1px solid var(--color-nav-border);
+    }
+    #site-nav { height: 100%; }
+    #nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      padding-inline: var(--nav-padding-inline);
+    }
+    #nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    #nav-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-family: var(--font-logo);
+      font-size: var(--type-logo);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-logo);
+      color: var(--color-logo-on-light);
+    }
+    #nav-logo-g {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      border-radius: 6px;
+      font-size: 20px; font-weight: 700;
+      margin-right: 4px; flex-shrink: 0;
+    }
+    #nav-back {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: var(--weight-medium);
+      color: var(--color-text-ui);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s ease;
+      border-left: 1px solid var(--color-border-tertiary);
+      padding-left: 20px;
+    }
+    #nav-back:hover { color: var(--color-text-heading); }
+    #nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--nav-gap);
+    }
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: var(--weight-regular);
+      color: var(--color-text-body);
+      text-decoration: none;
+      transition: var(--transition-button);
+    }
+    .nav-link:hover { color: var(--color-text-heading); }
+    .nav-link.nav-link--active { opacity: 0.45; pointer-events: none; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px var(--btn-padding-inline);
+      background: var(--button-primary-bg);
+      color: var(--button-primary-text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--tracking-btn);
+      text-decoration: none;
+      border-radius: var(--btn-border-radius);
+      box-shadow: var(--button-primary-shadow);
+      transition: var(--transition-button);
+    }
+    .nav-cta:hover {
+      background: var(--button-primary-bg-hover);
+      box-shadow: var(--button-primary-shadow-hover);
+    }
+
+    /* ── ARTICLE HEADER ── */
+    #article-header {
+      max-width: 760px;
+      margin: 0 auto;
+      padding-top: 72px;
+      padding-bottom: 48px;
+      padding-inline: var(--container-padding-wide);
+    }
+    #article-headline {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.5vw, 48px);
+      font-weight: 400;
+      letter-spacing: -1.2px;
+      line-height: 1.15;
+      color: var(--color-text-heading);
+      margin-bottom: 28px;
+    }
+    #article-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    #article-date-readtime {
+      font-family: var(--font-body);
+      font-size: var(--type-date-meta);
+      color: var(--color-text-date);
+    }
+    #article-author-block {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #author-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-avatar-gradient-start), var(--color-avatar-gradient-end));
+      display: flex; align-items: center; justify-content: center;
+      color: #ffffff; font-weight: var(--weight-semibold); font-size: 13px;
+      flex-shrink: 0;
+    }
+    #author-name {
+      font-family: var(--font-body);
+      font-size: var(--type-author);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-heading);
+    }
+    #author-title {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-meta);
+    }
+    #share-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #share-label {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-meta);
+    }
+    .share-btn {
+      width: 40px; height: 40px;
+      border-radius: 40px;
+      background: var(--color-share-btn-bg);
+      border: 1px solid var(--color-card-border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 14px; font-weight: 700; color: var(--color-text-heading);
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+    .share-btn:hover { background: #e5e7e5; }
+
+    /* ── ARTICLE IMAGE ── */
+    #article-image {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      padding-inline: var(--container-padding-wide);
+    }
+    #article-image-frame {
+      background: var(--color-image-frame-bg);
+      border: 1px solid var(--color-image-frame-border);
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #article-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #article-img-placeholder {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px;
+      text-align: center;
+    }
+    /* CSS network node visualization (shown when image not available) */
+    #network-visual {
+      width: 280px;
+      height: 160px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .net-node {
+      position: absolute;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: rgba(0, 105, 62, 0.7);
+      box-shadow: 0 0 12px rgba(0, 228, 134, 0.5);
+    }
+    .net-node:nth-child(1)  { top: 50%; left: 50%; transform: translate(-50%,-50%); width: 20px; height: 20px; background: #00e486; box-shadow: 0 0 20px rgba(0,228,134,0.8); }
+    .net-node:nth-child(2)  { top: 10%; left: 15%; }
+    .net-node:nth-child(3)  { top: 10%; left: 75%; }
+    .net-node:nth-child(4)  { top: 80%; left: 10%; }
+    .net-node:nth-child(5)  { top: 80%; left: 80%; }
+    .net-node:nth-child(6)  { top: 40%; left: 5%; }
+    .net-node:nth-child(7)  { top: 20%; left: 48%; }
+    .net-node:nth-child(8)  { top: 70%; left: 45%; }
+    @keyframes node-pulse {
+      0%, 100% { box-shadow: 0 0 12px rgba(0,228,134,0.5); }
+      50% { box-shadow: 0 0 24px rgba(0,228,134,0.9); }
+    }
+    .net-node:nth-child(1) { animation: node-pulse 2s ease-in-out infinite; }
+    #article-img-placeholder-text {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+    }
+    #phone-mockup {
+      width: 100px;
+      height: 180px;
+      background: #111;
+      border-radius: 16px;
+      border: 2px solid rgba(255,255,255,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 12px 8px;
+      flex-shrink: 0;
+    }
+    #phone-screen-header {
+      font-family: var(--font-body);
+      font-size: 8px;
+      font-weight: 700;
+      color: #00e486;
+      margin-bottom: 8px;
+    }
+    .phone-mentor-row {
+      width: 100%;
+      height: 20px;
+      background: rgba(0,105,62,0.2);
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+
+    /* ── ARTICLE BODY ── */
+    #article-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding-bottom: 80px;
+      padding-inline: var(--container-padding-wide);
+    }
+    .article-paragraph {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: var(--weight-regular);
+      line-height: 1.75;
+      color: var(--color-text-body);
+      margin-bottom: 24px;
+    }
+    .article-paragraph a {
+      color: var(--color-brand-primary);
+      font-weight: var(--weight-medium);
+      text-decoration: none;
+    }
+    .article-paragraph a:hover { text-decoration: underline; }
+    .article-paragraph strong {
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-heading);
+    }
+
+    /* ── CTA BANNER ── */
+    #cta-banner {
+      padding-block: 100px;
+      background: var(--color-brand-primary);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.06) 0%, transparent 70%);
+    }
+    #cta-banner-inner { position: relative; z-index: 1; padding-inline: var(--container-padding-wide); }
+    #cta-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 56px);
+      font-weight: 500;
+      letter-spacing: -1.5px;
+      color: #ffffff;
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+    #cta-btn-group { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-white {
+      display: inline-flex; align-items: center;
+      padding: var(--btn-padding-block) 32px;
+      background: #ffffff; color: var(--color-brand-primary);
+      font-family: var(--font-body); font-size: var(--type-btn-primary);
+      font-weight: var(--weight-semibold); letter-spacing: var(--tracking-btn);
+      text-decoration: none; border-radius: var(--btn-border-radius);
+      transition: var(--transition-button);
+    }
+    .btn-white:hover { background: var(--color-surface-light); }
+    .btn-white-outline {
+      display: inline-flex; align-items: center;
+      padding: var(--btn-padding-block) 32px;
+      background: transparent; color: #ffffff;
+      font-family: var(--font-body); font-size: var(--type-btn-primary);
+      font-weight: var(--weight-medium); letter-spacing: var(--tracking-btn);
+      text-decoration: none; border-radius: var(--btn-border-radius);
+      border: 1px solid rgba(255,255,255,0.4);
+      transition: var(--transition-button);
+    }
+    .btn-white-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.7); }
+
+    /* ── FOOTER ── */
+    #site-footer {
+      background: var(--color-bg-hero);
+      padding-top: 72px; padding-bottom: 40px;
+    }
+    #footer-inner {
+      max-width: var(--grid-max-width); margin: 0 auto;
+      padding-inline: var(--container-padding-wide);
+    }
+    #footer-top {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 56px;
+    }
+    #footer-logo {
+      display: flex; align-items: center;
+      font-family: var(--font-logo); font-size: 28px;
+      font-weight: var(--weight-semibold); letter-spacing: var(--tracking-logo);
+      color: #ffffff; text-decoration: none; margin-bottom: 20px;
+    }
+    #footer-logo-g {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; background: var(--color-brand-primary);
+      color: #ffffff; border-radius: 5px; font-size: 16px;
+      font-weight: 700; margin-right: 3px; flex-shrink: 0;
+    }
+    #footer-waitlist-cta {
+      display: inline-flex; padding: 12px 20px;
+      background: var(--color-brand-primary); color: #ffffff;
+      font-family: var(--font-body); font-size: 14px;
+      font-weight: var(--weight-medium); text-decoration: none;
+      border-radius: var(--btn-border-radius);
+      transition: var(--transition-button);
+    }
+    #footer-waitlist-cta:hover { background: var(--button-primary-bg-hover); }
+    .footer-col-heading {
+      font-family: var(--font-body); font-size: 12px;
+      font-weight: var(--weight-semibold); letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--color-text-meta); margin-bottom: 16px;
+    }
+    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col-links a {
+      font-family: var(--font-body); font-size: 14px;
+      color: rgba(255,255,255,0.55); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-col-links a:hover { color: rgba(255,255,255,0.9); }
+    #footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    #footer-copyright { font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.35); }
+    #footer-legal { display: flex; gap: 20px; }
+    .footer-legal-link { font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.35); text-decoration: none; }
+    .footer-legal-link:hover { color: rgba(255,255,255,0.6); }
+    #footer-social { display: flex; gap: 14px; }
+    .social-link {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 700;
+      text-decoration: none; transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .social-link:hover { border-color: rgba(255,255,255,0.4); color: #ffffff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #article-header, #article-image, #article-body, #cta-banner-inner, #footer-inner { padding-inline: 32px; }
+      #footer-top { grid-template-columns: 1fr 1fr; }
+      #article-image { max-width: 100%; }
+    }
+    @media (max-width: 600px) {
+      #article-header, #article-image, #article-body, #cta-banner-inner, #footer-inner { padding-inline: 20px; }
+      #article-headline { font-size: 1.75rem; }
+      #article-meta-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+      #footer-top { grid-template-columns: 1fr; }
+      #footer-bottom { flex-direction: column; gap: 16px; }
+      #nav-links .nav-link { display: none; }
+      #article-img-placeholder { flex-direction: column; }
+      #cta-btn-group { flex-direction: column; align-items: center; }
+      .btn-white, .btn-white-outline { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV (on-light + back button) ── -->
+  <header id="site-header">
+    <nav id="site-nav" aria-label="Main navigation">
+      <div id="nav-inner">
+        <div id="nav-left">
+          <a id="nav-logo" href="index.html" aria-label="Griting home">
+            <span id="nav-logo-g" aria-hidden="true">G</span><span id="nav-logo-wordmark">riting</span>
+          </a>
+          <a id="nav-back" href="blog-index.html">← All Post</a>
+        </div>
+        <div id="nav-links">
+          <a href="index.html" class="nav-link" id="nav-link-product">Product</a>
+          <a href="about-us.html" class="nav-link" id="nav-link-about">About</a>
+          <a href="index.html#cta-banner" class="nav-link" id="nav-link-contact">Contact</a>
+          <a href="blog-index.html" class="nav-link nav-link--active" id="nav-link-blog">Blog</a>
+          <a href="index.html#cta-banner" class="nav-cta" id="nav-cta-btn">Get in Touch</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ── ARTICLE HEADER ── -->
+  <header id="article-header">
+    <h1 id="article-headline">The First Agentic Career Mentorship System from Silicon Valley.</h1>
+    <div id="article-meta-row">
+      <div id="article-date-readtime">16 October 2025 · 3 minute read</div>
+      <div id="article-author-block">
+        <div id="author-avatar" aria-hidden="true">JZ</div>
+        <div>
+          <div id="author-name">Jie Zhang</div>
+          <div id="author-title">CEO / Founder</div>
+        </div>
+      </div>
+    </div>
+    <div id="share-row">
+      <span id="share-label">Share this article</span>
+      <a class="share-btn" href="#" aria-label="Share on Twitter">𝕏</a>
+      <a class="share-btn" href="#" aria-label="Share on LinkedIn">in</a>
+    </div>
+  </header>
+
+  <!-- ── ARTICLE IMAGE ── -->
+  <section id="article-image" aria-label="Article illustration">
+    <div id="article-image-frame">
+      <img
+        id="article-img"
+        src="assets/blog-post-hero.jpeg"
+        alt="Dark-framed editorial image with glowing teal nodes and network visualization with phone mockup showing Griting Mentorship app with G logo"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';document.getElementById('article-img-placeholder').style.display='flex'"
+      >
+      <div id="article-img-placeholder" style="display:none;align-items:center;justify-content:center;gap:40px;padding:40px;width:100%;height:100%;">
+        <div id="network-visual" aria-hidden="true">
+          <div class="net-node"></div>
+          <div class="net-node"></div>
+          <div class="net-node"></div>
+          <div class="net-node"></div>
+          <div class="net-node"></div>
+          <div class="net-node"></div>
+          <div class="net-node"></div>
+          <div class="net-node"></div>
+        </div>
+        <div id="phone-mockup" aria-hidden="true">
+          <div id="phone-screen-header">Mentorship</div>
+          <div class="phone-mentor-row"></div>
+          <div class="phone-mentor-row"></div>
+          <div class="phone-mentor-row"></div>
+          <div class="phone-mentor-row"></div>
+        </div>
+        <div id="article-img-placeholder-text">→ assets/blog-post-hero.jpeg</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ARTICLE BODY ── -->
+  <article id="article-body">
+    <p class="article-paragraph">Every idea begins with a spark, a question that refuses to fade.
+For us, it began when we stepped away from our comfort zones and realized how hard it is to find real guidance.</p>
+
+    <p class="article-paragraph">The AI era is reshaping how we live, work, and grow.
+Skills expire faster, careers shift overnight, and for many, confidence has become fragile.</p>
+
+    <p class="article-paragraph">But one truth remains, we all need human wisdom to guide us forward in our careers.
+We all crave guidance and clarity rooted in experience, empathy, and purpose.</p>
+
+    <p class="article-paragraph">That's why we built <strong>Griting</strong>, the first Agentic Career Mentorship Platform born in Silicon Valley, powered by high-density human mentors in the AI era.
+A place where mentorship evolves into something more structured: a path, a graph, a network, a living ecosystem of growth that belongs to you.</p>
+
+    <p class="article-paragraph">We believe career growth should never be lonely or confusing. In this new world, growth belongs to everyone.
+If you're curious to see what's next, visit <a href="https://griting.ai">griting.ai</a> and join our waitlist. You'll be among the first to experience what's coming.</p>
+  </article>
+
+  <!-- ── CTA BANNER ── -->
+  <section id="cta-banner" aria-labelledby="cta-heading">
+    <div id="cta-banner-inner">
+      <h2 id="cta-heading">Ready to build connections that shape your future?</h2>
+      <div id="cta-btn-group">
+        <a href="index.html#gritme-talent-evaluation" class="btn-white">Explore GritMe</a>
+        <a href="mailto:hello@griting.ai" class="btn-white-outline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-top">
+        <div id="footer-brand-col">
+          <a id="footer-logo" href="index.html">
+            <span id="footer-logo-g">G</span><span>riting</span>
+          </a>
+          <a id="footer-waitlist-cta" href="#">Join The waitlist</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Product</div>
+          <ul class="footer-col-links">
+            <li><a href="#">GritMe</a></li>
+            <li><a href="#">GritHub</a></li>
+            <li><a href="#">GritLab</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Company</div>
+          <ul class="footer-col-links">
+            <li><a href="about-us.html">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="blog-index.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Contact</div>
+          <ul class="footer-col-links">
+            <li><a href="mailto:hello@griting.ai">Email</a></li>
+            <li><a href="#">Phone</a></li>
+            <li><a href="#">Address</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Support</div>
+          <ul class="footer-col-links">
+            <li><a href="#">Talk to an expert</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="footer-bottom">
+        <div id="footer-copyright">© 2026 Griting. All rights reserved.</div>
+        <div id="footer-legal">
+          <a href="#" class="footer-legal-link">Terms &amp; Conditions</a>
+          <a href="#" class="footer-legal-link">Privacy Policy</a>
+        </div>
+        <div id="footer-social">
+          <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+          <a href="#" class="social-link" aria-label="Dribbble">⊙</a>
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const EASE = 'cubic-bezier(0.19, 1, 0.22, 1)';
+
+    // Article header entrance
+    gsap.from('#article-headline', {
+      y: 40,
+      opacity: 0,
+      duration: 0.8,
+      ease: EASE,
+      delay: 0.1
+    });
+
+    gsap.from(['#article-meta-row', '#share-row'], {
+      y: 20,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.12,
+      ease: EASE,
+      delay: 0.3
+    });
+
+    // Article image: gentle scale from center
+    gsap.from('#article-image-frame', {
+      scrollTrigger: { trigger: '#article-image', start: 'top 85%' },
+      scale: 0.97,
+      opacity: 0,
+      duration: 0.7,
+      ease: EASE
+    });
+
+    // Article body paragraphs: fade up sequentially
+    gsap.from('.article-paragraph', {
+      scrollTrigger: { trigger: '#article-body', start: 'top 80%' },
+      y: 24,
+      opacity: 0,
+      duration: 0.55,
+      stagger: 0.1,
+      ease: EASE
+    });
+
+    // CTA
+    gsap.from('#cta-heading', {
+      scrollTrigger: { trigger: '#cta-banner', start: 'top 80%' },
+      scale: 0.94,
+      opacity: 0,
+      duration: 0.8,
+      ease: EASE
+    });
+
+    gsap.from('#cta-btn-group', {
+      scrollTrigger: { trigger: '#cta-banner', start: 'top 80%' },
+      y: 20,
+      opacity: 0,
+      duration: 0.6,
+      ease: EASE,
+      delay: 0.2
+    });
+  </script>
+</body>
+</html>

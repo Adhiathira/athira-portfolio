@@ -2832,7 +2832,7 @@ export function renderHome(sites, registry, siteUrls = new Map()) {
 </html>`;
 }
 
-export function renderSite(siteName, siteDir, registry, siteUrl = null, landingPageUrl = null) {
+export function renderSite(siteName, siteDir, registry, siteUrl = null, landingPageUrl = null, hasNextjsApp = false) {
   const sections = registry.map(entry => {
     if (entry.slug === 'concept-summary') {
       const imageMarkdown = readMarkdown(path.join(siteDir, 'concept-summary', 'concept_by_image.md'));
@@ -2913,6 +2913,7 @@ export function renderSite(siteName, siteDir, registry, siteUrl = null, landingP
     <h1 class="site-hero-name">${esc(siteName)}</h1>
     ${siteUrl ? `<a class="site-hero-source" href="${esc(siteUrl)}" target="_blank" rel="noopener noreferrer">↗ Visit site</a>` : ''}
     ${landingPageUrl ? `<a class="site-hero-source" href="${esc(landingPageUrl)}" target="_blank" rel="noopener noreferrer">↗ Landing page</a>` : ''}
+    ${hasNextjsApp ? `<a class="site-hero-source" href="/api/nextjs/${encodeURIComponent(siteName)}/launch" target="_blank" rel="noopener noreferrer">↗ Next.js app</a>` : ''}
   </div>
 
   <nav class="tab-bar">

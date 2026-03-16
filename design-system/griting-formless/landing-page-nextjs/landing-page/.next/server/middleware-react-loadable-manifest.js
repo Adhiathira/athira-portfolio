@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST="{\"pages/partners.tsx -> gsap\":{\"id\":\"pages/partners.tsx -> gsap\",\"files\":[\"static/chunks/node_modules_gsap_index_js.js\"]},\"pages/partners.tsx -> gsap/ScrollTrigger\":{\"id\":\"pages/partners.tsx -> gsap/ScrollTrigger\",\"files\":[\"static/chunks/node_modules_gsap_ScrollTrigger_js.js\"]}}"

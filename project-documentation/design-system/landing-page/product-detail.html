@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GritMe — Auditable Talent System | Griting</title>
+
+  <!-- FONT NOTICE: Helvetica Neue is not web-accessible.
+       The system stack (Helvetica Neue, Helvetica, Arial, sans-serif) closely
+       approximates it on macOS/iOS. Install locally for exact fidelity. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ════════════════════════════════════════════════════════════
+       BASE RESET & GLOBALS
+    ════════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--color-page-bg);
+      color: var(--color-text-body);
+      line-height: var(--lh-body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ════════════════════════════════════════════════════════════
+       NAVIGATION — Light variant
+    ════════════════════════════════════════════════════════════ */
+    #site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 72px;
+      background: #ffffff;
+      border-bottom: 1px solid #f3f4f6;
+      transition: box-shadow 0.3s var(--ease-primary);
+    }
+
+    #site-nav.nav--scrolled {
+      box-shadow: 0 2px 16px rgba(3, 31, 24, 0.08);
+    }
+
+    #nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-inline: 22px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 600;
+      letter-spacing: -1.61px;
+      color: #000000;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    #nav-logo-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #00693e;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    #nav-links {
+      display: flex;
+      gap: 45px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: #455451;
+      text-decoration: none;
+      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-link:hover { opacity: 0.6; }
+
+    .nav-link--active {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    #nav-cta {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      background: #00693e;
+      color: #fff;
+      transition: background 0.3s;
+    }
+
+    #nav-cta:hover { background: #00573a; }
+
+    /* Mobile nav toggle */
+    #nav-mobile-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    #nav-mobile-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #455451;
+      border-radius: 2px;
+      transition: all 0.3s var(--ease-primary);
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       PRODUCT HERO — Medium treatment (40–60vh)
+    ════════════════════════════════════════════════════════════ */
+    #product-hero {
+      position: relative;
+      min-height: 50vh;
+      background: linear-gradient(160deg, #003620 0%, #005032 45%, #003020 100%);
+      display: flex;
+      align-items: flex-end;
+      padding-top: 72px;
+      overflow: hidden;
+    }
+
+    #product-hero-ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 70% 60%, rgba(0, 105, 62, 0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 40%, rgba(0, 212, 146, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    #product-hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-inline: 244px;
+      padding-top: 60px;
+      padding-bottom: 72px;
+      width: 100%;
+    }
+
+    #product-hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(0, 212, 146, 0.9);
+      margin-bottom: 20px;
+    }
+
+    #product-hero-title {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: var(--type-h1);
+      font-weight: 500;
+      letter-spacing: var(--tracking-heading);
+      line-height: var(--lh-heading);
+      color: #ffffff;
+      max-width: 680px;
+      margin-bottom: 24px;
+    }
+
+    #product-hero-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.72);
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       AUDIENCE TAB BAR — Section 1
+    ════════════════════════════════════════════════════════════ */
+    #audience-tab-bar-section {
+      background: #ffffff;
+      padding-top: calc(72px + 40px);
+    }
+
+    #audience-tab-bar-wrapper {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-inline: 244px;
+    }
+
+    #audience-tab-bar {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 1146px;
+      height: 86px;
+      border-radius: 20px;
+      background: #f5f6f5;
+      padding: 8px;
+      gap: 4px;
+    }
+
+    .audience-tab {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-primary);
+      border: none;
+      background: transparent;
+      letter-spacing: -0.3px;
+      user-select: none;
+    }
+
+    .audience-tab:hover:not(.audience-tab--active) {
+      color: var(--color-text-heading);
+      background: rgba(0, 105, 62, 0.05);
+    }
+
+    .audience-tab--active {
+      font-weight: 600;
+      color: var(--color-text-heading);
+      background: #ffffff;
+      box-shadow: 0 2px 12px rgba(3, 31, 24, 0.10), 0 1px 3px rgba(3, 31, 24, 0.06);
+    }
+
+    .audience-tab--active::after {
+      /* Bottom indicator line absorbed into shadow treatment — active tab has white bg + shadow */
+      content: '';
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       AUDIENCE CONTENT PANELS
+    ════════════════════════════════════════════════════════════ */
+    #audience-content-wrapper {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-inline: 244px;
+      padding-top: 48px;
+      padding-bottom: 64px;
+    }
+
+    .audience-panel {
+      display: none;
+    }
+
+    .audience-panel--active {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    .audience-feature-card {
+      background: #f5f6f5;
+      border-radius: 16px;
+      padding: 32px 28px;
+      border: 1px solid rgba(0, 105, 62, 0.08);
+      transition: transform 0.3s var(--ease-primary), box-shadow 0.3s var(--ease-primary);
+    }
+
+    .audience-feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0, 105, 62, 0.12);
+    }
+
+    .audience-feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #00693e, #00995e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: #fff;
+      font-size: 1.25rem;
+    }
+
+    .audience-feature-title {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--color-text-heading);
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+
+    .audience-feature-body {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9375rem;
+      color: var(--color-text-body);
+      line-height: 1.6;
+    }
+
+    .audience-feature-list {
+      list-style: none;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .audience-feature-list li {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: var(--color-text-body);
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .audience-feature-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00693e;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       GRITME PRODUCT SECTION — Section 2
+    ════════════════════════════════════════════════════════════ */
+    #gritme-product {
+      background: linear-gradient(180deg, #f5f6f5 0%, #eef2ee 60%, #f5f6f5 100%);
+      padding-top: 80px;
+      padding-bottom: 100px;
+      position: relative;
+    }
+
+    /* Depth: subtle radial glow from upper-right */
+    #gritme-product::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse at top right, rgba(0, 105, 62, 0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    #gritme-product-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-inline: 244px;
+      position: relative;
+      z-index: 2;
+    }
+
+    #gritme-product-header {
+      margin-bottom: 16px;
+    }
+
+    #gritme-product-title {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: var(--type-h1);
+      font-weight: 500;
+      letter-spacing: var(--tracking-heading);
+      line-height: var(--lh-heading);
+      color: var(--color-text-heading);
+      margin-bottom: 18px;
+    }
+
+    #gritme-product-subheading {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.375rem;
+      font-weight: 400;
+      color: var(--color-text-body);
+      max-width: 720px;
+      line-height: 1.55;
+      margin-bottom: 56px;
+    }
+
+    /* Asymmetric split layout */
+    #gritme-product-layout {
+      display: grid;
+      grid-template-columns: var(--grid-product-section);
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* ── Left: Numbered item nav ── */
+    #gritme-product-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-top: 8px;
+    }
+
+    .numbered-tab {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 28px 20px 28px 0;
+      cursor: pointer;
+      border: none;
+      background: none;
+      text-align: left;
+      position: relative;
+      transition: all 0.3s var(--ease-primary);
+      border-bottom: 1px solid rgba(3, 31, 24, 0.08);
+    }
+
+    .numbered-tab:first-child {
+      border-top: 1px solid rgba(3, 31, 24, 0.08);
+    }
+
+    .numbered-tab:hover:not(.active) .numbered-tab-label {
+      color: var(--color-text-heading);
+    }
+
+    .numbered-tab-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      letter-spacing: 0.5px;
+      margin-top: 3px;
+      flex-shrink: 0;
+      transition: color 0.3s var(--ease-primary);
+    }
+
+    .numbered-tab-label {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      letter-spacing: -0.2px;
+      line-height: 1.4;
+      transition: color 0.3s var(--ease-primary), font-weight 0.2s;
+    }
+
+    .numbered-tab.active .numbered-tab-num {
+      color: var(--color-brand-primary);
+    }
+
+    .numbered-tab.active .numbered-tab-label {
+      color: var(--color-text-heading);
+      font-weight: 600;
+    }
+
+    .numbered-tab.active {
+      position: relative;
+    }
+
+    .numbered-tab.active::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--color-brand-primary);
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* ── Right: Content panel ── */
+    #gritme-product-panel-wrapper {
+      position: relative;
+    }
+
+    .product-content-panel {
+      display: none;
+      flex-direction: column;
+      background: var(--color-content-panel-bg);
+      border: 1px solid var(--color-content-panel-border);
+      border-radius: var(--content-panel-radius);
+      padding: 35px;
+      min-height: 640px;
+      box-shadow:
+        0 4px 24px rgba(0, 105, 62, 0.10),
+        0 1px 6px rgba(0, 105, 62, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-content-panel--active {
+      display: flex;
+    }
+
+    /* Depth: subtle inner glow */
+    .product-content-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
+      pointer-events: none;
+      border-radius: var(--content-panel-radius) var(--content-panel-radius) 0 0;
+    }
+
+    .product-panel-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .product-panel-heading {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--color-text-heading);
+      letter-spacing: -0.4px;
+      margin-bottom: 12px;
+    }
+
+    .product-panel-body {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: var(--color-text-body);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      max-width: 480px;
+    }
+
+    /* Product mockup / dashboard image container */
+    #product-dashboard-frame {
+      flex: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(0, 30, 18, 0.06);
+      position: relative;
+      min-height: 360px;
+      border: 1px solid rgba(0, 105, 62, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 30, 18, 0.12), 0 2px 8px rgba(0, 30, 18, 0.08);
+    }
+
+    #product-dashboard-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Fallback when image is missing */
+    #product-dashboard-fallback {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 360px;
+      padding: 40px;
+      background: linear-gradient(160deg, #002918 0%, #003620 100%);
+      text-align: center;
+    }
+
+    #product-dashboard-fallback-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(0, 212, 146, 0.8);
+      margin-bottom: 16px;
+    }
+
+    #product-dashboard-fallback-title {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 20px;
+      letter-spacing: -0.2px;
+    }
+
+    #product-dashboard-fallback-skills {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .skill-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .skill-bar-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.75);
+      width: 140px;
+      text-align: left;
+      flex-shrink: 0;
+    }
+
+    .skill-bar-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #00693e, #00d492);
+    }
+
+    .skill-bar-score {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      width: 40px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    #product-dashboard-fallback-notice {
+      margin-top: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.5;
+    }
+
+    /* CTAs below the product section */
+    #gritme-product-ctas {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .cta-btn-primary {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 8px;
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s var(--ease-primary), transform 0.2s var(--ease-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .cta-btn-primary:hover {
+      background: #00573a;
+      transform: translateY(-1px);
+    }
+
+    .cta-btn-ghost {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 13px 28px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--color-brand-primary);
+      border: 1.5px solid var(--color-brand-primary);
+      cursor: pointer;
+      transition: background 0.3s var(--ease-primary), color 0.3s var(--ease-primary), transform 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .cta-btn-ghost:hover {
+      background: rgba(0, 105, 62, 0.06);
+      transform: translateY(-1px);
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       STICKY TAB BAR (audience tab bar sticks on scroll into product section)
+    ════════════════════════════════════════════════════════════ */
+    #audience-tab-bar-sticky {
+      position: sticky;
+      top: 72px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0, 105, 62, 0.08);
+      padding: 12px 0;
+      display: none; /* shown via JS when scrolling into product section */
+    }
+
+    #audience-tab-bar-sticky-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-inline: 244px;
+    }
+
+    #audience-tab-bar-sticky-bar {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 1146px;
+      height: 60px;
+      border-radius: 16px;
+      background: #f5f6f5;
+      padding: 6px;
+      gap: 4px;
+    }
+
+    .audience-tab-sticky {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-primary);
+      border: none;
+      background: transparent;
+      letter-spacing: -0.2px;
+    }
+
+    .audience-tab-sticky:hover:not(.audience-tab-sticky--active) {
+      color: var(--color-text-heading);
+      background: rgba(0, 105, 62, 0.05);
+    }
+
+    .audience-tab-sticky--active {
+      font-weight: 600;
+      color: var(--color-text-heading);
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(3, 31, 24, 0.08);
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════════════════════════ */
+    #product-footer {
+      background: var(--color-bg-hero);
+      padding: 72px 0 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #product-footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0, 105, 62, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    #product-footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-inline: 244px;
+      position: relative;
+      z-index: 2;
+    }
+
+    #footer-wordmark {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 80px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -4px;
+      line-height: 1;
+      margin-bottom: 56px;
+      opacity: 0.92;
+    }
+
+    #footer-link-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 56px;
+    }
+
+    .footer-col-heading {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 20px;
+    }
+
+    .footer-col-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col-links li a {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9375rem;
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      transition: color 0.2s var(--ease-primary);
+    }
+
+    .footer-col-links li a:hover {
+      color: #ffffff;
+    }
+
+    #footer-waitlist-row {
+      padding: 24px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #footer-waitlist-label {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: -0.2px;
+    }
+
+    #footer-waitlist-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgb(0, 212, 146);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+
+    #footer-waitlist-link:hover { opacity: 0.75; }
+
+    #footer-waitlist-link::after {
+      content: '→';
+      font-size: 1.125rem;
+    }
+
+    #footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    #footer-copyright {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.38);
+    }
+
+    #footer-legal {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.38);
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    #footer-legal a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    #footer-legal a:hover { color: rgba(255, 255, 255, 0.85); }
+
+    #footer-social {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .footer-social-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.45);
+      text-decoration: none;
+      transition: color 0.2s var(--ease-primary);
+    }
+
+    .footer-social-link:hover { color: rgba(255, 255, 255, 0.85); }
+
+    /* ════════════════════════════════════════════════════════════
+       RESPONSIVE — ≤900px
+    ════════════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      #product-hero-inner,
+      #audience-tab-bar-wrapper,
+      #audience-content-wrapper,
+      #gritme-product-inner,
+      #audience-tab-bar-sticky-inner,
+      #product-footer-inner {
+        padding-inline: 40px;
+      }
+
+      #audience-tab-bar {
+        max-width: 100%;
+        height: 72px;
+      }
+
+      .audience-tab {
+        font-size: 1.125rem;
+      }
+
+      #gritme-product-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .audience-panel--active {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      #footer-link-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      #footer-wordmark {
+        font-size: 56px;
+      }
+
+      #audience-tab-bar-sticky-bar {
+        max-width: 100%;
+      }
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       RESPONSIVE — ≤600px
+    ════════════════════════════════════════════════════════════ */
+    @media (max-width: 600px) {
+      #product-hero-inner,
+      #audience-tab-bar-wrapper,
+      #audience-content-wrapper,
+      #gritme-product-inner,
+      #audience-tab-bar-sticky-inner,
+      #product-footer-inner {
+        padding-inline: 22px;
+      }
+
+      #nav-links,
+      #nav-cta {
+        display: none;
+      }
+
+      #nav-mobile-toggle {
+        display: flex;
+      }
+
+      #product-hero {
+        min-height: 42vh;
+      }
+
+      #product-hero-title {
+        font-size: clamp(1.625rem, 6vw, 2.25rem);
+      }
+
+      #audience-tab-bar {
+        height: 60px;
+        border-radius: 14px;
+        padding: 6px;
+      }
+
+      .audience-tab {
+        font-size: 0.9rem;
+        border-radius: 10px;
+      }
+
+      .audience-panel--active {
+        grid-template-columns: 1fr;
+      }
+
+      #gritme-product-title {
+        font-size: clamp(1.625rem, 6vw, 2.25rem);
+      }
+
+      #gritme-product-subheading {
+        font-size: 1rem;
+      }
+
+      .product-content-panel {
+        padding: 24px 20px;
+        min-height: auto;
+      }
+
+      #gritme-product-ctas {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      #footer-link-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+
+      #footer-wordmark {
+        font-size: 40px;
+        letter-spacing: -2px;
+      }
+
+      #footer-waitlist-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      #footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      #audience-tab-bar-section {
+        padding-top: calc(72px + 24px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════
+       NAVIGATION — Light (Product link active)
+  ════════════════════════════════════════════════ -->
+  <nav id="site-nav" class="nav--light">
+    <div id="nav-inner">
+      <a id="nav-logo" href="index.html">
+        <span id="nav-logo-mark" aria-hidden="true">G</span>riting
+      </a>
+      <ul id="nav-links">
+        <li><a href="product-detail.html" class="nav-link nav-link--active">Product</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="blog-index.html" class="nav-link">Blog</a></li>
+      </ul>
+      <a id="nav-cta" href="#contact">Get in Touch</a>
+      <button id="nav-mobile-toggle" aria-label="Open navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════
+       PRODUCT HERO — Medium treatment (40–60vh)
+  ════════════════════════════════════════════════ -->
+  <section id="product-hero">
+    <div id="product-hero-ambient" aria-hidden="true"></div>
+    <div id="product-hero-inner">
+      <p id="product-hero-eyebrow">GritMe Platform</p>
+      <h1 id="product-hero-title">Auditable Talent System</h1>
+      <p id="product-hero-sub">Enterprise-grade evidence-based evaluation with traceable reasoning and structured assessments built for scale.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 1: AUDIENCE TAB BAR
+  ════════════════════════════════════════════════ -->
+  <section id="audience-tab-bar-section">
+    <div id="audience-tab-bar-wrapper">
+      <div id="audience-tab-bar" role="tablist" aria-label="Audience tabs">
+        <button
+          id="tab-businesses"
+          class="audience-tab audience-tab--active"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-businesses"
+          data-tab="businesses"
+        >For Businesses</button>
+        <button
+          id="tab-individuals"
+          class="audience-tab"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-individuals"
+          data-tab="individuals"
+        >For Individuals</button>
+        <button
+          id="tab-community"
+          class="audience-tab"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-community"
+          data-tab="community"
+        >For Community</button>
+      </div>
+    </div>
+
+    <div id="audience-content-wrapper">
+
+      <!-- Panel: For Businesses -->
+      <div
+        id="panel-businesses"
+        class="audience-panel audience-panel--active"
+        role="tabpanel"
+        aria-labelledby="tab-businesses"
+      >
+        <div class="audience-feature-card" id="businesses-card-1">
+          <div class="audience-feature-icon" aria-hidden="true">&#9642;</div>
+          <h3 class="audience-feature-title">Hire With Confidence</h3>
+          <p class="audience-feature-body">Replace gut-feel hiring with structured, evidence-backed evaluations that surface the best candidates.</p>
+          <ul class="audience-feature-list">
+            <li>Multi-dimension skill scoring</li>
+            <li>Auditable assessment reports</li>
+            <li>Bias-reduction frameworks</li>
+          </ul>
+        </div>
+        <div class="audience-feature-card" id="businesses-card-2">
+          <div class="audience-feature-icon" aria-hidden="true">&#9643;</div>
+          <h3 class="audience-feature-title">Team Intelligence</h3>
+          <p class="audience-feature-body">Understand capability gaps, track skill growth, and align teams with strategic objectives.</p>
+          <ul class="audience-feature-list">
+            <li>Team capability mapping</li>
+            <li>Gap analysis dashboards</li>
+            <li>Growth trajectory tracking</li>
+          </ul>
+        </div>
+        <div class="audience-feature-card" id="businesses-card-3">
+          <div class="audience-feature-icon" aria-hidden="true">&#9641;</div>
+          <h3 class="audience-feature-title">Compliance Ready</h3>
+          <p class="audience-feature-body">Maintain full audit trails for every evaluation decision — built for regulated industries and enterprise compliance needs.</p>
+          <ul class="audience-feature-list">
+            <li>Complete decision audit logs</li>
+            <li>Exportable compliance reports</li>
+            <li>SOC 2-aligned data handling</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Panel: For Individuals -->
+      <div
+        id="panel-individuals"
+        class="audience-panel"
+        role="tabpanel"
+        aria-labelledby="tab-individuals"
+        hidden
+      >
+        <div class="audience-feature-card" id="individuals-card-1">
+          <div class="audience-feature-icon" aria-hidden="true">&#9671;</div>
+          <h3 class="audience-feature-title">Showcase Your Skills</h3>
+          <p class="audience-feature-body">Build a verified, evidence-based talent profile that demonstrates real capability — not just credentials.</p>
+          <ul class="audience-feature-list">
+            <li>Verified skill badges</li>
+            <li>Portfolio integration</li>
+            <li>Recruiter-ready profiles</li>
+          </ul>
+        </div>
+        <div class="audience-feature-card" id="individuals-card-2">
+          <div class="audience-feature-icon" aria-hidden="true">&#9670;</div>
+          <h3 class="audience-feature-title">Know Where You Stand</h3>
+          <p class="audience-feature-body">Get precise, actionable feedback on your strengths and development areas across multiple skill dimensions.</p>
+          <ul class="audience-feature-list">
+            <li>Multi-dimension skill scores</li>
+            <li>Benchmarking against peers</li>
+            <li>Personalised improvement paths</li>
+          </ul>
+        </div>
+        <div class="audience-feature-card" id="individuals-card-3">
+          <div class="audience-feature-icon" aria-hidden="true">&#9668;</div>
+          <h3 class="audience-feature-title">Fast-Track Your Career</h3>
+          <p class="audience-feature-body">Connect with employers who value demonstrated competency over pedigree. Get matched to roles where you'll thrive.</p>
+          <ul class="audience-feature-list">
+            <li>Opportunity matching</li>
+            <li>Employer introductions</li>
+            <li>Interview preparation tools</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Panel: For Community -->
+      <div
+        id="panel-community"
+        class="audience-panel"
+        role="tabpanel"
+        aria-labelledby="tab-community"
+        hidden
+      >
+        <div class="audience-feature-card" id="community-card-1">
+          <div class="audience-feature-icon" aria-hidden="true">&#9632;</div>
+          <h3 class="audience-feature-title">Ecosystem Standards</h3>
+          <p class="audience-feature-body">Contribute to shared evaluation frameworks and skill taxonomies that raise the bar across the entire talent ecosystem.</p>
+          <ul class="audience-feature-list">
+            <li>Open skill taxonomy contributions</li>
+            <li>Community benchmarking data</li>
+            <li>Shared evaluation rubrics</li>
+          </ul>
+        </div>
+        <div class="audience-feature-card" id="community-card-2">
+          <div class="audience-feature-icon" aria-hidden="true">&#9633;</div>
+          <h3 class="audience-feature-title">Mentorship Networks</h3>
+          <p class="audience-feature-body">Connect mentors with high-potential individuals identified through objective, evidence-based talent signals.</p>
+          <ul class="audience-feature-list">
+            <li>Mentor-mentee matching</li>
+            <li>Progress tracking tools</li>
+            <li>Community leaderboards</li>
+          </ul>
+        </div>
+        <div class="audience-feature-card" id="community-card-3">
+          <div class="audience-feature-icon" aria-hidden="true">&#9634;</div>
+          <h3 class="audience-feature-title">Trustworthy Data</h3>
+          <p class="audience-feature-body">Access aggregated, anonymised insights that help communities understand skill trends and workforce readiness.</p>
+          <ul class="audience-feature-list">
+            <li>Anonymised talent trend reports</li>
+            <li>Regional skill gap data</li>
+            <li>Industry readiness indices</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       STICKY AUDIENCE TAB BAR (activates on scroll)
+  ════════════════════════════════════════════════ -->
+  <div id="audience-tab-bar-sticky" aria-hidden="true">
+    <div id="audience-tab-bar-sticky-inner">
+      <div id="audience-tab-bar-sticky-bar">
+        <button class="audience-tab-sticky audience-tab-sticky--active" data-tab="businesses">For Businesses</button>
+        <button class="audience-tab-sticky" data-tab="individuals">For Individuals</button>
+        <button class="audience-tab-sticky" data-tab="community">For Community</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 2: GRITME AUDITABLE TALENT PRODUCT
+  ════════════════════════════════════════════════ -->
+  <section id="gritme-product">
+    <div id="gritme-product-inner">
+
+      <header id="gritme-product-header">
+        <h2 id="gritme-product-title">GritMe: Auditable Talent System</h2>
+        <p id="gritme-product-subheading">An enterprise evidence-based talent evaluation system that provides structured assessments with traceable reasoning and auditable records.</p>
+      </header>
+
+      <div id="gritme-product-layout">
+
+        <!-- Left: Numbered item nav -->
+        <nav id="gritme-product-nav" aria-label="Product feature navigation">
+          <button
+            class="numbered-tab active"
+            data-product-tab="talent-outcomes"
+            id="numbered-tab-1"
+            type="button"
+          >
+            <span class="numbered-tab-num">01</span>
+            <span class="numbered-tab-label">Talent outcomes</span>
+          </button>
+          <button
+            class="numbered-tab"
+            data-product-tab="multi-dimension"
+            id="numbered-tab-2"
+            type="button"
+          >
+            <span class="numbered-tab-num">02</span>
+            <span class="numbered-tab-label">Outputs by multi-dimension</span>
+          </button>
+          <button
+            class="numbered-tab"
+            data-product-tab="real-project"
+            id="numbered-tab-3"
+            type="button"
+          >
+            <span class="numbered-tab-num">03</span>
+            <span class="numbered-tab-label">Simulates with real project</span>
+          </button>
+        </nav>
+
+        <!-- Right: Content panel -->
+        <div id="gritme-product-panel-wrapper">
+
+          <!-- Panel 1: Talent outcomes (default active) -->
+          <div
+            id="product-panel-talent-outcomes"
+            class="product-content-panel product-content-panel--active"
+            role="region"
+            aria-label="Talent outcomes panel"
+          >
+            <div class="product-panel-content">
+              <h3 class="product-panel-heading">Evidence-Based Talent Evaluation</h3>
+              <p class="product-panel-body">Access skills with observable evidence to produce auditable reports.</p>
+            </div>
+            <!-- Product mockup image -->
+            <div id="product-dashboard-frame">
+              <img
+                id="product-dashboard-img"
+                src="assets/product-dashboard.jpeg"
+                alt="GritMe candidate evaluation dashboard showing skill scores: ML Knowledge 82%, Systems Design 71%, Coding Ability 79%, Other 86%"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+              >
+              <div id="product-dashboard-fallback">
+                <p id="product-dashboard-fallback-label">GritMe Dashboard</p>
+                <p id="product-dashboard-fallback-title">Candidate Evaluation Report</p>
+                <div id="product-dashboard-fallback-skills">
+                  <div class="skill-bar-row">
+                    <span class="skill-bar-label">ML Knowledge</span>
+                    <div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div>
+                    <span class="skill-bar-score">82%</span>
+                  </div>
+                  <div class="skill-bar-row">
+                    <span class="skill-bar-label">Systems Design</span>
+                    <div class="skill-bar-track"><div class="skill-bar-fill" style="width:71%"></div></div>
+                    <span class="skill-bar-score">71%</span>
+                  </div>
+                  <div class="skill-bar-row">
+                    <span class="skill-bar-label">Coding Ability</span>
+                    <div class="skill-bar-track"><div class="skill-bar-fill" style="width:79%"></div></div>
+                    <span class="skill-bar-score">79%</span>
+                  </div>
+                  <div class="skill-bar-row">
+                    <span class="skill-bar-label">Other</span>
+                    <div class="skill-bar-track"><div class="skill-bar-fill" style="width:86%"></div></div>
+                    <span class="skill-bar-score">86%</span>
+                  </div>
+                </div>
+                <p id="product-dashboard-fallback-notice">
+                  Asset missing: assets/product-dashboard.jpeg<br>
+                  Re-run extractor or generate with Kling prompt.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 2: Multi-dimension outputs -->
+          <div
+            id="product-panel-multi-dimension"
+            class="product-content-panel"
+            role="region"
+            aria-label="Multi-dimension outputs panel"
+          >
+            <div class="product-panel-content">
+              <h3 class="product-panel-heading">Multi-Dimension Skill Outputs</h3>
+              <p class="product-panel-body">Evaluate candidates across a structured taxonomy of dimensions — from technical depth to collaborative intelligence.</p>
+              <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+                <li style="display:flex; align-items:center; gap:10px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#00693e;flex-shrink:0;display:block;"></span>
+                  <span style="font-family:'Inter',sans-serif;font-size:0.9375rem;color:#455451;">Technical knowledge depth</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:10px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#00693e;flex-shrink:0;display:block;"></span>
+                  <span style="font-family:'Inter',sans-serif;font-size:0.9375rem;color:#455451;">Problem-solving under constraints</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:10px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#00693e;flex-shrink:0;display:block;"></span>
+                  <span style="font-family:'Inter',sans-serif;font-size:0.9375rem;color:#455451;">Systems thinking and architecture</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:10px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#00693e;flex-shrink:0;display:block;"></span>
+                  <span style="font-family:'Inter',sans-serif;font-size:0.9375rem;color:#455451;">Communication and documentation clarity</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:10px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#00693e;flex-shrink:0;display:block;"></span>
+                  <span style="font-family:'Inter',sans-serif;font-size:0.9375rem;color:#455451;">Collaborative and adaptive behaviour</span>
+                </li>
+              </ul>
+            </div>
+            <div id="product-dashboard-frame-2" style="flex:1;border-radius:8px;overflow:hidden;background:linear-gradient(140deg,#002918,#003620);border:1px solid rgba(0,105,62,0.2);min-height:320px;display:flex;align-items:center;justify-content:center;margin-top:24px;">
+              <div style="text-align:center;padding:32px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:360px;">
+                  <div style="background:rgba(0,105,62,0.15);border:1px solid rgba(0,105,62,0.25);border-radius:10px;padding:20px 16px;">
+                    <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:2rem;font-weight:600;color:#00d492;letter-spacing:-1px;">82%</div>
+                    <div style="font-family:'Inter',sans-serif;font-size:0.8125rem;color:rgba(255,255,255,0.6);margin-top:4px;">ML Knowledge</div>
+                  </div>
+                  <div style="background:rgba(0,105,62,0.15);border:1px solid rgba(0,105,62,0.25);border-radius:10px;padding:20px 16px;">
+                    <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:2rem;font-weight:600;color:#00d492;letter-spacing:-1px;">71%</div>
+                    <div style="font-family:'Inter',sans-serif;font-size:0.8125rem;color:rgba(255,255,255,0.6);margin-top:4px;">Systems Design</div>
+                  </div>
+                  <div style="background:rgba(0,105,62,0.15);border:1px solid rgba(0,105,62,0.25);border-radius:10px;padding:20px 16px;">
+                    <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:2rem;font-weight:600;color:#00d492;letter-spacing:-1px;">79%</div>
+                    <div style="font-family:'Inter',sans-serif;font-size:0.8125rem;color:rgba(255,255,255,0.6);margin-top:4px;">Coding Ability</div>
+                  </div>
+                  <div style="background:rgba(0,105,62,0.15);border:1px solid rgba(0,105,62,0.25);border-radius:10px;padding:20px 16px;">
+                    <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:2rem;font-weight:600;color:#00d492;letter-spacing:-1px;">86%</div>
+                    <div style="font-family:'Inter',sans-serif;font-size:0.8125rem;color:rgba(255,255,255,0.6);margin-top:4px;">Other</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 3: Simulates with real project -->
+          <div
+            id="product-panel-real-project"
+            class="product-content-panel"
+            role="region"
+            aria-label="Real project simulation panel"
+          >
+            <div class="product-panel-content">
+              <h3 class="product-panel-heading">Simulates With Real Projects</h3>
+              <p class="product-panel-body">Candidates are evaluated through realistic project scenarios — not abstract puzzles — producing signals that directly predict on-the-job performance.</p>
+              <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+                <li style="display:flex; align-items:center; gap:10px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#00693e;flex-shrink:0;display:block;"></span>
+                  <span style="font-family:'Inter',sans-serif;font-size:0.9375rem;color:#455451;">Industry-relevant project scenarios</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:10px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#00693e;flex-shrink:0;display:block;"></span>
+                  <span style="font-family:'Inter',sans-serif;font-size:0.9375rem;color:#455451;">Realistic constraints and ambiguity</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:10px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#00693e;flex-shrink:0;display:block;"></span>
+                  <span style="font-family:'Inter',sans-serif;font-size:0.9375rem;color:#455451;">Observable decision-making evidence</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:10px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#00693e;flex-shrink:0;display:block;"></span>
+                  <span style="font-family:'Inter',sans-serif;font-size:0.9375rem;color:#455451;">Auto-scored with human review option</span>
+                </li>
+              </ul>
+            </div>
+            <div id="product-dashboard-frame-3" style="flex:1;border-radius:8px;overflow:hidden;background:linear-gradient(140deg,#001f14,#003620);border:1px solid rgba(0,105,62,0.2);min-height:300px;display:flex;align-items:center;justify-content:center;padding:32px;margin-top:24px;">
+              <div style="width:100%;max-width:400px;">
+                <div style="font-family:'Inter',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:rgba(0,212,146,0.7);margin-bottom:12px;">Active Assessment</div>
+                <div style="background:rgba(0,105,62,0.12);border:1px solid rgba(0,105,62,0.22);border-radius:12px;padding:24px;">
+                  <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:1rem;font-weight:500;color:#ffffff;margin-bottom:8px;">Build a rate-limiting service</div>
+                  <div style="font-family:'Inter',sans-serif;font-size:0.875rem;color:rgba(255,255,255,0.55);line-height:1.5;">Design and implement a distributed rate limiter for a high-throughput API. Define your approach, justify trade-offs.</div>
+                  <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+                    <span style="font-family:'Inter',sans-serif;font-size:0.75rem;background:rgba(0,105,62,0.2);border:1px solid rgba(0,105,62,0.3);border-radius:6px;padding:4px 10px;color:rgba(255,255,255,0.7);">Systems Design</span>
+                    <span style="font-family:'Inter',sans-serif;font-size:0.75rem;background:rgba(0,105,62,0.2);border:1px solid rgba(0,105,62,0.3);border-radius:6px;padding:4px 10px;color:rgba(255,255,255,0.7);">Distributed Systems</span>
+                    <span style="font-family:'Inter',sans-serif;font-size:0.75rem;background:rgba(0,105,62,0.2);border:1px solid rgba(0,105,62,0.3);border-radius:6px;padding:4px 10px;color:rgba(255,255,255,0.7);">Trade-off Analysis</span>
+                  </div>
+                </div>
+                <div style="margin-top:12px;display:flex;align-items:center;gap:8px;">
+                  <div style="flex:1;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;">
+                    <div style="width:65%;height:100%;background:linear-gradient(90deg,#00693e,#00d492);border-radius:2px;"></div>
+                  </div>
+                  <span style="font-family:'Inter',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.45);">65%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CTAs -->
+      <div id="gritme-product-ctas">
+        <a href="#contact" class="cta-btn-primary" id="cta-get-in-touch">Get in Touch</a>
+        <a href="#contact" class="cta-btn-ghost" id="cta-book-demo">Book Demo</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       CONTACT ANCHOR
+  ════════════════════════════════════════════════ -->
+  <div id="contact" style="height:1px;"></div>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════ -->
+  <footer id="product-footer">
+    <div id="product-footer-inner">
+
+      <div id="footer-wordmark">GRITING</div>
+
+      <div id="footer-link-grid">
+        <div id="footer-col-product" class="footer-col">
+          <p class="footer-col-heading">Product</p>
+          <ul class="footer-col-links">
+            <li><a href="product-detail.html">GritMe</a></li>
+            <li><a href="#">Evaluation Engine</a></li>
+            <li><a href="#">Skill Taxonomy</a></li>
+            <li><a href="#">Integrations</a></li>
+          </ul>
+        </div>
+        <div id="footer-col-company" class="footer-col">
+          <p class="footer-col-heading">Company</p>
+          <ul class="footer-col-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Partners</a></li>
+          </ul>
+        </div>
+        <div id="footer-col-contact" class="footer-col">
+          <p class="footer-col-heading">Contact</p>
+          <ul class="footer-col-links">
+            <li><a href="#contact">Get in Touch</a></li>
+            <li><a href="#">Book a Demo</a></li>
+            <li><a href="#">Enterprise Sales</a></li>
+            <li><a href="#">hello@griting.com</a></li>
+          </ul>
+        </div>
+        <div id="footer-col-support" class="footer-col">
+          <p class="footer-col-heading">Support</p>
+          <ul class="footer-col-links">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Help Centre</a></li>
+            <li><a href="#">Status</a></li>
+            <li><a href="#">Community</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="footer-waitlist-row">
+        <p id="footer-waitlist-label">Ready to grow?</p>
+        <a id="footer-waitlist-link" href="#contact">Join The waitlist</a>
+      </div>
+
+      <div id="footer-bottom">
+        <p id="footer-copyright">© 2026 Griting. All rights reserved.</p>
+        <div id="footer-social">
+          <a href="#" class="footer-social-link" aria-label="Twitter">Twitter</a>
+          <a href="#" class="footer-social-link" aria-label="Dribbble">Dribbble</a>
+          <a href="#" class="footer-social-link" aria-label="LinkedIn">LinkedIn</a>
+        </div>
+        <div id="footer-legal">
+          <a href="#">Terms &amp; Conditions</a>
+          <span>&nbsp;·&nbsp;</span>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════════════ -->
+  <script>
+    // ─────────────────────────────────────────────────
+    // 1. NAV — scroll state
+    // ─────────────────────────────────────────────────
+    (function () {
+      var nav = document.getElementById('site-nav');
+      function updateNav() {
+        if (window.scrollY > 10) {
+          nav.classList.add('nav--scrolled');
+        } else {
+          nav.classList.remove('nav--scrolled');
+        }
+      }
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+    })();
+
+    // ─────────────────────────────────────────────────
+    // 2. AUDIENCE TAB SWITCHING (main + sticky)
+    //    Both tab bars share the same switching logic.
+    // ─────────────────────────────────────────────────
+    (function () {
+      var PANELS = {
+        businesses: 'panel-businesses',
+        individuals: 'panel-individuals',
+        community:   'panel-community'
+      };
+
+      function switchAudienceTab(tabKey) {
+        // Update main tab bar
+        document.querySelectorAll('.audience-tab').forEach(function (btn) {
+          var isActive = btn.dataset.tab === tabKey;
+          btn.classList.toggle('audience-tab--active', isActive);
+          btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        // Update sticky tab bar
+        document.querySelectorAll('.audience-tab-sticky').forEach(function (btn) {
+          var isActive = btn.dataset.tab === tabKey;
+          btn.classList.toggle('audience-tab-sticky--active', isActive);
+        });
+
+        // Show/hide panels
+        Object.keys(PANELS).forEach(function (key) {
+          var panel = document.getElementById(PANELS[key]);
+          if (!panel) return;
+          if (key === tabKey) {
+            panel.classList.add('audience-panel--active');
+            panel.removeAttribute('hidden');
+          } else {
+            panel.classList.remove('audience-panel--active');
+            panel.setAttribute('hidden', '');
+          }
+        });
+      }
+
+      // Attach listeners to main tab bar
+      document.querySelectorAll('.audience-tab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          switchAudienceTab(this.dataset.tab);
+        });
+      });
+
+      // Attach listeners to sticky tab bar
+      document.querySelectorAll('.audience-tab-sticky').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          switchAudienceTab(this.dataset.tab);
+          // Scroll to the audience section
+          var section = document.getElementById('audience-tab-bar-section');
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    })();
+
+    // ─────────────────────────────────────────────────
+    // 3. STICKY TAB BAR — show when user scrolls into product section
+    // ─────────────────────────────────────────────────
+    (function () {
+      var stickyBar    = document.getElementById('audience-tab-bar-sticky');
+      var productSection = document.getElementById('gritme-product');
+
+      if (!stickyBar || !productSection) return;
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            stickyBar.style.display = 'block';
+            stickyBar.removeAttribute('aria-hidden');
+          } else {
+            stickyBar.style.display = 'none';
+            stickyBar.setAttribute('aria-hidden', 'true');
+          }
+        });
+      }, {
+        rootMargin: '-72px 0px 0px 0px',
+        threshold: 0
+      });
+
+      observer.observe(productSection);
+    })();
+
+    // ─────────────────────────────────────────────────
+    // 4. NUMBERED ITEM TABS — product feature switching
+    // ─────────────────────────────────────────────────
+    (function () {
+      var PRODUCT_PANELS = {
+        'talent-outcomes': 'product-panel-talent-outcomes',
+        'multi-dimension':  'product-panel-multi-dimension',
+        'real-project':     'product-panel-real-project'
+      };
+
+      function switchProductTab(tabKey) {
+        // Update numbered tab buttons
+        document.querySelectorAll('.numbered-tab').forEach(function (tab) {
+          tab.classList.toggle('active', tab.dataset.productTab === tabKey);
+        });
+
+        // Show/hide product content panels
+        Object.keys(PRODUCT_PANELS).forEach(function (key) {
+          var panel = document.getElementById(PRODUCT_PANELS[key]);
+          if (!panel) return;
+          if (key === tabKey) {
+            panel.classList.add('product-content-panel--active');
+          } else {
+            panel.classList.remove('product-content-panel--active');
+          }
+        });
+      }
+
+      // Attach click listeners to all numbered tabs
+      document.querySelectorAll('.numbered-tab').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          switchProductTab(this.dataset.productTab);
+        });
+      });
+    })();
+
+    // ─────────────────────────────────────────────────
+    // 5. GSAP ANIMATIONS (transform-only: y/scale — no opacity:0 in from())
+    // ─────────────────────────────────────────────────
+    (function () {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero content entrance
+      gsap.from('#product-hero-eyebrow', {
+        y: 30,
+        duration: 0.8,
+        delay: 0.1,
+        ease: 'power2.out'
+      });
+
+      gsap.from('#product-hero-title', {
+        y: 50,
+        duration: 0.9,
+        delay: 0.2,
+        ease: 'power2.out'
+      });
+
+      gsap.from('#product-hero-sub', {
+        y: 30,
+        duration: 0.8,
+        delay: 0.35,
+        ease: 'power2.out'
+      });
+
+      // Audience tab bar entrance
+      gsap.from('#audience-tab-bar', {
+        y: 40,
+        duration: 0.7,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#audience-tab-bar',
+          start: 'top 88%'
+        }
+      });
+
+      // Audience feature cards stagger
+      gsap.from('.audience-feature-card', {
+        y: 50,
+        scale: 0.97,
+        duration: 0.65,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#audience-content-wrapper',
+          start: 'top 80%'
+        }
+      });
+
+      // Product section heading
+      gsap.from('#gritme-product-title', {
+        y: 40,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#gritme-product-title',
+          start: 'top 85%'
+        }
+      });
+
+      gsap.from('#gritme-product-subheading', {
+        y: 30,
+        duration: 0.7,
+        delay: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#gritme-product-subheading',
+          start: 'top 85%'
+        }
+      });
+
+      // Numbered tabs entrance
+      gsap.from('.numbered-tab', {
+        x: -30,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#gritme-product-nav',
+          start: 'top 80%'
+        }
+      });
+
+      // Content panel entrance
+      gsap.from('#gritme-product-panel-wrapper', {
+        y: 60,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#gritme-product-panel-wrapper',
+          start: 'top 80%'
+        }
+      });
+
+      // CTAs entrance
+      gsap.from('#gritme-product-ctas', {
+        y: 30,
+        duration: 0.6,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#gritme-product-ctas',
+          start: 'top 90%'
+        }
+      });
+
+      // Footer wordmark
+      gsap.from('#footer-wordmark', {
+        y: 40,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#footer-wordmark',
+          start: 'top 90%'
+        }
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

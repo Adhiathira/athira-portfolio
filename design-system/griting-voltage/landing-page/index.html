@@ -4,828 +4,1225 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Griting — Talent Trust and Readiness Infrastructure</title>
+
+  <!-- FONT NOTICE: Helvetica Neue → system stack (Helvetica Neue, Helvetica, Arial, sans-serif)
+       Helvetica Neue is not web-accessible. The system stack closely approximates it on macOS/iOS.
+       On Windows/Linux, Helvetica or Arial will render instead. Install Helvetica Neue locally for exact fidelity. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- GSAP + ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
   <style>
-    /* =============================================
-       RESET & BASE
-       ============================================= */
+    /* ════════════════════════════════════════════════════════════
+       BASE RESET & GLOBALS
+    ════════════════════════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Inter', sans-serif;
-      background: #f5f6f5;
-      color: #455451;
+      font-family: var(--font-body);
+      background-color: var(--color-bg-hero);
+      color: var(--color-text-on-dark);
+      line-height: var(--lh-body);
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
 
-    /* =============================================
-       CONTAINER
-       ============================================= */
-    .container {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding-inline: 22px;
-    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
 
-    /* =============================================
+    /* ════════════════════════════════════════════════════════════
        NAVIGATION
-       ============================================= */
+    ════════════════════════════════════════════════════════════ */
     #site-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: 72px; background: transparent; border-bottom: none;
-      transition: background 0.3s cubic-bezier(0.4,0,0.2,1), border-color 0.3s cubic-bezier(0.4,0,0.2,1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-3xl);
+      background: transparent;
+      transition: background 0.3s cubic-bezier(0.4,0,0.2,1),
+                  border-bottom 0.3s cubic-bezier(0.4,0,0.2,1);
     }
-    #site-nav.site-header--stuck { background: #ffffff; border-bottom: 1px solid #f3f4f6; }
-    #nav-inner { display: flex; align-items: center; height: 100%; max-width: 1440px; margin: 0 auto; padding-inline: 22px; }
-    #nav-logo-link { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; margin-right: auto; }
-    #nav-logo-g, #nav-logo-riting { font-family: 'Inter', sans-serif; font-size: 36px; font-weight: 600; letter-spacing: -1.61px; color: #ffffff; line-height: 1; transition: color 0.3s cubic-bezier(0.4,0,0.2,1); }
-    #site-nav.site-header--stuck #nav-logo-g,
-    #site-nav.site-header--stuck #nav-logo-riting { color: #000000; }
-    #nav-links { display: flex; align-items: center; gap: 45px; margin-right: 45px; }
-    .nav-link { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 400; color: #ffffff; text-decoration: none; transition: opacity 0.45s cubic-bezier(0.455,0.03,0.515,0.955); }
-    .nav-link:hover { opacity: 0.7; }
-    .nav-link.nav-link--active { opacity: 0.45; pointer-events: none; }
-    #site-nav.site-header--stuck .nav-link { color: #455451; }
-    #nav-cta-btn { display: inline-flex; align-items: center; justify-content: center; padding: 18px 16px; background: #00693e; color: #ffffff; font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 500; letter-spacing: -0.18px; border-radius: 8px; border: 1px solid #003620; box-shadow: 0px 1px 2px -1px rgba(9,6,63,0.4), 0px 0px 0px 1px #003620, inset 0px 1px 0px 0px rgba(255,255,255,0.16); transition: background-color 0.45s cubic-bezier(0.165,0.84,0.44,1); white-space: nowrap; flex-shrink: 0; }
-    #nav-cta-btn:hover { background: #008050; }
 
-    /* =============================================
-       SHARED BUTTON STYLES
-       ============================================= */
-    .btn-primary {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 18px 32px;
-      background: #00693e;
-      color: #ffffff;
-      font-family: 'Inter', sans-serif;
-      font-size: 18px; font-weight: 500; letter-spacing: -0.18px;
-      border-radius: 8px;
-      border: 1px solid #003620;
-      box-shadow: 0px 1px 2px -1px rgba(9,6,63,0.4), 0px 0px 0px 1px #003620, inset 0px 1px 0px 0px rgba(255,255,255,0.16);
+    #site-nav.nav--stuck {
+      background: rgba(0, 30, 18, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,105,62,0.2);
+    }
+
+    #nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-logo);
+      font-size: var(--type-logo);
+      font-weight: 600;
+      letter-spacing: var(--tracking-logo);
+      color: var(--color-text-on-dark);
       cursor: pointer;
-      transition: background-color 0.45s cubic-bezier(0.165,0.84,0.44,1), box-shadow 0.45s cubic-bezier(0.165,0.84,0.44,1);
-      text-decoration: none;
-      white-space: nowrap;
+      transition: var(--transition-interactive);
+      flex-shrink: 0;
     }
-    .btn-primary:hover { background: #008050; }
 
-    .btn-outline {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 18px 32px;
-      background: rgba(0,105,62,0.06);
-      color: #ffffff;
-      font-family: 'Inter', sans-serif;
-      font-size: 17px; font-weight: 500;
+    #nav-logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--color-brand-primary);
       border-radius: 8px;
-      border: 1px solid #00693e;
-      box-shadow: 1px 2px 8px 0px rgba(0,0,0,0.02);
-      cursor: pointer;
-      transition: background-color 0.45s cubic-bezier(0.455,0.03,0.515,0.955), border 0.45s cubic-bezier(0.455,0.03,0.515,0.955);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .btn-outline:hover { background: rgba(0,105,62,0.12); }
-
-    .btn-outline-light {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 14px 28px;
-      background: rgba(0,105,62,0.06);
-      color: #031f18;
-      font-family: 'Inter', sans-serif;
-      font-size: 17px; font-weight: 500;
-      border-radius: 8px;
-      border: 1px solid #00693e;
-      box-shadow: 1px 2px 8px 0px rgba(0,0,0,0.02);
-      cursor: pointer;
-      transition: background-color 0.45s cubic-bezier(0.455,0.03,0.515,0.955), border 0.45s cubic-bezier(0.455,0.03,0.515,0.955);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .btn-outline-light:hover { background: rgba(0,105,62,0.12); }
-
-    /* =============================================
-       EYEBROW
-       ============================================= */
-    .eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 600;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: #00693e;
-      display: block;
-      margin-bottom: 16px;
-    }
-    .eyebrow--white { color: rgba(255,255,255,0.7); }
-
-    /* =============================================
-       SECTION SHARED
-       ============================================= */
-    .section-heading {
-      font-family: 'Helvetica Neue', 'Inter', sans-serif;
-      font-size: 49px; font-weight: 500;
-      letter-spacing: -1.2px;
-      line-height: 1.167;
-      color: #031f18;
-    }
-    .section-heading--white { color: #ffffff; }
-    .section-body {
-      font-family: 'Inter', sans-serif;
-      font-size: 22px; font-weight: 500;
-      letter-spacing: -0.3px;
-      line-height: 1.4;
-      color: #455451;
-    }
-    .section-body--white { color: rgba(255,255,255,0.8); }
-
-    /* =============================================
-       SECTION 2: HERO
-       ============================================= */
-    #hero-wrapper {
-      position: relative;
-      width: 100%;
-      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #003620;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0;
+      flex-shrink: 0;
+    }
+
+    #nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xl);
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: 400;
+      color: var(--color-text-on-dark);
+      cursor: pointer;
+      transition: var(--transition-interactive);
+    }
+    .nav-link:hover { opacity: 0.7; }
+    .nav-link--active { opacity: 0.45; pointer-events: none; }
+
+    #nav-cta {
+      font-family: var(--font-body);
+      font-size: var(--type-btn);
+      font-weight: 500;
+      letter-spacing: var(--tracking-btn);
+      color: #fff;
+      background: var(--color-brand-primary);
+      border: 1px solid var(--color-brand-primary-dark);
+      border-radius: var(--btn-border-radius);
+      padding: 10px 20px;
+      cursor: pointer;
+      box-shadow: 0px 1px 2px -1px rgba(9,6,63,0.4),
+                  0px 0px 0px 1px #003620,
+                  inset 0px 1px 0px 0px rgba(255,255,255,0.16);
+      transition: var(--transition-interactive);
+      white-space: nowrap;
+    }
+    #nav-cta:hover { background: var(--color-brand-primary-hover); }
+
+    /* ════════════════════════════════════════════════════════════
+       HERO SECTION
+    ════════════════════════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      background: var(--color-bg-hero);
+      display: grid;
+      grid-template-columns: 58fr 42fr;
+      align-items: flex-end;
+      padding: 0 var(--space-3xl);
+      padding-top: var(--nav-height);
       overflow: hidden;
     }
 
-    #hero-video-container {
+    /* Deep green layered gradient depth */
+    #hero::before {
+      content: '';
       position: absolute;
       inset: 0;
-      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 30% 60%, rgba(0,105,62,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(0,150,90,0.08) 0%, transparent 50%);
+      pointer-events: none;
     }
-    #hero-bg-video {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    #hero-bg-placeholder {
-      display: none;
-      align-items: center; justify-content: center;
-      background: #003620;
-      color: rgba(255,255,255,0.4);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
-      width: 100%; height: 100%;
-    }
-    #hero-gradient-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(0,35,16,0.3) 0%, rgba(0,35,16,0.5) 60%, rgba(0,35,16,0.7) 100%);
+
+    /* Subtle grid texture */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,105,62,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,105,62,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at 50% 80%, black 0%, transparent 70%);
       pointer-events: none;
     }
 
     #hero-content {
       position: relative;
       z-index: 2;
-      text-align: center;
-      padding: 120px 22px 80px;
-      max-width: 1200px;
-      width: 100%;
+      padding-bottom: 120px;
+      padding-top: 80px;
     }
 
-    #hero-headline-group {
+    #hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: 600;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
+      background: rgba(0,105,62,0.12);
+      border: 1px solid rgba(0,105,62,0.25);
+      padding: 4px 12px;
+      border-radius: var(--pill-radius);
+      display: inline-block;
       margin-bottom: 32px;
     }
 
     #hero-headline {
-      font-family: 'Helvetica Neue', 'Inter', sans-serif;
-      font-size: clamp(44px, 5.5vw, 80px);
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 5rem);
       font-weight: 400;
-      letter-spacing: -3.6px;
-      line-height: 1.104;
-      color: #ffffff;
-      margin-bottom: 0;
-      max-width: 1100px;
-      margin-inline: auto;
+      line-height: 1.08;
+      letter-spacing: var(--tracking-display);
+      background: var(--gradient-display-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      max-width: 720px;
+      margin-bottom: 32px;
     }
 
-    /* Hero word-split spans */
-    .hero-word-wrap {
-      display: inline-block;
-      overflow: hidden;
-    }
-    .hero-word-inner {
-      display: inline-block;
-    }
-
-    #hero-subheading {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(18px, 1.5vw, 22px);
-      font-weight: 500;
-      letter-spacing: -0.3px;
-      line-height: 1.4;
-      color: rgba(255,255,255,0.85);
-      max-width: 620px;
-      margin: 28px auto 0;
+    #hero-subheadline {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 400;
+      color: var(--color-text-secondary-dark);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 48px;
     }
 
     #hero-cta-group {
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 16px;
-      margin-top: 48px;
       flex-wrap: wrap;
     }
 
-    /* =============================================
-       SECTION 3: NEW INFRASTRUCTURE
-       ============================================= */
-    #new-infrastructure {
-      padding: 120px 0;
-      background: #f5f6f5;
+    .btn-primary {
+      font-family: var(--font-body);
+      font-size: var(--type-btn);
+      font-weight: 500;
+      letter-spacing: var(--tracking-btn);
+      color: #fff;
+      background: var(--color-brand-primary);
+      border: 1px solid var(--color-brand-primary-dark);
+      border-radius: var(--btn-border-radius);
+      padding: var(--btn-padding-block) 28px;
+      cursor: pointer;
+      box-shadow: 0px 1px 2px -1px rgba(9,6,63,0.4),
+                  0px 0px 0px 1px #003620,
+                  inset 0px 1px 0px 0px rgba(255,255,255,0.16);
+      transition: var(--transition-interactive);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover { background: var(--color-brand-primary-hover); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-outline {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      font-weight: 500;
+      color: var(--color-text-on-dark);
+      background: var(--color-btn-outline-bg);
+      border: 1px solid var(--color-btn-outline-border);
+      border-radius: var(--btn-border-radius);
+      padding: var(--btn-padding-block) 28px;
+      cursor: pointer;
+      box-shadow: 1px 2px 8px 0px rgba(0,0,0,0.02);
+      transition: var(--transition-interactive);
+    }
+    .btn-outline:hover { background: rgba(0,105,62,0.12); }
+
+    #hero-visual {
       position: relative;
-      overflow: hidden;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 500px;
     }
 
-    #new-infrastructure::before {
-      content: '';
+    #hero-signal-map {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 1;
+    }
+
+    /* CSS-rendered signal/network visualization */
+    .signal-node {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(0,105,62,0.4);
+      background: rgba(0,105,62,0.08);
+      animation: signalPulse 3s ease-in-out infinite;
+    }
+    .signal-node.n1 { width: 180px; height: 180px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0s; }
+    .signal-node.n2 { width: 280px; height: 280px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0.5s; border-color: rgba(0,105,62,0.25); }
+    .signal-node.n3 { width: 380px; height: 380px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 1s; border-color: rgba(0,105,62,0.12); }
+
+    .signal-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-brand-primary);
+      box-shadow: 0 0 12px rgba(0,105,62,0.8);
+    }
+    .sd1 { top: 20%; left: 60%; }
+    .sd2 { top: 60%; left: 25%; }
+    .sd3 { top: 75%; left: 70%; }
+    .sd4 { top: 35%; left: 80%; animation-delay: 0.3s; }
+    .sd5 { top: 15%; left: 40%; animation-delay: 0.6s; }
+
+    .signal-line {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 900px;
-      height: 600px;
-      background: radial-gradient(ellipse at center, rgba(0,105,62,0.05) 0%, transparent 70%);
-      pointer-events: none;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(0,105,62,0.6), transparent);
+      transform-origin: left center;
+    }
+    .sl1 { width: 120px; transform: rotate(45deg); }
+    .sl2 { width: 90px; transform: rotate(150deg); }
+    .sl3 { width: 140px; transform: rotate(230deg); }
+
+    #hero-signal-label {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(0,105,62,0.6);
     }
 
-    #new-infra-header {
-      max-width: 700px;
+    @keyframes signalPulse {
+      0%, 100% { opacity: 0.4; transform: translate(-50%,-50%) scale(1); }
+      50% { opacity: 0.8; transform: translate(-50%,-50%) scale(1.03); }
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       NEW INFRASTRUCTURE SECTION
+    ════════════════════════════════════════════════════════════ */
+    #new-infrastructure {
+      background: var(--color-section-bg-light);
+      padding: 120px var(--space-3xl);
+      position: relative;
+    }
+
+    #infra-header {
+      max-width: 800px;
       margin-bottom: 72px;
     }
 
-    #new-infra-grid {
+    #infra-heading {
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      font-weight: 500;
+      letter-spacing: var(--tracking-heading);
+      color: var(--color-text-heading);
+      line-height: var(--lh-heading);
+      margin-bottom: 24px;
+    }
+
+    #infra-body {
+      font-family: var(--font-body);
+      font-size: var(--type-body-lg);
+      font-weight: 400;
+      color: var(--color-text-body);
+      line-height: var(--lh-body);
+      max-width: 680px;
+    }
+
+    #infra-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
     }
 
     .infra-card {
-      background: #ffffff;
-      border: 1px solid rgba(209,213,219,0.6);
-      border-radius: 16px;
-      padding: 40px;
-      box-shadow: 0 2px 12px rgba(0,35,16,0.04), 0 1px 3px rgba(0,0,0,0.04);
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--card-border-radius);
+      padding: 40px 36px;
       position: relative;
       overflow: hidden;
+      transition: var(--transition-media);
     }
 
     .infra-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #00693e, transparent);
-      opacity: 0;
-      transition: opacity 0.45s cubic-bezier(0.165,0.84,0.44,1);
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--color-brand-primary);
+      border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+      opacity: 0.7;
     }
-    .infra-card:hover::before { opacity: 1; }
+
+    .infra-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
 
     .infra-card-number {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 600;
-      letter-spacing: 0.8px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: #00693e;
-      margin-bottom: 20px;
+      color: var(--color-brand-primary);
+      margin-bottom: 16px;
     }
 
     .infra-card-title {
-      font-family: 'Helvetica Neue', 'Inter', sans-serif;
-      font-size: 24px; font-weight: 500;
-      letter-spacing: -0.2px;
-      color: #031f18;
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+      color: var(--color-text-heading);
       margin-bottom: 16px;
-      line-height: 1.25;
+      line-height: 1.3;
     }
 
     .infra-card-body {
-      font-family: 'Inter', sans-serif;
-      font-size: 16px; font-weight: 400;
-      letter-spacing: -0.2px;
-      line-height: 1.6;
-      color: #455451;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-text-body);
+      line-height: 1.65;
     }
 
-    /* =============================================
-       SECTION 4: GRITING ECOSYSTEM
-       ============================================= */
-    #griting-ecosystem {
-      padding: 120px 0;
-      background: linear-gradient(180deg, #003620 0%, #004d2e 100%);
+    /* ════════════════════════════════════════════════════════════
+       ECOSYSTEM SECTION
+    ════════════════════════════════════════════════════════════ */
+    #ecosystem {
+      background: linear-gradient(to bottom, #001a0e, #003620, #00241a);
+      padding: 120px var(--space-3xl);
       position: relative;
       overflow: hidden;
     }
 
-    #griting-ecosystem::before {
+    #ecosystem::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse at 30% 50%, rgba(0,105,62,0.25) 0%, transparent 60%);
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,105,62,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,105,62,0.07) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse at 50% 50%, black 0%, transparent 80%);
       pointer-events: none;
     }
 
     #ecosystem-header {
       text-align: center;
-      max-width: 720px;
-      margin: 0 auto 80px;
+      margin-bottom: 72px;
+      position: relative;
+      z-index: 1;
     }
 
-    #ecosystem-grid {
+    #ecosystem-heading {
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      font-weight: 500;
+      letter-spacing: var(--tracking-heading);
+      background: var(--gradient-display-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+    }
+
+    #ecosystem-subheading {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--color-text-secondary-dark);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    #ecosystem-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 16px;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ecosystem-card {
+      background: rgba(255,255,255,0.97);
+      border-radius: var(--card-border-radius);
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-media);
+      position: relative;
       overflow: hidden;
     }
 
-    .ecosystem-column {
-      padding: 56px 48px;
-      position: relative;
-      background: rgba(255,255,255,0.04);
-      transition: background 0.35s cubic-bezier(0.165,0.84,0.44,1);
-    }
-    .ecosystem-column:hover { background: rgba(255,255,255,0.07); }
+    .ecosystem-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.3); }
 
-    .ecosystem-column + .ecosystem-column {
-      border-left: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .ecosystem-col-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 600;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 20px;
+    .ecosystem-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(0,105,62,0.1);
+      border: 1px solid rgba(0,105,62,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 1.25rem;
     }
 
-    .ecosystem-col-title {
-      font-family: 'Helvetica Neue', 'Inter', sans-serif;
-      font-size: 30px; font-weight: 500;
+    .ecosystem-card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--color-text-heading);
       letter-spacing: -0.2px;
-      color: #ffffff;
-      margin-bottom: 20px;
-      line-height: 1.2;
+      margin-bottom: 16px;
     }
 
-    .ecosystem-col-body {
-      font-family: 'Inter', sans-serif;
-      font-size: 16px; font-weight: 400;
+    .ecosystem-card-body {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--color-text-body);
       line-height: 1.6;
-      color: rgba(255,255,255,0.65);
+      flex: 1;
       margin-bottom: 32px;
     }
 
-    .ecosystem-col-cta {
-      font-family: 'Inter', sans-serif;
-      font-size: 16px; font-weight: 500;
-      color: #ffffff;
-      text-decoration: none;
+    .ecosystem-card-cta {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-brand-primary);
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      border-bottom: 1px solid rgba(255,255,255,0.3);
-      padding-bottom: 2px;
-      transition: border-color 0.3s cubic-bezier(0.455,0.03,0.515,0.955), color 0.3s;
+      gap: 6px;
+      cursor: pointer;
+      transition: var(--transition-interactive);
     }
-    .ecosystem-col-cta:hover { color: #00693e; border-color: #00693e; }
-    .ecosystem-col-cta::after { content: '\2192'; }
+    .ecosystem-card-cta:hover { gap: 10px; }
 
-    /* =============================================
-       SECTION 5 & 6: GRITME FEATURE SPLITS
-       ============================================= */
-    .gritme-section {
-      padding: 120px 0;
-      position: relative;
+    /* ════════════════════════════════════════════════════════════
+       GRITME: AUDITABLE TALENT SECTION
+    ════════════════════════════════════════════════════════════ */
+    #gritme-auditable-talent {
+      background: var(--color-section-bg-light);
+      padding: 120px var(--space-3xl);
     }
-
-    #gritme-talent { background: #ffffff; }
-    #gritme-incubation { background: #f5f6f5; }
 
     .gritme-split {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 40fr 60fr;
       gap: 80px;
       align-items: center;
     }
 
-    .gritme-split--reverse .gritme-text-col { order: 2; }
-    .gritme-split--reverse .gritme-visual-col { order: 1; }
+    .gritme-split.reverse { grid-template-columns: 60fr 40fr; }
+    .gritme-split.reverse .gritme-text { order: 2; }
+    .gritme-split.reverse .gritme-visual { order: 1; }
 
-    .gritme-heading {
-      font-family: 'Helvetica Neue', 'Inter', sans-serif;
-      font-size: clamp(32px, 2.8vw, 44px);
-      font-weight: 500;
-      letter-spacing: -1.2px;
-      line-height: 1.15;
-      color: #031f18;
+    .gritme-tag {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
       margin-bottom: 20px;
     }
 
-    .gritme-body {
-      font-family: 'Inter', sans-serif;
-      font-size: 18px; font-weight: 400;
+    .gritme-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 500;
+      letter-spacing: var(--tracking-heading);
+      color: var(--color-text-heading);
+      line-height: var(--lh-heading);
+      margin-bottom: 16px;
+    }
+
+    .gritme-subheading {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--color-brand-primary);
+      margin-bottom: 16px;
       letter-spacing: -0.2px;
-      line-height: 1.6;
-      color: #455451;
+    }
+
+    .gritme-body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-text-body);
+      line-height: 1.65;
       margin-bottom: 32px;
     }
 
     .gritme-tabs {
       display: flex;
       flex-direction: column;
-      gap: 0;
-      margin-bottom: 32px;
-      border: 1px solid rgba(209,213,219,0.6);
-      border-radius: 12px;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .gritme-tab-item {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      padding: 12px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition-interactive);
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .gritme-tab-item:hover { background: rgba(0,105,62,0.06); color: var(--color-text-heading); }
+    .gritme-tab-item.active {
+      background: rgba(0,105,62,0.08);
+      border-color: rgba(0,105,62,0.2);
+      color: var(--color-text-heading);
+    }
+    .gritme-tab-item.active .tab-bullet {
+      background: var(--color-brand-primary);
+    }
+
+    .tab-bullet {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(3,31,24,0.3);
+      flex-shrink: 0;
+      transition: var(--transition-interactive);
+    }
+
+    .gritme-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-outline-light {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      font-weight: 500;
+      color: #000;
+      background: rgba(0,105,62,0.06);
+      border: 1px solid var(--color-brand-primary);
+      border-radius: var(--btn-border-radius);
+      padding: 14px 24px;
+      cursor: pointer;
+      transition: var(--transition-interactive);
+    }
+    .btn-outline-light:hover { background: rgba(0,105,62,0.12); }
+
+    /* Mockup panel */
+    .gritme-visual-panel {
+      background: linear-gradient(135deg, #0d1a14 0%, #1a2e22 100%);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,105,62,0.15);
+      position: relative;
       overflow: hidden;
     }
 
-    .gritme-tab {
-      padding: 16px 24px;
-      font-family: 'Inter', sans-serif;
-      font-size: 15px; font-weight: 500;
-      color: #84848a;
-      cursor: pointer;
-      border-bottom: 1px solid rgba(209,213,219,0.5);
-      transition: background 0.25s, color 0.25s;
-      position: relative;
-    }
-    .gritme-tab:last-child { border-bottom: none; }
-    .gritme-tab.gritme-tab--active {
-      background: rgba(0,105,62,0.04);
-      color: #031f18;
-    }
-    .gritme-tab.gritme-tab--active::before {
+    .gritme-visual-panel::before {
       content: '';
       position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: #00693e;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-brand-primary), transparent);
     }
-    .gritme-tab:hover:not(.gritme-tab--active) { background: #f9faf9; color: #455451; }
 
-    .gritme-feature-card {
-      background: #f5f6f5;
-      border: 1px solid rgba(209,213,219,0.6);
-      border-radius: 12px;
-      padding: 28px;
+    .mock-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 24px;
     }
 
-    .gritme-feature-card-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 16px; font-weight: 600;
-      color: #031f18;
-      margin-bottom: 10px;
+    .mock-title {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text-on-dark);
+      letter-spacing: 0.3px;
     }
 
-    .gritme-feature-card-body {
-      font-family: 'Inter', sans-serif;
-      font-size: 15px; font-weight: 400;
-      line-height: 1.6;
-      color: #455451;
-      margin-bottom: 16px;
+    .mock-badge {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--pill-radius);
+      background: rgba(0,105,62,0.2);
+      border: 1px solid rgba(0,105,62,0.4);
+      color: var(--color-brand-primary);
+      letter-spacing: 0.5px;
     }
 
-    .gritme-mockup-frame {
-      background: #18181b;
-      border: 1px solid #27272a;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.1);
-      position: relative;
-    }
-
-    .gritme-mockup-frame img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .gritme-mockup-placeholder {
-      display: none;
-      align-items: center; justify-content: center;
-      background: #18181b;
-      color: rgba(255,255,255,0.3);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
-      min-height: 400px;
-      width: 100%;
-    }
-
-    /* Feature list items (incubation) */
-    .gritme-feature-list {
+    .mock-skill-row {
       display: flex;
-      flex-direction: column;
-      gap: 24px;
-      margin-bottom: 32px;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
-    .gritme-feature-item-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 17px; font-weight: 600;
-      color: #031f18;
-      margin-bottom: 8px;
+    .mock-skill-label {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary-dark);
+      width: 160px;
+      flex-shrink: 0;
     }
 
-    .gritme-feature-item-body {
-      font-family: 'Inter', sans-serif;
-      font-size: 15px; font-weight: 400;
-      line-height: 1.6;
-      color: #455451;
-    }
-
-    /* =============================================
-       SECTION 7: MENTORSHIP
-       ============================================= */
-    #gritme-mentorship {
-      padding: 120px 0;
-      background: #ffffff;
-      position: relative;
+    .mock-skill-bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 3px;
       overflow: hidden;
     }
 
-    #mentorship-coming-soon-overlay {
-      position: absolute;
-      top: 28px; right: 28px;
-      background: #003620;
-      color: #ffffff;
-      font-family: 'Inter', sans-serif;
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 100px;
-      z-index: 10;
+    .mock-skill-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-green-mid));
+      border-radius: 3px;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
     }
 
-    #mentorship-header {
-      max-width: 700px;
-      margin-bottom: 72px;
+    .mock-skill-pct {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-brand-primary);
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
     }
 
-    #mentorship-pillars {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-      margin-bottom: 72px;
+    .mock-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin: 20px 0;
     }
 
-    .pillar-icon {
-      width: 48px; height: 48px;
+    .mock-evidence-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .mock-evidence-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-brand-primary);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .mock-evidence-text {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary-dark);
+      line-height: 1.5;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       GRITME: INCUBATION SECTION
+    ════════════════════════════════════════════════════════════ */
+    #gritme-incubation {
+      background: #fff;
+      padding: 120px var(--space-3xl);
+    }
+
+    .feature-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .feature-row-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       background: rgba(0,105,62,0.08);
-      border-radius: 12px;
+      border: 1px solid rgba(0,105,62,0.15);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
-      font-size: 22px;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .feature-row-content {}
+
+    .feature-row-title {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-text-heading);
+      margin-bottom: 6px;
+      letter-spacing: -0.26px;
+    }
+
+    .feature-row-body {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--color-text-body);
+      line-height: 1.6;
+    }
+
+    /* Skill graph mockup */
+    .incubation-graph {
+      background: linear-gradient(135deg, #0a1a0f 0%, #0d2218 100%);
+      border-radius: 16px;
+      padding: 32px;
+      height: 100%;
+      min-height: 440px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,105,62,0.12);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .graph-title {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text-on-dark);
+      margin-bottom: 24px;
+      letter-spacing: 0.3px;
+    }
+
+    .graph-nodes {
+      position: relative;
+      flex: 1;
+      min-height: 200px;
+    }
+
+    .graph-node {
+      position: absolute;
+      background: rgba(0,105,62,0.15);
+      border: 1px solid rgba(0,105,62,0.4);
+      border-radius: var(--pill-radius);
+      padding: 8px 16px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-text-on-dark);
+      white-space: nowrap;
+    }
+    .gn-center { top: 50%; left: 50%; transform: translate(-50%,-50%); background: rgba(0,105,62,0.3); border-color: var(--color-brand-primary); }
+    .gn-ml { top: 15%; left: 50%; transform: translateX(-50%); }
+    .gn-sd { top: 50%; left: 5%; transform: translateY(-50%); }
+    .gn-de { top: 50%; right: 5%; transform: translateY(-50%); }
+    .gn-badge { top: 0; right: 0; background: var(--color-brand-primary); border: none; font-size: 0.6875rem; font-weight: 700; padding: 4px 10px; }
+
+    .roadmap-section {
+      margin-top: 24px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .roadmap-title {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
+      margin-bottom: 12px;
+    }
+
+    .roadmap-week {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .roadmap-week-label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-brand-primary);
+      flex-shrink: 0;
+      width: 52px;
+    }
+
+    .roadmap-week-task {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--color-text-secondary-dark);
+      line-height: 1.4;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       GRITME: MENTORSHIP SECTION
+    ════════════════════════════════════════════════════════════ */
+    #gritme-mentorship {
+      background: var(--color-section-bg-light);
+      padding: 120px var(--space-3xl);
+    }
+
+    .mentor-pillars {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .pillar-card {
+      background: #fff;
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--card-border-radius);
+      padding: 24px 20px;
+      transition: var(--transition-media);
+    }
+    .pillar-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+
+    .pillar-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(0,105,62,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-bottom: 12px;
     }
 
     .pillar-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 18px; font-weight: 600;
-      color: #031f18;
-      margin-bottom: 10px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-text-heading);
+      margin-bottom: 8px;
     }
 
     .pillar-body {
-      font-family: 'Inter', sans-serif;
-      font-size: 15px; font-weight: 400;
-      line-height: 1.6;
-      color: #455451;
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: var(--color-text-body);
+      line-height: 1.55;
     }
 
-    #mentorship-cards-section {
+    /* Mentor cards */
+    .mentor-cards-panel {
+      background: linear-gradient(135deg, #0d1a14 0%, #1e2e22 100%);
+      border-radius: 16px;
+      padding: 32px;
       position: relative;
-      opacity: 0.7;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,105,62,0.12);
+      overflow: hidden;
     }
 
-    #mentorship-cards-scroll {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+    .mentor-panel-label {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text-secondary-dark);
+      margin-bottom: 20px;
+      letter-spacing: 0.3px;
     }
 
     .mentor-card {
-      background: #f5f6f5;
-      border: 1px solid rgba(209,213,219,0.6);
-      border-radius: 16px;
-      padding: 32px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
       display: flex;
-      flex-direction: column;
+      align-items: flex-start;
       gap: 16px;
+      transition: var(--transition-interactive);
     }
+    .mentor-card:last-child { margin-bottom: 0; }
+    .mentor-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(0,105,62,0.3); }
 
-    .mentor-card-avatar {
-      width: 64px; height: 64px;
+    .mentor-avatar {
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid rgba(0,105,62,0.2);
-    }
-
-    .mentor-card-avatar img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-
-    .mentor-card-avatar-placeholder {
-      display: none;
-      width: 100%; height: 100%;
-      align-items: center; justify-content: center;
-      background: linear-gradient(135deg, rgb(0,212,146), rgb(0,187,167));
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      text-align: center;
-      padding: 4px;
-    }
-
-    .mentor-card-name {
-      font-family: 'Inter', sans-serif;
-      font-size: 17px; font-weight: 600;
-      color: #031f18;
-    }
-
-    .mentor-card-title-text {
-      font-family: 'Inter', sans-serif;
-      font-size: 14px; font-weight: 400;
-      color: #84848a;
-    }
-
-    .mentor-card-stars {
-      color: #00693e;
-      font-size: 16px;
-      letter-spacing: 2px;
-    }
-
-    #mentorship-cta-row {
+      background: linear-gradient(135deg, #00693e, #00995e);
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-top: 40px;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
     }
 
-    /* =============================================
-       SECTION 8: EXPANDING ECOSYSTEM
-       ============================================= */
-    #expanding-ecosystem {
-      padding: 120px 0;
-      background: #003620;
-      position: relative;
-      overflow: hidden;
+    .mentor-info {}
+
+    .mentor-name {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-text-on-dark);
+      margin-bottom: 4px;
     }
 
-    #expanding-bg-grid {
+    .mentor-meta {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--color-text-secondary-dark);
+      line-height: 1.5;
+    }
+
+    .mentor-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .star { color: #f59e0b; font-size: 0.75rem; }
+
+    .coming-soon-badge {
       position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,105,62,0.9);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: var(--pill-radius);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
+    .mentorship-layout {
+      display: grid;
+      grid-template-columns: 42fr 58fr;
+      gap: 80px;
+      align-items: flex-start;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       EXPANDING ECOSYSTEM (GRITLAB + GRITHUB)
+    ════════════════════════════════════════════════════════════ */
+    #expanding-ecosystem {
+      background: var(--color-section-bg-light);
+      padding: 120px var(--space-3xl);
+      border-top: 1px solid var(--color-divider);
     }
 
     #expanding-header {
-      text-align: center;
-      max-width: 640px;
-      margin: 0 auto 72px;
+      margin-bottom: 56px;
     }
 
-    #expanding-cards-grid {
+    #expanding-heading {
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      font-weight: 500;
+      letter-spacing: var(--tracking-heading);
+      color: var(--color-text-heading);
+      margin-bottom: 16px;
+    }
+
+    #expanding-subheading {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      color: var(--color-text-body);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    #expanding-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
     }
 
     .expanding-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(135deg, #0a1a0f 0%, #132318 100%);
+      border: 1px solid rgba(0,105,62,0.2);
       border-radius: 16px;
-      padding: 48px;
+      padding: 40px;
       position: relative;
       overflow: hidden;
-      transition: background 0.35s cubic-bezier(0.165,0.84,0.44,1);
+      transition: var(--transition-media);
     }
-    .expanding-card:hover { background: rgba(255,255,255,0.07); }
-
     .expanding-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 3px;
-      background: linear-gradient(90deg, #00693e, rgba(0,105,62,0.3));
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--color-brand-primary), transparent);
     }
+    .expanding-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
 
-    .expanding-card-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 600;
-      letter-spacing: 0.8px;
+    .expanding-card-tag {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: #00693e;
+      color: var(--color-brand-primary);
       margin-bottom: 16px;
     }
 
     .expanding-card-title {
-      font-family: 'Helvetica Neue', 'Inter', sans-serif;
-      font-size: 28px; font-weight: 500;
-      letter-spacing: -0.5px;
-      color: #ffffff;
-      margin-bottom: 20px;
-      line-height: 1.2;
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 500;
+      color: var(--color-text-on-dark);
+      letter-spacing: -0.2px;
+      margin-bottom: 16px;
     }
 
     .expanding-card-body {
-      font-family: 'Inter', sans-serif;
-      font-size: 16px; font-weight: 400;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 28px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary-dark);
+      line-height: 1.65;
+      margin-bottom: 20px;
     }
 
     .expanding-card-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 28px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-bottom: 36px;
     }
-
-    .expanding-card-feature-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px; font-weight: 500;
-      color: rgba(255,255,255,0.7);
+    .expanding-card-features li {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--color-text-on-dark);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.5;
     }
-
-    .expanding-card-feature-item::before {
+    .expanding-card-features li::before {
       content: '';
-      width: 6px; height: 6px;
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: #00693e;
-      flex-shrink: 0;
+      background: var(--color-brand-primary);
     }
 
-    .btn-waitlist {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 14px 28px;
-      background: #00693e;
-      color: #ffffff;
-      font-family: 'Inter', sans-serif;
-      font-size: 16px; font-weight: 500;
-      border-radius: 8px;
-      border: 1px solid #003620;
-      box-shadow: 0px 1px 2px -1px rgba(9,6,63,0.4), inset 0px 1px 0px 0px rgba(255,255,255,0.16);
+    .btn-ghost-glass {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: var(--btn-border-radius);
+      padding: 12px 24px;
       cursor: pointer;
-      transition: background 0.45s cubic-bezier(0.165,0.84,0.44,1);
-      text-decoration: none;
+      backdrop-filter: blur(10px);
+      box-shadow: 0px 1px 22px 0px rgba(255,255,255,0.1),
+                  0px 4px 4px 0px rgba(0,0,0,0.05),
+                  inset 0px 1px 3px 0px rgba(199,220,255,0.25);
+      transition: var(--transition-interactive);
     }
-    .btn-waitlist:hover { background: #008050; }
+    .btn-ghost-glass:hover { background: rgba(255,255,255,0.08); }
 
-    /* =============================================
-       SECTION 9: TESTIMONIALS
-       ============================================= */
+    /* ════════════════════════════════════════════════════════════
+       TESTIMONIALS SECTION
+    ════════════════════════════════════════════════════════════ */
     #testimonials {
+      background: #fff;
       padding: 120px 0;
-      background: #f9faf9;
       overflow: hidden;
     }
 
     #testimonials-header {
       text-align: center;
-      max-width: 600px;
-      margin: 0 auto 72px;
+      padding: 0 var(--space-3xl);
+      margin-bottom: 64px;
     }
 
-    #testimonials-track-wrapper {
-      overflow: hidden;
-      position: relative;
-      mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    #testimonials-heading {
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      font-weight: 500;
+      letter-spacing: var(--tracking-heading);
+      color: var(--color-text-heading);
+      margin-bottom: 16px;
     }
 
-    #testimonials-track {
+    #testimonials-subheading {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      color: var(--color-text-body);
+    }
+
+    #testimonials-ticker {
       display: flex;
       gap: 24px;
       animation: testimonialScroll 40s linear infinite;
       width: max-content;
+      padding: 8px 0;
     }
 
-    #testimonials-track:hover { animation-play-state: paused; }
+    #testimonials-ticker:hover { animation-play-state: paused; }
+
+    #testimonials-track {
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
 
     @keyframes testimonialScroll {
       0% { transform: translateX(0); }
@@ -833,85 +1230,69 @@
     }
 
     .testimonial-card {
-      background: #ffffff;
-      border: 1px solid rgba(209,213,219,0.6);
+      background: #fff;
+      border: 1px solid var(--color-card-border);
       border-radius: 16px;
-      padding: 36px;
-      width: 380px;
+      padding: 32px 28px;
+      width: 360px;
       flex-shrink: 0;
+      transition: var(--transition-media);
       box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .testimonial-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
     }
 
     .testimonial-quote {
-      font-family: 'Inter', sans-serif;
-      font-size: 16px; font-weight: 400;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--color-text-body);
       line-height: 1.65;
-      color: #455451;
-      margin-bottom: 28px;
-      position: relative;
+      margin-bottom: 24px;
+      font-style: italic;
     }
 
-    .testimonial-quote-mark {
-      font-size: 48px;
-      color: #00693e;
-      opacity: 0.3;
-      font-family: Georgia, serif;
-      line-height: 0;
-      vertical-align: -16px;
-      margin-right: 4px;
-    }
-
-    .testimonial-author {
+    .testimonial-author-row {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .testimonial-avatar {
-      width: 44px; height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      overflow: hidden;
-      flex-shrink: 0;
-      border: 2px solid rgba(0,105,62,0.15);
-    }
-
-    .testimonial-avatar img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-
-    .testimonial-avatar-placeholder {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      display: none;
-      align-items: center; justify-content: center;
       background: linear-gradient(135deg, rgb(0,212,146), rgb(0,187,167));
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
       font-weight: 600;
+      color: #fff;
       flex-shrink: 0;
-      text-align: center;
     }
 
     .testimonial-name {
-      font-family: 'Inter', sans-serif;
-      font-size: 15px; font-weight: 600;
-      color: #031f18;
-      margin-bottom: 3px;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text-heading);
     }
 
-    .testimonial-role {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 400;
-      color: #84848a;
+    .testimonial-title {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--color-text-meta);
     }
 
-    /* =============================================
-       SECTION 10: CTA BANNER
-       ============================================= */
+    /* ════════════════════════════════════════════════════════════
+       CTA BANNER
+    ════════════════════════════════════════════════════════════ */
     #cta-banner {
-      padding: 120px 22px;
-      background: #003620;
+      background: var(--color-bg-hero);
+      padding: 140px var(--space-3xl);
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -920,681 +1301,922 @@
     #cta-banner::before {
       content: '';
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px; height: 500px;
-      background: radial-gradient(ellipse at center, rgba(0,105,62,0.35) 0%, transparent 65%);
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 40% 50%, rgba(0,105,62,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 30%, rgba(0,150,90,0.07) 0%, transparent 50%);
       pointer-events: none;
     }
 
-    #cta-banner-inner {
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-      margin: 0 auto;
+    /* Animated grid texture */
+    #cta-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,105,62,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,105,62,0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridDrift 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes gridDrift {
+      0% { background-position: 0 0; }
+      100% { background-position: 60px 60px; }
     }
 
     #cta-banner-heading {
-      font-family: 'Helvetica Neue', 'Inter', sans-serif;
-      font-size: clamp(36px, 4vw, 60px);
-      font-weight: 500;
-      letter-spacing: -1.8px;
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 400;
+      letter-spacing: var(--tracking-display);
+      background: var(--gradient-display-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      max-width: 820px;
+      margin: 0 auto 56px;
       line-height: 1.1;
-      color: #ffffff;
-      margin-bottom: 48px;
     }
 
-    #cta-banner-btns {
+    #cta-banner-buttons {
+      position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
+      gap: 20px;
     }
 
-    /* =============================================
-       SECTION 11: FOOTER
-       ============================================= */
+    /* ════════════════════════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════════════════════════ */
     #site-footer {
-      background: #003620;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      box-shadow: inset 0 4px 24px rgba(0,0,0,0.2);
-      padding: 80px 0 0;
+      background: var(--color-bg-hero);
+      border-top: 1px solid rgba(0,105,62,0.2);
+      padding: 80px var(--space-3xl) 40px;
     }
 
-    #footer-inner {
+    #footer-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-      gap: 40px;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+      gap: 48px;
       margin-bottom: 64px;
     }
 
+    #footer-brand {}
+
     #footer-logo {
-      font-family: 'Inter', sans-serif;
-      font-size: 28px; font-weight: 600;
-      letter-spacing: -1.2px;
-      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-logo);
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: var(--tracking-logo);
+      color: var(--color-text-on-dark);
       margin-bottom: 16px;
     }
 
-    #footer-tagline {
-      font-family: 'Inter', sans-serif;
-      font-size: 14px; font-weight: 400;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 28px;
-      max-width: 240px;
+    #footer-logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--color-brand-primary);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
     }
 
-    .footer-col-heading {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 600;
-      letter-spacing: 0.6px;
+    #footer-tagline {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+      max-width: 240px;
+      margin-bottom: 24px;
+    }
+
+    #footer-social {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      transition: var(--transition-interactive);
+    }
+    .social-link:hover { background: rgba(0,105,62,0.2); border-color: rgba(0,105,62,0.4); color: #fff; }
+
+    .footer-col-title {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.4);
       margin-bottom: 20px;
     }
 
-    .footer-link-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      list-style: none;
+    .footer-link {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: var(--transition-interactive);
     }
+    .footer-link:hover { color: #fff; }
 
-    .footer-link-list a {
-      font-family: 'Inter', sans-serif;
-      font-size: 15px; font-weight: 400;
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      transition: color 0.45s cubic-bezier(0.455,0.03,0.515,0.955);
+    .footer-waitlist-btn {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #fff;
+      background: var(--color-brand-primary);
+      border: none;
+      border-radius: var(--btn-border-radius);
+      padding: 12px 24px;
+      cursor: pointer;
+      display: block;
+      width: fit-content;
+      margin-top: 16px;
+      transition: var(--transition-interactive);
     }
-    .footer-link-list a:hover { color: #ffffff; }
+    .footer-waitlist-btn:hover { background: var(--color-brand-primary-hover); }
 
-    #footer-legal {
+    #footer-bottom {
       border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 24px 0;
+      padding-top: 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
     }
 
     #footer-copyright {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 400;
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
       color: rgba(255,255,255,0.35);
     }
 
-    #footer-legal-links {
+    #footer-legal {
       display: flex;
       gap: 24px;
     }
 
     .footer-legal-link {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
       color: rgba(255,255,255,0.35);
-      text-decoration: none;
-      transition: color 0.3s;
+      cursor: pointer;
+      transition: var(--transition-interactive);
     }
     .footer-legal-link:hover { color: rgba(255,255,255,0.7); }
 
-    #footer-social {
-      display: flex;
-      gap: 16px;
+    /* ════════════════════════════════════════════════════════════
+       SECTION TRANSITIONS
+    ════════════════════════════════════════════════════════════ */
+    .section-spacer {
+      height: 0;
     }
 
-    .footer-social-link {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.5);
-      font-family: 'Inter', sans-serif;
-      font-size: 12px; font-weight: 600;
-      text-decoration: none;
-      transition: background 0.3s, color 0.3s;
-    }
-    .footer-social-link:hover { background: rgba(255,255,255,0.12); color: #ffffff; }
+    /* reveal classes — no longer pre-hidden; GSAP animates transform only */
+    .reveal-up, .reveal-left, .reveal-right, .reveal-fade { }
 
-    /* =============================================
-       RESPONSIVE: TABLET (max 900px)
-       ============================================= */
+    /* ════════════════════════════════════════════════════════════
+       RESPONSIVE BREAKPOINTS
+    ════════════════════════════════════════════════════════════ */
+
+    @media (max-width: 1200px) {
+      :root {
+        --space-3xl: 60px;
+        --formless-margin-inline: 60px;
+      }
+
+      #hero {
+        grid-template-columns: 1fr;
+      }
+
+      #hero-visual {
+        display: none;
+      }
+
+      #hero-content {
+        max-width: 720px;
+        padding-bottom: 100px;
+      }
+
+      .gritme-split {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .gritme-split.reverse .gritme-text { order: 1; }
+      .gritme-split.reverse .gritme-visual { order: 2; }
+
+      .mentorship-layout {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+
     @media (max-width: 900px) {
-      #hero-headline { font-size: clamp(38px, 6vw, 60px); letter-spacing: -2.5px; }
-      #new-infra-grid { grid-template-columns: 1fr; }
-      #ecosystem-grid { grid-template-columns: 1fr; }
-      .ecosystem-column + .ecosystem-column { border-left: none; border-top: 1px solid rgba(255,255,255,0.12); }
-      .gritme-split { grid-template-columns: 1fr; gap: 48px; }
-      .gritme-split--reverse .gritme-text-col { order: 1; }
-      .gritme-split--reverse .gritme-visual-col { order: 2; }
-      #mentorship-pillars { grid-template-columns: repeat(2, 1fr); }
-      #mentorship-cards-scroll { grid-template-columns: 1fr; }
-      #expanding-cards-grid { grid-template-columns: 1fr; }
-      #footer-inner { grid-template-columns: 1fr 1fr; }
-      #footer-brand { grid-column: span 2; }
-      #nav-links { gap: 28px; margin-right: 24px; }
-      .section-heading { font-size: clamp(32px, 5vw, 44px); }
+      :root {
+        --space-3xl: 32px;
+      }
+
+      #site-nav {
+        padding: 0 var(--space-md);
+      }
+
+      #nav-links {
+        display: none;
+      }
+
+      #hero {
+        padding: 0 var(--space-md);
+        padding-top: var(--nav-height);
+      }
+
+      #new-infrastructure,
+      #ecosystem,
+      #gritme-auditable-talent,
+      #gritme-incubation,
+      #gritme-mentorship,
+      #expanding-ecosystem,
+      #testimonials-header,
+      #cta-banner,
+      #site-footer {
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+      }
+
+      #infra-cards {
+        grid-template-columns: 1fr;
+      }
+
+      #ecosystem-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      #footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      #footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .mentor-pillars {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      #expanding-cards {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 600px) {
-      #nav-links { display: none; }
-      #nav-cta-btn { padding: 12px 16px; font-size: 15px; }
-      #hero-content { padding: 100px 16px 60px; }
-      #hero-headline { font-size: clamp(30px, 8vw, 44px); letter-spacing: -1.8px; }
-      #hero-cta-group { flex-direction: column; align-items: stretch; }
-      .btn-primary, .btn-outline { width: 100%; justify-content: center; }
-      #new-infrastructure, .gritme-section, #gritme-mentorship, #expanding-ecosystem, #testimonials, #cta-banner { padding: 80px 0; }
-      #griting-ecosystem { padding: 80px 0; }
-      #site-footer { padding: 60px 0 0; }
-      .infra-card { padding: 28px 24px; }
-      .ecosystem-column { padding: 36px 28px; }
-      .expanding-card { padding: 32px 24px; }
-      #mentorship-pillars { grid-template-columns: 1fr 1fr; gap: 20px; }
-      .testimonial-card { width: 300px; }
-      #footer-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
-      #footer-brand { grid-column: span 2; }
-      .section-heading { font-size: clamp(28px, 7vw, 40px); }
-      #cta-banner-heading { font-size: clamp(28px, 7vw, 44px); }
+      :root {
+        --space-3xl: 20px;
+      }
+
+      #hero-headline {
+        font-size: clamp(2rem, 8vw, 2.75rem);
+      }
+
+      #hero-cta-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .btn-primary,
+      .btn-outline {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .gritme-cta-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .btn-primary,
+      .btn-outline-light {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .mentor-pillars {
+        grid-template-columns: 1fr;
+      }
+
+      #footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      #cta-banner-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-primary.cta-btn,
+      .btn-outline.cta-btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- =============================================
-       SECTION 1: NAVIGATION
-       ============================================= -->
-  <header id="site-nav">
-    <div id="nav-inner" class="container">
-      <a href="index.html" id="nav-logo-link">
-        <span id="nav-logo-g">G</span><span id="nav-logo-riting">riting</span>
-      </a>
-      <nav id="nav-links" aria-label="Main navigation">
-        <a href="index.html" class="nav-link" id="nav-product">Product</a>
-        <a href="about-us.html" class="nav-link" id="nav-about">About</a>
-        <a href="#cta-banner" class="nav-link" id="nav-contact">Contact</a>
-        <a href="blog-index.html" class="nav-link" id="nav-blog">Blog</a>
-      </nav>
-      <a href="#cta-banner" id="nav-cta-btn">Get in Touch</a>
-    </div>
-  </header>
+  <!-- ══════════════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════════════ -->
+  <nav id="site-nav" role="navigation" aria-label="Main navigation">
+    <a id="nav-logo" href="index.html" aria-label="Griting home">
+      <span id="nav-logo-mark" aria-hidden="true">G</span>
+      <span id="nav-logo-text">riting</span>
+    </a>
 
-  <!-- =============================================
-       SECTION 2: HERO
-       ============================================= -->
-  <section id="hero-wrapper" aria-label="Hero">
-    <div id="hero-video-container">
-      <video id="hero-bg-video" src="assets/hero-bg.mp4" autoplay muted loop playsinline
-        style="width:100%;height:100%;object-fit:cover;"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"></video>
-      <div id="hero-bg-placeholder" style="display:none;align-items:center;justify-content:center;background:#003620;color:rgba(255,255,255,0.4);font-family:'Inter',sans-serif;font-size:0.85rem;width:100%;height:100%;">&#x2192; assets/hero-bg.mp4</div>
-      <div id="hero-gradient-overlay" style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,35,16,0.3) 0%, rgba(0,35,16,0.5) 60%, rgba(0,35,16,0.7) 100%);pointer-events:none;"></div>
-    </div>
+    <ul id="nav-links" role="list">
+      <li><a href="#" class="nav-link nav-link--active">Product</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="#" class="nav-link">Contact</a></li>
+      <li><a href="#" class="nav-link">Blog</a></li>
+    </ul>
 
+    <a id="nav-cta" href="#" role="button">Get in Touch</a>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════════ -->
+  <section id="hero" aria-label="Hero">
     <div id="hero-content">
-      <div id="hero-headline-group">
-        <h1 id="hero-headline">Talent Trust and Readiness Infrastructure for the AI Capital</h1>
-        <p id="hero-subheading">We build products, foster community, and create opportunities that help you learn, grow, and make an impact.</p>
-      </div>
+      <div id="hero-eyebrow" aria-hidden="true">AI Talent Infrastructure</div>
+
+      <h1 id="hero-headline">
+        Talent Trust and Readiness Infrastructure for the AI Capital
+      </h1>
+
+      <p id="hero-subheadline">
+        We build products, foster community, and create opportunities that help you learn, grow, and make an impact.
+      </p>
+
       <div id="hero-cta-group">
-        <a href="#cta-banner" class="btn-primary" id="hero-cta-primary">Get in Touch</a>
+        <a href="#" class="btn-primary" id="hero-cta-primary">Get in Touch</a>
         <a href="#new-infrastructure" class="btn-outline" id="hero-cta-secondary">Learn More</a>
       </div>
     </div>
-  </section>
 
-  <!-- =============================================
-       SECTION 3: NEW INFRASTRUCTURE
-       ============================================= -->
-  <section id="new-infrastructure" aria-labelledby="new-infra-heading">
-    <div class="container">
-      <div id="new-infra-header">
-        <span class="eyebrow">The Shift</span>
-        <h2 id="new-infra-heading" class="section-heading">A New Infrastructure for the AI Talent Era</h2>
-        <p class="section-body" style="margin-top:24px;">AI is transforming work into workflows. Organizations need a new way to verify capability, develop talent, and build trusted human capital systems.</p>
-      </div>
-      <div id="new-infra-grid">
-        <div class="infra-card" id="infra-card-1">
-          <div class="infra-card-number">01</div>
-          <h3 class="infra-card-title">Work Is Becoming Workflow-Based</h3>
-          <p class="infra-card-body">AI transforms traditional job roles into dynamic workflows where execution, decision-making, and ownership matter more than static credentials.</p>
-        </div>
-        <div class="infra-card" id="infra-card-2">
-          <div class="infra-card-number">02</div>
-          <h3 class="infra-card-title">Capability Is New Talent Metric</h3>
-          <p class="infra-card-body">Companies are shifting from hiring individuals for roles to building internal capability systems. Continuous evaluation, learning, and feedback create a living model of talent growth and organizational strength.</p>
-        </div>
-        <div class="infra-card" id="infra-card-3">
-          <div class="infra-card-number">03</div>
-          <h3 class="infra-card-title">Human Capital Becomes Infrastructure</h3>
-          <p class="infra-card-body">AI talent needs its own infrastructure &#x2014; one that verifies execution, builds capability, and connects people across research, industry, and mentorship.</p>
-        </div>
-        <div class="infra-card" id="infra-card-4">
-          <div class="infra-card-number">04</div>
-          <h3 class="infra-card-title">Trust Must Be Verifiable</h3>
-          <p class="infra-card-body">Hiring signals today rely on resumes, interviews, and static tests. In the AI era, organizations need traceable and auditable signals of real capability, grounded in real-world work and measurable delivery.</p>
-        </div>
+    <div id="hero-visual" aria-hidden="true">
+      <div id="hero-signal-map">
+        <div class="signal-node n1"></div>
+        <div class="signal-node n2"></div>
+        <div class="signal-node n3"></div>
+        <div class="signal-dot sd1"></div>
+        <div class="signal-dot sd2"></div>
+        <div class="signal-dot sd3"></div>
+        <div class="signal-dot sd4"></div>
+        <div class="signal-dot sd5"></div>
+        <div class="signal-line sl1"></div>
+        <div class="signal-line sl2"></div>
+        <div class="signal-line sl3"></div>
+        <div id="hero-signal-label">AI Talent Network</div>
       </div>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 4: GRITING ECOSYSTEM
-       ============================================= -->
-  <section id="griting-ecosystem" aria-labelledby="ecosystem-heading">
-    <div class="container" style="position:relative;z-index:2;">
-      <div id="ecosystem-header">
-        <span class="eyebrow eyebrow--white">The Platform</span>
-        <h2 id="ecosystem-heading" class="section-heading section-heading--white">Explore the Griting Ecosystem</h2>
-        <p class="section-body section-body--white" style="margin-top:24px;">A platform designed to verify capability, develop talent, and connect the AI ecosystem across enterprise, research, and mentorship.</p>
+  <!-- ══════════════════════════════════════════════
+       NEW INFRASTRUCTURE
+  ══════════════════════════════════════════════ -->
+  <section id="new-infrastructure" aria-labelledby="infra-heading">
+    <div id="infra-header" class="reveal-up">
+      <h2 id="infra-heading">A New Infrastructure for the AI Talent Era</h2>
+      <p id="infra-body">AI is transforming work into workflows. Organizations need a new way to verify capability, develop talent, and build trusted human capital systems.</p>
+    </div>
+
+    <div id="infra-cards">
+      <div class="infra-card reveal-up" id="infra-card-1">
+        <div class="infra-card-number">01</div>
+        <h3 class="infra-card-title">Work Is Becoming Workflow-Based</h3>
+        <p class="infra-card-body">AI transforms traditional job roles into dynamic workflows where execution, decision-making, and ownership matter more than static credentials.</p>
       </div>
-      <div id="ecosystem-grid">
-        <div class="ecosystem-column" id="ecosystem-col-businesses">
-          <div class="ecosystem-col-label">Audience</div>
-          <h3 class="ecosystem-col-title">For Businesses</h3>
-          <p class="ecosystem-col-body">To discover, evaluate, and develop AI-ready talent for the future.</p>
-          <a href="#gritme-talent" class="ecosystem-col-cta">Learn More</a>
-        </div>
-        <div class="ecosystem-column" id="ecosystem-col-individuals">
-          <div class="ecosystem-col-label">Audience</div>
-          <h3 class="ecosystem-col-title">For Individuals</h3>
-          <p class="ecosystem-col-body">To grow faster in the AI era with mentorship, community, and incubation support.</p>
-          <a href="#gritme-mentorship" class="ecosystem-col-cta">Learn More</a>
-        </div>
-        <div class="ecosystem-column" id="ecosystem-col-community">
-          <div class="ecosystem-col-label">Audience</div>
-          <h3 class="ecosystem-col-title">For Community</h3>
-          <p class="ecosystem-col-body">To collaborate on building a global ecosystem for AI innovation and growth.</p>
-          <a href="#expanding-ecosystem" class="ecosystem-col-cta">Learn More</a>
-        </div>
+
+      <div class="infra-card reveal-up" id="infra-card-2">
+        <div class="infra-card-number">02</div>
+        <h3 class="infra-card-title">Capability Is New Talent Metric</h3>
+        <p class="infra-card-body">Companies are shifting from hiring individuals for roles to building internal capability systems. Continuous evaluation, learning, and feedback create a living model of talent growth and organizational strength.</p>
+      </div>
+
+      <div class="infra-card reveal-up" id="infra-card-3">
+        <div class="infra-card-number">03</div>
+        <h3 class="infra-card-title">Human Capital Becomes Infrastructure</h3>
+        <p class="infra-card-body">AI talent needs its own infrastructure — one that verifies execution, builds capability, and connects people across research, industry, and mentorship.</p>
+      </div>
+
+      <div class="infra-card reveal-up" id="infra-card-4">
+        <div class="infra-card-number">04</div>
+        <h3 class="infra-card-title">Trust Must Be Verifiable</h3>
+        <p class="infra-card-body">Hiring signals today rely on resumes, interviews, and static tests. In the AI era, organizations need traceable and auditable signals of real capability, grounded in real-world work and measurable delivery.</p>
       </div>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 5: GRITME TALENT SYSTEM
-       ============================================= -->
-  <section id="gritme-talent" class="gritme-section" aria-labelledby="gritme-talent-heading">
-    <div class="container">
-      <div class="gritme-split">
-        <div class="gritme-text-col" id="gritme-talent-text">
-          <span class="eyebrow">GritMe</span>
-          <h2 id="gritme-talent-heading" class="gritme-heading">GritMe: Auditable Talent System</h2>
-          <p class="gritme-body">An enterprise evidence-based talent evaluation system that provides structured assessments with traceable reasoning and auditable records.</p>
+  <!-- ══════════════════════════════════════════════
+       ECOSYSTEM
+  ══════════════════════════════════════════════ -->
+  <section id="ecosystem" aria-labelledby="ecosystem-heading">
+    <div id="ecosystem-header">
+      <h2 id="ecosystem-heading" class="reveal-up">Explore the Griting Ecosystem</h2>
+      <p id="ecosystem-subheading" class="reveal-up">A platform designed to verify capability, develop talent, and connect the AI ecosystem across enterprise, research, and mentorship.</p>
+    </div>
 
-          <div class="gritme-tabs" id="gritme-talent-tabs">
-            <div class="gritme-tab gritme-tab--active" id="gritme-tab-1">01 Talent outcomes</div>
-            <div class="gritme-tab" id="gritme-tab-2">02 Outputs by multi-dimension</div>
-            <div class="gritme-tab" id="gritme-tab-3">03 Simulates with real project</div>
-          </div>
+    <div id="ecosystem-cards">
+      <div class="ecosystem-card reveal-up" id="ecosystem-card-businesses">
+        <div class="ecosystem-card-icon" aria-hidden="true">🏢</div>
+        <h3 class="ecosystem-card-title">For Businesses</h3>
+        <p class="ecosystem-card-body">To discover, evaluate, and develop AI-ready talent for the future.</p>
+        <a href="#" class="ecosystem-card-cta">Learn More <span aria-hidden="true">→</span></a>
+      </div>
 
-          <div class="gritme-feature-card" id="gritme-talent-feature-card">
-            <div class="gritme-feature-card-title">Evidence-Based Talent Evaluation</div>
-            <div class="gritme-feature-card-body">Access skills with observable evidence to produce auditable reports.</div>
-            <a href="#cta-banner" class="btn-outline-light" id="gritme-talent-book-demo">Book Demo</a>
-          </div>
+      <div class="ecosystem-card reveal-up" id="ecosystem-card-individuals">
+        <div class="ecosystem-card-icon" aria-hidden="true">👤</div>
+        <h3 class="ecosystem-card-title">For Individuals</h3>
+        <p class="ecosystem-card-body">To grow faster in the AI era with mentorship, community, and incubation support.</p>
+        <a href="#" class="ecosystem-card-cta">Learn More <span aria-hidden="true">→</span></a>
+      </div>
 
-          <a href="#cta-banner" class="btn-primary" id="gritme-talent-cta" style="margin-top:8px;">Get in Touch</a>
-        </div>
-        <div class="gritme-visual-col" id="gritme-talent-visual">
-          <div class="gritme-mockup-frame" id="gritme-talent-mockup">
-            <img src="assets/gritme-talent-ui.jpeg"
-              alt="GritMe Candidate Evaluation Report showing skill breakdown: ML Knowledge 82%, Systems Design 71%, Coding Ability 79%"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="gritme-mockup-placeholder">&#x2192; assets/gritme-talent-ui.jpeg</div>
-          </div>
-        </div>
+      <div class="ecosystem-card reveal-up" id="ecosystem-card-community">
+        <div class="ecosystem-card-icon" aria-hidden="true">🌐</div>
+        <h3 class="ecosystem-card-title">For Community</h3>
+        <p class="ecosystem-card-body">To collaborate on building a global ecosystem for AI innovation and growth.</p>
+        <a href="#" class="ecosystem-card-cta">Learn More <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 6: GRITME INCUBATION SYSTEM
-       ============================================= -->
-  <section id="gritme-incubation" class="gritme-section" aria-labelledby="gritme-incubation-heading">
-    <div class="container">
-      <div class="gritme-split gritme-split--reverse">
-        <div class="gritme-text-col" id="gritme-incubation-text">
-          <span class="eyebrow">GritMe</span>
-          <h2 id="gritme-incubation-heading" class="gritme-heading">GritMe: AI Incubation System</h2>
-          <p class="gritme-body">An enterprise platform designed to develop talent through structured learning, real-world projects, and guided capability building.</p>
+  <!-- ══════════════════════════════════════════════
+       GRITME: AUDITABLE TALENT SYSTEM
+  ══════════════════════════════════════════════ -->
+  <section id="gritme-auditable-talent" aria-labelledby="gritme-talent-heading">
+    <div class="gritme-split">
 
-          <div class="gritme-feature-list" id="gritme-incubation-features">
-            <div class="gritme-feature-item" id="gritme-incub-feat-1">
-              <div class="gritme-feature-item-title">Workflow-Based Skill Mapping</div>
-              <div class="gritme-feature-item-body">Map real-world workflows into structured skill graphs to identify capability gaps and learning priorities across roles.</div>
-            </div>
-            <div class="gritme-feature-item" id="gritme-incub-feat-2">
-              <div class="gritme-feature-item-title">Personalized Learning Roadmap</div>
-              <div class="gritme-feature-item-body">Generate personalized development paths that adapt to performance while aligning progress with defined skill benchmarks.</div>
-            </div>
-            <div class="gritme-feature-item" id="gritme-incub-feat-3">
-              <div class="gritme-feature-item-title">Talent Feedback Integration</div>
-              <div class="gritme-feature-item-body">Continuously incorporate feedback signals to improve skill development and learning outcomes.</div>
-            </div>
-          </div>
+      <div class="gritme-text" id="gritme-talent-text">
+        <div class="gritme-tag reveal-up">GritMe</div>
+        <h2 class="gritme-heading reveal-up" id="gritme-talent-heading">GritMe: Auditable Talent System</h2>
+        <p class="gritme-subheading reveal-up">Evidence-Based Talent Evaluation</p>
+        <p class="gritme-body reveal-up">An enterprise evidence-based talent evaluation system that provides structured assessments with traceable reasoning and auditable records.</p>
 
-          <div style="display:flex;gap:14px;flex-wrap:wrap;">
-            <a href="#cta-banner" class="btn-primary" id="gritme-incubation-cta">Get in Touch</a>
-            <a href="#cta-banner" class="btn-outline-light" id="gritme-incubation-demo">Book Demo</a>
-          </div>
+        <nav class="gritme-tabs reveal-up" aria-label="Feature tabs">
+          <button class="gritme-tab-item active" id="talent-tab-1" aria-pressed="true">
+            <span class="tab-bullet" aria-hidden="true"></span>
+            01 Talent outcomes
+          </button>
+          <button class="gritme-tab-item" id="talent-tab-2" aria-pressed="false">
+            <span class="tab-bullet" aria-hidden="true"></span>
+            02 Outputs by multi-dimension
+          </button>
+          <button class="gritme-tab-item" id="talent-tab-3" aria-pressed="false">
+            <span class="tab-bullet" aria-hidden="true"></span>
+            03 Simulates with real project
+          </button>
+        </nav>
+
+        <div class="gritme-cta-row reveal-up">
+          <a href="#" class="btn-primary">Get in Touch</a>
+          <a href="#" class="btn-outline-light">Book Demo</a>
         </div>
-        <div class="gritme-visual-col" id="gritme-incubation-visual">
-          <div class="gritme-mockup-frame" id="gritme-incubation-mockup">
-            <img src="assets/gritme-incubation-ui.jpeg"
-              alt="GritMe skill graph showing ML Engineering, Systems Design, Data Engineering nodes connected to Candidate with Week 1: Model Optimization, Week 2: Deployment Simulation roadmap"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="gritme-mockup-placeholder">&#x2192; assets/gritme-incubation-ui.jpeg</div>
+      </div>
+
+      <div class="gritme-visual" id="gritme-talent-visual">
+        <div class="gritme-visual-panel reveal-right" id="gritme-talent-panel">
+          <div class="mock-header">
+            <span class="mock-title">Candidate Evaluation Report</span>
+            <span class="mock-badge">Auditable</span>
+          </div>
+
+          <div class="mock-skill-row">
+            <span class="mock-skill-label">ML Knowledge</span>
+            <div class="mock-skill-bar-wrap">
+              <div class="mock-skill-bar" style="width:82%" id="skill-bar-ml"></div>
+            </div>
+            <span class="mock-skill-pct">82%</span>
+          </div>
+
+          <div class="mock-skill-row">
+            <span class="mock-skill-label">Systems Design</span>
+            <div class="mock-skill-bar-wrap">
+              <div class="mock-skill-bar" style="width:71%"></div>
+            </div>
+            <span class="mock-skill-pct">71%</span>
+          </div>
+
+          <div class="mock-skill-row">
+            <span class="mock-skill-label">Coding Ability</span>
+            <div class="mock-skill-bar-wrap">
+              <div class="mock-skill-bar" style="width:79%"></div>
+            </div>
+            <span class="mock-skill-pct">79%</span>
+          </div>
+
+          <div class="mock-skill-row">
+            <span class="mock-skill-label">Problem Solving</span>
+            <div class="mock-skill-bar-wrap">
+              <div class="mock-skill-bar" style="width:86%"></div>
+            </div>
+            <span class="mock-skill-pct">86%</span>
+          </div>
+
+          <div class="mock-divider"></div>
+
+          <div style="margin-bottom:12px;">
+            <div style="font-family:var(--font-body);font-size:0.6875rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--color-brand-primary);margin-bottom:10px;">Evidence Sources</div>
+          </div>
+
+          <div class="mock-evidence-row">
+            <div class="mock-evidence-dot"></div>
+            <span class="mock-evidence-text">Real-world project completion: ML pipeline deployment on production system</span>
+          </div>
+          <div class="mock-evidence-row">
+            <div class="mock-evidence-dot"></div>
+            <span class="mock-evidence-text">Peer-reviewed code submission: Systems Architecture Review Q4</span>
+          </div>
+          <div class="mock-evidence-row">
+            <div class="mock-evidence-dot"></div>
+            <span class="mock-evidence-text">Structured interview with traceable reasoning chain</span>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 7: GRITME MENTORSHIP
-       ============================================= -->
-  <section id="gritme-mentorship" aria-labelledby="mentorship-heading">
-    <div id="mentorship-coming-soon-overlay">Coming Soon</div>
-    <div class="container">
-      <div id="mentorship-header">
-        <span class="eyebrow">GritMe</span>
-        <h2 id="mentorship-heading" class="section-heading">GritMe: Global Growth Mentorship with Physical AI</h2>
-        <p class="section-body" style="margin-top:24px;">A mentorship-driven platform powered by a global mentor network and Physical AI to support talent growth.</p>
-      </div>
+  <!-- ══════════════════════════════════════════════
+       GRITME: AI INCUBATION SYSTEM
+  ══════════════════════════════════════════════ -->
+  <section id="gritme-incubation" aria-labelledby="gritme-incubation-heading">
+    <div class="gritme-split reverse">
 
-      <div id="mentorship-pillars">
-        <div class="pillar-item" id="pillar-match">
-          <div class="pillar-icon">&#x1F517;</div>
-          <div class="pillar-title">Match</div>
-          <div class="pillar-body">AI pairs mentees with the right mentors based on skills, goals, and experience.</div>
-        </div>
-        <div class="pillar-item" id="pillar-connect">
-          <div class="pillar-icon">&#x1F4AC;</div>
-          <div class="pillar-title">Connect</div>
-          <div class="pillar-body">Seamless scheduling, chat, and video calls keep mentorship accessible anywhere.</div>
-        </div>
-        <div class="pillar-item" id="pillar-grow">
-          <div class="pillar-icon">&#x1F4C8;</div>
-          <div class="pillar-title">Grow</div>
-          <div class="pillar-body">Achieve career milestones with personalized guidance and hand-on support.</div>
-        </div>
-        <div class="pillar-item" id="pillar-thrive">
-          <div class="pillar-icon">&#x1F30D;</div>
-          <div class="pillar-title">Thrive</div>
-          <div class="pillar-body">Join a global community, share experiences, and unlock long-term success.</div>
-        </div>
-      </div>
-
-      <div id="mentorship-cards-section">
-        <div id="mentorship-cards-scroll">
-          <div class="mentor-card" id="mentor-card-rachel">
-            <div class="mentor-card-avatar">
-              <img src="assets/mentor-rachel.jpeg" alt="Rachel Green, Senior AI Mentor"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="mentor-card-avatar-placeholder">RG</div>
-            </div>
-            <div>
-              <div class="mentor-card-name">Rachel Green</div>
-              <div class="mentor-card-title-text">Senior AI Mentor</div>
-            </div>
-            <div class="mentor-card-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="gritme-visual" id="gritme-incubation-visual">
+        <div class="incubation-graph reveal-left" id="gritme-incubation-panel">
+          <div class="graph-title">Skill Development Graph</div>
+          <div class="graph-nodes" id="skill-graph">
+            <div class="graph-node gn-ml">ML Engineering</div>
+            <div class="graph-node gn-sd">Systems Design</div>
+            <div class="graph-node gn-de">Data Engineering</div>
+            <div class="graph-node gn-center">Candidate</div>
+            <div class="graph-node gn-badge">82%</div>
           </div>
-          <div class="mentor-card" id="mentor-card-michael">
-            <div class="mentor-card-avatar">
-              <img src="assets/mentor-michael.jpeg" alt="Michael Chen, Engineering Lead"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="mentor-card-avatar-placeholder">MC</div>
+          <div class="roadmap-section">
+            <div class="roadmap-title">RoadMap</div>
+            <div class="roadmap-week">
+              <span class="roadmap-week-label">Week 1:</span>
+              <span class="roadmap-week-task">Model Optimization Task — Production ML Pipeline</span>
             </div>
-            <div>
-              <div class="mentor-card-name">Michael Chen</div>
-              <div class="mentor-card-title-text">Engineering Lead</div>
+            <div class="roadmap-week">
+              <span class="roadmap-week-label">Week 2:</span>
+              <span class="roadmap-week-task">Deployment Simulation — Cloud Infrastructure Setup</span>
             </div>
-            <div class="mentor-card-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <div class="mentor-card" id="mentor-card-aisha">
-            <div class="mentor-card-avatar">
-              <img src="assets/mentor-aisha.jpeg" alt="Aisha Kapoor, ML Researcher"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="mentor-card-avatar-placeholder">AK</div>
+            <div class="roadmap-week">
+              <span class="roadmap-week-label">Week 3:</span>
+              <span class="roadmap-week-task">Peer Review — Systems Architecture Design Review</span>
             </div>
-            <div>
-              <div class="mentor-card-name">Aisha Kapoor</div>
-              <div class="mentor-card-title-text">ML Researcher</div>
-            </div>
-            <div class="mentor-card-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           </div>
         </div>
       </div>
 
-      <div id="mentorship-cta-row">
-        <a href="#cta-banner" class="btn-primary" id="mentorship-cta-primary">Try It Now</a>
+      <div class="gritme-text" id="gritme-incubation-text">
+        <div class="gritme-tag reveal-up">GritMe</div>
+        <h2 class="gritme-heading reveal-up" id="gritme-incubation-heading">GritMe: AI Incubation System</h2>
+        <p class="gritme-body reveal-up">An enterprise platform designed to develop talent through structured learning, real-world projects, and guided capability building.</p>
+
+        <div id="gritme-incubation-features">
+          <div class="feature-row reveal-up">
+            <div class="feature-row-icon" aria-hidden="true">⚡</div>
+            <div class="feature-row-content">
+              <h3 class="feature-row-title">Workflow-Based Skill Mapping</h3>
+              <p class="feature-row-body">Map real-world workflows into structured skill graphs to identify capability gaps and learning priorities across roles.</p>
+            </div>
+          </div>
+
+          <div class="feature-row reveal-up">
+            <div class="feature-row-icon" aria-hidden="true">🗺</div>
+            <div class="feature-row-content">
+              <h3 class="feature-row-title">Personalized Learning Roadmap</h3>
+              <p class="feature-row-body">Generate personalized development paths that adapt to performance while aligning progress with defined skill benchmarks.</p>
+            </div>
+          </div>
+
+          <div class="feature-row reveal-up">
+            <div class="feature-row-icon" aria-hidden="true">↺</div>
+            <div class="feature-row-content">
+              <h3 class="feature-row-title">Talent Feedback Integration</h3>
+              <p class="feature-row-body">Continuously incorporate feedback signals to improve skill development and learning outcomes.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gritme-cta-row reveal-up" style="margin-top:32px;">
+          <a href="#" class="btn-primary">Get in Touch</a>
+          <a href="#" class="btn-outline-light">Book Demo</a>
+        </div>
       </div>
+
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 8: EXPANDING ECOSYSTEM
-       ============================================= -->
+  <!-- ══════════════════════════════════════════════
+       GRITME: MENTORSHIP
+  ══════════════════════════════════════════════ -->
+  <section id="gritme-mentorship" aria-labelledby="gritme-mentorship-heading">
+    <div class="mentorship-layout">
+
+      <div id="mentorship-text">
+        <div class="gritme-tag reveal-up">GritMe</div>
+        <h2 class="gritme-heading reveal-up" id="gritme-mentorship-heading">GritMe: Global Growth Mentorship with Physical AI</h2>
+        <p class="gritme-body reveal-up">A mentorship-driven platform powered by a global mentor network and Physical AI to support talent growth.</p>
+
+        <div class="mentor-pillars reveal-up">
+          <div class="pillar-card" id="pillar-match">
+            <div class="pillar-icon" aria-hidden="true">🔗</div>
+            <h3 class="pillar-title">Match</h3>
+            <p class="pillar-body">AI pairs mentees with the right mentors based on skills, goals, and experience.</p>
+          </div>
+          <div class="pillar-card" id="pillar-connect">
+            <div class="pillar-icon" aria-hidden="true">💬</div>
+            <h3 class="pillar-title">Connect</h3>
+            <p class="pillar-body">Seamless scheduling, chat, and video calls keep mentorship accessible anywhere.</p>
+          </div>
+          <div class="pillar-card" id="pillar-grow">
+            <div class="pillar-icon" aria-hidden="true">📈</div>
+            <h3 class="pillar-title">Grow</h3>
+            <p class="pillar-body">Achieve career milestones with personalized guidance and hand-on support.</p>
+          </div>
+          <div class="pillar-card" id="pillar-thrive">
+            <div class="pillar-icon" aria-hidden="true">🌟</div>
+            <h3 class="pillar-title">Thrive</h3>
+            <p class="pillar-body">Join a global community, share experiences, and unlock long-term success.</p>
+          </div>
+        </div>
+
+        <div class="gritme-cta-row reveal-up">
+          <a href="#" class="btn-primary">Try It Now</a>
+        </div>
+      </div>
+
+      <div id="mentorship-visual">
+        <div class="mentor-cards-panel reveal-right">
+          <div class="mentor-panel-label">These are the mentors for you to get started!!</div>
+
+          <div class="mentor-card" id="mentor-rachel">
+            <div class="mentor-avatar" aria-label="Rachel Green avatar">RG</div>
+            <div class="mentor-info">
+              <div class="mentor-name">Rachel Green</div>
+              <div class="mentor-meta">UX Engineer at Amazon · 8 years</div>
+              <div class="mentor-rating">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-left:4px;">5.0 · 318 reviews</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mentor-card" id="mentor-michael">
+            <div class="mentor-avatar" aria-label="Michael Chen avatar">MC</div>
+            <div class="mentor-info">
+              <div class="mentor-name">Michael Chen</div>
+              <div class="mentor-meta">AI Research Lead at OpenAI · 10 years</div>
+              <div class="mentor-rating">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-left:4px;">5.0 · 267 reviews</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mentor-card" id="mentor-aisha">
+            <div class="mentor-avatar" aria-label="Aisha Kapoor avatar">AK</div>
+            <div class="mentor-info">
+              <div class="mentor-name">Aisha Kapoor</div>
+              <div class="mentor-meta">Head of Engineering at Spotify · 14 years</div>
+              <div class="mentor-rating">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-left:4px;">5.0 · 318 reviews</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="coming-soon-badge" aria-label="Coming soon">COMING SOON</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       EXPANDING THE ECOSYSTEM
+  ══════════════════════════════════════════════ -->
   <section id="expanding-ecosystem" aria-labelledby="expanding-heading">
-    <div id="expanding-bg-grid"></div>
-    <div class="container" style="position:relative;z-index:2;">
-      <div id="expanding-header">
-        <span class="eyebrow eyebrow--white">What&#x2019;s Next</span>
-        <h2 id="expanding-heading" class="section-heading section-heading--white">Expanding the Ecosystem</h2>
-        <p class="section-body section-body--white" style="margin-top:24px;">Research infrastructure and AI knowledge networks powering the next layer of the Griting platform.</p>
+    <div id="expanding-header">
+      <h2 id="expanding-heading" class="reveal-up">Expanding the Ecosystem</h2>
+      <p id="expanding-subheading" class="reveal-up">Research infrastructure and AI knowledge networks powering the next layer of the Griting platform.</p>
+    </div>
+
+    <div id="expanding-cards">
+      <div class="expanding-card reveal-up" id="gritlab-card">
+        <div class="expanding-card-tag">GritLab</div>
+        <h3 class="expanding-card-title">GritLab: Research Lab and IP Engine</h3>
+        <p class="expanding-card-body">An invite-only AI community in Silicon Valley that brings together top talents across research, engineering, and startups</p>
+        <ul class="expanding-card-features">
+          <li>AI System &amp; Optimization</li>
+          <li>Memory Governance Models</li>
+          <li>Vertical Benchmarks &amp; Agentic Architecture</li>
+        </ul>
+        <a href="#" class="btn-ghost-glass">Join The waitlist</a>
       </div>
-      <div id="expanding-cards-grid">
-        <div class="expanding-card" id="expanding-gritlab">
-          <div class="expanding-card-label">Research</div>
-          <h3 class="expanding-card-title">GritLab: Research Lab and IP Engine</h3>
-          <p class="expanding-card-body">An invite-only AI community in Silicon Valley that brings together top talents across research, engineering, and startups.</p>
-          <div class="expanding-card-features">
-            <div class="expanding-card-feature-item">AI System &amp; Optimization</div>
-            <div class="expanding-card-feature-item">Memory Governance Models</div>
-            <div class="expanding-card-feature-item">Vertical Benchmarks &amp; Agentic Architecture</div>
-          </div>
-          <a href="#cta-banner" class="btn-waitlist" id="expanding-gritlab-cta">Join The waitlist</a>
-        </div>
-        <div class="expanding-card" id="expanding-grithub">
-          <div class="expanding-card-label">Community</div>
-          <h3 class="expanding-card-title">GritHub: AI Knowledge &amp; Signal Platform</h3>
-          <p class="expanding-card-body">An invite-only AI community in Silicon Valley that brings together top talents across research, engineering, and startups.</p>
-          <div class="expanding-card-features">
-            <div class="expanding-card-feature-item">Aggregates frontier-AI Research</div>
-            <div class="expanding-card-feature-item">Connects talent, mentors, and enterprises</div>
-            <div class="expanding-card-feature-item">Captures context across domains in the AI wave</div>
-          </div>
-          <a href="#cta-banner" class="btn-waitlist" id="expanding-grithub-cta">Join The waitlist</a>
-        </div>
+
+      <div class="expanding-card reveal-up" id="grithub-card">
+        <div class="expanding-card-tag">GritHub</div>
+        <h3 class="expanding-card-title">GritHub: AI Knowledge &amp; Signal Platform</h3>
+        <p class="expanding-card-body">An invite-only AI community in Silicon Valley that brings together top talents across research, engineering, and startups</p>
+        <ul class="expanding-card-features">
+          <li>Aggregates frontier-AI Research</li>
+          <li>Connects talent, mentors, and enterprises</li>
+          <li>Captures context across domains in the AI wave</li>
+        </ul>
+        <a href="#" class="btn-ghost-glass">Join The waitlist</a>
       </div>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 9: TESTIMONIALS
-       ============================================= -->
+  <!-- ══════════════════════════════════════════════
+       TESTIMONIALS
+  ══════════════════════════════════════════════ -->
   <section id="testimonials" aria-labelledby="testimonials-heading">
-    <div class="container">
-      <div id="testimonials-header">
-        <span class="eyebrow">Social Proof</span>
-        <h2 id="testimonials-heading" class="section-heading">Words from those who trust us</h2>
-        <p class="section-body" style="margin-top:20px;">Trusted voices sharing their experiences with our platform and organization.</p>
-      </div>
+    <div id="testimonials-header">
+      <h2 id="testimonials-heading" class="reveal-up">Words from those who trust us</h2>
+      <p id="testimonials-subheading" class="reveal-up">Trusted voices sharing their experiences with our platform and organization.</p>
     </div>
-    <div id="testimonials-track-wrapper">
-      <div id="testimonials-track">
-        <!-- First pass -->
-        <div class="testimonial-card" id="testimonial-sebastiaan">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>The structure is so intuitive that even in demo form, I knew exactly where to go. It feels like they&#x2019;ve anticipated friction points and designed around them for usability.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-sebastiaan.jpeg" alt="Sebastiaan Debrouwere"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">SD</div>
-            </div>
-            <div class="testimonial-meta">
+
+    <div id="testimonials-track">
+      <div id="testimonials-ticker">
+        <!-- First set -->
+        <div class="testimonial-card" id="test-sebastiaan-1">
+          <p class="testimonial-quote">"The structure is so intuitive that even in demo form, I knew exactly where to go. It feels like they've anticipated friction points and designed around them for usability."</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar" aria-hidden="true">SD</div>
+            <div>
               <div class="testimonial-name">Sebastiaan Debrouwere</div>
-              <div class="testimonial-role">Senior engineer</div>
+              <div class="testimonial-title">Senior engineer</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card" id="testimonial-krishna">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>Turning research into product has always been a gap. If GritLab delivers on its promise, it could be a breakthrough for applied AI innovation.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-krishna.jpeg" alt="Krishna"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">K</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <div class="testimonial-card" id="test-krishna-1">
+          <p class="testimonial-quote">"Turning research into product has always been a gap. If GritLab delivers on its promise, it could be a breakthrough for applied AI innovation."</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar" aria-hidden="true">K</div>
+            <div>
               <div class="testimonial-name">Krishna</div>
-              <div class="testimonial-role">University Professor</div>
+              <div class="testimonial-title">University Professor</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card" id="testimonial-alon">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>I was impressed seeing how mentors are showing interest so early on. It makes me confident that it will be vibrant.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-alon.jpeg" alt="Alon"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">A</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <div class="testimonial-card" id="test-alon-1">
+          <p class="testimonial-quote">"I was impressed seeing how mentors are showing interest so early on. It makes me confident that it will be vibrant."</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar" aria-hidden="true">A</div>
+            <div>
               <div class="testimonial-name">Alon</div>
-              <div class="testimonial-role">Startup Founder</div>
+              <div class="testimonial-title">Startup Founder</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card" id="testimonial-jono">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>From what I&#x2019;ve seen so far, this is shaping up to be a game-changer. The matching process feels promising, and the final product delivers on this, it could set a new bar for mentorship platforms. I&#x2019;m excited to see how this turns out.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-jono.jpeg" alt="Jono Bacon"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">JB</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <div class="testimonial-card" id="test-jono-1">
+          <p class="testimonial-quote">"From what I've seen so far, this is shaping up to be a game-changer. The matching process feels promising, and the final product delivers on this, it could set a new bar for mentorship platforms. I'm excited to see how this turns out."</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar" aria-hidden="true">JB</div>
+            <div>
               <div class="testimonial-name">Jono Bacon</div>
-              <div class="testimonial-role">Senior AI researcher</div>
+              <div class="testimonial-title">Senior AI researcher</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card" id="testimonial-dimitry">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>GritHub looks like it could become the go-to AI community</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-dimitry.jpeg" alt="Dimitry Gershenson"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">DG</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <div class="testimonial-card" id="test-dimitry-1">
+          <p class="testimonial-quote">"GritHub looks like it could become the go-to AI community"</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar" aria-hidden="true">DG</div>
+            <div>
               <div class="testimonial-name">Dimitry Gershenson</div>
-              <div class="testimonial-role">Senior designer</div>
+              <div class="testimonial-title">Senior designer</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card" id="testimonial-sri">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>The model Griting is building feels like the missing piece in the AI ecosystem. The way they combine mentorship, innovation, and community has huge potential.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-sri.jpeg" alt="Sri"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">S</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <div class="testimonial-card" id="test-sri-1">
+          <p class="testimonial-quote">"The model Griting is building feels like the missing piece in the AI ecosystem. The way they combine mentorship, innovation, and community has huge potential."</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar" aria-hidden="true">S</div>
+            <div>
               <div class="testimonial-name">Sri</div>
-              <div class="testimonial-role">Venture Capitalist</div>
+              <div class="testimonial-title">Venture Capitalist</div>
             </div>
           </div>
         </div>
-        <!-- Duplicate pass for seamless scroll loop -->
-        <div class="testimonial-card" aria-hidden="true">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>The structure is so intuitive that even in demo form, I knew exactly where to go. It feels like they&#x2019;ve anticipated friction points and designed around them for usability.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-sebastiaan.jpeg" alt=""
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">SD</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <!-- Duplicate set for seamless loop -->
+        <div class="testimonial-card" id="test-sebastiaan-2" aria-hidden="true">
+          <p class="testimonial-quote">"The structure is so intuitive that even in demo form, I knew exactly where to go. It feels like they've anticipated friction points and designed around them for usability."</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar">SD</div>
+            <div>
               <div class="testimonial-name">Sebastiaan Debrouwere</div>
-              <div class="testimonial-role">Senior engineer</div>
+              <div class="testimonial-title">Senior engineer</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card" aria-hidden="true">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>Turning research into product has always been a gap. If GritLab delivers on its promise, it could be a breakthrough for applied AI innovation.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-krishna.jpeg" alt=""
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">K</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <div class="testimonial-card" id="test-krishna-2" aria-hidden="true">
+          <p class="testimonial-quote">"Turning research into product has always been a gap. If GritLab delivers on its promise, it could be a breakthrough for applied AI innovation."</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar">K</div>
+            <div>
               <div class="testimonial-name">Krishna</div>
-              <div class="testimonial-role">University Professor</div>
+              <div class="testimonial-title">University Professor</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card" aria-hidden="true">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>I was impressed seeing how mentors are showing interest so early on. It makes me confident that it will be vibrant.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-alon.jpeg" alt=""
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">A</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <div class="testimonial-card" id="test-alon-2" aria-hidden="true">
+          <p class="testimonial-quote">"I was impressed seeing how mentors are showing interest so early on. It makes me confident that it will be vibrant."</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar">A</div>
+            <div>
               <div class="testimonial-name">Alon</div>
-              <div class="testimonial-role">Startup Founder</div>
+              <div class="testimonial-title">Startup Founder</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card" aria-hidden="true">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>From what I&#x2019;ve seen so far, this is shaping up to be a game-changer. The matching process feels promising, and the final product delivers on this, it could set a new bar for mentorship platforms. I&#x2019;m excited to see how this turns out.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-jono.jpeg" alt=""
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">JB</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <div class="testimonial-card" id="test-jono-2" aria-hidden="true">
+          <p class="testimonial-quote">"From what I've seen so far, this is shaping up to be a game-changer. The matching process feels promising, and the final product delivers on this, it could set a new bar for mentorship platforms."</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar">JB</div>
+            <div>
               <div class="testimonial-name">Jono Bacon</div>
-              <div class="testimonial-role">Senior AI researcher</div>
+              <div class="testimonial-title">Senior AI researcher</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card" aria-hidden="true">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>GritHub looks like it could become the go-to AI community</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-dimitry.jpeg" alt=""
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">DG</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <div class="testimonial-card" id="test-dimitry-2" aria-hidden="true">
+          <p class="testimonial-quote">"GritHub looks like it could become the go-to AI community"</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar">DG</div>
+            <div>
               <div class="testimonial-name">Dimitry Gershenson</div>
-              <div class="testimonial-role">Senior designer</div>
+              <div class="testimonial-title">Senior designer</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card" aria-hidden="true">
-          <p class="testimonial-quote"><span class="testimonial-quote-mark">&#x201C;</span>The model Griting is building feels like the missing piece in the AI ecosystem. The way they combine mentorship, innovation, and community has huge potential.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">
-              <img src="assets/avatar-sri.jpeg" alt=""
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="testimonial-avatar-placeholder">S</div>
-            </div>
-            <div class="testimonial-meta">
+
+        <div class="testimonial-card" id="test-sri-2" aria-hidden="true">
+          <p class="testimonial-quote">"The model Griting is building feels like the missing piece in the AI ecosystem. The way they combine mentorship, innovation, and community has huge potential."</p>
+          <div class="testimonial-author-row">
+            <div class="testimonial-avatar">S</div>
+            <div>
               <div class="testimonial-name">Sri</div>
-              <div class="testimonial-role">Venture Capitalist</div>
+              <div class="testimonial-title">Venture Capitalist</div>
             </div>
           </div>
         </div>
@@ -1602,304 +2224,282 @@
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 10: CTA BANNER
-       ============================================= -->
-  <section id="cta-banner" aria-label="Call to action">
-    <div id="cta-banner-inner">
-      <h2 id="cta-banner-heading">Ready to build connections that shape your future?</h2>
-      <div id="cta-banner-btns">
-        <a href="#gritme-talent" class="btn-primary" id="cta-explore-gritme">Explore GritMe</a>
-        <a href="mailto:hello@griting.com" class="btn-outline" id="cta-contact-us">Contact Us</a>
-      </div>
+  <!-- ══════════════════════════════════════════════
+       CTA BANNER
+  ══════════════════════════════════════════════ -->
+  <section id="cta-banner" aria-labelledby="cta-banner-heading">
+    <h2 id="cta-banner-heading" class="reveal-up">Ready to build connections that shape your future?</h2>
+    <div id="cta-banner-buttons" class="reveal-up">
+      <a href="#" class="btn-primary cta-btn" id="cta-explore">Explore GritMe</a>
+      <a href="#" class="btn-outline cta-btn" id="cta-contact">Contact Us</a>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 11: FOOTER
-       ============================================= -->
-  <footer id="site-footer" aria-label="Site footer">
-    <div class="container">
-      <div id="footer-inner">
-        <div id="footer-brand">
-          <div id="footer-logo">Griting</div>
-          <div id="footer-tagline">Talent trust and readiness infrastructure for the AI Capital era.</div>
-          <a href="#cta-banner" class="btn-waitlist" id="footer-waitlist-btn">Join The waitlist</a>
+  <!-- ══════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════ -->
+  <footer id="site-footer" role="contentinfo">
+    <div id="footer-grid">
+      <div id="footer-brand">
+        <div id="footer-logo">
+          <span id="footer-logo-mark" aria-hidden="true">G</span>
+          <span id="footer-logo-text">riting</span>
         </div>
-
-        <div id="footer-col-product">
-          <div class="footer-col-heading">Product</div>
-          <ul class="footer-link-list">
-            <li><a href="#gritme-talent">GritMe</a></li>
-            <li><a href="#expanding-grithub">GritHub</a></li>
-            <li><a href="#expanding-gritlab">GritLab</a></li>
-          </ul>
-        </div>
-
-        <div id="footer-col-company">
-          <div class="footer-col-heading">Company</div>
-          <ul class="footer-link-list">
-            <li><a href="about-us.html">About</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="blog-index.html">Blog</a></li>
-          </ul>
-        </div>
-
-        <div id="footer-col-contact">
-          <div class="footer-col-heading">Contact</div>
-          <ul class="footer-link-list">
-            <li><a href="mailto:hello@griting.com">Email</a></li>
-            <li><a href="#">Phone</a></li>
-            <li><a href="#">Address</a></li>
-          </ul>
-        </div>
-
-        <div id="footer-col-support">
-          <div class="footer-col-heading">Support</div>
-          <ul class="footer-link-list">
-            <li><a href="#cta-banner">Talk to an expert</a></li>
-            <li><a href="#">Terms &amp; Conditions</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-          </ul>
+        <p id="footer-tagline">Talent trust and readiness infrastructure for the AI era.</p>
+        <div id="footer-social" aria-label="Social links">
+          <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-link" aria-label="Dribbble">🎯</a>
         </div>
       </div>
 
-      <div id="footer-legal">
-        <div id="footer-copyright">&#169; 2026 Griting. All rights reserved.</div>
-        <div id="footer-legal-links">
-          <a href="#" class="footer-legal-link">Terms &amp; Conditions</a>
-          <a href="#" class="footer-legal-link">Privacy Policy</a>
-        </div>
-        <div id="footer-social">
-          <a href="#" class="footer-social-link" aria-label="Twitter / X">X</a>
-          <a href="#" class="footer-social-link" aria-label="LinkedIn">in</a>
-          <a href="#" class="footer-social-link" aria-label="GitHub">GH</a>
-        </div>
+      <div id="footer-col-product">
+        <div class="footer-col-title">Product</div>
+        <a href="#" class="footer-link">GritMe</a>
+        <a href="#" class="footer-link">GritHub</a>
+        <a href="#" class="footer-link">GritLab</a>
       </div>
+
+      <div id="footer-col-company">
+        <div class="footer-col-title">Company</div>
+        <a href="#" class="footer-link">About</a>
+        <a href="#" class="footer-link">Careers</a>
+        <a href="#" class="footer-link">Blog</a>
+      </div>
+
+      <div id="footer-col-contact">
+        <div class="footer-col-title">Contact</div>
+        <a href="#" class="footer-link">Email</a>
+        <a href="#" class="footer-link">Phone</a>
+        <a href="#" class="footer-link">Address</a>
+      </div>
+
+      <div id="footer-col-support">
+        <div class="footer-col-title">Support</div>
+        <a href="#" class="footer-link">Talk to an expert</a>
+        <a href="#" class="footer-link">Terms &amp; Conditions</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-waitlist-btn">Join The waitlist</a>
+      </div>
+    </div>
+
+    <div id="footer-bottom">
+      <span id="footer-copyright">© 2026 Griting. All rights reserved.</span>
+      <nav id="footer-legal" aria-label="Legal links">
+        <a href="#" class="footer-legal-link">Terms &amp; Conditions</a>
+        <a href="#" class="footer-legal-link">Privacy Policy</a>
+      </nav>
     </div>
   </footer>
 
-  <!-- =============================================
-       JAVASCRIPT: Nav & Tab interactions
-       ============================================= -->
+  <!-- ══════════════════════════════════════════════
+       JAVASCRIPT: NAV + GSAP ANIMATIONS
+  ══════════════════════════════════════════════ -->
   <script>
-    /* ---- Nav scroll sticky ---- */
-    (function() {
-      var nav = document.getElementById('site-nav');
-      function updateNav() {
-        nav.classList.toggle('site-header--stuck', window.scrollY > 80);
-      }
-      window.addEventListener('scroll', updateNav, { passive: true });
-      updateNav();
-    }());
-
-    /* ---- GritMe tabs ---- */
-    (function() {
-      var tabs = document.querySelectorAll('.gritme-tab');
-      tabs.forEach(function(tab) {
-        tab.addEventListener('click', function() {
-          tabs.forEach(function(t) { t.classList.remove('gritme-tab--active'); });
-          tab.classList.add('gritme-tab--active');
-        });
-      });
-    }());
-  </script>
-
-  <!-- =============================================
-       JAVASCRIPT: GSAP Animations
-       ============================================= -->
-  <script>
+    // ── Register GSAP plugins ──────────────────────────────────
     gsap.registerPlugin(ScrollTrigger);
 
-    var BASE_DUR = 0.7;
-    var EASE = 'power2.out';
-    var EASE_SNAP = 'power3.inOut';
+    // ── Read motion tokens from CSS vars ──────────────────────
+    const EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+    const DUR_FAST    = 0.3;
+    const DUR_BASE    = 0.5;
+    const DUR_SLOW    = 0.7;
 
-    function makeST(trigger, start) {
-      return { trigger: trigger, start: start || 'top 82%', once: true };
-    }
+    // ── NAV: scroll state ──────────────────────────────────────
+    (function initNav() {
+      const nav = document.getElementById('site-nav');
+      let lastScroll = 0;
 
-    /* ---- Hero headline: safe DOM-based word split ---- */
-    (function() {
-      var headline = document.getElementById('hero-headline');
-      if (!headline) return;
-
-      var originalText = headline.textContent;
-      var words = originalText.trim().split(/\s+/);
-
-      /* Remove all child nodes cleanly */
-      while (headline.firstChild) {
-        headline.removeChild(headline.firstChild);
+      function updateNav() {
+        const scrollY = window.scrollY;
+        if (scrollY > 60) {
+          nav.classList.add('nav--stuck');
+        } else {
+          nav.classList.remove('nav--stuck');
+        }
+        lastScroll = scrollY;
       }
 
-      var wordInners = [];
-      words.forEach(function(word, i) {
-        /* Outer wrapper — clips the word for the reveal effect */
-        var wrapper = document.createElement('span');
-        wrapper.className = 'hero-word-wrap';
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+    })();
 
-        /* Inner span that animates */
-        var inner = document.createElement('span');
-        inner.className = 'hero-word-inner';
-        inner.textContent = word;
+    // ── HERO: entrance animation (transform only — opacity never hidden) ──
+    (function animateHero() {
+      const tl = gsap.timeline({ delay: 0.1 });
 
-        wrapper.appendChild(inner);
-        headline.appendChild(wrapper);
-        wordInners.push(inner);
+      tl.from('#hero-eyebrow', {
+        y: 20, duration: DUR_FAST, ease: EASE
+      })
+      .from('#hero-headline', {
+        y: 30, duration: DUR_BASE, ease: EASE
+      }, '-=0.1')
+      .from('#hero-subheadline', {
+        y: 20, duration: DUR_BASE, ease: EASE
+      }, '-=0.3')
+      .from('#hero-cta-primary', {
+        y: 12, duration: DUR_FAST, ease: EASE
+      }, '-=0.2')
+      .from('#hero-cta-secondary', {
+        y: 12, duration: DUR_FAST, ease: EASE
+      }, '-=0.2')
+      .from('#hero-signal-map', {
+        scale: 0.96, duration: DUR_SLOW, ease: EASE
+      }, '-=0.5');
+    })();
 
-        /* Add space between words (not after last) */
-        if (i < words.length - 1) {
-          headline.appendChild(document.createTextNode(' '));
-        }
+    // ── SCROLL REVEALS: .reveal-up elements ───────────────────
+    (function initScrollReveals() {
+      // Staggered card reveals
+      const cardGroups = [
+        { selector: '#infra-cards .infra-card', stagger: 0.1 },
+        { selector: '#ecosystem-cards .ecosystem-card', stagger: 0.12 },
+        { selector: '.mentor-pillars .pillar-card', stagger: 0.1 },
+        { selector: '#expanding-cards .expanding-card', stagger: 0.12 },
+        { selector: '.feature-row', stagger: 0.1 },
+      ];
+
+      cardGroups.forEach(({ selector, stagger }) => {
+        const els = document.querySelectorAll(selector);
+        if (!els.length) return;
+
+        gsap.from(els, {
+          scrollTrigger: {
+            trigger: els[0].closest('section') || els[0],
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          },
+          y: 30,
+          duration: DUR_BASE,
+          stagger: stagger,
+          ease: EASE
+        });
+
+        els.forEach(el => el.classList.remove('reveal-up'));
       });
 
-      gsap.set(wordInners, { y: 60, opacity: 0 });
-      gsap.to(wordInners, {
-        y: 0,
-        opacity: 1,
-        duration: BASE_DUR + 0.2,
-        ease: EASE,
-        stagger: 0.07,
-        delay: 0.3
-      });
-    }());
-
-    /* ---- Hero subheading + CTA ---- */
-    gsap.set('#hero-subheading', { opacity: 0, y: 30 });
-    gsap.set('#hero-cta-group', { opacity: 0, y: 20 });
-    gsap.to('#hero-subheading', { opacity: 1, y: 0, duration: BASE_DUR, ease: EASE, delay: 0.9 });
-    gsap.to('#hero-cta-group', { opacity: 1, y: 0, duration: BASE_DUR, ease: EASE, delay: 1.1 });
-
-    /* ---- New infrastructure: clip-path card wipe ---- */
-    (function() {
-      gsap.set('#new-infra-header', { opacity: 0, y: 30 });
-      gsap.to('#new-infra-header', {
-        opacity: 1, y: 0, duration: BASE_DUR, ease: EASE,
-        scrollTrigger: makeST('#new-infra-header', 'top 85%')
+      // Generic .reveal-up elements (transform only)
+      document.querySelectorAll('.reveal-up').forEach(el => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          },
+          y: 24,
+          duration: DUR_BASE,
+          ease: EASE
+        });
       });
 
-      var cards = ['#infra-card-1','#infra-card-2','#infra-card-3','#infra-card-4'];
-      gsap.set(cards, { clipPath: 'inset(0 100% 0 0)', opacity: 0 });
-      gsap.to(cards, {
-        clipPath: 'inset(0 0% 0 0)',
-        opacity: 1,
-        duration: BASE_DUR + 0.1,
-        ease: EASE_SNAP,
-        stagger: 0.12,
-        scrollTrigger: makeST('#new-infra-grid', 'top 80%')
-      });
-    }());
-
-    /* ---- Ecosystem columns: directional slide-in ---- */
-    (function() {
-      var col1 = document.getElementById('ecosystem-col-businesses');
-      var col2 = document.getElementById('ecosystem-col-individuals');
-      var col3 = document.getElementById('ecosystem-col-community');
-      if (!col1 || !col2 || !col3) return;
-
-      gsap.set('#ecosystem-header', { opacity: 0, y: 30 });
-      gsap.to('#ecosystem-header', {
-        opacity: 1, y: 0, duration: BASE_DUR, ease: EASE,
-        scrollTrigger: makeST('#ecosystem-header', 'top 85%')
+      // Right-enter for mockup panels (transform only)
+      document.querySelectorAll('.reveal-right').forEach(el => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          },
+          x: 30,
+          duration: DUR_SLOW,
+          ease: EASE
+        });
       });
 
-      gsap.set(col1, { opacity: 0, x: -60 });
-      gsap.set(col2, { opacity: 0, y: 40 });
-      gsap.set(col3, { opacity: 0, x: 60 });
-
-      var ecTrigger = { trigger: '#ecosystem-grid', start: 'top 78%', once: true };
-      gsap.to(col1, { opacity: 1, x: 0, duration: BASE_DUR, ease: EASE, scrollTrigger: ecTrigger });
-      gsap.to(col2, { opacity: 1, y: 0, duration: BASE_DUR, ease: EASE, delay: 0.1, scrollTrigger: ecTrigger });
-      gsap.to(col3, { opacity: 1, x: 0, duration: BASE_DUR, ease: EASE, delay: 0.2, scrollTrigger: ecTrigger });
-    }());
-
-    /* ---- GritMe Talent: stagger text + mockup from right ---- */
-    (function() {
-      var tabs = gsap.utils.toArray('#gritme-talent-tabs .gritme-tab');
-      var mockup = document.getElementById('gritme-talent-mockup');
-      if (!mockup) return;
-
-      gsap.set('#gritme-talent-text .eyebrow', { opacity: 0, y: 20 });
-      gsap.set('#gritme-talent-heading', { opacity: 0, y: 24 });
-      gsap.set('#gritme-talent-text .gritme-body', { opacity: 0, y: 20 });
-      gsap.set(tabs, { opacity: 0, y: 16 });
-      gsap.set('#gritme-talent-feature-card', { opacity: 0, y: 16 });
-      gsap.set('#gritme-talent-cta', { opacity: 0, y: 12 });
-      gsap.set(mockup, { opacity: 0, x: 50, scale: 0.97 });
-
-      var tl = gsap.timeline({ scrollTrigger: { trigger: '#gritme-talent', start: 'top 75%', once: true } });
-      tl.to('#gritme-talent-text .eyebrow', { opacity: 1, y: 0, duration: 0.5, ease: EASE })
-        .to('#gritme-talent-heading', { opacity: 1, y: 0, duration: BASE_DUR, ease: EASE }, '-=0.3')
-        .to('#gritme-talent-text .gritme-body', { opacity: 1, y: 0, duration: 0.55, ease: EASE }, '-=0.4')
-        .to(tabs, { opacity: 1, y: 0, duration: 0.4, ease: EASE, stagger: 0.08 }, '-=0.3')
-        .to('#gritme-talent-feature-card', { opacity: 1, y: 0, duration: 0.45, ease: EASE }, '-=0.2')
-        .to('#gritme-talent-cta', { opacity: 1, y: 0, duration: 0.4, ease: EASE }, '-=0.2')
-        .to(mockup, { opacity: 1, x: 0, scale: 1, duration: BASE_DUR + 0.1, ease: EASE }, '-=0.8');
-    }());
-
-    /* ---- GritMe Incubation: feature stagger + mockup from left ---- */
-    (function() {
-      var feats = ['#gritme-incub-feat-1','#gritme-incub-feat-2','#gritme-incub-feat-3'];
-      var mockup2 = document.getElementById('gritme-incubation-mockup');
-      if (!mockup2) return;
-
-      gsap.set('#gritme-incubation-text .eyebrow', { opacity: 0, y: 20 });
-      gsap.set('#gritme-incubation-heading', { opacity: 0, y: 24 });
-      gsap.set('#gritme-incubation-text .gritme-body', { opacity: 0, y: 20 });
-      gsap.set(feats, { opacity: 0, y: 20 });
-      gsap.set(['#gritme-incubation-cta','#gritme-incubation-demo'], { opacity: 0, y: 12 });
-      gsap.set(mockup2, { opacity: 0, x: -50, scale: 0.97 });
-
-      var tl2 = gsap.timeline({ scrollTrigger: { trigger: '#gritme-incubation', start: 'top 75%', once: true } });
-      tl2.to('#gritme-incubation-text .eyebrow', { opacity: 1, y: 0, duration: 0.5, ease: EASE })
-         .to('#gritme-incubation-heading', { opacity: 1, y: 0, duration: BASE_DUR, ease: EASE }, '-=0.3')
-         .to('#gritme-incubation-text .gritme-body', { opacity: 1, y: 0, duration: 0.55, ease: EASE }, '-=0.4')
-         .to(feats, { opacity: 1, y: 0, duration: 0.45, ease: EASE, stagger: 0.1 }, '-=0.3')
-         .to(['#gritme-incubation-cta','#gritme-incubation-demo'], { opacity: 1, y: 0, duration: 0.4, ease: EASE }, '-=0.2')
-         .to(mockup2, { opacity: 1, x: 0, scale: 1, duration: BASE_DUR + 0.1, ease: EASE }, '-=0.9');
-    }());
-
-    /* ---- Mentorship pillars: stagger fade-up ---- */
-    (function() {
-      var pillars = ['#pillar-match','#pillar-connect','#pillar-grow','#pillar-thrive'];
-
-      gsap.set('#mentorship-header', { opacity: 0, y: 30 });
-      gsap.to('#mentorship-header', {
-        opacity: 1, y: 0, duration: BASE_DUR, ease: EASE,
-        scrollTrigger: makeST('#mentorship-header', 'top 85%')
+      // Left-enter for incubation graph (transform only)
+      document.querySelectorAll('.reveal-left').forEach(el => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          },
+          x: -30,
+          duration: DUR_SLOW,
+          ease: EASE
+        });
       });
+    })();
 
-      gsap.set(pillars, { opacity: 0, y: 30 });
-      gsap.to(pillars, {
-        opacity: 1, y: 0, duration: 0.55, ease: EASE, stagger: 0.1,
-        scrollTrigger: makeST('#mentorship-pillars', 'top 82%')
+    // ── SECTION HEADING PARALLAX (hero cross-section) ─────────
+    gsap.to('#hero-headline', {
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1.2
+      },
+      y: -40,
+      ease: 'none'
+    });
+
+    // ── GRITME TAB SWITCHER ────────────────────────────────────
+    (function initTalentTabs() {
+      const tabs = document.querySelectorAll('.gritme-tab-item');
+      if (!tabs.length) return;
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          tabs.forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-pressed', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
+
+          // Animate the panel on tab change
+          gsap.from('#gritme-talent-panel', {
+            opacity: 0.6, scale: 0.99,
+            duration: 0.3, ease: EASE
+          });
+        });
       });
-    }());
+    })();
 
-    /* ---- Expanding ecosystem: scale from center ---- */
-    (function() {
-      gsap.set('#expanding-header', { opacity: 0, y: 30 });
-      gsap.to('#expanding-header', {
-        opacity: 1, y: 0, duration: BASE_DUR, ease: EASE,
-        scrollTrigger: makeST('#expanding-header', 'top 85%')
-      });
+    // ── CTA BANNER: clip-path wipe reveal ─────────────────────
+    gsap.from('#cta-banner-heading', {
+      scrollTrigger: {
+        trigger: '#cta-banner',
+        start: 'top 70%',
+        toggleActions: 'play none none none'
+      },
+      clipPath: 'inset(0 100% 0 0)',
+      opacity: 0,
+      duration: DUR_SLOW,
+      ease: EASE
+    });
 
-      gsap.set(['#expanding-gritlab','#expanding-grithub'], { opacity: 0, scale: 0.92 });
-      gsap.to(['#expanding-gritlab','#expanding-grithub'], {
-        opacity: 1, scale: 1,
-        duration: BASE_DUR + 0.1, ease: EASE, stagger: 0.15,
-        scrollTrigger: makeST('#expanding-cards-grid', 'top 80%')
-      });
-    }());
+    // ── SKILL BARS: animate widths on reveal ──────────────────
+    ScrollTrigger.create({
+      trigger: '#gritme-auditable-talent',
+      start: 'top 70%',
+      onEnter: function() {
+        document.querySelectorAll('.mock-skill-bar').forEach((bar, i) => {
+          const targetWidth = bar.style.width;
+          bar.style.width = '0%';
+          gsap.to(bar, {
+            width: targetWidth,
+            duration: 1.2,
+            delay: i * 0.1,
+            ease: EASE
+          });
+        });
+      }
+    });
 
-    /* ---- CTA banner: fade-up ---- */
-    (function() {
-      gsap.set('#cta-banner-heading', { opacity: 0, y: 30 });
-      gsap.set('#cta-banner-btns', { opacity: 0, y: 20 });
-      var ctaST = { trigger: '#cta-banner', start: 'top 80%', once: true };
-      gsap.to('#cta-banner-heading', { opacity: 1, y: 0, duration: BASE_DUR, ease: EASE, scrollTrigger: ctaST });
-      gsap.to('#cta-banner-btns', { opacity: 1, y: 0, duration: BASE_DUR, ease: EASE, delay: 0.15, scrollTrigger: ctaST });
-    }());
+    // ── FOOTER: staggered link reveal ─────────────────────────
+    gsap.from('#footer-grid > *', {
+      scrollTrigger: {
+        trigger: '#site-footer',
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      },
+      y: 24,
+      opacity: 0,
+      duration: DUR_BASE,
+      stagger: 0.08,
+      ease: EASE
+    });
   </script>
 
 </body>

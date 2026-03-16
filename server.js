@@ -2,9 +2,14 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawn } from 'node:child_process';
 import { renderHome, renderSite } from './server/render.js';
 import { createLogger } from './lib/logger.js';
 import { readFontCatalog, readFontDb, writeFontDb } from './server/font-db.js';
+
+// Tracks running Next.js dev servers: siteName -> { process, port }
+const nextjsProcesses = new Map();
+let nextjsPortCounter = 5600;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 5509;
@@ -14,7 +19,7 @@ const DESIGN_SYSTEM_DIR = path.join(__dirname, 'design-system');
 function getSiteNames() {
   if (!fs.existsSync(DESIGN_SYSTEM_DIR)) return [];
   return fs.readdirSync(DESIGN_SYSTEM_DIR, { withFileTypes: true })
-    .filter(d => d.isDirectory())
+    .filter(d => d.isDirectory() && !d.name.startsWith('.'))
     .map(d => d.name);
 }
 
@@ -84,8 +89,10 @@ const server = http.createServer((req, res) => {
     const siteUrl = loadSiteUrls().get(siteName) || null;
     const landingPageFile = path.join(siteDir, 'landing-page', 'index.html');
     const landingPageUrl = fs.existsSync(landingPageFile) ? `/site/${encodeURIComponent(siteName)}/landing-page/` : null;
+    const nextjsDir = path.join(siteDir, 'landing-page-nextjs', 'landing-page');
+    const hasNextjsApp = fs.existsSync(path.join(nextjsDir, 'package.json'));
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(renderSite(siteName, siteDir, registry, siteUrl, landingPageUrl));
+    res.end(renderSite(siteName, siteDir, registry, siteUrl, landingPageUrl, hasNextjsApp));
     return;
   }
 
@@ -306,6 +313,41 @@ const server = http.createServer((req, res) => {
     }
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ ok: true }));
+    return;
+  }
+
+  // GET /api/nextjs/:site/launch — start Next.js dev server and redirect to it
+  const nextjsLaunchMatch = req.method === 'GET' && pathname.match(/^\/api\/nextjs\/([^/]+)\/launch$/);
+  if (nextjsLaunchMatch) {
+    let siteName;
+    try { siteName = decodeURIComponent(nextjsLaunchMatch[1]); } catch {
+      res.writeHead(400); res.end('Bad Request'); return;
+    }
+    const siteDir = path.resolve(DESIGN_SYSTEM_DIR, siteName);
+    if (!siteDir.startsWith(DESIGN_SYSTEM_DIR + path.sep)) {
+      res.writeHead(400); res.end('Bad Request'); return;
+    }
+    const nextjsDir = path.join(siteDir, 'landing-page-nextjs', 'landing-page');
+    if (!fs.existsSync(path.join(nextjsDir, 'package.json'))) {
+      res.writeHead(404); res.end('No Next.js app found'); return;
+    }
+    if (!nextjsProcesses.has(siteName)) {
+      const port = nextjsPortCounter++;
+      const proc = spawn('npx', ['next', 'dev', '--port', String(port)], {
+        cwd: nextjsDir,
+        stdio: 'ignore',
+        detached: false,
+      });
+      proc.on('exit', () => nextjsProcesses.delete(siteName));
+      nextjsProcesses.set(siteName, { process: proc, port });
+      log.info(`Started Next.js dev server for ${siteName} on port ${port}`);
+    }
+    const { port } = nextjsProcesses.get(siteName);
+    // Give Next.js a moment to start before redirecting
+    setTimeout(() => {
+      res.writeHead(302, { Location: `http://localhost:${port}` });
+      res.end();
+    }, 2000);
     return;
   }
 

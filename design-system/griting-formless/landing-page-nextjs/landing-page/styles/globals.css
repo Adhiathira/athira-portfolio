@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design system tokens */
+@import './tokens.css';
+
+/* ── Base resets ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--tracking-body);
+  color: var(--color-text-heading);
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ── Typography utilities ── */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.text-display {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display);
+  font-weight: 400;
+  line-height: var(--line-height-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.text-section-heading {
+  font-family: var(--font-display);
+  font-size: var(--font-size-section-heading);
+  font-weight: 500;
+  line-height: var(--line-height-section-heading);
+  letter-spacing: var(--tracking-section-heading);
+  color: var(--color-text-heading);
+}
+
+.text-gradient {
+  background: linear-gradient(to bottom, var(--color-headline-gradient-start), var(--color-headline-gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Container utility ── */
+.site-container {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding-inline: var(--grid-gutter);
+}
+
+.editorial-container {
+  max-width: calc(var(--grid-max-width) - var(--layout-section-margin-inline) * 2);
+  margin: 0 auto;
+  padding-inline: var(--layout-section-margin-inline);
+}
+
+/* ── Button utilities ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--btn-padding-block) 24px;
+  background: var(--color-brand-primary);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: var(--font-size-btn-primary);
+  font-weight: 500;
+  letter-spacing: var(--tracking-btn);
+  border-radius: var(--btn-border-radius);
+  border: 1px solid var(--color-bg-hero);
+  box-shadow: 0px 1px 2px -1px rgba(9,6,63,0.4), 0px 0px 0px 1px #003620, inset 0px 1px 0px 0px rgba(255,255,255,0.16);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-primary);
+}
+
+.btn-primary:hover {
+  background: #008050;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--btn-padding-block) 24px;
+  background: var(--color-btn-outline-bg);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: var(--font-size-btn-secondary);
+  font-weight: 500;
+  border-radius: var(--btn-border-radius);
+  border: 1px solid var(--color-btn-outline-border);
+  box-shadow: 1px 2px 8px 0px rgba(0,0,0,0.02);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--duration-base) var(--ease-primary), color var(--duration-base) var(--ease-primary);
+}
+
+.btn-outline:hover {
+  background: #00693e;
+  color: #ffffff;
+}
+
+.btn-outline-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--btn-padding-block) 24px;
+  background: var(--color-btn-outline-bg);
+  color: #000000;
+  font-family: var(--font-body);
+  font-size: var(--font-size-btn-secondary);
+  font-weight: 500;
+  border-radius: var(--btn-border-radius);
+  border: 1px solid var(--color-btn-outline-border);
+  box-shadow: 1px 2px 8px 0px rgba(0,0,0,0.02);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--duration-base) var(--ease-primary), color var(--duration-base) var(--ease-primary);
+}
+
+.btn-outline-light:hover {
+  background: rgba(0,105,62,0.12);
+}
+
+/* ── Nav link active state — standardized ── */
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ── Formless opacity-fade link interaction ── */
+.nav-link-fade {
+  opacity: 1;
+  transition: opacity var(--duration-base) var(--ease-primary);
+}
+
+.nav-link-fade:hover {
+  opacity: var(--hover-opacity);
+}
+
+/* ── No flat surfaces — depth helpers ── */
+.depth-glow-hero {
+  background: radial-gradient(ellipse at 50% 70%, rgba(13,74,53,0.72) 0%, rgba(0,41,24,0.82) 40%, rgba(0,54,32,0.88) 80%);
+}
+
+.depth-glow-footer {
+  background: radial-gradient(ellipse at 50% 60%, rgba(0,153,94,0.6) 0%, rgba(30,38,35,0.6) 60%, transparent 100%);
+}
+
+/* ── Section transition curves ── */
+.curve-top {
+  border-radius: 32px 32px 0 0;
+  margin-top: -32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── GSAP scroll reveal baseline ── */
+.reveal-element {
+  will-change: transform;
+}
+
+/* ── Responsive base ── */
+@media (max-width: 900px) {
+  .text-display {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    line-height: 1.1;
+  }
+  .text-section-heading {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 600px) {
+  .text-display {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+  .btn-primary,
+  .btn-outline,
+  .btn-outline-light {
+    width: 100%;
+    justify-content: center;
+  }
+}
