@@ -1,0 +1,23 @@
+# Partners Visual 2 — AI-Transforming Companies
+
+**File:** assets/partners-visual-2.jpeg
+**Save to:** `landing-page/assets/partners-visual-2.jpeg`
+**Type:** Image
+**Dimensions:** 800×960
+**Aspect ratio:** 4:5
+**AI Tool:** Higgsfield Nano Banana Pro
+**Page:** partners.html
+**Section:** #partner-content-1
+
+## Context from code
+- **Alt text:** "AI-Transforming Companies partner visual"
+- **Nearest heading:** "Companies Undergoing AI Transformation"
+- **Section purpose:** Right-column visual panel for the AI-Transforming Companies tab; communicates internal organizational change, data infrastructure, and the layering of AI capability on top of existing enterprise systems
+- **Background:** Dark — the surrounding tab panel uses a deep forest-green dark surface (#003620 / #002918 range)
+
+## Prompt
+An abstract macro photograph of layered circuit traces on a dark circuit board, shot at extreme close range so the copper pathways become rivers of soft gold against a deep forest-green (#003620) substrate — the scale ambiguous enough that it could be an aerial view of an urban road network or a biological neural system. The dominant palette is #003620 for the substrate, with trace highlights in muted #00693e and #0d4a35, punctuated by single points of cold white light at junction nodes suggesting active signal flow. The composition communicates transformation from within: existing infrastructure being rewired, a system mid-evolution, capable but in the process of becoming something more powerful. No labels, no UI elements, no people. The image should feel like looking at the nervous system of a company in the moment of change.
+
+## Usage
+Used in `partners.html` inside `#partner-content-1` (AI-Transforming Companies tab panel) as the right-column visual accompanying use cases for engineer readiness evaluation, tiger team incubation, and integrated AI dashboards.
+HTML: `<img src="assets/partners-visual-2.jpeg" alt="AI-Transforming Companies partner visual">`
