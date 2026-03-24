@@ -1,0 +1,19 @@
+## Visual Identity
+
+The design system grounds itself in a warm ivory background — not the sterile white of enterprise dashboards, but something closer to the off-white of high-weight engineering paper, the kind used on drafting tables before digital took over. That material reference is intentional. Against it, pure black text establishes the high-contrast field necessary for reading technical specifications at a glance. The palette resists any temptation toward color-coded complexity; it trusts that form, type, and spacing carry meaning more reliably than hue. What results is a surface that feels simultaneously contemporary and rooted — as if the screen itself has the mild warmth of a physical medium.
+
+## Typography
+
+Three typefaces share responsibility for distinct registers of communication. Manrope handles body copy and UI labels: its geometric neutrality sits well at small sizes, communicates functionality without asserting personality, and reads cleanly in both the dense information contexts of feature sections and the more open passages of descriptive text. EB Garamond appears in display headings, introducing an editorial serif presence that signals considered authorship rather than templated output. This is not a typeface you associate with software marketing — which is precisely its value here. It differentiates. Overpass Mono anchors code blocks, specification callouts, and any numerical data requiring monospace precision. The three-way pairing creates a clear hierarchy: headings speak in editorial serif, body responds in clean sans, technical details resolve in mono. Each register reads distinctly without requiring color shifts to separate them.
+
+## Spatial Quality
+
+Spacing operates in two modes across the system. In sections referencing the product's technical capabilities — specification grids, feature cards, output previews — the rhythm tightens. Density is used deliberately, suggesting an interface comfortable with information load, not one that needs to hide complexity behind excessive whitespace. In marketing and narrative sections, the spatial logic opens. Paragraphs breathe. Images hold more vertical territory around them. This modulation prevents the page from reading like a product tour — it reads more like a considered editorial piece that happens to be about a technical product. The difference between these modes is what gives the layout its range.
+
+## Navigation Character
+
+The navigation bar holds to a 44px height: slim enough to recede, present enough to orient. Link labels are set in uppercase micro-type with measured letter spacing — a typographic gesture borrowed from luxury retail but here recontextualized as precision instrument labeling. Hover states are exact rather than expressive; the transition registers, confirms, and completes without drawing attention to itself. This is navigation designed for users who already know where they're going, or who will find their way by reading carefully. There is no visual noise competing for attention in the top bar. It functions the way a well-engineered component functions: reliably and without drama.
+
+## Overall Character
+
+The design sits at an uncommon intersection: editorial luxury sensibility applied to engineering context. The visual language is closer to the catalogues of high-end industrial manufacturers — companies that make precision optics or surgical instruments — than to the saturated gradients of typical SaaS marketing. This is intentional. The product generates real engineering artifacts: STL files, PCB layouts, DXF drawings. The aesthetic should communicate that it belongs to a world where things are made precisely and last. Warm ivory and black, serif display type, mono technical callouts, and disciplined spacing collectively build a surface that earns the word 'premium' without performing it — and that distinction is the hardest thing to achieve in interface design.

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draftform — AI Hardware Design IDE</title>
+  <meta name="description" content="Describe what you want to build. Draftform generates production-ready STL files, DXF drawings, and PCB layouts from natural language — the hardware design IDE for what comes next.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;600;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Overpass+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+</head>
+<body>
+
+<!-- NAV TEMPLATE — canonical Pale Draft nav -->
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Draftform home">
+      <span class="nav-logo-wordmark">Draftform</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html" class="nav-link nav-link--active">Home</a></li>
+      <li><a href="product.html" class="nav-link">Product</a></li>
+      <li><a href="artifacts.html" class="nav-link">Artifacts</a></li>
+      <li><a href="waitlist.html" class="nav-link">Waitlist</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="waitlist.html" class="nav-cta">Request Access</a>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <ul class="nav-links" role="list">
+    <li><a href="index.html" class="nav-link nav-link--active">Home</a></li>
+    <li><a href="product.html" class="nav-link">Product</a></li>
+    <li><a href="artifacts.html" class="nav-link">Artifacts</a></li>
+    <li><a href="waitlist.html" class="nav-link">Waitlist</a></li>
+  </ul>
+  <a href="waitlist.html" class="nav-cta">Request Access</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var toggle = document.querySelector('.nav-mobile-toggle');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 44) {
+        nav.classList.add('fixed');
+      } else {
+        nav.classList.remove('fixed');
+      }
+    }, { passive: true });
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+  })();
+</script>
+
+<!-- ═══════════════════════════════════════════════
+     HERO — Full viewport, ambient video background
+     ═══════════════════════════════════════════════ -->
+<section id="hero" aria-label="Hero">
+
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-drafting-loop.mp4"
+      autoplay muted loop playsinline
+      aria-hidden="true"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="hero-bg-video-placeholder">→ assets/hero-drafting-loop.mp4</div>
+    <div id="hero-video-gradient" aria-hidden="true"></div>
+  </div>
+
+  <div id="hero-content">
+    <p id="hero-eyebrow">Hardware Design IDE &nbsp;/&nbsp; AI-generated engineering artifacts</p>
+
+    <div id="hero-headline-group">
+      <h1 id="hero-title">
+        Describe what<br>
+        you want to <em>build.</em>
+      </h1>
+    </div>
+
+    <p id="hero-subheading">
+      Draftform converts natural language into production-ready engineering artifacts —
+      STL files, DXF drawings, PCB layouts — with an interface that adapts to what you're making.
+    </p>
+
+    <div id="hero-cta-group">
+      <a href="waitlist.html" class="btn btn--ghost-light btn--lg">Request early access</a>
+      <a href="product.html" class="btn btn--ghost-light">See how it works</a>
+    </div>
+  </div>
+
+  <aside id="hero-spec-strip" aria-label="Product specifications">
+    <span class="hero-spec-item">Output / STL · DXF · PCB</span>
+    <span class="hero-spec-item">Interface / Adaptive UI</span>
+    <span class="hero-spec-item">Input / Natural language</span>
+  </aside>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     HOW IT WORKS — Numbered horizontal step rows
+     Distinct from any card grid
+     ═══════════════════════════════════════════════ -->
+<section id="how-it-works" aria-label="How it works">
+  <div class="section-inner">
+
+    <header id="how-it-works-header">
+      <p id="how-it-works-eyebrow">Process</p>
+      <h2 id="how-it-works-title">From description<br>to artifact</h2>
+    </header>
+
+    <div id="steps-grid" role="list">
+
+      <div class="step-row" role="listitem" id="step-1">
+        <span class="step-number">01</span>
+        <h3 class="step-title">Describe your intent</h3>
+        <p class="step-body">
+          Write in plain language — "design me a mounting bracket for a 60mm fan with M3 holes at the corners"
+          or "generate a two-layer PCB for an ATmega32U4 keyboard controller." No CAD knowledge required.
+        </p>
+      </div>
+
+      <div class="step-row" role="listitem" id="step-2">
+        <span class="step-number">02</span>
+        <h3 class="step-title">AI generates the artifact</h3>
+        <p class="step-body">
+          Draftform parses your description, selects the appropriate output format, and generates a real
+          engineering file — parametric geometry, trace routing, or dimensioned drawings. Not a mockup.
+          A file you can manufacture.
+        </p>
+      </div>
+
+      <div class="step-row" role="listitem" id="step-3">
+        <span class="step-number">03</span>
+        <h3 class="step-title">The interface adapts to the artifact</h3>
+        <p class="step-body">
+          Controls are generated alongside the output. An STL renders in a 3D canvas with mesh inspection tools.
+          A PCB layout opens in a trace viewer with net selection. A DXF loads with dimension annotation overlays.
+          Each artifact type has its own appropriate interface.
+        </p>
+      </div>
+
+      <div class="step-row" role="listitem" id="step-4">
+        <span class="step-number">04</span>
+        <h3 class="step-title">Iterate and export</h3>
+        <p class="step-body">
+          Refine with follow-up prompts — "add a cable gutter along the right edge" or "reroute power traces away from
+          the antenna region." Export when ready: .stl, .dxf, .kicad_pcb, Gerber. Direct to fabrication.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CAPABILITIES — Video bg, asymmetric bento cards
+     Clip-path wipe animation — distinct from step rows
+     ═══════════════════════════════════════════════ -->
+<section id="capabilities" aria-label="Capabilities">
+
+  <div id="capabilities-video-container" aria-hidden="true">
+    <video
+      id="capabilities-bg-video"
+      src="assets/pcb-render-loop.mp4"
+      autoplay muted loop playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="capabilities-bg-video-placeholder">→ assets/pcb-render-loop.mp4</div>
+    <div id="capabilities-overlay" aria-hidden="true"></div>
+  </div>
+
+  <div id="capabilities-content">
+
+    <div id="capabilities-left">
+      <p id="capabilities-eyebrow">Capabilities</p>
+      <h2 id="capabilities-title">Three output formats.<br>One prompt.</h2>
+      <p id="capabilities-body">
+        Draftform understands the engineering context of your request and routes it to the right generation
+        pipeline — solid geometry for mechanical parts, 2D linework for fabrication drawings, copper topology
+        for electronics. The interface assembles itself around the result.
+      </p>
+      <a href="artifacts.html" class="btn btn--ghost-light">Explore artifacts</a>
+    </div>
+
+    <div id="capabilities-right" aria-label="Output format cards">
+
+      <div class="capability-card capability-card--wide" id="cap-card-stl">
+        <span class="capability-card-tag">Format 01</span>
+        <h3 class="capability-card-title">STL — 3D Solid Geometry</h3>
+        <p class="capability-card-body">
+          Parametric mesh generation for mechanical components. Describe topology, constraints, and tolerances
+          in plain language. Output is a watertight solid ready for FDM, SLA, or CNC.
+        </p>
+      </div>
+
+      <div class="capability-card" id="cap-card-dxf">
+        <span class="capability-card-tag">Format 02</span>
+        <h3 class="capability-card-title">DXF — Fabrication Drawings</h3>
+        <p class="capability-card-body">
+          Dimensioned 2D drawings with annotation layers, title block, and tolerance callouts.
+          Compatible with any CAD import or laser cutter workflow.
+        </p>
+      </div>
+
+      <div class="capability-card" id="cap-card-pcb">
+        <span class="capability-card-tag">Format 03</span>
+        <h3 class="capability-card-title">PCB — Layout &amp; Routing</h3>
+        <p class="capability-card-body">
+          Schematic-to-layout from component descriptions. Two-layer and four-layer support.
+          Exports to KiCad and Gerber for immediate fab submission.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     ARTIFACT GALLERY — 3D video + PCB + DXF stills
+     Asymmetric 1.4fr / 1fr grid, right-side column
+     Divergent horizontal animation (distinct from both above)
+     ═══════════════════════════════════════════════ -->
+<section id="artifact-gallery" aria-label="Artifact gallery">
+  <div class="section-inner">
+
+    <header id="artifact-gallery-header">
+      <div id="artifact-gallery-title-group">
+        <p id="artifact-gallery-eyebrow">Outputs</p>
+        <h2 id="artifact-gallery-title">What Draftform makes</h2>
+      </div>
+      <p id="artifact-gallery-meta" aria-label="Three artifact types">STL · DXF · PCB</p>
+    </header>
+
+    <div id="artifact-grid">
+
+      <!-- 3D STL — spans both rows, looping video -->
+      <div id="artifact-main" role="figure" aria-label="3D STL model — rotating mechanical bracket">
+        <video
+          id="artifact-main-video"
+          src="assets/stl-rotate-loop.mp4"
+          autoplay muted loop playsinline
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        ></video>
+        <div id="artifact-main-video-placeholder">→ assets/stl-rotate-loop.mp4</div>
+        <div id="artifact-main-label" aria-hidden="true">
+          <span class="artifact-type-label">Output format</span>
+          <span class="artifact-filename">bracket-assembly.stl</span>
+        </div>
+      </div>
+
+      <!-- PCB layout still -->
+      <div id="artifact-pcb" role="figure" aria-label="PCB layout — keyboard controller">
+        <img
+          id="artifact-pcb-img"
+          src="assets/pcb-layout-still.jpeg"
+          alt="PCB layout showing trace routing and component placement for a keyboard controller"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div id="artifact-pcb-img-placeholder">→ assets/pcb-layout-still.jpeg</div>
+        <div id="artifact-pcb-label" aria-hidden="true">
+          <span class="artifact-type-label">Output format</span>
+          <span class="artifact-filename">keyboard-ctrl.kicad_pcb</span>
+        </div>
+      </div>
+
+      <!-- DXF drawing still -->
+      <div id="artifact-dxf" role="figure" aria-label="DXF fabrication drawing with dimension annotations">
+        <img
+          id="artifact-dxf-img"
+          src="assets/dxf-drawing-still.jpeg"
+          alt="DXF fabrication drawing showing dimensioned orthographic views with tolerance callouts"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div id="artifact-dxf-img-placeholder">→ assets/dxf-drawing-still.jpeg</div>
+        <div id="artifact-dxf-label" aria-hidden="true">
+          <span class="artifact-type-label">Output format</span>
+          <span class="artifact-filename">enclosure-panel.dxf</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CTA STRIP — Black, centered, italic serif
+     ═══════════════════════════════════════════════ -->
+<section id="cta-strip" aria-label="Call to action">
+  <div id="cta-content">
+    <p id="cta-eyebrow">Early access</p>
+    <h2 id="cta-title">Hardware design<br>reimagined</h2>
+    <p id="cta-body">
+      Draftform is currently in closed beta. Request early access to join the first cohort
+      of engineers designing hardware with natural language.
+    </p>
+    <div id="cta-actions">
+      <a href="waitlist.html" class="btn btn--ghost-light btn--lg">Request early access</a>
+      <a href="product.html" class="btn btn--ghost-light">Learn more</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════ -->
+<footer id="site-footer" role="contentinfo">
+  <div id="footer-inner">
+
+    <div id="footer-top">
+      <div id="footer-brand">
+        <a href="index.html" id="footer-wordmark">Draftform</a>
+        <p id="footer-tagline">
+          AI hardware design IDE.<br>
+          From description to artifact.
+        </p>
+      </div>
+
+      <nav id="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col" id="footer-col-product">
+          <p class="footer-nav-col-heading">Product</p>
+          <ul class="footer-nav-list">
+            <li><a href="product.html" class="footer-nav-link">How it works</a></li>
+            <li><a href="artifacts.html" class="footer-nav-link">Artifacts</a></li>
+            <li><a href="waitlist.html" class="footer-nav-link">Request access</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav-col" id="footer-col-formats">
+          <p class="footer-nav-col-heading">Formats</p>
+          <ul class="footer-nav-list">
+            <li><a href="artifacts.html#stl" class="footer-nav-link">STL</a></li>
+            <li><a href="artifacts.html#dxf" class="footer-nav-link">DXF</a></li>
+            <li><a href="artifacts.html#pcb" class="footer-nav-link">PCB</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav-col" id="footer-col-company">
+          <p class="footer-nav-col-heading">Company</p>
+          <ul class="footer-nav-list">
+            <li><a href="#" class="footer-nav-link">About</a></li>
+            <li><a href="#" class="footer-nav-link">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div id="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 Draftform. All rights reserved.</p>
+      <ul id="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     GSAP Animations
+     ═══════════════════════════════════════════════ -->
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Hero entrance timeline (fires on page load)
+  var heroTl = gsap.timeline({ delay: 0.1 });
+  heroTl
+    .from('#hero-eyebrow', {
+      y: 12,
+      duration: 0.4,
+      ease: 'power2.out'
+    })
+    .from('#hero-title', {
+      y: 16,
+      duration: 0.5,
+      ease: 'power2.out'
+    }, '-=0.2')
+    .from('#hero-subheading', {
+      y: 10,
+      duration: 0.4,
+      ease: 'power2.out'
+    }, '-=0.2')
+    .from('#hero-cta-group', {
+      y: 8,
+      duration: 0.35,
+      ease: 'power2.out'
+    }, '-=0.2')
+    .from('#hero-spec-strip', {
+      y: 6,
+      duration: 0.3,
+      ease: 'power2.out'
+    }, '-=0.3');
+
+  // ── How It Works: step rows horizontal sweep left
+  // Distinct grid (numbered rows) + distinct animation (x sweep) from capabilities cards
+  gsap.from('.step-row', {
+    scrollTrigger: {
+      trigger: '#steps-grid',
+      start: 'top 82%'
+    },
+    x: -70,
+    stagger: 0.13,
+    duration: 0.55,
+    ease: 'power2.out'
+  });
+
+  gsap.from('#how-it-works-header', {
+    scrollTrigger: {
+      trigger: '#how-it-works',
+      start: 'top 85%'
+    },
+    y: 20,
+    duration: 0.5,
+    ease: 'power2.out'
+  });
+
+  // ── Capabilities: clip-path wipe reveals (left-to-right)
+  // Asymmetric bento cards — distinct from step rows
+  gsap.from('#capabilities-left', {
+    scrollTrigger: {
+      trigger: '#capabilities-content',
+      start: 'top 78%'
+    },
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 0.75,
+    ease: 'power3.out'
+  });
+
+  // Cards: divergent x animation — wide card from right, two narrow cards from below
+  gsap.from('#cap-card-stl', {
+    scrollTrigger: {
+      trigger: '#capabilities-right',
+      start: 'top 80%'
+    },
+    x: 80,
+    duration: 0.6,
+    ease: 'power2.out'
+  });
+
+  gsap.from(['#cap-card-dxf', '#cap-card-pcb'], {
+    scrollTrigger: {
+      trigger: '#capabilities-right',
+      start: 'top 78%'
+    },
+    y: 50,
+    stagger: 0.1,
+    duration: 0.55,
+    ease: 'power2.out'
+  });
+
+  // ── Artifact Gallery: divergent horizontal
+  // Left video from -80, right column from +80 — distinct from above
+  gsap.from('#artifact-main', {
+    scrollTrigger: {
+      trigger: '#artifact-grid',
+      start: 'top 82%'
+    },
+    x: -80,
+    duration: 0.65,
+    ease: 'power3.out'
+  });
+
+  gsap.from(['#artifact-pcb', '#artifact-dxf'], {
+    scrollTrigger: {
+      trigger: '#artifact-grid',
+      start: 'top 80%'
+    },
+    x: 80,
+    stagger: 0.14,
+    duration: 0.6,
+    ease: 'power3.out'
+  });
+
+  gsap.from('#artifact-gallery-header', {
+    scrollTrigger: {
+      trigger: '#artifact-gallery',
+      start: 'top 85%'
+    },
+    y: 20,
+    duration: 0.5,
+    ease: 'power2.out'
+  });
+
+  // ── CTA strip: scale + rise
+  gsap.from('#cta-content > *', {
+    scrollTrigger: {
+      trigger: '#cta-strip',
+      start: 'top 80%'
+    },
+    y: 28,
+    scale: 0.97,
+    stagger: 0.12,
+    duration: 0.55,
+    ease: 'power2.out'
+  });
+
+  // ── Footer: single block fade (no translate — signals end of narrative)
+  gsap.from('#site-footer', {
+    scrollTrigger: {
+      trigger: '#site-footer',
+      start: 'top 90%'
+    },
+    duration: 0.4,
+    ease: 'power1.out'
+    // y-only, no opacity — per page-builder.md GSAP opacity rule
+  });
+</script>
+
+</body>
+</html>

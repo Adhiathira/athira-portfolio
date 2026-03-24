@@ -1,0 +1,85 @@
+{
+  "cssVars": {},
+  "container": {
+    "maxWidth": "100vw",
+    "paddingLeft": "24px",
+    "paddingRight": "24px"
+  },
+  "grids": {},
+  "responsive": {
+    "bp-600px": {
+      "query": "(min-width: 600px) and (max-width: 800px)",
+      "display": "inline-flex",
+      "maxWidth": "100%"
+    },
+    "bp-760px": {
+      "query": "(min-width: 760px) and (max-width: 1060px)",
+      "rowGap": "10px",
+      "columnGap": "10px"
+    },
+    "bp-768px": {
+      "query": "(min-width: 768px) and (max-width: 991.98px)",
+      "display": "flex",
+      "flexWrap": "wrap",
+      "rowGap": "14px",
+      "columnGap": "14px",
+      "maxWidth": "none"
+    },
+    "bp-992px": {
+      "query": "(min-width: 900px)",
+      "maxWidth": "min(820px, -32px + 100vw)",
+      "display": "flex",
+      "flexDirection": "column",
+      "rowGap": "8px",
+      "columnGap": "8px",
+      "flexWrap": "nowrap"
+    },
+    "bp-1023px": {
+      "query": "(max-width: 1023px)",
+      "display": "none"
+    },
+    "bp-1024px": {
+      "query": "(min-width: 1024px)",
+      "maxWidth": "1290px",
+      "display": "none",
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "columnGap": "40px",
+      "gridTemplateColumns": "repeat(4, minmax(0px, 1fr))",
+      "gridTemplateRows": "1fr",
+      "rowGap": "16px"
+    }
+  },
+  "visual": [
+    {
+      "section": "top-navigation",
+      "layout": "full-width-bar",
+      "description": "Fixed full-width top navigation bar spanning 100vw, containing the application logo on the left, project/file breadcrumbs in the center, and action controls (run, export, settings) on the right. Height is compact at 44px to maximize vertical space for the workspace below."
+    },
+    {
+      "section": "workspace-split-pane",
+      "layout": "2-column-asymmetric",
+      "description": "Primary workspace split into two resizable panes side by side below the top nav. Left pane (chat panel) occupies approximately 30-35% of the viewport width and contains the conversational prompt interface, message history, and input field. Right pane (artifact viewer) occupies the remaining 65-70% and renders the active design artifact — 3D model, DXF, or PCB layout. A draggable divider between the panes allows the user to adjust the split ratio."
+    },
+    {
+      "section": "chat-panel",
+      "layout": "single-column-scroll",
+      "description": "Left split-pane column with a scrollable message thread above and a fixed prompt input area at the bottom. The thread displays alternating user and AI message bubbles. The input area includes a text field, send button, and optional attachment controls. Content is contained within the panel width with 16px horizontal padding."
+    },
+    {
+      "section": "artifact-canvas",
+      "layout": "full-bleed-canvas",
+      "description": "Full-bleed right pane occupying its full allocated width and the full height between the top nav bar and the bottom of the viewport. Renders an immersive 3D canvas (React Three Fiber) or a 2D design artifact view with no internal padding — the artifact fills edge to edge. An AI-generated floating toolbar overlay appears at the bottom of the canvas with context-sensitive controls relevant to the current artifact type."
+    },
+    {
+      "section": "artifact-toolbar-overlay",
+      "layout": "floating-bar-bottom",
+      "description": "Semi-transparent floating toolbar anchored to the bottom of the artifact canvas. Contains AI-generated controls specific to the active artifact (e.g., layer toggles for DXF, material selectors for STL, net inspector for PCB). Rendered as a horizontal row of icon buttons with labels, with 12px padding and a subtle backdrop blur."
+    },
+    {
+      "section": "status-bar",
+      "layout": "full-width-bar",
+      "description": "Narrow full-width status bar at the very bottom of the viewport, 24px tall. Displays real-time generation status on the left (e.g., 'Generating STL...'), active file name in the center, and connection/backend status indicators on the right. Sits below both split panes."
+    }
+  ]
+}

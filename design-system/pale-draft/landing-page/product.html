@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — Draftform Hardware Design IDE</title>
+  <meta name="description" content="How Draftform works — from natural language description to production-ready STL, DXF, and PCB artifacts. The IDE that adapts its interface to what you're building.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;600;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Overpass+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/product.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Draftform home">
+      <span class="nav-logo-wordmark">Draftform</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="product.html" class="nav-link nav-link--active">Product</a></li>
+      <li><a href="artifacts.html" class="nav-link">Artifacts</a></li>
+      <li><a href="waitlist.html" class="nav-link">Waitlist</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="waitlist.html" class="nav-cta">Request Access</a>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <ul class="nav-links" role="list">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="product.html" class="nav-link nav-link--active">Product</a></li>
+    <li><a href="artifacts.html" class="nav-link">Artifacts</a></li>
+    <li><a href="waitlist.html" class="nav-link">Waitlist</a></li>
+  </ul>
+  <a href="waitlist.html" class="nav-cta">Request Access</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var toggle = document.querySelector('.nav-mobile-toggle');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 44) {
+        nav.classList.add('fixed');
+      } else {
+        nav.classList.remove('fixed');
+      }
+    }, { passive: true });
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+  })();
+</script>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE HEADER — Compact (product archetype)
+     ═══════════════════════════════════════════════ -->
+<header id="product-header" style="padding-top: calc(44px + 80px);">
+  <div id="product-header-inner">
+    <div id="product-header-left">
+      <p id="product-header-eyebrow">Product</p>
+      <h1 id="product-header-title">The interface<br>earns its shape</h1>
+    </div>
+    <div id="product-header-right">
+      <p id="product-header-desc">
+        Draftform is a hardware design IDE where the workspace is not fixed.
+        Describe what you want to build — the IDE generates the artifact and
+        assembles the interface controls appropriate for it. Every session
+        begins with a sentence and resolves into a manufacturable file.
+      </p>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════
+     INTERFACE OVERVIEW — IDE mockup image
+     ═══════════════════════════════════════════════ -->
+<section id="interface-overview" aria-label="Interface overview">
+  <div id="interface-overview-inner">
+    <header id="interface-overview-header">
+      <p id="interface-overview-eyebrow">The workspace</p>
+      <h2 id="interface-overview-title">A split canvas that knows what it's showing</h2>
+    </header>
+
+    <div id="ide-mockup-container" role="figure" aria-label="Draftform IDE interface showing split-pane workspace">
+      <img
+        id="ide-mockup-img"
+        src="assets/ide-interface-overview.jpeg"
+        alt="Draftform IDE showing chat panel on the left with a 3D STL preview on the right, adaptive toolbar at the bottom of the canvas"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div id="ide-mockup-placeholder">→ assets/ide-interface-overview.jpeg</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     LAYOUT PANELS — 3fr 2fr bento grid
+     Rotate + rise animation — distinct from above
+     ═══════════════════════════════════════════════ -->
+<section id="layout-panels" aria-label="Interface layout panels">
+  <div id="layout-panels-inner">
+    <p id="layout-panels-eyebrow">Architecture</p>
+    <h2 id="layout-panels-title">Four panels. One coherent workspace.</h2>
+
+    <div id="panels-grid">
+
+      <div class="panel-card panel-card--tall" id="panel-chat">
+        <span class="panel-card-index">Panel A</span>
+        <h3 class="panel-card-title">Chat panel — natural language input</h3>
+        <p class="panel-card-body">
+          The left pane is a scrollable conversation thread with a fixed prompt field at the bottom.
+          Messages alternate between user prompts and AI responses — but AI responses include embedded
+          artifact previews, generation status, and parameter summaries alongside prose. The input
+          accepts plain language; structured CAD syntax is never required. Prompts can reference
+          previous turns: "make the mounting holes 0.5mm larger" correctly modifies only the relevant
+          dimension of the most recently generated artifact.
+        </p>
+      </div>
+
+      <div class="panel-card" id="panel-canvas">
+        <span class="panel-card-index">Panel B</span>
+        <h3 class="panel-card-title">Artifact canvas — full-bleed rendering</h3>
+        <p class="panel-card-body">
+          The right pane occupies the remaining viewport. For STL output, it renders a React Three Fiber
+          scene with orbit controls, mesh shading, and wireframe toggle. For PCB, it opens a 2D layer
+          viewer with net inspection. For DXF, it loads a dimensioned orthographic view.
+        </p>
+      </div>
+
+      <div class="panel-card" id="panel-toolbar">
+        <span class="panel-card-index">Panel C</span>
+        <h3 class="panel-card-title">Adaptive toolbar — AI-generated controls</h3>
+        <p class="panel-card-body">
+          A floating control strip anchored to the bottom of the canvas. The controls present are generated
+          alongside the artifact — they are not a fixed menu. An STL artifact yields material selector,
+          layer visibility, and export button. A PCB artifact yields net filter, DRC checker, and Gerber export.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     ADAPTIVE UI — Dark section, split image/text
+     ═══════════════════════════════════════════════ -->
+<section id="adaptive-ui" aria-label="Adaptive user interface">
+  <div id="adaptive-ui-inner">
+
+    <div id="adaptive-ui-text">
+      <p id="adaptive-ui-eyebrow">Design principle</p>
+      <h2 id="adaptive-ui-title">The interface is generated, not configured</h2>
+      <p id="adaptive-ui-body">
+        Most IDEs present the same tool palette regardless of what you're working on. Draftform takes a
+        different position: the controls for a 3D mechanical part are structurally different from the controls
+        for a PCB layout, and both are different from what you need to work with a dimensioned 2D drawing.
+        Presenting all three simultaneously is friction. Generating only what's relevant to the current
+        artifact is function.
+      </p>
+      <p id="adaptive-ui-body-2" style="font-family:var(--font-body);font-size:0.875rem;font-weight:300;line-height:1.7;color:rgba(252,247,241,0.6);margin:0;">
+        This is the core design premise of Draftform: the workspace assembles itself around the artifact,
+        rather than forcing the artifact to fit inside a fixed workspace.
+      </p>
+    </div>
+
+    <div id="adaptive-ui-visual" role="figure" aria-label="Adaptive toolbar showing context-specific controls for PCB artifact">
+      <img
+        id="adaptive-ui-visual-img"
+        src="assets/adaptive-toolbar-detail.jpeg"
+        alt="Close-up of Draftform's adaptive toolbar showing PCB-specific controls: net inspector, layer toggles, DRC checker, and Gerber export button"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div id="adaptive-ui-visual-placeholder">→ assets/adaptive-toolbar-detail.jpeg</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CTA STRIP
+     ═══════════════════════════════════════════════ -->
+<section id="cta-strip" aria-label="Call to action">
+  <div id="cta-content">
+    <p id="cta-eyebrow">Early access</p>
+    <h2 id="cta-title">Build something real</h2>
+    <p id="cta-body">
+      Request early access to Draftform and start generating engineering artifacts from natural language today.
+    </p>
+    <div id="cta-actions">
+      <a href="waitlist.html" class="btn btn--ghost-light btn--lg">Request early access</a>
+      <a href="artifacts.html" class="btn btn--ghost-light">Browse artifacts</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer" role="contentinfo">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand">
+        <a href="index.html" id="footer-wordmark">Draftform</a>
+        <p id="footer-tagline">AI hardware design IDE.<br>From description to artifact.</p>
+      </div>
+      <nav id="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col" id="footer-col-product">
+          <p class="footer-nav-col-heading">Product</p>
+          <ul class="footer-nav-list">
+            <li><a href="product.html" class="footer-nav-link">How it works</a></li>
+            <li><a href="artifacts.html" class="footer-nav-link">Artifacts</a></li>
+            <li><a href="waitlist.html" class="footer-nav-link">Request access</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col" id="footer-col-formats">
+          <p class="footer-nav-col-heading">Formats</p>
+          <ul class="footer-nav-list">
+            <li><a href="artifacts.html#stl" class="footer-nav-link">STL</a></li>
+            <li><a href="artifacts.html#dxf" class="footer-nav-link">DXF</a></li>
+            <li><a href="artifacts.html#pcb" class="footer-nav-link">PCB</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col" id="footer-col-company">
+          <p class="footer-nav-col-heading">Company</p>
+          <ul class="footer-nav-list">
+            <li><a href="#" class="footer-nav-link">About</a></li>
+            <li><a href="#" class="footer-nav-link">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 Draftform. All rights reserved.</p>
+      <ul id="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Page header — rotate + rise stagger (distinct from step rows or clip-path)
+  var headerTl = gsap.timeline({ delay: 0.1 });
+  headerTl
+    .from('#product-header-eyebrow', { y: 10, duration: 0.35, ease: 'power2.out' })
+    .from('#product-header-title', { rotation: 1.5, y: 18, duration: 0.5, ease: 'power2.out' }, '-=0.15')
+    .from('#product-header-desc', { y: 12, duration: 0.4, ease: 'power2.out' }, '-=0.2');
+
+  // IDE mockup — scale from center
+  gsap.from('#ide-mockup-container', {
+    scrollTrigger: { trigger: '#ide-mockup-container', start: 'top 80%' },
+    scale: 0.96,
+    duration: 0.7,
+    ease: 'power2.out'
+  });
+
+  // Panel cards — rotate + rise (distinct from horizontal sweep on homepage)
+  gsap.from('.panel-card', {
+    scrollTrigger: { trigger: '#panels-grid', start: 'top 78%' },
+    rotation: 1.5,
+    y: 40,
+    stagger: 0.12,
+    duration: 0.6,
+    ease: 'power3.out'
+  });
+
+  // Adaptive UI — divergent: text from left, visual from right
+  gsap.from('#adaptive-ui-text', {
+    scrollTrigger: { trigger: '#adaptive-ui-inner', start: 'top 80%' },
+    x: -60,
+    duration: 0.65,
+    ease: 'power3.out'
+  });
+  gsap.from('#adaptive-ui-visual', {
+    scrollTrigger: { trigger: '#adaptive-ui-inner', start: 'top 78%' },
+    x: 60,
+    duration: 0.65,
+    ease: 'power3.out'
+  });
+
+  // CTA
+  gsap.from('#cta-content > *', {
+    scrollTrigger: { trigger: '#cta-strip', start: 'top 80%' },
+    y: 28,
+    scale: 0.97,
+    stagger: 0.12,
+    duration: 0.55,
+    ease: 'power2.out'
+  });
+</script>
+
+</body>
+</html>
