@@ -13,6 +13,9 @@ import { parseEditorTokens } from './server/editor-tokens.js';
 const nextjsProcesses = new Map();
 let nextjsPortCounter = 5600;
 
+// In-memory agent session map: siteName -> agentId
+const siteAgents = {};
+
 // In-memory cache for Google Fonts data
 let googleFontsCache = null;
 
@@ -60,6 +63,44 @@ function ensureWorkspace(siteName) {
     fs.cpSync(src, dest, { recursive: true });
   }
   return dest;
+}
+
+async function fetchJSON(url, options = {}) {
+  const res = await fetch(url, options);
+  if (!res.ok) throw new Error(`HTTP ${res.status} from ${url}`);
+  return res.json();
+}
+
+async function drainAgentPrompt(agentId, content) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30_000);
+  try {
+    const res = await fetch(`${DELULU_AGENCY_URL}/code-agents/${agentId}/prompt`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content }),
+      signal: controller.signal,
+    });
+    if (!res.ok) throw new Error(`Prompt failed: HTTP ${res.status}`);
+    // Drain the SSE stream until done or error
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value, { stream: true });
+      for (const line of chunk.split('\n')) {
+        if (!line.startsWith('data:')) continue;
+        let evt;
+        try { evt = JSON.parse(line.slice(5).trim()); } catch { /* ignore malformed lines */ }
+        if (!evt) continue;
+        if (evt.type === 'done') return;
+        if (evt.type === 'error') throw new Error(evt.content || 'Agent error during context prompt');
+      }
+    }
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 const server = http.createServer((req, res) => {
@@ -559,6 +600,128 @@ const server = http.createServer((req, res) => {
     const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'application/javascript', '.json': 'application/json', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.gif': 'image/gif', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.woff2': 'font/woff2', '.woff': 'font/woff' }[ext] || 'application/octet-stream';
     res.writeHead(200, { 'Content-Type': mime });
     res.end(fs.readFileSync(filePath));
+    return;
+  }
+
+  // POST /api/agent/:site/start — ensure workspace, start code agent, send context prompt
+  const agentStartMatch = req.method === 'POST' && pathname.match(/^\/api\/agent\/([^/]+)\/start$/);
+  if (agentStartMatch) {
+    let siteName;
+    try { siteName = decodeURIComponent(agentStartMatch[1]); } catch {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Bad site name' })); return;
+    }
+    const siteDir = path.resolve(DESIGN_SYSTEM_DIR, siteName);
+    if (!siteDir.startsWith(DESIGN_SYSTEM_DIR + path.sep) || !fs.existsSync(siteDir)) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Site not found' })); return;
+    }
+
+    (async () => {
+      // 1. Ensure workspace exists
+      const workspaceDir = ensureWorkspace(siteName);
+
+      // 2. Start (or retrieve) agent via delulu-agency
+      const startAgent = async () => {
+        const startRes = await fetchJSON(`${DELULU_AGENCY_URL}/code-agents`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ working_dir: workspaceDir }),
+        });
+        siteAgents[siteName] = startRes.agent_id;
+        return startRes.agent_id;
+      };
+      const usedCached = Boolean(siteAgents[siteName]);
+      let agentId = siteAgents[siteName] || await startAgent();
+      const contextPrompt = [
+        `You are a code editing agent for the "${siteName}" design system.`,
+        `Your working directory contains all the site files. The landing page HTML/CSS lives in landing-page/.`,
+        `Design tokens (CSS custom properties) are in landing-page/styles/tokens.css.`,
+        `When making visual changes, prefer editing CSS variables in tokens.css first, then component CSS.`,
+        `Only modify files inside landing-page/ unless explicitly asked otherwise.`,
+        `Keep changes minimal and focused. Do not add new dependencies.`,
+        `Acknowledge this setup with a single word: Ready`,
+      ].join(' ');
+
+      // 3. Send context prompt and drain SSE (wait for "Ready")
+      // If drain fails with a cached agent ID, the agent may be stale — recreate and retry once.
+      try {
+        await drainAgentPrompt(agentId, contextPrompt);
+      } catch (err) {
+        if (usedCached) {
+          delete siteAgents[siteName];
+          agentId = await startAgent();
+          await drainAgentPrompt(agentId, contextPrompt);
+        } else {
+          throw err;
+        }
+      }
+
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        agentId,
+        iframeUrl: `/workspace/${encodeURIComponent(siteName)}/landing-page/index.html`,
+      }));
+    })().catch(err => {
+      log.major('Agent start failed', { message: err.message });
+      res.writeHead(503, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'delulu-agency unavailable: ' + err.message }));
+    });
+    return;
+  }
+
+  // POST /api/agent/:site/prompt — proxy SSE from delulu-agency to client
+  const agentPromptMatch = req.method === 'POST' && pathname.match(/^\/api\/agent\/([^/]+)\/prompt$/);
+  if (agentPromptMatch) {
+    let siteName;
+    try { siteName = decodeURIComponent(agentPromptMatch[1]); } catch {
+      res.writeHead(400); res.end('Bad Request'); return;
+    }
+    const agentId = siteAgents[siteName];
+    if (!agentId) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Agent not started. Call /start first.' })); return;
+    }
+
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', async () => {
+      let content;
+      try { content = JSON.parse(body).content; } catch {
+        res.writeHead(400); res.end('Bad Request'); return;
+      }
+      if (!content) { res.writeHead(400); res.end('Missing content'); return; }
+
+      try {
+        const upstream = await fetch(`${DELULU_AGENCY_URL}/code-agents/${agentId}/prompt`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content }),
+        });
+        if (!upstream.ok) {
+          res.writeHead(502, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: `Agency returned ${upstream.status}` })); return;
+        }
+        res.writeHead(200, {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+        });
+        const reader = upstream.body.getReader();
+        const decoder = new TextDecoder();
+        const pump = async () => {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) { res.end(); return; }
+            res.write(decoder.decode(value, { stream: true }));
+          }
+        };
+        pump().catch(() => res.end());
+      } catch (err) {
+        res.writeHead(503, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Agency unavailable: ' + err.message }));
+      }
+    });
     return;
   }
 
