@@ -2454,10 +2454,12 @@ function renderVideosAndMedia(videos) {
       if (video.attributes.muted) html += '<span class="badge">muted</span>';
       html += '</div>';
       html += '<div class="video-props">';
-      html += `<div class="grid-prop-row">
+      if (video.position) {
+        html += `<div class="grid-prop-row">
         <span class="grid-prop-key">Dimensions</span>
         <span class="grid-prop-value">${Math.round(video.position.width)} × ${Math.round(video.position.height)}</span>
       </div>`;
+      }
       if (video.sources && video.sources.length > 0) {
         html += `<div class="grid-prop-row">
           <span class="grid-prop-key">Source</span>
