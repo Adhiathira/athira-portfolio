@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor</title>
+  <link rel="stylesheet" href="/editor-assets/editor.css">
+</head>
+<body>
+  <!-- Header bar -->
+  <header class="editor-header">
+    <a href="/" class="editor-back">← Back</a>
+    <span class="editor-site-name" id="editor-site-name"></span>
+    <nav class="editor-page-tabs" id="editor-page-tabs">
+      <!-- page tab buttons rendered by editor.js -->
+    </nav>
+    <button class="editor-save-btn" id="editor-save-btn">Save Variant</button>
+  </header>
+
+  <!-- Main content area -->
+  <main class="editor-main">
+    <!-- Landing page preview iframe -->
+    <div class="editor-preview">
+      <iframe
+        id="editor-iframe"
+        class="editor-iframe"
+        title="Landing page preview"
+        sandbox="allow-scripts allow-same-origin"
+      ></iframe>
+    </div>
+
+    <!-- Right sidebar -->
+    <aside class="editor-sidebar" id="editor-sidebar">
+      <!-- Accordion sections rendered by editor.js -->
+      <div class="editor-sidebar-loading">Loading tokens…</div>
+    </aside>
+  </main>
+
+  <!-- Save modal -->
+  <div class="editor-modal-overlay" id="editor-modal" hidden>
+    <div class="editor-modal">
+      <h2 class="editor-modal-title">Save Variant</h2>
+      <label class="editor-modal-label" for="variant-name-input">Variant name</label>
+      <input
+        type="text"
+        id="variant-name-input"
+        class="editor-modal-input"
+        placeholder="e.g. dark-mode-draft"
+        autocomplete="off"
+      >
+      <p class="editor-modal-hint">Only lowercase letters, numbers, hyphens, and underscores</p>
+      <p class="editor-modal-error" id="modal-error" hidden></p>
+      <div class="editor-modal-actions">
+        <button class="editor-modal-cancel" id="modal-cancel">Cancel</button>
+        <button class="editor-modal-confirm" id="modal-confirm">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*__EDITOR_SITE__*/
+
+    // Basic modal toggle — full save flow handled by Task 8
+    const saveBtn = document.getElementById('editor-save-btn');
+    const modal = document.getElementById('editor-modal');
+    const cancelBtn = document.getElementById('modal-cancel');
+
+    if (saveBtn && modal && cancelBtn) {
+      saveBtn.addEventListener('click', () => { modal.removeAttribute('hidden'); });
+      cancelBtn.addEventListener('click', () => { modal.setAttribute('hidden', ''); });
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.setAttribute('hidden', '');
+      });
+    }
+  </script>
+  <script src="/editor-assets/editor.js" type="module"></script>
+</body>
+</html>
