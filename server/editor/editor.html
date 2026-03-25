@@ -29,10 +29,46 @@
       ></iframe>
     </div>
 
-    <!-- Right sidebar -->
-    <aside class="editor-sidebar" id="editor-sidebar">
-      <!-- Accordion sections rendered by editor.js -->
-      <div class="editor-sidebar-loading">Loading tokens…</div>
+    <!-- Right sidebar with tab bar -->
+    <aside class="editor-sidebar-wrap">
+
+      <!-- Tab bar: Tokens / Agent -->
+      <div class="editor-sidebar-tabs">
+        <button class="editor-sidebar-tab active" id="tab-tokens" data-tab="tokens">Tokens</button>
+        <button class="editor-sidebar-tab" id="tab-agent" data-tab="agent">Agent</button>
+      </div>
+
+      <!-- Tokens panel (existing content) -->
+      <div class="editor-sidebar" id="editor-sidebar" data-panel="tokens">
+        <div class="editor-sidebar-loading">Loading tokens…</div>
+      </div>
+
+      <!-- Agent panel (new) -->
+      <div class="editor-agent-panel" id="editor-agent-panel" data-panel="agent" hidden>
+
+        <!-- Agent start status -->
+        <div class="editor-agent-status" id="editor-agent-status">
+          <span class="editor-agent-status-dot" id="editor-agent-status-dot"></span>
+          <span class="editor-agent-status-text" id="editor-agent-status-text">Click Agent tab to start</span>
+        </div>
+
+        <!-- Chat message history -->
+        <div class="editor-agent-messages" id="editor-agent-messages"></div>
+
+        <!-- Input bar -->
+        <div class="editor-agent-input-bar">
+          <textarea
+            id="editor-agent-input"
+            class="editor-agent-input"
+            placeholder="Ask the agent to change something…"
+            rows="2"
+            disabled
+          ></textarea>
+          <button id="editor-agent-send" class="editor-agent-send" disabled>Send</button>
+        </div>
+
+      </div>
+
     </aside>
   </main>
 
