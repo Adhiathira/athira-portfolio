@@ -45,6 +45,9 @@ async function init() {
 
   // Wire save variant modal and POST flow
   initSaveFlow();
+
+  // Wire agent chat panel
+  initAgentPanel();
 }
 
 init().catch(err => {
@@ -650,4 +653,178 @@ function initSaveFlow() {
       nameInput.classList.add('editor-modal-input--invalid');
     }
   });
+}
+
+// ─── Agent Panel ────────────────────────────────────────────────────────────
+
+function initAgentPanel() {
+  const tabTokens   = document.getElementById('tab-tokens');
+  const tabAgent    = document.getElementById('tab-agent');
+  const tokenPanel  = document.getElementById('editor-sidebar');
+  const agentPanel  = document.getElementById('editor-agent-panel');
+  const statusDot   = agentPanel.querySelector('.editor-agent-status-dot');
+  const statusText  = document.getElementById('editor-agent-status-text');
+  const messages    = document.getElementById('editor-agent-messages');
+  const input       = document.getElementById('editor-agent-input');
+  const sendBtn     = document.getElementById('editor-agent-send');
+
+  let agentStarted  = false;
+  let agentBusy     = false;
+
+  // ── Tab switching ────────────────────────────────────────────────────────
+
+  tabTokens.addEventListener('click', () => {
+    tabTokens.classList.add('active');
+    tabAgent.classList.remove('active');
+    tokenPanel.removeAttribute('hidden');
+    agentPanel.setAttribute('hidden', '');
+    // Restore iframe to source URL and reapply any in-memory overrides
+    iframe.src = iframe.dataset.sourceUrl || iframe.src;
+    iframe.addEventListener('load', reapplyAllOverrides, { once: true });
+  });
+
+  tabAgent.addEventListener('click', async () => {
+    tabTokens.classList.remove('active');
+    tabAgent.classList.add('active');
+    tokenPanel.setAttribute('hidden', '');
+    agentPanel.removeAttribute('hidden');
+
+    if (!agentStarted) {
+      await startAgent();
+    }
+  });
+
+  // ── Agent start ──────────────────────────────────────────────────────────
+
+  async function startAgent() {
+    setStatus('starting', 'Starting agent…');
+    try {
+      const res = await fetch(`/api/agent/${encodeURIComponent(SITE)}/start`, { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+
+      // User may have switched away while fetch was in-flight; bail without mutating DOM
+      if (!tabAgent.classList.contains('active')) return;
+
+      // Store original iframe src before swapping
+      if (!iframe.dataset.sourceUrl) {
+        iframe.dataset.sourceUrl = iframe.src;
+      }
+      iframe.src = data.iframeUrl;
+
+      agentStarted = true;
+      setStatus('ready', 'Agent ready');
+      input.disabled = false;
+      sendBtn.disabled = false;
+      input.focus();
+    } catch (err) {
+      setStatus('error', 'Failed to start: ' + err.message);
+    }
+  }
+
+  // ── Send prompt ──────────────────────────────────────────────────────────
+
+  sendBtn.addEventListener('click', sendPrompt);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendPrompt(); }
+  });
+
+  async function sendPrompt() {
+    const content = input.value.trim();
+    if (!content || agentBusy) return;
+
+    input.value = '';
+    agentBusy = true;
+    sendBtn.disabled = true;
+    input.disabled = true;
+
+    appendMessage('user', content);
+
+    // Placeholder for agent response (filled as SSE streams in)
+    const agentMsgEl = appendMessage('agent', '');
+
+    try {
+      const res = await fetch(`/api/agent/${encodeURIComponent(SITE)}/prompt`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+        agentMsgEl.textContent = 'Error: ' + (err.error || 'Unknown error');
+        return;
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        const lines = buffer.split('\n');
+        buffer = lines.pop(); // keep incomplete last line
+
+        for (const line of lines) {
+          if (!line.startsWith('data:')) continue;
+          let evt;
+          try { evt = JSON.parse(line.slice(5).trim()); } catch { continue; }
+
+          if (evt.type === 'output') {
+            appendStatusLine(evt.content);
+          } else if (evt.type === 'done') {
+            agentMsgEl.textContent = evt.content;
+            scrollMessages();
+            // Only reload iframe if Agent tab is still active (user may have switched to Tokens)
+            if (tabAgent.classList.contains('active')) {
+              iframe.src = iframe.src;
+            }
+            setStatus('ready', 'Agent ready');
+          } else if (evt.type === 'error') {
+            agentMsgEl.textContent = 'Error: ' + evt.content;
+            setStatus('error', evt.content);
+          }
+        }
+      }
+    } catch (err) {
+      agentMsgEl.textContent = 'Network error: ' + err.message;
+      setStatus('error', err.message);
+    } finally {
+      agentBusy = false;
+      sendBtn.disabled = false;
+      input.disabled = false;
+      input.focus();
+    }
+  }
+
+  // ── Helpers ──────────────────────────────────────────────────────────────
+
+  function appendMessage(role, text) {
+    const el = document.createElement('div');
+    el.className = `editor-agent-msg editor-agent-msg--${role}`;
+    el.textContent = text;
+    messages.appendChild(el);
+    scrollMessages();
+    return el;
+  }
+
+  function appendStatusLine(text) {
+    const el = document.createElement('div');
+    el.className = 'editor-agent-msg editor-agent-msg--status';
+    el.textContent = text;
+    messages.appendChild(el);
+    scrollMessages();
+  }
+
+  function scrollMessages() {
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function setStatus(state, text) {
+    statusDot.className = 'editor-agent-status-dot' + (state ? ' ' + state : '');
+    statusText.textContent = text;
+  }
 }
