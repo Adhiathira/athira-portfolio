@@ -2,7 +2,8 @@
 // EDITOR_SITE is injected by the server before this module loads
 const SITE = EDITOR_SITE;
 let tokenData = null;
-const overrides = {}; // { cssVarName: newValue } — for Task 7
+const overrides = {}; // { cssVarName: newValue }
+const iframe = document.getElementById('editor-iframe');
 
 const SECTION_ORDER = ['colors', 'typography', 'spacing', 'grid', 'motion', 'interactions', 'assets'];
 
@@ -26,16 +27,44 @@ async function init() {
   renderPageTabs(tokenData.pages);
 
   if (tokenData.pages && tokenData.pages.length > 0) {
-    document.getElementById('editor-iframe').src = tokenData.pages[0].url;
+    iframe.src = tokenData.pages[0].url;
   }
 
   renderSidebar(tokenData);
+
+  // Wire all controls and page tab switching
+  wireControls();
+  initPageTabs();
+
+  // Load fonts then init font pickers
+  await loadFonts();
+  initFontPickers();
+
+  // Re-apply overrides when iframe first loads
+  iframe.addEventListener('load', reapplyAllOverrides, { once: true });
 }
 
 init().catch(err => {
   const sidebar = document.getElementById('editor-sidebar');
   if (sidebar) sidebar.textContent = 'Failed to load tokens: ' + err.message;
 });
+
+// ─── Override Engine ─────────────────────────────────────────────────────────
+
+function applyOverride(varName, value) {
+  overrides[varName] = value;
+  if (!iframe || !iframe.contentDocument) return;
+  iframe.contentDocument.documentElement.style.setProperty(varName, value);
+}
+
+function reapplyAllOverrides() {
+  if (!iframe || !iframe.contentDocument) return;
+  const root = iframe.contentDocument.documentElement;
+  for (const [varName, value] of Object.entries(overrides)) {
+    root.style.setProperty(varName, value);
+  }
+  reapplyFontLinks();
+}
 
 // ─── Page Tabs ───────────────────────────────────────────────────────────────
 
@@ -55,12 +84,183 @@ function renderPageTabs(pages) {
     btn.addEventListener('click', () => {
       container.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
-      const iframe = document.getElementById('editor-iframe');
-      if (iframe) iframe.src = page.url;
     });
 
     container.appendChild(btn);
   });
+}
+
+// ─── Control Wiring ──────────────────────────────────────────────────────────
+
+function wireControls() {
+  const sidebar = document.getElementById('editor-sidebar');
+
+  // Color inputs — fire on every input event for instant feedback
+  sidebar.querySelectorAll('.editor-ctrl--color').forEach(input => {
+    input.addEventListener('input', e => {
+      applyOverride(e.target.dataset.var, e.target.value);
+    });
+  });
+
+  // Range inputs (weight, duration, opacity) — fire on input, reconstruct unit
+  sidebar.querySelectorAll('.editor-ctrl--range').forEach(input => {
+    input.addEventListener('input', e => {
+      const varName = e.target.dataset.var;
+      const rawValue = parseFloat(e.target.value);
+      let value;
+      if (varName.includes('duration')) {
+        value = (rawValue / 1000).toFixed(3) + 's';
+      } else {
+        value = String(rawValue);
+      }
+      const label = e.target.nextElementSibling;
+      if (label && label.classList.contains('editor-ctrl-value')) label.textContent = value;
+      applyOverride(varName, value);
+    });
+  });
+
+  // Select inputs (easing) — fire on change
+  sidebar.querySelectorAll('.editor-ctrl--select').forEach(select => {
+    select.addEventListener('change', e => {
+      applyOverride(e.target.dataset.var, e.target.value);
+    });
+  });
+
+  // Text inputs — fire on change (not input) to avoid partial values
+  sidebar.querySelectorAll('.editor-ctrl--text').forEach(input => {
+    input.addEventListener('change', e => {
+      applyOverride(e.target.dataset.var, e.target.value);
+    });
+  });
+
+  // Clamp inputs — reconstruct clamp() when any part changes
+  sidebar.querySelectorAll('.editor-clamp').forEach(clampContainer => {
+    clampContainer.querySelectorAll('input').forEach(input => {
+      input.addEventListener('change', () => {
+        const min  = clampContainer.querySelector('[data-part="min"]').value;
+        const pref = clampContainer.querySelector('[data-part="pref"]').value;
+        const max  = clampContainer.querySelector('[data-part="max"]').value;
+        applyOverride(clampContainer.dataset.var, 'clamp(' + min + ', ' + pref + ', ' + max + ')');
+      });
+    });
+  });
+}
+
+function initPageTabs() {
+  const nav = document.getElementById('editor-page-tabs');
+  if (!nav) return;
+  nav.addEventListener('click', e => {
+    const tab = e.target.closest('.editor-tab');
+    if (!tab) return;
+    nav.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    iframe.src = tab.dataset.url;
+    iframe.addEventListener('load', reapplyAllOverrides, { once: true });
+  });
+}
+
+// ─── Google Fonts Picker ─────────────────────────────────────────────────────
+
+let allFonts = [];
+
+async function loadFonts() {
+  try {
+    const res = await fetch('/api/google-fonts');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    allFonts = Array.isArray(data) ? data : [];
+  } catch (e) {
+    // Network failure or non-2xx response — font picker will show empty results
+    allFonts = [];
+  }
+}
+
+function initFontPickers() {
+  const sidebar = document.getElementById('editor-sidebar');
+  sidebar.querySelectorAll('.editor-font-picker').forEach(picker => {
+    const input = picker.querySelector('.editor-ctrl--font-search');
+    const dropdown = picker.querySelector('.editor-font-dropdown');
+    const varName = picker.dataset.var;
+
+    input.addEventListener('focus', () => showFontDropdown(input, dropdown, varName));
+    input.addEventListener('input', () => filterFontDropdown(input, dropdown, varName));
+
+    document.addEventListener('click', e => {
+      if (!picker.contains(e.target)) dropdown.hidden = true;
+    });
+  });
+}
+
+function showFontDropdown(input, dropdown, varName) {
+  filterFontDropdown(input, dropdown, varName);
+  dropdown.hidden = false;
+}
+
+function filterFontDropdown(input, dropdown, varName) {
+  const query = input.value.toLowerCase();
+  const matches = allFonts
+    .filter(f => f.family.toLowerCase().includes(query))
+    .slice(0, 20);
+
+  if (matches.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'editor-font-empty';
+    empty.textContent = 'No fonts found';
+    dropdown.textContent = '';
+    dropdown.appendChild(empty);
+    return;
+  }
+
+  dropdown.textContent = '';
+  matches.forEach(f => {
+    const btn = document.createElement('button');
+    btn.className = 'editor-font-option';
+    btn.dataset.family = f.family;
+    btn.dataset.category = f.category;
+    btn.textContent = f.family;
+    btn.addEventListener('click', () => selectFont(f.family, f.category, input, dropdown, varName));
+    dropdown.appendChild(btn);
+  });
+}
+
+function selectFont(family, category, input, dropdown, varName) {
+  input.value = family;
+  dropdown.hidden = true;
+  loadFontIntoIframe(family);
+  const cssValue = "'" + family + "', " + category;
+  applyOverride(varName, cssValue);
+}
+
+// ─── Font Link Tracking ───────────────────────────────────────────────────────
+
+const loadedFonts = new Set();
+const fontLinks = {}; // family -> Google Fonts URL
+
+function loadFontIntoIframe(family) {
+  if (loadedFonts.has(family)) return;
+  if (!iframe || !iframe.contentDocument) return;
+  loadedFonts.add(family);
+
+  const url = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(family) + ':wght@100;200;300;400;500;600;700;800;900&display=swap';
+  const link = iframe.contentDocument.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = url;
+  link.dataset.googleFont = family;
+  iframe.contentDocument.head.appendChild(link);
+  fontLinks[family] = url;
+}
+
+function reapplyFontLinks() {
+  if (!iframe || !iframe.contentDocument) return;
+  for (const [family, url] of Object.entries(fontLinks)) {
+    if (!iframe.contentDocument.querySelector('link[data-google-font="' + family + '"]')) {
+      const link = iframe.contentDocument.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = url;
+      link.dataset.googleFont = family;
+      iframe.contentDocument.head.appendChild(link);
+    }
+  }
 }
 
 // ─── Sidebar ─────────────────────────────────────────────────────────────────
