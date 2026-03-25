@@ -20,6 +20,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 5509;
 const log = createLogger('server');
 const DESIGN_SYSTEM_DIR = path.join(__dirname, 'design-system');
+const DELULU_AGENCY_URL = process.env.DELULU_AGENCY_URL || 'http://localhost:9123';
+const WORKSPACES_DIR = path.join(__dirname, 'workspaces');
 
 function getSiteNames() {
   if (!fs.existsSync(DESIGN_SYSTEM_DIR)) return [];
@@ -48,6 +50,16 @@ function loadSiteUrls() {
   } catch {
     return new Map();
   }
+}
+
+function ensureWorkspace(siteName) {
+  const src  = path.join(DESIGN_SYSTEM_DIR, siteName);
+  const dest = path.join(WORKSPACES_DIR, siteName);
+  if (!fs.existsSync(dest)) {
+    fs.mkdirSync(dest, { recursive: true });
+    fs.cpSync(src, dest, { recursive: true });
+  }
+  return dest;
 }
 
 const server = http.createServer((req, res) => {
@@ -521,6 +533,32 @@ const server = http.createServer((req, res) => {
         res.end(JSON.stringify({ error: err.message }));
       }
     });
+    return;
+  }
+
+  // GET /workspace/:site/* — serve files from workspaces/<site>/
+  const workspaceMatch = pathname.match(/^\/workspace\/([^/]+)(\/.*)?$/);
+  if (workspaceMatch) {
+    let siteName;
+    try { siteName = decodeURIComponent(workspaceMatch[1]); } catch {
+      res.writeHead(400); res.end('Bad Request'); return;
+    }
+    if (siteName.includes('/') || siteName.includes('\\')) {
+      res.writeHead(400); res.end('Bad Request'); return;
+    }
+    const restRaw = (workspaceMatch[2] || '').replace(/^\//, '') || 'index.html';
+    const siteRoot = path.join(WORKSPACES_DIR, siteName);
+    const filePath = path.resolve(siteRoot, ...restRaw.split('/'));
+    if (!filePath.startsWith(siteRoot + path.sep)) {
+      res.writeHead(400); res.end('Bad Request'); return;
+    }
+    let stat;
+    try { stat = fs.statSync(filePath); } catch { /* not found */ }
+    if (!stat?.isFile()) { res.writeHead(404); res.end('Not Found'); return; }
+    const ext = path.extname(filePath).toLowerCase();
+    const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'application/javascript', '.json': 'application/json', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.gif': 'image/gif', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.woff2': 'font/woff2', '.woff': 'font/woff' }[ext] || 'application/octet-stream';
+    res.writeHead(200, { 'Content-Type': mime });
+    res.end(fs.readFileSync(filePath));
     return;
   }
 
