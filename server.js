@@ -8,6 +8,7 @@ import { createLogger } from './lib/logger.js';
 import { readFontCatalog, readFontDb, writeFontDb } from './server/font-db.js';
 import { saveVariant } from './server/save-variant.js';
 import { parseEditorTokens } from './server/editor-tokens.js';
+import { initDb } from './server/db.js';
 
 // Tracks running Next.js dev servers: siteName -> { process, port }
 const nextjsProcesses = new Map();
@@ -738,6 +739,13 @@ server.on('error', err => {
   throw err;
 });
 
+try {
+  await initDb();
+} catch (err) {
+  console.error('[db] Failed to connect to Postgres:', err.message);
+  console.error('[db] Make sure the database is running: docker compose up -d');
+  process.exit(1);
+}
 server.listen(PORT, () => {
   log.info(`Design System Browser running at http://localhost:${PORT}`);
 });
