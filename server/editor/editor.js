@@ -42,6 +42,9 @@ async function init() {
 
   // Re-apply overrides when iframe first loads
   iframe.addEventListener('load', reapplyAllOverrides, { once: true });
+
+  // Wire save variant modal and POST flow
+  initSaveFlow();
 }
 
 init().catch(err => {
@@ -55,6 +58,16 @@ function applyOverride(varName, value) {
   overrides[varName] = value;
   if (!iframe || !iframe.contentDocument) return;
   iframe.contentDocument.documentElement.style.setProperty(varName, value);
+  updateUnsavedIndicator();
+}
+
+// ─── Unsaved Indicator ────────────────────────────────────────────────────────
+
+function updateUnsavedIndicator() {
+  const saveBtn = document.getElementById('editor-save-btn');
+  if (!saveBtn) return;
+  const hasDirty = Object.keys(overrides).length > 0;
+  saveBtn.classList.toggle('editor-save-btn--dirty', hasDirty);
 }
 
 function reapplyAllOverrides() {
@@ -518,4 +531,123 @@ function parseDuration(value) {
 function escapeAttr(str) {
   if (!str) return '';
   return String(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ─── Save Variant Flow ────────────────────────────────────────────────────────
+
+const NAME_REGEX = /^[a-z0-9][a-z0-9\-_]{1,63}$/;
+
+function initSaveFlow() {
+  const saveBtn     = document.getElementById('editor-save-btn');
+  const modal       = document.getElementById('editor-modal');
+  const cancelBtn   = document.getElementById('modal-cancel');
+  const confirmBtn  = document.getElementById('modal-confirm');
+  const nameInput   = document.getElementById('variant-name-input');
+  const errorEl     = document.getElementById('modal-error');
+
+  if (!saveBtn || !modal || !cancelBtn || !confirmBtn || !nameInput || !errorEl) return;
+
+  function openModal() {
+    nameInput.value = '';
+    nameInput.classList.remove('editor-modal-input--invalid');
+    errorEl.textContent = '';
+    errorEl.hidden = true;
+    modal.removeAttribute('hidden');
+    nameInput.focus();
+  }
+
+  function closeModal() {
+    modal.setAttribute('hidden', '');
+  }
+
+  function showError(msg) {
+    errorEl.textContent = msg;
+    errorEl.hidden = false;
+  }
+
+  async function doSave() {
+    if (confirmBtn.disabled) return;
+    const name = nameInput.value.trim();
+
+    if (!NAME_REGEX.test(name)) {
+      nameInput.classList.add('editor-modal-input--invalid');
+      showError('Name must be lowercase letters, numbers, hyphens, or underscores (2–64 chars, starting with a letter or number).');
+      return;
+    }
+
+    // Disable confirm button for the duration of the POST
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = 'Saving…';
+
+    try {
+      const res = await fetch('/api/save-variant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sourceSite: SITE,
+          variantName: name,
+          overrides: { ...overrides },
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        // Redirect to the newly-saved design system
+        window.location.href = '/site/' + encodeURIComponent(name);
+        return;
+      }
+
+      // Non-2xx response — surface server error inline
+      const msg = data && data.error
+        ? data.error
+        : 'Save failed (HTTP ' + res.status + '). Please try again.';
+
+      if (res.status === 409) {
+        showError('That name is already taken. Choose a different name.');
+      } else {
+        showError(msg);
+      }
+    } catch (err) {
+      showError('Network error. Check your connection and try again.');
+    } finally {
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = 'Save';
+    }
+  }
+
+  // Open modal when Save Variant button is clicked
+  saveBtn.addEventListener('click', openModal);
+
+  // Cancel button closes modal
+  cancelBtn.addEventListener('click', closeModal);
+
+  // Click outside modal dialog closes it
+  modal.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if (modal.hasAttribute('hidden')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Enter' && document.activeElement !== cancelBtn) doSave();
+  });
+
+  // Confirm button triggers save
+  confirmBtn.addEventListener('click', doSave);
+
+  // Real-time name input validation
+  nameInput.addEventListener('input', () => {
+    const val = nameInput.value.trim();
+    if (val === '') {
+      nameInput.classList.remove('editor-modal-input--invalid');
+      return;
+    }
+    if (NAME_REGEX.test(val)) {
+      nameInput.classList.remove('editor-modal-input--invalid');
+    } else {
+      nameInput.classList.add('editor-modal-input--invalid');
+    }
+  });
 }
