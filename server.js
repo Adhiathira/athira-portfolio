@@ -6,6 +6,7 @@ import { spawn } from 'node:child_process';
 import { renderHome, renderSite } from './server/render.js';
 import { createLogger } from './lib/logger.js';
 import { readFontCatalog, readFontDb, writeFontDb } from './server/font-db.js';
+import { saveVariant } from './server/save-variant.js';
 
 // Tracks running Next.js dev servers: siteName -> { process, port }
 const nextjsProcesses = new Map();
@@ -413,6 +414,43 @@ const server = http.createServer((req, res) => {
     }[ext] || 'application/octet-stream';
     res.writeHead(200, { 'Content-Type': mime });
     res.end(fs.readFileSync(filePath));
+    return;
+  }
+
+  // POST /api/save-variant
+  if (req.method === 'POST' && pathname === '/api/save-variant') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', async () => {
+      let payload;
+      try {
+        payload = JSON.parse(body);
+      } catch {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Invalid JSON' }));
+        return;
+      }
+      if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Request body must be a JSON object' }));
+        return;
+      }
+      const { sourceSite, variantName, overrides } = payload;
+      if (!sourceSite || !variantName || typeof overrides !== 'object' || overrides === null || Array.isArray(overrides)) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Missing required fields: sourceSite, variantName, overrides' }));
+        return;
+      }
+      try {
+        const result = await saveVariant(DESIGN_SYSTEM_DIR, sourceSite, variantName, overrides);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(result));
+      } catch (err) {
+        const status = err.statusCode || 500;
+        res.writeHead(status, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    });
     return;
   }
 
