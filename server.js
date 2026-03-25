@@ -11,6 +11,9 @@ import { readFontCatalog, readFontDb, writeFontDb } from './server/font-db.js';
 const nextjsProcesses = new Map();
 let nextjsPortCounter = 5600;
 
+// In-memory cache for Google Fonts data
+let googleFontsCache = null;
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 5509;
 const log = createLogger('server');
@@ -348,6 +351,68 @@ const server = http.createServer((req, res) => {
       res.writeHead(302, { Location: `http://localhost:${port}` });
       res.end();
     }, 2000);
+    return;
+  }
+
+  // GET /api/google-fonts
+  if (req.method === 'GET' && pathname === '/api/google-fonts') {
+    if (!googleFontsCache) {
+      try {
+        const fontsPath = path.join(__dirname, 'server', 'data', 'google-fonts.json');
+        googleFontsCache = JSON.parse(fs.readFileSync(fontsPath, 'utf8'));
+      } catch (err) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Failed to load Google Fonts data' }));
+        return;
+      }
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(googleFontsCache));
+    return;
+  }
+
+  // GET /editor-assets/:file — serve static files from server/editor/ with path traversal protection
+  const editorAssetsMatch = pathname.match(/^\/editor-assets\/(.+)$/);
+  if (req.method === 'GET' && editorAssetsMatch) {
+    const EDITOR_DIR = path.join(__dirname, 'server', 'editor');
+    let fileName;
+    try {
+      fileName = decodeURIComponent(editorAssetsMatch[1]);
+    } catch {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    const filePath = path.resolve(EDITOR_DIR, ...fileName.split('/'));
+    if (!filePath.startsWith(EDITOR_DIR + path.sep)) {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    let stat;
+    try { stat = fs.statSync(filePath); } catch { /* not found */ }
+    if (!stat?.isFile()) {
+      res.writeHead(404);
+      res.end('Not Found');
+      return;
+    }
+    const ext = path.extname(filePath).toLowerCase();
+    const mime = {
+      '.html': 'text/html; charset=utf-8',
+      '.css': 'text/css',
+      '.js': 'application/javascript',
+      '.json': 'application/json',
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.png': 'image/png',
+      '.gif': 'image/gif',
+      '.svg': 'image/svg+xml',
+      '.webp': 'image/webp',
+      '.woff2': 'font/woff2',
+      '.woff': 'font/woff',
+    }[ext] || 'application/octet-stream';
+    res.writeHead(200, { 'Content-Type': mime });
+    res.end(fs.readFileSync(filePath));
     return;
   }
 
