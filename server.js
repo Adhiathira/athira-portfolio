@@ -7,6 +7,7 @@ import { renderHome, renderSite } from './server/render.js';
 import { createLogger } from './lib/logger.js';
 import { readFontCatalog, readFontDb, writeFontDb } from './server/font-db.js';
 import { saveVariant } from './server/save-variant.js';
+import { parseEditorTokens } from './server/editor-tokens.js';
 
 // Tracks running Next.js dev servers: siteName -> { process, port }
 const nextjsProcesses = new Map();
@@ -97,6 +98,75 @@ const server = http.createServer((req, res) => {
     const hasNextjsApp = fs.existsSync(path.join(nextjsDir, 'package.json'));
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
     res.end(renderSite(siteName, siteDir, registry, siteUrl, landingPageUrl, hasNextjsApp));
+    return;
+  }
+
+  // GET /site/:name/editor — serve editor shell HTML
+  const editorMatch = pathname.match(/^\/site\/([^/]+)\/editor$/);
+  if (req.method === 'GET' && editorMatch) {
+    let siteName;
+    try {
+      siteName = decodeURIComponent(editorMatch[1]);
+    } catch {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    const siteDir = path.resolve(DESIGN_SYSTEM_DIR, siteName);
+    if (!siteDir.startsWith(DESIGN_SYSTEM_DIR + path.sep)) {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    if (!fs.existsSync(siteDir)) {
+      res.writeHead(404);
+      res.end('Not Found');
+      return;
+    }
+    const landingPageFile = path.join(siteDir, 'landing-page', 'index.html');
+    if (!fs.existsSync(landingPageFile)) {
+      res.writeHead(404);
+      res.end('No landing page for this site');
+      return;
+    }
+    const editorHtmlPath = path.join(__dirname, 'server', 'editor', 'editor.html');
+    if (!fs.existsSync(editorHtmlPath)) {
+      res.writeHead(500);
+      res.end('Editor shell not yet built');
+      return;
+    }
+    const editorHtml = fs.readFileSync(editorHtmlPath, 'utf8');
+    const injected = editorHtml.replace('/*__EDITOR_SITE__*/', `const EDITOR_SITE = ${JSON.stringify(siteName)};`);
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end(injected);
+    return;
+  }
+
+  // GET /api/editor-tokens/:site — return parsed editor token data
+  const editorTokensMatch = req.method === 'GET' && pathname.match(/^\/api\/editor-tokens\/([^/]+)$/);
+  if (editorTokensMatch) {
+    let siteName;
+    try {
+      siteName = decodeURIComponent(editorTokensMatch[1]);
+    } catch {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    const siteDir = path.resolve(DESIGN_SYSTEM_DIR, siteName);
+    if (!siteDir.startsWith(DESIGN_SYSTEM_DIR + path.sep)) {
+      res.writeHead(400);
+      res.end('Bad Request');
+      return;
+    }
+    if (!fs.existsSync(siteDir)) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Site not found' }));
+      return;
+    }
+    const tokens = parseEditorTokens(siteDir, siteName);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(tokens));
     return;
   }
 

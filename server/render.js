@@ -510,6 +510,14 @@ header {
   color: var(--accent);
   border-bottom-color: var(--accent);
 }
+.site-hero-edit-btn {
+  background: rgba(255,255,255,0.10);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+.site-hero-edit-btn:hover {
+  background: rgba(255,255,255,0.18);
+}
 
 /* ─── Tab Bar ─── */
 .tab-bar {
@@ -3091,7 +3099,7 @@ export function renderSite(siteName, siteDir, registry, siteUrl = null, landingP
     <div class="site-hero-kicker">Design System Reference</div>
     <h1 class="site-hero-name">${esc(siteName)}</h1>
     ${siteUrl ? `<a class="site-hero-source" href="${esc(siteUrl)}" target="_blank" rel="noopener noreferrer">↗ Visit site</a>` : ''}
-    ${landingPageUrl ? `<a class="site-hero-source" href="${esc(landingPageUrl)}" target="_blank" rel="noopener noreferrer">↗ Landing page</a>` : ''}
+    ${landingPageUrl ? `<a class="site-hero-source" href="${esc(landingPageUrl)}" target="_blank" rel="noopener noreferrer">↗ Preview</a><a class="site-hero-source site-hero-edit-btn" href="/site/${encodeURIComponent(siteName)}/editor">✏ Edit</a>` : ''}
     ${hasNextjsApp ? `<a class="site-hero-source" href="/api/nextjs/${encodeURIComponent(siteName)}/launch" target="_blank" rel="noopener noreferrer">↗ Next.js app</a>` : ''}
   </div>
 
