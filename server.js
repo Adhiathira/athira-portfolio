@@ -8,7 +8,7 @@ import { createLogger } from './lib/logger.js';
 import { readFontCatalog, readFontDb, writeFontDb } from './server/font-db.js';
 import { saveVariant } from './server/save-variant.js';
 import { parseEditorTokens } from './server/editor-tokens.js';
-import { initDb } from './server/db.js';
+import { initDb, listWorkspaces, insertWorkspace, workspaceExists } from './server/db.js';
 
 // Tracks running Next.js dev servers: siteName -> { process, port }
 const nextjsProcesses = new Map();
@@ -102,6 +102,17 @@ async function drainAgentPrompt(agentId, content) {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+// ─── Workspace name validation (mirrors save-variant.js — not re-exported there) ─
+function isValidSegment(name) {
+  if (typeof name !== 'string') return false;
+  if (name.includes('/') || name.includes('..') || name === '.') return false;
+  return true;
+}
+
+function isValidVariantName(name) {
+  return /^[a-z0-9][a-z0-9\-_]{1,63}$/.test(name);
 }
 
 const server = http.createServer((req, res) => {
@@ -493,6 +504,86 @@ const server = http.createServer((req, res) => {
     }
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(googleFontsCache));
+    return;
+  }
+
+  // GET /api/workspaces?site=<source_site>
+  if (req.method === 'GET' && pathname === '/api/workspaces') {
+    const site = url.searchParams.get('site');
+    if (!site) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Missing site parameter' }));
+      return;
+    }
+    (async () => {
+      const rows = await listWorkspaces(site);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(rows));
+    })().catch(err => {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: err.message }));
+    });
+    return;
+  }
+
+  // POST /api/workspaces
+  if (req.method === 'POST' && pathname === '/api/workspaces') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', async () => {
+      let payload;
+      try {
+        payload = JSON.parse(body);
+      } catch {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Invalid JSON' }));
+        return;
+      }
+      if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Request body must be a JSON object' }));
+        return;
+      }
+      const { sourceSite, name } = payload;
+      if (!sourceSite || !name) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Missing required fields: sourceSite, name' }));
+        return;
+      }
+      if (!isValidSegment(sourceSite) || !isValidSegment(name)) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Invalid sourceSite or name: path traversal not allowed' }));
+        return;
+      }
+      if (!isValidVariantName(name)) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Invalid workspace name: must match /^[a-z0-9][a-z0-9\\-_]{1,63}$/' }));
+        return;
+      }
+      const srcPath = path.join(DESIGN_SYSTEM_DIR, sourceSite);
+      if (!fs.existsSync(srcPath)) {
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: `Source design-system not found: ${sourceSite}` }));
+        return;
+      }
+      const destPath = path.join(WORKSPACES_DIR, name);
+      if (fs.existsSync(destPath) || await workspaceExists(name)) {
+        res.writeHead(409, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Workspace name already exists' }));
+        return;
+      }
+      try {
+        fs.cpSync(srcPath, destPath, { recursive: true });
+        await insertWorkspace(name, sourceSite);
+      } catch (err) {
+        fs.rmSync(destPath, { recursive: true, force: true });
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message }));
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ ok: true, name }));
+    });
     return;
   }
 
