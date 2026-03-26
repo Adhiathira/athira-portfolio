@@ -518,6 +518,32 @@ header {
 .site-hero-edit-btn:hover {
   background: rgba(255,255,255,0.18);
 }
+button.site-hero-edit-btn {
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-decoration: none;
+  display: inline;
+}
+.ws-picker-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.ws-picker-modal { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; min-width: 360px; max-width: 480px; width: 100%; box-sizing: border-box; }
+.ws-picker-title { margin: 0 0 0.5rem; font-size: 1.15rem; color: var(--text); }
+.ws-picker-desc { margin: 0 0 1.25rem; color: var(--text-muted, #666); font-size: 0.875rem; }
+.ws-picker-combobox { position: relative; }
+.ws-picker-input { width: 100%; box-sizing: border-box; padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 4px; font-size: 0.9rem; background: var(--bg); color: var(--text); outline: none; }
+.ws-picker-input:focus { border-color: var(--accent); }
+.ws-picker-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; margin-top: 2px; list-style: none; padding: 0; max-height: 160px; overflow-y: auto; z-index: 10; }
+.ws-picker-option { padding: 0.45rem 0.75rem; cursor: pointer; font-size: 0.875rem; color: var(--text); }
+.ws-picker-option:hover { background: var(--accent); color: #fff; }
+.ws-picker-error { margin: 0.5rem 0 0; font-size: 0.8rem; color: #c0392b; }
+.ws-picker-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.25rem; }
+.ws-picker-btn { padding: 0.4rem 1rem; border-radius: 4px; border: none; cursor: pointer; font-size: 0.875rem; font-family: inherit; }
+.ws-picker-btn--cancel { background: var(--border); color: var(--text); }
+.ws-picker-btn--confirm { background: var(--accent); color: #fff; }
+.ws-picker-btn--confirm:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* ─── Tab Bar ─── */
 .tab-bar {
@@ -3101,7 +3127,7 @@ export function renderSite(siteName, siteDir, registry, siteUrl = null, landingP
     <div class="site-hero-kicker">Design System Reference</div>
     <h1 class="site-hero-name">${esc(siteName)}</h1>
     ${siteUrl ? `<a class="site-hero-source" href="${esc(siteUrl)}" target="_blank" rel="noopener noreferrer">↗ Visit site</a>` : ''}
-    ${landingPageUrl ? `<a class="site-hero-source" href="${esc(landingPageUrl)}" target="_blank" rel="noopener noreferrer">↗ Preview</a><a class="site-hero-source site-hero-edit-btn" href="/site/${encodeURIComponent(siteName)}/editor">✏ Edit</a>` : ''}
+    ${landingPageUrl ? `<a class="site-hero-source" href="${esc(landingPageUrl)}" target="_blank" rel="noopener noreferrer">↗ Preview</a><button class="site-hero-source site-hero-edit-btn" onclick="openWorkspacePicker()">✏ Edit</button>` : ''}
     ${hasNextjsApp ? `<a class="site-hero-source" href="/api/nextjs/${encodeURIComponent(siteName)}/launch" target="_blank" rel="noopener noreferrer">↗ Next.js app</a>` : ''}
   </div>
 
@@ -3238,7 +3264,124 @@ export function renderSite(siteName, siteDir, registry, siteUrl = null, landingP
         })
         .catch(() => {});
     }
+
+    // Workspace Picker
+    const WS_SITE = SITE_NAME;
+    let wsPickerWorkspaces = [];
+
+    async function openWorkspacePicker() {
+      document.getElementById('ws-picker-overlay').removeAttribute('hidden');
+      document.getElementById('ws-picker-input').focus();
+      try {
+        const res = await fetch('/api/workspaces?site=' + encodeURIComponent(WS_SITE));
+        wsPickerWorkspaces = await res.json();
+        renderWsDropdown(document.getElementById('ws-picker-input').value);
+      } catch (e) {
+        wsPickerWorkspaces = [];
+      }
+    }
+
+    function closeWorkspacePicker() {
+      document.getElementById('ws-picker-overlay').setAttribute('hidden', '');
+      document.getElementById('ws-picker-error').setAttribute('hidden', '');
+      document.getElementById('ws-picker-input').value = '';
+      document.getElementById('ws-picker-dropdown').setAttribute('hidden', '');
+    }
+
+    function renderWsDropdown(query) {
+      const list = document.getElementById('ws-picker-dropdown');
+      const q = query.toLowerCase();
+      const matches = wsPickerWorkspaces.filter(w => w.name.toLowerCase().includes(q));
+      if (matches.length === 0) { list.setAttribute('hidden', ''); return; }
+      list.replaceChildren();
+      matches.forEach(w => {
+        const li = document.createElement('li');
+        li.className = 'ws-picker-option';
+        li.textContent = w.name;
+        li.addEventListener('click', () => {
+          document.getElementById('ws-picker-input').value = w.name;
+          list.setAttribute('hidden', '');
+        });
+        list.appendChild(li);
+      });
+      list.removeAttribute('hidden');
+    }
+
+    document.getElementById('ws-picker-input').addEventListener('input', e => {
+      renderWsDropdown(e.target.value);
+    });
+
+    document.getElementById('ws-picker-overlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('ws-picker-overlay')) closeWorkspacePicker();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('ws-picker-overlay').hasAttribute('hidden') && e.key === 'Escape') {
+        closeWorkspacePicker();
+      }
+    });
+
+    const WS_NAME_RE = /^[a-z0-9][a-z0-9\-_]{1,63}$/;
+
+    async function confirmWorkspace() {
+      const name = document.getElementById('ws-picker-input').value.trim();
+      const errorEl = document.getElementById('ws-picker-error');
+      const confirmBtn = document.getElementById('ws-picker-confirm');
+
+      if (!WS_NAME_RE.test(name)) {
+        errorEl.textContent = 'Name must be lowercase letters, numbers, hyphens, or underscores (2\u201364 chars).';
+        errorEl.removeAttribute('hidden');
+        return;
+      }
+
+      const existing = wsPickerWorkspaces.find(w => w.name === name);
+      if (existing) {
+        window.location.href = '/workspace/' + encodeURIComponent(name) + '/editor';
+        return;
+      }
+
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Creating\u2026';
+      errorEl.setAttribute('hidden', '');
+
+      try {
+        const res = await fetch('/api/workspaces', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sourceSite: WS_SITE, name }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok) {
+          window.location.href = '/workspace/' + encodeURIComponent(name) + '/editor';
+          return;
+        }
+        errorEl.textContent = data.error || 'Failed to create workspace (HTTP ' + res.status + ')';
+        errorEl.removeAttribute('hidden');
+      } catch {
+        errorEl.textContent = 'Network error. Check your connection.';
+        errorEl.removeAttribute('hidden');
+      } finally {
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = 'Open';
+      }
+    }
   </script>
+
+  <div id="ws-picker-overlay" class="ws-picker-overlay" hidden>
+    <div class="ws-picker-modal" role="dialog" aria-modal="true" aria-labelledby="ws-picker-title">
+      <h2 id="ws-picker-title" class="ws-picker-title">Open Workspace</h2>
+      <p class="ws-picker-desc">Select an existing workspace or enter a new name to create one.</p>
+      <div class="ws-picker-combobox">
+        <input id="ws-picker-input" type="text" class="ws-picker-input" placeholder="workspace-name" autocomplete="off" spellcheck="false" />
+        <ul id="ws-picker-dropdown" class="ws-picker-dropdown" hidden></ul>
+      </div>
+      <p id="ws-picker-error" class="ws-picker-error" hidden></p>
+      <div class="ws-picker-actions">
+        <button class="ws-picker-btn ws-picker-btn--cancel" onclick="closeWorkspacePicker()">Cancel</button>
+        <button id="ws-picker-confirm" class="ws-picker-btn ws-picker-btn--confirm" onclick="confirmWorkspace()">Open</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>`;
 }
