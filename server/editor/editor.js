@@ -20,7 +20,8 @@ const SECTION_LABELS = {
 // ─── Init ────────────────────────────────────────────────────────────────────
 
 async function init() {
-  const res = await fetch(`/api/editor-tokens/${encodeURIComponent(SITE)}`);
+  const modeParam = (typeof EDITOR_MODE !== 'undefined' && EDITOR_MODE === 'workspace') ? '?mode=workspace' : '';
+  const res = await fetch(`/api/editor-tokens/${encodeURIComponent(SITE)}${modeParam}`);
   tokenData = await res.json();
 
   document.querySelector('.editor-site-name').textContent = SITE;

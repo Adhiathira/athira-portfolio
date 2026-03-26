@@ -201,7 +201,33 @@ const server = http.createServer((req, res) => {
       return;
     }
     const editorHtml = fs.readFileSync(editorHtmlPath, 'utf8');
-    const injected = editorHtml.replace('/*__EDITOR_SITE__*/', `const EDITOR_SITE = ${JSON.stringify(siteName)};`);
+    const injected = editorHtml
+      .replace('/*__EDITOR_SITE__*/', `const EDITOR_SITE = ${JSON.stringify(siteName)};`)
+      .replace('/*__EDITOR_MODE__*/', `const EDITOR_MODE = "site";`);
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end(injected);
+    return;
+  }
+
+  // GET /workspace/:name/editor — serve editor shell HTML for a workspace
+  const workspaceEditorMatch = req.method === 'GET' && pathname.match(/^\/workspace\/([^/]+)\/editor$/);
+  if (workspaceEditorMatch) {
+    let wsName;
+    try { wsName = decodeURIComponent(workspaceEditorMatch[1]); } catch {
+      res.writeHead(400); res.end('Bad Request'); return;
+    }
+    const wsDir = path.resolve(WORKSPACES_DIR, wsName);
+    if (!wsDir.startsWith(WORKSPACES_DIR + path.sep) || !fs.existsSync(wsDir)) {
+      res.writeHead(404); res.end('Workspace not found'); return;
+    }
+    const editorHtmlPath = path.join(__dirname, 'server', 'editor', 'editor.html');
+    if (!fs.existsSync(editorHtmlPath)) {
+      res.writeHead(500); res.end('Editor shell not yet built'); return;
+    }
+    const editorHtml = fs.readFileSync(editorHtmlPath, 'utf8');
+    const injected = editorHtml
+      .replace('/*__EDITOR_SITE__*/', `const EDITOR_SITE = ${JSON.stringify(wsName)};`)
+      .replace('/*__EDITOR_MODE__*/', `const EDITOR_MODE = "workspace";`);
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
     res.end(injected);
     return;
@@ -218,8 +244,10 @@ const server = http.createServer((req, res) => {
       res.end('Bad Request');
       return;
     }
-    const siteDir = path.resolve(DESIGN_SYSTEM_DIR, siteName);
-    if (!siteDir.startsWith(DESIGN_SYSTEM_DIR + path.sep)) {
+    const mode = url.searchParams.get('mode');
+    const baseDir = (mode === 'workspace') ? WORKSPACES_DIR : DESIGN_SYSTEM_DIR;
+    const siteDir = path.resolve(baseDir, siteName);
+    if (!siteDir.startsWith(baseDir + path.sep)) {
       res.writeHead(400);
       res.end('Bad Request');
       return;
