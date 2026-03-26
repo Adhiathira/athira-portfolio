@@ -27,7 +27,17 @@ async function init() {
   document.querySelector('.editor-site-name').textContent = SITE;
   renderPageTabs(tokenData.pages);
 
-  if (tokenData.pages && tokenData.pages.length > 0) {
+  if (typeof EDITOR_MODE !== 'undefined' && EDITOR_MODE === 'workspace') {
+    iframe.src = `/workspace/${encodeURIComponent(SITE)}/landing-page/index.html`;
+    // Hide Save Variant button; show workspace Save button
+    const saveVariantBtn = document.getElementById('editor-save-btn');
+    if (saveVariantBtn) saveVariantBtn.hidden = true;
+    const wsSaveBtn = document.getElementById('editor-ws-save-btn');
+    if (wsSaveBtn) {
+      wsSaveBtn.hidden = false;
+      wsSaveBtn.addEventListener('click', saveWorkspace);
+    }
+  } else if (tokenData.pages && tokenData.pages.length > 0) {
     iframe.src = tokenData.pages[0].url;
   }
 
@@ -55,6 +65,34 @@ init().catch(err => {
   const sidebar = document.getElementById('editor-sidebar');
   if (sidebar) sidebar.textContent = 'Failed to load tokens: ' + err.message;
 });
+
+// ─── Workspace Save ───────────────────────────────────────────────────────────
+
+async function saveWorkspace() {
+  const btn = document.getElementById('editor-ws-save-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+  try {
+    const res = await fetch(`/api/workspaces/${encodeURIComponent(SITE)}/tokens`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ overrides: { ...overrides } }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      alert('Save failed: ' + (data.error || 'Unknown error'));
+      btn.textContent = 'Save';
+      return;
+    }
+    btn.textContent = 'Saved!';
+    setTimeout(() => { btn.textContent = 'Save'; }, 2000);
+  } catch (err) {
+    alert('Network error: ' + err.message);
+    btn.textContent = 'Save';
+  } finally {
+    btn.disabled = false;
+  }
+}
 
 // ─── Override Engine ─────────────────────────────────────────────────────────
 

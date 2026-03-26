@@ -615,6 +615,60 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // POST /api/workspaces/:name/tokens — write CSS overrides in-place to workspace tokens.css
+  const wsTokensMatch = req.method === 'POST' && pathname.match(/^\/api\/workspaces\/([^/]+)\/tokens$/);
+  if (wsTokensMatch) {
+    let wsName;
+    try { wsName = decodeURIComponent(wsTokensMatch[1]); } catch {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Bad workspace name' })); return;
+    }
+    const wsDir = path.resolve(WORKSPACES_DIR, wsName);
+    if (!wsDir.startsWith(WORKSPACES_DIR + path.sep) || !fs.existsSync(wsDir)) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Workspace not found' })); return;
+    }
+
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', async () => {
+      try {
+        let payload;
+        try { payload = JSON.parse(body); } catch {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Invalid JSON' })); return;
+        }
+        if (typeof payload !== 'object' || payload === null) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Request body must be a JSON object' })); return;
+        }
+        const { overrides } = payload;
+        if (typeof overrides !== 'object' || overrides === null || Array.isArray(overrides)) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'overrides must be an object' })); return;
+        }
+
+        const tokensCssPath = path.join(wsDir, 'landing-page', 'styles', 'tokens.css');
+        if (!fs.existsSync(tokensCssPath)) {
+          res.writeHead(404, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'tokens.css not found in workspace' })); return;
+        }
+
+        const { applyOverridesToCss } = await import('./server/save-variant.js');
+        const original = fs.readFileSync(tokensCssPath, 'utf8');
+        const patched = applyOverridesToCss(original, overrides);
+        fs.writeFileSync(tokensCssPath, patched, 'utf8');
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: true }));
+      } catch (err) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Internal server error' }));
+      }
+    });
+    return;
+  }
+
   // GET /editor-assets/:file — serve static files from server/editor/ with path traversal protection
   const editorAssetsMatch = pathname.match(/^\/editor-assets\/(.+)$/);
   if (req.method === 'GET' && editorAssetsMatch) {

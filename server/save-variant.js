@@ -49,7 +49,7 @@ function isValidVariantName(name) {
  * @param {Record<string, string>} overrides - { "--css-var-name": "new-value" }
  * @returns {string} Patched CSS content
  */
-function applyOverridesToCss(cssContent, overrides) {
+export function applyOverridesToCss(cssContent, overrides) {
   let result = cssContent;
   for (const [varName, value] of Object.entries(overrides)) {
     // Reject non-CSS-custom-property keys — guards against empty/invalid keys
