@@ -1,0 +1,188 @@
+/* ==========================================================================
+   ATTORNEYS PAGE — Stone Ledger / Aravindan & Co.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Attorney profile section
+   -------------------------------------------------------------------------- */
+.attorney-profile {
+  background: var(--color-page-bg);
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
+  border-top: 1px solid var(--color-border-default);
+  position: relative;
+}
+
+/* Founding attorney — slightly elevated surface */
+.attorney-profile--founding {
+  background: var(--color-page-bg);
+  position: relative;
+}
+
+.attorney-profile--founding::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary-action) 0%, transparent 60%);
+}
+
+/* Alt background — subtle surface variation */
+.attorney-profile--alt-bg {
+  background: var(--color-surface-2);
+}
+
+/* Profile grid: portrait left, bio right */
+.attorney-profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* Reversed: bio left, portrait right */
+.attorney-profile-grid--reversed {
+  direction: rtl;
+}
+
+.attorney-profile-grid--reversed > * {
+  direction: ltr;
+}
+
+/* Portrait */
+.attorney-profile-portrait {
+  aspect-ratio: 2/3;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--color-surface-bg);
+  position: relative;
+  box-shadow: 0 12px 48px rgba(61, 57, 48, 0.1);
+}
+
+.attorney-profile-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Bio content */
+.attorney-profile-bio {
+  padding-top: 8px;
+}
+
+.attorney-meta {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.attorney-designation {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary-action);
+}
+
+.attorney-bar {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--color-muted-text);
+}
+
+.attorney-profile-name {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-transform: uppercase;
+  color: var(--color-heading-text);
+  margin: 0 0 28px 0;
+}
+
+.attorney-bio-body {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--color-body-text);
+  margin: 0 0 18px 0;
+}
+
+/* Practice tags */
+.attorney-practice-tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.attorney-tag {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-body-text);
+  border: 1px solid var(--color-border-default);
+  padding: 5px 12px;
+  border-radius: 18px;
+  background: transparent;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.attorney-tag:hover {
+  background: var(--color-primary-action);
+  border-color: var(--color-primary-action);
+  color: var(--color-page-bg);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .attorney-profile-grid,
+  .attorney-profile-grid--reversed {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    direction: ltr;
+  }
+
+  .attorney-profile-portrait {
+    aspect-ratio: 4/3;
+    max-height: 320px;
+  }
+
+  .attorney-profile {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+}
+
+@media (max-width: 600px) {
+  .attorney-profile {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .attorney-profile-portrait {
+    max-height: 240px;
+  }
+
+  .attorney-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

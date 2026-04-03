@@ -529,6 +529,7 @@ button.site-hero-edit-btn {
   display: inline;
 }
 .ws-picker-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.ws-picker-overlay[hidden] { display: none; }
 .ws-picker-modal { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; min-width: 360px; max-width: 480px; width: 100%; box-sizing: border-box; }
 .ws-picker-title { margin: 0 0 0.5rem; font-size: 1.15rem; color: var(--text); }
 .ws-picker-desc { margin: 0 0 1.25rem; color: var(--text-muted, #666); font-size: 0.875rem; }

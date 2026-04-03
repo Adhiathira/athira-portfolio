@@ -1,0 +1,93 @@
+:root {
+  /* Duration tokens — all scaled 1.5x from slite source */
+  --motion-duration-fast: 0.195s;       /* was 0.13s */
+  --motion-duration-base: 0.3s;         /* was 0.2s */
+  --motion-duration-slow: 0.45s;        /* was 0.3s */
+  --motion-duration-marquee: 72s;       /* was 48s */
+
+  /* Easing tokens — ease-in-out replaced with material deceleration curve */
+  --motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-decelerate: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --motion-easing-linear: linear;
+  --motion-easing-ease: ease;
+}
+
+@keyframes fadeIn {
+  0%   { opacity: 0; visibility: hidden; }
+  100% { opacity: 1; visibility: visible; }
+}
+
+@keyframes slideInFromTop {
+  0%   { opacity: 0; transform: translateY(-2%) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0px) scale(1); }
+}
+
+@keyframes slideInFromRight {
+  0%   { opacity: 0; transform: translate(4%) scale(0.98); }
+  100% { opacity: 1; transform: translate(0px) scale(1); }
+}
+
+@keyframes spinning {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse-opacity {
+  0%   { opacity: 0.6; }
+  80%  { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0px); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Animated element utilities */
+.motion-marquee {
+  animation: marquee var(--motion-duration-marquee) linear infinite;
+}
+
+.motion-fade-in {
+  animation: fadeIn var(--motion-duration-slow) var(--motion-easing-standard) both;
+}
+
+.motion-slide-in-top {
+  animation: slideInFromTop var(--motion-duration-slow) var(--motion-easing-standard) both;
+}
+
+.motion-slide-in-right {
+  animation: slideInFromRight var(--motion-duration-slow) var(--motion-easing-standard) both;
+}
+
+.motion-spin {
+  animation: spinning var(--motion-duration-base) linear infinite;
+}
+
+.motion-pulse-opacity {
+  animation: pulse-opacity var(--motion-duration-slow) var(--motion-easing-standard) infinite;
+}
+
+/* Transition utilities */
+.transition-fast {
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.transition-base {
+  transition: all var(--motion-duration-base) var(--motion-easing-decelerate);
+}
+
+.transition-slow {
+  transition: all var(--motion-duration-slow) var(--motion-easing-standard);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

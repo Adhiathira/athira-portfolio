@@ -1,0 +1,501 @@
+/* ==========================================================================
+   SECTIONS — Stone Ledger / Aravindan & Co.
+   Shared section styles, practice preview, approach, attorneys, CTA
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Shared section utilities
+   -------------------------------------------------------------------------- */
+.section-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding-left: var(--grid-padding);
+  padding-right: var(--grid-padding);
+}
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: var(--type-xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary-action);
+  margin: 0 0 12px 0;
+}
+
+.section-label--light {
+  color: var(--color-muted-text);
+}
+
+.section-label--muted {
+  color: var(--color-accent);
+}
+
+.section-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1.0;
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-transform: uppercase;
+  color: var(--color-heading-text);
+  margin: 0 0 40px 0;
+}
+
+.section-heading--light {
+  color: var(--color-page-bg);
+}
+
+.section-header--left {
+  margin-bottom: 48px;
+}
+
+.section-header--split {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+
+.section-header-left {
+  flex: 1;
+}
+
+.section-header-right {
+  flex-shrink: 0;
+}
+
+.section-footer {
+  margin-top: 48px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* --------------------------------------------------------------------------
+   Section 2: Practice Areas Preview — bento grid
+   -------------------------------------------------------------------------- */
+.section-practice-preview {
+  background: var(--color-page-bg);
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
+  position: relative;
+}
+
+/* Subtle top edge gradient to separate from hero */
+.section-practice-preview::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary-action) 0%, transparent 60%);
+}
+
+/* Bento layout: 1.4fr 1fr grid, first card spans 2 rows */
+.practice-bento {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px;
+  background: var(--color-border-default);
+}
+
+.practice-card {
+  background: var(--color-page-bg);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.practice-card:hover {
+  background: var(--color-surface-2);
+}
+
+/* Featured card spans 2 rows */
+.practice-card--featured {
+  grid-row: span 2;
+}
+
+.practice-card-inner {
+  padding: 40px 36px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+}
+
+.practice-card--featured .practice-card-inner {
+  min-height: 380px;
+}
+
+.practice-num {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--color-muted-text);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.practice-name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-heading-text);
+  margin: 0 0 12px 0;
+}
+
+.practice-card--featured .practice-name {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  margin-bottom: 20px;
+}
+
+.practice-desc {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-body-text);
+  margin: 0 0 24px 0;
+  flex: 1;
+}
+
+.practice-link {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary-action);
+  text-decoration: none;
+  margin-top: auto;
+  transition: var(--transition-link);
+}
+
+.practice-link:hover {
+  color: var(--color-heading-text);
+}
+
+/* --------------------------------------------------------------------------
+   Section 3: Approach — dark section with video background
+   -------------------------------------------------------------------------- */
+.section-approach {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-hero-bg);
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
+}
+
+.approach-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.approach-video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.15;
+}
+
+/* Library overlay — warm tungsten cast, left fade */
+.approach-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(26, 26, 20, 0.95) 0%,
+    rgba(26, 26, 20, 0.85) 50%,
+    rgba(26, 26, 20, 0.6) 100%
+  );
+  pointer-events: none;
+}
+
+.approach-content-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.approach-text {
+  max-width: 560px;
+}
+
+.approach-body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--color-muted-text);
+  margin: 0 0 24px 0;
+}
+
+.approach-body:last-of-type {
+  margin-bottom: 36px;
+}
+
+/* Right column — display year */
+.approach-display {
+  text-align: center;
+  position: relative;
+  padding: 40px 0;
+}
+
+.approach-display::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(251, 115, 57, 0.4) 30%, rgba(251, 115, 57, 0.4) 70%, transparent);
+}
+
+.approach-year {
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 8vw, 7rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(251, 115, 57, 0.3);
+  display: block;
+  line-height: 1;
+  user-select: none;
+}
+
+.approach-year-caption {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 233, 0.3);
+  margin: 12px 0 0 0;
+}
+
+/* --------------------------------------------------------------------------
+   Section 4: Attorneys Preview — horizontal cards, warm off-white
+   -------------------------------------------------------------------------- */
+.section-attorneys {
+  background: var(--color-page-bg);
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
+  position: relative;
+}
+
+/* Directional shadow from top edge */
+.section-attorneys::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, rgba(61, 57, 48, 0.06) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.attorneys-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--color-border-default);
+}
+
+.attorney-card {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 32px;
+  align-items: center;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--color-border-default);
+  transition: background 0.2s ease;
+}
+
+.attorney-card:hover {
+  background: rgba(0,0,0,0.015);
+}
+
+.attorney-portrait {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--color-surface-2);
+  position: relative;
+}
+
+.attorney-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.attorney-info {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.attorney-name {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-heading-text);
+  margin: 0 0 4px 0;
+}
+
+.attorney-role {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary-action);
+  margin: 0;
+}
+
+.attorney-specialty {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-body-text);
+  margin: 0;
+  grid-column: 2;
+}
+
+/* --------------------------------------------------------------------------
+   Section 5: CTA Dark — centered, scale + rise
+   -------------------------------------------------------------------------- */
+.section-cta-dark {
+  background: var(--color-heading-text);
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle warm gradient to avoid flat surface */
+.section-cta-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(251,115,57,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-inner {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+}
+
+.cta-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-transform: uppercase;
+  color: var(--color-page-bg);
+  margin: 0 0 28px 0;
+}
+
+.cta-body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--color-muted-text);
+  margin: 0 0 40px 0;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — sections
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .section-practice-preview,
+  .section-approach,
+  .section-attorneys,
+  .section-cta-dark {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .practice-bento {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .practice-card--featured {
+    grid-row: span 1;
+  }
+
+  .approach-content-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .approach-display {
+    display: none;
+  }
+
+  .section-header--split {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .attorney-info {
+    grid-template-columns: 1fr;
+  }
+
+  .attorney-specialty {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-practice-preview,
+  .section-approach,
+  .section-attorneys,
+  .section-cta-dark {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .attorney-card {
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+  }
+
+  .attorney-portrait {
+    width: 56px;
+    height: 56px;
+  }
+
+  .cta-inner {
+    text-align: left;
+  }
+
+  .section-inner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

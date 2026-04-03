@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terroir — Curated Seed Library for Culinary Gardeners</title>
+  <meta name="description" content="Terroir is a living archive of heritage seeds, rare cultivars, and seasonal planting knowledge for the culinary gardener. Discover seeds with provenance.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="has-announce-bar">
+
+  <!-- Announcement bar -->
+  <div id="announce-bar">
+    <span>Spring 2026 catalogue now open — Limited quantities per cultivar</span>
+    <button id="announce-bar-dismiss" aria-label="Dismiss">×</button>
+  </div>
+
+  <!-- NAV — on-dark (floats over dark hero) -->
+  <nav id="site-nav" class="on-dark">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span class="nav-logo-wordmark">Terroir</span></a>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="catalogue.html" class="nav-link">Catalogue</a></li>
+        <li class="nav-item"><a href="origin.html" class="nav-link">Origin</a></li>
+        <li class="nav-item"><a href="workshops.html" class="nav-link">Workshops</a></li>
+        <li class="nav-item"><a href="archive.html" class="nav-link">Archive</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="catalogue.html">Catalogue</a>
+    <a href="origin.html">Origin</a>
+    <a href="workshops.html">Workshops</a>
+    <a href="archive.html">Archive</a>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       HERO — Full viewport ambient video
+  ══════════════════════════════════════ -->
+  <section id="hero">
+    <div id="hero-video-container">
+      <video
+        id="hero-bg-video"
+        src="assets/hero-ambient.mp4"
+        autoplay muted loop playsinline
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      ></video>
+      <div
+        id="hero-bg-video-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+               background:#1a1a14;color:rgba(242,239,233,0.35);font-family:'Nunito',sans-serif;font-size:0.85rem;">
+        → assets/hero-ambient.mp4
+      </div>
+      <div id="hero-video-gradient"></div>
+    </div>
+
+    <div id="hero-content">
+      <p id="hero-eyebrow">A Living Seed Archive</p>
+      <h1 id="hero-title">Seeds with<br>memory.</h1>
+      <p id="hero-tagline">Heritage cultivars, rare varietals, and seasonal planting wisdom — sourced from small family farms and preserved for the culinary garden.</p>
+      <div id="hero-cta-group">
+        <a href="catalogue.html" class="btn-primary">Browse the Catalogue</a>
+        <a href="origin.html" class="btn-ghost">Our provenance story</a>
+      </div>
+    </div>
+
+    <div id="hero-scroll-cue">
+      <div id="hero-scroll-cue-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 1 — Catalogue Browse Strip
+       6-column category grid, x-sweep reveal
+  ══════════════════════════════════════ -->
+  <section id="catalogue-section">
+    <div class="section-inner">
+      <div id="catalogue-header">
+        <div id="catalogue-header-left">
+          <span class="section-eyebrow">Spring–Summer 2026</span>
+          <h2 id="catalogue-heading" class="section-heading">What's in<br>season now</h2>
+        </div>
+        <a href="catalogue.html" class="btn-utility">View all cultivars →</a>
+      </div>
+
+      <div id="catalogue-grid">
+        <div class="catalogue-item">
+          <img class="catalogue-item-img" src="assets/catalogue-tomato.jpeg" alt="Brandywine tomato, heirloom cultivar"
+               onerror="this.style.display='none';this.parentElement.style.background='#a39b8b'">
+          <div class="catalogue-item-label">Brandywine Tomato</div>
+        </div>
+        <div class="catalogue-item">
+          <img class="catalogue-item-img" src="assets/catalogue-pepper.jpeg" alt="Piment d'Espelette pepper"
+               onerror="this.style.display='none';this.parentElement.style.background='#8a8472'">
+          <div class="catalogue-item-label">Piment d'Espelette</div>
+        </div>
+        <div class="catalogue-item">
+          <img class="catalogue-item-img" src="assets/catalogue-bean.jpeg" alt="Borlotti climbing bean"
+               onerror="this.style.display='none';this.parentElement.style.background='#c8c1b4'">
+          <div class="catalogue-item-label">Borlotti Bean</div>
+        </div>
+        <div class="catalogue-item">
+          <img class="catalogue-item-img" src="assets/catalogue-herb.jpeg" alt="Tuscan basil, Genovese variety"
+               onerror="this.style.display='none';this.parentElement.style.background='#a39b8b'">
+          <div class="catalogue-item-label">Genovese Basil</div>
+        </div>
+        <div class="catalogue-item">
+          <img class="catalogue-item-img" src="assets/catalogue-squash.jpeg" alt="Delicata squash, winter variety"
+               onerror="this.style.display='none';this.parentElement.style.background='#d4cfc8'">
+          <div class="catalogue-item-label">Delicata Squash</div>
+        </div>
+        <div class="catalogue-item">
+          <img class="catalogue-item-img" src="assets/catalogue-radish.jpeg" alt="Watermelon radish, East Asian cultivar"
+               onerror="this.style.display='none';this.parentElement.style.background='#8a8472'">
+          <div class="catalogue-item-label">Watermelon Radish</div>
+        </div>
+      </div>
+
+      <div id="catalogue-cta">
+        <a href="catalogue.html" class="btn-utility">Explore the full seed library →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 2 — Origin Story
+       Dark section, two-column + numbered steps
+       Video editorial macro (editorial-object-detail.mp4)
+  ══════════════════════════════════════ -->
+  <section id="origin-section">
+    <div class="section-inner">
+      <div id="origin-inner">
+        <div id="origin-visual">
+          <video
+            id="origin-video"
+            src="assets/editorial-object-detail.mp4"
+            autoplay muted loop playsinline
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          ></video>
+          <div
+            id="origin-video-placeholder"
+            style="display:none;align-items:center;justify-content:center;
+                   width:100%;height:100%;background:#2a2520;
+                   color:rgba(242,239,233,0.3);font-size:0.8rem;font-family:'Nunito',sans-serif;">
+            → assets/editorial-object-detail.mp4
+          </div>
+          <div id="origin-video-gradient"></div>
+        </div>
+
+        <div id="origin-text-col">
+          <span class="section-eyebrow">Provenance</span>
+          <h2 class="section-heading">Every seed<br>has a story.</h2>
+          <p id="origin-body">We work directly with family farms, botanical preserves, and seed-saving networks across Southern Europe and the Americas. Every cultivar in our library is sourced from growers who have tended the same varieties for at least three generations.</p>
+
+          <div id="origin-steps">
+            <div class="origin-step">
+              <span class="origin-step-num">01</span>
+              <div class="origin-step-content">
+                <p class="origin-step-title">Source selection</p>
+                <p class="origin-step-desc">We visit farms personally to evaluate growing conditions and genetic integrity before listing any cultivar.</p>
+              </div>
+            </div>
+            <div class="origin-step">
+              <span class="origin-step-num">02</span>
+              <div class="origin-step-content">
+                <p class="origin-step-title">Germination testing</p>
+                <p class="origin-step-desc">Every batch is tested at 15°C and 20°C. We only ship seed with a minimum 85% germination rate.</p>
+              </div>
+            </div>
+            <div class="origin-step">
+              <span class="origin-step-num">03</span>
+              <div class="origin-step-content">
+                <p class="origin-step-title">Cold storage & packaging</p>
+                <p class="origin-step-desc">Stored at controlled humidity in beeswax-sealed envelopes. Designed for long-term viability, not fast retail.</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="origin.html" class="btn-ghost" style="display:inline-flex;">Visit the Origin page</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 — Seasonal Collection Editorial
+       1.4fr image / 1fr sticky text + bento cards
+  ══════════════════════════════════════ -->
+  <section id="seasonal-section">
+    <div class="section-inner">
+      <div id="seasonal-inner">
+        <div id="seasonal-image-panel">
+          <img
+            id="seasonal-main-img"
+            src="assets/seasonal-collection.jpeg"
+            alt="Sun-dried seed pods arranged on unglazed stoneware"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div
+            id="seasonal-img-placeholder"
+            style="display:none;align-items:center;justify-content:center;
+                   width:100%;height:100%;background:#c8c1b4;
+                   color:rgba(61,57,48,0.5);font-size:0.8rem;font-family:'Nunito',sans-serif;">
+            → assets/seasonal-collection.jpeg
+          </div>
+          <div id="seasonal-image-label">Autumn archive</div>
+        </div>
+
+        <div id="seasonal-text-col">
+          <span class="section-eyebrow">The Collection</span>
+          <h2 class="section-heading section-heading--display">Seasonal<br>selections</h2>
+          <div class="section-divider"></div>
+          <p id="seasonal-body-text">Four times a year we release a curated selection of seeds aligned with the current growing season — chosen for flavour complexity, culinary interest, and the narratives attached to each variety.</p>
+
+          <div id="seasonal-cards">
+            <div class="seasonal-card seasonal-card--featured">
+              <p class="seasonal-card-season">Featured</p>
+              <p class="seasonal-card-name">Corne de Boeuf Tomato</p>
+              <p class="seasonal-card-note">A narrow horn-shaped beefsteak from the Languedoc. Dense flesh, low seed count. A kitchen tomato.</p>
+            </div>
+            <div class="seasonal-card">
+              <p class="seasonal-card-season">Autumn</p>
+              <p class="seasonal-card-name">Nero di Toscana Kale</p>
+              <p class="seasonal-card-note">Florentine black kale, frost-sweetened.</p>
+            </div>
+            <div class="seasonal-card">
+              <p class="seasonal-card-season">Winter</p>
+              <p class="seasonal-card-name">Romanesco Broccoli</p>
+              <p class="seasonal-card-note">Geometric spirals, nutty flavour.</p>
+            </div>
+          </div>
+
+          <a href="catalogue.html" class="btn-utility">See all seasonal selections →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 4 — Workshops
+       Dark section, lifestyle video right panel
+  ══════════════════════════════════════ -->
+  <section id="workshops-section">
+    <div id="workshops-inner">
+      <div id="workshops-text-panel">
+        <span class="section-eyebrow">Learning</span>
+        <h2 class="section-heading section-heading--light">Grow with<br>intention.</h2>
+        <p id="workshops-body">We run small-group workshops across the year — seed-saving techniques, soil preparation, flavour-driven garden design. Held at partner farms, never online.</p>
+
+        <ul id="workshops-list">
+          <li>Seed saving fundamentals — June, Provence</li>
+          <li>Flavour-first kitchen garden design — July, Catalonia</li>
+          <li>Winter brassica cultivation — September, Sussex</li>
+          <li>The fermentation garden — October, Tuscany</li>
+        </ul>
+
+        <a href="workshops.html" class="btn-primary">View all workshops</a>
+      </div>
+
+      <div id="workshops-video-panel">
+        <video
+          id="workshops-lifestyle-video"
+          src="assets/lifestyle-interior-right.mp4"
+          autoplay muted loop playsinline
+          style="width:100%;height:100%;object-fit:cover;min-height:600px;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        ></video>
+        <div
+          id="workshops-video-placeholder"
+          style="display:none;align-items:center;justify-content:center;
+                 width:100%;height:100%;min-height:600px;background:#2a2520;
+                 color:rgba(242,239,233,0.3);font-size:0.8rem;font-family:'Nunito',sans-serif;">
+          → assets/lifestyle-interior-right.mp4
+        </div>
+        <div id="workshops-video-overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 5 — Newsletter
+  ══════════════════════════════════════ -->
+  <section id="newsletter-section">
+    <div class="section-inner">
+      <div id="newsletter-inner">
+        <span class="section-eyebrow">Seasonal dispatch</span>
+        <h2 class="section-heading">The Sowing<br>Letter</h2>
+        <p id="newsletter-body">Six times a year, a short letter on what to plant, what to preserve, and what we found in the field. No algorithm. No noise.</p>
+
+        <form id="newsletter-form" onsubmit="return false;">
+          <input
+            type="email"
+            id="newsletter-input"
+            placeholder="Your email address"
+            aria-label="Email address for newsletter"
+          >
+          <button type="submit" id="newsletter-submit" class="btn-primary newsletter-submit-btn">Subscribe</button>
+        </form>
+
+        <p id="newsletter-note">Unsubscribe at any time. We never share addresses.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pre-footer band -->
+  <div id="pre-footer-band">
+    <button id="region-selector">🌍 Europe (EN) ▾</button>
+    <button id="scroll-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  </div>
+
+  <!-- Footer -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-top">
+        <div id="footer-brand">
+          <a href="index.html" id="footer-wordmark">Terroir</a>
+          <p id="footer-brand-desc">A curated seed library and living plant archive for culinary gardeners. Seeds with provenance, grown with intention.</p>
+        </div>
+        <div id="footer-col-shop">
+          <p class="footer-col-heading">Shop</p>
+          <ul class="footer-links">
+            <li><a href="catalogue.html">Catalogue</a></li>
+            <li><a href="catalogue.html">Seasonal picks</a></li>
+            <li><a href="catalogue.html">Gift envelopes</a></li>
+            <li><a href="archive.html">Archive seeds</a></li>
+          </ul>
+        </div>
+        <div id="footer-col-learn">
+          <p class="footer-col-heading">Learn</p>
+          <ul class="footer-links">
+            <li><a href="origin.html">Our provenance</a></li>
+            <li><a href="workshops.html">Workshops</a></li>
+            <li><a href="archive.html">Seed library</a></li>
+          </ul>
+        </div>
+        <div id="footer-col-contact">
+          <p class="footer-col-heading">Contact</p>
+          <ul class="footer-links">
+            <li><a href="mailto:seeds@terroir.garden">seeds@terroir.garden</a></li>
+            <li><a href="#">Stockists</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="footer-bottom">
+        <p id="footer-copyright">© 2026 Terroir Seed Library. All rights reserved.</p>
+        <div id="footer-legal-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Shipping</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile nav JS -->
+  <script>
+    document.querySelector('.nav-mobile-toggle').addEventListener('click', function() {
+      document.getElementById('site-nav').classList.toggle('nav-mobile-open');
+      document.getElementById('nav-mobile-menu').classList.toggle('is-open');
+    });
+
+    // Announce bar dismiss
+    document.getElementById('announce-bar-dismiss').addEventListener('click', function() {
+      const bar = document.getElementById('announce-bar');
+      bar.style.transition = 'all 0.3s ease';
+      bar.style.height = bar.offsetHeight + 'px';
+      requestAnimationFrame(() => {
+        bar.style.height = '0';
+        bar.style.opacity = '0';
+        bar.style.padding = '0';
+        bar.style.overflow = 'hidden';
+      });
+      setTimeout(() => {
+        bar.remove();
+        document.body.classList.remove('has-announce-bar');
+        document.getElementById('site-nav').style.top = '0';
+      }, 350);
+    });
+  </script>
+
+  <!-- GSAP Animations -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Read motion tokens
+    const style = getComputedStyle(document.documentElement);
+    const EASE_HERO    = style.getPropertyValue('--ease-hero').trim()    || 'cubic-bezier(0.19,1,0.22,1)';
+    const EASE_CONTENT = style.getPropertyValue('--ease-content').trim() || 'cubic-bezier(0.4,0,0.2,1)';
+    const EASE_SETTLE  = style.getPropertyValue('--ease-settle').trim()  || 'power2.out';
+
+    // ── Hero entrance timeline (fires on page load, not scroll)
+    const heroTL = gsap.timeline({ delay: 0.3 });
+    heroTL
+      .from('#hero-eyebrow', {
+        y: 20,
+        duration: 0.7,
+        ease: EASE_HERO
+      })
+      .from('#hero-title', {
+        y: 32,
+        duration: 1.0,
+        ease: EASE_HERO
+      }, '-=0.45')
+      .from('#hero-tagline', {
+        y: 24,
+        duration: 0.8,
+        ease: EASE_HERO
+      }, '-=0.6')
+      .from('#hero-cta-group', {
+        y: 20,
+        duration: 0.7,
+        ease: EASE_HERO
+      }, '-=0.5')
+      .from('#hero-scroll-cue', {
+        y: 12,
+        duration: 0.6,
+        ease: EASE_SETTLE
+      }, '-=0.3');
+
+    // ── Catalogue grid — horizontal x-sweep left, items stagger
+    gsap.from('.catalogue-item', {
+      scrollTrigger: {
+        trigger: '#catalogue-grid',
+        start: 'top 80%'
+      },
+      x: -70,
+      stagger: 0.10,
+      duration: 0.6,
+      ease: EASE_HERO
+    });
+
+    gsap.from('#catalogue-header-left', {
+      scrollTrigger: {
+        trigger: '#catalogue-header',
+        start: 'top 85%'
+      },
+      y: 30,
+      duration: 0.7,
+      ease: EASE_HERO
+    });
+
+    // ── Origin section — rotate + rise for steps
+    gsap.from('.origin-step', {
+      scrollTrigger: {
+        trigger: '#origin-steps',
+        start: 'top 80%'
+      },
+      rotation: 1.5,
+      y: 36,
+      stagger: 0.12,
+      duration: 0.65,
+      ease: EASE_HERO
+    });
+
+    gsap.from('#origin-visual', {
+      scrollTrigger: {
+        trigger: '#origin-inner',
+        start: 'top 75%'
+      },
+      x: -60,
+      duration: 0.9,
+      ease: EASE_HERO
+    });
+
+    // Origin text col — divergent
+    gsap.from(['#origin-text-col .section-eyebrow', '#origin-text-col .section-heading'], {
+      scrollTrigger: {
+        trigger: '#origin-text-col',
+        start: 'top 80%'
+      },
+      x: 60,
+      stagger: 0.12,
+      duration: 0.8,
+      ease: EASE_HERO
+    });
+
+    // ── Seasonal — clip-path wipe on image, then text rises
+    gsap.from('#seasonal-image-panel', {
+      scrollTrigger: {
+        trigger: '#seasonal-section',
+        start: 'top 80%'
+      },
+      clipPath: 'inset(0 100% 0 0)',
+      duration: 1.0,
+      ease: EASE_HERO
+    });
+
+    gsap.from('.seasonal-card', {
+      scrollTrigger: {
+        trigger: '#seasonal-cards',
+        start: 'top 85%'
+      },
+      y: 40,
+      stagger: 0.10,
+      duration: 0.6,
+      ease: EASE_CONTENT
+    });
+
+    // ── Cross-segment: seasonal image travels as user scrolls into workshops
+    // (Ember Round motion profile: languid, scrub-based — fits cross-segment travel)
+    gsap.to('#seasonal-image-panel', {
+      scrollTrigger: {
+        trigger: '#seasonal-section',
+        endTrigger: '#workshops-section',
+        start: 'bottom 60%',
+        end: 'top 40%',
+        scrub: 1.4
+      },
+      y: '8%',
+      ease: 'none'
+    });
+
+    // ── Workshops — scale + rise for list items (distinct from above sections)
+    gsap.from('#workshops-list li', {
+      scrollTrigger: {
+        trigger: '#workshops-list',
+        start: 'top 85%'
+      },
+      scale: 0.94,
+      y: 20,
+      stagger: 0.10,
+      duration: 0.55,
+      ease: EASE_CONTENT
+    });
+
+    gsap.from('#workshops-text-panel .section-heading', {
+      scrollTrigger: {
+        trigger: '#workshops-text-panel',
+        start: 'top 75%'
+      },
+      y: 40,
+      duration: 0.8,
+      ease: EASE_HERO
+    });
+
+    // ── Newsletter — vertical stagger, slow
+    gsap.from(['#newsletter-inner .section-eyebrow', '#newsletter-inner .section-heading', '#newsletter-body', '#newsletter-form'], {
+      scrollTrigger: {
+        trigger: '#newsletter-section',
+        start: 'top 80%'
+      },
+      y: 30,
+      stagger: 0.14,
+      duration: 0.7,
+      ease: EASE_SETTLE
+    });
+
+    // ── Pre-footer band — fade only, no transform (90% threshold per concept_by_video.md)
+    ScrollTrigger.create({
+      trigger: '#pre-footer-band',
+      start: 'top 90%',
+      onEnter: () => {
+        gsap.from('#pre-footer-band', { duration: 0.4, ease: EASE_SETTLE });
+      },
+      once: true
+    });
+  </script>
+
+</body>
+</html>

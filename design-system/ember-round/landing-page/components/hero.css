@@ -1,0 +1,287 @@
+/* ── Ember Round — Hero & CTA Components ── */
+
+/* ── Hero — Full Viewport Video ── */
+#hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--color-hero-bg);
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 12%;
+}
+
+#hero-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#hero-video-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 26, 20, 0.35) 0%,
+    rgba(26, 26, 20, 0.15) 40%,
+    rgba(26, 26, 20, 0.72) 100%
+  );
+  pointer-events: none;
+}
+
+#hero-content {
+  position: relative;
+  z-index: 2;
+  padding-left: 8%;
+  max-width: 52%;
+}
+
+#hero-eyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 20px 0;
+}
+
+#hero-title {
+  font-family: var(--font-display);
+  font-size: var(--type-hero);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--color-white);
+  margin: 0 0 24px 0;
+}
+
+#hero-tagline {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-weight: var(--weight-regular);
+  line-height: var(--line-height-body);
+  color: rgba(242, 239, 233, 0.8);
+  margin: 0 0 40px 0;
+  max-width: 38ch;
+}
+
+#hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* ── Announcement bar ── */
+#announce-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: var(--color-accent);
+  color: var(--color-cta-text);
+  text-align: center;
+  padding: 10px 40px;
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+#announce-bar-dismiss {
+  background: none;
+  border: none;
+  color: var(--color-cta-text);
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0;
+  opacity: 0.7;
+  position: absolute;
+  right: 16px;
+  transition: opacity 0.2s ease;
+}
+
+#announce-bar-dismiss:hover {
+  opacity: 1;
+}
+
+/* Adjust hero when announce bar is visible */
+body.has-announce-bar #site-nav {
+  top: 38px;
+}
+
+/* ── Primary CTA button ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-cta-bg);
+  color: var(--color-cta-text);
+  border: 1.5px solid var(--color-cta-bg);
+  border-radius: 100px;
+  padding: var(--space-btn-top) 32px var(--space-btn-bottom) 32px;
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-btn);
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background: #e8621f;
+  border-color: #e8621f;
+  transform: var(--hover-scale);
+}
+
+/* ── Ghost CTA button ── */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-ghost-bg);
+  color: var(--color-ghost-text);
+  border: 1.5px solid rgba(242, 239, 233, 0.5);
+  border-radius: 100px;
+  padding: var(--space-btn-top) 32px var(--space-btn-bottom) 32px;
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-hero);
+  white-space: nowrap;
+}
+
+.btn-ghost:hover {
+  background: rgba(242, 239, 233, 0.1);
+  border-color: rgba(242, 239, 233, 0.8);
+}
+
+/* ── Utility button (dark outline) ── */
+.btn-utility {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--color-utility-text);
+  border: 1.5px solid rgba(61, 57, 48, 0.4);
+  border-radius: 100px;
+  padding: var(--space-btn-top) 28px var(--space-btn-bottom) 28px;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-hero);
+  white-space: nowrap;
+}
+
+.btn-utility:hover {
+  background: rgba(61, 57, 48, 0.06);
+  border-color: var(--color-heading-text);
+}
+
+/* ── Scroll cue ── */
+#hero-scroll-cue {
+  position: absolute;
+  bottom: 32px;
+  right: 8%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(242, 239, 233, 0.6);
+  font-family: var(--font-heading);
+  font-size: 0.6875rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#hero-scroll-cue-line {
+  width: 1px;
+  height: 40px;
+  background: rgba(242, 239, 233, 0.4);
+  animation: scrollLine 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ── Section-level layout container ── */
+.section-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 100px var(--space-section-margin);
+}
+
+@media (max-width: 1280px) {
+  .section-inner {
+    padding: 80px 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  .section-inner {
+    padding: 60px 40px;
+  }
+
+  #hero-content {
+    max-width: 80%;
+    padding-left: 6%;
+    padding-bottom: 20%;
+  }
+
+  #hero-title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .section-inner {
+    padding: 48px 24px;
+  }
+
+  #hero-content {
+    max-width: 90%;
+    padding-left: 24px;
+    padding-bottom: 30%;
+  }
+
+  #hero-cta-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .btn-primary,
+  .btn-ghost,
+  .btn-utility {
+    width: 100%;
+    justify-content: center;
+  }
+}
