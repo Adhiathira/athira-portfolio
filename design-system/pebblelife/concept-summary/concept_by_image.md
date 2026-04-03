@@ -103,7 +103,7 @@ The interface avoids drop shadows, card elevation, and hard-bordered containers 
 The component styling vocabulary is **minimal and border-light**:
 
 - **Primary CTA button** (`#fb7339` fill): No visible border. Rounded corners at approximately `14.22px` radius. Text in cream. Bold, decisive.
-- **Ghost/utility button:** Thin border (`#575349`), no fill. Rounded to match the CTA. Used for secondary actions — "Explore the Pebble Flow →" type labels.
+- **Ghost/utility button:** Thin border (`#575349`), no fill. Rounded to match the CTA. Used for secondary actions — "Explore the Flow →" type labels.
 - **Navigation bar:** Transparent background in the above-fold state. No border, no shadow. The logo container is a white rounded square — the only visible "card" element in the nav.
 - **Testimonial cards:** No visible border or shadow in the screenshots. Separation is achieved by whitespace between card edges.
 - **Footer:** No borders between columns. Column separation relies on whitespace alone.
@@ -238,7 +238,7 @@ The footer's large typographic link list is a deliberate exception: it uses disp
 In the static screenshots, interactive elements are signaled through:
 
 - **Filled colored button:** The orange "ORDER" button is immediately legible as primary CTA — fill color, rounded corners, uppercase label, high contrast. No other element shares this treatment.
-- **Ghost/outlined button:** The "EXPLORE THE PEBBLE FLOW →" button and similar secondary CTAs use a bordered outline with no fill, matching the nav's visual vocabulary. The `→` arrow suffix is a consistent affordance signal for "navigate to" actions.
+- **Ghost/outlined button:** The "EXPLORE THE FLOW →" button and similar secondary CTAs use a bordered outline with no fill, matching the nav's visual vocabulary. The `→` arrow suffix is a consistent affordance signal for "navigate to" actions.
 - **Underlined inline link:** "Book Now" in the announcement bar appears underlined — the only inline text link on the page. This distinguishes it from the display text around it.
 - **Tab navigation:** In the split feature section (Pattern 3), a horizontal row of numbered labels ("3.EASY TOW", "4.REMOTE CONTROL", etc.) at the base of the content panel — one is visually selected/highlighted ("6.INTERIORS"). This is a clear interactive affordance: the underlined/weighted selection state signals the tab navigation pattern.
 - **Video thumbnail inset:** The small video preview in the hero carries a centered play-button icon — a universal interactive affordance for media playback.

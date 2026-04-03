@@ -1,0 +1,346 @@
+/* process.css — Foramen Studio process page */
+
+/* ─── Process Hero (medium, with video bg) ─────────────────── */
+#process-hero {
+  min-height: 58vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 60px;
+  background: var(--color-page-bg);
+}
+
+#process-hero-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#process-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#process-hero-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #071418;
+  color: rgba(255,255,255,0.2);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+}
+
+#process-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 13, 16, 0.92) 0%,
+    rgba(0, 13, 16, 0.5) 50%,
+    rgba(0, 13, 16, 0.15) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+#process-hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 80px;
+  max-width: 780px;
+}
+
+/* ─── The Earth Sequence (Phase cards) ──────────────────────── */
+/* Clip-path wipe reveal animation, full-width horizontal cards */
+#process-phases {
+  background: var(--color-surface-1);
+  padding: 100px 80px;
+}
+
+#process-phases-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 56px;
+}
+
+.phase-card {
+  display: grid;
+  grid-template-columns: 200px 1fr 280px;
+  gap: 60px;
+  align-items: center;
+  padding: 52px 0;
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.phase-card:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.phase-number-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.phase-number {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--color-border);
+  letter-spacing: -0.02em;
+}
+
+.phase-name {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.phase-description {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-body-text);
+}
+
+.phase-description strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 1.6vw, 1.4rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: var(--color-heading-text);
+  margin-bottom: 10px;
+}
+
+.phase-image {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  background: var(--color-heading-text);
+}
+
+.phase-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.phase-card:hover .phase-image img {
+  transform: scale(1.06);
+}
+
+.phase-image-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #0f1e22;
+  color: rgba(255,255,255,0.18);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+}
+
+/* ─── Clay & Glaze Palette (Color swatches section) ─────────── */
+/* Divergent x-animation (±80px) — horizontal sweep from both sides */
+#process-materials {
+  background: var(--color-page-bg);
+  padding: 100px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+#process-materials::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(188, 113, 85, 0.04) 0%, transparent 50%, rgba(188, 113, 85, 0.03) 100%);
+  pointer-events: none;
+}
+
+#process-materials-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+#process-materials-swatches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.swatch {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.swatch-label {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  right: 10px;
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+}
+
+/* Six clay/glaze tones */
+.swatch-1 { background: #bc7155; }
+.swatch-2 { background: #9b6448; }
+.swatch-3 { background: #e8d5c4; }
+.swatch-4 { background: #3a2e29; }
+.swatch-5 { background: #f0ece6; }
+.swatch-6 { background: #000d10; }
+
+#process-materials-text .section-heading--light {
+  margin-bottom: 20px;
+}
+
+/* ─── Atelier Walk (full-bleed photo with text overlay) ──────── */
+#process-atelier {
+  position: relative;
+  min-height: 70vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+#process-atelier-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--color-page-bg);
+}
+
+#process-atelier-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#process-atelier-bg-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #0a1a20;
+  color: rgba(255,255,255,0.18);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+}
+
+#process-atelier-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 13, 16, 0.90) 0%,
+    rgba(0, 13, 16, 0.65) 40%,
+    rgba(0, 13, 16, 0.15) 70%,
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+#process-atelier-content {
+  position: relative;
+  z-index: 2;
+  padding: 80px;
+  max-width: 520px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  #process-hero-content,
+  #process-phases,
+  #process-materials,
+  #process-atelier-content {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .phase-card {
+    grid-template-columns: 80px 1fr;
+    gap: 28px;
+  }
+
+  .phase-image {
+    display: none;
+  }
+
+  #process-materials-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  #process-materials-swatches {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+  }
+
+  .swatch {
+    aspect-ratio: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  #process-hero-content,
+  #process-phases,
+  #process-materials,
+  #process-atelier-content {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .phase-card {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .phase-number-block {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .phase-number {
+    font-size: 1.8rem;
+  }
+
+  #process-materials-swatches {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #process-phases {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  #process-materials {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+}

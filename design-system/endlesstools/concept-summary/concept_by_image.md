@@ -1,5 +1,5 @@
 `★ Insight ─────────────────────────────────────`
-This analysis is being generated to populate a `concept_by_image.md` file in the design system for `endlesstools`. The extracted design tokens (Inter, monochromatic dark palette, 12px border radius) serve as ground truth to cross-validate visual observations — what the extractor captures programmatically should align with what a designer reads visually.
+This analysis is being generated to populate a `concept_by_image.md` file for this design system. The extracted design tokens (Inter, monochromatic dark palette, 12px border radius) serve as ground truth to cross-validate visual observations — what the extractor captures programmatically should align with what a designer reads visually.
 `─────────────────────────────────────────────────`
 
 ---
@@ -66,7 +66,7 @@ This section breaks from the contained grid discipline of other sections. Horizo
 ### Social Proof Card Grid (Mid-Page)
 
 **Internal Organization**
-A three-column card grid sits below a full-width horizontal image strip. A centered section heading ("About Tools on X") introduces the grid. Each card replicates a social media post format — avatar, username, tweet body, image embed. This is a **testimonial grid with embedded media composition**. The section is enclosed within the standard horizontal margin, not full-bleed.
+A three-column card grid sits below a full-width horizontal image strip. A centered section heading introduces the grid. Each card replicates a social media post format — avatar, username, post body, image embed. This is a **testimonial grid with embedded media composition**. The section is enclosed within the standard horizontal margin, not full-bleed.
 
 **Grid and Spacing**
 Three columns of equal width. Internal card padding appears generous, consistent with ~20px horizontal spacing. The cards use a `surface-background` (`#1d1d1d`) fill with no visible border — separation is achieved through background color contrast against the page's `#0a0a0a` background.

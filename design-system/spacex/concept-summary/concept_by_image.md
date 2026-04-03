@@ -1,7 +1,7 @@
 `★ Insight ─────────────────────────────────────`
-The SpaceX design tokens reveal three sophisticated techniques worth noting:
+The design tokens for this system reveal three sophisticated techniques worth noting:
 1. **Dual-state nav transparency** — `navBackground: transparent` vs `navBackgroundScrolled: transparent` (both transparent) means the nav never changes background, relying entirely on the hero imagery for contextual contrast rather than a solid bar
-2. **Proprietary font as brand lock** — D-DIN and D-DIN-Bold are flagged `webAccessible: false`, meaning the visual identity is deliberately inaccessible to standard web replication — a strategic design moat
+2. **Proprietary font as brand lock** — The primary typeface is flagged `webAccessible: false`, meaning the visual identity is deliberately inaccessible to standard web replication — a strategic design moat
 3. **Button hover using opacity fill** — The interaction tokens show `rgba(0,0,0,0.5)` → `rgba(235,235,245,0.98)` on hover: a near-inversion from semi-transparent dark to near-opaque light, creating a dramatic state change without changing the border
 `─────────────────────────────────────────────────`
 
@@ -129,7 +129,7 @@ The above-fold section occupies the full viewport height with no scroll-prompt o
 
 **Text Placement:** Left-anchored, vertically centered (approximately mid-height to slightly below center). The headline uses maximum-contrast white on pure black — the text sits in the image's natural dark region.
 
-**Headline Scale:** Large display type in all-caps at approximately 48px, set in a condensed bold sans-serif (D-DIN-Bold as confirmed by tokens). The all-caps treatment and condensed proportions give the headline a strong vertical presence with tight line-height matching the font size (1:1 ratio per token values).
+**Headline Scale:** Large display type in all-caps at approximately 48px, set in a condensed bold sans-serif (as confirmed by tokens). The all-caps treatment and condensed proportions give the headline a strong vertical presence with tight line-height matching the font size (1:1 ratio per token values).
 
 **CTA:** A single pill-shaped ghost button with border and arrow icon. One CTA only — no secondary or competing action. The interface does not split user attention.
 
@@ -200,9 +200,9 @@ Color enters the interface exclusively through photography — warm amber, sky b
 
 ## Typography System
 
-The type system is **compressed and authoritarian**. D-DIN-Bold at 48px with a 1:1 line-height and 0.96px letter-spacing creates dense, wide, all-caps headlines that occupy visual space assertively. There is no decorative or ornamental typography — every typographic decision reinforces legibility and weight.
+The type system is **compressed and authoritarian**. The primary display typeface at 48px with a 1:1 line-height and 0.96px letter-spacing creates dense, wide, all-caps headlines that occupy visual space assertively. There is no decorative or ornamental typography — every typographic decision reinforces legibility and weight.
 
-Body text at 16px/24px (D-DIN regular) provides a dramatic scale contrast with the 48px headline — roughly a 3:1 ratio — which is larger than typical body-to-heading ratios and contributes to the cinematic scale feel.
+Body text at 16px/24px provides a dramatic scale contrast with the 48px headline — roughly a 3:1 ratio — which is larger than typical body-to-heading ratios and contributes to the cinematic scale feel.
 
 Button text at 13.3px is slightly smaller than body text, which is unusual — most interfaces use button text at or above body scale. Here it creates a deliberately understated CTA that does not shout, consistent with the overall restraint of the design language.
 

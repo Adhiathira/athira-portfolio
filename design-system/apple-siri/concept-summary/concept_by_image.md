@@ -1,5 +1,5 @@
 `★ Insight ─────────────────────────────────────`
-This is a concept analysis request — the user wants a deep UX/UI breakdown of the Apple Siri page screenshots, using the extracted design tokens as ground truth. The "no brand name" constraint applies to my written analysis. No code output, no dynamic behavior, no implementation details.
+This is a concept analysis request — a deep UX/UI breakdown of this design system's screenshots, using the extracted design tokens as ground truth. No code output, no dynamic behavior, no implementation details.
 `─────────────────────────────────────────────────`
 
 ---
@@ -26,20 +26,20 @@ There is no apparent column grid governing the hero. The scatter pattern is **co
 All product images are extracted objects (cutouts with no backgrounds), positioned at varying z-depths implied by scale — larger items suggest foreground, smaller items suggest distance. Images are **rotated** — tilted on independent axes — introducing dynamism in a fully static composition. The background is pure white, which acts as the primary text-safe zone. No photography competes with the text.
 
 ### Visual Composition and Layout Intent
-The layout functions as **editorial storytelling through product arrangement**. The wordmark gradient (magenta → purple → cyan, matching `#ea3a8c` → `#bf5af2` → `#32ade6`) creates a typographic centerpiece that gives the composition its visual gravity. This is image-driven narrative: the products illustrate the product's reach across the hardware ecosystem without any body text or caption — a composition-only storytelling approach.
+The layout functions as **editorial storytelling through product arrangement**. The wordmark gradient (magenta → purple → cyan, matching `#ea3a8c` → `#bf5af2` → `#32ade6`) creates a typographic centerpiece that gives the composition its visual gravity. This is image-driven narrative: the products illustrate reach across a hardware ecosystem without any body text or caption — a composition-only storytelling approach.
 
 ---
 
 ## Pattern B — Full-Width Navigation Bar
 
 ### Internal Section Organization
-The navigation bar is a single-row horizontal component spanning the full viewport width. Three zones are visible: a **logo/mark zone** on the far left (an Apple logo mark), a **centered link cluster** with evenly spaced short-label text links, and a **utility icon zone** on the far right (search and bag icons). No visible container wraps constrain the bar — it appears to run edge-to-edge.
+The navigation bar is a single-row horizontal component spanning the full viewport width. Three zones are visible: a **logo/mark zone** on the far left (a small brand mark), a **centered link cluster** with evenly spaced short-label text links, and a **utility icon zone** on the far right (search and bag icons). No visible container wraps constrain the bar — it appears to run edge-to-edge.
 
 ### Background Treatment
 The nav background is transparent, rendering the background white from the hero section beneath it. There is no visible elevation shadow, blur, or border separating it from the content below.
 
 ### Typography
-Nav links use `SF Pro Text` at what appears to be 12px (matching the extracted `h2` entry: `fontSize: "12px"`, `fontWeight: "400"`, `letterSpacing: "-0.12px"`). Labels are short — single-word product categories — which supports high link density in a single row without wrapping.
+Nav links use the proprietary typeface at what appears to be 12px (matching the extracted `h2` entry: `fontSize: "12px"`, `fontWeight: "400"`, `letterSpacing: "-0.12px"`). Labels are short — single-word product categories — which supports high link density in a single row without wrapping.
 
 ### Visual Affordances
 Navigation links are not visually differentiated from body text except by position and scale. There are no visible borders or button outlines on links. The interaction state data confirms this: transition is on `color` opacity only (`rgba(0,0,0,0.8)` → `rgba(0,0,0,1)` on hover), meaning the bar relies entirely on color opacity shift as the hover affordance — invisible in static screenshots.
@@ -122,7 +122,7 @@ The footer background is a light neutral — `#f5f5f7` (surface-background) or n
 Link groups are organized into logical categories: commerce links on the left, account links, entertainment links, retail links, audience-segment links (business, education, healthcare, government), and values/company links on the far right. This is a **taxonomy-organized footer** following an information architecture grid, not a brand storytelling layout.
 
 ### Typography Scale and Legal Text
-Legal text at the bottom of the footer uses the `small: { fontSize: "12px" }` scale in `#86868b` (muted-text). This is the weakest tier in the color system — visually the most recessive — which is appropriate for disclaimers and copyright notices. Inline legal links within running text are underlined and use `#0066cc` (primary-action, deeper Apple blue), which matches the footer's inline link coloring.
+Legal text at the bottom of the footer uses the `small: { fontSize: "12px" }` scale in `#86868b` (muted-text). This is the weakest tier in the color system — visually the most recessive — which is appropriate for disclaimers and copyright notices. Inline legal links within running text are underlined and use `#0066cc` (primary-action, a deep blue), which matches the footer's inline link coloring.
 
 ---
 
@@ -132,7 +132,7 @@ Legal text at the bottom of the footer uses the `small: { fontSize: "12px" }` sc
 - **Border radius** follows a single family: cards at `18px`, section tile grids at `40px`, large section containers at `60px`. There is a clear **corner radius scale** — small surfaces use tighter radii, large backgrounds use larger radii.
 - **Typography scale** is consistently applied: `64px` display at `fontWeight: "600"` for all large feature headlines; `17px` at `fontWeight: "400"` for all body copy; `12px` at `fontWeight: "400"` for all footnote and footer text. No arbitrary intermediate sizes appear.
 - **Gradient color palette** is limited to the six accent tokens: `#ea3a8c`, `#bf5af2`, `#5e5ce6`, `#32ade6`, `#0a3480`, `#1c1c6e`. Every gradient across the interface draws from this same set, creating **palette unity** across wildly different section aesthetics.
-- **Spacing rhythm** uses multiples of `8px`: `gap: "24px"`, `card.marginTop/Right/Bottom/Left: "8px"`, `card.padding: "24px"`, `grid.gap: "24px"`. The `230px` section vertical padding is a large jump but is used consistently across multiple contextual sections (confirmed in extracted tokens for in-the-car, working-out, in-the-kitchen, winding-down — all identical).
+- **Spacing rhythm** uses multiples of `8px`: `gap: "24px"`, `card.marginTop/Right/Bottom/Left: "8px"`, `card.padding: "24px"`, `grid.gap: "24px"`. The `230px` section vertical padding is a large jump but is used consistently across multiple contextual sections (confirmed in extracted tokens — all identical).
 
 ### Deliberate Variation
 - **Background color alternates** between white (`#ffffff`), light gray (`#f5f5f7`), deep black (`#000000`), and gradient ranges — creating strong visual pacing. The alternation is not mechanical (light/dark/light/dark) but **narrative**: black appears only at the cinematic headline section, gradients appear only at the feature card sections.

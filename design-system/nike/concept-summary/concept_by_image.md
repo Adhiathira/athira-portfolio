@@ -3,7 +3,7 @@ Looking at the screenshots and design tokens provided, this is a UX analysis tas
 ---
 
 `★ Insight ─────────────────────────────────────`
-Nike's "Podium CDS" design system is a rare example of a fully tokenized enterprise-scale design system surfacing directly in CSS custom properties. The `podium-cds-*` namespace reveals a deliberate semantic layering: primitive color scales (red-50 through red-900) are separate from semantic role tokens (text-primary, text-disabled), which is exactly how mature design systems like Material Design 3 or Radix Primitives structure their token architecture.
+This design system is a rare example of a fully tokenized enterprise-scale design system surfacing directly in CSS custom properties. The token namespace reveals a deliberate semantic layering: primitive color scales (red-50 through red-900) are separate from semantic role tokens (text-primary, text-disabled), which is exactly how mature design systems like Material Design 3 or Radix Primitives structure their token architecture.
 `─────────────────────────────────────────────────`
 
 ---
@@ -30,7 +30,7 @@ Three distinct structural patterns are visible across the interface:
 
 ## 2. Grid System and Spacing System
 
-The grid system is **container-based with full-bleed exceptions**. The extracted tokens reveal a 12-column grid (`podium-cds-size-spacing-grid-gutter: 16px`, exterior gutter `48px` on large viewports). The navigation and footer content observe the 48px exterior gutter consistently — nav items have `marginRight/Left: 48px`, footer has `paddingRight/Left: 48px`.
+The grid system is **container-based with full-bleed exceptions**. The extracted tokens reveal a 12-column grid (exterior gutter `48px` on large viewports). The navigation and footer content observe the 48px exterior gutter consistently — nav items have `marginRight/Left: 48px`, footer has `paddingRight/Left: 48px`.
 
 The spacing scale follows a **non-linear modular progression**: 4px → 8px → 12px → 24px → 36px → 60px → 84px → 120px. This is not a strict 2× scale but a rhythm-tuned progression designed to feel organic while maintaining proportional relationships.
 
@@ -44,7 +44,7 @@ The footer link columns observe consistent vertical spacing between list items, 
 
 **Hero:** The hero image is a full-bleed product photography composition. Notably, the subject (the product) is placed center-right within the frame, while decorative objects (crystals, minerals) radiate outward from the subject across the full width. The lower-left quadrant is intentionally less visually complex — the background in that zone is a mid-tone textured surface that creates a **text-safe zone** where white text remains legible without overlay treatment. This is premeditated art direction: the photographer or retoucher has reserved legibility space for the UI.
 
-The headline text (`KOBE 3 LOW PROTRO`) is white, large, and placed precisely in this quieter left-bottom region. No scrim or semi-transparent overlay is used — the image itself provides the contrast through compositional design.
+The headline text is white, large, and placed precisely in this quieter left-bottom region. No scrim or semi-transparent overlay is used — the image itself provides the contrast through compositional design.
 
 **Editorial Card Grid:** Each of the three card images uses subjects positioned at varying distances from the camera — full-body wide shot (left panel), mid-body shot (center), and two-subject wide shot (right). All subjects are positioned roughly center-to-left within their respective panels, leaving visual breathing room consistent with the CTA button placement in the lower-left. The backgrounds vary (night outdoor, urban daylight, desert sand) but all are high-contrast editorial photography.
 
@@ -99,7 +99,7 @@ The navigation bar uses a hairline bottom border (`#e5e5e5`) as its only visual 
 
 ## 8. Shape Language
 
-The shape language is **dominated by pill/fully-rounded forms** for interactive components. The extracted spacing tokens confirm `podium-cds-button-border-radius: 30px` — essentially pill-shaped for standard button heights. The container border radius tokens escalate from 4px (small) through 24px (xl), but the button pills are the most visually prominent shape in the interface.
+The shape language is **dominated by pill/fully-rounded forms** for interactive components. The extracted spacing tokens confirm a button border-radius of `30px` — essentially pill-shaped for standard button heights. The container border radius tokens escalate from 4px (small) through 24px (xl), but the button pills are the most visually prominent shape in the interface.
 
 This creates an interesting contrast: the **content areas are entirely rectilinear** (full-bleed images, square card panels, flat nav bar) while the **interactive affordances are rounded** (pill buttons, rounded search bar). The shape language uses geometry as a functional signal — rounded = interactive, sharp = structural.
 
@@ -116,7 +116,7 @@ Section transitions use **straight horizontal edges throughout** — no curves, 
 - **Background type:** Full-bleed high-resolution product photography spanning 100% viewport width. Not a static color or gradient — entirely image-based.
 - **Viewport coverage:** Full height (100vh or close), with the product headline visible in the lower third.
 - **Text placement:** Lower-left anchored, with a tight vertical stack (headline → subheading → CTA). No center-aligned or floating text.
-- **Headline scale:** Large display type, white, uppercase, condensed. Dramatically larger than body text (approximately 6–8× the scale of supporting copy). Based on tokens, likely `Helvetica Now Display Medium` or `Nike Futura ND` at display scale.
+- **Headline scale:** Large display type, white, uppercase, condensed. Dramatically larger than body text (approximately 6–8× the scale of supporting copy).
 - **CTA:** Single pill-shaped button (white fill, black border outline), left-aligned below the subheading. Ghost/outlined style.
 - **Scroll indicator:** Carousel dot indicators visible at the bottom center (4 dots) and prev/next/pause controls at bottom-right. These are static pagination UI elements visible in the screenshot.
 - **Navigation state:** Solid white bar at the top. No transparency or blur. Thin hairline bottom border separating it from the hero image below.
@@ -137,13 +137,13 @@ Section transitions use **straight horizontal edges throughout** — no curves, 
 
 ## Navigation Bar Analysis
 
-- **Layout zones:** Logo far-left. Five primary category links centered (Men, Women, Kids, Jordan, NikeSKIMS, Sport). Three utility icons right-aligned (search, wishlist, bag).
-- **Navigation items:** 6 short category labels, uppercase or sentence case. No descriptive phrases.
+- **Layout zones:** Logo far-left. Primary category links centered (Men, Women, Kids, Sport). Three utility icons right-aligned (search, wishlist, bag).
+- **Navigation items:** Short category labels, uppercase or sentence case. No descriptive phrases.
 - **Visual differentiation:** Category links have no button chrome — they are plain text links. Utility icons (search, wishlist, bag) are icon-only with no label. No filled CTA button visible in the primary nav.
 - **Background treatment:** Solid white, with a hairline bottom border.
 - **Position:** Appears to be a fixed or sticky bar — it is visible at the top in the mid-page and footer screenshots as well, maintaining consistent white solid state.
 
-A utility bar sits above the primary nav in the hero screenshot, showing secondary brand logos (Jordan, Converse) left-aligned and utility text links (Find a Store, Help, Join Us, Sign In) right-aligned. This two-tier navigation system is separated by a hairline divider.
+A utility bar sits above the primary nav in the hero screenshot, showing secondary brand-line labels left-aligned and utility text links (Find a Store, Help, Join Us, Sign In) right-aligned. This two-tier navigation system is separated by a hairline divider.
 
 ---
 
@@ -185,7 +185,7 @@ The interface operates as a **near-monochrome system** in its UI chrome:
 - **Muted text:** `#707072` — secondary/legal text, inactive states
 - **Borders:** `#e5e5e5` / `#d4d4d4` — hairline dividers only
 
-Color is not used for section differentiation, brand expression, or emphasis within the UI chrome. All visual interest comes from photography. The only accent color defined in the design system (`podium-cds-color-box-focus-ring: #275dc5`) is invisible in normal page state — reserved for keyboard focus accessibility.
+Color is not used for section differentiation, brand expression, or emphasis within the UI chrome. All visual interest comes from photography. The accent color defined in the design system for focus ring is invisible in normal page state — reserved for keyboard focus accessibility.
 
 This is a radical chromatic restraint strategy: by draining color from the UI, photography is given absolute visual priority.
 
@@ -193,10 +193,10 @@ This is a radical chromatic restraint strategy: by draining color from the UI, p
 
 ## Typography System
 
-The type system uses **two functional families** — display and text — both within the Helvetica Now umbrella:
+The type system uses **two functional families** — display and text:
 
-- **Display headlines** (`Helvetica Now Display Medium`, `Nike Futura ND`): Large, condensed, uppercase. Used exclusively in the hero overlay. Scale is extreme — the hero headline is approximately 76px+ based on extracted tokens for `h2`/`h3`.
-- **UI text** (`Helvetica Now Text`, `Helvetica Now Text Medium`): Used for all navigation, body, buttons, footer links. Scale ranges from 12px (legal/caption) to 16px (body/button) to 14px (nav/link).
+- **Display headlines** (large, condensed, uppercase): Used exclusively in the hero overlay. Scale is extreme — the hero headline is approximately 76px+ based on extracted tokens for `h2`/`h3`.
+- **UI text**: Used for all navigation, body, buttons, footer links. Scale ranges from 12px (legal/caption) to 16px (body/button) to 14px (nav/link).
 
 The typography hierarchy uses **scale + weight** for differentiation, not color or decoration. The gap between the display headline scale (76px) and the largest UI text (16px) is deliberately extreme — approximately 5:1 ratio — which is what creates the bold graphic character of the hero section.
 

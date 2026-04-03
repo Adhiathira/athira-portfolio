@@ -107,9 +107,9 @@ The orange line-art illustration is a single-color linework drawing — zero pho
 - **Link Groupings:** Column headers use uppercase tracking — functioning as category labels. Links below are sentence-case with normal weight.
 - **Container:** The footer uses a rounded-corner container (dark charcoal fill with visible border-radius) that floats within the page's black base, matching the "floating card" pattern seen on the mid-page orange section.
 - **Typographic Scale:** Smaller than body. Column headers appear in uppercase small-caps; link items in normal weight, sentence case. The scale reduction is clear but not extreme.
-- **Logo:** Full wordmark with icon present in the far left. "Backed by Y Combinator" branding appears below the logo with the YC orange badge — the only external brand mark on the page.
+- **Logo:** Full wordmark with icon present in the far left. An investor/accelerator badge appears below the logo with an orange badge mark — the only external brand mark on the page.
 - **Social Links:** Bottom row, left-aligned — X and LinkedIn icons at small scale. No text labels.
-- **Legal/Copyright:** Far right, bottom row — "© 2026 [Brand]" in muted gray, minimal visual weight.
+- **Legal/Copyright:** Far right, bottom row — "© 2026 [this design system]" in muted gray, minimal visual weight.
 - **Overall Visual Weight:** Dark, brand-neutral. The footer uses the same dark charcoal surface as mid-page content sections — it does not introduce a new background register.
 
 ---

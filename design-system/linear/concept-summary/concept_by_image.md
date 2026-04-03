@@ -1,4 +1,4 @@
-I'll analyze the Linear website screenshots as a senior UX designer, reverse-engineering the design system and layout grammar. Let me provide a comprehensive technical breakdown.
+I'll analyze these screenshots as a senior UX designer, reverse-engineering the design system and layout grammar. Let me provide a comprehensive technical breakdown.
 
 ---
 

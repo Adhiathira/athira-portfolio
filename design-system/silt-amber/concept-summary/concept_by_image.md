@@ -1,4 +1,4 @@
-# Casper's Caviar — Design Concept Analysis
+# Design Concept Analysis
 
 ## Section Design Pattern Extraction
 
@@ -127,17 +127,17 @@ This is consistent with the luxury editorial register: decorative dividers are e
 ## Hero Section Analysis (Above-Fold Screenshot)
 
 - **Background type:** Full-bleed dark photographic texture. Near-black charcoal with a subtle grain/sphere surface visible. Viewport coverage is full-height.
-- **Text placement:** The primary display headline occupies the upper-center zone at oversized scale — it extends nearly the full width of the viewport. Supporting copy is bottom-left. A text-link CTA ("SHOP CAVIAR →") anchors bottom-left as well. A secondary directional text link ("CAVIAR BELOW") anchors bottom-right. This creates a four-corner-aware composition.
+- **Text placement:** The primary display headline occupies the upper-center zone at oversized scale — it extends nearly the full width of the viewport. Supporting copy is bottom-left. A text-link CTA anchors bottom-left as well. A secondary directional text link anchors bottom-right. This creates a four-corner-aware composition.
 - **Headline scale:** The display typeface (`interstate-condensed`, uppercase) is rendered at ~85.5px — approximately 6× the body text size. The scale gap between headline and body copy is extreme, reinforcing display-as-graphic-element intention.
 - **CTA style:** Text link with arrow (`SHOP CAVIAR →`) — no button fill, no border. Underlined-text affordance pattern typical of luxury e-commerce.
-- **Navigation bar:** Transparent, full-width, no background fill. Left-aligned links (Shop, About, Sourcing) and right-aligned utility links (Contact, Cart). No visible logo in the above-fold nav state — consistent with the reported `navBackground: transparent` token.
+- **Navigation bar:** Transparent, full-width, no background fill. Left-aligned navigation links and right-aligned utility links (Contact, Cart). No visible logo in the above-fold nav state — consistent with the reported `navBackground: transparent` token.
 
 ---
 
 ## Footer Section Analysis
 
 - **Column count:** Three columns — brand description (left), navigation links (center), shop category links (right).
-- **Link grouping:** Center column groups informational navigation (Collection, About, Contact, Caviar 101). Right column groups product category links (White Sturgeon, Siberian Sturgeon, Ossetra).
+- **Link grouping:** Center column groups informational navigation (Collection, About, Contact, product-category educational links). Right column groups product category links.
 - **Typography:** Small scale, low weight — subdued relative to body. Lowercase treatment. No uppercase utility labels.
 - **Logo/wordmark:** A circular logo mark is visible in the footer background — the brand stamp motif repeating from the manifesto section.
 - **Newsletter/CTA:** No newsletter form in the footer — the conversion section appears mid-page.
@@ -148,9 +148,9 @@ This is consistent with the luxury editorial register: decorative dividers are e
 
 ## Navigation Bar Analysis
 
-The navigation bar is most clearly visible in screenshot 3 (footer/mid-page state) where the center logo (`CASPER'S CAVIAR` wordmark) is visible.
+The navigation bar is most clearly visible in screenshot 3 (footer/mid-page state) where the center logo wordmark is visible.
 
-- **Layout zones:** Left-aligned page navigation (Shop, About, Sourcing), center logo/wordmark, right-aligned utility navigation (Contact, Cart).
+- **Layout zones:** Left-aligned page navigation, center logo/wordmark, right-aligned utility navigation (Contact, Cart).
 - **Item count:** 5 visible links plus cart. All short labels (1 word each).
 - **Visual differentiation:** No visible distinction between navigation links and CTA buttons — all items appear as same-weight text links.
 - **Background treatment:** Transparent in the hero state. In the mid-page state, the nav appears to maintain the same transparent treatment (dark page background shows through).
@@ -182,7 +182,7 @@ The typography system holds its range under deliberate stress. At one end: `inte
 
 Interactive elements are signaled through:
 
-- **Text links with arrows:** `SHOP CAVIAR →`, `CAVIAR BELOW` — typographic affordance, no button styling. Relies entirely on label and arrow to signal clickability.
+- **Text links with arrows:** typographic affordance, no button styling. Relies entirely on label and arrow to signal clickability.
 - **Nav links:** Typographic only. Hover behavior (color change to `#202020`) is the only distinguishing interaction state — not visible in static screenshots.
 - **Modal CTA button:** The only filled button visible — `#000000` background, `#ffffff` text, full-width within the modal. This is the strongest button affordance in the interface and appears exclusively in the modal context.
 - **Form inputs:** Visible border lines in the modal form distinguish input fields from surrounding content.

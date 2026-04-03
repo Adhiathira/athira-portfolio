@@ -1,5 +1,5 @@
 `★ Insight ─────────────────────────────────────`
-This is a pure design analysis task — no code generation. The extracted design tokens (color palette with 300+ CSS vars, Segoe UI Variable type scale, 8-step spacing system) provide precise grounding for the visual analysis, letting us cross-reference what we observe visually against what was formally specified in the design system.
+This is a pure design analysis task — no code generation. The extracted design tokens (color palette with 300+ CSS vars, variable type scale, 8-step spacing system) provide precise grounding for the visual analysis, letting us cross-reference what we observe visually against what was formally specified in the design system.
 `─────────────────────────────────────────────────`
 
 ---
@@ -150,7 +150,7 @@ The lack of geometric section dividers reinforces the clean, corporate, structur
 
 ## Footer Section Analysis (Bottom Screenshot)
 
-- **Column count**: Six equal-width link columns (`What's new`, `Microsoft Store`, `Education`, `Business`, `Developer & IT`, `Company`)
+- **Column count**: Six equal-width link columns (`What's new`, `Store`, `Education`, `Business`, `Developer & IT`, `Company`)
 - **Typographic treatment**: Small scale (~12–14px, approximately `root-small` / `root-x-small` tokens), normal weight for link text, slightly heavier for column headings — low visual weight overall
 - **Logo/wordmark**: Not prominently visible in the footer itself; social media icons (Facebook, X/Twitter, LinkedIn) appear in a row above the link columns with a "Follow" label
 - **Newsletter/CTA**: Not present in the footer
@@ -213,7 +213,7 @@ The dominant palette across the interface:
 - **Body text**: `#262626` — near-black dark gray
 - **Heading text**: `#0e1726` — dark blue-black (`ds-color-dark-blue-900`)
 - **Muted/utility text**: `#616161` — medium gray
-- **Link color**: `#0067b8` — Microsoft blue (distinct from the purple accent — links and CTAs are deliberately differentiated by hue)
+- **Link color**: `#0067b8` — a corporate blue tone (distinct from the purple accent — links and CTAs are deliberately differentiated by hue)
 - **Announcement banner**: `#4b1c4e` — dark violet, highest contrast element on page
 
 Color hierarchy is sharp and well-defined: the deep purple `#702573` immediately signals "take action here" as the only saturated, warm-dark color on an otherwise neutral page. The atmospheric gradient section introduces lavender, mauve, and rose mid-tones (`ds-color-lavender`, `ds-color-lilac` ranges) as a visual palette expansion for decorative use only — no interactive elements are colored with these tones.
@@ -224,7 +224,7 @@ Color hierarchy is sharp and well-defined: the deep purple `#702573` immediately
 
 Based on extracted tokens:
 
-- **Display/Hero headline**: ~62px (`root-marquee`: 4.75rem), weight 400, letter-spacing -0.025em, `Segoe UI Variable Display` — large, open, light weight at display scale
+- **Display/Hero headline**: ~62px (`root-marquee`: 4.75rem), weight 400, letter-spacing -0.025em — large, open, light weight at display scale
 - **Section headings**: ~32–40px (`root-h1` / `root-h2`: 2.5–2rem), weight 500, letter-spacing -0.025em
 - **Card titles**: ~20–24px (`root-h4` / `root-h3`), weight 500
 - **Body text**: 16px (`root-base`: 1rem), weight 400, letter-spacing -0.03em

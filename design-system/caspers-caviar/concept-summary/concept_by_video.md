@@ -86,7 +86,7 @@ The interface is constructed from several distinct, reusable section design patt
 *   **Media Usage:** Each card contains a background video that plays on a loop. The videos are atmospheric, scenic aerial shots of landscapes. A small, circular, semi-transparent overlay with a text label is centered on each video.
 *   **Image Frame Shape Analysis:** All video assets use standard rectangular frames.
 *   **Visual Composition and Layout Intent:** This is a visual navigation or showcase pattern. The grid provides an organized way to present multiple locations or categories. The use of video makes the section dynamic and engaging.
-*   **Background and Section Design Behavior:** The section uses the site's standard light gray background.
+*   **Background and Section Design Behavior:** The section uses the standard light gray background.
 *   **Depth, Layering, and Visual Hierarchy:** A simple two-layer system is present in each card: the background video and the foreground text overlay. The section itself is flat.
 *   **Component Styling:** The circular text overlays are the only unique component. On hover, they appear to be clickable, suggesting they are navigation links.
 *   **Shape Language:** The cards are rectangular with sharp corners. The overlays introduce a circular element.
@@ -238,14 +238,14 @@ Section transitions are the primary mechanism for creating narrative flow and pa
 
 *   The most significant transition is the **shift from dark to light backgrounds**. Moving from the dark hero to the light product grid signals a shift from "brand story" to "shopping." The reverse transition, from the light grid to the dark footer, signals the end of the main content.
 *   Transitions between sections that share the same background color (e.g., on the "About" page) are seamless, relying solely on **vertical whitespace**. This creates a continuous flow of information.
-*   The boundary between all sections is a **straight horizontal edge**. The site does not use any geometric or organic-shaped section dividers. The clean, sharp edges reinforce the minimalist and structured aesthetic. This lack of decorative dividers places all the emphasis on the content and layout structure within the sections themselves.
+*   The boundary between all sections is a **straight horizontal edge**. This design does not use any geometric or organic-shaped section dividers. The clean, sharp edges reinforce the minimalist and structured aesthetic. This lack of decorative dividers places all the emphasis on the content and layout structure within the sections themselves.
 
 ---
 
 ### **Notable UX/UI Design Observations**
 
 1.  **Monochromatic Discipline:** The extremely strict adherence to a black, white, and gray color palette is a powerful design choice. It forces the design to rely on typography, layout, and motion for hierarchy and emphasis, resulting in a sophisticated and confident aesthetic that feels premium and art-directed.
-2.  **Purposeful Shape Language Variation:** The deliberate contrast between the site's default sharp-cornered elements and the specifically chosen pill-shaped buttons for key user choices is a notable micro-interaction pattern. It subtly guides the user's attention to interactive decision points (choosing a product variant, selecting a source location) without using color.
-3.  **Layout as Pacing:** The design masterfully uses shifts in layout density and structure to control the user's journey. The transition from the open, atmospheric hero (low density) to the structured product grid (high density) and back to the layered footer collage is a clear narrative arc. This demonstrates a mature understanding of how layout itself can be a storytelling tool.
-4.  **Cinematic Media Integration:** The use of high-quality, full-bleed video is not merely decorative; it's fundamental to the brand's identity. By bookending the experience with these dark, cinematic sections (hero and footer), the site creates an immersive loop that feels more like a short film than a simple e-commerce page.
+2.  **Purposeful Shape Language Variation:** The deliberate contrast between the default sharp-cornered elements and the specifically chosen pill-shaped buttons for key user choices is a notable micro-interaction pattern. It subtly guides the user's attention to interactive decision points (choosing a product variant, selecting a source location) without using color.
+3.  **Layout as Pacing:** This design masterfully uses shifts in layout density and structure to control the user's journey. The transition from the open, atmospheric hero (low density) to the structured product grid (high density) and back to the layered footer collage is a clear narrative arc. This demonstrates a mature understanding of how layout itself can be a storytelling tool.
+4.  **Cinematic Media Integration:** The use of high-quality, full-bleed video is not merely decorative; it's fundamental to the visual identity. By bookending the experience with these dark, cinematic sections (hero and footer), the site creates an immersive loop that feels more like a short film than a simple e-commerce page.
 5.  **Generous Whitespace as a Luxury Signal:** The significant amount of negative space used in all sections, particularly on the product detail page, is a key design feature. It prevents the interface from feeling cluttered, enhances readability, and implicitly communicates a sense of luxury and quality by giving the content and products "room to breathe."

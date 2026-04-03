@@ -29,7 +29,7 @@ A near-black (`#0a0a0a`) media field fills the remaining viewport height, functi
 
 ## 2. Grid System and Spacing System
 
-The token data confirms a **12-column grid** with a `2vw` fluid column gap (`34.56px` at 1440px viewport width). The hero section (`home-hero`) uses exactly this structure: 12 equal columns (`97.9px` each at extraction resolution) with two defined rows — a shallow top row (~142px for the nav/headline band) and a deep bottom row (~694px for the media field).
+The token data confirms a **12-column grid** with a `2vw` fluid column gap (`34.56px` at 1440px viewport width). The hero section uses exactly this structure: 12 equal columns (`97.9px` each at extraction resolution) with two defined rows — a shallow top row (~142px for the nav/headline band) and a deep bottom row (~694px for the media field).
 
 The horizontal padding is derived from `max(5vw, 40px)`, resolving to approximately `86px` at 1440px. This creates a generous but not excessive page margin that prevents content from touching viewport edges.
 
@@ -57,7 +57,7 @@ The layout uses **compositional separation by field** rather than typographic se
 
 This is a notable editorial choice. Most hero layouts either overlay text on imagery (risking legibility conflicts) or use a side-by-side split (fragmenting the media). Here, the layout preserves the image's full compositional integrity by placing text entirely outside it — in a separate horizontal stripe above.
 
-The headline itself ("We help brands create digital experiences that connect with their audience") is set at a large scale (`43.2px` / `1.1` line-height) in regular weight, in the same Aeonik typeface used for everything else on the page. There is **no typographic hierarchy variation** within the headline band — no subheading, no eyebrow label, no supporting copy. The single headline occupies the full center-left span with nothing competing for attention.
+The headline itself ("We help brands create digital experiences that connect with their audience") is set at a large scale (`43.2px` / `1.1` line-height) in regular weight, in the same typeface used for everything else on the page. There is **no typographic hierarchy variation** within the headline band — no subheading, no eyebrow label, no supporting copy. The single headline occupies the full center-left span with nothing competing for attention.
 
 ---
 
@@ -113,7 +113,7 @@ The hero section terminates at a **straight horizontal edge** — the media fiel
 - **Text placement**: Entirely in the top band, not overlaid on media — headline is left-of-center aligned within the top band, wordmark is far left, CTA cluster is far right
 - **Headline scale**: Large — `43.2px` / `47.5px` line-height in regular weight, no additional emphasis. Headline spans three lines in the center-left zone. Contrast against the `#eaedf4` background is high (black on light)
 - **CTA count**: Two — one primary filled pill ("LET'S TALK" with a dot indicator), one utility surface pill ("MENU" with a dots indicator). No ghost or underlined link style in the nav zone
-- **Scroll indicator**: Present as a static text label — "SCROLL TO EXPLORE" in what appears to be monospaced type (IBM Plex Mono or LusionMono), centered in the footer bar beneath the media field, flanked by `+` icons
+- **Scroll indicator**: Present as a static text label — "SCROLL TO EXPLORE" in what appears to be monospaced type, centered in the footer bar beneath the media field, flanked by `+` icons
 - **Navigation bar**: Transparent — sits inside the same light-field band as the headline with no separate background panel. No border, no blur treatment
 
 ---
@@ -140,7 +140,7 @@ From the single visible section and extracted token data:
 
 - **Button style consistency**: Pill geometry used across all interactive components at all sizes
 - **Spacing scale**: Fluid `vw`-based spacing tied to a 12-column grid — consistent and mathematically derived, not arbitrary
-- **Typography**: Single typeface family (Aeonik) used for all roles — headline, body, buttons, nav labels — differentiated by weight (`400` vs. `500`) and text-transform (`uppercase` for labels/buttons). No decorative or display secondary typeface in the hero
+- **Typography**: Single typeface family used for all roles — headline, body, buttons, nav labels — differentiated by weight (`400` vs. `500`) and text-transform (`uppercase` for labels/buttons). No decorative or display secondary typeface in the hero
 - **Color discipline**: The light-field zone uses only `#eaedf4` (background), `#000000` (text), `#2b2e3a` (primary CTA), and `#e4e6ef` (utility surface). This is a 4-color palette in the above-fold. The full token set reveals a richer system (`#1a2ffb`, `#c1ff00`, `#8832f7`), but these accent colors are reserved for deeper page sections
 
 ---
@@ -156,19 +156,19 @@ The above-fold palette is intentionally restrained:
 - `#ffffff` — CTA text (white on dark)
 - `#0a0a0a` — media field (near-black, not quite the same as `#000000`)
 
-The cobalt blue (`#3d4fd6`, the brand accent visible in the 3D objects) appears exclusively inside the imagery at this stage — it is not used in any UI chrome at the above-fold level. This is a deliberate restraint: the accent is introduced visually through art direction before being deployed as a UI color, giving it narrative buildup.
+The cobalt blue (`#3d4fd6`, the accent visible in the 3D objects) appears exclusively inside the imagery at this stage — it is not used in any UI chrome at the above-fold level. This is a deliberate restraint: the accent is introduced visually through art direction before being deployed as a UI color, giving it narrative buildup.
 
 ---
 
 ## Typography System
 
-The type system is **monolithic**: a single typeface (Aeonik, proprietary) across all roles, differentiated only by:
+The type system is **monolithic**: a single typeface (proprietary) across all roles, differentiated only by:
 
 - **Weight**: `400` regular for headlines and body; `500` medium for buttons, labels, and uppercase elements
 - **Scale**: Headline at `43.2px`; body/paragraph at `~15–16px`; button/label at `15.12px`
 - **Case**: Labels and buttons use `text-transform: uppercase`, creating a visual register shift without changing the typeface
 
-This is a high-confidence typographic system — using one face at all levels signals that the type system's expressiveness comes from scale and case contrast, not from typeface mixing. The IBM Plex Mono is registered in the token system for the scroll indicator and mono elements, providing a secondary register that is functionally distinct (data/label/UI chrome) from the editorial Aeonik register.
+This is a high-confidence typographic system — using one face at all levels signals that the type system's expressiveness comes from scale and case contrast, not from typeface mixing. A secondary monospaced typeface is registered in the token system for the scroll indicator and mono elements, providing a secondary register that is functionally distinct (data/label/UI chrome) from the primary editorial register.
 
 ---
 
@@ -192,7 +192,7 @@ The hero image contains no text overlay whatsoever. All typographic content is h
 The hero functions as a self-contained narrative unit through hard contrast between a light cognitive zone (headline, navigation) and a dark sensory zone (media, 3D render). This binary structure condenses the visual experience that would normally be spread across two separate sections.
 
 **3. Restrained accent color introduction**
-The cobalt blue — the most emotionally charged color in the palette — appears only inside the 3D render at the hero level. It is withheld from UI chrome entirely. This creates a color discovery moment where the brand accent emerges from the content rather than being imposed by the interface system.
+The cobalt blue — the most emotionally charged color in the palette — appears only inside the 3D render at the hero level. It is withheld from UI chrome entirely. This creates a color discovery moment where the accent emerges from the content rather than being imposed by the interface system.
 
 **4. Asymmetric headline positioning**
 The headline occupies a center-left column span rather than a symmetrically centered position. The left column is reserved for the wordmark; the right ~40% of the top band contains only the two buttons. This asymmetry gives the headline room to breathe without centering it — preventing the layout from feeling static or brochure-like.

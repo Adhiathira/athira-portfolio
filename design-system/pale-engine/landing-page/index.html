@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meridian Grain — Precision Film Laboratory</title>
+  <meta name="description" content="Meridian Grain is a precision film developing and scanning laboratory. Push-pull development, large-format scanning, and archival printing for working photographers and editorial clients.">
+
+  <!-- Design tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <!-- Components -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════ -->
+  <nav id="site-nav" class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="nav-links-left">
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="process.html" class="nav-link">Process</a>
+      </div>
+      <a href="index.html" class="nav-logo" aria-label="Meridian Grain — Home">
+        <span class="nav-logo-text">Meridian Grain</span>
+      </a>
+      <div class="nav-links-right">
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="contact.html" class="nav-cta">Book a Run</a>
+      </div>
+      <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <a href="index.html" class="nav-link nav-link--active">Home</a>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="process.html" class="nav-link">Process</a>
+    <a href="work.html" class="nav-link">Work</a>
+    <a href="contact.html" class="nav-cta">Book a Run</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       HERO — Video background, light-dominant treatment
+       Video placement 1: hero-bg.mp4 (darkroom ambient drift)
+  ═══════════════════════════════════════ -->
+  <section class="hero-section" aria-label="Hero">
+    <video
+      class="hero-video"
+      src="assets/hero-bg.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      aria-hidden="true"
+      onerror="this.style.display='none'"
+    ></video>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content" id="hero-content">
+      <span class="hero-label" id="hero-label">Precision Film Laboratory</span>
+      <h1 class="hero-headline" id="hero-headline">
+        Where Film<br><em>Becomes</em><br>Evidence
+      </h1>
+      <p class="hero-subheadline" id="hero-subheadline">
+        Custom push-pull development, large-format scanning, and archival printing
+        for photographers who refuse to let chemistry be an afterthought.
+      </p>
+      <div class="hero-cta-row" id="hero-cta-row">
+        <a href="contact.html" class="hero-cta-primary">Book a Run</a>
+        <a href="services.html" class="hero-cta-ghost">View Services</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll-indicator" aria-hidden="true">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       STATS BAND — Orange accent, key numbers
+  ═══════════════════════════════════════ -->
+  <div class="stats-band" id="stats-band">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number">24h</span>
+        <span class="stat-label">Standard Turnaround</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">6400dpi</span>
+        <span class="stat-label">Maximum Resolution</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">±⅓</span>
+        <span class="stat-label">Stop Accuracy</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">12 yrs</span>
+        <span class="stat-label">In Operation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SERVICES SECTION — Asymmetric featured grid
+       Light surface, distinct from next section
+  ═══════════════════════════════════════ -->
+  <section class="section section--cream" id="services-section" aria-labelledby="services-heading">
+    <div class="container--wide">
+      <span class="section-label" id="services-label">What We Do</span>
+      <h2 class="section-heading" id="services-heading">Film is a<br>System of Record</h2>
+      <p class="section-subheading">
+        Every service we offer treats film as a precision instrument, not a nostalgic medium.
+        We are technicians first, romantics never.
+      </p>
+
+      <!-- Asymmetric grid: featured spans 2 rows -->
+      <div class="services-grid" id="services-grid">
+        <div class="service-card service-card--featured">
+          <span class="service-card-number">01</span>
+          <h3 class="service-card-title">Custom Push-Pull Development</h3>
+          <p class="service-card-body">
+            We develop to your exact EI rating, not the box speed.
+            Every push is calibrated to the specific emulsion batch, developer concentration,
+            temperature, and agitation interval. We document everything.
+            Your negatives arrive with a development card showing precise conditions.
+          </p>
+          <a href="services.html" class="service-card-link">Development Specs</a>
+        </div>
+
+        <div class="service-card">
+          <span class="service-card-number">02</span>
+          <h3 class="service-card-title">Large-Format Scanning</h3>
+          <p class="service-card-body">
+            4×5, 5×7, and 8×10 at up to 6400 dpi.
+            Delivered as 16-bit TIFF with embedded ICC profile.
+          </p>
+          <a href="services.html" class="service-card-link">Scan Options</a>
+        </div>
+
+        <div class="service-card">
+          <span class="service-card-number">03</span>
+          <h3 class="service-card-title">Archival Contact Printing</h3>
+          <p class="service-card-body">
+            Platinum-palladium and silver gelatin contact prints
+            to museum archival standard. Minimum 200-year projection.
+          </p>
+          <a href="services.html" class="service-card-link">Print Formats</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       PROCESS PREVIEW — Numbered rows, distinct from services
+       White bg, horizontal two-column rows with counter
+  ═══════════════════════════════════════ -->
+  <section class="section section--white" id="process-section" aria-labelledby="process-heading">
+    <div class="container--wide">
+      <span class="section-label section-label--muted" id="process-label">The Method</span>
+      <h2 class="section-heading" id="process-heading">Precision is<br>a Protocol</h2>
+      <p class="section-subheading">
+        From intake to delivery, every step is documented and traceable.
+        We operate more like an analytical laboratory than a darkroom.
+      </p>
+
+      <div class="process-steps" id="process-steps">
+        <div class="process-step">
+          <span class="process-step-number">01</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Intake & Assessment</h3>
+            <p class="process-step-body">
+              We inspect every roll before development. Damaged leaders, unusual winding,
+              or non-standard canister types are flagged and communicated before processing begins.
+              Nothing proceeds without your confirmation.
+            </p>
+            <span class="process-step-spec">// 15-minute inspection window per submission</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <span class="process-step-number">02</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Chemistry Selection</h3>
+            <p class="process-step-body">
+              Developer, stop, fix, and wash protocols are selected per emulsion.
+              We maintain 23 active chemistry configurations, documented by spectrographic analysis.
+            </p>
+            <span class="process-step-spec">// Rodinal / D-76 / HC-110 / Pyrocat-HD / PMK Pyro — all fresh batches</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <span class="process-step-number">03</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Controlled Development</h3>
+            <p class="process-step-body">
+              Temperature maintained to ±0.1°C. Agitation interval held to ±2 seconds.
+              We use calibrated digital timers, not intuition.
+            </p>
+            <span class="process-step-spec">// 20.0°C ± 0.1°C — verified by NIST-traceable thermometer</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <span class="process-step-number">04</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Documentation & Delivery</h3>
+            <p class="process-step-body">
+              Every order ships with a development card: exact times, temperatures, chemistry batch ID,
+              and agitation protocol. Your negatives are reproducible by this record.
+            </p>
+            <span class="process-step-spec">// PDF development card included with every order</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-2xl); text-align: left;">
+        <a href="process.html" class="hero-cta-primary">Full Process Details</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       WORK PREVIEW — Bento grid, charcoal section
+       Distinct animation: rotate + rise
+  ═══════════════════════════════════════ -->
+  <section class="section section--charcoal" id="work-section" aria-labelledby="work-heading">
+    <div class="container--wide">
+      <span class="section-label" id="work-label">Selected Work</span>
+      <h2 class="section-heading section-heading--light" id="work-heading">The Negative<br>Tells the Truth</h2>
+
+      <div class="work-grid" id="work-grid">
+        <div class="work-item">
+          <div class="work-item-placeholder">
+            <span class="work-item-placeholder-label">35mm — Tri-X 400 @ 1600 EI · 4-stop push · D-76</span>
+          </div>
+          <div class="work-item-overlay">
+            <span class="work-item-label">35mm · Push Process</span>
+            <h3 class="work-item-title">Tri-X 400 @ 1600 EI</h3>
+          </div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-item-placeholder">
+            <span class="work-item-placeholder-label">4×5 — HP5 · Normal − 1 · Pyrocat-HD</span>
+          </div>
+          <div class="work-item-overlay">
+            <span class="work-item-label">4×5 · Large Format</span>
+            <h3 class="work-item-title">HP5 N-1</h3>
+          </div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-item-placeholder">
+            <span class="work-item-placeholder-label">120 — Portra 800 · 2-stop push · C-41 X-Pro</span>
+          </div>
+          <div class="work-item-overlay">
+            <span class="work-item-label">120 · Color Push</span>
+            <h3 class="work-item-title">Portra 800 + 2</h3>
+          </div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-item-placeholder">
+            <span class="work-item-placeholder-label">8×10 — FP4 · Contact Print · Platinum-Palladium</span>
+          </div>
+          <div class="work-item-overlay">
+            <span class="work-item-label">8×10 · Contact Print</span>
+            <h3 class="work-item-title">FP4 Pt-Pd</h3>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-2xl);">
+        <a href="work.html" class="hero-cta-ghost">View All Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       TESTIMONIALS — Light surface, horizontal rows
+       Distinct animation: clip/reveal (clipPath)
+  ═══════════════════════════════════════ -->
+  <section class="section testimonials-section" id="testimonials-section" aria-labelledby="testimonials-heading">
+    <div class="container--wide">
+      <span class="section-label section-label--muted" id="testimonials-label">From the Field</span>
+      <h2 class="section-heading" id="testimonials-heading">Photographers<br>Who Demand More</h2>
+
+      <div class="testimonial-list" id="testimonial-list">
+        <div class="testimonial-item">
+          <p class="testimonial-quote">
+            "The development card they provide is genuinely scientific. I pushed Tri-X to 3200 and got
+            their exact Rodinal dilution, temperature log, and agitation intervals. Reproducible results
+            for the first time in twelve years of shooting film."
+          </p>
+          <div class="testimonial-meta">
+            <span class="testimonial-author">Elise Marchetti</span>
+            <span class="testimonial-detail">Documentary photographer, Lyon</span>
+            <span class="testimonial-film-spec">Tri-X 400 @ 3200 EI · Rodinal 1:50</span>
+          </div>
+        </div>
+
+        <div class="testimonial-item">
+          <p class="testimonial-quote">
+            "I sent them a box of 4×5 HP5 that I'd exposed in fog. They called me before processing
+            to discuss N-2 vs N-3 — nobody does that. The prints are the best I've made in a decade."
+          </p>
+          <div class="testimonial-meta">
+            <span class="testimonial-author">Owen St. Claire</span>
+            <span class="testimonial-detail">Landscape photographer, British Columbia</span>
+            <span class="testimonial-film-spec">HP5 4×5 · N-2 · Pyrocat-HD</span>
+          </div>
+        </div>
+
+        <div class="testimonial-item">
+          <p class="testimonial-quote">
+            "Editorial turnaround without sacrificing the quality I need for exhibition prints.
+            They understand that 24-hour film processing is not a compromise — it's just chemistry done right."
+          </p>
+          <div class="testimonial-meta">
+            <span class="testimonial-author">Yuna Takahashi</span>
+            <span class="testimonial-detail">Photo editor, Tokyo / New York</span>
+            <span class="testimonial-film-spec">Portra 400 · Standard C-41 · Rush order</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       CTA SECTION — Dark, ambient video depth
+       Video placement 3: cta-depth.mp4
+  ═══════════════════════════════════════ -->
+  <section class="cta-section" id="cta-section" aria-labelledby="cta-heading">
+    <video
+      class="cta-video"
+      src="assets/cta-depth.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      aria-hidden="true"
+      onerror="this.style.display='none'"
+    ></video>
+
+    <div class="cta-content" id="cta-content">
+      <span class="cta-eyebrow">Ready to Begin</span>
+      <h2 class="cta-heading" id="cta-heading">Your Film<br>Deserves<br>Better Chemistry</h2>
+      <p class="cta-body">
+        Send us your next roll. Tell us your EI rating and what you need from the negative.
+        We'll handle everything from intake to archival delivery.
+      </p>
+      <a href="contact.html" class="cta-btn-primary">Book a Run</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">Meridian Grain</a>
+          <p class="footer-tagline">Precision film developing and scanning laboratory. Chemistry as a discipline.</p>
+        </div>
+
+        <nav class="footer-nav-col" aria-label="Services links">
+          <h3 class="footer-nav-heading">Services</h3>
+          <ul class="footer-nav-links">
+            <li><a href="services.html#development">Push-Pull Development</a></li>
+            <li><a href="services.html#scanning">Large-Format Scanning</a></li>
+            <li><a href="services.html#printing">Archival Printing</a></li>
+            <li><a href="services.html#rush">Rush Processing</a></li>
+          </ul>
+        </nav>
+
+        <nav class="footer-nav-col" aria-label="Studio links">
+          <h3 class="footer-nav-heading">Studio</h3>
+          <ul class="footer-nav-links">
+            <li><a href="process.html">Our Process</a></li>
+            <li><a href="work.html">Client Work</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <nav class="footer-nav-col" aria-label="Technical links">
+          <h3 class="footer-nav-heading">Technical</h3>
+          <ul class="footer-nav-links">
+            <li><a href="process.html#chemistry">Chemistry Configurations</a></li>
+            <li><a href="process.html#formats">Supported Formats</a></li>
+            <li><a href="services.html#pricing">Pricing</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Meridian Grain. All rights reserved.</p>
+        <ul class="footer-legal-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════
+       NAV SCROLL JS
+  ═══════════════════════════════════════ -->
+  <script>
+    (function() {
+      var nav = document.getElementById('site-nav');
+      var toggle = nav.querySelector('.nav-mobile-toggle');
+      var mobileMenu = document.querySelector('.nav-mobile-menu');
+
+      var scrolled = false;
+      var threshold = 60;
+      function onScroll() {
+        var isScrolled = window.scrollY > threshold;
+        if (isScrolled !== scrolled) {
+          scrolled = isScrolled;
+          nav.classList.toggle('scrolled', isScrolled);
+          nav.classList.toggle('fixed-nav', isScrolled);
+          if (isScrolled) {
+            document.body.style.paddingTop = nav.offsetHeight + 'px';
+          } else {
+            document.body.style.paddingTop = '';
+          }
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen.toString());
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+
+      mobileMenu.querySelectorAll('.nav-link, .nav-cta').forEach(function(link) {
+        link.addEventListener('click', function() {
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    })();
+  </script>
+
+  <!-- ═══════════════════════════════════════
+       GSAP ANIMATIONS
+       Rule: transform-only, NEVER opacity:0 in from()
+       Scroll-triggered cinematic reveals
+  ═══════════════════════════════════════ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof gsap === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero — elements rise in sequence, label first then headline then sub then CTAs
+      var heroLabel = document.getElementById('hero-label');
+      var heroHeadline = document.getElementById('hero-headline');
+      var heroSub = document.getElementById('hero-subheadline');
+      var heroCtas = document.getElementById('hero-cta-row');
+
+      if (heroLabel) {
+        var tl = gsap.timeline({ delay: 0.3 });
+        tl.from(heroLabel, { y: 20, duration: 0.75, ease: 'power2.out' })
+          .from(heroHeadline, { y: 40, duration: 0.9, ease: 'power2.out' }, '-=0.5')
+          .from(heroSub, { y: 30, duration: 0.75, ease: 'power2.out' }, '-=0.5')
+          .from(heroCtas, { y: 25, duration: 0.75, ease: 'power2.out' }, '-=0.4');
+      }
+
+      // Stats band — scale + rise, stagger across 4 stats
+      gsap.from('#stats-band .stat-item', {
+        y: 30,
+        scale: 0.96,
+        stagger: 0.1,
+        duration: 0.75,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#stats-band',
+          start: 'top 85%'
+        }
+      });
+
+      // Services label + heading — rise
+      gsap.from('#services-label, #services-heading, .section-subheading', {
+        y: 40,
+        duration: 0.9,
+        ease: 'power2.out',
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: '#services-section',
+          start: 'top 80%'
+        }
+      });
+
+      // Service cards — horizontal sweep from left, stagger
+      gsap.from('#services-grid .service-card', {
+        x: -70,
+        stagger: 0.13,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#services-grid',
+          start: 'top 85%'
+        }
+      });
+
+      // Process steps — vertical stagger, slight rotation
+      gsap.from('#process-steps .process-step', {
+        y: 50,
+        stagger: 0.1,
+        duration: 0.75,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#process-steps',
+          start: 'top 80%'
+        }
+      });
+
+      // Work heading — divergent: heading from left, grid from right
+      gsap.from('#work-heading', {
+        x: -80,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#work-section',
+          start: 'top 80%'
+        }
+      });
+
+      // Work grid items — rotate + rise
+      gsap.from('#work-grid .work-item', {
+        rotation: 2,
+        y: 40,
+        stagger: 0.12,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#work-grid',
+          start: 'top 80%'
+        }
+      });
+
+      // Testimonials — clip/reveal from left to right
+      gsap.from('#testimonial-list .testimonial-item', {
+        clipPath: 'inset(0 100% 0 0)',
+        stagger: 0.15,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#testimonial-list',
+          start: 'top 80%'
+        }
+      });
+
+      // CTA content — scale + rise
+      gsap.from('#cta-content > *', {
+        y: 40,
+        scale: 0.97,
+        stagger: 0.14,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#cta-section',
+          start: 'top 75%'
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

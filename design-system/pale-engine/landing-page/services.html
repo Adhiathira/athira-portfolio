@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — Meridian Grain Precision Film Laboratory</title>
+  <meta name="description" content="Push-pull development, large-format scanning, archival contact printing, and rush processing. Every service at Meridian Grain is documented to laboratory standard.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <style>
+    /* Sub-page spacer — nav is not position:absolute on sub-pages */
+    .nav-spacer {
+      height: var(--nav-height, 154px);
+      width: 100%;
+    }
+
+    /* Services page header */
+    .page-header {
+      background-color: var(--color-surface-neutral, #f2efe9);
+      padding: var(--space-2xl, 101.25px) var(--space-xl, 54px) var(--space-2xl, 101.25px);
+      border-bottom: 1px solid var(--color-border-default, #d4cfc8);
+    }
+
+    .page-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .page-header-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-primary-action, #fb7339);
+      margin-bottom: var(--space-lg, 27px);
+    }
+
+    .page-header-title {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: var(--letter-spacing-heading, 0.06em);
+      text-transform: uppercase;
+      color: var(--color-heading-text, #3d3930);
+      margin: 0 0 var(--space-xl, 54px) 0;
+      max-width: 12ch;
+    }
+
+    .page-header-body {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      line-height: 1.65;
+      color: var(--color-warm-gray, #575349);
+      max-width: 56ch;
+    }
+
+    /* Services full list */
+    .service-full-row {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: var(--grid-gap-expanded, 134px);
+      align-items: start;
+      padding: var(--space-2xl, 101.25px) 0;
+      border-bottom: 1px solid var(--color-border-default, #d4cfc8);
+    }
+
+    .service-full-row:first-child {
+      padding-top: var(--space-3xl, 202.5px);
+    }
+
+    .service-left {
+      position: sticky;
+      top: calc(var(--nav-height-scrolled, 80px) + 32px);
+    }
+
+    .service-index {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-primary-action, #fb7339);
+      display: block;
+      margin-bottom: var(--space-lg, 27px);
+    }
+
+    .service-main-title {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-heading-text, #3d3930);
+      line-height: 1.1;
+      margin: 0 0 var(--space-xl, 54px) 0;
+    }
+
+    .service-price {
+      font-family: var(--font-mono, 'Roboto Mono', monospace);
+      font-size: 0.875rem;
+      color: var(--color-warm-gray, #575349);
+      letter-spacing: 0.04em;
+    }
+
+    .service-right {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl, 54px);
+    }
+
+    .service-body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-warm-gray, #575349);
+    }
+
+    .service-specs {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm, 13.5px);
+      border-top: 1px solid var(--color-border-default, #d4cfc8);
+      padding-top: var(--space-xl, 54px);
+    }
+
+    .service-spec-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--grid-gap, 22px);
+      padding: var(--space-sm, 13.5px) 0;
+      border-bottom: 1px solid var(--color-border-default, #d4cfc8);
+    }
+
+    .service-spec-key {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text, #c8c1b4);
+    }
+
+    .service-spec-val {
+      font-family: var(--font-mono, 'Roboto Mono', monospace);
+      font-size: 0.75rem;
+      color: var(--color-heading-text, #3d3930);
+      letter-spacing: 0.04em;
+    }
+
+    /* Pricing grid */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--grid-gap-wide, 45px);
+      margin-top: var(--space-2xl, 101.25px);
+    }
+
+    .pricing-card {
+      background-color: var(--color-white, #ffffff);
+      border: 1px solid var(--color-border-default, #d4cfc8);
+      border-radius: 4px;
+      padding: var(--space-xl, 54px);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg, 27px);
+    }
+
+    .pricing-card--featured {
+      background-color: var(--color-heading-text, #3d3930);
+      border-color: var(--color-heading-text);
+    }
+
+    .pricing-tier {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-primary-action, #fb7339);
+    }
+
+    .pricing-amount {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--color-heading-text, #3d3930);
+      line-height: 1.0;
+    }
+
+    .pricing-card--featured .pricing-amount {
+      color: var(--color-surface-neutral, #f2efe9);
+    }
+
+    .pricing-amount span {
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      vertical-align: super;
+    }
+
+    .pricing-includes {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--color-warm-gray, #575349);
+    }
+
+    .pricing-card--featured .pricing-includes {
+      color: rgba(242, 239, 233, 0.7);
+    }
+
+    .pricing-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs, 10.8px);
+    }
+
+    .pricing-features li {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--color-warm-gray, #575349);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .pricing-features li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--color-primary-action, #fb7339);
+    }
+
+    .pricing-card--featured .pricing-features li {
+      color: rgba(242, 239, 233, 0.7);
+    }
+
+    .pricing-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: var(--space-cta-radius, 10px);
+      margin-top: auto;
+      background-color: transparent;
+      color: var(--color-heading-text, #3d3930);
+      border: 1px solid var(--color-border-default, #d4cfc8);
+      transition: all var(--duration-base, 0.45s) var(--ease-primary);
+    }
+
+    .pricing-cta:hover {
+      background-color: var(--color-heading-text, #3d3930);
+      color: var(--color-surface-neutral, #f2efe9);
+      border-color: var(--color-heading-text);
+    }
+
+    .pricing-card--featured .pricing-cta {
+      background-color: var(--color-primary-action, #fb7339);
+      color: var(--color-surface-neutral, #f2efe9);
+      border-color: var(--color-primary-action);
+    }
+
+    .pricing-card--featured .pricing-cta:hover {
+      background-color: transparent;
+      color: var(--color-primary-action, #fb7339);
+    }
+
+    @media (max-width: 968px) {
+      .service-full-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl, 54px);
+      }
+
+      .service-left {
+        position: relative;
+        top: auto;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav" class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="nav-links-left">
+        <a href="services.html" class="nav-link nav-link--active">Services</a>
+        <a href="process.html" class="nav-link">Process</a>
+      </div>
+      <a href="index.html" class="nav-logo" aria-label="Meridian Grain — Home">
+        <span class="nav-logo-text">Meridian Grain</span>
+      </a>
+      <div class="nav-links-right">
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="contact.html" class="nav-cta">Book a Run</a>
+      </div>
+      <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="services.html" class="nav-link nav-link--active">Services</a>
+    <a href="process.html" class="nav-link">Process</a>
+    <a href="work.html" class="nav-link">Work</a>
+    <a href="contact.html" class="nav-cta">Book a Run</a>
+  </div>
+
+  <!-- Sub-page nav spacer — always active -->
+  <div class="nav-spacer" aria-hidden="true"></div>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header" id="page-header">
+    <div class="page-header-inner">
+      <span class="page-header-label">Services</span>
+      <h1 class="page-header-title">Chemistry<br>as a<br>Discipline</h1>
+      <p class="page-header-body">
+        Every service at Meridian Grain is grounded in the same premise: film chemistry is not art,
+        it is science. The creative decisions belong to you. The technical precision belongs to us.
+      </p>
+    </div>
+  </header>
+
+  <!-- SERVICES DETAIL — Full sticky rows -->
+  <section class="section section--white" id="services-detail" aria-labelledby="services-detail-heading">
+    <div class="container--wide">
+      <h2 class="sr-only" id="services-detail-heading">Service Details</h2>
+      <style>.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }</style>
+
+      <!-- Service 01 -->
+      <div class="service-full-row" id="development" data-service="1">
+        <div class="service-left">
+          <span class="service-index">01 / Development</span>
+          <h2 class="service-main-title">Push-Pull Development</h2>
+          <p class="service-price">From $18 / roll (35mm)</p>
+        </div>
+        <div class="service-right">
+          <p class="service-body">
+            Push-pull development is the most variable process in film photography, and the most
+            mishandled. Most labs push by adjusting time only. We adjust time, temperature, agitation
+            interval, and sometimes developer dilution — because each emulsion responds differently
+            to underexposure, and a single variable never tells the full story.
+          </p>
+          <p class="service-body">
+            We work with Rodinal, D-76, HC-110, Pyrocat-HD, PMK Pyro, Xtol, and FX-39II.
+            If you have a specific developer you want us to use, send it with your film and we'll use it.
+            Every batch is mixed fresh. We do not use replenished developer.
+          </p>
+          <div class="service-specs">
+            <div class="service-spec-row">
+              <span class="service-spec-key">Formats</span>
+              <span class="service-spec-val">35mm · 120 · 4×5 · 5×7 · 8×10</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Push range</span>
+              <span class="service-spec-val">N-3 to N+4</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Temperature control</span>
+              <span class="service-spec-val">±0.1°C — NIST-traceable</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Documentation</span>
+              <span class="service-spec-val">PDF development card per order</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Turnaround</span>
+              <span class="service-spec-val">24h standard · 4h rush</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 02 -->
+      <div class="service-full-row" id="scanning" data-service="2">
+        <div class="service-left">
+          <span class="service-index">02 / Scanning</span>
+          <h2 class="service-main-title">Large-Format Scanning</h2>
+          <p class="service-price">From $22 / sheet (4×5)</p>
+        </div>
+        <div class="service-right">
+          <p class="service-body">
+            We scan on Imacon Flextight and Epson V850 depending on format and resolution requirement.
+            All scans are delivered as 16-bit TIFF with embedded ICC profile. We do not deliver
+            compressed JPEGs for archival work — if you need web-optimized files, we include them
+            in addition to the archival master, not instead.
+          </p>
+          <p class="service-body">
+            We dust-spot every scan before delivery. This is not a premium add-on. It is the standard.
+            Delivering a scan with visible dust is delivering an incomplete product.
+          </p>
+          <div class="service-specs">
+            <div class="service-spec-row">
+              <span class="service-spec-key">Formats</span>
+              <span class="service-spec-val">35mm · 120 · 4×5 · 5×7 · 8×10</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Maximum resolution</span>
+              <span class="service-spec-val">6400 dpi (Flextight) · 2400 dpi (V850)</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Bit depth</span>
+              <span class="service-spec-val">16-bit TIFF · ICC profile embedded</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Delivery</span>
+              <span class="service-spec-val">Encrypted download · 30-day cloud archive</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Turnaround</span>
+              <span class="service-spec-val">48h standard · 12h rush</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 03 -->
+      <div class="service-full-row" id="printing" data-service="3">
+        <div class="service-left">
+          <span class="service-index">03 / Printing</span>
+          <h2 class="service-main-title">Archival Contact Printing</h2>
+          <p class="service-price">From $140 / print</p>
+        </div>
+        <div class="service-right">
+          <p class="service-body">
+            Contact printing from large-format negatives at 1:1 scale. We print silver gelatin
+            and platinum-palladium on Arches Platine, Revere Platinum, and Canson Platine Fibre Rag.
+            All platinum-palladium prints are coated in-house using Na2 and Ferric Oxalate sensitizers.
+          </p>
+          <p class="service-body">
+            Minimum projected permanence for platinum-palladium on Arches Platine: 500 years under
+            standard museum storage conditions. We provide a material certificate with each print
+            documenting paper lot, sensitizer batch, and development chemistry.
+          </p>
+          <div class="service-specs">
+            <div class="service-spec-row">
+              <span class="service-spec-key">Processes</span>
+              <span class="service-spec-val">Platinum-palladium · Silver gelatin</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Papers</span>
+              <span class="service-spec-val">Arches Platine · Revere · Canson Platine</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Maximum size</span>
+              <span class="service-spec-val">11×14" contact from 8×10 negative</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Permanence</span>
+              <span class="service-spec-val">200–500 yr projected (process dependent)</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Documentation</span>
+              <span class="service-spec-val">Material certificate per print</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 04 -->
+      <div class="service-full-row" id="rush" data-service="4">
+        <div class="service-left">
+          <span class="service-index">04 / Rush</span>
+          <h2 class="service-main-title">Rush Processing</h2>
+          <p class="service-price">+65% standard rate</p>
+        </div>
+        <div class="service-right">
+          <p class="service-body">
+            Editorial deadlines are real. Rush processing at Meridian Grain means your film
+            enters the darkroom within 90 minutes of receipt and is processed, dried, and scanned
+            before anything else in the queue. We do not sacrifice quality for speed — we adjust
+            capacity. Rush orders are capped at 4 per day to ensure this guarantee holds.
+          </p>
+          <div class="service-specs">
+            <div class="service-spec-row">
+              <span class="service-spec-key">Darkroom entry</span>
+              <span class="service-spec-val">Within 90 min of receipt</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Development turnaround</span>
+              <span class="service-spec-val">4h from receipt</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Scan turnaround</span>
+              <span class="service-spec-val">12h from receipt</span>
+            </div>
+            <div class="service-spec-row">
+              <span class="service-spec-key">Daily capacity</span>
+              <span class="service-spec-val">4 rush orders maximum</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section section--cream" id="pricing" aria-labelledby="pricing-heading">
+    <div class="container--wide">
+      <span class="section-label section-label--muted">Pricing</span>
+      <h2 class="section-heading" id="pricing-heading">Transparent<br>Rates</h2>
+      <p class="section-subheading">No hidden fees. No reprinting charges for our errors. Every price includes a development card.</p>
+
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <span class="pricing-tier">Standard</span>
+          <div class="pricing-amount"><span>$</span>18</div>
+          <p class="pricing-includes">35mm / 120 develop only</p>
+          <ul class="pricing-features">
+            <li>Any process (B&W / C-41 / E-6)</li>
+            <li>Push-pull to ±3 stops</li>
+            <li>PDF development card</li>
+            <li>24h turnaround</li>
+            <li>Negatives returned uncut</li>
+          </ul>
+          <a href="contact.html" class="pricing-cta">Get Started</a>
+        </div>
+
+        <div class="pricing-card pricing-card--featured">
+          <span class="pricing-tier">Large Format</span>
+          <div class="pricing-amount"><span>$</span>22</div>
+          <p class="pricing-includes">4×5 per sheet — develop + scan</p>
+          <ul class="pricing-features">
+            <li>Develop + 6400 dpi TIFF scan</li>
+            <li>Dust-spotted master file</li>
+            <li>ICC profile embedded</li>
+            <li>PDF development card</li>
+            <li>30-day cloud archive</li>
+          </ul>
+          <a href="contact.html" class="pricing-cta">Book a Run</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta-section" aria-labelledby="services-cta-heading">
+    <div class="cta-content">
+      <span class="cta-eyebrow">Ready to Begin</span>
+      <h2 class="cta-heading" id="services-cta-heading">Send Us<br>Your Film</h2>
+      <p class="cta-body">We accept work by mail and by appointment. Rush orders available on weekdays.</p>
+      <a href="contact.html" class="cta-btn-primary">Book a Run</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">Meridian Grain</a>
+          <p class="footer-tagline">Precision film developing and scanning laboratory.</p>
+        </div>
+        <nav class="footer-nav-col" aria-label="Services links">
+          <h3 class="footer-nav-heading">Services</h3>
+          <ul class="footer-nav-links">
+            <li><a href="services.html#development">Push-Pull Development</a></li>
+            <li><a href="services.html#scanning">Large-Format Scanning</a></li>
+            <li><a href="services.html#printing">Archival Printing</a></li>
+            <li><a href="services.html#rush">Rush Processing</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-nav-col" aria-label="Studio links">
+          <h3 class="footer-nav-heading">Studio</h3>
+          <ul class="footer-nav-links">
+            <li><a href="process.html">Our Process</a></li>
+            <li><a href="work.html">Client Work</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-nav-col" aria-label="Technical links">
+          <h3 class="footer-nav-heading">Technical</h3>
+          <ul class="footer-nav-links">
+            <li><a href="process.html#chemistry">Chemistry Configurations</a></li>
+            <li><a href="process.html#formats">Supported Formats</a></li>
+            <li><a href="services.html#pricing">Pricing</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Meridian Grain. All rights reserved.</p>
+        <ul class="footer-legal-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var nav = document.getElementById('site-nav');
+      var toggle = nav.querySelector('.nav-mobile-toggle');
+      var mobileMenu = document.querySelector('.nav-mobile-menu');
+      var scrolled = false;
+      function onScroll() {
+        var isScrolled = window.scrollY > 60;
+        if (isScrolled !== scrolled) {
+          scrolled = isScrolled;
+          nav.classList.toggle('scrolled', isScrolled);
+          nav.classList.toggle('fixed-nav', isScrolled);
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen.toString());
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('.nav-link, .nav-cta').forEach(function(link) {
+        link.addEventListener('click', function() {
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    })();
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof gsap === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Page header — scale + rise
+      gsap.from('#page-header .page-header-label, #page-header .page-header-title, #page-header .page-header-body', {
+        y: 40, scale: 0.97, stagger: 0.12, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '#page-header', start: 'top 85%' }
+      });
+
+      // Services rows — each sweeps in from left as it enters viewport
+      document.querySelectorAll('.service-full-row').forEach(function(row) {
+        gsap.from(row.querySelectorAll('.service-left > *, .service-right > *'), {
+          x: -70, stagger: 0.1, duration: 0.9, ease: 'power2.out',
+          scrollTrigger: { trigger: row, start: 'top 80%' }
+        });
+      });
+
+      // Pricing cards — divergent: left card from left, right card from right
+      gsap.from('.pricing-grid .pricing-card:first-child', {
+        x: -80, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '.pricing-grid', start: 'top 80%' }
+      });
+      gsap.from('.pricing-grid .pricing-card:last-child', {
+        x: 80, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '.pricing-grid', start: 'top 80%' }
+      });
+
+      // CTA — vertical stagger
+      gsap.from('#cta-section .cta-content > *', {
+        y: 50, stagger: 0.1, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '#cta-section', start: 'top 75%' }
+      });
+    });
+  </script>
+</body>
+</html>

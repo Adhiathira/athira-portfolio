@@ -1,22 +1,22 @@
-# Concept by Video — Griting × Formless Motion World
+# Concept by Video — This Design System (Merged) Motion World
 
 ## Overview
 
-This document describes the motion and video aesthetic for the Griting × Formless merged design system. Griting's visual identity is the foundation: deep forest green, earned trust, infrastructure permanence. Formless contributes the motion grammar: generative flow, cinematic scale, atmospheric depth, and a single coherent easing character. Together they produce a world that feels both grounded and alive — infrastructure that breathes.
+This document describes the motion and video aesthetic for this merged design system. The primary visual identity is the foundation: deep forest green, earned trust, infrastructure permanence. The secondary aesthetic contributes the motion grammar: generative flow, cinematic scale, atmospheric depth, and a single coherent easing character. Together they produce a world that feels both grounded and alive — infrastructure that breathes.
 
 ---
 
 ## Brand World Description
 
-The visual world of Griting × Formless is one of deep growth: not the rapid, surface-level growth of a startup, but the slow, structural growth of a forest. The dominant metaphor is infrastructure beneath the surface — root systems, structural beams, deep water — all rendered in the brand's deep forest green (#003620) with soft ambient light as the only luminous element.
+The visual world of this design system is one of deep growth: not the rapid, surface-level growth of a startup, but the slow, structural growth of a forest. The dominant metaphor is infrastructure beneath the surface — root systems, structural beams, deep water — all rendered in the brand's deep forest green (#003620) with soft ambient light as the only luminous element.
 
-Formless adds to this a sense of fluid intelligence: forms that shift, resolve, and reveal themselves over time. Not chaos — controlled emergence. The motion feels purposeful, like a system becoming legible as you watch it.
+The secondary aesthetic adds to this a sense of fluid intelligence: forms that shift, resolve, and reveal themselves over time. Not chaos — controlled emergence. The motion feels purposeful, like a system becoming legible as you watch it.
 
 ---
 
 ## Color World for Video Assets
 
-All video and motion assets must operate within Griting's chromatic environment:
+All video and motion assets must operate within this design system's chromatic environment:
 
 **Primary environment color:** `#003620` (deep forest green) — the dominant field, the ground
 **Brand accent:** `#00693e` (medium green) — the brightest living element, used sparingly as highlight
@@ -24,7 +24,7 @@ All video and motion assets must operate within Griting's chromatic environment:
 **Text / luminous element:** `#ffffff` / `#f4f2f0` — white-to-cream, used only for type and the softest light
 **No blues, purples, or warm neutrals** — the chromatic world is entirely within the green family
 
-The Formless source system used a teal-to-blue ambient glow shift. In this merged system, that shift is retuned entirely to the green family: the hero glow is `#0d4a35` at its brightest core, and the footer glow is `#002918` — a slightly cooler, deeper green — creating the same chromatic arc Formless used but wholly within Griting's palette.
+The secondary aesthetic source system used a teal-to-blue ambient glow shift. In this merged system, that shift is retuned entirely to the green family: the hero glow is `#0d4a35` at its brightest core, and the footer glow is `#002918` — a slightly cooler, deeper green — creating the same chromatic arc but wholly within the primary system's palette.
 
 ---
 
@@ -69,7 +69,7 @@ Background videos are extremely slow — nearly still. Camera movement, if prese
 
 ---
 
-### Section Atmospheric Background (GritMe Sections)
+### Section Atmospheric Background (Primary Product Sections)
 **Concept:** A dark studio environment with a single soft radial glow emerging from lower center — green light in a dark field. Not a lens flare, not a particle system — just ambient environmental light suggesting depth and warmth in darkness. Completely still or barely breathing (0.5% scale oscillation over 6 seconds).
 
 **Color:** Central glow `#0d4a35`, outer field `#001a0f` (near-black green). No other colors.
@@ -90,12 +90,12 @@ Background videos are extremely slow — nearly still. Camera movement, if prese
 ---
 
 ### Concept Motion — "Infrastructure Beneath the Visible"
-**Concept:** A generative visualization of a network resolving from noise into structure. Begins as ambient green light particles in slow chaotic drift — the Formless quality — then gradually self-organizes into a stable, geometric node graph. The nodes and edges are in `#00693e` on `#003620`. The organization process takes 8–12 seconds, then holds for 3 seconds before the loop resets with a slow dissolve.
+**Concept:** A generative visualization of a network resolving from noise into structure. Begins as ambient green light particles in slow chaotic drift — the secondary aesthetic's quality — then gradually self-organizes into a stable, geometric node graph. The nodes and edges are in `#00693e` on `#003620`. The organization process takes 8–12 seconds, then holds for 3 seconds before the loop resets with a slow dissolve.
 
 **Color:** `#003620` background, `#00693e` lines and nodes, `#f4f2f0` node highlights (very subtle)
 **Motion:** Slow drift → gradual crystallization → stable hold → slow dissolve → loop
 **Use:** Optional: hero section background behind the headline, or as a standalone brand video asset
-**This is the most "Formless" moment in the merged system** — generative, fluid, resolving into structure. It is allowed here because it serves Griting's core thesis: trust is built from observed evidence, not assertion.
+**This is the most generative moment in the merged system** — fluid, resolving into structure. It is allowed here because it serves the platform's core thesis: trust is built from observed evidence, not assertion.
 
 ---
 
@@ -114,11 +114,11 @@ Background videos are extremely slow — nearly still. Camera movement, if prese
 - No hard cut — the background field dissolves between zones
 - The transition uses the midpoint of the section boundary as the trigger threshold
 
-### Sticky Scroll (GritMe Product Panels)
+### Sticky Scroll (Primary Product Panels)
 - Left column (media/mockup) is position: sticky at 20% from top
 - Right column (text) scrolls normally
 - A thin vertical rule (`#00693e`, 1px, 0.3 opacity) divides left from right
-- Text stack reveals stagger at 0.15s intervals as each GritMe section enters the sticky zone
+- Text stack reveals stagger at 0.15s intervals as each product section enters the sticky zone
 
 ### CTA Hover States
 - Primary button: background shifts from `#00693e` to `#004d2c` (darker green), 0.2s, `cubic-bezier(0.4, 0, 0.2, 1)`
@@ -139,4 +139,3 @@ Background videos are extremely slow — nearly still. Camera movement, if prese
 | UI section reveals | n/a | Scroll-triggered, staggered, 0.5s | Slide up + fade in, hierarchy order |
 
 All assets must avoid: bright colors, warm tones, blue tones, artificial glow effects that break the green chromatic world, rapid motion, particle explosions, lens flares, or any visual element associated with generic AI-generated aesthetics.
-

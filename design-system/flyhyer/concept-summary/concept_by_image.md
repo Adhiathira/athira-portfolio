@@ -78,7 +78,7 @@ The page executes a deliberate **light → dark → light → dark → light →
 - Flexible Services: dark navy (`#000d10`)
 - Destinations: white (`#ffffff`)
 - App Feature: dark navy (`#000d10`)
-- Hyer Experience: white
+- This Design Experience: white
 - Footer: dark navy (`#000d10`)
 
 This alternation creates **visual pacing** — each background shift signals a new narrative chapter. The transitions are **sharp and flat** (no gradients, no wave dividers, no diagonal cuts between sections), which gives the interface a modernist, high-confidence character. Section boundaries are clean horizontal edges.

@@ -1,8 +1,8 @@
-I don't see a `concept_by_image.md` yet for GSAP — this is a fresh extraction. Let me write the design analysis directly from the tokens and screenshots provided.
+I don't see a `concept_by_image.md` yet for this design system — this is a fresh extraction. Let me write the design analysis directly from the tokens and screenshots provided.
 
 ---
 
-## GSAP — Design Analysis
+## Design Analysis
 
 ### Visual Identity
 
@@ -32,7 +32,7 @@ The **marquee sections treat horizontal overflow as deliberate content** — tex
 
 ### Footer Section
 
-The footer splits into two distinct background zones: an upper dark section (`#0e100f`) containing a 6-column plugin navigation grid — each column headed by its category label in its designated accent color (green, pink, orange, cyan, lavender, lime) — and a lower cream section (`#f5f0e8` / `#fffce1` range) containing the newsletter form and link columns. The cream zone shifts the typographic palette to near-black (`#0e100f`) text on light ground, creating a deliberate visual termination after the long dark scroll. The newsletter form uses a bottom-border-only input style (`border-bottom: 1px solid #7c7c6f`) with no box or container around it — purely an underline. A Webflow logo mark appears centered in the legal strip at the very bottom, flanked by copyright text left and Privacy/Terms right, all in small-scale type at reduced opacity.
+The footer splits into two distinct background zones: an upper dark section (`#0e100f`) containing a 6-column plugin navigation grid — each column headed by its category label in its designated accent color (green, pink, orange, cyan, lavender, lime) — and a lower cream section (`#f5f0e8` / `#fffce1` range) containing the newsletter form and link columns. The cream zone shifts the typographic palette to near-black (`#0e100f`) text on light ground, creating a deliberate visual termination after the long dark scroll. The newsletter form uses a bottom-border-only input style (`border-bottom: 1px solid #7c7c6f`) with no box or container around it — purely an underline. A logo mark appears centered in the legal strip at the very bottom, flanked by copyright text left and Privacy/Terms right, all in small-scale type at reduced opacity.
 
 ---
 
@@ -51,5 +51,5 @@ The footer splits into two distinct background zones: an upper dark section (`#0
 - **The `{ }` bracket device** around the hero descriptor label is a direct reference to code syntax — it signals domain fluency without using iconography or illustration.
 - **The footer's dual-zone color break** (dark → cream) is a structurally unusual choice: most sites use a dark footer on a light body. Here the reversal creates a closing beat where the page "exhales" into warmth.
 - **Category accent colors are non-neutral and fully saturated** — `#fec5fb`, `#ff8709`, `#00bae2`. These are not muted brand tones; they read as distinct signal flags, closer to syntax highlighting in a code editor than to typical nav label styling.
-- **The focus state on the email input** uses a `4px solid #0ae448` outline — the primary brand green appears only in the CTA button and on focused form inputs, tying the two conversion moments together with a single color signal.
+- **The focus state on the email input** uses a `4px solid #0ae448` outline — the primary green appears only in the CTA button and on focused form inputs, tying the two conversion moments together with a single color signal.
 - **Hero CTA placement is bottom-right, not centered** — breaking the convention of centering the primary action under the headline. This forces the reader's eye to travel the full width of the display type before landing on the action.

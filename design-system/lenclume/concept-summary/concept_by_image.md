@@ -65,7 +65,7 @@ The interface operates as **editorial storytelling design**, not as structured g
 
 Text placement consistently exploits quiet photographic zones — the oversized display headline in the hero sits in the compositionally calm central band of the image. This is intentional art direction: the photographer and the layout designer are in dialogue. UI elements are placed where images allow them, not imposed on top of photography regardless of visual conflict.
 
-The sidebar labels ("SIMON ROGAN", "RESERVATION") rotated 90 degrees and pinned to the vertical viewport edges are a distinctive editorial gesture borrowed from print magazine design — a typographic device that frames the image as if it were a spread, treating the viewport as a page rather than a screen.
+The sidebar labels (the brand name and "RESERVATION") rotated 90 degrees and pinned to the vertical viewport edges are a distinctive editorial gesture borrowed from print magazine design — a typographic device that frames the image as if it were a spread, treating the viewport as a page rather than a screen.
 
 The layout intent is to minimize UI chrome so that photography dominates. Navigation, labels, and CTAs are intentionally reduced to their minimum footprint, preserving the full emotional weight of the photography.
 
@@ -138,7 +138,7 @@ This is a **minimal section grammar** — the interface does not use geometric d
 - **Headline scale:** Extremely large — the display headline is approximately 80–100px in rendered size, vastly larger than the navigation labels (~15px). This is a **5–6× typographic scale jump** between display and navigation, creating strong scale contrast
 - **CTA presence:** No CTA button in the hero itself — the hero is purely a brand impression moment, with navigation as the only interaction path
 - **Navigation state:** The top navigation bar is **transparent** at hero — no background fill, type appears directly over the photography. A secondary centered navigation grouping appears at the mid-hero vertical position — an unusual dual-navigation architecture
-- **Sidebar labels:** "SIMON ROGAN" and "RESERVATION" appear as rotated text on the left and right viewport edges, printed in the off-white/cream tone against the sage green rail
+- **Sidebar labels:** The brand name and "RESERVATION" appear as rotated text on the left and right viewport edges, printed in the off-white/cream tone against the sage green rail
 
 ---
 

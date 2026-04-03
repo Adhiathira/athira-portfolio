@@ -1,16 +1,16 @@
-# Concept by Video — Griting-Opux Merged System
+# Concept by Video — This Design System (Merged)
 
 ## Overview
 
-This document describes how video and motion assets should look, feel, and behave in the griting-opux merged design system. It synthesizes Opux's scroll-video and cinematic motion philosophy, fully retuned to Griting's green-world identity, narrative pace, and brand feeling.
+This document describes how video and motion assets should look, feel, and behave in this merged design system. It synthesizes the secondary aesthetic's scroll-video and cinematic motion philosophy, fully retuned to the primary system's green-world identity, narrative pace, and brand feeling.
 
-The source authority for all color, typography, and brand decisions is Griting. Opux contributes the motion grammar: how video and animated backgrounds are structured, paced, and layered across the scroll journey.
+The source authority for all color, typography, and brand decisions is the primary design system. The secondary aesthetic contributes the motion grammar: how video and animated backgrounds are structured, paced, and layered across the scroll journey.
 
 ---
 
 ## Brand Motion Identity
 
-Griting's brand is infrastructure — permanent, load-bearing, grown from the ground up. Motion in this system does not excite or dazzle. It **grounds**. Animated elements behave like deep forest processes: they move slowly, continuously, with implied weight. There is no bounce, no spring, no pop. There is growth, depth, and accumulation.
+This design system's brand is infrastructure — permanent, load-bearing, grown from the ground up. Motion in this system does not excite or dazzle. It **grounds**. Animated elements behave like deep forest processes: they move slowly, continuously, with implied weight. There is no bounce, no spring, no pop. There is growth, depth, and accumulation.
 
 The primary motion metaphor is **root systems and canopy**: things moving beneath the surface, slowly spreading, occasionally becoming visible. The animated terrain grid — the system's primary motion asset — is not a racing landscape or a digital void. It is an overhead or perspective view of a living ground: growing lines, spreading networks, the structure beneath the visible.
 
@@ -29,11 +29,11 @@ The primary animated video/canvas element is a **perspective-distorted wireframe
 - **Line color:** #00693e at 15–20% opacity
 - **Background field:** #003620 (solid, no gradient)
 - **Glow on lines:** none in resting state; at 0.5x scroll velocity intersection points may pulse to #00693e at 35% opacity for 200ms
-- **No warm tones, no red/terracotta, no teal-black.** The original Opux terrain used a warm-to-cool gradient background (#6b2a24 → #1a3040) — this is replaced entirely with the Griting green field.
+- **No warm tones, no red/terracotta, no teal-black.** The original secondary aesthetic terrain used a warm-to-cool gradient background (#6b2a24 → #1a3040) — this is replaced entirely with the primary system's green field.
 
 ### Animation Behavior
 
-The terrain grid moves in slow continuous forward motion — the camera appears to travel across the ground plane toward a horizon. Speed is approximately 20–30% of Opux's original pace. The motion should feel like time-lapse root growth, not forward flight.
+The terrain grid moves in slow continuous forward motion — the camera appears to travel across the ground plane toward a horizon. Speed is approximately 20–30% of the secondary aesthetic's original pace. The motion should feel like time-lapse root growth, not forward flight.
 
 - **Loop:** Seamless. The grid tiles along the forward axis; no visible restart.
 - **Parallax:** The terrain plane moves at 0.6x the scroll velocity. Foreground content moves at 1.0x. This creates depth separation between foreground text and background terrain.
@@ -42,13 +42,13 @@ The terrain grid moves in slow continuous forward motion — the camera appears 
 
 ### When the Terrain Is Active
 
-The terrain background appears in sections where Griting's green-world atmosphere is foregrounded:
+The terrain background appears in sections where the primary system's green-world atmosphere is foregrounded:
 
 1. **Hero section** — full opacity terrain, full depth composition
-2. **GritMe Demo Beat (mid-page showcase)** — terrain reactivated to signal narrative chapter shift
+2. **Primary Product Demo Beat (mid-page showcase)** — terrain reactivated to signal narrative chapter shift
 3. **Footer** — terrain at 30% opacity, purely textural, not animated at full pace (reduced to 10% speed)
 
-The terrain is **absent** in off-white/light sections (New Infrastructure, GritMe feature sections, Testimonials). Its controlled reappearance is the primary pacing mechanism on the page.
+The terrain is **absent** in off-white/light sections (New Infrastructure, Primary Product feature sections, Testimonials). Its controlled reappearance is the primary pacing mechanism on the page.
 
 ---
 
@@ -59,8 +59,8 @@ The terrain is **absent** in off-white/light sections (New Infrastructure, GritM
 The hero operates as a three-layer motion composition:
 
 1. **Layer 1 — Background (terrain):** Forest-floor grid, full opacity, slow forward motion, #003620 base
-2. **Layer 2 — Midground (ghost typography):** Griting's G-icon or full wordmark at 5% white opacity, rendered at full viewport width. Static — does not animate. Functions as texture, not readable content.
-3. **Layer 3 — Foreground (content):** Griting's headline (bottom-left anchor), CTAs, subheadline. Static. White text.
+2. **Layer 2 — Midground (ghost typography):** The G-icon or full wordmark at 5% white opacity, rendered at full viewport width. Static — does not animate. Functions as texture, not readable content.
+3. **Layer 3 — Foreground (content):** The headline (bottom-left anchor), CTAs, subheadline. Static. White text.
 
 ### Entrance Animation
 
@@ -71,7 +71,7 @@ On page load, the hero composition assembles in sequence:
 3. **400–800ms:** Foreground content block fades in with 20px upward slide (ease-out, offset 400ms)
 4. **600–900ms:** CTA buttons fade in (staggered 80ms between primary and secondary)
 
-The overall entrance reads as: environment appears first, then structure, then message. This sequence reinforces Griting's identity — the ground is established before the content speaks.
+The overall entrance reads as: environment appears first, then structure, then message. This sequence reinforces the primary identity — the ground is established before the content speaks.
 
 ### Scroll Exit
 
@@ -87,7 +87,7 @@ As the user scrolls down from the hero:
 
 ### Purpose
 
-This section is the **GritMe Demonstration Beat** — the cinematic mid-page moment that demonstrates the product in motion. It mirrors Opux's Media Showcase Section in structure and atmospheric intent.
+This section is the **Primary Product Demonstration Beat** — the cinematic mid-page moment that demonstrates the product in motion. It mirrors the secondary aesthetic's Media Showcase Section in structure and atmospheric intent.
 
 ### Layout
 
@@ -105,7 +105,7 @@ Video assets placed in the demo container follow these visual rules:
 - Midtone highlights: lifted toward #00693e
 - Skin tones: preserved but shifted -5 to -10 degrees on the hue wheel toward cool green, to read as native to the green-world environment
 - No warm red/amber tones. Any terracotta or rose elements from source footage are desaturated and cooled.
-- UI elements within screencapture footage retain their original green-tinted card colors (the GritMe UI is already green-native)
+- UI elements within screencapture footage retain their original green-tinted card colors (the primary product UI is already green-native)
 
 **Narrative content:**
 - The video demonstrates the system working — data flowing, evaluations completing, roadmaps generating. It does not demonstrate a concept or mood.

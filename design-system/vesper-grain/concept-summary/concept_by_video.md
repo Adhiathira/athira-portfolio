@@ -1,4 +1,4 @@
-## Vesper Grain — Scroll Video Analysis
+## Scroll Video Analysis
 
 ---
 
@@ -16,7 +16,7 @@ The display headline enters at scale — not building letter by letter but arriv
 
 ### Section Transitions
 
-Scrolling from the hero into the first product feature split is not marked by any wipe or dissolve — the transition is purely spatial. The grain texture slides off the top of the viewport and the product photography column rises to fill it, already fully resolved. No cross-fade, no scale tween: the new section arrives edge-flush with the previous one, consistent with the straight-horizontal-edge geometry that governs all section boundaries in the design. When the manifesto section enters, the oversized headline moves slightly faster than the viewport scroll speed — a subtle parallax differential that amplifies its visual mass, making the text feel anchored in a layer in front of the page plane rather than embedded within it. The springy easing inherited from the Apple Mac motion system gives any scroll-triggered element a slight physical overshoot — a barely perceptible bounce at the end of its travel that reads as material rather than digital.
+Scrolling from the hero into the first product feature split is not marked by any wipe or dissolve — the transition is purely spatial. The grain texture slides off the top of the viewport and the product photography column rises to fill it, already fully resolved. No cross-fade, no scale tween: the new section arrives edge-flush with the previous one, consistent with the straight-horizontal-edge geometry that governs all section boundaries in the design. When the manifesto section enters, the oversized headline moves slightly faster than the viewport scroll speed — a subtle parallax differential that amplifies its visual mass, making the text feel anchored in a layer in front of the page plane rather than embedded within it. The springy easing built into this design system gives any scroll-triggered element a slight physical overshoot — a barely perceptible bounce at the end of its travel that reads as material rather than digital.
 
 ---
 
@@ -34,7 +34,7 @@ As the footer enters the viewport, no transition animation distinguishes it from
 
 ### Motion Principles
 
-The overall timing philosophy is **languid and deliberate, with a physical undercurrent**. The springy easing curve (`cubic-bezier(0.68, -0.55, 0.265, 1.55)`) inherited from the Apple Mac motion system introduces micro-overshoots that distinguish this design system from purely CSS-smooth predecessors — transitions arrive past their target and spring back, giving even subtle fades a sense of inertia. This is not a bouncy, playful system: the overshoots are small, and the durations are moderate (400–600ms) — they read as material, as if the interface has slight physical weight, rather than as cartoon physics. The dominant motion register of the page is cinematic: controlled, composed, edited. Motion is used as a reveal mechanism rather than a feedback mechanism — it discloses content, it does not respond to user gesture beyond the scroll event itself.
+The overall timing philosophy is **languid and deliberate, with a physical undercurrent**. The springy easing curve (`cubic-bezier(0.68, -0.55, 0.265, 1.55)`) built into this design system introduces micro-overshoots that distinguish it from purely CSS-smooth predecessors — transitions arrive past their target and spring back, giving even subtle fades a sense of inertia. This is not a bouncy, playful system: the overshoots are small, and the durations are moderate (400–600ms) — they read as material, as if the interface has slight physical weight, rather than as cartoon physics. The dominant motion register of the page is cinematic: controlled, composed, edited. Motion is used as a reveal mechanism rather than a feedback mechanism — it discloses content, it does not respond to user gesture beyond the scroll event itself.
 
 ---
 

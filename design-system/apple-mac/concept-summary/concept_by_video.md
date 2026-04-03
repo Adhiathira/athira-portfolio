@@ -28,7 +28,7 @@ The interface utilizes several distinct and reusable section design patterns acr
 *   **Section Divider Geometry:** The top and bottom boundaries of this section are **straight horizontal edges**.
 *   **Section Differentiation Analysis:** This section is always the first on the page. It transitions to the subsequent section via a hard, straight-edged cut. The shift is from a full-screen, spacious, centered layout to a more structured, content-dense section below. This contrast in density and layout creates a clear beginning to the user's journey.
 *   **Section Aesthetic Identity:** This is a **media-dominant, cinematic storytelling section**. Its aesthetic is minimal, confident, and focused, using motion and negative space to create a premium feel.
-*   **Design System Signals:** The typography, button style, and use of rounded shapes in this section establish a core visual language that is largely maintained throughout the rest ofthe interface.
+*   **Design System Signals:** The typography, button style, and use of rounded shapes in this section establish a core visual language that is largely maintained throughout the rest of the interface.
 
 ---
 
@@ -145,7 +145,7 @@ Transitions between sections are a key part of the narrative experience.
 
 *   **Hard Cuts with Thematic Shifts:** The most common transition is a straight horizontal edge. The visual interest comes from the radical change in layout, density, or background color across this edge. For example, a transition from a full-width, dark, cinematic video section to a bright white, text-focused editorial section is extremely effective at creating a chapter break and resetting the user's focus.
 *   **Continuous Animation:** In the alternating split-media sequence, the "transition" is the animation itself. There is no visible divider, only the seamless motion of the product and the cross-fade of the accompanying text. This creates a fluid, uninterrupted flow.
-*   **Background Bleed:** Some sections use overlapping layers or bleed background colors/videos into the section below, often using a gentle fade or gradient to soften the transition. On the iMac page, a soft, amorphous rainbow gradient graphic sits behind a text section and bleeds down into the card grid below it, visually linking the two.
+*   **Background Bleed:** Some sections use overlapping layers or bleed background colors/videos into the section below, often using a gentle fade or gradient to soften the transition. On one page, a soft, amorphous rainbow gradient graphic sits behind a text section and bleeds down into the card grid below it, visually linking the two.
 
 ---
 

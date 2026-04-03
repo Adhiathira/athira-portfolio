@@ -101,7 +101,7 @@ Not applicable — only one section is visible. No section transitions exist in 
 - **Background type:** Flat solid color — warm blush `#ead9d1`. No imagery, no gradient.
 - **Viewport coverage:** Full-height, 100vh.
 - **Text placement:** Perfectly centered both axes. Text block is narrow, centered, and reads as a single compositional unit.
-- **Headline scale:** The wordmark "UNSEEN STUDIO®" uses a relatively restrained headline size — token shows h1 at 34.56px. Not large-display; it reads as a brand lockup rather than a typographic statement.
+- **Headline scale:** The wordmark uses a relatively restrained headline size — token shows h1 at 34.56px. Not large-display; it reads as a brand lockup rather than a typographic statement.
 - **CTA count:** Two — one primary (white pill, "Enter ↗"), one secondary (underlined text, "ENTER WITHOUT AUDIO"). The count is deliberately minimal.
 - **Button style:** Primary is filled pill (white on blush). Secondary is underlined link — no button chrome at all.
 - **Scroll indicator:** None visible.

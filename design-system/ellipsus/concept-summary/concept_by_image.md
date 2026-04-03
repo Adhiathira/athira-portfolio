@@ -7,7 +7,7 @@ Looking at the screenshots and extracted design tokens, here is the design analy
 The site employs a high-contrast dual-mode palette — a near-black charcoal (`#0c0d0d`, `#1d1e20`) for hero and footer sections paired against warm off-white (`#f4f4f2`, `#fbfbf9`) for content sections, creating a stark rhythmic oscillation as you scroll. Typographically, Roslindale Display Narrow (light weight, 300) anchors all display text with editorial softness, while Manrope handles all UI text — the contrast between this condensed serif and the geometric sans is the site's most distinctive typographic decision. Motion character is understated: keyframe-driven opacity transitions at 0.4–0.5s using `cubic-bezier(0.19, 1, 0.22, 1)` (a fast-out, slow-decelerate) give scroll-triggered reveals a weighted, physical quality.
 
 `★ Insight ─────────────────────────────────────`
-The `cubic-bezier(0.19, 1, 0.22, 1)` easing is a classic "ease out expo" curve — objects decelerate dramatically as they land, mimicking physical mass. Ellipsus uses this on scroll-reveal transforms but not on button transitions (which use plain `ease`), creating a two-tier motion system: ambient/structural animations feel more cinematic than micro-interactions.
+The `cubic-bezier(0.19, 1, 0.22, 1)` easing is a classic "ease out expo" curve — objects decelerate dramatically as they land, mimicking physical mass. This design system uses this on scroll-reveal transforms but not on button transitions (which use plain `ease`), creating a two-tier motion system: ambient/structural animations feel more cinematic than micro-interactions.
 `─────────────────────────────────────────────────`
 
 ---
@@ -30,7 +30,7 @@ The illustrations are positioned with `transition: opacity 0.4s linear, transfor
 
 ## Footer Section
 
-The footer uses a full-black background (`#0c0d0d`) — heavier than the dark content sections — with an asymmetric 2-column layout: left column holds the Ellipsus wordmark logo (large, white) above a stacked list of uppercase nav links in Manrope at small scale, all-caps, weight 400, zero letter-spacing variation. The right column contains a single large display quote in Roslindale Display Narrow (~64px, weight 300) with a blinking cursor `|` appended — matching the hero's text-editor motif. A bottom bar carries a row of social icon glyphs (email, Tumblr, Discord, Instagram, TikTok, LinkedIn, Bluesky) left-aligned, with legal links ("TERMS OF SERVICE", "PRIVACY POLICY") centered and a physical address right-aligned — all in small Manrope, uppercase, `color-content-secondary: #64645e`. The footer carries the same visual weight as the hero — it is the second full-bleed dark section, bookending the page and closing the dark/light/dark oscillation.
+The footer uses a full-black background (`#0c0d0d`) — heavier than the dark content sections — with an asymmetric 2-column layout: left column holds the wordmark logo (large, white) above a stacked list of uppercase nav links in Manrope at small scale, all-caps, weight 400, zero letter-spacing variation. The right column contains a single large display quote in Roslindale Display Narrow (~64px, weight 300) with a blinking cursor `|` appended — matching the hero's text-editor motif. A bottom bar carries a row of social icon glyphs (email, Tumblr, Discord, Instagram, TikTok, LinkedIn, Bluesky) left-aligned, with legal links ("TERMS OF SERVICE", "PRIVACY POLICY") centered and a physical address right-aligned — all in small Manrope, uppercase, `color-content-secondary: #64645e`. The footer carries the same visual weight as the hero — it is the second full-bleed dark section, bookending the page and closing the dark/light/dark oscillation.
 
 ---
 
@@ -40,7 +40,7 @@ The footer uses a full-black background (`#0c0d0d`) — heavier than the dark co
 - **Two-font system with maximum contrast**: Roslindale Display Narrow (condensed serif, editorial weight 300) vs. Manrope (geometric sans, functional weight 400–500) — never a third family. Every typographic decision routes through this binary.
 - **Illustration system as a grid layer**: Hand-drawn line-art illustrations sit in a z-layer above the text grid but outside the content container's max-width, decorating the page periphery. They are consistent in style (single-weight white stroke) but not in subject — creating variety within a visual system.
 - **Hard-cut section alternation**: No gradients, no bleed transitions, no overlapping sections. Each background switch is a binary cut from `#fbfbf9` to `#0c0d0d` or vice versa.
-- **Blinking cursor as motif**: The `|` cursor animation appears in at least three locations (hero headline, footer quote, and a library/landing section) — using the same `styles_blink__yKBRw` keyframe (0→49%: opacity 0, 50→99%: opacity 1). It functions as a brand signature, not a one-off effect.
+- **Blinking cursor as motif**: The `|` cursor animation appears in at least three locations (hero headline, footer quote, and a library/landing section) — using the same `styles_blink__yKBRw` keyframe (0→49%: opacity 0, 50→99%: opacity 1). It functions as a visual signature, not a one-off effect.
 
 ---
 

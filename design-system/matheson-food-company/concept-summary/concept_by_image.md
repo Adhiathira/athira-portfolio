@@ -223,7 +223,7 @@ The typography system is **monolithic** — a single condensed font family acros
 - **Display/H1:** ~114px, uppercase, tight line-height at 1:1 — letterforms fill space without vertical breathing room
 - **H2:** ~56px, uppercase
 - **H3:** ~42px, uppercase
-- **Large display (H4 context):** ~110px — used for editorial "MATTY MATHESON" style brand credit text
+- **Large display (H4 context):** ~110px — used for editorial brand credit text at display scale
 - **Body/Link/Nav:** 20–32px, uppercase, letter-spacing +1.5–1.6px — body text set at a scale that would be considered display-level in most systems
 - **Button label:** 14px, semi-bold — the only typographic instance at a "normal" scale
 

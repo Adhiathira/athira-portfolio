@@ -1,5 +1,5 @@
 `★ Insight ─────────────────────────────────────`
-The screenshots show Bruno Simon's portfolio site — a WebGL/Three.js interactive 3D experience. What makes this analysis interesting from an extraction standpoint: the entire "page" is essentially one full-viewport canvas. The design system operates almost entirely in 3D space, not DOM layout. The extracted tokens (Amatic SC, Nunito, the dark navy palette) are the thin HTML overlay layer sitting atop a Three.js render.
+The screenshots show a WebGL/Three.js interactive 3D experience — what makes this analysis interesting from an extraction standpoint: the entire "page" is essentially one full-viewport canvas. The design system operates almost entirely in 3D space, not DOM layout. The extracted tokens (Amatic SC, Nunito, the dark navy palette) are the thin HTML overlay layer sitting atop a Three.js render.
 `─────────────────────────────────────────────────`
 
 ---

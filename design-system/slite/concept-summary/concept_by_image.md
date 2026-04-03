@@ -135,7 +135,7 @@ The one notable exception is the **wave-boundary transition** between the cream 
 - **Background:** Static warm cream solid field — no image fill, no gradient
 - **Viewport coverage:** Above-fold visible area; does not fill to viewport bottom edge — the product mockup begins below the CTA cluster, extending the hero below the fold
 - **Text placement:** Fully center-aligned along the vertical axis. Headline occupies approximately 35–40% of the viewport width at display scale, centered with significant horizontal margin
-- **Headline scale:** Very large display size (64px per extracted typeScale.h1) using the serif-adjacent Garnett typeface at weight 500 — creates strong scale contrast against the 16–18px body text
+- **Headline scale:** Very large display size (64px per extracted typeScale.h1) using a serif-adjacent proprietary display typeface at weight 500 — creates strong scale contrast against the 16–18px body text
 - **Decorative headline treatment:** Two-line headline with a strikethrough on the first line and a script/italic accent on the second word of the second line. This typographic split creates a "replacement narrative" — the crossed-out phrase and the emphasized alternative. The strikethrough uses a warm coral/orange accent color (#e8a87c) while the script emphasis uses the brand blue (#2b5cc9)
 - **CTA cluster:** Two buttons, side-by-side — ghost outlined (secondary) and dark filled pill (primary). Equal visual weight at layout level, differentiated by fill
 - **Announcement pill:** A small pill-shaped label at the top of the content block — acts as an attention anchor before the headline
@@ -187,10 +187,10 @@ The design uses **one high-contrast visual break** (the dark section) to pace th
 - Button corner radius (pill shape) — uniform across all sections and contexts
 - Color palette — cream background, dark charcoal text, blue accent, white card surfaces — used consistently throughout
 - Spacing scale — section padding (~80px), card padding (~20–24px) are consistent across all section types
-- Typography hierarchy — the Garnett/UniversalSans split between display text and body text is maintained throughout
+- Typography hierarchy — the serif-display/grotesque split between display text and body text is maintained throughout
 
 **Deliberate variation:**
-- The hero headline uses Garnett at large display scale with the script italic accent — this typographic treatment does not repeat anywhere else visible in the screenshots, making it a hero-specific design moment
+- The hero headline uses the display typeface at large scale with the script italic accent — this typographic treatment does not repeat anywhere else visible in the screenshots, making it a hero-specific design moment
 - The dark section introduces an inverted color context (light text on dark background) — the component styles adapt but the shape language (pill buttons, rounded cards) remains constant
 - The wave divider geometry is used only once — making it a single deliberate structural exception
 
@@ -215,14 +215,14 @@ The color system achieves hierarchy through **value contrast** (dark text on lig
 
 Two distinct typeface families create a clear personality split:
 
-- **Garnett** (proprietary serif/humanist hybrid): Used exclusively for display and heading roles (h1 64px, h2/h3 36px, h4 16px). Carries the editorial and brand identity weight of the interface. The italic variant appears in the hero as the "replacement word" accent — a high-personality typographic moment
-- **UniversalSans** (proprietary grotesque): Used for all body, UI, button, and utility text. Clean, low-personality workhorse that recedes to support readability
+- **A proprietary serif/humanist hybrid**: Used exclusively for display and heading roles (h1 64px, h2/h3 36px, h4 16px). Carries the editorial and brand identity weight of the interface. The italic variant appears in the hero as the "replacement word" accent — a high-personality typographic moment
+- **A proprietary grotesque**: Used for all body, UI, button, and utility text. Clean, low-personality workhorse that recedes to support readability
 
 Type scale creates a strong hierarchy:
-- Display: 64px / weight 500 (Garnett) — hero headline
-- Section heading: 36px / weight 400–500 (Garnett) — section titles
-- Body: 16–18px / weight 400–700 (UniversalSans) — content text
-- Button/utility: 13–14px / weight 400–500 (UniversalSans) — interactive labels
+- Display: 64px / weight 500 — hero headline
+- Section heading: 36px / weight 400–500 — section titles
+- Body: 16–18px / weight 400–700 — content text
+- Button/utility: 13–14px / weight 400–500 — interactive labels
 
 The 64px → 36px → 18px → 13px progression creates a 4:2:1:0.7 scale ratio — clearly legible hierarchy with strong visual contrast between levels.
 
@@ -248,7 +248,7 @@ The dominant transition mode is **invisible whitespace expansion** — sections 
 
 The single exception — the wave-boundary dark section transition — creates a genuine **narrative pause** and **visual surprise** in the scroll journey. Because this is the only curved/decorative transition, it carries maximum visual impact. All other transitions are quiet precisely to make this one moment feel significant.
 
-Typography scale contrasts also mark transitions: when a new section heading appears at Garnett 36px after a run of UniversalSans 16px body text, the scale jump signals a structural boundary without requiring a visual divider.
+Typography scale contrasts also mark transitions: when a new section heading appears at 36px after a run of 16px body text, the scale jump signals a structural boundary without requiring a visual divider.
 
 ---
 

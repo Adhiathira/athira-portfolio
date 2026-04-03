@@ -24,7 +24,7 @@ The body sections alternate between a strict two-column asymmetric split (approx
 
 ## Footer Section
 
-The footer is a large `#f2f2f2` off-white rounded card (heavy border-radius, floated on the black page background) — visually contained rather than full-bleed, creating an inset capsule effect. It runs a five-column grid: a logo/wordmark column on the far left, followed by four categorized link columns (Use cases, Integrations, Resources, Products) in #000000 at approximately 16px/400 weight — a deliberate scale drop from the 69–120px body display type. The wordmark in the footer uses a light background app-icon treatment (rounded square container) rather than the inline logotype used in the nav. No newsletter form, no social links, no decorative elements — the footer is entirely navigation-utility. A centered Typeform copyright line sits below the column grid in small text, completing the closure.
+The footer is a large `#f2f2f2` off-white rounded card (heavy border-radius, floated on the black page background) — visually contained rather than full-bleed, creating an inset capsule effect. It runs a five-column grid: a logo/wordmark column on the far left, followed by four categorized link columns (Use cases, Integrations, Resources, Products) in #000000 at approximately 16px/400 weight — a deliberate scale drop from the 69–120px body display type. The wordmark in the footer uses a light background app-icon treatment (rounded square container) rather than the inline logotype used in the nav. No newsletter form, no social links, no decorative elements — the footer is entirely navigation-utility. A centered copyright line sits below the column grid in small text, completing the closure.
 
 ---
 

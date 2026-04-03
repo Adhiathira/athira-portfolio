@@ -1,5 +1,5 @@
 `★ Insight ─────────────────────────────────────`
-The screenshots show Casper's Caviar — a dark-luxury e-commerce site built on Shopify. The design vocabulary leans heavily on editorial fashion/luxury conventions: near-black backgrounds, off-white typography, full-bleed photography, and sparse white space as a luxury signal. What makes it worth studying as a design system is the tension between Shopify's rigid grid and the designer's attempt to impose editorial composition on top of it.
+This design system belongs to a dark-luxury e-commerce site built on Shopify. The design vocabulary leans heavily on editorial fashion/luxury conventions: near-black backgrounds, off-white typography, full-bleed photography, and sparse white space as a luxury signal. What makes it worth studying as a design system is the tension between Shopify's rigid grid and the designer's attempt to impose editorial composition on top of it.
 `─────────────────────────────────────────────────`
 
 ---
@@ -48,8 +48,8 @@ The container is full-width with 19px edge padding — there is no max-width con
 
 Photography is the dominant visual medium throughout. It operates at three registers:
 
-- **Full-bleed background layer** (hero): The caviar tin/grain texture image spans the full viewport. It is art-directed as a dark, low-contrast field — functioning as a texture rather than a subject. The grain fills the frame uniformly, creating a safe text zone across the entire viewport surface.
-- **Foreground subject photography** (product sections): Product tin close-ups and food plating images appear as foreground content within grid columns. These are tightly cropped, high-contrast, and subject-dominant. Negative space within the product imagery is not used as a text zone — text appears in adjacent columns instead.
+- **Full-bleed background layer** (hero): The product texture image spans the full viewport. It is art-directed as a dark, low-contrast field — functioning as a texture rather than a subject. The grain fills the frame uniformly, creating a safe text zone across the entire viewport surface.
+- **Foreground subject photography** (product sections): Product close-ups and food plating images appear as foreground content within grid columns. These are tightly cropped, high-contrast, and subject-dominant. Negative space within the product imagery is not used as a text zone — text appears in adjacent columns instead.
 - **Atmospheric/editorial photography** (brand manifesto sections): The product carrying case image and similar editorial shots appear alongside the oversized headline. These feel like magazine editorial photography — props, context, mood — rather than e-commerce product shots.
 
 The circular brand stamp graphic used in the manifesto section is a decorative motif — it introduces a non-photographic visual element and functions as a brand identity anchor alongside the typographic headline.
@@ -131,9 +131,9 @@ This is consistent with the luxury editorial register: decorative dividers are e
 ## Hero Section Analysis (Above-Fold Screenshot)
 
 - **Background type:** Full-bleed dark photographic texture. Near-black charcoal with a subtle grain/sphere surface visible. Viewport coverage is full-height.
-- **Text placement:** The primary display headline occupies the upper-center zone at oversized scale — it extends nearly the full width of the viewport. Supporting copy is bottom-left. A text-link CTA ("SHOP CAVIAR →") anchors bottom-left as well. A secondary directional text link ("CAVIAR BELOW") anchors bottom-right. This creates a four-corner-aware composition.
+- **Text placement:** The primary display headline occupies the upper-center zone at oversized scale — it extends nearly the full width of the viewport. Supporting copy is bottom-left. A text-link CTA anchors bottom-left as well. A secondary directional text link anchors bottom-right. This creates a four-corner-aware composition.
 - **Headline scale:** The display typeface (`interstate-condensed`, uppercase) is rendered at ~85.5px — approximately 6× the body text size. The scale gap between headline and body copy is extreme, reinforcing display-as-graphic-element intention.
-- **CTA style:** Text link with arrow (`SHOP CAVIAR →`) — no button fill, no border. Underlined-text affordance pattern typical of luxury e-commerce.
+- **CTA style:** Text link with arrow — no button fill, no border. Underlined-text affordance pattern typical of luxury e-commerce.
 - **Navigation bar:** Transparent, full-width, no background fill. Left-aligned links (Shop, About, Sourcing) and right-aligned utility links (Contact, Cart). No visible logo in the above-fold nav state — consistent with the reported `navBackground: transparent` token. The absence of a logo in this state is intentional: the oversized headline serves as the brand identity anchor.
 
 ---
@@ -141,7 +141,7 @@ This is consistent with the luxury editorial register: decorative dividers are e
 ## Footer Section Analysis (Bottom Screenshot)
 
 - **Column count:** Three columns — brand description (left), navigation links (center), shop category links (right).
-- **Link grouping:** Center column groups informational navigation (Collection, About, Contact, Caviar 101). Right column groups product category links (White Sturgeon, Siberian Sturgeon, Ossetra).
+- **Link grouping:** Center column groups informational navigation. Right column groups product category links.
 - **Typography:** Small scale, low weight (`interstate`, 14.256px, weight 300 per extracted tokens) — subdued relative to body. Lowercase treatment. No uppercase utility labels.
 - **Logo/wordmark:** A circular logo mark is visible in the footer background — the brand stamp motif repeating from the manifesto section.
 - **Newsletter/CTA:** No newsletter form in the footer — the conversion section appears mid-page.
@@ -152,7 +152,7 @@ This is consistent with the luxury editorial register: decorative dividers are e
 
 ## Navigation Bar Analysis
 
-The navigation bar is most clearly visible in screenshot 3 (footer/mid-page state) where the center logo (`CASPER'S CAVIAR` wordmark) is visible.
+The navigation bar is most clearly visible in screenshot 3 (footer/mid-page state) where the center wordmark is visible.
 
 - **Layout zones:** Left-aligned page navigation (Shop, About, Sourcing), center logo/wordmark, right-aligned utility navigation (Contact, Cart).
 - **Item count:** 5 visible links plus cart. All short labels (1 word each).
@@ -229,7 +229,7 @@ The ratio between display (85.5px) and nav/label (14.256px) is approximately **6
 
 Interactive elements are signaled through:
 
-- **Text links with arrows:** `SHOP CAVIAR →`, `CAVIAR BELOW` — typographic affordance, no button styling. Relies entirely on label and arrow to signal clickability.
+- **Text links with arrows:** Typographic affordance, no button styling. Relies entirely on label and arrow to signal clickability.
 - **Nav links:** Typographic only. Hover behavior (color change to `#202020`) is the only distinguishing interaction state — not visible in static screenshots.
 - **Modal CTA button:** The only filled button visible — `#000000` background, `#ffffff` text, full-width within the modal. This is the strongest button affordance in the interface and appears exclusively in the modal context.
 - **Form inputs:** Visible border lines in the modal form distinguish input fields from surrounding content.

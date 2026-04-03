@@ -3,7 +3,7 @@ This request is a UX/UI design analysis task — there's no idea to brainstorm o
 ---
 
 `★ Insight ─────────────────────────────────────`
-**Appwrite's design system uses a deliberate "dark canvas" strategy** — the near-black base (`#19191c`) is nearly identical between the nav, hero, and footer, which makes the pink-red accent (`#fd356e`) carry enormous visual weight even at small sizes. This is a precision instrument: one high-chroma accent on a low-lightness field. The extracted `ctaButtons` array shows 18 button variants — most of them are subtle alpha-channel variations of the same pink, which means the design system is built around a single brand hue with perceptual depth rather than multiple accent colors.
+**This design system uses a deliberate "dark canvas" strategy** — the near-black base (`#19191c`) is nearly identical between the nav, hero, and footer, which makes the pink-red accent (`#fd356e`) carry enormous visual weight even at small sizes. This is a precision instrument: one high-chroma accent on a low-lightness field. The extracted `ctaButtons` array shows 18 button variants — most of them are subtle alpha-channel variations of the same pink, which means the design system is built around a single brand hue with perceptual depth rather than multiple accent colors.
 `─────────────────────────────────────────────────`
 
 ---
@@ -84,9 +84,9 @@ This request is a UX/UI design analysis task — there's no idea to brainstorm o
 - **Viewport coverage:** Full viewport height.
 - **Text placement:** Left-aligned, vertically centered within the left column. The headline is not overlaid on the dashboard image — it sits in clean negative space.
 - **Headline scale:** The extracted `h1` is 72px / 74px line height with `-1.584px` letter spacing — extremely tight tracking for display size, characteristic of modern tech brand aesthetics. The headline spans two lines, creating a large typographic mass.
-- **Announcement chip:** A small pill-shaped chip above the headline ("New — Introducing Imagine →") uses a dark surface with a thin border, functioning as a low-contrast entry point into the headline.
+- **Announcement chip:** A small pill-shaped chip above the headline uses a dark surface with a thin border, functioning as a low-contrast entry point into the headline.
 - **CTA count:** Two buttons. Primary: filled pink (`#fd356e`) with white text. Secondary: dark surface with lighter border, lower visual weight. This two-CTA pattern matches the extracted `primary-cta` and `secondary-cta` button token variants.
-- **Navigation bar state:** Visually transparent at top of page — blending into the dark hero background. Logo left-aligned. Navigation links centered. A "Star on GitHub" counter badge and a primary CTA button are right-aligned. This matches the extracted `navBackground: transparent` token.
+- **Navigation bar state:** Visually transparent at top of page — blending into the dark hero background. Logo left-aligned. Navigation links centered. A repository star counter badge and a primary CTA button are right-aligned. This matches the extracted `navBackground: transparent` token.
 
 ---
 
@@ -106,7 +106,7 @@ This request is a UX/UI design analysis task — there's no idea to brainstorm o
 
 - **Layout zones:** Logo far-left, navigation links in the center, CTA cluster far-right.
 - **Navigation items:** Five labeled links ("Products", "Docs", "Pricing", "Customers", "Enterprise") using short single-word or single-concept labels. "Products" has a dropdown indicator (chevron).
-- **CTA differentiation:** "Star on GitHub" appears as a ghost/outlined element with a numerical badge. "Start building for free" is a filled pink primary CTA button — strongly differentiated from the plain navigation links.
+- **CTA differentiation:** A repository star counter appears as a ghost/outlined element with a numerical badge. "Start building for free" is a filled pink primary CTA button — strongly differentiated from the plain navigation links.
 - **Background:** Transparent at the above-fold position — the nav visually merges with the hero section's dark background. The extracted tokens confirm `navBackground: transparent` and `navBackgroundScrolled: transparent` — the nav maintains transparency on scroll, relying on the page background for visual grounding.
 - **Visual state:** The nav does not appear fixed with a visible backdrop — it reads as inline with the page's surface.
 

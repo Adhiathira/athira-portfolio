@@ -1,10 +1,10 @@
-# Concept Summary — Griting-Voltage Landing Page
+# Concept Summary — This Design System (Merged)
 
 ## Brand Statement
 
-Griting is positioning itself as foundational infrastructure for the AI talent economy — not a tool, not a platform, but a layer beneath platforms. The name itself signals this intent: "grit" (earned capability, perseverance) combined with the suffix "-ing" (continuous action). The visual language mirrors this: everything is deliberate, dense with meaning, and organized around the idea that trust in human capital must be earned, measured, and made traceable.
+This design system is positioning itself as foundational infrastructure for the AI talent economy — not a tool, not a platform, but a layer beneath platforms. The visual language mirrors this: everything is deliberate, dense with meaning, and organized around the idea that trust in human capital must be earned, measured, and made traceable.
 
-Still-voltage contributes a subordinate but unmistakable energy layer to this foundation: the feeling that the infrastructure is not merely stable but live — carrying current, under tension, operating at scale in real time. Still-voltage does not redirect the brand; it amplifies what is already there. Griting's world, run at voltage.
+The secondary aesthetic contributes a subordinate but unmistakable energy layer to this foundation: the feeling that the infrastructure is not merely stable but live — carrying current, under tension, operating at scale in real time. This energy layer does not redirect the primary identity; it amplifies what is already there. The primary world, run at voltage.
 
 ---
 
@@ -12,9 +12,9 @@ Still-voltage contributes a subordinate but unmistakable energy layer to this fo
 
 ### 1. Navigation
 
-The navigation is minimal and confident. "Griting" is rendered with a distinct G-icon logotype — the mark suggests a monogram forged from purpose, not decoration. The nav links (Product, About, Contact, Blog) are sparse and functional, signaling that this is a company that earns attention through substance, not spectacle. There is no drop-down sprawl, no mega-menu. The implicit message: we know who we are, and we expect you to take the time to find out.
+The navigation is minimal and confident. The wordmark is rendered with a distinct G-icon logotype — the mark suggests a monogram forged from purpose, not decoration. The nav links (Product, About, Contact, Blog) are sparse and functional, signaling that this is a company that earns attention through substance, not spectacle. There is no drop-down sprawl, no mega-menu. The implicit message: we know who we are, and we expect you to take the time to find out.
 
-The logo pairing of a G-icon alongside the wordmark "riting" is a typographic split that calls attention to the root word — grit — while visually anchoring the brand in a single letterform. It is a confident move: most logos hide their etymology; this one wears it.
+The logo pairing of a G-icon alongside the wordmark text is a typographic split that calls attention to the root word — grit — while visually anchoring the brand in a single letterform. It is a confident move: most logos hide their etymology; this one wears it.
 
 ### 2. Hero Section
 
@@ -30,7 +30,7 @@ The subheadline — "We build products, foster community, and create opportuniti
 
 Atmospherically, the hero communicates: we are the infrastructure beneath the visible. You may not see us, but everything runs on us.
 
-Still-voltage amplification: where griting's hero breathes deep and grounds, voltage adds the sensation that the field is live. The green is not passive — it carries current. Motion assets in the hero section should reflect this dual character: grounded in the deep forest palette, but pulsing with a slow, measured ambient energy — not restless, not decorative, but alive in the way infrastructure is alive when load is running through it.
+Voltage amplification: where the primary hero breathes deep and grounds, the secondary aesthetic adds the sensation that the field is live. The green is not passive — it carries current. Motion assets in the hero section should reflect this dual character: grounded in the deep forest palette, but pulsing with a slow, measured ambient energy — not restless, not decorative, but alive in the way infrastructure is alive when load is running through it.
 
 ### 3. New Infrastructure Section
 
@@ -45,11 +45,11 @@ The four cards that follow are a content architecture decision as much as a desi
 - Human Capital Becomes Infrastructure — the organizational category is changing
 - Trust Must Be Verifiable — the basis of hiring is changing
 
-Read in sequence, the cards build a thesis: the old models for talent are broken, and the AI era demands verifiable, traceable systems. By the time the reader reaches card four, Griting's existence feels not like a product pitch but a logical necessity.
+Read in sequence, the cards build a thesis: the old models for talent are broken, and the AI era demands verifiable, traceable systems. By the time the reader reaches card four, this design system's existence feels not like a product pitch but a logical necessity.
 
 The dark green headings on each card maintain brand continuity against the light background — the green is not decorative here but a visual thread that says: this is all part of one system.
 
-### 4. Explore the Griting Ecosystem
+### 4. Explore the Ecosystem
 
 The section returns to a dark green gradient — a visual palette beat that signals a transition from problem framing to solution presentation. The centered heading and subheading establish hierarchy, then give way to a three-column white card grid.
 
@@ -59,9 +59,9 @@ Each column is brief and benefit-led: "To discover, evaluate, and develop AI-rea
 
 Compositionally, white cards on a dark green gradient create a strong figure-ground relationship. The cards feel like windows into distinct rooms of the same building. The dark green unifies; the white separates and clarifies. It is a sophisticated use of a simple two-tone palette.
 
-### 5. GritMe: Auditable Talent System
+### 5. Primary Product: Auditable Talent System
 
-The first GritMe section introduces the product line with a light gray background and a left-text / right-mockup composition — the classic SaaS feature layout, but executed with care. The mockup shows a Candidate Evaluation Report with skill breakdowns: ML Knowledge 82%, Systems Design 71%, Coding Ability 79%, 86%. These are not decorative numbers; they are the proof of concept rendered visible.
+The first product section introduces the product line with a light gray background and a left-text / right-mockup composition — the classic SaaS feature layout, but executed with care. The mockup shows a Candidate Evaluation Report with skill breakdowns: ML Knowledge 82%, Systems Design 71%, Coding Ability 79%, 86%. These are not decorative numbers; they are the proof of concept rendered visible.
 
 The tabbed interface (01 Talent outcomes, 02 Outputs by multi-dimension, 03 Simulates with real project) signals depth without overwhelming. The tab system communicates: this product has multiple use cases; we are showing you one at a time.
 
@@ -69,9 +69,9 @@ The feature card headline "Evidence-Based Talent Evaluation" and body "Access sk
 
 The UI mockup's green-tinted cards are a visual alignment decision — the product feels native to the brand's color world, not bolted on. The skill graph and evidence source elements communicate that this is a system of record, not a dashboard for dashboards' sake.
 
-### 6. GritMe: AI Incubation System
+### 6. Primary Product: AI Incubation System
 
-The second GritMe section mirrors the compositional structure of the first — light background, left text, right mockup — but shifts from evaluation to development. The headline "AI Incubation System" introduces a different register: where the talent system measures, the incubation system builds.
+The second product section mirrors the compositional structure of the first — light background, left text, right mockup — but shifts from evaluation to development. The headline "AI Incubation System" introduces a different register: where the talent system measures, the incubation system builds.
 
 The two feature callouts — "Workflow-Based Skill Mapping" and "Personalized Learning Roadmap" — are precise and actionable. The mockup reinforces this: a skill graph showing nodes (ML Engineering, Systems Design, Data Engineering) connected to a Candidate node, annotated with an 82% badge. A RoadMap panel shows Week 1: Model Optimization Task, Week 2: Deployment Simulation.
 
@@ -79,23 +79,23 @@ The roadmap visual is a strategic choice: it makes abstract "personalized learni
 
 The section's atmosphere is constructive and systematic — a design counterpoint to the evaluative tone of the previous section. Together, the two sections say: we measure where you are, then we build you forward.
 
-### 7. GritMe: Global Growth Mentorship with Physical AI
+### 7. Primary Product: Global Growth Mentorship with Physical AI
 
-The mentorship section is the most human of the three GritMe panels. It introduces real names — Rachel Green, Michael Chen, Aisha Kapoor — with star ratings, review counts, and years of experience. The shift from abstract system language to named, credentialed people is intentional: mentorship is fundamentally a relationship, and the design reflects this.
+The mentorship section is the most human of the three product panels. It introduces real names — Rachel Green, Michael Chen, Aisha Kapoor — with star ratings, review counts, and years of experience. The shift from abstract system language to named, credentialed people is intentional: mentorship is fundamentally a relationship, and the design reflects this.
 
 The four pillars (Match, Connect, Grow, Thrive) form a lifecycle: from discovery through relationship to outcome and community. This is not a list of features; it is a narrative arc. The progression is emotionally legible — each word is a stage in a journey.
 
-The UI mockup text "These are the mentors for you to get started!!" carries a rare warmth in a product screenshot — a conversational register that contrasts with the enterprise formalism of the other GritMe sections. This is deliberate: mentorship is the human layer of the platform, and the product UI echoes that.
+The UI mockup text "These are the mentors for you to get started!!" carries a rare warmth in a product screenshot — a conversational register that contrasts with the enterprise formalism of the other product sections. This is deliberate: mentorship is the human layer of the platform, and the product UI echoes that.
 
-The "COMING SOON" badge is placed with confidence, not apology. It signals roadmap transparency — Griting is building in public, and it trusts the design to carry the aspirational weight.
+The "COMING SOON" badge is placed with confidence, not apology. It signals roadmap transparency — this design system is building in public, and it trusts the design to carry the aspirational weight.
 
 ### 8. Expanding the Ecosystem
 
-This section introduces GritLab and GritHub — the research and knowledge infrastructure that sits beneath the GritMe product layer. The heading "Expanding the Ecosystem" and subheading "Research infrastructure and AI knowledge networks powering the next layer of the Griting platform" position these not as separate products but as foundation stones.
+This section introduces the research platform and the knowledge platform — the research and knowledge infrastructure that sits beneath the primary product layer. The heading "Expanding the Ecosystem" and subheading "Research infrastructure and AI knowledge networks powering the next layer of this platform" position these not as separate products but as foundation stones.
 
-GritLab is described as "invite-only" — a signal of selectivity and exclusivity that contrasts with the broader accessibility implied by GritMe. The features (AI System & Optimization, Memory Governance Models, Vertical Benchmarks & Agentic Architecture) are deeply technical, pitched at a research-literate audience.
+The research platform is described as "invite-only" — a signal of selectivity and exclusivity that contrasts with the broader accessibility implied by the primary product. The features (AI System & Optimization, Memory Governance Models, Vertical Benchmarks & Agentic Architecture) are deeply technical, pitched at a research-literate audience.
 
-GritHub mirrors the positioning language of GritLab but focuses on knowledge aggregation and signal capture. The repeated "invite-only AI community in Silicon Valley" framing across both cards creates a sense of a closed inner circle — a community of practice that is curated, not open.
+The knowledge platform mirrors the positioning language of the research platform but focuses on knowledge aggregation and signal capture. The repeated "invite-only AI community in Silicon Valley" framing across both cards creates a sense of a closed inner circle — a community of practice that is curated, not open.
 
 Both sections end with "Join The waitlist" — a CTA that acknowledges product unavailability while converting visitor interest into a pipeline. The waitlist mechanic is a classic trust-building device: scarcity signals value.
 
@@ -105,7 +105,7 @@ Compositionally, the section likely uses a two-column card layout against a ligh
 
 The testimonials section is executed in a three-column bordered card grid on a white background. The social proof is dense: six distinct voices (with some duplication in the design), spanning senior engineers, professors, startup founders, AI researchers, designers, and venture capitalists.
 
-The range of personas is the message. Griting is not testimonial-stacking with similar profiles; it is deliberately displaying a cross-section of the ecosystem it claims to serve. Sebastiaan (usability), Krishna (applied research), Alon (mentorship vibrancy), Jono Bacon (matching quality), Dimitry (community), Sri (ecosystem vision) — each testimonial speaks to a different part of the platform's value proposition.
+The range of personas is the message. This design system is not testimonial-stacking with similar profiles; it is deliberately displaying a cross-section of the ecosystem it claims to serve. Sebastiaan (usability), Krishna (applied research), Alon (mentorship vibrancy), Jono Bacon (matching quality), Dimitry (community), Sri (ecosystem vision) — each testimonial speaks to a different part of the platform's value proposition.
 
 The avatar photos humanize the section — these are real people with named titles and affiliations. The bordered card format gives each testimonial equal visual weight, suggesting a community of equals rather than a hierarchy of endorsers.
 
@@ -115,7 +115,7 @@ The duplication of some testimonials (Sebastiaan, Alon, Dimitry) is a design art
 
 The CTA banner — "Ready to build connections that shape your future?" — is the most emotionally direct copy on the page. It reframes the entire platform value proposition in personal terms: not infrastructure, not systems, but connections that shape a future.
 
-The two CTAs ("Explore GritMe", "Contact Us") offer two paths: the self-directed explorer and the person ready for a human conversation. The banner's compositional simplicity — likely centered text on a brand-colored background — creates a visual breath before the complexity of the footer.
+The two CTAs offer two paths: the self-directed explorer and the person ready for a human conversation. The banner's compositional simplicity — likely centered text on a brand-colored background — creates a visual breath before the complexity of the footer.
 
 ### 11. Footer
 
@@ -123,7 +123,7 @@ The footer returns to deep forest green (#003620), closing the page with the sam
 
 The five-column link grid (Product, Company, Contact, Support, Join The waitlist) is comprehensive without being overwhelming. The "Join The waitlist" column is given equal billing with Company and Contact — a signal that community growth is a first-class organizational priority, not an afterthought.
 
-The copyright line ("© 2026 Griting. All rights reserved.") places Griting firmly in the present moment of the AI era. The social icons (Twitter, Dribbble, LinkedIn) are a standard but purposeful trio: Twitter for discourse, Dribbble for design credibility, LinkedIn for professional reach.
+The copyright line places this design system firmly in the present moment of the AI era. The social icons (Twitter, Dribbble, LinkedIn) are a standard but purposeful trio: Twitter for discourse, Dribbble for design credibility, LinkedIn for professional reach.
 
 ---
 
@@ -131,48 +131,48 @@ The copyright line ("© 2026 Griting. All rights reserved.") places Griting firm
 
 | Artifact | Description | Location |
 |---|---|---|
-| Logo (G-icon + wordmark) | G-icon monogram paired with "riting" text | Navigation, Footer |
+| Logo (G-icon + wordmark) | G-icon monogram paired with wordmark text | Navigation, Footer |
 | Hero background | Full-bleed #003620 deep forest green field | Hero section |
-| GritMe Talent UI mockup | Candidate Evaluation Report with skill breakdown charts, evidence source, strengths chart | GritMe Talent section |
-| GritMe Incubation UI mockup | Skill graph (ML Engineering, Systems Design, Data Engineering nodes), RoadMap weekly schedule | GritMe Incubation section |
-| GritMe Mentorship UI mockup | Mentor recommendation cards (Rachel Green, Michael Chen, Aisha Kapoor) with ratings and bios | GritMe Mentorship section |
+| Primary Product Talent UI mockup | Candidate Evaluation Report with skill breakdown charts, evidence source, strengths chart | Primary Product Talent section |
+| Primary Product Incubation UI mockup | Skill graph (ML Engineering, Systems Design, Data Engineering nodes), RoadMap weekly schedule | Primary Product Incubation section |
+| Primary Product Mentorship UI mockup | Mentor recommendation cards (Rachel Green, Michael Chen, Aisha Kapoor) with ratings and bios | Primary Product Mentorship section |
 | Testimonial avatar photos | Portrait photos for Sebastiaan Debrouwere, Krishna, Alon, Jono Bacon, Dimitry Gershenson, Sri | Testimonials section |
-| Section background fields | Light gray/off-white (New Infrastructure, GritMe sections), dark green gradient (Ecosystem), white (Testimonials) | Multiple sections |
+| Section background fields | Light gray/off-white (New Infrastructure, Primary Product sections), dark green gradient (Ecosystem), white (Testimonials) | Multiple sections |
 
-### Still-Voltage Asset Layer (subordinate, voltage-amplified)
+### Secondary Aesthetic Asset Layer (subordinate, voltage-amplified)
 
-These asset guidelines describe how still-voltage's energy and motion grammar should be expressed within griting's visual world. Still-voltage does not contribute its own color palette or scene aesthetic — it contributes temporal and spatial tension layered on top of griting's established environment.
+These asset guidelines describe how the secondary aesthetic's energy and motion grammar should be expressed within the primary visual world. The secondary aesthetic does not contribute its own color palette or scene aesthetic — it contributes temporal and spatial tension layered on top of the primary system's established environment.
 
-| Asset Type | Description | Griting Color Grounding | Still-Voltage Energy Layer |
+| Asset Type | Description | Primary Color Grounding | Secondary Aesthetic Energy Layer |
 |---|---|---|---|
 | Hero video / ambient loop | A slow, living field in deep forest green — environmental, not cinematic | #003620 background, #00693e accent | Subtle pulse or low-frequency ambient motion; the field breathes as if current is running through it; no flicker or distraction — a steady voltage, not a discharge |
 | Section transition motion | Dark green gradient sweeps that signal section changes | Dark green (#003620 → #00693e gradient) | Motion carries a slight directional charge — not a fade, but a wipe or reveal with the pacing of a circuit completing |
-| UI mockup animation | Skill charts, roadmap nodes, and graph connections animating into view | Green-tinted cards and chart elements native to griting's palette | Data nodes connect with a fast, precise draw-in — electrical precision, as if the graph is being calculated in real time rather than performed for the viewer |
-| Background texture (optional) | A subtle, low-contrast repeating motif that grounds the hero field without competing | Deep forest green base | Fine grid or cross-mark texture at very low opacity — borrowed from still-voltage's coordinate-grid aesthetic but rendered in dark green, not purple, so it reads as griting's world |
-| Audio (if used) | Ambient environmental tone | Warm, low-frequency, grounded | Still-voltage contributes a barely-audible electrical hum beneath the environmental tone — present enough to feel, invisible enough not to name |
+| UI mockup animation | Skill charts, roadmap nodes, and graph connections animating into view | Green-tinted cards and chart elements native to the primary palette | Data nodes connect with a fast, precise draw-in — electrical precision, as if the graph is being calculated in real time rather than performed for the viewer |
+| Background texture (optional) | A subtle, low-contrast repeating motif that grounds the hero field without competing | Deep forest green base | Fine grid or cross-mark texture at very low opacity — borrowed from the secondary aesthetic's coordinate-grid aesthetic but rendered in dark green, not purple, so it reads as the primary system's world |
+| Audio (if used) | Ambient environmental tone | Warm, low-frequency, grounded | The secondary aesthetic contributes a barely-audible electrical hum beneath the environmental tone — present enough to feel, invisible enough not to name |
 
 ---
 
 ## Design DNA
 
 ### 1. Infrastructure as Identity
-Griting does not position itself as a tool or app — it positions itself as infrastructure. Every design decision reinforces this: the monolithic green environment, the structured card taxonomies, the system-of-record UI mockups. The design communicates permanence and load-bearing capability, not lightness or delight. This is intentional. Infrastructure is not charming; it is trustworthy.
+This design system does not position itself as a tool or app — it positions itself as infrastructure. Every design decision reinforces this: the monolithic green environment, the structured card taxonomies, the system-of-record UI mockups. The design communicates permanence and load-bearing capability, not lightness or delight. This is intentional. Infrastructure is not charming; it is trustworthy.
 
-Still-voltage adds a single dimension to this: live infrastructure. The distinction between infrastructure that sits still and infrastructure under load is the felt difference between a bridge in the afternoon and a power grid at peak demand. Griting-voltage is the latter — it carries weight visibly.
+The secondary aesthetic adds a single dimension to this: live infrastructure. The distinction between infrastructure that sits still and infrastructure under load is the felt difference between a bridge in the afternoon and a power grid at peak demand. This merged aesthetic is the latter — it carries weight visibly.
 
 ### 2. Earned Legibility
-Nothing in this design is immediately obvious. The hero headline sits at the bottom-left, not center. The product is organized into three named layers (GritMe, GritLab, GritHub) that require the reader to build a mental model. The design assumes and rewards attention. It does not simplify itself for the casual visitor — it invites the serious one deeper.
+Nothing in this design is immediately obvious. The hero headline sits at the bottom-left, not center. The product is organized into three named layers that require the reader to build a mental model. The design assumes and rewards attention. It does not simplify itself for the casual visitor — it invites the serious one deeper.
 
 ### 3. Green as Ground Truth
 The deep forest green (#003620) is not a brand color applied to elements — it is an environment. Used for the hero background and footer, it brackets the page and creates a sense of space that the visitor enters and exits. The medium green (#00693e) is then used for accent, button, and heading treatment — a tonal family that keeps the entire page within a single chromatic world. No other brand color appears to compete.
 
-Still-voltage does not alter this. Griting's green is the ground truth of griting-voltage. The voltage energy is expressed through motion and pacing, not through new colors or palette additions. Any temptation to introduce still-voltage's purple-dark or neon accent colors should be resisted — those belong to still-voltage's world, which is not this one.
+The secondary aesthetic does not alter this. The primary system's green is the ground truth of this merged aesthetic. The voltage energy is expressed through motion and pacing, not through new colors or palette additions. Any temptation to introduce the secondary aesthetic's purple-dark or neon accent colors should be resisted — those belong to the secondary aesthetic's world, which is not this one.
 
 ### 4. Proof Over Promise
 Every section that could make an abstract claim instead offers a concrete artifact: skill percentages in the UI mockup, week-by-week roadmap tasks, named mentor credentials with star ratings and review counts, verbatim testimonials from named professionals. The design philosophy is: show the evidence, let the claim follow. This is the visual embodiment of the platform's own core thesis — that trust must be verifiable.
 
 ### 5. Ecosystem Thinking as Architecture
-The page is not organized as a product feature list but as a system of interconnected parts: enterprise evaluation (GritMe Talent), talent development (GritMe Incubation), mentorship network (GritMe Mentorship), research infrastructure (GritLab), knowledge platform (GritHub). The layout mirrors this thinking — each section is a distinct layer, but they share visual language (green palette, card-based structure, evidence-first UI) that makes the whole feel like one coherent system rather than a collection of features. The ecosystem is the product.
+The page is not organized as a product feature list but as a system of interconnected parts: enterprise evaluation (primary product talent layer), talent development (primary product incubation layer), mentorship network (primary product mentorship layer), research infrastructure (research platform), knowledge platform (knowledge network). The layout mirrors this thinking — each section is a distinct layer, but they share visual language (green palette, card-based structure, evidence-first UI) that makes the whole feel like one coherent system rather than a collection of features. The ecosystem is the product.
 
-### 6. Voltage as Amplifier, Not Override (still-voltage contribution)
-Still-voltage's design identity — the composition-driven single-canvas layout, the immersive 3D world, the ambient persistence of its motion language — is not carried into griting-voltage directly. Its structural decisions belong to a different kind of site. What carries over is the underlying principle: that a design system can hold tension, can run at sustained energy, can make stillness feel like a live state rather than an inert one. Griting-voltage inherits this as a felt quality, not as a copied visual. The infrastructure breathes. The platform is not idle between interactions. The green field is not empty — it is waiting, at voltage, for the next verification to run.
+### 6. Voltage as Amplifier, Not Override
+The secondary aesthetic's design identity — the composition-driven single-canvas layout, the immersive 3D world, the ambient persistence of its motion language — is not carried into this merged aesthetic directly. Its structural decisions belong to a different kind of site. What carries over is the underlying principle: that a design system can hold tension, can run at sustained energy, can make stillness feel like a live state rather than an inert one. This merged aesthetic inherits this as a felt quality, not as a copied visual. The infrastructure breathes. The platform is not idle between interactions. The green field is not empty — it is waiting, at voltage, for the next verification to run.

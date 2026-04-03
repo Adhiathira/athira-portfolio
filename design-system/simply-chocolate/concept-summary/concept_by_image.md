@@ -110,7 +110,7 @@ The nav background is in its **transparent dark state** — consistent with the 
 
 Partially visible at the top-left behind the overlay scrim. The nav appears to be in its **transparent/dark hero state**, consistent with:
 - `navBackground: transparent`
-- The extracted `atlas-font-family: Simply-ChocolateRegular` branding font for the wordmark
+- The extracted `atlas-font-family` branding font for the wordmark
 
 Full nav structure cannot be reliably analyzed given the overlay obscuring most of the bar.
 
@@ -139,16 +139,16 @@ The deep forest green (`#2C622C`) functions as the **sole brand accent** in the 
 
 From the extracted `type-system` tokens:
 
-- **Headline** (`h1`): `Simply-ChocolateRegular`, 32px, weight 400, line-height 52.8px — a proprietary display typeface, soft and humanist in character
-- **Body / paragraphs**: `Simply-ChocolateRegular`, 15–16px, weight 400, letter-spacing 0.48px
-- **Buttons**: `Simply-ChocolateRegular`, 15px, weight 400 (rendered as `700` per the interaction-states data — bold at runtime)
-- **Links**: `Simply-ChocolateRegular`, 15px, weight 600, underlined
+- **Headline** (`h1`): A proprietary display typeface, 32px, weight 400, line-height 52.8px — soft and humanist in character
+- **Body / paragraphs**: The same proprietary typeface, 15–16px, weight 400, letter-spacing 0.48px
+- **Buttons**: The proprietary typeface, 15px, weight 400 (rendered as `700` per the interaction-states data — bold at runtime)
+- **Links**: The proprietary typeface, 15px, weight 600, underlined
 
 `★ Insight ─────────────────────────────────────`
-The brand uses its **proprietary typeface for every role** — headings, body, buttons, and links all use `Simply-ChocolateRegular` or its variants. This is unusual: most design systems differentiate display fonts from body fonts. Using one family throughout creates extreme typographic cohesion but requires careful weight variation (`Regular → Bold → COMPBold`) to establish hierarchy rather than family switching.
+This design system uses a **proprietary typeface for every role** — headings, body, buttons, and links all use the same family or its variants. This is unusual: most design systems differentiate display fonts from body fonts. Using one family throughout creates extreme typographic cohesion but requires careful weight variation (`Regular → Bold → COMPBold`) to establish hierarchy rather than family switching.
 `─────────────────────────────────────────────────`
 
-Note: `Simply-ChocolateRegular` is **proprietary and not web-accessible** (confirmed in the extracted `proprietaryFonts` array). Any faithful reproduction requires a fallback via the `get-fallback-font` skill.
+Note: The primary typeface is **proprietary and not web-accessible** (confirmed in the extracted `proprietaryFonts` array). Any faithful reproduction requires a fallback via the `get-fallback-font` skill.
 
 ---
 

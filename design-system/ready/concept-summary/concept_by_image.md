@@ -15,7 +15,7 @@ Six distinct section patterns are visible across the three screenshots. Rather t
 ## Pattern A — Hero Editorial (Centered, Stacked Vertical)
 
 ### Internal Section Organization
-The above-fold section uses a centered editorial stack: an eyebrow label in uppercase tracked-out small caps sits above a display headline, followed by a supporting subhead in a smaller body weight. The headline itself contains an inline highlight treatment — a light lavender rectangle placed behind a key phrase, functioning as a text-level accent rather than a background element. A floating user-identification badge ("Febby") hovers at the edge of the highlight zone, suggesting real-time multiplayer context within the static composition.
+The above-fold section uses a centered editorial stack: an eyebrow label in uppercase tracked-out small caps sits above a display headline, followed by a supporting subhead in a smaller body weight. The headline itself contains an inline highlight treatment — a light lavender rectangle placed behind a key phrase, functioning as a text-level accent rather than a background element. A floating user-identification badge hovers at the edge of the highlight zone, suggesting real-time multiplayer context within the static composition.
 
 Below the text block, a floating UI mockup panel — styled as an application window with macOS-style window chrome dots — extends below the fold, partially revealed. A second narrower panel appears at the left edge of the viewport, suggesting a calendar sidebar that continues outside the frame. This "overflow into below-fold" composition creates visual tension and draws the eye downward without a traditional scroll caret.
 
@@ -83,10 +83,10 @@ The layout is purely **vertical stacked editorial** with no structural complexit
 - **Background type:** Static warm off-white field (`#f0ede8`) — no gradient, no photography, no texture beyond a subtle paper-like grain implied by the color value
 - **Viewport coverage:** Partial — the UI mockup panel below the text block extends below the fold, so the section is functionally taller than one viewport height
 - **Text placement:** Centered, vertically stacked in the upper half of the viewport
-- **Headline scale:** Very large (~64px, bold GT Walsheim) — high contrast against the off-white field; the inline lavender highlight (`#d4c5f0`) draws attention to a specific phrase without changing the font color
+- **Headline scale:** Very large (~64px, bold geometric grotesque) — high contrast against the off-white field; the inline lavender highlight (`#d4c5f0`) draws attention to a specific phrase without changing the font color
 - **CTA count:** No traditional CTA button is visible in the above-fold — the hero relies on visual momentum (the floating UI panel) rather than an explicit call-to-action. The navigation contains link-style CTAs rather than filled buttons
 - **Scroll indicator:** None visible as a static element
-- **Navigation bar visual state:** Transparent at top of page — the nav floats above the off-white background with no solid fill, no blur, no border. The logo ("Ready") appears in dark charcoal; navigation links are small-scale body weight
+- **Navigation bar visual state:** Transparent at top of page — the nav floats above the off-white background with no solid fill, no blur, no border. The logo appears in dark charcoal; navigation links are small-scale body weight
 
 ---
 
@@ -94,9 +94,9 @@ The layout is purely **vertical stacked editorial** with no structural complexit
 
 - **Column count:** Two columns — left-aligned brand attribution, right-aligned social icons
 - **Typographic treatment:** Smaller than body scale; link text appears in muted grey (`#8b8c96`), which lightens the visual weight relative to the page
-- **Logo/wordmark:** Present as text ("Ready — Made remotely 🌍") in the left block
+- **Logo/wordmark:** Present as text in the left block
 - **Newsletter form/CTA:** Absent — the footer is minimal and non-commercial
-- **Social link treatment:** Icon-only links (Twitter/X and LinkedIn) at approximately 50% opacity in default state, suggesting the opacity interaction state visible in the token data
+- **Social link treatment:** Icon-only links at approximately 50% opacity in default state, suggesting the opacity interaction state visible in the token data
 - **Legal and copyright text:** Present as inline text links ("Privacy Policy", "Terms of Service") in the muted grey
 - **Overall visual weight:** Light — the footer sits on the same off-white background as the page body with no background differentiation
 
@@ -106,9 +106,9 @@ The layout is purely **vertical stacked editorial** with no structural complexit
 
 The navigation bar is visible in the above-fold screenshot:
 
-- **Layout zones:** Logo left-anchored ("Ready"), navigation links center or right, with small pill-shaped feature callout links ("Google Calendar Sync", "Notifications") and a "Sign in" text link
+- **Layout zones:** Logo left-anchored, navigation links center or right, with small pill-shaped feature callout links and a "Sign in" text link
 - **Link style:** Short single-word or short-phrase labels in small body weight — not descriptive phrases
-- **Visual differentiation:** The feature callout links (Google Calendar Sync, Notifications) appear in pill-shaped containers with a light purple-lavender fill (`#c8b8f8`) — these are visually distinct from plain text links but do not behave as primary CTA buttons. They function as social proof or feature highlights embedded in the nav
+- **Visual differentiation:** The feature callout links appear in pill-shaped containers with a light purple-lavender fill (`#c8b8f8`) — these are visually distinct from plain text links but do not behave as primary CTA buttons. They function as social proof or feature highlights embedded in the nav
 - **Background treatment:** Transparent — no background fill at page top
 - **Positioning:** Inline with page content at the top; appears fixed or sticky based on the scroll position shown
 
@@ -162,9 +162,9 @@ The color system creates **tonal unity across register changes**: even the high-
 
 The type system is a **dual-family pairing**:
 
-- **Display/Headings:** GT Walsheim Bold at 64px/64px line-height — a wide, friendly geometric grotesque. The roundness of the letterforms contributes to the approachable, anti-corporate tone of the interface
-- **Body/UI/Supporting:** GT America Standard — a more neutral grotesque at 14–18px across different roles. Regular and Medium weights create clear but understated hierarchy beneath the display level
-- **Label/UI micro-text:** Inter across multiple weights (100–900) — used inside the embedded UI mockups and application interfaces, suggesting Inter is the product's UI font rather than the marketing site's primary voice
+- **Display/Headings:** A wide, friendly geometric grotesque at 64px/64px line-height — the roundness of the letterforms contributes to the approachable, anti-corporate tone of the interface
+- **Body/UI/Supporting:** A more neutral grotesque at 14–18px across different roles. Regular and Medium weights create clear but understated hierarchy beneath the display level
+- **Label/UI micro-text:** A utility sans-serif across multiple weights — used inside the embedded UI mockups and application interfaces, suggesting this font is the product's UI font rather than the marketing site's primary voice
 
 The visual hierarchy has a **large gap between display and body** — the jump from 64px headlines to 14–18px body creates a strong focal point at each section opening. There is no intermediate h2-at-medium-scale treatment; sections lead with large then step down immediately to small.
 
@@ -207,8 +207,8 @@ The overall impression is **Z-depth through color contrast**, not through shadow
 
 ## Visual Affordances (Static Signals of Interactivity)
 
-- **Pill-shaped nav links** (Google Calendar Sync, Notifications): the enclosed pill shape signals clickability without filling a full button
-- **The floating "Febby" badge** in the hero: rounded pill with solid fill — reads as a tag or state indicator
+- **Pill-shaped nav links**: the enclosed pill shape signals clickability without filling a full button
+- **The floating user badge** in the hero: rounded pill with solid fill — reads as a tag or state indicator
 - **Calendar event chips**: colored rectangular chips with slight rounding — the color differentiation within the grid signals their status/identity as discrete interactive objects
 - **Social icon links in footer**: small icon-only at reduced opacity — conventional affordance for icon links
 - **Dropdown menus within feature cards**: styled as application-authentic floating panels — the dark background and sharp border signal "this is a UI element" without needing explicit button outlines
@@ -218,7 +218,7 @@ The overall impression is **Z-depth through color contrast**, not through shadow
 ## Notable UX/UI Design Observations
 
 **1. Inline Typographic Highlight as Interaction Signal**
-The lavender highlight rectangle (`#d4c5f0`) placed behind "need to meet" in the hero headline is a distinctive choice. Rather than using color on the text itself or a decorative underline, the highlight mimics a text selection state — directly invoking the product's real-time collaborative context as a visual device. The floating "Febby" user badge extends this metaphor. The hero's conceptual design and the product's functional identity are unified in a single typographic gesture.
+The lavender highlight rectangle (`#d4c5f0`) placed behind a key phrase in the hero headline is a distinctive choice. Rather than using color on the text itself or a decorative underline, the highlight mimics a text selection state — directly invoking the product's real-time collaborative context as a visual device. The floating user badge extends this metaphor. The hero's conceptual design and the product's functional identity are unified in a single typographic gesture.
 
 **2. Product UI as Marketing Content**
 The feature cards contain genuine, recognizable application interfaces (template pickers, task assignment panels, document editors, calendar week views). These are not abstract mockups or illustrated representations — they appear as accurate renderings of the actual product UI, embedded at real interaction state depths (menus open, users assigned, metrics populated). This design decision eliminates the gap between marketing impression and product reality. Visitors preview the interface as it would appear in active use.

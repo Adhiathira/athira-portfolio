@@ -1,6 +1,6 @@
 # Visual Identity — deep-signal
 
-Source system: void-spring | Tone twist: Restraint shift (one paragraph made more observational, less interpretive)
+Source system: reference design system | Tone twist: Restraint shift (one paragraph made more observational, less interpretive)
 
 ---
 
@@ -9,7 +9,7 @@ Source system: void-spring | Tone twist: Restraint shift (one paragraph made mor
 The palette is built on a monochromatic green architecture: deep forest green (`#062914`) as the dominant canvas, forest green (`#155527`) as the primary structural surface, and vivid green (`#1E7E45`) as the sole action accent — a combination that reads as authoritative and technically grounded rather than decorative. The only departure from the green monochrome is mint off-white (`#EEF5EE`) deployed as the light-section alternation, and white (`#FFFFFF`) as text on dark. Typography uses **Plus Jakarta Sans** (bold geometric sans-serif, weights 600–700) for all headings and **Inter** (neutral, highly legible, weights 300–500) for all body and UI text — a pairing that communicates enterprise precision without sacrificing readability. Motion is measured and deliberate: `cubic-bezier(0.25, 0.46, 0.45, 0.94)` drives all micro-interactions at 0.21s, entry animations at 0.52s, creating a tempo that feels considered rather than either sluggish or hyperactive.
 
 `★ Insight ─────────────────────────────────────`
-The letter-spacing injection applied to headings (0.06em) and nav links (0.08em) is the twist that separates deep-signal from its void-spring source. Where void-spring used tightly compressed Anton headlines for percussive impact, deep-signal uses Plus Jakarta Sans at expanded tracking — the same geometric weight, but stretched into formal precision rather than urgency. It is the difference between a punch and a signature.
+The letter-spacing injection applied to headings (0.06em) and nav links (0.08em) is the twist that separates this design system from its source. Where the source system used tightly compressed Anton headlines for percussive impact, this aesthetic uses Plus Jakarta Sans at expanded tracking — the same geometric weight, but stretched into formal precision rather than urgency. It is the difference between a punch and a signature.
 `─────────────────────────────────────────────────`
 
 ---
@@ -48,6 +48,6 @@ The footer runs a 5-column dark structure: a brand column with extended descript
 
 ## Distinctive Qualities
 
-The most consequential decision in deep-signal is the refusal to use any warm color. Every value in the palette — from the near-black page background to the mint section alternation — stays within a green-to-cool-neutral range. This eliminates the warmth shortcuts that make AI-generated interfaces feel generic. The forest green is not chosen for friendliness; it is chosen for depth. Griting's brand promise is verifiability — the ability to know with precision what a person can do. The palette communicates exactly that: measured, calibrated, dark where it should be dark, clear where it needs to be clear.
+The most consequential decision in this design system is the refusal to use any warm color. Every value in the palette — from the near-black page background to the mint section alternation — stays within a green-to-cool-neutral range. This eliminates the warmth shortcuts that make AI-generated interfaces feel generic. The forest green is not chosen for friendliness; it is chosen for depth. This visual language communicates verifiability — the ability to know with precision what something can do. The palette communicates exactly that: measured, calibrated, dark where it should be dark, clear where it needs to be clear.
 
 The `0.06em` letter-spacing injection on Plus Jakarta Sans headings is the typographic signature of the system. Most enterprise design systems either track tight for compression or ignore tracking entirely. This value — subtle enough to miss at a glance, noticeable once seen — gives every heading a deliberate quality that signals human craft rather than automated generation.

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process — Meridian Grain Precision Film Laboratory</title>
+  <meta name="description" content="Every step of the Meridian Grain film processing protocol, from intake to delivery. Chemistry documented to analytical laboratory standard.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <style>
+    .nav-spacer {
+      height: var(--nav-height, 154px);
+      width: 100%;
+    }
+
+    /* Process page header — charcoal with orange accent */
+    .process-header {
+      background-color: var(--color-heading-text, #3d3930);
+      padding: var(--space-2xl, 101.25px) var(--space-xl, 54px) var(--space-2xl, 101.25px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-header::before {
+      content: '';
+      position: absolute;
+      right: -10%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 60vw;
+      max-width: 700px;
+      aspect-ratio: 1;
+      background: radial-gradient(circle, rgba(251, 115, 57, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .process-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .process-header-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-primary-action, #fb7339);
+      margin-bottom: var(--space-lg, 27px);
+    }
+
+    .process-header-title {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: var(--letter-spacing-heading, 0.06em);
+      text-transform: uppercase;
+      color: var(--color-surface-neutral, #f2efe9);
+      margin: 0 0 var(--space-xl, 54px) 0;
+    }
+
+    .process-header-body {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      line-height: 1.65;
+      color: rgba(242, 239, 233, 0.65);
+      max-width: 52ch;
+    }
+
+    /* Chemistry table */
+    .chemistry-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-2xl, 101.25px);
+    }
+
+    .chemistry-table thead tr {
+      border-bottom: 2px solid var(--color-border-default, #d4cfc8);
+    }
+
+    .chemistry-table th {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-warm-gray, #575349);
+      text-align: left;
+      padding: var(--space-sm, 13.5px) var(--space-lg, 27px) var(--space-sm, 13.5px) 0;
+    }
+
+    .chemistry-table tbody tr {
+      border-bottom: 1px solid var(--color-border-default, #d4cfc8);
+      transition: background-color var(--duration-fast, 0.3s) ease;
+    }
+
+    .chemistry-table tbody tr:hover {
+      background-color: rgba(251, 115, 57, 0.04);
+    }
+
+    .chemistry-table td {
+      font-family: var(--font-mono, 'Roboto Mono', monospace);
+      font-size: 0.75rem;
+      color: var(--color-heading-text, #3d3930);
+      letter-spacing: 0.04em;
+      padding: var(--space-lg, 27px) var(--space-lg, 27px) var(--space-lg, 27px) 0;
+      vertical-align: top;
+    }
+
+    .chemistry-table td:first-child {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-heading-text, #3d3930);
+    }
+
+    .chemistry-badge {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+      background-color: rgba(251, 115, 57, 0.12);
+      color: var(--color-primary-action, #fb7339);
+      margin-top: 4px;
+    }
+
+    /* Formats section — bento-style unequal */
+    .formats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--grid-gap, 22px);
+      margin-top: var(--space-2xl, 101.25px);
+    }
+
+    .format-card {
+      background-color: var(--color-white, #ffffff);
+      border: 1px solid var(--color-border-default, #d4cfc8);
+      padding: var(--space-xl, 54px) var(--space-lg, 27px);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm, 13.5px);
+      transition: border-color var(--duration-base, 0.45s) var(--ease-primary);
+    }
+
+    .format-card:hover {
+      border-color: var(--color-primary-action, #fb7339);
+    }
+
+    .format-size {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--color-primary-action, #fb7339);
+      line-height: 1.0;
+    }
+
+    .format-name {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-heading-text, #3d3930);
+    }
+
+    .format-details {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      color: var(--color-warm-gray, #575349);
+    }
+
+    /* FAQ section — accordion feel */
+    .faq-list {
+      margin-top: var(--space-2xl, 101.25px);
+      border-top: 1px solid var(--color-border-default, #d4cfc8);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--color-border-default, #d4cfc8);
+      padding: var(--space-xl, 54px) 0;
+    }
+
+    .faq-q {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--grid-gap, 22px);
+      align-items: start;
+      cursor: pointer;
+    }
+
+    .faq-question {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-heading-text, #3d3930);
+      margin: 0;
+    }
+
+    .faq-toggle {
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      color: var(--color-primary-action, #fb7339);
+      line-height: 1;
+      transition: transform var(--duration-fast, 0.3s) ease;
+    }
+
+    .faq-item.is-open .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: var(--color-warm-gray, #575349);
+      max-width: 72ch;
+      margin-top: var(--space-lg, 27px);
+      display: none;
+    }
+
+    .faq-item.is-open .faq-answer {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .formats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .chemistry-table th:nth-child(3),
+      .chemistry-table td:nth-child(3) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .formats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav" class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="nav-links-left">
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="process.html" class="nav-link nav-link--active">Process</a>
+      </div>
+      <a href="index.html" class="nav-logo" aria-label="Meridian Grain — Home">
+        <span class="nav-logo-text">Meridian Grain</span>
+      </a>
+      <div class="nav-links-right">
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="contact.html" class="nav-cta">Book a Run</a>
+      </div>
+      <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="process.html" class="nav-link nav-link--active">Process</a>
+    <a href="work.html" class="nav-link">Work</a>
+    <a href="contact.html" class="nav-cta">Book a Run</a>
+  </div>
+
+  <div class="nav-spacer" aria-hidden="true"></div>
+
+  <!-- PROCESS HEADER -->
+  <header class="process-header" id="process-header">
+    <div class="process-header-inner">
+      <span class="process-header-label">How We Work</span>
+      <h1 class="process-header-title">The Protocol</h1>
+      <p class="process-header-body">
+        We operate more like an analytical chemistry laboratory than a traditional darkroom.
+        Every variable is measured. Every decision is documented. Reproducibility is the standard.
+      </p>
+    </div>
+  </header>
+
+  <!-- FULL PROCESS STEPS -->
+  <section class="section section--cream" id="process-full" aria-labelledby="process-full-heading">
+    <div class="container--wide">
+      <span class="section-label section-label--muted">The Method</span>
+      <h2 class="section-heading" id="process-full-heading">Step by<br>Step</h2>
+
+      <div class="process-steps" id="process-full-steps">
+        <div class="process-step">
+          <span class="process-step-number">01</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Order Submission</h3>
+            <p class="process-step-body">
+              Complete the online booking form specifying format, emulsion, EI rating, process type,
+              desired push-pull compensation, and any special instructions. We respond within 2 hours
+              on business days to confirm receipt and provide a shipping label if needed.
+            </p>
+            <span class="process-step-spec">// Online form · Email confirmation within 2h</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <span class="process-step-number">02</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Intake & Inspection</h3>
+            <p class="process-step-body">
+              Each submission is logged with a barcode on receipt. We inspect every roll or sheet
+              before development: cassette condition, film leader, winding direction, any unusual
+              exposure. If we find anything that warrants consultation, we contact you before
+              proceeding — we never make unilateral decisions about your film.
+            </p>
+            <span class="process-step-spec">// Barcode tracking from intake to delivery · 15min inspection per submission</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <span class="process-step-number">03</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Chemistry Preparation</h3>
+            <p class="process-step-body">
+              We mix developer fresh for each order using the concentration and dilution specified
+              by your emulsion and push-pull target. We do not use replenished or recycled developer.
+              Temperature is brought to target and verified by NIST-traceable thermometer before
+              film enters the tank.
+            </p>
+            <span class="process-step-spec">// Fresh chemistry per order · 20.0°C ±0.1°C verified</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <span class="process-step-number">04</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Development</h3>
+            <p class="process-step-body">
+              Development time is calculated from our calibration curves for the specific emulsion
+              batch and chemistry combination. Agitation is timed with a digital interval timer.
+              We log temperature at start and finish of development. Stop bath, fix, and wash
+              times are protocol-specified and not abbreviated.
+            </p>
+            <span class="process-step-spec">// Digital interval timing · Temperature logged at start and finish</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <span class="process-step-number">05</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Drying & Cutting</h3>
+            <p class="process-step-body">
+              Film dries in a filtered cabinet for a minimum of 2 hours before handling.
+              35mm is cut in strips of 6. Medium format is cut per frame or left in full strips
+              per your instruction. Large format sheets are individually sleeved. We do not cut
+              under light — all handling is in darkroom conditions until the film is fully dry
+              and confirmed clear.
+            </p>
+            <span class="process-step-spec">// 2h minimum dry time · Filtered cabinet · Cut to order specification</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <span class="process-step-number">06</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Scanning (if ordered)</h3>
+            <p class="process-step-body">
+              Scanning follows development on the same business day. We select scan resolution
+              based on your order: standard (2000 dpi), high (4000 dpi), or archive (6400 dpi).
+              Every scan is dust-spotted. Color work receives a calibrated baseline exposure
+              correction — not a creative grade. Files are delivered as 16-bit TIFF.
+            </p>
+            <span class="process-step-spec">// 2000 / 4000 / 6400 dpi · 16-bit TIFF · Dust-spotted as standard</span>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <span class="process-step-number">07</span>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Documentation & Delivery</h3>
+            <p class="process-step-body">
+              Every order is accompanied by a PDF development card. Negatives are packaged in archival
+              polypropylene sleeves and shipped via tracked courier. Digital scans are delivered
+              via encrypted download link within 24h of order completion. Download links remain active
+              for 30 days; we archive your files for 90 days after delivery.
+            </p>
+            <span class="process-step-spec">// PDF development card · Archival sleeves · 30-day download · 90-day archive</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHEMISTRY CONFIGURATIONS -->
+  <section class="section section--white" id="chemistry" aria-labelledby="chemistry-heading">
+    <div class="container--wide">
+      <span class="section-label section-label--muted">Configurations</span>
+      <h2 class="section-heading" id="chemistry-heading">Active Chemistry</h2>
+      <p class="section-subheading">
+        We maintain 23 active chemistry configurations, verified by spectrographic analysis.
+        All batches are documented with date, concentration, and expected useful life.
+      </p>
+
+      <table class="chemistry-table" id="chemistry-table">
+        <thead>
+          <tr>
+            <th>Developer</th>
+            <th>Dilution</th>
+            <th>Best For</th>
+            <th>Push Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rodinal<br><span class="chemistry-badge">B&W</span></td>
+            <td>1:25 · 1:50 · 1:100</td>
+            <td>Grain emphasis, high sharpness</td>
+            <td>N to N+3</td>
+          </tr>
+          <tr>
+            <td>D-76<br><span class="chemistry-badge">B&W</span></td>
+            <td>Stock · 1:1 · 1:3</td>
+            <td>General purpose, tonal range</td>
+            <td>N-2 to N+4</td>
+          </tr>
+          <tr>
+            <td>HC-110<br><span class="chemistry-badge">B&W</span></td>
+            <td>Dil B · Dil H</td>
+            <td>Fast films, extended EI</td>
+            <td>N to N+4</td>
+          </tr>
+          <tr>
+            <td>Pyrocat-HD<br><span class="chemistry-badge">B&W · Staining</span></td>
+            <td>1:1:100</td>
+            <td>Large format, platinum printing</td>
+            <td>N-3 to N+1</td>
+          </tr>
+          <tr>
+            <td>PMK Pyro<br><span class="chemistry-badge">B&W · Staining</span></td>
+            <td>1:2:100</td>
+            <td>Contact printing, UV processes</td>
+            <td>N-2 to N</td>
+          </tr>
+          <tr>
+            <td>C-41 RA<br><span class="chemistry-badge">Color Neg</span></td>
+            <td>Standard kit</td>
+            <td>Color negative, fresh batch</td>
+            <td>N-1 to N+2</td>
+          </tr>
+          <tr>
+            <td>E-6 3-Bath<br><span class="chemistry-badge">Color Rev</span></td>
+            <td>Standard kit</td>
+            <td>Slide / reversal film</td>
+            <td>N to N+2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FORMATS -->
+  <section class="section section--cream" id="formats" aria-labelledby="formats-heading">
+    <div class="container--wide">
+      <span class="section-label section-label--muted">Film Formats</span>
+      <h2 class="section-heading" id="formats-heading">What We<br>Accept</h2>
+
+      <div class="formats-grid" id="formats-grid">
+        <div class="format-card">
+          <span class="format-size">35mm</span>
+          <span class="format-name">135 Format</span>
+          <p class="format-details">All standard cassettes. Bulk-rolled cassettes accepted. 12, 24, 36, and 40-exposure rolls. DX-coded and manual ISO setting supported.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-size">120</span>
+          <span class="format-name">Medium Format</span>
+          <p class="format-details">All 120 emulsions. 220 accepted with equipment note. 6×4.5, 6×6, 6×7, 6×9, and 6×12 formats. Panoramic accepted.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-size">4×5</span>
+          <span class="format-name">Large Format</span>
+          <p class="format-details">Standard Grafmatic and film holder loading. Cut film in any emulsion. Fuji QuickLoad and Kodak ReadyLoad accepted.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-size">5×7</span>
+          <span class="format-name">Large Format</span>
+          <p class="format-details">Cut film in archival sleeves. Standard tray development. B&W processes only for this format.</p>
+        </div>
+        <div class="format-card">
+          <span class="format-size">8×10</span>
+          <span class="format-name">Large Format</span>
+          <p class="format-details">Cut film in archival sleeves. Tray development in complete darkness. Contact printing available directly from 8×10 negatives.</p>
+        </div>
+        <div class="format-card" style="background-color: var(--color-heading-text); border-color: var(--color-heading-text);">
+          <span class="format-size" style="color: rgba(242,239,233,0.4);">?</span>
+          <span class="format-name" style="color: var(--color-surface-neutral);">Other</span>
+          <p class="format-details" style="color: rgba(242,239,233,0.6);">Unusual formats accepted on consultation. APS, 127, 110, glass plates. Contact us before shipping.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--white" id="faq" aria-labelledby="faq-heading">
+    <div class="container--wide">
+      <span class="section-label section-label--muted">Questions</span>
+      <h2 class="section-heading" id="faq-heading">Common<br>Questions</h2>
+
+      <div class="faq-list" id="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">
+            <h3 class="faq-question">Can I specify a non-standard development time?</h3>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </div>
+          <p class="faq-answer">Yes. If you have your own development card with times, temperatures, and agitation intervals, send it with your film and we will follow it exactly. We document whether we followed your protocol or ours on the development card we return with your negatives.</p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <h3 class="faq-question">What happens if you make an error in development?</h3>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </div>
+          <p class="faq-answer">We redevelop at no charge if the error is within our process and the negatives can be corrected. If the film is lost or destroyed by our error, we refund the full order including film stock at replacement cost based on your receipt. We do not charge for consultation time on error-related orders.</p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <h3 class="faq-question">How do you handle film that has been fogged or damaged in transit?</h3>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </div>
+          <p class="faq-answer">We photograph the packaging on receipt if damage is visible. If we believe film has been fogged before processing, we contact you before any chemistry touches it. We will not process film that shows evidence of light leaks in the cassette without your explicit instruction to proceed.</p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <h3 class="faq-question">Do you accept film from outside the country?</h3>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </div>
+          <p class="faq-answer">Yes. International orders are accepted. We recommend declaring film as "undeveloped photographic film" on customs forms and using a courier that does not X-ray small packages. We can provide a letter for customs describing the contents if needed.</p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <h3 class="faq-question">Can I come in person to drop off and discuss my project?</h3>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </div>
+          <p class="faq-answer">Yes, by appointment. We are not a walk-in facility. Studio visits are available Tuesdays and Thursdays from 10am–4pm. Use the contact form to request a visit and describe your project. We'll confirm within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta-section" aria-labelledby="process-cta-heading">
+    <div class="cta-content">
+      <span class="cta-eyebrow">Start Here</span>
+      <h2 class="cta-heading" id="process-cta-heading">Ready to<br>Send Film?</h2>
+      <p class="cta-body">Use the booking form to describe your project. We'll confirm details before you ship anything.</p>
+      <a href="contact.html" class="cta-btn-primary">Book a Run</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">Meridian Grain</a>
+          <p class="footer-tagline">Precision film developing and scanning laboratory.</p>
+        </div>
+        <nav class="footer-nav-col" aria-label="Services links">
+          <h3 class="footer-nav-heading">Services</h3>
+          <ul class="footer-nav-links">
+            <li><a href="services.html#development">Push-Pull Development</a></li>
+            <li><a href="services.html#scanning">Large-Format Scanning</a></li>
+            <li><a href="services.html#printing">Archival Printing</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-nav-col" aria-label="Studio links">
+          <h3 class="footer-nav-heading">Studio</h3>
+          <ul class="footer-nav-links">
+            <li><a href="process.html">Our Process</a></li>
+            <li><a href="work.html">Client Work</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-nav-col" aria-label="Technical links">
+          <h3 class="footer-nav-heading">Technical</h3>
+          <ul class="footer-nav-links">
+            <li><a href="#chemistry">Chemistry Configurations</a></li>
+            <li><a href="#formats">Supported Formats</a></li>
+            <li><a href="services.html#pricing">Pricing</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Meridian Grain. All rights reserved.</p>
+        <ul class="footer-legal-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var nav = document.getElementById('site-nav');
+      var toggle = nav.querySelector('.nav-mobile-toggle');
+      var mobileMenu = document.querySelector('.nav-mobile-menu');
+      var scrolled = false;
+      function onScroll() {
+        var isScrolled = window.scrollY > 60;
+        if (isScrolled !== scrolled) {
+          scrolled = isScrolled;
+          nav.classList.toggle('scrolled', isScrolled);
+          nav.classList.toggle('fixed-nav', isScrolled);
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen.toString());
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('.nav-link, .nav-cta').forEach(function(link) {
+        link.addEventListener('click', function() {
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+
+      // FAQ accordion
+      document.querySelectorAll('.faq-item').forEach(function(item) {
+        var q = item.querySelector('.faq-q');
+        q.addEventListener('click', function() {
+          var wasOpen = item.classList.contains('is-open');
+          document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+            open.classList.remove('is-open');
+          });
+          if (!wasOpen) item.classList.add('is-open');
+        });
+      });
+    })();
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof gsap === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Header — horizontal sweep from left
+      gsap.from('#process-header .process-header-label, #process-header .process-header-title, #process-header .process-header-body', {
+        x: -70, stagger: 0.12, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '#process-header', start: 'top 85%' }
+      });
+
+      // Process steps — clip reveal
+      gsap.from('#process-full-steps .process-step', {
+        clipPath: 'inset(0 100% 0 0)',
+        stagger: 0.12, duration: 0.75, ease: 'power2.out',
+        scrollTrigger: { trigger: '#process-full-steps', start: 'top 80%' }
+      });
+
+      // Chemistry table rows — vertical stagger
+      gsap.from('#chemistry-table tbody tr', {
+        y: 30, stagger: 0.08, duration: 0.75, ease: 'power2.out',
+        scrollTrigger: { trigger: '#chemistry-table', start: 'top 85%' }
+      });
+
+      // Formats grid — rotate + rise
+      gsap.from('#formats-grid .format-card', {
+        rotation: 2, y: 40, stagger: 0.1, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '#formats-grid', start: 'top 80%' }
+      });
+
+      // FAQ items — scale + rise
+      gsap.from('#faq-list .faq-item', {
+        y: 30, scale: 0.98, stagger: 0.1, duration: 0.75, ease: 'power2.out',
+        scrollTrigger: { trigger: '#faq-list', start: 'top 80%' }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -28,7 +28,7 @@ This pattern is used as the primary entry point to the interface, designed for i
 
 *   **Layout Zones:** The section is organized into three distinct layers:
     1.  **Background Media Layer:** A full-screen, animated 3D asset that serves as the primary visual anchor.
-    2.  **Foreground Typography Layer:** A large, dominant typographic element ("LUSION") placed centrally in the lower half of the viewport.
+    2.  **Foreground Typography Layer:** A large, dominant typographic element placed centrally in the lower half of the viewport.
     3.  **UI Control Layer:** The main navigation bar at the top and a "SCROLL TO EXPLORE" affordance at the bottom right.
 *   **Layout Style:** The layout is media-driven and composition-driven. It uses a full-bleed, layered composition where the typography and UI elements float above the animated background. The overall feel is minimal and atmospheric.
 
@@ -255,7 +255,7 @@ This pattern is used on the project detail page to provide an in-depth look at a
 ## **Typography System**
 
 *   **Scale:** The typography system uses a dramatic and effective scale.
-    *   **Display/Hero:** Extremely large, impactful sans-serif type is used for hero titles ("LUSION", "PROJECTS").
+    *   **Display/Hero:** Extremely large, impactful sans-serif type is used for hero titles and section headers.
     *   **Headlines:** Large, but more reserved, headlines are used for project titles on the detail page.
     *   **Body Text:** A clean, readable sans-serif is used for descriptive paragraphs.
 *   **Hierarchy:** The dramatic difference in font size creates an immediate and effortless visual hierarchy. Users know exactly what to read first.

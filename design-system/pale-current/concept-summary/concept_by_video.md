@@ -1,4 +1,4 @@
-# Motion Brief: Pale Current
+# Motion Brief
 
 ## Scroll Opening
 

@@ -1,6 +1,6 @@
 ## Visual Identity
 
-The site's color palette is based on deep forest greens, warm off-whites, and charcoal grays for a muted, natural feel. A typeface pairing of a classic serif (Newsreader) for body copy and a proprietary sans-serif (Goyard) for headings imparts a feeling of vintage luxury, limited by the display font's lack of web accessibility. Motion is subtle, with slow transitions and a full-bleed looping background video.
+The site's color palette is based on deep forest greens, warm off-whites, and charcoal grays for a muted, natural feel. A typeface pairing of a classic serif (Newsreader) for body copy and a proprietary sans-serif for headings imparts a feeling of vintage luxury, limited by the display font's lack of web accessibility. Motion is subtle, with slow transitions and a full-bleed looping background video.
 
 ## Hero Section
 
@@ -8,7 +8,7 @@ The hero uses a full-bleed looping video background that dominates the viewport.
 
 ## Content Sections
 
-A grid layout is employed, arranging three product images per row, with each item displayed on a background of a warm, off-white color. Following this are additional sections showcasing two-column divisions featuring a product image alongside descriptive text. A newsletter sign-up is contained within a rectangular section, accompanied by another image on the right. The page employs the Newsreader font for body text and a proprietary font, Goyard, for headings across each section.
+A grid layout is employed, arranging three product images per row, with each item displayed on a background of a warm, off-white color. Following this are additional sections showcasing two-column divisions featuring a product image alongside descriptive text. A newsletter sign-up is contained within a rectangular section, accompanied by another image on the right. The page employs the Newsreader font for body text and a proprietary font for headings across each section.
 
 ## Footer Section
 

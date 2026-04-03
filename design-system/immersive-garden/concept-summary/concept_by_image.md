@@ -102,7 +102,7 @@ The top navigation bar in screenshots 2 and 3 includes what appears to be a hair
 - Background: flat `#e8e8e8` static color, no imagery, no gradient
 - Viewport coverage: the content occupies a single horizontal band at mid-viewport — no full-height narrative structure
 - Text placement: left-aligned, vertically centered in the viewport
-- Headline scale: the wordmark "IMMERSIVE GARDEN" reads at small-to-medium scale using the `HelveticaNeueRegular` / `14px` nav-scale token — it is uppercase-spaced lettering functioning as a label, not a display headline
+- Headline scale: the wordmark reads at small-to-medium scale using the `HelveticaNeueRegular` / `14px` nav-scale token — it is uppercase-spaced lettering functioning as a label, not a display headline
 - CTA count: zero — no CTA is present in the above-fold view
 - Scroll indicator: none visible as static element
 - Navigation bar state: Screenshot 1 shows no navigation bar at all — the interface at top-of-page reveals only the identity bar at mid-viewport with no chrome. Screenshots 2 and 3 introduce an "About" text link in the top-right corner, suggesting the navigation either fades in on scroll or is positioned in a fixed but initially invisible state
@@ -168,7 +168,7 @@ Color does not perform hierarchy in this system — there is no typographic colo
 
 Visible typographic elements across all three screenshots use two distinct scales:
 
-**Identity scale**: The wordmark "IMMERSIVE GARDEN" renders as tracked uppercase lettering at approximately 14px using `HelveticaNeueRegular` — a sans-serif label register. This is the primary identity element but occupies a small type scale.
+**Identity scale**: The wordmark renders as tracked uppercase lettering at approximately 14px using `HelveticaNeueRegular` — a sans-serif label register. This is the primary identity element but occupies a small type scale.
 
 **Navigation scale**: "About" and "See all projects" appear at the same small register — consistent with the extracted `nav` token at `14px` / `15.4px` line-height.
 
