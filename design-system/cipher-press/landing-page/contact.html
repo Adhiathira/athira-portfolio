@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Recto</title>
+  <meta name="description" content="Request access to Recto — a precision document intelligence platform available to editorial teams, publishers, and research organisations.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    .nav-spacer.active { display: block; }
+
+    /* Contact — minimal header, form immediately visible */
+    #contact-header {
+      background: var(--color-page-bg);
+      padding: 40px 0 50px;
+      border-bottom: 1px solid var(--color-border-default);
+      max-height: 15vh;
+      overflow: visible;
+    }
+
+    #contact-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-container-h);
+    }
+
+    #contact-kicker {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin-bottom: 1rem;
+    }
+
+    #contact-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3.5vw, 4rem);
+      font-weight: var(--weight-heading);
+      line-height: 1.05;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0;
+    }
+
+    /* Contact body */
+    #contact-body {
+      background: var(--color-page-bg);
+      padding: var(--space-section) 0;
+    }
+
+    #contact-body-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-container-h);
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 8rem;
+      align-items: start;
+    }
+
+    #contact-info h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 2vw, 2.5rem);
+      font-weight: var(--weight-heading);
+      line-height: 1.15;
+      letter-spacing: 0.05em;
+      color: var(--color-heading);
+      margin: 0 0 1.5rem;
+    }
+
+    #contact-info p {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--color-muted-text);
+      margin: 0 0 2rem;
+    }
+
+    #contact-eligibility {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .eligibility-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--color-muted-text);
+    }
+
+    .eligibility-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--color-muted-text);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.45rem;
+    }
+
+    /* Form */
+    #contact-form-wrapper {
+      background: var(--color-surface-1);
+      padding: 3rem;
+      border-top: 2px solid #000000;
+    }
+
+    #contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-field label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--color-body-text);
+      background: var(--color-page-bg);
+      border: none;
+      border-bottom: 1px solid rgba(0,0,0,0.2);
+      padding: 10px 0;
+      width: 100%;
+      transition: border-color var(--duration-fast) var(--ease-primary);
+      outline: none;
+      appearance: none;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-bottom-color: #000000;
+    }
+
+    .form-field input:focus-visible,
+    .form-field select:focus-visible,
+    .form-field textarea:focus-visible {
+      outline: var(--focus-outline);
+      outline-offset: 2px;
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    #form-submit {
+      margin-top: 0.5rem;
+    }
+
+    #form-submit button {
+      font-family: var(--font-body);
+      font-size: var(--type-button);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fcfcfc;
+      background: #000000;
+      border: 1px solid #000000;
+      padding: 14px 32px;
+      cursor: pointer;
+      transition: opacity var(--duration-fast) var(--ease-primary);
+      align-self: flex-start;
+    }
+
+    #form-submit button:hover {
+      opacity: 0.8;
+    }
+
+    #form-submit button:focus-visible {
+      outline: var(--focus-outline);
+      outline-offset: 2px;
+    }
+
+    #form-note {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--color-subtle-text);
+      margin-top: 0.5rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      #contact-header-inner { padding: 0 40px; }
+      #contact-body-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 0 40px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #contact-header-inner { padding: 0 24px; }
+      #contact-body-inner { padding: 0 24px; }
+      #contact-body { padding: 80px 0; }
+      #contact-form-wrapper { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Recto</a>
+      <ul class="nav-links">
+        <li><a href="work.html">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="nav-link--active">Contact</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="work.html">Work</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-spacer active"></div>
+  <script>
+    const nav = document.getElementById('site-nav');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    const toggle = nav.querySelector('.nav-mobile-toggle');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    });
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+    });
+  </script>
+
+  <!-- MINIMAL HEADER -->
+  <header id="contact-header">
+    <div id="contact-header-inner">
+      <div id="contact-kicker">Get in touch</div>
+      <h1 id="contact-title">Request access</h1>
+    </div>
+  </header>
+
+  <!-- CONTACT BODY -->
+  <section id="contact-body">
+    <div id="contact-body-inner">
+      <div id="contact-info">
+        <h2>Recto is available by invitation to editorial teams who need it.</h2>
+        <p>We review every application and reach out within five business days. We work with teams of all sizes — from a single editor managing a complex manuscript to a publishing house running dozens of titles simultaneously.</p>
+        <div id="contact-eligibility">
+          <div class="eligibility-item">
+            <div class="eligibility-dot"></div>
+            <span>Academic and literary publishers</span>
+          </div>
+          <div class="eligibility-item">
+            <div class="eligibility-dot"></div>
+            <span>Legal and policy editorial teams</span>
+          </div>
+          <div class="eligibility-item">
+            <div class="eligibility-dot"></div>
+            <span>Technical documentation teams</span>
+          </div>
+          <div class="eligibility-item">
+            <div class="eligibility-dot"></div>
+            <span>Research organisations</span>
+          </div>
+          <div class="eligibility-item">
+            <div class="eligibility-dot"></div>
+            <span>Independent editorial consultants</span>
+          </div>
+        </div>
+      </div>
+      <div id="contact-form-wrapper">
+        <form id="contact-form" action="#" method="post">
+          <div class="form-field">
+            <label for="field-name">Full name</label>
+            <input type="text" id="field-name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-field">
+            <label for="field-email">Work email</label>
+            <input type="email" id="field-email" name="email" placeholder="you@organisation.com" required>
+          </div>
+          <div class="form-field">
+            <label for="field-org">Organisation</label>
+            <input type="text" id="field-org" name="organisation" placeholder="Publisher, university, firm, etc.">
+          </div>
+          <div class="form-field">
+            <label for="field-type">Team type</label>
+            <select id="field-type" name="team-type">
+              <option value="" disabled selected>Select your context</option>
+              <option value="academic">Academic publishing</option>
+              <option value="literary">Literary publishing</option>
+              <option value="legal">Legal or policy</option>
+              <option value="technical">Technical documentation</option>
+              <option value="research">Research organisation</option>
+              <option value="independent">Independent consultant</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="field-context">Tell us about your workflow</label>
+            <textarea id="field-context" name="context" placeholder="What kind of documents do you work with? What problems do you most want Recto to solve?"></textarea>
+          </div>
+          <div id="form-submit">
+            <button type="submit">Submit request</button>
+            <p id="form-note">We respond within five business days. Your information is not shared with third parties.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <div id="footer-logo">Recto</div>
+        <p id="footer-tagline">Document intelligence for teams who care about how language is made.</p>
+      </div>
+      <div id="footer-nav-col-1">
+        <div class="footer-col-heading">Product</div>
+        <ul class="footer-links">
+          <li><a href="work.html">How it works</a></li>
+          <li><a href="work.html">Features</a></li>
+          <li><a href="contact.html">Request access</a></li>
+        </ul>
+      </div>
+      <div id="footer-nav-col-2">
+        <div class="footer-col-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <div id="footer-copyright">© 2026 Recto. All rights reserved.</div>
+      <div id="footer-legal">Built for editorial precision.</div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.39;
+    const EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+    // Header
+    gsap.from('#contact-title', {
+      y: 20,
+      duration: BASE_DURATION * 1.4,
+      ease: EASE,
+      delay: 0.1
+    });
+
+    // Info col — sweep left
+    gsap.from('#contact-info', {
+      scrollTrigger: { trigger: '#contact-body', start: 'top 75%' },
+      x: -40,
+      duration: BASE_DURATION * 1.5,
+      ease: EASE
+    });
+
+    // Form — sweep right
+    gsap.from('#contact-form-wrapper', {
+      scrollTrigger: { trigger: '#contact-body', start: 'top 75%' },
+      x: 40,
+      duration: BASE_DURATION * 1.5,
+      ease: EASE
+    });
+
+    // Eligibility items stagger
+    gsap.from('.eligibility-item', {
+      scrollTrigger: { trigger: '#contact-eligibility', start: 'top 85%' },
+      y: 15,
+      stagger: 0.08,
+      duration: BASE_DURATION,
+      ease: EASE
+    });
+  </script>
+</body>
+</html>

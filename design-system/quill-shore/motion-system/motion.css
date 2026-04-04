@@ -1,0 +1,30 @@
+:root {
+  --motion-duration-primary: 2.47s;
+  --motion-duration-secondary: 0.65s;
+  --motion-easing-primary: ease-in-out;
+  --motion-easing-secondary: ease;
+  --motion-total-animated-elements: 20;
+}
+
+/* Primary transition — languid opacity fade, 2.47s ease-in-out */
+.mediaBlock {
+  transition: opacity var(--motion-duration-primary) var(--motion-easing-primary);
+}
+
+/* Secondary transitions — 0.65s ease for interactive elements */
+.interactive,
+button,
+a {
+  transition: all var(--motion-duration-secondary) var(--motion-easing-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

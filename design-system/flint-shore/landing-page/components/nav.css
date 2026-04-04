@@ -1,0 +1,209 @@
+/* Nav — Flint Shore
+   Height: 30px (editorial hairline)
+   Position: absolute over dark hero on homepage; static on sub-pages
+   No backdrop-filter at any scroll state
+   Pill hover, 0.08em letter-spacing
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+#site-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 30px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Sub-page static nav */
+#site-nav.nav-static {
+  position: relative;
+}
+
+.nav-inner {
+  width: 100%;
+  max-width: 1224px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+}
+
+/* Logo */
+.nav-logo {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #fcf7f1;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-logo:hover {
+  opacity: 0.7;
+}
+
+/* On light background (sub-pages, scrolled) */
+#site-nav.on-light .nav-logo,
+#site-nav.scrolled .nav-logo {
+  color: #000000;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: #fcf7f1;
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links a:hover {
+  background-color: rgba(255,255,255,0.12);
+}
+
+/* Active nav link */
+.nav-links a.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* On light background: dark link text */
+#site-nav.on-light .nav-links a,
+#site-nav.scrolled .nav-links a {
+  color: #000000;
+}
+
+#site-nav.on-light .nav-links a:hover,
+#site-nav.scrolled .nav-links a:hover {
+  background-color: rgba(0,0,0,0.06);
+}
+
+/* Scrolled state — subtle cream background for legibility */
+#site-nav.scrolled {
+  background-color: rgba(252, 247, 241, 0.96);
+  position: fixed;
+  top: 0;
+}
+
+/* Nav spacer (sub-pages: always active) */
+.nav-spacer {
+  display: none;
+  height: 30px;
+}
+
+.nav-spacer.active {
+  display: block;
+}
+
+/* Mobile hamburger */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20px;
+  height: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: #fcf7f1;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#site-nav.on-light .nav-mobile-toggle span,
+#site-nav.scrolled .nav-mobile-toggle span {
+  background-color: #000000;
+}
+
+/* Hamburger → X */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Mobile overlay menu */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background-color: #0a0a0a;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+}
+
+.nav-mobile-menu a {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: #fcf7f1;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.nav-mobile-menu a:hover {
+  opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-inner {
+    padding: 0 1.25rem;
+  }
+}

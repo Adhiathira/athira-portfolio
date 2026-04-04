@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System — Forme</title>
+  <meta name="description" content="The Forme system: dimensional tolerance management, surface finish call-outs, material chains, STEP import, and supplier views — all in one structured record.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    /* ── System-specific styles ── */
+
+    /* Feature rows — full-width horizontal cards */
+    #features-list {
+      padding: var(--space-section-v) 0;
+      background: var(--color-page-bg);
+    }
+
+    #features-header {
+      margin-bottom: 80px;
+    }
+
+    #features-eyebrow {
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-accent-cyan);
+      margin: 0 0 16px;
+    }
+
+    #features-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0;
+      line-height: var(--line-height-h2);
+      max-width: 540px;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: var(--grid-col-gap);
+      align-items: center;
+      padding: 56px 0;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .feature-row--reversed {
+      grid-template-columns: 2fr 3fr;
+    }
+
+    .feature-row--reversed .feature-row-text {
+      order: 2;
+    }
+
+    .feature-row--reversed .feature-row-media {
+      order: 1;
+    }
+
+    .feature-row-label {
+      font-size: 10px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent-indigo);
+      margin: 0 0 16px;
+    }
+
+    .feature-row-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+      font-weight: var(--font-weight-regular);
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+      margin: 0 0 16px;
+      line-height: 1.25;
+    }
+
+    .feature-row-body {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--color-heading-alt);
+      margin: 0 0 24px;
+    }
+
+    .feature-row-link {
+      font-size: 14px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-link);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color var(--duration-hover) var(--ease-primary);
+    }
+
+    .feature-row-link:hover {
+      color: var(--color-primary-action);
+    }
+
+    .feature-row-media {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      background: var(--color-surface-2);
+    }
+
+    .feature-row-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── Spec detail band — dark ── */
+    #spec-detail {
+      padding: 100px 0;
+      background: var(--color-accent-navy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #spec-detail::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 92, 230, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    #spec-detail-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-section-h);
+      position: relative;
+      z-index: 1;
+    }
+
+    #spec-detail-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--letter-spacing-heading);
+      color: #fff;
+      margin: 0 0 64px;
+      line-height: 1.15;
+      max-width: 640px;
+    }
+
+    #spec-detail-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .spec-stat {
+      background: rgba(255,255,255,0.04);
+      padding: 40px 36px;
+      transition: background var(--duration-hover) var(--ease-primary);
+    }
+
+    .spec-stat:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .spec-stat-value {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--letter-spacing-heading);
+      color: #fff;
+      margin: 0 0 8px;
+      background: linear-gradient(135deg, var(--color-accent-pink), var(--color-accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .spec-stat-label {
+      font-size: 12px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin: 0;
+    }
+
+    /* ── Tolerance standards table ── */
+    #tolerance-standards {
+      padding: var(--space-section-v) 0;
+      background: var(--color-surface-1);
+      border-top: 1px solid var(--color-border);
+    }
+
+    #standards-header {
+      margin-bottom: 56px;
+    }
+
+    #standards-eyebrow {
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-accent-purple);
+      margin: 0 0 16px;
+    }
+
+    #standards-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0;
+      line-height: var(--line-height-h2);
+      max-width: 480px;
+    }
+
+    #standards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-grid-gap);
+    }
+
+    .standard-card {
+      background: var(--color-page-bg);
+      border-radius: 2px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      transition: box-shadow var(--duration-hover) var(--ease-primary);
+    }
+
+    .standard-card:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+
+    .standard-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent-indigo);
+      border: 1px solid var(--color-accent-indigo);
+      border-radius: 2px;
+      padding: 3px 8px;
+      align-self: flex-start;
+    }
+
+    .standard-name {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: var(--font-weight-regular);
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+      margin: 0;
+    }
+
+    .standard-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .feature-row,
+      .feature-row--reversed {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .feature-row--reversed .feature-row-text,
+      .feature-row--reversed .feature-row-media {
+        order: unset;
+      }
+      #spec-detail-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+      #standards-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #spec-detail-stats {
+        grid-template-columns: 1fr;
+      }
+      #standards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Forme home">Forme</a>
+    <ul class="nav-links">
+      <li><a href="method.html">Method</a></li>
+      <li><a href="system.html" class="nav-link--active" aria-current="page">System</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="pricing.html" class="nav-cta">Start free →</a>
+    <button class="nav-mobile-toggle" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="method.html">Method</a>
+  <a href="system.html">System</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="pricing.html" class="nav-mobile-cta">Start free →</a>
+</div>
+<div class="nav-spacer active" style="height:48px;"></div>
+<script>
+  (function(){
+    var nav=document.getElementById('site-nav');
+    var toggle=nav.querySelector('.nav-mobile-toggle');
+    var mobileMenu=document.querySelector('.nav-mobile-menu');
+    window.addEventListener('scroll',function(){
+      nav.classList.toggle('scrolled',window.scrollY>8);
+    });
+    toggle.addEventListener('click',function(){
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow=mobileMenu.classList.contains('is-open')?'hidden':'';
+    });
+  })();
+</script>
+
+<!-- ── Subpage Hero ── -->
+<header class="subpage-hero">
+  <div class="section-inner">
+    <p class="subpage-hero-eyebrow">The system</p>
+    <h1 class="subpage-hero-title">Every tool the specification record requires.</h1>
+    <p class="subpage-hero-sub">Forme covers dimensional tolerances, surface finish call-outs, material chains, STEP import, supplier views, and version control — all structured so they can be queried, compared, and handed off without transformation.</p>
+  </div>
+</header>
+
+<!-- ── Feature Rows ── -->
+<section id="features-list">
+  <div class="section-inner">
+    <div id="features-header">
+      <p id="features-eyebrow">Core capabilities</p>
+      <h2 id="features-heading">A specification tool is only as good as the constraints it enforces.</h2>
+    </div>
+
+    <div class="feature-row" id="step-import">
+      <div class="feature-row-text">
+        <p class="feature-row-label">STEP Import</p>
+        <h3 class="feature-row-title">Import nominal values directly from STEP geometry.</h3>
+        <p class="feature-row-body">Forme reads dimensional features from STEP files and populates the base record automatically. Nominal values are extracted; your engineers assign tolerances. No manual data entry, no transcription errors, no disconnection between the 3D model and the specification record.</p>
+        <a href="#" class="feature-row-link">Documentation →</a>
+      </div>
+      <div class="feature-row-media" id="step-import-media">
+        <img
+          src="assets/system-step-import.jpeg"
+          alt="STEP file import interface showing dimensional feature extraction"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-2);color:var(--color-muted-text);font-size:0.85rem;">
+          → assets/system-step-import.jpeg
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-row feature-row--reversed" id="supplier-view">
+      <div class="feature-row-text">
+        <p class="feature-row-label">Supplier View</p>
+        <h3 class="feature-row-title">A filtered handoff — not a redacted PDF.</h3>
+        <p class="feature-row-body">The supplier view shows exactly what the manufacturer needs for their process. The filter is structural: it exposes call-outs by process type (machining, finishing, assembly) rather than manually hiding fields. Your IP stays in the record; the supplier gets a coherent specification for their scope.</p>
+        <a href="#" class="feature-row-link">See how it works →</a>
+      </div>
+      <div class="feature-row-media" id="supplier-view-media">
+        <img
+          src="assets/system-supplier-view.jpeg"
+          alt="Supplier view showing filtered specification relevant to machining process"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-2);color:var(--color-muted-text);font-size:0.85rem;">
+          → assets/system-supplier-view.jpeg
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-row-text">
+        <p class="feature-row-label">Revision control</p>
+        <h3 class="feature-row-title">Every change is ancestry, not replacement.</h3>
+        <p class="feature-row-body">When a tolerance changes, the previous value is preserved as a revision branch — not overwritten. Compare across revisions inline. Know who changed what, when, and why. The record accumulates every engineering decision made on the part, from first entry to final sign-off.</p>
+        <a href="#" class="feature-row-link">Learn about revision branching →</a>
+      </div>
+      <div class="feature-row-media" id="revision-media">
+        <img
+          src="assets/system-revision.jpeg"
+          alt="Revision history view showing branched tolerance changes with authorship"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-2);color:var(--color-muted-text);font-size:0.85rem;">
+          → assets/system-revision.jpeg
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Spec Detail Band (dark) ── -->
+<section id="spec-detail">
+  <div id="spec-detail-inner">
+    <h2 id="spec-detail-heading">Specifications that answer questions instead of raising them.</h2>
+    <div id="spec-detail-stats">
+      <div class="spec-stat">
+        <p class="spec-stat-value">12</p>
+        <p class="spec-stat-label">Tolerance models supported</p>
+      </div>
+      <div class="spec-stat">
+        <p class="spec-stat-value">ISO 286</p>
+        <p class="spec-stat-label">Fit system built-in</p>
+      </div>
+      <div class="spec-stat">
+        <p class="spec-stat-value">Ra / Rz</p>
+        <p class="spec-stat-label">Surface finish parameters</p>
+      </div>
+      <div class="spec-stat">
+        <p class="spec-stat-value">JSON</p>
+        <p class="spec-stat-label">Machine-readable export</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Tolerance Standards ── -->
+<section id="tolerance-standards">
+  <div class="section-inner">
+    <div id="standards-header">
+      <p id="standards-eyebrow">Supported standards</p>
+      <h2 id="standards-heading">The references your parts already live by.</h2>
+    </div>
+    <div id="standards-grid">
+      <div class="standard-card">
+        <span class="standard-tag">Dimensional</span>
+        <h3 class="standard-name">ISO 286 — Limits and Fits</h3>
+        <p class="standard-desc">Full H/h tolerance grade system. Clearance, transition, and interference fits with automatic class assignment.</p>
+      </div>
+      <div class="standard-card">
+        <span class="standard-tag">Surface</span>
+        <h3 class="standard-name">ISO 1302 — Surface Texture</h3>
+        <p class="standard-desc">Ra, Rz, Rq, Rt. Call-out symbols with manufacturing process linkage and lay direction specification.</p>
+      </div>
+      <div class="standard-card">
+        <span class="standard-tag">Geometric</span>
+        <h3 class="standard-name">ASME Y14.5 — GD&T</h3>
+        <p class="standard-desc">Flatness, circularity, cylindricity, profile, orientation, location, and runout tolerances. Datum reference frames.</p>
+      </div>
+      <div class="standard-card">
+        <span class="standard-tag">Material</span>
+        <h3 class="standard-name">ISO 6892 — Tensile Properties</h3>
+        <p class="standard-desc">Link material specifications to mechanical property requirements. Yield strength, UTS, and elongation tracked per alloy.</p>
+      </div>
+      <div class="standard-card">
+        <span class="standard-tag">Coating</span>
+        <h3 class="standard-name">ISO 2081 — Electroplating</h3>
+        <p class="standard-desc">Deposit thickness specification with minimum local thickness and corrosion class call-outs.</p>
+      </div>
+      <div class="standard-card">
+        <span class="standard-tag">Custom</span>
+        <h3 class="standard-name">Company-specific standards</h3>
+        <p class="standard-desc">Define and register internal tolerance standards. Custom fields with validation rules and approved value sets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA Band ── -->
+<section id="cta-band">
+  <div class="section-inner" id="cta-band-inner">
+    <h2 id="cta-band-heading">The system is the specification.</h2>
+    <p id="cta-band-sub">Start with three parts free. If Forme changes how you document specifications, the pricing is the easy part.</p>
+    <div id="cta-band-actions">
+      <a href="pricing.html" class="btn-primary">See pricing</a>
+      <a href="contact.html" class="btn-ghost-dark">Request a demo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand-col">
+        <a href="index.html" id="footer-logo">Forme</a>
+        <p id="footer-tagline">Structured specification for hardware that cannot afford imprecision.</p>
+        <ul id="footer-social">
+          <li><a href="#" aria-label="Forme on GitHub">GitHub</a></li>
+          <li><a href="#" aria-label="Forme on LinkedIn">LinkedIn</a></li>
+          <li><a href="#" aria-label="Forme changelog">Changelog</a></li>
+        </ul>
+      </div>
+      <div id="footer-product-col">
+        <p class="footer-col-heading">Product</p>
+        <ul class="footer-links">
+          <li><a href="method.html">Method</a></li>
+          <li><a href="system.html">System</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="system.html#step-import">STEP Import</a></li>
+          <li><a href="system.html#supplier-view">Supplier View</a></li>
+        </ul>
+      </div>
+      <div id="footer-company-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="method.html#about">About Forme</a></li>
+          <li><a href="method.html#principles">Design principles</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html#press">Press</a></li>
+        </ul>
+      </div>
+      <div id="footer-resources-col">
+        <p class="footer-col-heading">Resources</p>
+        <ul class="footer-links">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Tolerance standards</a></li>
+          <li><a href="#">ISO fit reference</a></li>
+          <li><a href="#">Surface finish guide</a></li>
+          <li><a href="#">API reference</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-copyright">© 2026 Forme. Precision measurement tools for hardware engineers.</p>
+      <ul id="footer-legal">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Security</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from('.subpage-hero-title', {
+    y: 16,
+    duration: 0.65,
+    ease: 'power2.out',
+    delay: 0.05
+  });
+
+  // Feature rows — alternating horizontal reveals
+  var featureRows = document.querySelectorAll('.feature-row');
+  featureRows.forEach(function(row, i) {
+    var isReversed = row.classList.contains('feature-row--reversed');
+    gsap.from(row.querySelector('.feature-row-text'), {
+      scrollTrigger: { trigger: row, start: 'top 80%' },
+      x: isReversed ? 40 : -40,
+      duration: 0.65,
+      ease: 'power2.out'
+    });
+    gsap.from(row.querySelector('.feature-row-media'), {
+      scrollTrigger: { trigger: row, start: 'top 80%' },
+      scale: 0.97,
+      duration: 0.7,
+      ease: 'power2.out'
+    });
+  });
+
+  // Stats — staggered y rise
+  gsap.from('.spec-stat', {
+    scrollTrigger: { trigger: '#spec-detail-stats', start: 'top 82%' },
+    y: 30,
+    stagger: 0.1,
+    duration: 0.55,
+    ease: 'power2.out'
+  });
+
+  // Standards cards — sweep left with stagger
+  gsap.from('.standard-card', {
+    scrollTrigger: { trigger: '#standards-grid', start: 'top 80%' },
+    x: -24,
+    stagger: { amount: 0.5, from: 'start' },
+    duration: 0.5,
+    ease: 'power2.out'
+  });
+
+  gsap.from('#cta-band-heading', {
+    scrollTrigger: { trigger: '#cta-band', start: 'top 78%' },
+    scale: 0.95,
+    duration: 0.6,
+    ease: 'power2.out'
+  });
+</script>
+</body>
+</html>

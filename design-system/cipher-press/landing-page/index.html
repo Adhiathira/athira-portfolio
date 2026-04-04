@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recto — Document Intelligence for Editorial Teams</title>
+  <meta name="description" content="Recto is a precision document intelligence platform for editorial teams who care about the craft of language. Every word in its place.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/features.css">
+  <link rel="stylesheet" href="components/process.css">
+  <link rel="stylesheet" href="components/usecases.css">
+  <link rel="stylesheet" href="components/cta.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- NAV TEMPLATE -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Recto</a>
+      <ul class="nav-links">
+        <li><a href="work.html">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="work.html">Work</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <script>
+    const nav = document.getElementById('site-nav');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    const toggle = nav.querySelector('.nav-mobile-toggle');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+    });
+  </script>
+
+  <!-- HERO SECTION -->
+  <section id="hero">
+    <div id="hero-video-container">
+      <video
+        id="hero-bg-video"
+        src="assets/hero-compositor.mp4"
+        autoplay muted loop playsinline
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      ></video>
+      <div
+        id="hero-bg-video-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+               background:var(--color-surface-2);color:rgba(0,0,0,0.4);font-family:var(--font-body);
+               font-size:0.85rem;"
+      >
+        → assets/hero-compositor.mp4
+      </div>
+      <div id="hero-video-overlay"></div>
+    </div>
+    <div id="hero-content">
+      <div id="hero-eyebrow">Document Intelligence</div>
+      <h1 id="hero-headline">Every word<br>in its place.</h1>
+      <p id="hero-body">Recto brings structural precision to editorial work — intelligent document analysis for teams who care about how language is made.</p>
+      <div id="hero-cta-group">
+        <a href="work.html" class="btn-primary" id="hero-cta-primary">See how it works</a>
+        <a href="contact.html" class="btn-ghost-dark" id="hero-cta-secondary">Request access</a>
+      </div>
+    </div>
+    <div id="hero-scroll-indicator">
+      <span>Scroll</span>
+      <div id="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section id="features">
+    <div id="features-inner">
+      <div id="features-header">
+        <div id="features-kicker">Capabilities</div>
+        <h2 id="features-headline">Precision at every layer of the document</h2>
+      </div>
+      <div id="features-grid">
+        <div class="feature-card" id="feature-1">
+          <div class="feature-number">01</div>
+          <h3 class="feature-title">Structural Analysis</h3>
+          <p class="feature-body">Recto maps the architecture of any document — headings, hierarchies, dependencies, flow. What editors know intuitively, Recto makes explicit and navigable.</p>
+        </div>
+        <div class="feature-card" id="feature-2">
+          <div class="feature-number">02</div>
+          <h3 class="feature-title">Style Intelligence</h3>
+          <p class="feature-body">House style is a living standard. Recto learns from the editorial record — not just from the style guide — and surfaces inconsistencies before they compound.</p>
+        </div>
+        <div class="feature-card" id="feature-3">
+          <div class="feature-number">03</div>
+          <h3 class="feature-title">Proof-State Tracking</h3>
+          <p class="feature-body">Every draft carries its history. Recto tracks the state of a document across revision cycles, preserving what was changed, why, and by whom.</p>
+        </div>
+        <div class="feature-card" id="feature-4">
+          <div class="feature-number">04</div>
+          <h3 class="feature-title">Cross-Document Coherence</h3>
+          <p class="feature-body">Series, volumes, editions — Recto holds the editorial thread across every piece, ensuring the vocabulary, register, and decisions travel with the work.</p>
+        </div>
+        <div class="feature-card" id="feature-5">
+          <div class="feature-number">05</div>
+          <h3 class="feature-title">Annotation Intelligence</h3>
+          <p class="feature-body">Margin notes are where the real editorial thinking lives. Recto reads annotations as structured data — queryable, resolvable, exportable.</p>
+        </div>
+        <div class="feature-card" id="feature-6">
+          <div class="feature-number">06</div>
+          <h3 class="feature-title">Output Fidelity</h3>
+          <p class="feature-body">From manuscript to print-ready PDF to digital edition — Recto ensures that what was written is what is published, without the last-mile errors that erode trust.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS SECTION (HOW IT WORKS) -->
+  <section id="process">
+    <div id="process-inner">
+      <div id="process-left">
+        <div id="process-kicker">Process</div>
+        <h2 id="process-headline">Built for the way editorial work actually flows</h2>
+        <p id="process-body">Recto doesn't ask you to change your workflow. It reads what you produce — in whatever format you produce it — and returns structured intelligence you can act on immediately.</p>
+        <a href="about.html" class="btn-ghost-dark" id="process-cta">Learn about our approach</a>
+      </div>
+      <div id="process-right">
+        <div id="process-video-container">
+          <video
+            id="process-bg-video"
+            src="assets/feature-document-flow.mp4"
+            autoplay muted loop playsinline
+            style="width:100%;height:100%;object-fit:cover;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          ></video>
+          <div
+            id="process-bg-placeholder"
+            style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                   background:var(--color-surface-2);color:rgba(0,0,0,0.4);font-family:var(--font-body);
+                   font-size:0.85rem;"
+          >
+            → assets/feature-document-flow.mp4
+          </div>
+          <div id="process-video-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES SECTION -->
+  <section id="usecases">
+    <div id="usecases-inner">
+      <div id="usecases-header">
+        <div id="usecases-kicker">For teams who care</div>
+        <h2 id="usecases-headline">Where precision matters most</h2>
+      </div>
+      <div id="usecases-grid">
+        <div class="usecase-item" id="usecase-1">
+          <div class="usecase-label">Academic Publishing</div>
+          <p class="usecase-body">Citation integrity, cross-reference accuracy, edition tracking. Recto handles the structural weight so your editors focus on the intellectual work.</p>
+        </div>
+        <div class="usecase-divider"></div>
+        <div class="usecase-item" id="usecase-2">
+          <div class="usecase-label">Literary Publishing</div>
+          <p class="usecase-body">Voice consistency, style coherence, the invisible hand of the house. Recto holds the editorial line across revisions without losing what makes the work distinctive.</p>
+        </div>
+        <div class="usecase-divider"></div>
+        <div class="usecase-item" id="usecase-3">
+          <div class="usecase-label">Legal &amp; Policy</div>
+          <p class="usecase-body">Where every word carries consequence. Recto flags structural ambiguity, surfaces version conflicts, and tracks definitional dependencies before they become problems.</p>
+        </div>
+        <div class="usecase-divider"></div>
+        <div class="usecase-item" id="usecase-4">
+          <div class="usecase-label">Technical Documentation</div>
+          <p class="usecase-body">Versioning is everything. Recto links documentation to the product lifecycle — ensuring no page exists in a state that doesn't match the software it describes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDIO / AMBIENT VIDEO SECTION -->
+  <section id="studio">
+    <div id="studio-video-container">
+      <video
+        id="studio-bg-video"
+        src="assets/studio-interior.mp4"
+        autoplay muted loop playsinline
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      ></video>
+      <div
+        id="studio-bg-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+               background:var(--color-dark-surface);color:rgba(255,255,255,0.3);font-family:var(--font-body);
+               font-size:0.85rem;"
+      >
+        → assets/studio-interior.mp4
+      </div>
+      <div id="studio-overlay"></div>
+    </div>
+    <div id="studio-content">
+      <blockquote id="studio-quote">
+        "The document is not the container for the work. It is the work."
+      </blockquote>
+      <div id="studio-attribution">— Editorial brief, Recto</div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section id="cta-section">
+    <div id="cta-inner">
+      <div id="cta-left">
+        <h2 id="cta-headline">Start with precision.</h2>
+        <p id="cta-body">Recto is available to editorial teams by invitation. If your work demands accuracy at every layer, we'd like to hear from you.</p>
+      </div>
+      <div id="cta-right">
+        <a href="contact.html" class="btn-primary" id="cta-button">Request access</a>
+        <div id="cta-note">Available to editorial teams, publishers, and research organisations.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <div id="footer-logo">Recto</div>
+        <p id="footer-tagline">Document intelligence for teams who care about how language is made.</p>
+      </div>
+      <div id="footer-nav-col-1">
+        <div class="footer-col-heading">Product</div>
+        <ul class="footer-links">
+          <li><a href="work.html">How it works</a></li>
+          <li><a href="work.html">Features</a></li>
+          <li><a href="contact.html">Request access</a></li>
+        </ul>
+      </div>
+      <div id="footer-nav-col-2">
+        <div class="footer-col-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <div id="footer-copyright">© 2026 Recto. All rights reserved.</div>
+      <div id="footer-legal">Built for editorial precision.</div>
+    </div>
+  </footer>
+
+  <!-- GSAP Animations -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const BASE_DURATION = parseFloat(getComputedStyle(document.documentElement)
+      .getPropertyValue('--duration-base')) || 0.39;
+    const EASE = getComputedStyle(document.documentElement)
+      .getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+    // Hero entrance — clip-path wipe on headline
+    const heroTl = gsap.timeline({ delay: 0.2 });
+    heroTl
+      .from('#hero-eyebrow', {
+        y: 18,
+        duration: BASE_DURATION,
+        ease: EASE
+      })
+      .from('#hero-headline', {
+        clipPath: 'inset(0 100% 0 0)',
+        duration: BASE_DURATION * 2.2,
+        ease: 'power2.out'
+      }, '-=0.1')
+      .from('#hero-body', {
+        y: 24,
+        duration: BASE_DURATION,
+        ease: EASE
+      }, '-=0.6')
+      .from('#hero-cta-group', {
+        y: 16,
+        duration: BASE_DURATION,
+        ease: EASE
+      }, '-=0.4')
+      .from('#hero-scroll-indicator', {
+        y: 10,
+        duration: BASE_DURATION * 1.5,
+        ease: EASE
+      }, '-=0.3');
+
+    // Features — horizontal sweep left stagger
+    gsap.from('#features-header', {
+      scrollTrigger: { trigger: '#features', start: 'top 78%' },
+      x: -60,
+      duration: BASE_DURATION * 1.4,
+      ease: EASE
+    });
+
+    gsap.from('#features-grid .feature-card', {
+      scrollTrigger: { trigger: '#features-grid', start: 'top 82%' },
+      y: 50,
+      stagger: 0.1,
+      duration: BASE_DURATION * 1.2,
+      ease: EASE
+    });
+
+    // Process — divergent reveal (left and right)
+    gsap.from('#process-left', {
+      scrollTrigger: { trigger: '#process', start: 'top 75%' },
+      x: -80,
+      duration: BASE_DURATION * 1.5,
+      ease: EASE
+    });
+
+    gsap.from('#process-right', {
+      scrollTrigger: { trigger: '#process', start: 'top 75%' },
+      x: 80,
+      duration: BASE_DURATION * 1.5,
+      ease: EASE
+    });
+
+    // Use cases — vertical stagger, scale + rise
+    gsap.from('.usecase-item', {
+      scrollTrigger: { trigger: '#usecases-grid', start: 'top 80%' },
+      scale: 0.97,
+      y: 30,
+      stagger: 0.14,
+      duration: BASE_DURATION * 1.3,
+      ease: EASE
+    });
+
+    // Studio quote — clip-path reveal
+    gsap.from('#studio-quote', {
+      scrollTrigger: { trigger: '#studio', start: 'top 60%' },
+      clipPath: 'inset(0 0 100% 0)',
+      duration: BASE_DURATION * 2.0,
+      ease: 'power2.out'
+    });
+
+    gsap.from('#studio-attribution', {
+      scrollTrigger: { trigger: '#studio', start: 'top 55%' },
+      y: 12,
+      duration: BASE_DURATION,
+      ease: EASE
+    });
+
+    // CTA — rotate + rise
+    gsap.from('#cta-left', {
+      scrollTrigger: { trigger: '#cta-section', start: 'top 80%' },
+      rotation: 1,
+      y: 40,
+      duration: BASE_DURATION * 1.4,
+      ease: EASE
+    });
+
+    gsap.from('#cta-right', {
+      scrollTrigger: { trigger: '#cta-section', start: 'top 80%' },
+      y: 30,
+      duration: BASE_DURATION * 1.2,
+      ease: EASE,
+      delay: 0.12
+    });
+
+    // Scroll indicator animation
+    gsap.to('#hero-scroll-line', {
+      scaleY: 0,
+      transformOrigin: 'top center',
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom 30%',
+        scrub: 1
+      }
+    });
+  </script>
+</body>
+</html>

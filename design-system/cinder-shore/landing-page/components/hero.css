@@ -1,0 +1,340 @@
+/* hero.css — Cinder Shore / Tidemark */
+/* Hero section: full-viewport, dark teal background, video background, light copy */
+
+/* ─── Hero section wrapper ──────────────────────────────── */
+#hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  background-color: #1e3a35;
+}
+
+/* ─── Video background container ───────────────────────── */
+#hero-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+#hero-bg-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #1e3a35;
+  color: rgba(255,255,255,0.3);
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+#hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(30, 58, 53, 0.72) 0%,
+    rgba(38, 61, 64, 0.58) 40%,
+    rgba(30, 58, 53, 0.35) 100%
+  );
+}
+
+/* ─── Hero content ──────────────────────────────────────── */
+#hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width, 1200px);
+  margin: 0 auto;
+  padding: 0 var(--container-padding, 36px);
+  width: 100%;
+  padding-top: 86px; /* offset for fixed nav */
+}
+
+#hero-label {
+  font-family: var(--font-edito, "Raleway", sans-serif);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-secondary-accent, #c9b84c);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fade-up-in 0.48s ease-out 0.1s forwards;
+}
+
+#hero-title {
+  font-family: var(--font-heading, "Playfair Display", Georgia, serif);
+  font-size: var(--type-hero, clamp(2.5rem, 6vw, 3.954rem));
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: var(--letter-spacing-heading, 0.04em);
+  color: #ffffff;
+  margin: 0 0 32px 0;
+  max-width: 640px;
+  opacity: 0;
+  animation: fade-up-in 0.48s ease-out 0.2s forwards;
+}
+
+#hero-tagline {
+  font-family: var(--font-body, "Open Sans", Arial, sans-serif);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0 0 48px 0;
+  max-width: 480px;
+  opacity: 0;
+  animation: fade-up-in 0.48s ease-out 0.35s forwards;
+}
+
+#hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fade-up-in 0.48s ease-out 0.5s forwards;
+}
+
+/* ─── CTA buttons ───────────────────────────────────────── */
+.btn-primary {
+  font-family: var(--font-edito, "Raleway", sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: var(--color-primary-action, #df5e12);
+  border: 1px solid var(--color-primary-action, #df5e12);
+  padding: 14px 28px;
+  text-decoration: none;
+  transition: opacity 0.17s ease-in-out, transform 0.17s ease-in-out;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  opacity: var(--hover-opacity-btn, 0.85);
+  transform: translateY(-1px);
+}
+
+.btn-ghost-light {
+  font-family: var(--font-edito, "Raleway", sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: transparent;
+  border: 1px solid rgba(255,255,255,0.55);
+  padding: 14px 28px;
+  text-decoration: none;
+  transition: opacity 0.17s ease-in-out, transform 0.17s ease-in-out;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.btn-ghost-light:hover {
+  opacity: var(--hover-opacity, 0.75);
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.85);
+}
+
+.btn-secondary {
+  font-family: var(--font-edito, "Raleway", sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--color-body-text, #2b2b29);
+  background-color: transparent;
+  border: 1px solid var(--color-body-text, #2b2b29);
+  padding: 14px 28px;
+  text-decoration: none;
+  transition: opacity 0.17s ease-in-out, transform 0.17s ease-in-out;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  opacity: var(--hover-opacity, 0.75);
+  transform: translateY(-1px);
+}
+
+/* ─── Scroll indicator ──────────────────────────────────── */
+#hero-scroll-indicator {
+  position: absolute;
+  bottom: 48px;
+  right: var(--container-padding, 36px);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fade-up-in 0.48s ease-out 0.7s forwards;
+}
+
+#hero-scroll-indicator span {
+  font-family: var(--font-edito, "Raleway", sans-serif);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+#hero-scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0));
+  animation: scroll-pulse 2.4s ease-in-out infinite 1s;
+}
+
+/* ─── Sub-page hero (medium height) ─────────────────────── */
+.hero-sub {
+  position: relative;
+  width: 100%;
+  min-height: 55vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background-color: #1e3a35;
+}
+
+.hero-sub-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(30, 58, 53, 0.85) 0%,
+    rgba(30, 58, 53, 0.40) 60%,
+    rgba(30, 58, 53, 0.20) 100%
+  );
+  z-index: 0;
+}
+
+.hero-sub-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--grid-max-width, 1200px);
+  margin: 0 auto;
+  padding: 96px var(--container-padding, 36px) 64px;
+}
+
+.hero-sub-label {
+  font-family: var(--font-edito, "Raleway", sans-serif);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-secondary-accent, #c9b84c);
+  margin-bottom: 16px;
+}
+
+.hero-sub-title {
+  font-family: var(--font-heading, "Playfair Display", Georgia, serif);
+  font-size: var(--type-h1, clamp(2rem, 5vw, 3.235rem));
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: var(--letter-spacing-heading, 0.04em);
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  max-width: 680px;
+}
+
+.hero-sub-tagline {
+  font-family: var(--font-body, "Open Sans", Arial, sans-serif);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.78);
+  margin: 0;
+  max-width: 480px;
+}
+
+/* Compact sub-page hero (about, contact) */
+.hero-compact {
+  position: relative;
+  width: 100%;
+  min-height: 30vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background-color: #263d40;
+}
+
+.hero-compact-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--grid-max-width, 1200px);
+  margin: 0 auto;
+  padding: 120px var(--container-padding, 36px) 48px;
+}
+
+/* ─── Animations ────────────────────────────────────────── */
+@keyframes fade-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 0.5; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* ─── Responsive ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #hero {
+    min-height: 100svh;
+  }
+
+  #hero-title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  #hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-sub {
+    min-height: 45vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #hero-label,
+  #hero-title,
+  #hero-tagline,
+  #hero-actions,
+  #hero-scroll-indicator {
+    opacity: 1;
+    animation: none;
+  }
+  #hero-scroll-line {
+    animation: none;
+  }
+}

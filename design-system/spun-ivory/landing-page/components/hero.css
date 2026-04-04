@@ -1,0 +1,235 @@
+/* hero.css — Ivoire Bureau hero section */
+
+/* ── Hero section (index.html) ── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 30px; /* nav height */
+  background: var(--color-page-bg);
+}
+
+/* Hero video container — full bleed, behind content */
+#hero-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+#hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Very low opacity — texture, not scene (per concept_by_video.md: 0.12–0.18) */
+}
+
+#hero-bg-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--color-surface-2);
+  color: rgba(0,0,0,0.3);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+}
+
+/* Cream-tinted overlay — keeps the warm ivory register while allowing texture through */
+#hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(245, 240, 232, 0.84);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Hero content — sits above video */
+#hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-gutter);
+  width: 100%;
+}
+
+#hero-eyebrow {
+  font-family: var(--font-nav);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+  margin: 0 0 32px;
+}
+
+#hero-headline {
+  font-family: var(--font-heading);
+  font-size: var(--type-hero-display);
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-heading);
+  line-height: 1.1;
+  color: var(--color-heading);
+  margin: 0 0 24px;
+  max-width: 800px;
+}
+
+#hero-headline em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+#hero-tagline {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: var(--lh-body);
+  color: var(--color-muted-text);
+  max-width: 480px;
+  margin: 0 0 48px;
+}
+
+#hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-nav);
+  color: var(--color-page-bg);
+  background: var(--color-heading);
+  border: 1px solid var(--color-heading);
+  padding: 14px 28px;
+  border-radius: var(--btn-border-radius);
+  text-decoration: none;
+  transition: background var(--duration-base) var(--ease-primary),
+              color var(--duration-base) var(--ease-primary);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.btn-ghost {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing-nav);
+  color: var(--color-heading);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  padding: 14px 28px;
+  border-radius: var(--btn-border-radius);
+  text-decoration: none;
+  transition: background var(--duration-base) var(--ease-primary),
+              color var(--duration-base) var(--ease-primary);
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  background: var(--color-heading);
+  color: var(--color-page-bg);
+}
+
+.btn-ghost-light {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing-nav);
+  color: rgba(245,240,232,0.8);
+  background: transparent;
+  border: 1px solid rgba(245,240,232,0.4);
+  padding: 14px 28px;
+  border-radius: var(--btn-border-radius);
+  text-decoration: none;
+  transition: background var(--duration-base) var(--ease-primary),
+              color var(--duration-base) var(--ease-primary);
+  cursor: pointer;
+}
+
+.btn-ghost-light:hover {
+  background: rgba(245,240,232,0.15);
+  border-color: rgba(245,240,232,0.7);
+  color: #ffffff;
+}
+
+/* Hero scroll indicator */
+#hero-scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+}
+
+#hero-scroll-hint span {
+  font-family: var(--font-nav);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-muted-text), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+  50% { opacity: 0.8; transform: scaleY(1); }
+}
+
+/* ── Hero responsive ── */
+@media (max-width: 900px) {
+  #hero-headline {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    max-width: 100%;
+  }
+  #hero-tagline {
+    max-width: 100%;
+  }
+  #hero-content {
+    padding: 0 var(--space-lg);
+  }
+}
+
+@media (max-width: 600px) {
+  #hero-headline {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+  }
+  #hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-primary, .btn-ghost {
+    text-align: center;
+    width: 100%;
+  }
+}

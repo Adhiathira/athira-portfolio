@@ -1,0 +1,94 @@
+:root {
+  --motion-duration-xfast: 0.234s;
+  --motion-duration-fast: 0.351s;
+  --motion-duration-medium: 0.468s;
+  --motion-duration-slow: 1.17s;
+  --motion-duration-xslow: 1.404s;
+  --motion-duration-pulse: 3.276s;
+
+  --motion-easing-linear: linear;
+  --motion-easing-standard: ease-in-out;
+  --motion-easing-decelerate: cubic-bezier(0.68, 0, 0.23, 1);
+  --motion-easing-default: ease;
+  --motion-easing-out: ease-out;
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-left {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes slide-out-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes scale-in {
+  0% { opacity: 0; transform: scale(0.75); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  25% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes rotate-full {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animated-pulse {
+  animation: pulse var(--motion-duration-pulse) var(--motion-easing-default) infinite;
+}
+
+.btn,
+button {
+  transition: background-color var(--motion-duration-xfast) linear,
+              border-color var(--motion-duration-xfast) linear,
+              color var(--motion-duration-xfast) linear;
+}
+
+.fade-element {
+  transition: opacity var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.transform-element {
+  transition: transform var(--motion-duration-medium) var(--motion-easing-decelerate);
+}
+
+.accordion,
+.drawer {
+  transition: grid-template-rows var(--motion-duration-slow) var(--motion-easing-default);
+}
+
+.overlay {
+  transition: opacity var(--motion-duration-slow) var(--motion-easing-default);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

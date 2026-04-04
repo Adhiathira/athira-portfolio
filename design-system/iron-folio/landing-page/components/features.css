@@ -1,0 +1,235 @@
+/* features.css — iron-folio / Compendium */
+/* Dark feature card section: near-black, asymmetric 3-card grid */
+
+#features {
+  position: relative;
+  background: #0a0a0a;
+  padding: var(--space-section) 0;
+  overflow: hidden;
+}
+
+/* Ambient video background for features section */
+#features-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+#features-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.22;
+}
+
+#features-bg-video-placeholder {
+  display: none;
+}
+
+/* Overlay darkens the video further */
+#features-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10,10,10,0.88) 0%,
+    rgba(10,10,10,0.72) 50%,
+    rgba(10,10,10,0.88) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+#features-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-gutter);
+}
+
+#features-header {
+  margin-bottom: 56px;
+}
+
+#features-label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin: 0 0 16px;
+}
+
+#features-heading {
+  font-family: var(--font-heading);
+  font-size: var(--type-h1);
+  font-weight: 500;
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-heading);
+  color: #ffffff;
+  margin: 0;
+  max-width: 640px;
+}
+
+/* Asymmetric card grid: 3 cards, 60/40 ratio */
+#features-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.feature-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 2px;
+  padding: 32px;
+  transition: all 0.45s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.feature-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.14);
+  transform: translateY(-2px);
+}
+
+/* First card is taller — more visual weight */
+.feature-card:first-child {
+  padding: 40px;
+}
+
+.feature-card-number {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.3);
+  margin: 0 0 32px;
+  font-style: italic;
+}
+
+.feature-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  margin: 0 0 16px;
+}
+
+/* Featured card (first) — larger title */
+.feature-card:first-child .feature-card-title {
+  font-size: 1.65rem;
+}
+
+.feature-card-body {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.55);
+  margin: 0 0 28px;
+  flex: 1;
+}
+
+/* Feature card image panel */
+.feature-card-visual {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  margin-top: auto;
+}
+
+.feature-card-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.04);
+}
+
+.feature-card:first-child .feature-card-image-wrap {
+  height: 260px;
+}
+
+.feature-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: opacity 0.75s ease-in-out;
+}
+
+.feature-card:hover .feature-card-img {
+  opacity: 1;
+}
+
+.feature-card-img-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.25);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+}
+
+/* Link style on feature cards */
+.feature-card-link {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(255,255,255,0.5);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 2px;
+  transition: var(--hover-transition);
+}
+
+.feature-card-link:hover {
+  color: rgba(255,255,255,0.9);
+  border-bottom-color: rgba(255,255,255,0.6);
+}
+
+/* Accent line decoration */
+#features::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(30,58,110,0.6) 40%, rgba(30,58,110,0.6) 60%, transparent);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  #features-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .feature-card:first-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  #features-grid {
+    grid-template-columns: 1fr;
+  }
+  .feature-card:first-child {
+    grid-column: span 1;
+  }
+}

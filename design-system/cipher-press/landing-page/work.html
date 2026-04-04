@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — Recto</title>
+  <meta name="description" content="How Recto works: a precision document intelligence platform for editorial teams. Structural analysis, style intelligence, and proof-state tracking.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* Work page — How It Works */
+    .nav-spacer.active { display: block; }
+
+    #work-header {
+      background: var(--color-page-bg);
+      padding: 60px 0 80px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    #work-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-container-h);
+    }
+
+    #work-kicker {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin-bottom: 1.5rem;
+    }
+
+    #work-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 7.5rem);
+      font-weight: var(--weight-heading);
+      line-height: 1.0;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0 0 2rem;
+      max-width: 900px;
+    }
+
+    #work-subtitle {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.5vw, 1.1rem);
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--color-muted-text);
+      max-width: 600px;
+      margin: 0;
+    }
+
+    /* Steps section */
+    #steps {
+      background: var(--color-page-bg);
+      padding: var(--space-section) 0;
+    }
+
+    #steps-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-container-h);
+    }
+
+    .step-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 1.2fr;
+      gap: 4rem;
+      align-items: start;
+      padding: 4rem 0;
+      border-top: 1px solid var(--color-border-default);
+    }
+
+    .step-row:last-child {
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .step-num {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: var(--weight-heading);
+      line-height: 1;
+      letter-spacing: 0.05em;
+      color: rgba(0,0,0,0.12);
+    }
+
+    .step-left h3 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 2vw, 2rem);
+      font-weight: var(--weight-heading);
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+      margin: 0 0 1rem;
+    }
+
+    .step-left p {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    .step-right {
+      padding-top: 0.2rem;
+    }
+
+    .step-detail {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 400;
+      line-height: 1.8;
+      color: var(--color-subtle-text);
+      margin: 0;
+      border-left: 1px solid var(--color-border-default);
+      padding-left: 1.5rem;
+    }
+
+    /* Image placeholder */
+    #work-image-section {
+      background: var(--color-surface-1);
+      padding: var(--space-section) 0;
+    }
+
+    #work-image-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-container-h);
+    }
+
+    #work-image-container {
+      width: 100%;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #work-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #work-image-caption {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--color-subtle-text);
+      margin-top: 1.5rem;
+    }
+
+    /* Work CTA */
+    #work-cta {
+      background: var(--color-dark-surface);
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    #work-cta-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-container-h);
+    }
+
+    #work-cta h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 5rem);
+      font-weight: var(--weight-heading);
+      line-height: 1.05;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: rgba(252,252,252,0.9);
+      margin: 0 0 2rem;
+    }
+
+    #work-cta .btn-light {
+      display: inline-block;
+      align-self: flex-start;
+      font-family: var(--font-body);
+      font-size: var(--type-button);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-dark-surface);
+      background: rgba(252,252,252,0.9);
+      border: 1px solid rgba(252,252,252,0.9);
+      padding: 14px 32px;
+      text-decoration: none;
+      transition: opacity var(--duration-fast) var(--ease-primary);
+    }
+
+    #work-cta .btn-light:hover {
+      opacity: 0.85;
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .step-row {
+        grid-template-columns: 60px 1fr;
+        gap: 2rem;
+      }
+      .step-right { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      #work-header-inner, #steps-inner, #work-image-inner, #work-cta-inner {
+        padding: 0 40px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #work-header-inner, #steps-inner, #work-image-inner, #work-cta-inner {
+        padding: 0 24px;
+      }
+      .step-row {
+        grid-template-columns: 40px 1fr;
+        gap: 1.5rem;
+      }
+      #work-image-container {
+        height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Recto</a>
+      <ul class="nav-links">
+        <li><a href="work.html" class="nav-link--active">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="work.html">Work</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-spacer active"></div>
+  <script>
+    const nav = document.getElementById('site-nav');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    const toggle = nav.querySelector('.nav-mobile-toggle');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    });
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+    });
+  </script>
+
+  <!-- HEADER -->
+  <header id="work-header">
+    <div id="work-header-inner">
+      <div id="work-kicker">How it works</div>
+      <h1 id="work-title">The anatomy of a document, made navigable.</h1>
+      <p id="work-subtitle">Recto ingests documents in any format and returns structured intelligence across six dimensions — available through API, integration, or the Recto editing environment.</p>
+    </div>
+  </header>
+
+  <!-- STEPS -->
+  <section id="steps">
+    <div id="steps-inner">
+      <div class="step-row" id="step-1">
+        <div class="step-num">01</div>
+        <div class="step-left">
+          <h3>Ingest</h3>
+          <p>Recto accepts documents in Word, PDF, InDesign IDML, Markdown, plain text, and XML. Conversion is lossless at the structural level — headings, annotations, footnotes, and revision history travel intact.</p>
+        </div>
+        <div class="step-right">
+          <p class="step-detail">File formats are normalized to Recto's internal document model — a graph structure that preserves all editorial relationships. The original file is never modified.</p>
+        </div>
+      </div>
+      <div class="step-row" id="step-2">
+        <div class="step-num">02</div>
+        <div class="step-left">
+          <h3>Analyse</h3>
+          <p>Structure, style, terminology, and proof state are extracted in a single pass. Recto does not use generative language models for analysis — the intelligence is rule-based, deterministic, and auditable.</p>
+        </div>
+        <div class="step-right">
+          <p class="step-detail">Analysis runs locally by default. Cloud processing is available for teams working with large document corpora. Both modes produce identical output — the difference is throughput and storage.</p>
+        </div>
+      </div>
+      <div class="step-row" id="step-3">
+        <div class="step-num">03</div>
+        <div class="step-left">
+          <h3>Surface</h3>
+          <p>Structural issues, style deviations, and terminology conflicts are surfaced as actionable items — each linked to the exact location in the document and the rule that produced it.</p>
+        </div>
+        <div class="step-right">
+          <p class="step-detail">Issues are classified by severity, type, and confidence. Teams can configure which rules apply to which document types — a house style rule for literary manuscripts may not apply to technical documentation.</p>
+        </div>
+      </div>
+      <div class="step-row" id="step-4">
+        <div class="step-num">04</div>
+        <div class="step-left">
+          <h3>Resolve</h3>
+          <p>Each issue surfaces with a proposed resolution, the basis for that resolution, and the editorial precedent from your own document corpus. Accept, reject, or defer — every decision is logged.</p>
+        </div>
+        <div class="step-right">
+          <p class="step-detail">Accepted resolutions update the document in place. Rejected resolutions teach the system — Recto learns your house standards from the decisions your team makes, not just the rules you write.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGE -->
+  <section id="work-image-section">
+    <div id="work-image-inner">
+      <div id="work-image-container">
+        <img
+          id="work-feature-img"
+          src="assets/work-analysis-view.jpeg"
+          alt="Recto document analysis interface showing structural breakdown of an editorial manuscript"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div
+          style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                 background:var(--color-surface-2);color:rgba(0,0,0,0.4);font-family:var(--font-body);
+                 font-size:0.85rem;"
+        >
+          → assets/work-analysis-view.jpeg
+        </div>
+      </div>
+      <div id="work-image-caption">The Recto analysis view — structural issues surfaced in context, with editorial precedent attached to each.</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="work-cta">
+    <div id="work-cta-inner">
+      <h2>Ready to see it on your documents?</h2>
+      <a href="contact.html" class="btn-light">Request access</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <div id="footer-logo">Recto</div>
+        <p id="footer-tagline">Document intelligence for teams who care about how language is made.</p>
+      </div>
+      <div id="footer-nav-col-1">
+        <div class="footer-col-heading">Product</div>
+        <ul class="footer-links">
+          <li><a href="work.html">How it works</a></li>
+          <li><a href="work.html">Features</a></li>
+          <li><a href="contact.html">Request access</a></li>
+        </ul>
+      </div>
+      <div id="footer-nav-col-2">
+        <div class="footer-col-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <div id="footer-copyright">© 2026 Recto. All rights reserved.</div>
+      <div id="footer-legal">Built for editorial precision.</div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.39;
+    const EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+    // Header — scale + rise
+    gsap.from('#work-title', {
+      scale: 0.97,
+      y: 30,
+      duration: BASE_DURATION * 1.6,
+      ease: EASE,
+      delay: 0.1
+    });
+
+    gsap.from('#work-subtitle', {
+      y: 20,
+      duration: BASE_DURATION * 1.2,
+      ease: EASE,
+      delay: 0.3
+    });
+
+    // Steps — clip reveal
+    gsap.from('.step-row', {
+      scrollTrigger: { trigger: '#steps', start: 'top 80%' },
+      clipPath: 'inset(0 0 100% 0)',
+      stagger: 0.12,
+      duration: BASE_DURATION * 1.4,
+      ease: EASE
+    });
+
+    // Work image — parallax
+    gsap.to('#work-feature-img', {
+      scrollTrigger: {
+        trigger: '#work-image-section',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.2
+      },
+      y: '8%',
+      ease: 'none'
+    });
+
+    // CTA — rotate + rise
+    gsap.from('#work-cta h2', {
+      scrollTrigger: { trigger: '#work-cta', start: 'top 80%' },
+      rotation: 1,
+      y: 40,
+      duration: BASE_DURATION * 1.4,
+      ease: EASE
+    });
+  </script>
+</body>
+</html>

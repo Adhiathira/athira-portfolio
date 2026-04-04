@@ -1,0 +1,126 @@
+/* ============================================================
+ * motion-system: iron-vellum
+ * Source: wix
+ * Twist C (intensity 3): Easing curve swap
+ *   ease → ease-in-out
+ *   ease-in-out → cubic-bezier(0.4, 0, 0.2, 1)
+ *   linear → ease
+ * Applied consistently across all transitions and animations.
+ * ============================================================ */
+
+:root {
+  --motion-duration-fast: 0.1s;
+  --motion-duration-base: 0.2s;
+  --motion-duration-medium: 0.3s;
+  --motion-duration-slow: 0.4s;
+  --motion-duration-breathe: 3s;
+  --motion-duration-ambient: 10s;
+
+  --motion-easing-default: ease-in-out;
+  --motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-out: ease-out;
+  --motion-easing-ambient: ease;
+  --motion-easing-cinematic: cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+/* Slide transitions */
+@keyframes slide-horizontal-new {
+  from { transform: translate(100%); }
+}
+
+@keyframes slide-horizontal-old {
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-100%); }
+}
+
+@keyframes slide-vertical-new {
+  from { transform: translateY(-100%); }
+}
+
+@keyframes slide-vertical-old {
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(100%); }
+}
+
+/* Fade */
+@keyframes out-in-new {
+  from { opacity: 0; }
+}
+
+@keyframes out-in-old {
+  to { opacity: 0; }
+}
+
+/* Float in — content reveal */
+@keyframes motion-floatIn {
+  0% {
+    opacity: 0;
+    animation-timing-function: step-end;
+  }
+  0.0001% {
+    opacity: 0;
+    transform: translate(var(--motion-translate-x, 0), var(--motion-translate-y, 20px))
+               rotate(var(--comp-rotate-z, 0deg));
+  }
+  100% {
+    opacity: var(--comp-opacity, 1);
+    transform: translate(0, 0) rotate(var(--comp-rotate-z, 0deg));
+  }
+}
+
+/* Breathe — ambient oscillation */
+@keyframes motion-breathe-1 {
+  0% {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transform: var(--motion-breathe-perspective, ) translate3d(0, 0, 0) rotateZ(var(--comp-rotate-z, 0deg));
+  }
+  25% {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transform: var(--motion-breathe-perspective, )
+               translate3d(
+                 calc(var(--motion-breathe-x) * var(--motion-breathe-distance)),
+                 calc(var(--motion-breathe-y) * var(--motion-breathe-distance)),
+                 calc(var(--motion-breathe-z) * var(--motion-breathe-distance))
+               )
+               rotateZ(var(--comp-rotate-z, 0deg));
+  }
+  75% {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transform: var(--motion-breathe-perspective, )
+               translate3d(
+                 calc(var(--motion-breathe-x) * -1 * var(--motion-breathe-distance)),
+                 calc(var(--motion-breathe-y) * -1 * var(--motion-breathe-distance)),
+                 calc(var(--motion-breathe-z) * -1 * var(--motion-breathe-distance))
+               )
+               rotateZ(var(--comp-rotate-z, 0deg));
+  }
+  100% {
+    transform: var(--motion-breathe-perspective, ) translate3d(0, 0, 0) rotateZ(var(--comp-rotate-z, 0deg));
+  }
+}
+
+/* Moving arrow — micro-interaction */
+@keyframes moving-arrow {
+  from { transform: translateX(0px); }
+  to { transform: translateX(8px); }
+}
+
+/* Gradient text wave */
+@keyframes gradientTextWave {
+  0%   { background-position-x: 0%; background-position-y: 50%; }
+  50%  { background-position-x: 100%; background-position-y: 50%; }
+  100% { background-position-x: 0%; background-position-y: 50%; }
+}
+
+/* Default transition for interactive elements */
+.interactive,
+button,
+a,
+.card {
+  transition: all var(--motion-duration-base) var(--motion-easing-default);
+}
+
+/* Standard GSAP-style reveal */
+.reveal-element {
+  animation: motion-floatIn var(--motion-duration-medium) var(--motion-easing-standard) forwards;
+}

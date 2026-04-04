@@ -1,0 +1,172 @@
+/* Nav — Linen Verge
+   Source: hydra nav-system + linen-verge type-system
+   Height: 21px (editorial hairline), position: absolute, Manrope 500 0.08em tracking
+   Scroll: color + max-width + z-index inversion via class toggle (.scrolled)
+*/
+
+#site-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: auto;
+  padding: 28px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  transition: background 0.39s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+              padding 0.39s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+/* Fixed on scroll */
+#site-nav.scrolled {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: none;
+  padding: 16px 40px;
+  border-bottom: 1px solid rgba(5, 5, 5, 0.08);
+  z-index: 200;
+}
+
+.nav-logo {
+  font-family: 'Manrope', 'Roboto', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #050505;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: 'Manrope', 'Roboto', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #050505;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity 0.39s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.nav-links a:hover {
+  opacity: 0.5;
+}
+
+/* Active nav link: dim + no pointer events */
+.nav-links a.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Nav spacer — for sub-pages where nav is positioned absolute */
+.nav-spacer {
+  display: none;
+  height: 80px;
+}
+
+.nav-spacer.active {
+  display: block;
+}
+
+/* Mobile hamburger toggle */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 300;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #050505;
+  transition: transform 0.39s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+              opacity 0.39s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transform-origin: center;
+}
+
+/* Hamburger → X */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Mobile menu overlay */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.98);
+  z-index: 250;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+}
+
+.nav-mobile-menu a {
+  font-family: 'Manrope', 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #050505;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+
+  #site-nav {
+    padding: 24px 24px;
+  }
+
+  #site-nav.scrolled {
+    padding: 16px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  #site-nav {
+    padding: 20px 16px;
+  }
+
+  #site-nav.scrolled {
+    padding: 14px 16px;
+  }
+}

@@ -1,0 +1,186 @@
+/* hero.css — verre-calme */
+
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding-top: 48px;
+}
+
+#hero-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#hero-bg-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #1a1a1a;
+  color: rgba(255,255,255,0.3);
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+}
+
+#hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0.14) 50%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+#hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 680px;
+  padding: 0 40px;
+}
+
+#hero-eyebrow {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(252, 247, 241, 0.7);
+  margin: 0 0 28px;
+}
+
+#hero-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.75rem);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: #fcf7f1;
+  margin: 0 0 16px;
+  line-height: 1.05;
+}
+
+#hero-tagline {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(252, 247, 241, 0.65);
+  margin: 0 0 48px;
+}
+
+#hero-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.hero-btn-primary {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fcf7f1;
+  border: 1px solid rgba(252, 247, 241, 0.6);
+  padding: 14px 32px;
+  text-decoration: none;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.39s cubic-bezier(0.4,0,0.2,1), color 0.39s cubic-bezier(0.4,0,0.2,1), opacity 0.39s cubic-bezier(0.4,0,0.2,1);
+}
+
+.hero-btn-primary:hover {
+  opacity: 0.75;
+}
+
+.hero-btn-secondary {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(252, 247, 241, 0.55);
+  text-decoration: none;
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  padding: 14px 0;
+  transition: opacity 0.39s cubic-bezier(0.4,0,0.2,1);
+}
+
+.hero-btn-secondary:hover {
+  opacity: 0.75;
+}
+
+#hero-scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+#hero-scroll-hint span {
+  font-family: 'Manrope', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(252, 247, 241, 0.4);
+}
+
+#hero-scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(252,247,241,0.4), rgba(252,247,241,0));
+  animation: scrollLinePulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollLinePulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 0.8; transform: scaleY(1.1); }
+}
+
+@media (max-width: 600px) {
+  #hero-content {
+    padding: 0 24px;
+  }
+
+  #hero-cta-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -1,0 +1,29 @@
+# Iron Vellum — Concept by Image
+
+## Brand Premise
+
+Iron Vellum is a design system that performs the same argument as the studios whose work it distills: that creative and functional intelligence are not separate disciplines but two halves of the same practice. The site is structured as a long-form demonstration of capability — a scroll journey that alternates between cinematic visual moments and dense, organized information, between immersive media showcases and precise typographic grids. A persistent animated background element — a very faint, large-scale outlined wordmark drifting slowly through all light-background sections — acts as the studio's signature: always present, never demanding attention, a quiet assertion of identity that reveals itself gradually rather than announcing itself upfront.
+
+## Color Architecture
+
+The palette is built on a warm off-white foundation — not pure white, but the color of good laid paper or uncoated linen stock — with near-black text that reads as ink on a well-lit surface rather than screen-on-screen. A single vivid green accent functions as the system's one chromatic indulgence, reserved exclusively for the most important interactive surface. The gradient's selectivity is the design's most disciplined color decision: by keeping it to exactly one element, the system ensures it reads as a semantic signal rather than a decorative choice. All other interactive elements operate in the near-black register, their hierarchy communicated through typography and hover animation rather than color. The accent green is pure tension — it exists to break the monochrome, and that break is earned.
+
+## Typography System
+
+A single geometric sans-serif, Space Grotesk, handles everything from hero-scale display headlines to navigation labels, while Inter provides its counterpart at the body and UI scale. The type system is deployed across a clear five-step hierarchy: primary headlines at 92px with tight negative tracking that compresses space to a near-mechanical density, section headings at 56px, card headings at 35px, a comfortable body size at 18px with generous line height, and small uppercase eyebrow labels at 13px with wide positive tracking for category and tertiary navigation. The display scale has been stretched 15% beyond its source system, which means each headline claims more vertical real estate than expected — the extra mass reads as editorial authority, the sense that the words themselves carry weight. Uppercase application is strategic: nav links, CTAs, and eyebrow labels all use it to differentiate them from sentence-case content without requiring a second typeface.
+
+## Spatial System
+
+The spatial logic uses a 34px container gutter — wider than the conventional 22px minimum, tight enough to preserve the sense of a bounded page rather than a browser viewport — and allows two classes of escape: full-bleed media sections and scroll-hijacked horizontal carousels. The increased spacing scale (×1.2 across all elements) means the system breathes at a pace that recalls printed matter: the distance between paragraphs feels like the physical pause between sections in a well-laid book, not the compact stacking of a dashboard interface. Hero sections sit in 173px of vertical padding — generous enough that the headline genuinely arrives into space, the way a chapter opener arrives on a fresh recto page. The 77px grid gap is not accidental: it is close enough to a standard grid measure to feel familiar, far enough to feel considered. The material quality this spacing evokes is cotton-bond paper, the kind where the surface resists the eye just enough to slow it down.
+
+## Photography and Editorial Voice
+
+The photography and visual language serves two distinct registers. In media-dominant sections, high-quality cinematic imagery appears at full bleed or near-full bleed, with text overlays in visually safe zones. In gallery and grid sections, the same imagery reorganizes as a functional inventory — a horizontal scroll-hijacked carousel for featured work, a two-column grid for the broader archive. The two modes serve different cognitive goals: the first asks you to feel the work, the second asks you to survey it. Dark overlays on media in the two-column grid allow text to be layered directly onto images, consolidating card and caption into a single surface.
+
+## Navigation and Wayfinding
+
+The navigation bar operates at 50px height — lean and economical — with uppercase micro-typography at 12px and 0.08em letter spacing that stretches each character into a kind of typographic patience. The wide spacing is not decorative: it is the visual equivalent of slowing down, of giving the user a moment to read each label with the attention it deserves. Hairline underline animations wipe from right-to-left on hover, snapping to full width on active state. There is no nav-level CTA button — the accent element appears only in the body of the page, keeping the navigation register consistently informational. The absence of a nav-level CTA is a positioning statement: the system is not urgently selling, it is demonstrating.
+
+## Overall Design Character
+
+Iron Vellum is a design system organized around a small number of bold decisions executed with exceptional discipline. The warm off-white ground creates a material warmth that pure white would erase. The oversized headline type claims space with quiet authority. The single accent element earns maximum chromatic attention by being the only thing that breaks the monochrome. The wide letter-spaced nav creates an unhurried upper register while the body operates at standard cadence below. And the expanded spacing scale gives everything room to resolve — images can breathe, text can settle, and the page can be read the way a well-printed document is read: not consumed, but experienced.

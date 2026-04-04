@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Compendium</title>
+  <meta name="description" content="Compendium pricing for research institutions, university libraries, and independent scholars. Annual plans with institution-grade security and TEI export.">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/page-header.css">
+  <link rel="stylesheet" href="components/footer.css">
+
+  <style>
+  /* Pricing page */
+  #pricing-body {
+    background: var(--color-page-bg);
+    padding: var(--space-section) 0;
+  }
+
+  #pricing-body-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--grid-gutter);
+  }
+
+  /* Billing toggle */
+  #pricing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 64px;
+  }
+
+  .pricing-toggle-label {
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-body-text);
+  }
+
+  #pricing-toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.45s ease-in-out;
+    border: none;
+    outline: none;
+  }
+
+  #pricing-toggle-switch.annual {
+    background: #000000;
+  }
+
+  #pricing-toggle-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.45s ease-in-out;
+    pointer-events: none;
+  }
+
+  #pricing-toggle-switch.annual #pricing-toggle-knob {
+    transform: translateX(20px);
+  }
+
+  .pricing-toggle-badge {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--color-accent);
+  }
+
+  /* Plans grid */
+  #pricing-plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .pricing-plan {
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 2px;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: var(--color-page-bg);
+    transition: box-shadow 0.45s ease-in-out, border-color 0.45s ease-in-out;
+  }
+
+  .pricing-plan:hover {
+    box-shadow: 0 12px 48px rgba(0,0,0,0.1);
+    border-color: rgba(0,0,0,0.25);
+  }
+
+  /* Featured plan — dark */
+  .pricing-plan.featured {
+    background: #0a0a0a;
+    border-color: transparent;
+  }
+
+  .pricing-plan.featured:hover {
+    box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+  }
+
+  .plan-badge {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    background: var(--color-accent);
+    border-radius: 2px;
+    padding: 3px 10px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+  }
+
+  .plan-name {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--color-heading);
+    margin: 0 0 8px;
+  }
+
+  .pricing-plan.featured .plan-name {
+    color: #ffffff;
+  }
+
+  .plan-tagline {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--color-muted-text);
+    margin: 0 0 32px;
+  }
+
+  .pricing-plan.featured .plan-tagline {
+    color: rgba(255,255,255,0.5);
+  }
+
+  .plan-price {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--color-heading);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .pricing-plan.featured .plan-price {
+    color: #ffffff;
+  }
+
+  .plan-price-period {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-muted-text);
+    margin: 6px 0 32px;
+  }
+
+  .pricing-plan.featured .plan-price-period {
+    color: rgba(255,255,255,0.45);
+  }
+
+  .plan-divider {
+    border: none;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    margin: 0 0 24px;
+  }
+
+  .pricing-plan.featured .plan-divider {
+    border-top-color: rgba(255,255,255,0.1);
+  }
+
+  .plan-features {
+    list-style: none;
+    margin: 0 0 32px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .plan-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--color-body-text);
+  }
+
+  .pricing-plan.featured .plan-feature {
+    color: rgba(255,255,255,0.7);
+  }
+
+  .plan-feature::before {
+    content: '—';
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--color-muted-text);
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .pricing-plan.featured .plan-feature::before {
+    color: rgba(255,255,255,0.3);
+  }
+
+  .plan-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #000000;
+    background: transparent;
+    border: 1px solid #000000;
+    border-radius: var(--radius-btn);
+    padding: var(--space-btn-v) var(--space-btn-h);
+    transition: var(--hover-transition);
+    cursor: pointer;
+    margin-top: auto;
+  }
+
+  .plan-cta:hover {
+    background: #000000;
+    color: var(--color-page-bg);
+  }
+
+  .pricing-plan.featured .plan-cta {
+    color: #0a0a0a;
+    background: #ffffff;
+    border-color: #ffffff;
+  }
+
+  .pricing-plan.featured .plan-cta:hover {
+    background: rgba(255,255,255,0.88);
+  }
+
+  /* FAQ section */
+  #pricing-faq {
+    margin-top: var(--space-section);
+    padding-top: var(--space-section);
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  #faq-heading {
+    font-family: var(--font-heading);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    letter-spacing: var(--letter-spacing-heading);
+    color: var(--color-heading);
+    margin: 0 0 48px;
+  }
+
+  #faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .faq-question {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--color-heading);
+    margin: 0;
+    padding: 24px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    transition: opacity 0.45s ease-in-out;
+  }
+
+  .faq-question:hover {
+    opacity: 0.7;
+  }
+
+  .faq-question::after {
+    content: '+';
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--color-muted-text);
+    flex-shrink: 0;
+    transition: transform 0.45s ease-in-out;
+  }
+
+  .faq-item.open .faq-question::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    display: none;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--color-body-text);
+    padding: 0 0 24px;
+    margin: 0;
+    max-width: 680px;
+  }
+
+  .faq-item.open .faq-answer {
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    #pricing-plans { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+  }
+
+  @media (max-width: 600px) {
+    #pricing-plans { max-width: 100%; }
+    .pricing-plan { padding: 28px 20px; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Compendium</a>
+    <ul class="nav-links">
+      <li><a href="collections.html">Collections</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="pricing.html" class="nav-link--active">Pricing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+<div id="nav-mobile-menu" class="nav-mobile-menu">
+  <a href="collections.html">Collections</a>
+  <a href="about.html">About</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <span class="page-header-eyebrow">Access &amp; plans</span>
+    <h1 class="page-header-title">Pricing</h1>
+    <p class="page-header-subtitle">Compendium is available to institutions and independent scholars on annual plans. All plans include unlimited collections and TEI XML export.</p>
+  </div>
+</header>
+
+<main id="pricing-body">
+  <div id="pricing-body-inner">
+
+    <!-- Billing toggle -->
+    <div id="pricing-toggle">
+      <span class="pricing-toggle-label">Monthly</span>
+      <button id="pricing-toggle-switch" aria-label="Toggle billing period">
+        <span id="pricing-toggle-knob"></span>
+      </button>
+      <span class="pricing-toggle-label">Annual</span>
+      <span class="pricing-toggle-badge">Save 20%</span>
+    </div>
+
+    <!-- Plans -->
+    <div id="pricing-plans">
+
+      <!-- Scholar -->
+      <div id="plan-scholar" class="pricing-plan">
+        <h2 class="plan-name">Scholar</h2>
+        <p class="plan-tagline">For independent researchers and doctoral candidates working with one to three collections.</p>
+        <p class="plan-price">$89</p>
+        <p class="plan-price-period">per month, billed annually</p>
+        <hr class="plan-divider">
+        <ul class="plan-features">
+          <li class="plan-feature">Up to 3 active collections</li>
+          <li class="plan-feature">400+ scribal hand profiles</li>
+          <li class="plan-feature">TEI XML and plain-text export</li>
+          <li class="plan-feature">Dual-pane transcription editor</li>
+          <li class="plan-feature">Standard OCR confidence scoring</li>
+          <li class="plan-feature">Email support</li>
+        </ul>
+        <a href="contact.html" class="plan-cta">Request access</a>
+      </div>
+
+      <!-- Institution — featured -->
+      <div id="plan-institution" class="pricing-plan featured">
+        <span class="plan-badge">Most common</span>
+        <h2 class="plan-name">Institution</h2>
+        <p class="plan-tagline">For university libraries and research institutions with multiple collections and scholar teams.</p>
+        <p class="plan-price">$490</p>
+        <p class="plan-price-period">per month, billed annually</p>
+        <hr class="plan-divider">
+        <ul class="plan-features">
+          <li class="plan-feature">Unlimited active collections</li>
+          <li class="plan-feature">Custom scribal hand training</li>
+          <li class="plan-feature">TEI XML, IIIF manifest, PDF export</li>
+          <li class="plan-feature">Up to 12 scholar seats</li>
+          <li class="plan-feature">Variant comparison across witnesses</li>
+          <li class="plan-feature">Priority support + onboarding</li>
+          <li class="plan-feature">SOC 2 Type II compliant</li>
+        </ul>
+        <a href="contact.html" class="plan-cta">Request access</a>
+      </div>
+
+      <!-- Archive -->
+      <div id="plan-archive" class="pricing-plan">
+        <h2 class="plan-name">Archive</h2>
+        <p class="plan-tagline">For national archives, rare book libraries, and institutions requiring custom deployment and data sovereignty.</p>
+        <p class="plan-price">Custom</p>
+        <p class="plan-price-period">volume and deployment pricing</p>
+        <hr class="plan-divider">
+        <ul class="plan-features">
+          <li class="plan-feature">Everything in Institution</li>
+          <li class="plan-feature">On-premises or private cloud deployment</li>
+          <li class="plan-feature">Unlimited scholar seats</li>
+          <li class="plan-feature">Dedicated model training pipeline</li>
+          <li class="plan-feature">Custom export formats</li>
+          <li class="plan-feature">Dedicated collections team</li>
+          <li class="plan-feature">SLA with 99.9% uptime guarantee</li>
+        </ul>
+        <a href="contact.html" class="plan-cta">Speak with us</a>
+      </div>
+    </div><!-- /pricing-plans -->
+
+    <!-- FAQ -->
+    <div id="pricing-faq">
+      <h2 id="faq-heading">Questions</h2>
+      <ul id="faq-list">
+        <li class="faq-item">
+          <button class="faq-question">Is there a trial period?</button>
+          <p class="faq-answer">We offer a 30-day pilot for institutions. During the pilot, your collections team works with one of ours to ingest a sample collection and run the full transcription workflow. Pricing applies after the pilot concludes.</p>
+        </li>
+        <li class="faq-item">
+          <button class="faq-question">What does "custom scribal hand training" include?</button>
+          <p class="faq-answer">We calibrate a recognition profile against a reference set of folios you provide — typically 15–25 pages of consistent hand. Calibration takes approximately 30–45 minutes of computation time. Custom profiles are stored against your account and can be shared across collections.</p>
+        </li>
+        <li class="faq-item">
+          <button class="faq-question">Who owns the transcribed data?</button>
+          <p class="faq-answer">You do. Full stop. We process your material to produce transcriptions; we do not retain, aggregate, or use your collection data to train shared models without explicit written consent. Your data can be exported and deleted at any time.</p>
+        </li>
+        <li class="faq-item">
+          <button class="faq-question">Can Compendium handle non-Latin scripts?</button>
+          <p class="faq-answer">Yes. We currently support Latin, Greek, Arabic (including Maghribī and Mashriqi regional hands), Hebrew, and Japanese (hiragana, katakana, kana-kanji mixed). Additional scripts can be supported via custom training if a sufficient reference corpus is available.</p>
+        </li>
+        <li class="faq-item">
+          <button class="faq-question">What image formats are accepted?</button>
+          <p class="faq-answer">TIFF (preferred), JPEG 2000, JPEG, and PNG. We recommend TIFF at 400–600 DPI for best OCR accuracy on damaged or faded text. IIIF endpoints are also accepted directly.</p>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand">
+        <p id="footer-brand-name">Compendium</p>
+        <p id="footer-brand-tagline">Manuscript intelligence for the materials that endure.</p>
+      </div>
+      <div id="footer-nav-columns">
+        <div class="footer-nav-col">
+          <p class="footer-nav-col-heading">Platform</p>
+          <ul class="footer-nav-list">
+            <li><a href="collections.html">Collections</a></li>
+            <li><a href="about.html">Method</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-col-heading">Resources</p>
+          <ul class="footer-nav-list">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">TEI Export guide</a></li>
+            <li><a href="#">Scribal hand library</a></li>
+            <li><a href="#">Research partnerships</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-copyright">© 2025 Compendium. All rights reserved.</p>
+      <ul id="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="behaviors/nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const BASE_DURATION = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--duration-base')
+  ) || 0.75;
+  const EASE = (getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim()) || 'power2.out';
+
+  // Page header
+  gsap.from('.page-header-inner', { y: 24, duration: BASE_DURATION, ease: EASE, delay: 0.2 });
+
+  // Pricing plans — sweep up with stagger
+  ['#plan-scholar', '#plan-institution', '#plan-archive'].forEach((sel, i) => {
+    gsap.from(sel, {
+      scrollTrigger: { trigger: '#pricing-plans', start: 'top 82%' },
+      y: 44,
+      duration: BASE_DURATION,
+      delay: i * 0.14,
+      ease: EASE,
+    });
+  });
+
+  // FAQ — slide from right
+  document.querySelectorAll('.faq-item').forEach((item, i) => {
+    gsap.from(item, {
+      scrollTrigger: { trigger: item, start: 'top 90%' },
+      x: 32,
+      duration: BASE_DURATION * 0.9,
+      delay: i * 0.05,
+      ease: EASE,
+    });
+  });
+
+  // Billing toggle interaction
+  const toggleBtn = document.getElementById('pricing-toggle-switch');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      toggleBtn.classList.toggle('annual');
+    });
+  }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      // Open clicked if it wasn't open
+      if (!wasOpen) {
+        item.classList.add('open');
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

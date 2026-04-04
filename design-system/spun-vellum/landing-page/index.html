@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kesslar &amp; Vane — Precision Scientific Instruments, Edinburgh</title>
+  <meta name="description" content="Kesslar &amp; Vane handcrafts precision scientific instruments in Edinburgh. Each piece is numbered, documented, and built to outlast its owner.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV — Kesslar & Vane
+     ============================================================ -->
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" id="nav-logo-link">
+      <span class="nav-logo-wordmark">Kesslar &amp; Vane</span>
+    </a>
+    <ul class="nav-links" id="nav-links-list">
+      <li><a href="work.html" class="nav-link" id="nav-link-work">Work</a></li>
+      <li><a href="process.html" class="nav-link" id="nav-link-process">Process</a></li>
+      <li><a href="studio.html" class="nav-link" id="nav-link-studio">Studio</a></li>
+      <li><a href="contact.html" class="nav-link" id="nav-link-contact">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="work.html" class="nav-link" id="nav-mobile-work">Work</a>
+  <a href="process.html" class="nav-link" id="nav-mobile-process">Process</a>
+  <a href="studio.html" class="nav-link" id="nav-mobile-studio">Studio</a>
+  <a href="contact.html" class="nav-link" id="nav-mobile-contact">Contact</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = document.getElementById('nav-mobile-toggle');
+    var mobileMenu = document.getElementById('nav-mobile-menu');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    }, { passive: true });
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open');
+        var isOpen = mobileMenu.classList.contains('is-open');
+        toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      });
+    }
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('.nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.classList.remove('is-open');
+        });
+      });
+    }
+  })();
+</script>
+
+<!-- ============================================================
+     SECTION 1 — HERO (full viewport, video background)
+     HERO_TREATMENT=light → lighter overlay, text in cream
+     ============================================================ -->
+<section id="hero" class="hero-section">
+  <div id="hero-video-container" class="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-bg.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div
+      id="hero-bg-video-placeholder"
+      style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+             background:var(--color-surface-3);color:rgba(5,5,5,0.35);font-family:var(--font-body);
+             font-size:0.85rem;letter-spacing:0.06em;"
+    >→ assets/hero-bg.mp4</div>
+    <!-- Lighter overlay for light-dominant site -->
+    <div id="hero-video-overlay" class="hero-video-overlay"></div>
+  </div>
+
+  <div id="hero-content" class="hero-content">
+    <div id="hero-label-wrap" class="hero-label-wrap">
+      <span id="hero-label" class="hero-label">Edinburgh · Est. 1887</span>
+    </div>
+    <div id="hero-headline-group" class="hero-headline-group">
+      <h1 id="hero-title" class="hero-title">Kesslar<br>&amp; Vane</h1>
+    </div>
+    <p id="hero-tagline" class="hero-tagline">Precision instruments,<br>hand-assembled and numbered.</p>
+    <div id="hero-actions" class="hero-actions">
+      <a href="work.html" class="btn-primary" id="hero-cta-primary">View the Collection</a>
+      <a href="process.html" class="btn-ghost-light" id="hero-cta-secondary">Our Process</a>
+    </div>
+  </div>
+
+  <div id="hero-instrument-no" class="hero-instrument-no">
+    <span id="hero-no-label">Current instrument</span>
+    <span id="hero-no-value">No. 1,847</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 2 — MANIFESTO (centered editorial, white, tight text)
+     Grid: single column centered, large type
+     Animation: clip-path wipe in from left
+     ============================================================ -->
+<section id="manifesto" class="manifesto-section">
+  <div id="manifesto-inner" class="manifesto-inner">
+    <div id="manifesto-rule-top" class="manifesto-rule"></div>
+    <p id="manifesto-text" class="manifesto-text">
+      An instrument built to last a century<br>
+      is built differently from one built<br>
+      to last a decade.
+    </p>
+    <div id="manifesto-rule-bottom" class="manifesto-rule"></div>
+    <div id="manifesto-attribution" class="manifesto-attribution">
+      <span>— Principle, Kesslar &amp; Vane, 1887</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3 — FEATURED INSTRUMENTS (asymmetric grid, surface-1 bg)
+     Grid: 1.4fr 1fr with first card spanning 2 rows (featured asymmetric)
+     Animation: horizontal sweep left, stagger 0.13
+     ============================================================ -->
+<section id="instruments" class="instruments-section">
+  <div id="instruments-inner" class="instruments-inner">
+    <div id="instruments-header" class="instruments-header">
+      <h3 id="instruments-label" class="section-label">Selected Works</h3>
+      <h2 id="instruments-title" class="instruments-title">Instruments<br>of Record</h2>
+    </div>
+    <div id="instruments-grid" class="instruments-grid">
+
+      <!-- Featured card — spans 2 rows -->
+      <div id="instrument-card-1" class="instrument-card instrument-card--featured">
+        <div class="instrument-card-image-wrap">
+          <img
+            id="instrument-img-1"
+            src="assets/instrument-featured.jpeg"
+            alt="Kesslar & Vane theodolite No. 1,847 — brass and optical glass"
+            style="width:100%;height:100%;object-fit:cover;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="instrument-card-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/instrument-featured.jpeg</div>
+        </div>
+        <div id="instrument-card-1-info" class="instrument-card-info">
+          <span class="instrument-no">No. 1,847</span>
+          <h3 class="instrument-name">Survey Theodolite</h3>
+          <p class="instrument-desc">Brass body, optical glass, graduated limb. Commissioned for the Geological Survey, 2024.</p>
+        </div>
+      </div>
+
+      <!-- Secondary cards -->
+      <div id="instrument-card-2" class="instrument-card">
+        <div class="instrument-card-image-wrap instrument-card-image-wrap--sm">
+          <img
+            id="instrument-img-2"
+            src="assets/instrument-secondary-1.jpeg"
+            alt="Precision level — surveying instrument with bubble chamber"
+            style="width:100%;height:100%;object-fit:cover;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="instrument-card-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/instrument-secondary-1.jpeg</div>
+        </div>
+        <div id="instrument-card-2-info" class="instrument-card-info">
+          <span class="instrument-no">No. 1,829</span>
+          <h3 class="instrument-name">Precision Level</h3>
+          <p class="instrument-desc">Spirit bubble, graduated staff, tilting screw. High-accuracy field use.</p>
+        </div>
+      </div>
+
+      <div id="instrument-card-3" class="instrument-card">
+        <div class="instrument-card-image-wrap instrument-card-image-wrap--sm">
+          <img
+            id="instrument-img-3"
+            src="assets/instrument-secondary-2.jpeg"
+            alt="Micrometer gauge — precision measurement instrument"
+            style="width:100%;height:100%;object-fit:cover;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="instrument-card-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/instrument-secondary-2.jpeg</div>
+        </div>
+        <div id="instrument-card-3-info" class="instrument-card-info">
+          <span class="instrument-no">No. 1,814</span>
+          <h3 class="instrument-name">Micrometer Gauge</h3>
+          <p class="instrument-desc">Calibrated to 0.001mm. Ground and lapped anvil faces, thimble scale.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="instruments-footer-row" class="instruments-footer-row">
+      <a href="work.html" class="btn-ghost-dark" id="instruments-view-all">View all instruments</a>
+      <span id="instruments-count" class="instruments-count">1,847 instruments numbered since 1887</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 4 — PROCESS SPLIT (split asymmetric feature, white bg)
+     Grid: 3fr 2fr, content left, full-height image right
+     Animation: divergent — content slides left, image scales from center
+     ============================================================ -->
+<section id="process-split" class="process-split-section">
+  <div id="process-split-inner" class="process-split-inner">
+    <div id="process-content" class="process-content">
+      <h3 id="process-label" class="section-label">How We Work</h3>
+      <h2 id="process-title" class="process-title">Each instrument<br>begins as a brief.</h2>
+      <p id="process-body-1" class="process-body">A commission at Kesslar &amp; Vane starts with a conversation — what the instrument must measure, where it will be used, how long it must last. The brief is handwritten. It becomes the document that travels with the instrument for its lifetime.</p>
+      <p id="process-body-2" class="process-body">Every component is made in-house. Optics ground on the premises. Metal turned by hand. Assembly takes weeks. Testing takes months.</p>
+      <div id="process-steps" class="process-steps">
+        <div id="process-step-1" class="process-step">
+          <span class="process-step-no">01</span>
+          <span class="process-step-name">Brief &amp; consultation</span>
+        </div>
+        <div id="process-step-2" class="process-step">
+          <span class="process-step-no">02</span>
+          <span class="process-step-name">Design &amp; specification</span>
+        </div>
+        <div id="process-step-3" class="process-step">
+          <span class="process-step-no">03</span>
+          <span class="process-step-name">Fabrication &amp; assembly</span>
+        </div>
+        <div id="process-step-4" class="process-step">
+          <span class="process-step-no">04</span>
+          <span class="process-step-name">Calibration &amp; documentation</span>
+        </div>
+      </div>
+      <a href="process.html" class="btn-ghost-dark" id="process-cta">Explore the process</a>
+    </div>
+
+    <div id="process-media" class="process-media">
+      <img
+        id="process-img"
+        src="assets/process-workshop.jpeg"
+        alt="Workshop bench — precision machining tools and partially assembled instrument"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div class="process-img-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-2);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/process-workshop.jpeg</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 5 — LEGACY / DARK CONTRAST SECTION
+     One dark section per HERO_TREATMENT=light rhythm
+     Full-width centered editorial on dark ground
+     Animation: scale from center, single element
+     ============================================================ -->
+<section id="legacy" class="legacy-section">
+  <div id="legacy-inner" class="legacy-inner">
+    <div id="legacy-number-mark" class="legacy-number-mark">1,847</div>
+    <div id="legacy-text-group" class="legacy-text-group">
+      <h2 id="legacy-heading" class="legacy-heading">Instruments in the register.</h2>
+      <p id="legacy-body" class="legacy-body">Each one numbered. Each one documented from first cut to final calibration. The register is permanent — an instrument made here is made for keeps.</p>
+      <a href="work.html" class="btn-ghost-light" id="legacy-cta">Browse the register</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 6 — TESTIMONIALS / COMMISSIONS (white, card row)
+     Grid: horizontal testimonial row, equal-width cards
+     Animation: vertical stagger y:50 → each card distinct offset
+     ============================================================ -->
+<section id="commissions" class="commissions-section">
+  <div id="commissions-inner" class="commissions-inner">
+    <div id="commissions-header" class="commissions-header">
+      <h3 id="commissions-label" class="section-label">Commissioned By</h3>
+    </div>
+    <div id="commissions-grid" class="commissions-grid">
+
+      <div id="commission-card-1" class="commission-card">
+        <div id="commission-quote-1" class="commission-quote">
+          "The theodolite we commissioned in 2019 has now been used on three continents. It has not been serviced once."
+        </div>
+        <div id="commission-source-1" class="commission-source">
+          <span class="commission-client">Ordnance Survey, Scotland</span>
+          <span class="commission-instrument">Instrument No. 1,791</span>
+        </div>
+      </div>
+
+      <div id="commission-card-2" class="commission-card">
+        <div id="commission-quote-2" class="commission-quote">
+          "We asked for a micrometer accurate to a micron. They delivered two, and the second was a spare — unbilled."
+        </div>
+        <div id="commission-source-2" class="commission-source">
+          <span class="commission-client">National Physical Laboratory</span>
+          <span class="commission-instrument">Instrument No. 1,803</span>
+        </div>
+      </div>
+
+      <div id="commission-card-3" class="commission-card">
+        <div id="commission-quote-3" class="commission-quote">
+          "Every instrument they have made for us is still in daily use. The oldest is from 1994."
+        </div>
+        <div id="commission-source-3" class="commission-source">
+          <span class="commission-client">Royal Observatory, Edinburgh</span>
+          <span class="commission-instrument">Since No. 1,204</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer id="site-footer" class="site-footer">
+  <div id="footer-inner" class="footer-inner">
+    <div id="footer-top" class="footer-top">
+      <div id="footer-brand" class="footer-brand">
+        <span id="footer-wordmark" class="footer-wordmark">Kesslar &amp; Vane</span>
+        <p id="footer-tagline-text" class="footer-tagline-text">Precision scientific instruments.<br>Edinburgh, Scotland.</p>
+      </div>
+      <div id="footer-nav" class="footer-nav">
+        <div id="footer-nav-col-1" class="footer-nav-col">
+          <p class="footer-nav-heading">Studio</p>
+          <ul class="footer-nav-list">
+            <li><a href="work.html" class="footer-link">Work</a></li>
+            <li><a href="process.html" class="footer-link">Process</a></li>
+            <li><a href="studio.html" class="footer-link">Studio</a></li>
+          </ul>
+        </div>
+        <div id="footer-nav-col-2" class="footer-nav-col">
+          <p class="footer-nav-heading">Contact</p>
+          <ul class="footer-nav-list">
+            <li><a href="contact.html" class="footer-link">Commission an instrument</a></li>
+            <li><a href="contact.html" class="footer-link">General enquiries</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="footer-address" class="footer-address">
+        <p class="footer-nav-heading">Location</p>
+        <p class="footer-address-text">14 Grassmarket<br>Edinburgh EH1 2JU<br>Scotland</p>
+      </div>
+    </div>
+    <div id="footer-bottom" class="footer-bottom">
+      <span id="footer-legal" class="footer-legal">© 2026 Kesslar &amp; Vane. All rights reserved.</span>
+      <span id="footer-established" class="footer-legal">Est. Edinburgh, 1887</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const SLOW = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-slow')) || 1.3;
+  const BASE = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.78;
+  const CARD = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-card')) || 0.52;
+  const EASE_P = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.inOut';
+  const EASE_E = getComputedStyle(document.documentElement).getPropertyValue('--ease-enter').trim() || 'power3.out';
+
+  // ── Hero entrance (runs on load — opacity is valid here since it fires immediately) ──
+  var heroTl = gsap.timeline({ delay: 0.2 });
+  heroTl
+    .from('#hero-label', { opacity: 0, y: 8, duration: SLOW, ease: EASE_E })
+    .from('#hero-title', { opacity: 0, y: 24, duration: SLOW, ease: EASE_P }, '-=0.9')
+    .from('#hero-tagline', { opacity: 0, y: 16, duration: BASE, ease: EASE_E }, '-=0.7')
+    .from('#hero-actions', { opacity: 0, y: 12, duration: CARD, ease: EASE_E }, '-=0.5')
+    .from('#hero-instrument-no', { opacity: 0, duration: BASE, ease: EASE_E }, '-=0.3');
+
+  // ── Manifesto — clip-path wipe in from left ──
+  gsap.from('#manifesto-text', {
+    scrollTrigger: { trigger: '#manifesto', start: 'top 72%' },
+    clipPath: 'inset(0 100% 0 0)',
+    duration: SLOW,
+    ease: EASE_P
+  });
+  gsap.from('#manifesto-rule-top, #manifesto-rule-bottom', {
+    scrollTrigger: { trigger: '#manifesto', start: 'top 72%' },
+    scaleX: 0,
+    transformOrigin: 'left center',
+    duration: BASE,
+    stagger: 0.26,
+    ease: EASE_E
+  });
+  gsap.from('#manifesto-attribution', {
+    scrollTrigger: { trigger: '#manifesto', start: 'top 60%' },
+    y: 16,
+    duration: CARD,
+    ease: EASE_E
+  });
+
+  // ── Instruments — horizontal sweep left ──
+  gsap.from('#instruments-header', {
+    scrollTrigger: { trigger: '#instruments', start: 'top 80%' },
+    x: -70,
+    duration: BASE,
+    ease: EASE_E
+  });
+  gsap.from('#instrument-card-1', {
+    scrollTrigger: { trigger: '#instruments-grid', start: 'top 80%' },
+    x: -70,
+    duration: BASE,
+    ease: EASE_E
+  });
+  gsap.from('#instrument-card-2, #instrument-card-3', {
+    scrollTrigger: { trigger: '#instruments-grid', start: 'top 75%' },
+    x: -70,
+    stagger: 0.13,
+    duration: CARD,
+    ease: EASE_E
+  });
+  gsap.from('#instruments-footer-row', {
+    scrollTrigger: { trigger: '#instruments-footer-row', start: 'top 90%' },
+    y: 20,
+    duration: CARD,
+    ease: EASE_E
+  });
+
+  // ── Process split — divergent entrance ──
+  gsap.from('#process-content', {
+    scrollTrigger: { trigger: '#process-split', start: 'top 72%' },
+    x: -80,
+    duration: BASE,
+    ease: EASE_E
+  });
+  gsap.from('#process-media', {
+    scrollTrigger: { trigger: '#process-split', start: 'top 72%' },
+    scale: 1.04,
+    duration: BASE,
+    ease: EASE_P
+  });
+  gsap.from('#process-step-1, #process-step-2, #process-step-3, #process-step-4', {
+    scrollTrigger: { trigger: '#process-steps', start: 'top 80%' },
+    x: -40,
+    stagger: 0.1,
+    duration: CARD,
+    ease: EASE_E
+  });
+
+  // ── Legacy — scale from center ──
+  gsap.from('#legacy-number-mark', {
+    scrollTrigger: { trigger: '#legacy', start: 'top 72%' },
+    scale: 0.85,
+    duration: SLOW,
+    ease: EASE_P
+  });
+  gsap.from('#legacy-text-group', {
+    scrollTrigger: { trigger: '#legacy', start: 'top 65%' },
+    y: 40,
+    duration: BASE,
+    ease: EASE_E
+  });
+
+  // ── Commissions — vertical stagger, offset heights ──
+  gsap.from('#commission-card-1', {
+    scrollTrigger: { trigger: '#commissions-grid', start: 'top 80%' },
+    y: 50,
+    duration: BASE,
+    ease: EASE_E
+  });
+  gsap.from('#commission-card-2', {
+    scrollTrigger: { trigger: '#commissions-grid', start: 'top 80%' },
+    y: 80,
+    duration: BASE,
+    ease: EASE_E,
+    delay: 0.1
+  });
+  gsap.from('#commission-card-3', {
+    scrollTrigger: { trigger: '#commissions-grid', start: 'top 80%' },
+    y: 50,
+    duration: BASE,
+    ease: EASE_E,
+    delay: 0.2
+  });
+
+  // ── Parallax on hero video (scrub scroll) ──
+  gsap.to('#hero-video-container', {
+    scrollTrigger: { trigger: '#hero', scrub: 1.5 },
+    y: '12%',
+    ease: 'none'
+  });
+</script>
+
+</body>
+</html>

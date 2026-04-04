@@ -1,0 +1,227 @@
+/* ── Nav Component — Arca Systems ── */
+/* Derived from chalk-signal nav.json tokens */
+/* Height: 64px | Logo: left | Letter-spacing: 0.08em */
+
+#site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  z-index: 1000;
+  background: rgba(242, 242, 242, 0.96);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  transition: background 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#site-nav.scrolled {
+  background: rgba(242, 242, 242, 0.98);
+  border-bottom-color: rgba(0, 0, 0, 0.14);
+  box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+}
+
+/* Logo */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-logo-text {
+  font-family: 'Barlow Condensed', Verdana, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #202020;
+  line-height: 1;
+}
+
+.nav-logo-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgb(253, 53, 110);
+  margin-left: 2px;
+  vertical-align: super;
+  font-size: 0;
+}
+
+/* Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: 'Barlow Condensed', Verdana, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #202020;
+  opacity: 1;
+  transition: opacity 0.3s cubic-bezier(0, 0, 0.2, 1),
+              color 0.3s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.nav-links a:hover {
+  color: rgb(253, 53, 110);
+  opacity: 0.75;
+}
+
+/* Active nav link */
+.nav-links a.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* CTA button */
+.nav-cta {
+  font-family: 'Barlow Condensed', Verdana, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ffffff;
+  background: #202020;
+  border: 1px solid #202020;
+  border-radius: 9999px;
+  padding: 8px 20px;
+  transition: background 0.3s cubic-bezier(0, 0, 0.2, 1),
+              color 0.3s cubic-bezier(0, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.nav-cta:hover {
+  background: rgb(253, 53, 110);
+  border-color: rgb(253, 53, 110);
+  opacity: 0.9;
+}
+
+/* Right side cluster */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+/* Nav spacer — always active since nav is fixed */
+.nav-spacer {
+  height: 64px;
+  width: 100%;
+  display: block;
+}
+
+/* ── Mobile hamburger button ── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 1100;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #202020;
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+/* Hamburger → X */
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Mobile menu overlay ── */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(242, 242, 242, 0.98);
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  padding: 80px 40px 40px;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+  opacity: 1;
+}
+
+.nav-mobile-menu a {
+  font-family: 'Barlow Condensed', Verdana, Arial, Helvetica, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #202020;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-mobile-menu a:hover {
+  color: rgb(253, 53, 110);
+  opacity: 0.75;
+}
+
+.nav-mobile-menu .nav-cta {
+  font-size: 16px;
+  padding: 12px 32px;
+}
+
+/* ── Responsive breakpoints ── */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-right .nav-cta {
+    display: none;
+  }
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  #site-nav {
+    padding: 0 20px;
+  }
+}

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Compendium</title>
+  <meta name="description" content="Compendium was built by archivists and engineers who understood that manuscript materials demand a different class of tool. Our method is rooted in the traditions of textual scholarship.">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/page-header.css">
+  <link rel="stylesheet" href="components/footer.css">
+
+  <style>
+  /* About page body */
+  #about-body {
+    background: var(--color-page-bg);
+  }
+
+  /* Manifesto section — full-width editorial, generous whitespace */
+  #about-manifesto {
+    padding: var(--space-section) 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  #about-manifesto-inner {
+    max-width: var(--grid-max-width);
+    margin: 0 auto;
+    padding: 0 var(--grid-gutter);
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 96px;
+    align-items: start;
+  }
+
+  #manifesto-sticky {
+    position: sticky;
+    top: 80px;
+  }
+
+  #manifesto-label {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted-text);
+    margin: 0 0 16px;
+    display: block;
+  }
+
+  #manifesto-heading {
+    font-family: var(--font-heading);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  #manifesto-body {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .manifesto-para {
+    font-family: var(--font-body);
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--color-body-text);
+    margin: 0;
+  }
+
+  .manifesto-para strong {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .manifesto-pull-quote {
+    border-left: 2px solid var(--color-accent);
+    padding-left: 24px;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--color-heading);
+  }
+
+  /* Team section — dark, 2-col grid */
+  #about-team {
+    background: #0a0a0a;
+    padding: var(--space-section) 0;
+    position: relative;
+  }
+
+  #about-team::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 30% 50%, rgba(30,58,110,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  #about-team-inner {
+    position: relative;
+    z-index: 1;
+    max-width: var(--grid-max-width);
+    margin: 0 auto;
+    padding: 0 var(--grid-gutter);
+  }
+
+  #team-label {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin: 0 0 16px;
+    display: block;
+  }
+
+  #team-heading {
+    font-family: var(--font-heading);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
+    color: #ffffff;
+    margin: 0 0 56px;
+  }
+
+  #team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+
+  .team-member {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .team-member-portrait {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    height: 280px;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .team-member-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%);
+    transition: filter 0.75s ease-in-out;
+  }
+
+  .team-member:hover .team-member-portrait img {
+    filter: grayscale(0%);
+  }
+
+  .team-member-portrait-placeholder {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.25);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+
+  /* Navy bottom border on portrait */
+  .team-member-portrait::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.75s ease-in-out;
+  }
+
+  .team-member:hover .team-member-portrait::after {
+    transform: scaleX(1);
+  }
+
+  .team-member-name {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .team-member-role {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin: 0;
+  }
+
+  .team-member-bio {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.55);
+    margin: 0;
+  }
+
+  /* Values section — light, 2-col asymmetric */
+  #about-values {
+    background: var(--color-page-bg);
+    padding: var(--space-section) 0;
+    position: relative;
+  }
+
+  #about-values-inner {
+    max-width: var(--grid-max-width);
+    margin: 0 auto;
+    padding: 0 var(--grid-gutter);
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  #values-label {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted-text);
+    margin: 0 0 16px;
+    display: block;
+  }
+
+  #values-heading {
+    font-family: var(--font-heading);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  #values-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .value-item {
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .value-item:first-child {
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .value-item-num {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--color-muted-text);
+    padding-top: 4px;
+  }
+
+  .value-item-text h4 {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-heading);
+    margin: 0 0 8px;
+  }
+
+  .value-item-text p {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--color-body-text);
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    #about-manifesto-inner { grid-template-columns: 1fr; gap: 48px; }
+    #manifesto-sticky { position: relative; top: 0; }
+    #about-values-inner { grid-template-columns: 1fr; gap: 48px; }
+    #team-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    #team-grid { grid-template-columns: 1fr; }
+    .team-member-portrait { height: 240px; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Compendium</a>
+    <ul class="nav-links">
+      <li><a href="collections.html">Collections</a></li>
+      <li><a href="about.html" class="nav-link--active">About</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+<div id="nav-mobile-menu" class="nav-mobile-menu">
+  <a href="collections.html">Collections</a>
+  <a href="about.html">About</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <span class="page-header-eyebrow">The method</span>
+    <h1 class="page-header-title">Why we built it</h1>
+    <p class="page-header-subtitle">Every tool we know was built for digitized text. We built one for the thing that comes before: the material itself.</p>
+  </div>
+</header>
+
+<main id="about-body">
+
+  <!-- Manifesto -->
+  <section id="about-manifesto">
+    <div id="about-manifesto-inner">
+      <div id="manifesto-sticky">
+        <span id="manifesto-label">Our position</span>
+        <h2 id="manifesto-heading">Precision over convenience</h2>
+      </div>
+      <div id="manifesto-body">
+        <p class="manifesto-para">The history of textual scholarship is a history of people getting close to things. Close to the folio, to the character, to the ligature. Close enough to know that the second <em>a</em> in a given word was written by a different hand than the first. That proximity is not inefficiency — it is method.</p>
+        <blockquote id="manifesto-pullquote" class="manifesto-pull-quote">
+          A tool that approximates is a tool that lies. Manuscript material does not approximate. Neither should the software that handles it.
+        </blockquote>
+        <p class="manifesto-para">Compendium was built from the inside of that problem. Our founders spent years working in special collections before they wrote any code. The first version of the platform was a set of scripts a paleographer wrote for herself. The second version was what happened when an engineer looked at those scripts and understood, without being told, that <strong>the constraint was the point</strong>.</p>
+        <p class="manifesto-para">We are not a general transcription service. We are not a document management system. We are a platform for scholars who need to work with materials that resist generalization — and who refuse to accept tools that pretend otherwise.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section id="about-team">
+    <div id="about-team-inner">
+      <span id="team-label">The team</span>
+      <h2 id="team-heading">Built by people who use it</h2>
+
+      <div id="team-grid">
+        <div id="team-member-1" class="team-member">
+          <div class="team-member-portrait">
+            <img
+              src="assets/team-1.jpeg"
+              alt="Portrait of Dr. Marguerite Holloway, Founding Director"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="team-member-portrait-placeholder">→ assets/team-1.jpeg</div>
+          </div>
+          <h3 class="team-member-name">Dr. Marguerite Holloway</h3>
+          <p class="team-member-role">Founding Director · Paleography</p>
+          <p class="team-member-bio">Former senior curator, Bodleian Library Western Manuscripts. Specialist in Carolingian minuscule and medieval Latin documentary hands. The first person in this building who could read a 12th-century charter at speed.</p>
+        </div>
+
+        <div id="team-member-2" class="team-member">
+          <div class="team-member-portrait">
+            <img
+              src="assets/team-2.jpeg"
+              alt="Portrait of Kiran Mehta, Lead Engineer"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="team-member-portrait-placeholder">→ assets/team-2.jpeg</div>
+          </div>
+          <h3 class="team-member-name">Kiran Mehta</h3>
+          <p class="team-member-role">Lead Engineer · OCR Systems</p>
+          <p class="team-member-bio">Previously at the Alan Turing Institute, where he worked on handwriting recognition for historical corpora. His model for 15th-century Italian merchant hands currently has a character error rate of 1.4%.</p>
+        </div>
+
+        <div id="team-member-3" class="team-member">
+          <div class="team-member-portrait">
+            <img
+              src="assets/team-3.jpeg"
+              alt="Portrait of Elena Voss, Head of Collections"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="team-member-portrait-placeholder">→ assets/team-3.jpeg</div>
+          </div>
+          <h3 class="team-member-name">Elena Voss</h3>
+          <p class="team-member-role">Head of Collections</p>
+          <p class="team-member-bio">Trained as a manuscript librarian at the Bibliothèque nationale de France. Manages all institutional partnerships and oversees the hand calibration process for every new collection onboarded.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section id="about-values">
+    <div id="about-values-inner">
+      <div id="values-left">
+        <span id="values-label">What we stand for</span>
+        <h2 id="values-heading">The principles behind the platform</h2>
+      </div>
+      <ul id="values-list">
+        <li class="value-item">
+          <span class="value-item-num">i</span>
+          <div class="value-item-text">
+            <h4>The material is the authority</h4>
+            <p>Every decision in the platform traces back to the document, not the database. Confidence scoring exists because the material sometimes resists certainty — and the system should say so.</p>
+          </div>
+        </li>
+        <li class="value-item">
+          <span class="value-item-num">ii</span>
+          <div class="value-item-text">
+            <h4>Scholarship travels with the text</h4>
+            <p>Annotations, editorial decisions, and provenance notes are not metadata stored separately from the transcription. They are bound to the text at the character level, and they export with it.</p>
+          </div>
+        </li>
+        <li class="value-item">
+          <span class="value-item-num">iii</span>
+          <div class="value-item-text">
+            <h4>Open standards, no lock-in</h4>
+            <p>TEI XML, IIIF manifests, and plain-text exports are first-class outputs. Institutional data belongs to institutions. We do not hold it for leverage.</p>
+          </div>
+        </li>
+        <li class="value-item">
+          <span class="value-item-num">iv</span>
+          <div class="value-item-text">
+            <h4>Slow is not inefficient</h4>
+            <p>A platform that rushes a scholar through a folio produces a flawed edition. We design for the pace the work demands — which is often slower than software defaults allow.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand">
+        <p id="footer-brand-name">Compendium</p>
+        <p id="footer-brand-tagline">Manuscript intelligence for the materials that endure.</p>
+      </div>
+      <div id="footer-nav-columns">
+        <div class="footer-nav-col">
+          <p class="footer-nav-col-heading">Platform</p>
+          <ul class="footer-nav-list">
+            <li><a href="collections.html">Collections</a></li>
+            <li><a href="about.html">Method</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-col-heading">Resources</p>
+          <ul class="footer-nav-list">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">TEI Export guide</a></li>
+            <li><a href="#">Scribal hand library</a></li>
+            <li><a href="#">Research partnerships</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-copyright">© 2025 Compendium. All rights reserved.</p>
+      <ul id="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="behaviors/nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const BASE_DURATION = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--duration-base')
+  ) || 0.75;
+  const EASE = (getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim()) || 'power2.out';
+
+  // Page header
+  gsap.from('.page-header-inner', { y: 24, duration: BASE_DURATION, ease: EASE, delay: 0.2 });
+
+  // Manifesto — sticky heading clips in, body paragraphs sweep left
+  gsap.from('#manifesto-sticky', {
+    scrollTrigger: { trigger: '#about-manifesto', start: 'top 80%' },
+    x: -40,
+    duration: BASE_DURATION,
+    ease: EASE,
+  });
+
+  document.querySelectorAll('.manifesto-para, .manifesto-pull-quote').forEach((el, i) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+      y: 24,
+      duration: BASE_DURATION,
+      delay: i * 0.06,
+      ease: EASE,
+    });
+  });
+
+  // Team — scale + rise stagger
+  document.querySelectorAll('.team-member').forEach((member, i) => {
+    gsap.from(member, {
+      scrollTrigger: { trigger: '#team-grid', start: 'top 80%' },
+      scale: 0.97,
+      y: 30,
+      duration: BASE_DURATION,
+      delay: i * 0.14,
+      ease: EASE,
+    });
+  });
+
+  // Values — horizontal sweep right
+  document.querySelectorAll('.value-item').forEach((item, i) => {
+    gsap.from(item, {
+      scrollTrigger: { trigger: item, start: 'top 88%' },
+      x: 40,
+      duration: BASE_DURATION * 0.9,
+      delay: i * 0.07,
+      ease: EASE,
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

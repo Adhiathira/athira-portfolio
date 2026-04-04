@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Fieldset</title>
+  <meta name="description" content="Fieldset was built by researchers and engineers who spent years losing data to spreadsheets, notebooks, and fractured collection tools.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/about.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav" id="site-nav">
+  <a href="index.html" class="nav-logo" id="nav-logo-link" aria-label="Fieldset — home">
+    <div class="nav-logo-mark" aria-hidden="true">FS</div>
+    Fieldset
+  </a>
+
+  <ul class="nav-links" id="nav-links-desktop" role="list">
+    <li><a href="platform.html" class="nav-link">Platform</a></li>
+    <li><a href="about.html" class="nav-link nav-link--active">About</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+
+  <a href="contact.html" class="nav-cta" id="nav-cta-desktop">Request Access</a>
+
+  <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="platform.html" class="nav-link">Platform</a></li>
+    <li><a href="about.html" class="nav-link nav-link--active">About</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Request Access</a>
+</div>
+
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+    var toggle = document.getElementById('nav-mobile-toggle');
+    var menu = document.getElementById('nav-mobile-menu');
+    toggle.addEventListener('click', function() {
+      var isOpen = menu.classList.contains('is-open');
+      nav.classList.toggle('nav-mobile-open', !isOpen);
+      menu.classList.toggle('is-open', !isOpen);
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+    });
+  })();
+</script>
+
+<!-- MISSION STATEMENT — full-width editorial, dark bg -->
+<section id="about-mission" aria-label="Mission">
+  <div id="about-mission-inner">
+    <div id="about-mission-label" aria-hidden="true">
+      <span>Fieldset</span>
+      <span>Est. 2022</span>
+    </div>
+    <blockquote id="about-mission-quote">
+      <p id="about-mission-text">Research data is the most painstaking product of human inquiry. It deserves infrastructure as rigorous as the science it records.</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ORIGIN STORY -->
+<section id="about-origin" class="about-section" aria-label="Origin">
+  <div class="about-section-inner">
+    <div id="about-origin-number" class="about-section-num" aria-hidden="true">01</div>
+    <div id="about-origin-content">
+      <span class="about-section-eyebrow">Origin</span>
+      <h2 class="about-section-heading">Built by Researchers,<br>For Researchers</h2>
+      <div class="about-section-body">
+        <p>Fieldset was founded in 2022 by a team that had spent the previous decade doing observational fieldwork across ecology, hydrology, and archaeological survey. We knew what it meant to lose a season of data to a corrupted spreadsheet. We knew the particular frustration of discovering, during analysis, that three collectors had been using different unit conventions for the same measurement.</p>
+        <p>We built Fieldset because we couldn't find a tool that treated data integrity as a first principle rather than an afterthought. Most field data software is designed around ease of capture — and then leaves the hard work of validation and reconciliation to the analyst, after the fact.</p>
+        <p>We inverted the constraint: structure at capture, so that analysis doesn't begin with reconstruction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="about-divider" aria-hidden="true"></div>
+
+<!-- PRINCIPLES -->
+<section id="about-principles" class="about-section about-section--alt" aria-label="Principles">
+  <div class="about-section-inner">
+    <div id="about-principles-number" class="about-section-num" aria-hidden="true">02</div>
+    <div id="about-principles-content">
+      <span class="about-section-eyebrow">Principles</span>
+      <h2 class="about-section-heading">How We Think<br>About Data</h2>
+      <div id="about-principles-grid">
+        <div class="principle-item" id="principle-1">
+          <h3 class="principle-title">Structure Before Capture</h3>
+          <p class="principle-body">A schema defined in advance is not a bureaucratic constraint — it is the most important act of research design. Fieldset treats schema authorship as a first-class activity, not configuration overhead.</p>
+        </div>
+        <div class="principle-item" id="principle-2">
+          <h3 class="principle-title">Validation at Source</h3>
+          <p class="principle-body">Errors found at collection cost minutes. Errors found at analysis cost weeks. Errors found at publication cost careers. We validate as early as physically possible.</p>
+        </div>
+        <div class="principle-item" id="principle-3">
+          <h3 class="principle-title">Provenance is Non-Negotiable</h3>
+          <p class="principle-body">Every observation has a collector, a timestamp, a schema version, and a validation history. These are not metadata — they are the observation. We never lose them.</p>
+        </div>
+        <div class="principle-item" id="principle-4">
+          <h3 class="principle-title">Analysis Environments are Downstream</h3>
+          <p class="principle-body">We do not replace R, Python, QGIS, or your preferred analysis stack. We make certain that what arrives there is trustworthy — structured, validated, and accompanied by its full lineage.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="about-divider" aria-hidden="true"></div>
+
+<!-- TEAM — id="team" (footer anchor target) -->
+<section id="team" class="about-section" aria-label="Team">
+  <div class="about-section-inner">
+    <div id="about-team-number" class="about-section-num" aria-hidden="true">03</div>
+    <div id="about-team-content">
+      <span class="about-section-eyebrow">Team</span>
+      <h2 class="about-section-heading">The People<br>Behind Fieldset</h2>
+      <div id="team-grid">
+        <div class="team-member" id="team-1">
+          <div class="team-member-initials" aria-hidden="true">MK</div>
+          <div class="team-member-info">
+            <h3 class="team-member-name">Maya Krishnamurthy</h3>
+            <span class="team-member-role">Co-Founder &amp; CEO</span>
+            <p class="team-member-bio">Ecologist. Six seasons of freshwater macroinvertebrate surveys across the Upper Colorado Basin. MS, UC Davis.</p>
+          </div>
+        </div>
+        <div class="team-member" id="team-2">
+          <div class="team-member-initials" aria-hidden="true">TW</div>
+          <div class="team-member-info">
+            <h3 class="team-member-name">Tobias Werner</h3>
+            <span class="team-member-role">Co-Founder &amp; CTO</span>
+            <p class="team-member-bio">Infrastructure engineer. Former data platform lead at a climate science consortium. Previously distributed systems at Stripe.</p>
+          </div>
+        </div>
+        <div class="team-member" id="team-3">
+          <div class="team-member-initials" aria-hidden="true">NF</div>
+          <div class="team-member-info">
+            <h3 class="team-member-name">Nadia Farouk</h3>
+            <span class="team-member-role">Head of Research Partnerships</span>
+            <p class="team-member-bio">Archaeologist and field data specialist. Led digital documentation programs for sites across North Africa and the Levant.</p>
+          </div>
+        </div>
+        <div class="team-member" id="team-4">
+          <div class="team-member-initials" aria-hidden="true">CS</div>
+          <div class="team-member-info">
+            <h3 class="team-member-name">Carl Sundqvist</h3>
+            <span class="team-member-role">Lead Engineer</span>
+            <p class="team-member-bio">Offline-first systems specialist. Built the sync engine and schema versioning layer. Previously GBIF's data ingestion team.</p>
+          </div>
+        </div>
+        <div class="team-member" id="team-5">
+          <div class="team-member-initials" aria-hidden="true">PO</div>
+          <div class="team-member-info">
+            <h3 class="team-member-name">Priya Osei</h3>
+            <span class="team-member-role">Head of Design</span>
+            <p class="team-member-bio">Interaction designer with a focus on data-dense environments. Former interface lead at a scientific instrument manufacturer.</p>
+          </div>
+        </div>
+        <div class="team-member" id="team-6">
+          <div class="team-member-initials" aria-hidden="true">JL</div>
+          <div class="team-member-info">
+            <h3 class="team-member-name">James Liang</h3>
+            <span class="team-member-role">Validation Systems</span>
+            <p class="team-member-bio">Statistician specializing in ecological measurement error. Designed the automated rule engine and anomaly detection layer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTORS / BACKERS BAND -->
+<section id="about-backers" class="section" aria-label="Backers">
+  <div class="section-inner">
+    <div id="about-backers-inner">
+      <span id="about-backers-eyebrow">Backers</span>
+      <p id="about-backers-statement">Fieldset is backed by investors who have funded research infrastructure across conservation biology, biodiversity informatics, and environmental monitoring.</p>
+      <div id="about-backers-note">
+        <span class="about-backers-note-text">Seed round closed Q4 2022. Series A closed Q2 2024. Not currently raising.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer" role="contentinfo">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand">
+        <a href="index.html" id="footer-logo" aria-label="Fieldset — home">
+          <div id="footer-logo-mark" aria-hidden="true">FS</div>
+          <span id="footer-logo-text">Fieldset</span>
+        </a>
+        <p id="footer-tagline">Structured research data infrastructure for observational science teams.</p>
+      </div>
+      <div id="footer-col-product">
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="platform.html">Platform</a></li>
+          <li><a href="platform.html#capture">Capture</a></li>
+          <li><a href="platform.html#validation">Validation</a></li>
+          <li><a href="platform.html#query">Query &amp; Export</a></li>
+        </ul>
+      </div>
+      <div id="footer-col-company">
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html#team">Team</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div id="footer-col-access">
+        <div class="footer-col-title">Access</div>
+        <ul class="footer-links">
+          <li><a href="contact.html">Request Access</a></li>
+          <li><a href="contact.html#enterprise">Enterprise</a></li>
+          <li><a href="contact.html#research">Research Programs</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <span id="footer-copyright">© 2026 Fieldset. All rights reserved.</span>
+      <div id="footer-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Security</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- GSAP CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── MISSION STATEMENT — radial bloom: text fades in from center outward ── */
+  /* Distinct animation: scale from 0.92 + opacity, no translation */
+  var missionTl = gsap.timeline({ defaults: { ease: 'cubic-bezier(0.16, 1, 0.3, 1)' } });
+
+  missionTl
+    .fromTo('#about-mission-label span', {
+      opacity: 0
+    }, {
+      opacity: 1,
+      duration: 0.91,
+      stagger: 0.2
+    }, 0.15)
+    .fromTo('#about-mission-text', {
+      opacity: 0,
+      scale: 0.96,
+      transformOrigin: 'center center'
+    }, {
+      opacity: 1,
+      scale: 1,
+      duration: 1.43
+    }, 0.4);
+
+  /* ── ORIGIN SECTION — typewriter-style: num first, then text cascades ── */
+  ScrollTrigger.create({
+    trigger: '#about-origin',
+    start: 'top 82%',
+    onEnter: function() {
+      gsap.fromTo('#about-origin-number', {
+        opacity: 0,
+        y: 32
+      }, {
+        opacity: 0.12,
+        y: 0,
+        duration: 0.91,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+      gsap.fromTo('#about-origin-content .about-section-eyebrow', {
+        opacity: 0,
+        clipPath: 'inset(0 100% 0 0)'
+      }, {
+        opacity: 1,
+        clipPath: 'inset(0 0% 0 0)',
+        duration: 0.91,
+        delay: 0.1,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+      gsap.fromTo('#about-origin-content .about-section-heading', {
+        opacity: 0,
+        y: 40
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 1.43,
+        delay: 0.2,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+      gsap.fromTo('#about-origin-content .about-section-body p', {
+        opacity: 0,
+        y: 20
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.91,
+        stagger: 0.18,
+        delay: 0.4,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+    }
+  });
+
+  /* ── PRINCIPLES — accordion-style: items expand from collapsed height ── */
+  ScrollTrigger.create({
+    trigger: '#about-principles',
+    start: 'top 80%',
+    onEnter: function() {
+      gsap.fromTo('#about-principles-number', {
+        opacity: 0, y: 32
+      }, {
+        opacity: 0.12, y: 0, duration: 0.91, ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+      gsap.fromTo('#about-principles-content .about-section-eyebrow', {
+        opacity: 0, clipPath: 'inset(0 100% 0 0)'
+      }, {
+        opacity: 1, clipPath: 'inset(0 0% 0 0)', duration: 0.91, delay: 0.1,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+      gsap.fromTo('#about-principles-content .about-section-heading', {
+        opacity: 0, y: 40
+      }, {
+        opacity: 1, y: 0, duration: 1.43, delay: 0.2, ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+      gsap.fromTo('.principle-item', {
+        opacity: 0,
+        y: 40,
+        scale: 0.97
+      }, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.91,
+        stagger: 0.12,
+        delay: 0.4,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+    }
+  });
+
+  /* ── TEAM — staggered reveal with horizontal offset alternating L/R ── */
+  ScrollTrigger.create({
+    trigger: '#team',
+    start: 'top 80%',
+    onEnter: function() {
+      gsap.fromTo('#about-team-number', {
+        opacity: 0, y: 32
+      }, {
+        opacity: 0.12, y: 0, duration: 0.91, ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+      gsap.fromTo('#about-team-content .about-section-eyebrow', {
+        opacity: 0, clipPath: 'inset(0 100% 0 0)'
+      }, {
+        opacity: 1, clipPath: 'inset(0 0% 0 0)', duration: 0.91, delay: 0.1,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+      gsap.fromTo('#about-team-content .about-section-heading', {
+        opacity: 0, y: 40
+      }, {
+        opacity: 1, y: 0, duration: 1.43, delay: 0.2, ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+
+      /* Alternate: odd cards from left, even cards from right */
+      document.querySelectorAll('.team-member').forEach(function(card, i) {
+        var dir = (i % 2 === 0) ? -40 : 40;
+        gsap.fromTo(card, {
+          opacity: 0,
+          x: dir
+        }, {
+          opacity: 1,
+          x: 0,
+          duration: 0.91,
+          delay: 0.3 + i * 0.09,
+          ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+        });
+      });
+    }
+  });
+
+  /* ── BACKERS — simple fade + y, center-aligned ── */
+  ScrollTrigger.create({
+    trigger: '#about-backers',
+    start: 'top 85%',
+    onEnter: function() {
+      gsap.fromTo('#about-backers-eyebrow, #about-backers-statement, #about-backers-note', {
+        opacity: 0,
+        y: 24
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.91,
+        stagger: 0.14,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

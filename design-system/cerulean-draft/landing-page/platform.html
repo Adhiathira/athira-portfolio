@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Platform — Strata Subsurface Data Analysis</title>
+  <meta name="description" content="Explore Strata's geospatial analysis platform: multi-source data fusion, 3D subsurface modeling, and automated Eurocode 7-compliant risk reporting for infrastructure engineers.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sub-page-header.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* ── Platform page-specific styles ── */
+
+    .platform-section {
+      padding: var(--space-section) 0;
+      position: relative;
+    }
+
+    .platform-section--alt {
+      background: var(--color-surface-1);
+    }
+
+    .platform-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+    }
+
+    /* ── Data Fusion: bento grid layout ── */
+    #data-fusion {
+      background: var(--color-page-bg);
+      border-bottom: 1px solid rgba(27, 27, 55, 0.06);
+    }
+
+    #fusion-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-h4);
+      font-weight: var(--weight-regular);
+      letter-spacing: var(--letter-spacing-label);
+      text-transform: uppercase;
+      color: var(--color-accent-teal);
+      margin: 0 0 24px;
+    }
+
+    #fusion-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--weight-regular);
+      line-height: var(--lh-h2);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0 0 60px;
+      max-width: 560px;
+    }
+
+    /* Bento: mix of span-2 and span-1 */
+    #fusion-bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 220px;
+      gap: var(--grid-col-gap);
+    }
+
+    .bento-card {
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border);
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .bento-card--wide {
+      grid-column: span 2;
+    }
+
+    .bento-card--tall {
+      grid-row: span 2;
+    }
+
+    /* Accent gradient bar */
+    .bento-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-accent-teal), transparent);
+      opacity: 0.5;
+    }
+
+    .bento-card--accent::before {
+      background: linear-gradient(90deg, var(--color-accent-violet), transparent);
+    }
+
+    .bento-card--blue::before {
+      background: linear-gradient(90deg, var(--color-accent-blue), transparent);
+    }
+
+    .bento-card-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: var(--weight-regular);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent-teal);
+      margin: 0;
+    }
+
+    .bento-card--accent .bento-card-label { color: var(--color-accent-violet); }
+    .bento-card--blue .bento-card-label { color: var(--color-accent-blue); }
+
+    .bento-card-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0 0 10px;
+    }
+
+    .bento-card-body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: var(--weight-light);
+      line-height: var(--lh-body);
+      letter-spacing: var(--letter-spacing-body);
+      color: var(--color-muted);
+      margin: 0;
+    }
+
+    /* Supported formats list inside wide card */
+    #fusion-formats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .format-tag {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent-teal);
+      background: rgba(99, 202, 190, 0.08);
+      border: 1px solid rgba(99, 202, 190, 0.25);
+      padding: 4px 10px;
+    }
+
+    /* ── Subsurface Modeling: full-width feature row layout ── */
+    #modeling {
+      background: var(--color-page-bg);
+      border-bottom: 1px solid rgba(27, 27, 55, 0.06);
+    }
+
+    #modeling-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-h4);
+      font-weight: var(--weight-regular);
+      letter-spacing: var(--letter-spacing-label);
+      text-transform: uppercase;
+      color: var(--color-accent-violet);
+      margin: 0 0 24px;
+    }
+
+    #modeling-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--weight-regular);
+      line-height: var(--lh-h2);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0 0 60px;
+      max-width: 560px;
+    }
+
+    /* Full-width horizontal feature rows */
+    #modeling-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .modeling-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      column-gap: 80px;
+      padding: 48px 0;
+      border-top: 1px solid var(--color-border);
+      align-items: start;
+    }
+
+    .modeling-row:last-child {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    /* Alternate direction every other row */
+    .modeling-row:nth-child(even) {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    .modeling-row:nth-child(even) .modeling-row-title-col {
+      order: 2;
+    }
+
+    .modeling-row:nth-child(even) .modeling-row-body-col {
+      order: 1;
+    }
+
+    .modeling-row-title-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .modeling-row-number {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent-violet);
+    }
+
+    .modeling-row-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-semibold);
+      line-height: var(--lh-h3);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0;
+    }
+
+    .modeling-row-body {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--weight-light);
+      line-height: var(--lh-body);
+      letter-spacing: var(--letter-spacing-body);
+      color: var(--color-muted);
+      margin: 0;
+    }
+
+    /* ── Reporting: dark midnight section ── */
+    #reporting {
+      background: var(--color-midnight);
+      padding: var(--space-section) 0;
+    }
+
+    #reporting-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+    }
+
+    #reporting-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-h4);
+      font-weight: var(--weight-regular);
+      letter-spacing: var(--letter-spacing-label);
+      text-transform: uppercase;
+      color: var(--color-accent-teal);
+      margin: 0 0 24px;
+    }
+
+    #reporting-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--weight-regular);
+      line-height: var(--lh-h2);
+      letter-spacing: var(--letter-spacing-heading);
+      color: #ffffff;
+      margin: 0 0 60px;
+      max-width: 560px;
+    }
+
+    #report-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: var(--grid-col-gap);
+      row-gap: var(--grid-col-gap);
+    }
+
+    .report-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      position: relative;
+    }
+
+    .report-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--color-accent-teal), transparent);
+      opacity: 0.4;
+    }
+
+    .report-card-standard {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: var(--weight-light);
+      letter-spacing: var(--letter-spacing-heading);
+      color: #ffffff;
+      margin: 0 0 12px;
+    }
+
+    .report-card-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h4);
+      font-weight: var(--weight-regular);
+      letter-spacing: var(--letter-spacing-label);
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin: 0 0 20px;
+    }
+
+    .report-card-body {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--weight-light);
+      line-height: var(--lh-body);
+      letter-spacing: var(--letter-spacing-body);
+      color: rgba(255, 255, 255, 0.55);
+      margin: 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      #fusion-bento {
+        grid-template-columns: 1fr 1fr;
+      }
+      .bento-card--wide { grid-column: span 2; }
+      .bento-card--tall { grid-row: span 1; }
+      .modeling-row,
+      .modeling-row:nth-child(even) {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .modeling-row:nth-child(even) .modeling-row-title-col,
+      .modeling-row:nth-child(even) .modeling-row-body-col {
+        order: unset;
+      }
+      #report-cards { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      #fusion-bento { grid-template-columns: 1fr; }
+      .bento-card--wide { grid-column: span 1; }
+      #report-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Strata home">
+      <span class="nav-logo-text">Strata<span class="nav-logo-dot">.</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="platform.html" class="nav-link--active">Platform</a></li>
+      <li><a href="methodology.html">Methodology</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Request Access</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="platform.html">Platform</a>
+  <a href="methodology.html">Methodology</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html">Request Access</a>
+</div>
+<div class="nav-spacer active"></div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = nav.querySelector('.nav-mobile-toggle');
+    var mobileMenu = document.getElementById('nav-mobile-menu');
+    var last = 0;
+    window.addEventListener('scroll', function() {
+      var cur = window.scrollY;
+      if (cur > 80 && cur > last) nav.classList.add('hidden');
+      else nav.classList.remove('hidden');
+      last = cur;
+    });
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+    });
+  })();
+</script>
+
+<!-- ── PAGE HEADER ── -->
+<header class="subpage-header" id="platform-header">
+  <div class="subpage-header-inner">
+    <p class="subpage-header-label">Platform</p>
+    <h1 class="subpage-header-title">The complete subsurface<br>analysis environment.</h1>
+    <p class="subpage-header-tagline">From raw survey files to regulatory-ready reports — every stage of geotechnical analysis in one place.</p>
+  </div>
+</header>
+
+<!-- ── DATA FUSION ── -->
+<section id="data-fusion" class="platform-section">
+  <div class="platform-inner">
+    <p id="fusion-label">Data Fusion</p>
+    <h2 id="fusion-heading">Forty formats, one model.</h2>
+    <!-- Bento grid -->
+    <div id="fusion-bento">
+      <div class="bento-card bento-card--wide bento-card--tall" id="bento-main">
+        <div>
+          <p class="bento-card-label">Multi-source ingestion</p>
+          <h3 class="bento-card-title">No preprocessing required</h3>
+        </div>
+        <div>
+          <p class="bento-card-body">Upload borehole logs, CPT profiles, seismic survey outputs, LiDAR ground models, and piezometer readings in any common format. Strata resolves coordinate system mismatches and depth datum conflicts automatically.</p>
+          <div id="fusion-formats">
+            <span class="format-tag">AGS 4</span>
+            <span class="format-tag">GEF-CPT</span>
+            <span class="format-tag">LAS</span>
+            <span class="format-tag">GeoTIFF</span>
+            <span class="format-tag">DXF</span>
+            <span class="format-tag">CSV</span>
+            <span class="format-tag">IFC</span>
+            <span class="format-tag">JSON</span>
+          </div>
+        </div>
+      </div>
+      <div class="bento-card" id="bento-coord">
+        <p class="bento-card-label">Coordinate resolution</p>
+        <h3 class="bento-card-title">Spatial alignment</h3>
+        <p class="bento-card-body">Automatic datum transformation between WGS84, OSGB36, and local site grids.</p>
+      </div>
+      <div class="bento-card bento-card--accent" id="bento-quality">
+        <p class="bento-card-label">Quality flags</p>
+        <h3 class="bento-card-title">Data confidence scoring</h3>
+        <p class="bento-card-body">Every imported dataset receives a completeness and consistency score before entering the model — outliers flagged, gaps quantified.</p>
+      </div>
+      <div class="bento-card bento-card--blue" id="bento-version">
+        <p class="bento-card-label">Versioning</p>
+        <h3 class="bento-card-title">Full audit trail</h3>
+        <p class="bento-card-body">Every data import is versioned. Revert to any prior model state with one click.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SUBSURFACE MODELING ── -->
+<section id="modeling" class="platform-section">
+  <div class="platform-inner">
+    <p id="modeling-label">Subsurface Modeling</p>
+    <h2 id="modeling-heading">The ground, rendered<br>at instrument precision.</h2>
+    <div id="modeling-rows">
+      <div class="modeling-row" id="modeling-row-1">
+        <div class="modeling-row-title-col">
+          <span class="modeling-row-number">01</span>
+          <h3 class="modeling-row-title">3D Grid Construction</h3>
+        </div>
+        <div class="modeling-row-body-col">
+          <p class="modeling-row-body">Variogram-based kriging interpolation builds a three-dimensional soil classification grid at 0.5m resolution from sparse borehole data. The interpolation is calibrated to site-specific soil classification schemes — not generic textbook parameters.</p>
+        </div>
+      </div>
+      <div class="modeling-row" id="modeling-row-2">
+        <div class="modeling-row-title-col">
+          <span class="modeling-row-number">02</span>
+          <h3 class="modeling-row-title">Formation Boundary Detection</h3>
+        </div>
+        <div class="modeling-row-body-col">
+          <p class="modeling-row-body">Geological formation boundaries — the interfaces between soil and rock layers — are extracted using CPT friction ratio transitions and cross-validated against borehole classification logs, producing a formation model with uncertainty bounds at each boundary surface.</p>
+        </div>
+      </div>
+      <div class="modeling-row" id="modeling-row-3">
+        <div class="modeling-row-title-col">
+          <span class="modeling-row-number">03</span>
+          <h3 class="modeling-row-title">Water Table Mapping</h3>
+        </div>
+        <div class="modeling-row-body-col">
+          <p class="modeling-row-body">Piezometer readings and seasonal high-water observations are interpolated across the site extent to produce a dynamic water table surface — with confidence intervals that reflect the density of measurement points.</p>
+        </div>
+      </div>
+      <div class="modeling-row" id="modeling-row-4">
+        <div class="modeling-row-title-col">
+          <span class="modeling-row-number">04</span>
+          <h3 class="modeling-row-title">Load-Ground Interaction</h3>
+        </div>
+        <div class="modeling-row-body-col">
+          <p class="modeling-row-body">Import a structural foundation layout and apply load scenarios to the 3D model. Bearing capacity, settlement, and lateral earth pressure are computed at each foundation node using the Eurocode 7 partial factor framework.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REPORTING (dark) ── -->
+<section id="reporting">
+  <div id="reporting-inner">
+    <p id="reporting-label">Reporting</p>
+    <h2 id="reporting-heading">Output in the format<br>your review board requires.</h2>
+    <div id="report-cards">
+      <div class="report-card" id="report-ec7">
+        <p class="report-card-standard">EC7</p>
+        <p class="report-card-title">Eurocode 7 GEO reports</p>
+        <p class="report-card-body">Geotechnical design reports formatted to EN 1997-1 Annex B, with full ULS and SLS verification tables and characteristic parameter derivations.</p>
+      </div>
+      <div class="report-card" id="report-astm">
+        <p class="report-card-standard">ASTM</p>
+        <p class="report-card-title">ASTM D standards summary</p>
+        <p class="report-card-body">Soil classification and bearing capacity outputs referenced to ASTM D 2487, D 3441, and D 1143 — ready for US project submissions.</p>
+      </div>
+      <div class="report-card" id="report-json">
+        <p class="report-card-standard">JSON</p>
+        <p class="report-card-title">Machine-readable output</p>
+        <p class="report-card-body">All model outputs available as structured JSON for BIM integration, GIS import, and downstream structural analysis software.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-grid">
+      <div id="footer-brand">
+        <p id="footer-logo-text">Strata<span>.</span></p>
+        <p id="footer-tagline">Subsurface data platform for infrastructure engineers.</p>
+      </div>
+      <div class="footer-col" id="footer-col-platform">
+        <p class="footer-col-heading">Platform</p>
+        <ul class="footer-links">
+          <li><a href="platform.html">Overview</a></li>
+          <li><a href="platform.html#data-fusion">Data Fusion</a></li>
+          <li><a href="platform.html#modeling">Subsurface Modeling</a></li>
+          <li><a href="platform.html#reporting">Reporting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footer-col-method">
+        <p class="footer-col-heading">Methodology</p>
+        <ul class="footer-links">
+          <li><a href="methodology.html">Our Approach</a></li>
+          <li><a href="methodology.html#standards">Standards</a></li>
+          <li><a href="methodology.html#validation">Validation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footer-col-company">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footer-col-resources">
+        <p class="footer-col-heading">Resources</p>
+        <ul class="footer-links">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Case Studies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-legal">© 2026 Strata Technologies Ltd. All rights reserved.</p>
+      <div id="footer-legal-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Security</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  var EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+  var DUR = 0.35;
+
+  // Header: fade-up
+  gsap.from('.subpage-header-title', {
+    y: 30, duration: DUR * 1.4, ease: EASE, delay: 0.1
+  });
+
+  // Bento cards: scale-from-center
+  gsap.from('.bento-card', {
+    scrollTrigger: { trigger: '#fusion-bento', start: 'top 75%' },
+    scale: 0.94, stagger: 0.08, duration: DUR * 1.4, ease: EASE
+  });
+
+  // Modeling rows: individual row scroll triggers (clip-path)
+  document.querySelectorAll('.modeling-row').forEach(function(row, i) {
+    gsap.from(row.querySelector('.modeling-row-title-col'), {
+      scrollTrigger: { trigger: row, start: 'top 85%' },
+      x: -50, duration: DUR * 1.5, ease: EASE
+    });
+    gsap.from(row.querySelector('.modeling-row-body-col'), {
+      scrollTrigger: { trigger: row, start: 'top 85%' },
+      x: 40, duration: DUR * 1.5, delay: 0.08, ease: EASE
+    });
+  });
+
+  // Report cards: staggered y entrance
+  gsap.from('.report-card', {
+    scrollTrigger: { trigger: '#report-cards', start: 'top 80%' },
+    y: 50, stagger: 0.12, duration: DUR * 1.4, ease: EASE
+  });
+</script>
+
+</body>
+</html>

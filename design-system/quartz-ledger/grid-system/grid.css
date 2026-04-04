@@ -1,0 +1,68 @@
+/* Grid system — source: matheson-food-company / Twist B: gap value compression ×0.85 (intensity 2) */
+
+:root {
+  --grid-container-maxWidth: 1728px;
+  --grid-container-paddingLeft: 48px;
+  --grid-container-paddingRight: 48px;
+
+  /* Column gaps — all compressed ×0.85 from source 34.56px / 69.12px */
+  --grid-gap-sm: 29.376px;
+  --grid-gap-md: 58.752px;
+}
+
+/* Container */
+.container {
+  max-width: var(--grid-container-maxWidth);
+  padding-left: var(--grid-container-paddingLeft);
+  padding-right: var(--grid-container-paddingRight);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* Grid layouts */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--grid-gap-sm);
+}
+
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap-sm);
+}
+
+.grid-4col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--grid-gap-md);
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1024px) {
+  .grid-3col,
+  .grid-4col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-2col,
+  .grid-3col,
+  .grid-4col {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

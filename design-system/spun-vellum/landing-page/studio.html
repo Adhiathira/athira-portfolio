@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio — Kesslar &amp; Vane Instruments</title>
+  <meta name="description" content="The Kesslar &amp; Vane studio: a working instrument workshop at 14 Grassmarket, Edinburgh, unchanged since 1887.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/studio.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" id="nav-logo-link">
+      <span class="nav-logo-wordmark">Kesslar &amp; Vane</span>
+    </a>
+    <ul class="nav-links" id="nav-links-list">
+      <li><a href="work.html" class="nav-link" id="nav-link-work">Work</a></li>
+      <li><a href="process.html" class="nav-link" id="nav-link-process">Process</a></li>
+      <li><a href="studio.html" class="nav-link nav-link--active" id="nav-link-studio">Studio</a></li>
+      <li><a href="contact.html" class="nav-link" id="nav-link-contact">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="work.html" class="nav-link" id="nav-mobile-work">Work</a>
+  <a href="process.html" class="nav-link" id="nav-mobile-process">Process</a>
+  <a href="studio.html" class="nav-link nav-link--active" id="nav-mobile-studio">Studio</a>
+  <a href="contact.html" class="nav-link" id="nav-mobile-contact">Contact</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = document.getElementById('nav-mobile-toggle');
+    var mobileMenu = document.getElementById('nav-mobile-menu');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    }, { passive: true });
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open');
+        var isOpen = mobileMenu.classList.contains('is-open');
+        toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      });
+    }
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('.nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.classList.remove('is-open');
+        });
+      });
+    }
+  })();
+</script>
+
+<div class="nav-spacer active" id="nav-spacer"></div>
+
+<!-- ============================================================
+     STUDIO HERO — compact 20vh (information/about archetype)
+     ============================================================ -->
+<section id="studio-hero" class="studio-hero-section">
+  <div id="studio-hero-inner" class="studio-hero-inner">
+    <h3 id="studio-label" class="section-label">Where We Work</h3>
+    <h1 id="studio-hero-title" class="studio-hero-title">14 Grassmarket</h1>
+    <p id="studio-hero-sub" class="studio-hero-sub">Edinburgh. The same address since 1887.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     STUDIO VIDEO SECTION — studio-interior.mp4
+     From concept_by_video.md: slow environmental interior,
+     directional light, micro shadow movement. 10s loop.
+     Dark contrast beat.
+     ============================================================ -->
+<section id="studio-video" class="studio-video-section">
+  <div id="studio-video-wrap" class="studio-video-wrap">
+    <video
+      id="studio-bg-video"
+      src="assets/studio-interior.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-dark);color:rgba(255,255,255,0.3);font-size:0.8rem;letter-spacing:0.06em;">→ assets/studio-interior.mp4</div>
+    <div id="studio-video-overlay" class="studio-video-overlay"></div>
+    <div id="studio-video-text" class="studio-video-text">
+      <p id="studio-video-caption" class="studio-video-caption">The workshop at 14 Grassmarket, Edinburgh.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STUDIO ABOUT — two-col bento layout (asymmetric 3fr 2fr)
+     Animation: divergent entrance — left column x:-80, right x:80
+     ============================================================ -->
+<section id="studio-about" class="studio-about-section">
+  <div id="studio-about-inner" class="studio-about-inner">
+    <div id="studio-about-primary" class="studio-about-primary">
+      <h2 id="studio-about-heading" class="studio-about-heading">A workshop, not a factory.</h2>
+      <p id="studio-about-body-1" class="studio-about-body">The building at 14 Grassmarket has housed Kesslar &amp; Vane since the firm's founding in 1887. The ground floor is the main workshop: lathes, milling machines, the grinding room. The first floor is the office, the drawing room, and the archive. The basement is where instruments await calibration.</p>
+      <p id="studio-about-body-2" class="studio-about-body">We have never had more than fourteen people working in the building at one time. The maximum has been reached twice — once in 1942, when the workshop was contracted for wartime optical instruments, and once in 2018, when we were simultaneously building six commissions.</p>
+      <p id="studio-about-body-3" class="studio-about-body">The workshop is not open to visitors. Precision manufacture requires stillness, controlled temperature, and the absence of external disturbance. We do, however, welcome clients at agreed times to see their commission at a relevant stage — typically at the start of assembly and at the start of calibration.</p>
+    </div>
+    <div id="studio-about-secondary" class="studio-about-secondary">
+      <div id="studio-fact-1" class="studio-fact">
+        <span class="studio-fact-number">8</span>
+        <span class="studio-fact-label">Manual lathes, all in daily use</span>
+      </div>
+      <div id="studio-fact-2" class="studio-fact">
+        <span class="studio-fact-number">1</span>
+        <span class="studio-fact-label">Optical grinding room</span>
+      </div>
+      <div id="studio-fact-3" class="studio-fact">
+        <span class="studio-fact-number">137</span>
+        <span class="studio-fact-label">Years at the same address</span>
+      </div>
+      <div id="studio-fact-4" class="studio-fact">
+        <span class="studio-fact-number">14</span>
+        <span class="studio-fact-label">Maximum staff, ever</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STUDIO TEAM — masonry-style grid, staggered heights
+     Animation: scale from center per card, stagger 0.14
+     Light surface background
+     ============================================================ -->
+<section id="studio-team" class="studio-team-section">
+  <div id="studio-team-inner" class="studio-team-inner">
+    <div id="studio-team-header" class="studio-team-header">
+      <h3 id="studio-team-label" class="section-label">The Workshop</h3>
+      <h2 id="studio-team-heading" class="studio-team-heading">Nine people.<br>No vacancies.</h2>
+    </div>
+    <div id="studio-team-grid" class="studio-team-grid">
+
+      <div id="team-card-1" class="team-card team-card--tall">
+        <div class="team-card-image-wrap">
+          <img
+            id="team-img-1"
+            src="assets/team-principal.jpeg"
+            alt="Dr. Alison Vane, principal instrument maker, at a lathe"
+            style="width:100%;height:100%;object-fit:cover;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;">→ assets/team-principal.jpeg</div>
+        </div>
+        <div id="team-card-1-info" class="team-card-info">
+          <span class="team-name">Dr. Alison Vane</span>
+          <span class="team-role">Principal Instrument Maker</span>
+        </div>
+      </div>
+
+      <div id="team-card-2" class="team-card">
+        <div class="team-card-image-wrap team-card-image-wrap--sm">
+          <img
+            id="team-img-2"
+            src="assets/team-optician.jpeg"
+            alt="James Rennie, optical technician, at the grinding bench"
+            style="width:100%;height:100%;object-fit:cover;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;">→ assets/team-optician.jpeg</div>
+        </div>
+        <div id="team-card-2-info" class="team-card-info">
+          <span class="team-name">James Rennie</span>
+          <span class="team-role">Optical Technician</span>
+        </div>
+      </div>
+
+      <div id="team-card-3" class="team-card">
+        <div class="team-card-image-wrap team-card-image-wrap--sm">
+          <img
+            id="team-img-3"
+            src="assets/team-machinist.jpeg"
+            alt="Margaret Kesslar, senior machinist, at a milling machine"
+            style="width:100%;height:100%;object-fit:cover;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;">→ assets/team-machinist.jpeg</div>
+        </div>
+        <div id="team-card-3-info" class="team-card-info">
+          <span class="team-name">Margaret Kesslar</span>
+          <span class="team-role">Senior Machinist</span>
+        </div>
+      </div>
+
+    </div>
+    <p id="studio-team-note" class="studio-team-note">Training for all workshop positions takes a minimum of six years. Most of our team have been here longer than a decade.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer" class="site-footer">
+  <div id="footer-inner" class="footer-inner">
+    <div id="footer-top" class="footer-top">
+      <div id="footer-brand" class="footer-brand">
+        <span class="footer-wordmark">Kesslar &amp; Vane</span>
+        <p class="footer-tagline-text">Precision scientific instruments.<br>Edinburgh, Scotland.</p>
+      </div>
+      <div id="footer-nav" class="footer-nav">
+        <div id="footer-nav-col-1" class="footer-nav-col">
+          <p class="footer-nav-heading">Studio</p>
+          <ul class="footer-nav-list">
+            <li><a href="work.html" class="footer-link">Work</a></li>
+            <li><a href="process.html" class="footer-link">Process</a></li>
+            <li><a href="studio.html" class="footer-link">Studio</a></li>
+          </ul>
+        </div>
+        <div id="footer-nav-col-2" class="footer-nav-col">
+          <p class="footer-nav-heading">Contact</p>
+          <ul class="footer-nav-list">
+            <li><a href="contact.html" class="footer-link">Commission an instrument</a></li>
+            <li><a href="contact.html" class="footer-link">General enquiries</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="footer-address" class="footer-address">
+        <p class="footer-nav-heading">Location</p>
+        <p class="footer-address-text">14 Grassmarket<br>Edinburgh EH1 2JU<br>Scotland</p>
+      </div>
+    </div>
+    <div id="footer-bottom" class="footer-bottom">
+      <span class="footer-legal">© 2026 Kesslar &amp; Vane. All rights reserved.</span>
+      <span class="footer-legal">Est. Edinburgh, 1887</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  const BASE = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.78;
+  const SLOW = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-slow')) || 1.3;
+  const CARD = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-card')) || 0.52;
+  const EASE_E = getComputedStyle(document.documentElement).getPropertyValue('--ease-enter').trim() || 'power3.out';
+  const EASE_P = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.inOut';
+
+  // Hero entrance
+  gsap.from('#studio-hero-title', { y: 24, duration: SLOW, ease: EASE_E });
+  gsap.from('#studio-hero-sub', { y: 16, duration: BASE, ease: EASE_E, delay: 0.2 });
+
+  // Video caption parallax
+  gsap.to('#studio-video-text', {
+    scrollTrigger: { trigger: '#studio-video', scrub: 1.2 },
+    y: '12%', ease: 'none'
+  });
+
+  // About — divergent entrance
+  gsap.from('#studio-about-primary', {
+    scrollTrigger: { trigger: '#studio-about', start: 'top 75%' },
+    x: -80, duration: BASE, ease: EASE_E
+  });
+  gsap.from('#studio-about-secondary', {
+    scrollTrigger: { trigger: '#studio-about', start: 'top 72%' },
+    x: 80, duration: BASE, ease: EASE_P
+  });
+  gsap.from('#studio-fact-1, #studio-fact-2, #studio-fact-3, #studio-fact-4', {
+    scrollTrigger: { trigger: '#studio-about-secondary', start: 'top 80%' },
+    y: 30, stagger: 0.1, duration: CARD, ease: EASE_E
+  });
+
+  // Team grid — scale from center, stagger
+  gsap.from('#team-card-1, #team-card-2, #team-card-3', {
+    scrollTrigger: { trigger: '#studio-team-grid', start: 'top 78%' },
+    scale: 0.94, stagger: 0.14, duration: BASE, ease: EASE_P
+  });
+  gsap.from('#studio-team-note', {
+    scrollTrigger: { trigger: '#studio-team-note', start: 'top 85%' },
+    y: 20, duration: CARD, ease: EASE_E
+  });
+</script>
+
+</body>
+</html>

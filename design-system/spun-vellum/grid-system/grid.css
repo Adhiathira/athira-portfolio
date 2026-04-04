@@ -1,0 +1,139 @@
+/* Grid System — Spun Vellum */
+/* Source: griting-formless | Agent 4 | Twist C: Container padding +12px | Intensity 3 */
+
+:root {
+  --container-max-width: 1440px;
+  --container-padding-inline: 34px;
+  --grid-cols-features: 3;
+  --grid-cols-footer: 5;
+  --section-width: 1372px;
+
+  /* Blog index */
+  --grid-blog-featured-columns: 60fr 40fr;
+  --grid-blog-list-columns: 1fr;
+  --grid-filter-bar-columns: 1fr auto;
+
+  /* Formless-incorporated gap tokens */
+  --grid-formless-sticky-gap: 80px;
+  --grid-formless-2col-baseline-gap: 48px;
+  --grid-formless-4col-flex-gap: 32px;
+  --grid-formless-4col-bar-gap: 60px;
+  --grid-formless-section-large-gap: 164px;
+}
+
+/* === Container === */
+
+.container {
+  max-width: var(--container-max-width);
+  padding-inline: var(--container-padding-inline);
+  margin-inline: auto;
+}
+
+/* === Editorial column === */
+
+.editorial {
+  margin-inline: 244px;
+  max-width: calc(100% - 488px);
+}
+
+/* === Two-column split === */
+
+.two-col-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-end;
+  gap: var(--grid-formless-2col-baseline-gap, 48px);
+}
+
+/* === Feature / card grids === */
+
+.grid-features {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols-features), 1fr);
+}
+
+.grid-footer {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols-footer), 1fr);
+}
+
+/* === Formless-style layout utilities === */
+
+.formless-editorial {
+  margin-inline: 244px;
+  max-width: calc(100% - 488px);
+}
+
+.formless-two-col-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-end;
+  gap: var(--grid-formless-2col-baseline-gap, 48px);
+}
+
+.formless-sticky-scroll-container {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  gap: var(--grid-formless-sticky-gap, 80px);
+  border-right: 1px solid currentcolor;
+}
+
+.formless-4col-flex-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--grid-formless-4col-flex-gap, 32px);
+}
+
+.formless-4col-bottom-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--grid-formless-4col-bar-gap, 60px);
+}
+
+.formless-overlapping-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.formless-full-width-lockup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* === Responsive breakpoints === */
+
+@media (min-width: 640px) {
+  .responsive-container { max-width: 640px; margin-inline: auto; }
+}
+
+@media (min-width: 768px) {
+  .responsive-container { max-width: 768px; }
+}
+
+@media (min-width: 1024px) {
+  .responsive-container { max-width: 1024px; }
+  .grid-3col-responsive {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .responsive-container { max-width: 1280px; }
+  .grid-3col-responsive {
+    row-gap: 106px;
+    column-gap: 106px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .responsive-container { max-width: 1440px; }
+}

@@ -1,0 +1,118 @@
+/* Pale Stave — Grid System */
+/* Source: griting-ellipsus. Twist B: gap values scaled ×1.4 (intensity 3). */
+
+:root {
+  --container-max-width: 1440px;
+  --container-padding-inline: 22px;
+  --grid-cols-features: 3;
+  --grid-cols-footer: 5;
+  --section-width: 1420px;
+
+  /* blog-index screen */
+  --grid-blog-featured-columns: 60fr 40fr;
+  --grid-blog-list-columns: 1fr;
+  --grid-filter-bar-columns: 1fr auto;
+
+  /* about-us screen */
+  --grid-about-mission-width: 925px;
+  --grid-about-body-copy-width: 785px;
+
+  /* Responsive gap tokens — scaled ×1.4 from griting-ellipsus source */
+  --grid-responsive-row-gap-md: 2.1rem;
+  --grid-responsive-col-gap-md: 2.1rem;
+  --grid-responsive-row-gap-lg: 3.5rem;
+  --grid-responsive-col-gap-lg: 3.5rem;
+
+  /* Breakpoint reference vars */
+  --grid-responsive-bp-520px-maxWidth: 60vw;
+  --grid-responsive-bp-580px-maxWidth: 50%;
+  --grid-responsive-bp-720px-maxWidth: 31.875rem;
+  --grid-responsive-bp-768px-maxWidth: 41.25rem;
+}
+
+/* ── Container ── */
+.container {
+  max-width: var(--container-max-width);
+  padding-inline: var(--container-padding-inline);
+  margin-inline: auto;
+}
+
+/* ── Featured post grid ── */
+.grid-featured-post {
+  display: grid;
+  grid-template-columns: var(--grid-blog-featured-columns);
+  gap: 56px; /* ×1.4 from source 40px */
+}
+
+/* ── Filter pills ── */
+.grid-filter-pills {
+  display: flex;
+  gap: 11.2px; /* ×1.4 from source 8px */
+}
+
+/* ── Ecosystem cards (3-col) ── */
+.grid-ecosystem-cards {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols-features), 1fr);
+  gap: var(--grid-responsive-col-gap-lg);
+}
+
+/* ── Footer grid ── */
+.grid-footer {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols-footer), 1fr);
+  gap: var(--grid-responsive-col-gap-md);
+}
+
+/* ── Responsive breakpoints ── */
+
+@media (min-width: 520px) {
+  .grid-responsive-element {
+    max-width: 60vw;
+  }
+}
+
+@media (min-width: 580px) {
+  .grid-responsive-element {
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 720px) {
+  .grid-responsive-flex {
+    flex-direction: row;
+    max-width: 31.875rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .grid-desktop-only {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-responsive-flex {
+    flex-direction: row;
+    max-width: 41.25rem;
+  }
+  .grid-mobile-only {
+    display: none;
+  }
+}
+
+@media (min-width: 780px) {
+  .grid-card-layout {
+    flex-direction: row;
+    max-width: unset;
+    row-gap: var(--grid-responsive-row-gap-md);
+    column-gap: var(--grid-responsive-col-gap-md);
+  }
+}
+
+@media (min-width: 820px) {
+  .grid-card-layout-lg {
+    row-gap: var(--grid-responsive-row-gap-lg);
+    column-gap: var(--grid-responsive-col-gap-lg);
+  }
+}

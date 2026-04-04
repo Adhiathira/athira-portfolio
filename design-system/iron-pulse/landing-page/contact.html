@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Prismatica Instruments</title>
+  <meta name="description" content="Request a demonstration or contact Prismatica Instruments for sales, support, or distributor enquiries.">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/contact-page.css">
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo-link">
+    <div class="nav-logo-mark"></div>
+    <span class="nav-logo-wordmark">Prismatica</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="instruments.html" class="nav-link">Instruments</a></li>
+    <li><a href="science.html" class="nav-link">Science</a></li>
+    <li><a href="contact.html" class="nav-link nav-link--active">Contact</a></li>
+  </ul>
+
+  <a href="contact.html" class="nav-cta">Request Demo</a>
+
+  <button class="nav-mobile-toggle" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-menu">
+  <a href="instruments.html" class="nav-mobile-link">Instruments</a>
+  <a href="science.html" class="nav-mobile-link">Science</a>
+  <a href="contact.html" class="nav-mobile-link">Contact</a>
+  <a href="contact.html" class="nav-mobile-cta">Request Demo</a>
+</div>
+
+<div class="nav-spacer active"></div>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  const toggle = document.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile-menu');
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open');
+  });
+</script>
+
+<!-- ── CONTACT PAGE — action archetype (minimal header, form immediately visible) ── -->
+<section id="contact-section">
+  <div id="contact-inner">
+
+    <!-- Left: info column -->
+    <div id="contact-info">
+      <p id="contact-eyebrow">Get in Touch</p>
+      <h1 id="contact-title">Request a Demo.</h1>
+      <p id="contact-desc">
+        Our application scientists will arrange a demonstration of the most relevant Prismatica system for your research application — either in your laboratory or remotely via live data feed.
+      </p>
+
+      <div id="contact-direct">
+        <div class="contact-channel">
+          <span class="contact-channel-label">Sales</span>
+          <a href="mailto:sales@prismatica.instruments" class="contact-channel-val">sales@prismatica.instruments</a>
+        </div>
+        <div class="contact-channel">
+          <span class="contact-channel-label">Support</span>
+          <a href="mailto:support@prismatica.instruments" class="contact-channel-val">support@prismatica.instruments</a>
+        </div>
+        <div class="contact-channel">
+          <span class="contact-channel-label">Geneva HQ</span>
+          <span class="contact-channel-val">+41 22 700 8400</span>
+        </div>
+        <div class="contact-channel">
+          <span class="contact-channel-label">Address</span>
+          <span class="contact-channel-val">14 Route de Drize<br>1227 Carouge, Geneva</span>
+        </div>
+      </div>
+
+      <!-- Spectrum decorative -->
+      <div id="contact-spectrum-line"></div>
+
+      <div id="contact-locations">
+        <p class="contact-locations-label">Regional Offices</p>
+        <div class="contact-location-row">
+          <span>Boston, MA</span>
+          <span class="contact-location-code">+1 617 555 0188</span>
+        </div>
+        <div class="contact-location-row">
+          <span>Tokyo, Japan</span>
+          <span class="contact-location-code">+81 3 5555 1820</span>
+        </div>
+        <div class="contact-location-row">
+          <span>Singapore</span>
+          <span class="contact-location-code">+65 6555 4200</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: form -->
+    <div id="contact-form-col">
+      <form id="contact-form" novalidate>
+
+        <div class="form-row form-row--two">
+          <div class="form-field">
+            <label class="form-label" for="field-name">Full name</label>
+            <input id="field-name" class="form-input" type="text" name="name" placeholder="Dr. Ingrid Solberg" autocomplete="name">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="field-email">Email address</label>
+            <input id="field-email" class="form-input" type="email" name="email" placeholder="i.solberg@university.edu" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="field-institution">Institution / Organisation</label>
+            <input id="field-institution" class="form-input" type="text" name="institution" placeholder="European Synchrotron Radiation Facility">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="field-instrument">Instrument of interest</label>
+            <select id="field-instrument" class="form-input form-select" name="instrument">
+              <option value="" disabled selected>Select an instrument</option>
+              <option value="axiom-9">Axiom-9 — UV-VIS Spectrometer</option>
+              <option value="lattice-r">Lattice-R — Portable Raman</option>
+              <option value="prism-x">Prism-X — FTIR Spectrometer</option>
+              <option value="eclipse-array">Eclipse Array — Atmospheric System</option>
+              <option value="unsure">Not sure — help me choose</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="field-application">Application &amp; requirements</label>
+            <textarea id="field-application" class="form-input form-textarea" name="application" rows="5" placeholder="Briefly describe your measurement application, sample types, and any critical performance requirements."></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field form-field--checkbox">
+            <input id="field-consent" class="form-checkbox" type="checkbox" name="consent">
+            <label class="form-checkbox-label" for="field-consent">
+              I agree to Prismatica Instruments contacting me regarding this enquiry.
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <button id="contact-submit" class="form-submit btn-primary" type="submit">
+            Submit Request
+          </button>
+        </div>
+
+        <p id="form-privacy-note">
+          Your information is held according to our <a href="#" id="privacy-link">Privacy Policy</a>. We do not share your data with third parties.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── DISTRIBUTORS ── -->
+<section id="distributors-section">
+  <div id="distributors-inner">
+    <div id="dist-header">
+      <p class="section-label">Authorised Distributors</p>
+      <h2 id="dist-title">Find your local representative.</h2>
+    </div>
+
+    <div id="dist-grid">
+      <div class="dist-card">
+        <p class="dist-region">North America</p>
+        <p class="dist-company">Photon Sciences Ltd.</p>
+        <p class="dist-contact">Boston · Chicago · Los Angeles</p>
+      </div>
+      <div class="dist-card">
+        <p class="dist-region">Japan &amp; Korea</p>
+        <p class="dist-company">Kagaku Instruments KK</p>
+        <p class="dist-contact">Tokyo · Osaka · Seoul</p>
+      </div>
+      <div class="dist-card">
+        <p class="dist-region">Southeast Asia</p>
+        <p class="dist-company">Optica Pacific Pte. Ltd.</p>
+        <p class="dist-contact">Singapore · Kuala Lumpur</p>
+      </div>
+      <div class="dist-card">
+        <p class="dist-region">India</p>
+        <p class="dist-company">Advanced Spectral Systems</p>
+        <p class="dist-contact">Bangalore · Mumbai · Delhi</p>
+      </div>
+      <div class="dist-card">
+        <p class="dist-region">Australia &amp; NZ</p>
+        <p class="dist-company">Southern Optics Pty. Ltd.</p>
+        <p class="dist-contact">Sydney · Melbourne</p>
+      </div>
+      <div class="dist-card">
+        <p class="dist-region">Middle East &amp; Africa</p>
+        <p class="dist-company">Spectrum Arabia LLC</p>
+        <p class="dist-contact">Dubai · Riyadh · Cape Town</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-brand">
+      <p class="footer-brand-name">Prismatica Instruments</p>
+      <p class="footer-brand-desc">Precision spectrographic systems for research, industry, and atmospheric monitoring. Founded 1983, Geneva.</p>
+    </div>
+    <div id="footer-col-instruments" class="footer-col">
+      <p class="footer-col-heading">Instruments</p>
+      <ul class="footer-links">
+        <li><a href="instruments.html">Axiom-9</a></li>
+        <li><a href="instruments.html">Lattice-R</a></li>
+        <li><a href="instruments.html">Prism-X</a></li>
+        <li><a href="instruments.html">Eclipse Array</a></li>
+      </ul>
+    </div>
+    <div id="footer-col-science" class="footer-col">
+      <p class="footer-col-heading">Science</p>
+      <ul class="footer-links">
+        <li><a href="science.html">Grating Technology</a></li>
+        <li><a href="science.html">Publications</a></li>
+        <li><a href="science.html">Applications</a></li>
+        <li><a href="science.html">Calibration</a></li>
+      </ul>
+    </div>
+    <div id="footer-col-company" class="footer-col">
+      <p class="footer-col-heading">Company</p>
+      <ul class="footer-links">
+        <li><a href="science.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html">Distributors</a></li>
+        <li><a href="contact.html">Support</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="footer-bottom">
+    <p id="footer-copyright">© 2025 Prismatica Instruments SA. All rights reserved.</p>
+    <div class="footer-spectrum"></div>
+  </div>
+</footer>
+
+<!-- ── GSAP ── -->
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const BASE_DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-emphasis')) || 0.7;
+  const EASE_DECEL = getComputedStyle(document.documentElement).getPropertyValue('--ease-decelerate').trim() || 'power2.out';
+  const EASE_SPRING = getComputedStyle(document.documentElement).getPropertyValue('--ease-spring').trim() || 'back.out(1.4)';
+
+  // Page load — info column immediate reveal
+  const contactTl = gsap.timeline({ defaults: { ease: EASE_DECEL } });
+  contactTl
+    .from('#contact-title', { opacity: 0, y: 16, duration: 0.7 })
+    .from('#contact-desc', { opacity: 0, y: 10, duration: 0.6 }, '-=0.35')
+    .from('.contact-channel', { opacity: 0, y: 8, duration: 0.5, stagger: 0.08, ease: EASE_SPRING }, '-=0.3')
+    .from('#contact-form-col', { opacity: 0, x: 20, duration: 0.8 }, '-=0.6');
+
+  // Distributors — horizontal scroll-reveal
+  gsap.from('.dist-card', {
+    scrollTrigger: { trigger: '#distributors-section', start: 'top 80%' },
+    scale: 0.96,
+    duration: 0.55,
+    stagger: 0.08,
+    ease: EASE_SPRING
+  });
+
+  // Footer
+  gsap.from('#site-footer', {
+    scrollTrigger: { trigger: '#site-footer', start: 'top 95%' },
+    y: 12,
+    duration: 0.9,
+    ease: EASE_DECEL
+  });
+
+  // Form submit handler (static demo — no actual submission)
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('contact-submit');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitBtn.textContent = 'Request Received';
+    submitBtn.style.background = 'var(--color-accent-cool)';
+    submitBtn.style.color = '#fff';
+    submitBtn.disabled = true;
+  });
+</script>
+
+</body>
+</html>

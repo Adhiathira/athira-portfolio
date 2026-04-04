@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process — Kesslar &amp; Vane Instruments</title>
+  <meta name="description" content="The Kesslar &amp; Vane process: from initial brief to final calibration. Every instrument made here follows the same four-stage path.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/process.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" id="nav-logo-link">
+      <span class="nav-logo-wordmark">Kesslar &amp; Vane</span>
+    </a>
+    <ul class="nav-links" id="nav-links-list">
+      <li><a href="work.html" class="nav-link" id="nav-link-work">Work</a></li>
+      <li><a href="process.html" class="nav-link nav-link--active" id="nav-link-process">Process</a></li>
+      <li><a href="studio.html" class="nav-link" id="nav-link-studio">Studio</a></li>
+      <li><a href="contact.html" class="nav-link" id="nav-link-contact">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="work.html" class="nav-link" id="nav-mobile-work">Work</a>
+  <a href="process.html" class="nav-link nav-link--active" id="nav-mobile-process">Process</a>
+  <a href="studio.html" class="nav-link" id="nav-mobile-studio">Studio</a>
+  <a href="contact.html" class="nav-link" id="nav-mobile-contact">Contact</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = document.getElementById('nav-mobile-toggle');
+    var mobileMenu = document.getElementById('nav-mobile-menu');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    }, { passive: true });
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open');
+        var isOpen = mobileMenu.classList.contains('is-open');
+        toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      });
+    }
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('.nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.classList.remove('is-open');
+        });
+      });
+    }
+  })();
+</script>
+
+<div class="nav-spacer active" id="nav-spacer"></div>
+
+<!-- ============================================================
+     PROCESS HERO — compact 20vh (about/information archetype)
+     ============================================================ -->
+<section id="process-hero" class="process-hero-section">
+  <div id="process-hero-inner" class="process-hero-inner">
+    <h3 id="process-hero-label" class="section-label">How We Work</h3>
+    <h1 id="process-hero-title" class="process-hero-title">The Process</h1>
+    <p id="process-hero-sub" class="process-hero-sub">Four stages. No shortcuts.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROCESS STAGES — numbered step rows
+     Grid: horizontal two-column layout per row (step-no | content)
+     Each row is a discrete stage with full-width media
+     Animation: clip-path wipe + y rise, stagger per stage
+     ============================================================ -->
+<section id="stages" class="stages-section">
+  <div id="stages-inner" class="stages-inner">
+
+    <!-- Stage 1 -->
+    <div id="stage-1" class="stage">
+      <div id="stage-1-row" class="stage-row">
+        <div id="stage-1-number" class="stage-number">01</div>
+        <div id="stage-1-content" class="stage-content">
+          <h2 class="stage-title">Brief &amp; Consultation</h2>
+          <div id="stage-1-body" class="stage-body">
+            <p>Every instrument we build begins with a written brief. Not a specification sheet — a conversation that is then committed to paper by hand. The brief records what needs to be measured, to what accuracy, under what conditions, and for how long.</p>
+            <p>We do not start machining until we understand the use case completely. An instrument designed for laboratory use and one designed for Arctic fieldwork may share the same name but require fundamentally different choices at every subsequent stage.</p>
+            <p>The brief is kept permanently in the instrument's file. It accompanies the instrument when it leaves the workshop.</p>
+          </div>
+        </div>
+      </div>
+      <div id="stage-1-media" class="stage-media">
+        <img
+          id="stage-1-img"
+          src="assets/stage-brief.jpeg"
+          alt="Handwritten instrument brief on a workshop desk with pencil sketches"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/stage-brief.jpeg</div>
+      </div>
+    </div>
+
+    <!-- Stage 2 -->
+    <div id="stage-2" class="stage">
+      <div id="stage-2-row" class="stage-row">
+        <div id="stage-2-number" class="stage-number">02</div>
+        <div id="stage-2-content" class="stage-content">
+          <h2 class="stage-title">Design &amp; Specification</h2>
+          <div id="stage-2-body" class="stage-body">
+            <p>Design at Kesslar &amp; Vane means engineering drawings on vellum, not CAD files. The drawings are made by hand because hand drawing forces precision of thought before precision of manufacture — every line costs effort and cannot be undone without marking the vellum.</p>
+            <p>Material specifications are determined at this stage: alloy grades, glass types, tolerances at each component interface. The instrument's expected service life — typically 60–100 years — determines which materials are acceptable.</p>
+            <p>The specification document is reviewed by the client before manufacture begins. Once signed, it becomes contractually binding on both sides.</p>
+          </div>
+        </div>
+      </div>
+      <div id="stage-2-media" class="stage-media">
+        <img
+          id="stage-2-img"
+          src="assets/stage-design.jpeg"
+          alt="Engineering drawing on vellum with a divider compass and pencil"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/stage-design.jpeg</div>
+      </div>
+    </div>
+
+    <!-- Stage 3 -->
+    <div id="stage-3" class="stage">
+      <div id="stage-3-row" class="stage-row">
+        <div id="stage-3-number" class="stage-number">03</div>
+        <div id="stage-3-content" class="stage-content">
+          <h2 class="stage-title">Fabrication &amp; Assembly</h2>
+          <div id="stage-3-body" class="stage-body">
+            <p>All machining is done on the premises. The workshop contains eight lathes, two milling machines, and a grinding room. All are manual. The case for CNC manufacture was considered in 1997 and rejected: the tolerances achievable by a skilled operator on a manual lathe, working slowly, exceed those routinely achievable on automated equipment for small components.</p>
+            <p>Optical elements — lenses, prisms, graticules — are ground in the optical workshop at the rear of the building. The grinding room is temperature-controlled. It holds a single bench and one worker at a time.</p>
+            <p>Assembly takes weeks. Every joint is test-fitted before bonding. Every threaded component is lapped to its mating part.</p>
+          </div>
+        </div>
+      </div>
+      <div id="stage-3-media" class="stage-media">
+        <img
+          id="stage-3-img"
+          src="assets/stage-fabrication.jpeg"
+          alt="Close-up of a manual lathe cutting brass — swarf and precision turning"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/stage-fabrication.jpeg</div>
+      </div>
+    </div>
+
+    <!-- Stage 4 -->
+    <div id="stage-4" class="stage">
+      <div id="stage-4-row" class="stage-row">
+        <div id="stage-4-number" class="stage-number">04</div>
+        <div id="stage-4-content" class="stage-content">
+          <h2 class="stage-title">Calibration &amp; Documentation</h2>
+          <div id="stage-4-body" class="stage-body">
+            <p>An instrument is not finished until it has been calibrated against a known reference and the results are documented. At Kesslar &amp; Vane, calibration takes longer than fabrication for precision instruments. The theodolites and spectrometers are calibrated over three months minimum.</p>
+            <p>The calibration certificate records every measurement taken during the process: not just the final result, but the trajectory of adjustments. The certificate is signed by the calibrating technician and by a second technician who checks the work independently.</p>
+            <p>Documentation is permanent. The instrument receives its number. The file is closed and archived. It can be retrieved at any time — instruments made here in the 1920s still have their files.</p>
+          </div>
+        </div>
+      </div>
+      <div id="stage-4-media" class="stage-media">
+        <img
+          id="stage-4-img"
+          src="assets/stage-calibration.jpeg"
+          alt="Calibration in progress — theodolite on a precision survey pillar with reference targets"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/stage-calibration.jpeg</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     TIMELINE STAT BAND — light surface, horizontal
+     ============================================================ -->
+<section id="timeline-band" class="timeline-band-section">
+  <div id="timeline-band-inner" class="timeline-band-inner">
+    <div id="stat-1" class="timeline-stat">
+      <span class="timeline-stat-number">6–18</span>
+      <span class="timeline-stat-label">Months per instrument</span>
+    </div>
+    <div id="stat-divider-1" class="timeline-stat-divider"></div>
+    <div id="stat-2" class="timeline-stat">
+      <span class="timeline-stat-number">100%</span>
+      <span class="timeline-stat-label">Components made in-house</span>
+    </div>
+    <div id="stat-divider-2" class="timeline-stat-divider"></div>
+    <div id="stat-3" class="timeline-stat">
+      <span class="timeline-stat-number">137</span>
+      <span class="timeline-stat-label">Years of unbroken production</span>
+    </div>
+    <div id="stat-divider-3" class="timeline-stat-divider"></div>
+    <div id="stat-4" class="timeline-stat">
+      <span class="timeline-stat-number">1</span>
+      <span class="timeline-stat-label">Workshop. One location. Always.</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer" class="site-footer">
+  <div id="footer-inner" class="footer-inner">
+    <div id="footer-top" class="footer-top">
+      <div id="footer-brand" class="footer-brand">
+        <span class="footer-wordmark">Kesslar &amp; Vane</span>
+        <p class="footer-tagline-text">Precision scientific instruments.<br>Edinburgh, Scotland.</p>
+      </div>
+      <div id="footer-nav" class="footer-nav">
+        <div id="footer-nav-col-1" class="footer-nav-col">
+          <p class="footer-nav-heading">Studio</p>
+          <ul class="footer-nav-list">
+            <li><a href="work.html" class="footer-link">Work</a></li>
+            <li><a href="process.html" class="footer-link">Process</a></li>
+            <li><a href="studio.html" class="footer-link">Studio</a></li>
+          </ul>
+        </div>
+        <div id="footer-nav-col-2" class="footer-nav-col">
+          <p class="footer-nav-heading">Contact</p>
+          <ul class="footer-nav-list">
+            <li><a href="contact.html" class="footer-link">Commission an instrument</a></li>
+            <li><a href="contact.html" class="footer-link">General enquiries</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="footer-address" class="footer-address">
+        <p class="footer-nav-heading">Location</p>
+        <p class="footer-address-text">14 Grassmarket<br>Edinburgh EH1 2JU<br>Scotland</p>
+      </div>
+    </div>
+    <div id="footer-bottom" class="footer-bottom">
+      <span class="footer-legal">© 2026 Kesslar &amp; Vane. All rights reserved.</span>
+      <span class="footer-legal">Est. Edinburgh, 1887</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  const BASE = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.78;
+  const SLOW = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-slow')) || 1.3;
+  const CARD = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-card')) || 0.52;
+  const EASE_E = getComputedStyle(document.documentElement).getPropertyValue('--ease-enter').trim() || 'power3.out';
+  const EASE_P = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.inOut';
+
+  // Hero header
+  gsap.from('#process-hero-title', { y: 24, duration: SLOW, ease: EASE_E });
+  gsap.from('#process-hero-sub', { y: 16, duration: BASE, ease: EASE_E, delay: 0.2 });
+
+  // Stage entries — clip-path wipe on media, y rise on text
+  [1, 2, 3, 4].forEach(function(i) {
+    gsap.from('#stage-' + i + '-number', {
+      scrollTrigger: { trigger: '#stage-' + i, start: 'top 78%' },
+      clipPath: 'inset(0 0 100% 0)',
+      duration: SLOW,
+      ease: EASE_P
+    });
+    gsap.from('#stage-' + i + '-content', {
+      scrollTrigger: { trigger: '#stage-' + i, start: 'top 75%' },
+      y: 40,
+      duration: BASE,
+      ease: EASE_E,
+      delay: 0.13
+    });
+    gsap.from('#stage-' + i + '-media', {
+      scrollTrigger: { trigger: '#stage-' + i, start: 'top 72%' },
+      scale: 1.04,
+      duration: BASE,
+      ease: EASE_P,
+      delay: 0.08
+    });
+  });
+
+  // Timeline stats — horizontal sweep, stagger
+  gsap.from('#stat-1, #stat-2, #stat-3, #stat-4', {
+    scrollTrigger: { trigger: '#timeline-band', start: 'top 80%' },
+    y: 30,
+    stagger: 0.15,
+    duration: BASE,
+    ease: EASE_E
+  });
+</script>
+
+</body>
+</html>

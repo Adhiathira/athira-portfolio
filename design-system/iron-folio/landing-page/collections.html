@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collections — Compendium</title>
+  <meta name="description" content="Explore institutional manuscript collections in progress on Compendium — medieval psalters, merchant ledgers, scientific correspondence, and rare sutras.">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/page-header.css">
+  <link rel="stylesheet" href="components/footer.css">
+
+  <style>
+  /* Collections page body styles */
+  #collections-body {
+    background: var(--color-page-bg);
+    padding: var(--space-section) 0;
+  }
+
+  #collections-body-inner {
+    max-width: var(--grid-max-width);
+    margin: 0 auto;
+    padding: 0 var(--grid-gutter);
+  }
+
+  /* Filter bar */
+  #collections-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  #collections-filter-label {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted-text);
+    margin-right: 12px;
+  }
+
+  .filter-btn {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #000000;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 2px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: var(--hover-transition);
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: #000000;
+    color: var(--color-page-bg);
+    border-color: #000000;
+  }
+
+  /* Full collections grid — wider, 3-col */
+  #collections-full-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 28px;
+    align-items: start;
+  }
+
+  .col-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    cursor: pointer;
+  }
+
+  .col-card-image-wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    background: rgba(0,0,0,0.04);
+  }
+
+  .col-card:nth-child(3n+1) .col-card-image-wrap { height: 320px; }
+  .col-card:nth-child(3n+2) .col-card-image-wrap { height: 280px; }
+  .col-card:nth-child(3n)   .col-card-image-wrap { height: 340px; }
+
+  .col-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.75s ease-in-out;
+  }
+
+  .col-card:hover .col-card-img {
+    transform: scale(1.04);
+  }
+
+  .col-card-img-placeholder {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.04);
+    color: var(--color-muted-text);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+
+  /* Subtle bottom gradient on card images */
+  .col-card-image-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
+    pointer-events: none;
+    border-radius: 0 0 2px 2px;
+  }
+
+  .col-card-category {
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted-text);
+    margin: 0;
+  }
+
+  .col-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-heading);
+    margin: 0;
+    transition: opacity 0.45s ease-in-out;
+  }
+
+  .col-card:hover .col-card-title {
+    opacity: 0.6;
+  }
+
+  .col-card-meta {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-body-text);
+    margin: 0;
+  }
+
+  .col-card-folio-count {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--color-muted-text);
+    margin: 0;
+  }
+
+  /* Staggered heights for visual rhythm */
+  .col-card:nth-child(3n+2) {
+    margin-top: 32px;
+  }
+
+  /* Pagination */
+  #collections-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 72px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .page-btn {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: #000000;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 2px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: var(--hover-transition);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .page-btn:hover, .page-btn.active {
+    background: #000000;
+    color: var(--color-page-bg);
+    border-color: #000000;
+  }
+
+  @media (max-width: 1024px) {
+    #collections-full-grid { grid-template-columns: repeat(2, 1fr); }
+    .col-card:nth-child(3n+2) { margin-top: 0; }
+    .col-card:nth-child(2n) { margin-top: 28px; }
+  }
+
+  @media (max-width: 600px) {
+    #collections-full-grid { grid-template-columns: 1fr; }
+    .col-card:nth-child(2n) { margin-top: 0; }
+    .col-card-image-wrap { height: 240px !important; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Compendium</a>
+    <ul class="nav-links">
+      <li><a href="collections.html" class="nav-link--active">Collections</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+<div id="nav-mobile-menu" class="nav-mobile-menu">
+  <a href="collections.html">Collections</a>
+  <a href="about.html">About</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<header id="collections-page-header" class="page-header">
+  <div class="page-header-inner">
+    <span class="page-header-eyebrow">Institutional collections</span>
+    <h1 class="page-header-title">Works in progress</h1>
+    <p class="page-header-subtitle">Materials from research libraries, private institutions, and university special collections — currently being transcribed, annotated, or prepared for edition.</p>
+  </div>
+</header>
+
+<!-- COLLECTIONS BODY -->
+<main id="collections-body">
+  <div id="collections-body-inner">
+    <!-- Filter bar -->
+    <div id="collections-filter">
+      <span id="collections-filter-label">Filter by language:</span>
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Latin</button>
+      <button class="filter-btn">Italian</button>
+      <button class="filter-btn">French</button>
+      <button class="filter-btn">Japanese</button>
+      <button class="filter-btn">Arabic</button>
+      <button class="filter-btn">Greek</button>
+    </div>
+
+    <!-- Collections grid -->
+    <div id="collections-full-grid">
+      <!-- 1 -->
+      <div class="col-card">
+        <div class="col-card-image-wrap">
+          <img class="col-card-img" src="assets/collection-1.jpeg" alt="Medieval Latin psalter illuminated folio" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="col-card-img-placeholder">→ assets/collection-1.jpeg</div>
+        </div>
+        <p class="col-card-category">Latin · 13th Century</p>
+        <h3 class="col-card-title">Psalterium Monasticum</h3>
+        <p class="col-card-meta">Augustinian psalter, Flemish provenance. Caroline minuscule with rubric headers.</p>
+        <p class="col-card-folio-count">214 folios · Transcription in progress</p>
+      </div>
+
+      <!-- 2 -->
+      <div class="col-card">
+        <div class="col-card-image-wrap">
+          <img class="col-card-img" src="assets/collection-2.jpeg" alt="Italian merchant ledger in secretary hand" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="col-card-img-placeholder">→ assets/collection-2.jpeg</div>
+        </div>
+        <p class="col-card-category">Italian · 16th Century</p>
+        <h3 class="col-card-title">Libro dei Conti, Genova</h3>
+        <p class="col-card-meta">Double-entry merchant ledger, Casa Grimaldi. Secretary hand, mixed Latin and vernacular.</p>
+        <p class="col-card-folio-count">88 folios · Edition review</p>
+      </div>
+
+      <!-- 3 -->
+      <div class="col-card">
+        <div class="col-card-image-wrap">
+          <img class="col-card-img" src="assets/collection-3.jpeg" alt="18th century French scientific correspondence" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="col-card-img-placeholder">→ assets/collection-3.jpeg</div>
+        </div>
+        <p class="col-card-category">French · 18th Century</p>
+        <h3 class="col-card-title">Correspondance Savante</h3>
+        <p class="col-card-meta">Scientific epistolary archive, Académie Royale. Cursive académique with marginal annotations.</p>
+        <p class="col-card-folio-count">340 letters · Annotation phase</p>
+      </div>
+
+      <!-- 4 -->
+      <div class="col-card">
+        <div class="col-card-image-wrap">
+          <img class="col-card-img" src="assets/collection-4.jpeg" alt="Japanese Buddhist sutra scroll fragment" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="col-card-img-placeholder">→ assets/collection-4.jpeg</div>
+        </div>
+        <p class="col-card-category">Japanese · 12th Century</p>
+        <h3 class="col-card-title">Hokekyō Sutra Fragment</h3>
+        <p class="col-card-meta">Heian period scroll fragment, gold ink on indigo-dyed paper. Nara provenance.</p>
+        <p class="col-card-folio-count">7 scroll sections · Export preparation</p>
+      </div>
+
+      <!-- 5 -->
+      <div class="col-card">
+        <div class="col-card-image-wrap">
+          <img class="col-card-img" src="assets/collection-5.jpeg" alt="Arabic medical manuscript with diagrams" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="col-card-img-placeholder">→ assets/collection-5.jpeg</div>
+        </div>
+        <p class="col-card-category">Arabic · 14th Century</p>
+        <h3 class="col-card-title">Kitāb al-Manāfi' al-Ḥayawān</h3>
+        <p class="col-card-meta">Illustrated natural history manuscript, maghribī script. Diagrams with Arabic caption text.</p>
+        <p class="col-card-folio-count">156 folios · Hand identification</p>
+      </div>
+
+      <!-- 6 -->
+      <div class="col-card">
+        <div class="col-card-image-wrap">
+          <img class="col-card-img" src="assets/collection-6.jpeg" alt="Byzantine Greek theological codex with marginal scholia" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="col-card-img-placeholder">→ assets/collection-6.jpeg</div>
+        </div>
+        <p class="col-card-category">Greek · 10th Century</p>
+        <h3 class="col-card-title">Codex Theologicus Byzantinus</h3>
+        <p class="col-card-meta">Byzantine minuscule with extensive marginal scholia. Multiple scribal hands identified.</p>
+        <p class="col-card-folio-count">312 folios · Multi-hand calibration</p>
+      </div>
+    </div><!-- /collections-full-grid -->
+
+    <!-- Pagination -->
+    <nav id="collections-pagination" aria-label="Collections pagination">
+      <a href="#" class="page-btn active">1</a>
+      <a href="#" class="page-btn">2</a>
+      <a href="#" class="page-btn">3</a>
+      <a href="#" class="page-btn">Next →</a>
+    </nav>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand">
+        <p id="footer-brand-name">Compendium</p>
+        <p id="footer-brand-tagline">Manuscript intelligence for the materials that endure.</p>
+      </div>
+      <div id="footer-nav-columns">
+        <div class="footer-nav-col">
+          <p class="footer-nav-col-heading">Platform</p>
+          <ul class="footer-nav-list">
+            <li><a href="collections.html">Collections</a></li>
+            <li><a href="about.html">Method</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-col-heading">Resources</p>
+          <ul class="footer-nav-list">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">TEI Export guide</a></li>
+            <li><a href="#">Scribal hand library</a></li>
+            <li><a href="#">Research partnerships</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-copyright">© 2025 Compendium. All rights reserved.</p>
+      <ul id="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="behaviors/nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const BASE_DURATION = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--duration-base')
+  ) || 0.75;
+  const EASE = (getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim()) || 'power2.out';
+
+  // Page header — fade up on load
+  gsap.from('.page-header-inner', { y: 24, duration: BASE_DURATION, ease: EASE, delay: 0.2 });
+
+  // Filter bar — slide in from left
+  gsap.from('#collections-filter', {
+    scrollTrigger: { trigger: '#collections-filter', start: 'top 90%' },
+    x: -30,
+    duration: BASE_DURATION * 0.9,
+    ease: EASE,
+  });
+
+  // Cards — staggered vertical rise
+  document.querySelectorAll('.col-card').forEach((card, i) => {
+    gsap.from(card, {
+      scrollTrigger: { trigger: '#collections-full-grid', start: 'top 82%' },
+      y: 40,
+      duration: BASE_DURATION,
+      delay: i * 0.10,
+      ease: EASE,
+    });
+  });
+
+  // Filter buttons — interactive state toggle
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+})();
+</script>
+</body>
+</html>

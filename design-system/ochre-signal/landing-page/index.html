@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pellum — Colour Drawn from the Ground</title>
+  <meta name="description" content="Pellum produces small-batch natural inks milled from foraged minerals and plants. Pigments for calligraphers, printmakers, and studio artists.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+</head>
+<body>
+
+<!-- NAV TEMPLATE -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo">Pellum</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="pigments.html" class="nav-link">Pigments</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+  </ul>
+  <a href="pigments.html" class="nav-cta">Order</a>
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="pigments.html" class="nav-link">Pigments</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="pigments.html" class="nav-cta">Order</a>
+</div>
+<script>
+(function() {
+  var nav = document.getElementById('site-nav');
+  var toggle = document.querySelector('.nav-mobile-toggle');
+  var mobileMenu = document.querySelector('.nav-mobile-menu');
+  var scrolled = false;
+
+  window.addEventListener('scroll', function() {
+    var isScrolled = window.scrollY > 60;
+    if (isScrolled !== scrolled) {
+      scrolled = isScrolled;
+      if (scrolled) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }
+  }, { passive: true });
+
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function() {
+      var isOpen = mobileMenu.classList.contains('is-open');
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      mobileMenu.classList.toggle('is-open');
+      nav.classList.toggle('nav-mobile-open');
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+  }
+})();
+</script>
+<!-- END NAV -->
+
+<!-- HERO SECTION -->
+<section class="hero" aria-label="Hero">
+  <!-- Layer 1: ambient video background -->
+  <video
+    class="hero__video-bg"
+    src="assets/hero-bg.mp4"
+    autoplay
+    loop
+    muted
+    playsinline
+    aria-hidden="true"
+    onerror="this.style.display='none'"
+  ></video>
+
+  <!-- Layer 2: ghost letterforms -->
+  <div class="hero__ghost-text" aria-hidden="true">
+    <span>Pellum</span>
+  </div>
+
+  <!-- Layer 3: foreground content -->
+  <div class="hero__content" data-hero-content>
+    <span class="hero__eyebrow" data-hero-eyebrow>Natural Ink Studio</span>
+    <h1 class="hero__headline" data-hero-headline>Colour Drawn<br>from the Ground</h1>
+    <p class="hero__body" data-hero-body>
+      Small-batch pigments milled from foraged minerals and plants. Made for calligraphers, printmakers, and studio artists who demand material integrity.
+    </p>
+    <div class="hero__cta-group" data-hero-cta>
+      <a href="pigments.html" class="btn-primary">Explore Pigments</a>
+      <a href="process.html" class="btn-ghost">Our Process</a>
+    </div>
+  </div>
+
+  <div class="hero__scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MATERIALS OVERVIEW — asymmetric split, 1.5fr/1fr -->
+<section class="section section--cream" aria-label="Materials overview">
+  <div class="container">
+    <div class="materials-split">
+      <!-- Left: ambient video of material surface -->
+      <div class="materials-split__left" data-reveal="fade-right">
+        <div class="materials-split__ambient">
+          <video
+            src="assets/material-detail.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            aria-label="Slow drift across woven linen fiber surface"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+          ></video>
+          <div class="asset-placeholder" style="display:none;">
+            <span class="asset-placeholder__label">Material Surface</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: material categories list -->
+      <div class="materials-split__right" data-reveal="fade-left">
+        <span class="section__eyebrow">The Palette</span>
+        <h2 class="section__heading">Earth, Mineral,<br>Plant</h2>
+        <p class="section__subheading">Every Pellum ink traces back to a specific place and season. We mill, suspend, and test each batch before it reaches your hands.</p>
+        <ul class="materials-split__list">
+          <li class="materials-split__item">
+            <span class="materials-split__item-label">Mineral</span>
+            <p class="materials-split__item-name">Iron Oxide Series</p>
+            <p class="materials-split__item-desc">Raw ochre, sienna, and umber sourced from clay deposits. Dense pigment load, exceptional lightfastness.</p>
+          </li>
+          <li class="materials-split__item">
+            <span class="materials-split__item-label">Plant</span>
+            <p class="materials-split__item-name">Botanical Series</p>
+            <p class="materials-split__item-desc">Weld, madder, and oak gall extracts. Seasonal availability. Each batch is numbered and dated.</p>
+          </li>
+          <li class="materials-split__item">
+            <span class="materials-split__item-label">Carbon</span>
+            <p class="materials-split__item-name">Soot &amp; Char Series</p>
+            <p class="materials-split__item-desc">Vine charcoal and lamp black suspended in gum arabic. The oldest ink lineage, still unimproved.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS STEPS — numbered rows -->
+<section class="section section--taupe" aria-label="Process overview">
+  <div class="container">
+    <span class="section__eyebrow">How It's Made</span>
+    <h2 class="section__heading">The Method</h2>
+    <div class="process-steps" data-stagger-group="fade-up">
+      <div class="process-step">
+        <span class="process-step__number">01</span>
+        <h3 class="process-step__title">Forage &amp; Source</h3>
+        <p class="process-step__desc">Each raw material is collected or sourced from known origins — named deposits, specific regions, identified growers. Nothing anonymous.</p>
+      </div>
+      <div class="process-step">
+        <span class="process-step__number">02</span>
+        <h3 class="process-step__title">Mill &amp; Grade</h3>
+        <p class="process-step__desc">Dry pigments are milled in small quantities, graded for particle size, and tested for consistency across the batch before suspension.</p>
+      </div>
+      <div class="process-step">
+        <span class="process-step__number">03</span>
+        <h3 class="process-step__title">Suspend &amp; Test</h3>
+        <p class="process-step__desc">Final inks are mixed, tested for flow across five paper stocks, and assessed for fade resistance under UV exposure over 30 days.</p>
+      </div>
+      <div class="process-step">
+        <span class="process-step__number">04</span>
+        <h3 class="process-step__title">Number &amp; Ship</h3>
+        <p class="process-step__desc">Each bottle carries a batch number, season, and material origin. You know exactly what you're working with before you uncap it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PIGMENT FEATURE GRID — 3-col cards -->
+<section class="section section--cream" aria-label="Featured pigments">
+  <div class="container">
+    <span class="section__eyebrow">Current Collection</span>
+    <h2 class="section__heading">Selected Pigments</h2>
+    <div class="pigment-grid" data-stagger-group="scale">
+      <article class="pigment-card" tabindex="0">
+        <div class="pigment-card__swatch">
+          <div class="pigment-card__swatch-color" style="background: #c4762a;"></div>
+        </div>
+        <div class="pigment-card__body">
+          <span class="pigment-card__category">Mineral · Batch 24A</span>
+          <h3 class="pigment-card__name">Burnt Sienna</h3>
+          <p class="pigment-card__desc">Calcined iron-rich clay from coastal deposits. Warm reddish brown with exceptional granulation on wet media.</p>
+        </div>
+      </article>
+      <article class="pigment-card" tabindex="0">
+        <div class="pigment-card__swatch">
+          <div class="pigment-card__swatch-color" style="background: #6b5c34;"></div>
+        </div>
+        <div class="pigment-card__body">
+          <span class="pigment-card__category">Mineral · Batch 24B</span>
+          <h3 class="pigment-card__name">Raw Umber</h3>
+          <p class="pigment-card__desc">Unheated manganese-iron deposit. Neutral brown with subtle green undertone. Dries faster than processed pigments.</p>
+        </div>
+      </article>
+      <article class="pigment-card" tabindex="0">
+        <div class="pigment-card__swatch">
+          <div class="pigment-card__swatch-color" style="background: #8c3f22;"></div>
+        </div>
+        <div class="pigment-card__body">
+          <span class="pigment-card__category">Plant · Batch 23W</span>
+          <h3 class="pigment-card__name">Madder Lake</h3>
+          <p class="pigment-card__desc">Alizarin extracted from Rubia tinctorum root. Transparent warm red. Seasonal — limited to autumn harvest batches.</p>
+        </div>
+      </article>
+    </div>
+    <div style="text-align:center; margin-top: 48px;">
+      <a href="pigments.html" class="btn-primary" data-reveal="fade-up">View Full Collection</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND — dark, centered editorial with product video -->
+<section class="cta-band" aria-label="Studio invitation">
+  <video
+    src="assets/feature-product.mp4"
+    autoplay
+    loop
+    muted
+    playsinline
+    aria-hidden="true"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;z-index:0;"
+    onerror="this.style.display='none'"
+  ></video>
+  <div class="container" style="position:relative;z-index:2;" data-reveal="fade-up">
+    <h2 class="cta-band__heading">Made for the<br>Considered Hand</h2>
+    <p class="cta-band__body">Pellum pigments are produced in batches of 50–120 units. When a batch sells, it is gone. The next one will be different.</p>
+    <div class="cta-band__cta-group">
+      <a href="pigments.html" class="btn-primary">Current Batches</a>
+      <a href="about.html" class="btn-ghost" style="color:rgba(242,239,233,0.7);border-color:rgba(242,239,233,0.3);">About the Studio</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer" data-reveal="fade-up">
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <a href="index.html" class="footer__logo">Pellum</a>
+      <p class="footer__tagline">Colour drawn from the ground. Small-batch natural inks for studio practice.</p>
+    </div>
+    <div>
+      <p class="footer__col-heading">Studio</p>
+      <ul class="footer__links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="process.html">Sourcing</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__col-heading">Collection</p>
+      <ul class="footer__links">
+        <li><a href="pigments.html">All Pigments</a></li>
+        <li><a href="pigments.html">Mineral Series</a></li>
+        <li><a href="pigments.html">Botanical Series</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__col-heading">Contact</p>
+      <ul class="footer__links">
+        <li><a href="about.html">Stockists</a></li>
+        <li><a href="about.html">Press</a></li>
+        <li><a href="about.html">Wholesale</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p class="footer__copyright">© 2026 Pellum. All rights reserved.</p>
+    <p class="footer__copyright" style="opacity:0.6;">Small-batch natural ink studio.</p>
+  </div>
+</footer>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="behaviors/scroll-reveal.js"></script>
+<script>
+(function() {
+  // Register ScrollTrigger
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  // Hero entrance — cascading sequence
+  var tl = gsap.timeline({ delay: 0.2 });
+  tl.to('[data-hero-eyebrow]', {
+    opacity: 1, y: 0,
+    duration: 0.8,
+    ease: 'power2.out'
+  })
+  .to('[data-hero-headline]', {
+    opacity: 1, y: 0,
+    duration: 0.8,
+    ease: 'power2.out'
+  }, '-=0.5')
+  .to('[data-hero-body]', {
+    opacity: 1, y: 0,
+    duration: 0.7,
+    ease: 'power2.out'
+  }, '-=0.5')
+  .to('[data-hero-cta]', {
+    opacity: 1, y: 0,
+    duration: 0.6,
+    ease: 'power2.out'
+  }, '-=0.4');
+
+  // Set initial states for GSAP targets (must set in JS before animating)
+  gsap.set('[data-hero-eyebrow], [data-hero-headline], [data-hero-body], [data-hero-cta]', {
+    y: 4
+  });
+
+  // Scroll reveals — [data-reveal] single elements
+  document.querySelectorAll('[data-reveal]').forEach(function(el) {
+    var type = el.getAttribute('data-reveal');
+    var from = { opacity: 0 };
+    if (type === 'fade-up') { from.y = 24; }
+    else if (type === 'fade-right') { from.x = -32; }
+    else if (type === 'fade-left') { from.x = 32; }
+    else if (type === 'scale-rise') { from.scale = 0.94; from.y = 20; }
+
+    gsap.set(el, from);
+    gsap.to(el, Object.assign({ opacity: 1, y: 0, x: 0, scale: 1 }, {
+      duration: 0.7,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none'
+      }
+    }));
+  });
+
+  // [data-stagger-group] batch reveals
+  document.querySelectorAll('[data-stagger-group]').forEach(function(group) {
+    var type = group.getAttribute('data-stagger-group');
+    var children = group.children;
+    var from = { opacity: 0 };
+    var to = { opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.1 };
+
+    if (type === 'fade-up') { from.y = 24; to.y = 0; }
+    else if (type === 'scale') { from.scale = 0.94; from.y = 20; to.scale = 1; to.y = 0; }
+    else if (type === 'rotate') { from.rotation = 3; from.y = 40; to.rotation = 0; to.y = 0; }
+    else if (type === 'sweep-left') { from.x = -70; to.x = 0; }
+
+    gsap.set(children, from);
+    to.scrollTrigger = {
+      trigger: group,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    };
+    gsap.to(children, to);
+  });
+})();
+</script>
+
+</body>
+</html>

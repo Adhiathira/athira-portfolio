@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Lattice Bureau — start a structural engineering conversation or enquire about a project.">
+  <title>Contact — Lattice Bureau</title>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- ─── NAV ───────────────────────────────────────────────────────────── -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="method.html">Method</a></li>
+    </ul>
+    <div class="nav-logo">
+      <a href="index.html">Lattice Bureau</a>
+    </div>
+    <div class="nav-actions">
+      <a href="studio.html">Studio</a>
+      <a href="contact.html" class="nav-link--active nav-cta">Enquire</a>
+    </div>
+    <button class="nav-mobile-toggle" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div id="nav-mobile-menu">
+  <a href="work.html">Work</a>
+  <a href="method.html">Method</a>
+  <a href="studio.html">Studio</a>
+  <a href="contact.html" class="nav-mobile-cta">Enquire</a>
+</div>
+
+<!-- ─── PAGE HEADER (minimal — action archetype: ~15vh) ────────────────── -->
+<header id="contact-header" style="background:var(--color-surface-1);padding-top:80px;min-height:30vh;display:flex;align-items:flex-end;border-bottom:1px solid rgba(0,0,0,0.06);">
+  <div style="max-width:var(--grid-container-width);margin:0 auto;padding:48px var(--grid-padding-inline) 60px;width:100%;">
+    <span class="eyebrow">Get in touch</span>
+    <h1 id="contact-title" style="font-family:var(--font-heading);font-size:clamp(2rem,4.5vw,3.25rem);font-weight:400;letter-spacing:0.02em;color:var(--color-heading);margin:0;line-height:1.1;max-width:500px;">
+      Tell us about your project
+    </h1>
+  </div>
+</header>
+
+<!-- ─── MAIN CONTACT SECTION (white, form + direct channels) ───────────── -->
+<section id="contact-main" class="section--light">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:100px;align-items:start;">
+
+      <!-- Contact form -->
+      <div id="contact-form-container">
+        <span class="eyebrow" style="margin-bottom:32px;">Project enquiry</span>
+        <form id="contact-form" style="display:flex;flex-direction:column;gap:0;" novalidate>
+
+          <div id="form-row-1" class="form-group" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--grid-gap-sm);margin-bottom:var(--grid-gap);">
+            <div class="form-field">
+              <label for="field-name" style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-subtle-text);display:block;margin-bottom:10px;">Name</label>
+              <input type="text" id="field-name" name="name" placeholder="Your name" required style="width:100%;font-family:var(--font-body);font-size:0.9375rem;color:var(--color-heading);background:transparent;border:none;border-bottom:1.5px solid var(--color-border-default);padding:10px 0;outline:none;transition:border-color var(--duration-base) var(--ease-languid);">
+            </div>
+            <div class="form-field">
+              <label for="field-org" style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-subtle-text);display:block;margin-bottom:10px;">Organisation</label>
+              <input type="text" id="field-org" name="organisation" placeholder="Practice or company" style="width:100%;font-family:var(--font-body);font-size:0.9375rem;color:var(--color-heading);background:transparent;border:none;border-bottom:1.5px solid var(--color-border-default);padding:10px 0;outline:none;transition:border-color var(--duration-base) var(--ease-languid);">
+            </div>
+          </div>
+
+          <div id="form-row-2" class="form-group" style="margin-bottom:var(--grid-gap);">
+            <label for="field-email" style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-subtle-text);display:block;margin-bottom:10px;">Email</label>
+            <input type="email" id="field-email" name="email" placeholder="your@email.com" required style="width:100%;font-family:var(--font-body);font-size:0.9375rem;color:var(--color-heading);background:transparent;border:none;border-bottom:1.5px solid var(--color-border-default);padding:10px 0;outline:none;transition:border-color var(--duration-base) var(--ease-languid);">
+          </div>
+
+          <div id="form-row-3" class="form-group" style="margin-bottom:var(--grid-gap);">
+            <label style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-subtle-text);display:block;margin-bottom:14px;">Project type</label>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;" id="project-type-group">
+              <button type="button" class="type-chip type-chip--active" data-value="new-build" style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;background:transparent;border:1.5px solid #111111;color:#111111;padding:8px 16px;cursor:pointer;transition:background-color var(--duration-base) var(--ease-soft),color var(--duration-base) var(--ease-soft);">New build</button>
+              <button type="button" class="type-chip" data-value="retrofit" style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;background:transparent;border:1.5px solid var(--color-border-default);color:var(--color-subtle-text);padding:8px 16px;cursor:pointer;transition:background-color var(--duration-base) var(--ease-soft),color var(--duration-base) var(--ease-soft),border-color var(--duration-base) var(--ease-soft);">Retrofit</button>
+              <button type="button" class="type-chip" data-value="research" style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;background:transparent;border:1.5px solid var(--color-border-default);color:var(--color-subtle-text);padding:8px 16px;cursor:pointer;transition:background-color var(--duration-base) var(--ease-soft),color var(--duration-base) var(--ease-soft),border-color var(--duration-base) var(--ease-soft);">Research</button>
+              <button type="button" class="type-chip" data-value="consultation" style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;background:transparent;border:1.5px solid var(--color-border-default);color:var(--color-subtle-text);padding:8px 16px;cursor:pointer;transition:background-color var(--duration-base) var(--ease-soft),color var(--duration-base) var(--ease-soft),border-color var(--duration-base) var(--ease-soft);">Consultation</button>
+            </div>
+          </div>
+
+          <div id="form-row-4" class="form-group" style="margin-bottom:var(--grid-gap);">
+            <label for="field-message" style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-subtle-text);display:block;margin-bottom:10px;">Tell us about the project</label>
+            <textarea id="field-message" name="message" placeholder="Brief description — location, program, scale, structural complexity..." rows="5" style="width:100%;font-family:var(--font-body);font-size:0.9375rem;color:var(--color-heading);background:transparent;border:none;border-bottom:1.5px solid var(--color-border-default);padding:10px 0;outline:none;resize:none;transition:border-color var(--duration-base) var(--ease-languid);line-height:1.6;"></textarea>
+          </div>
+
+          <div id="form-submit-row" style="margin-top:12px;">
+            <button type="submit" id="form-submit-btn" class="btn-primary" style="cursor:pointer;">Send enquiry</button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Direct channels + addresses -->
+      <div id="contact-direct" style="padding-top:48px;">
+        <div style="margin-bottom:52px;">
+          <span class="eyebrow">Direct</span>
+          <div style="display:flex;flex-direction:column;gap:24px;margin-top:24px;">
+            <div>
+              <p style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-subtle-text);margin:0 0 8px;">New projects</p>
+              <a href="mailto:studio@latticebureau.com" style="font-family:var(--font-body);font-size:1rem;color:var(--color-heading);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.12);transition:border-color var(--duration-base) var(--ease-languid);">studio@latticebureau.com</a>
+            </div>
+            <div>
+              <p style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-subtle-text);margin:0 0 8px;">Press &amp; media</p>
+              <a href="mailto:press@latticebureau.com" style="font-family:var(--font-body);font-size:1rem;color:var(--color-heading);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.12);transition:border-color var(--duration-base) var(--ease-languid);">press@latticebureau.com</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edinburgh address -->
+        <div style="border-top:1px solid rgba(0,0,0,0.07);padding-top:32px;margin-bottom:32px;">
+          <p style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-subtle-text);margin:0 0 14px;">Edinburgh</p>
+          <p style="font-family:var(--font-body);font-size:0.9375rem;color:var(--color-muted-text);line-height:1.65;margin:0 0 4px;">12 Drummond Street</p>
+          <p style="font-family:var(--font-body);font-size:0.9375rem;color:var(--color-muted-text);line-height:1.65;margin:0 0 4px;">Edinburgh EH8 9TU</p>
+          <p style="font-family:var(--font-body);font-size:0.9375rem;color:var(--color-muted-text);line-height:1.65;margin:0;">+44 131 000 0000</p>
+        </div>
+
+        <!-- London address -->
+        <div style="border-top:1px solid rgba(0,0,0,0.07);padding-top:32px;">
+          <p style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-subtle-text);margin:0 0 14px;">London</p>
+          <p style="font-family:var(--font-body);font-size:0.9375rem;color:var(--color-muted-text);line-height:1.65;margin:0 0 4px;">4 Perseverance Works</p>
+          <p style="font-family:var(--font-body);font-size:0.9375rem;color:var(--color-muted-text);line-height:1.65;margin:0 0 4px;">London E2 8DD</p>
+          <p style="font-family:var(--font-body);font-size:0.9375rem;color:var(--color-muted-text);line-height:1.65;margin:0;">+44 20 0000 0000</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────── -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-brand-name">Lattice Bureau</p>
+        <p class="footer-brand-tagline">Structural engineering at the intersection of precision and architectural vision.</p>
+      </div>
+      <div class="footer-links-group">
+        <div class="footer-col">
+          <p class="footer-col-heading">Practice</p>
+          <a href="work.html">Work</a>
+          <a href="method.html">Method</a>
+          <a href="studio.html">Studio</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-heading">Connect</p>
+          <a href="mailto:studio@latticebureau.com">studio@latticebureau.com</a>
+          <a href="studio.html">Edinburgh</a>
+          <a href="studio.html">London</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-legal">© 2025 Lattice Bureau Ltd. Registered in Scotland.</p>
+      <div class="footer-social">
+        <a href="#">LinkedIn</a>
+        <a href="#">Dezeen</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.45;
+
+// Header: rotate + rise (distinct entry per page)
+gsap.from('#contact-title', {
+  rotation: 1,
+  y: 28,
+  duration: BASE_DURATION * 1.2,
+  ease: 'power2.out',
+  delay: 0.12
+});
+
+// Form container slides up
+gsap.from('#contact-form-container', {
+  scrollTrigger: { trigger: '#contact-main', start: 'top 78%' },
+  y: 40, duration: BASE_DURATION * 1.1, ease: 'power2.out'
+});
+
+// Direct channels: fade from right
+gsap.from('#contact-direct', {
+  scrollTrigger: { trigger: '#contact-main', start: 'top 75%' },
+  x: 50, duration: BASE_DURATION * 1.2, ease: 'power2.out', delay: 0.1
+});
+
+// Form field focus: bottom border darkens
+document.querySelectorAll('input, textarea').forEach(el => {
+  el.addEventListener('focus', () => {
+    el.style.borderBottomColor = '#111111';
+    el.style.borderBottomWidth = '2px';
+  });
+  el.addEventListener('blur', () => {
+    el.style.borderBottomColor = 'var(--color-border-default)';
+    el.style.borderBottomWidth = '1.5px';
+  });
+});
+
+// Type chip selector
+const chips = document.querySelectorAll('.type-chip');
+chips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    chips.forEach(c => {
+      c.style.background = 'transparent';
+      c.style.color = 'var(--color-subtle-text)';
+      c.style.borderColor = 'var(--color-border-default)';
+      c.classList.remove('type-chip--active');
+    });
+    chip.style.background = '#111111';
+    chip.style.color = '#ffffff';
+    chip.style.borderColor = '#111111';
+    chip.classList.add('type-chip--active');
+  });
+});
+
+// Form submit: prevent default, show confirmation
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('form-submit-btn');
+  btn.textContent = 'Sent — we\'ll be in touch';
+  btn.style.backgroundColor = 'transparent';
+  btn.style.color = '#111111';
+  btn.style.borderColor = '#111111';
+  btn.disabled = true;
+});
+</script>
+<script src="behaviors/nav.js"></script>
+
+<style>
+@media (max-width: 900px) {
+  #contact-main .section-inner > div {
+    grid-template-columns: 1fr !important;
+    gap: 60px !important;
+  }
+  #contact-direct {
+    padding-top: 0 !important;
+  }
+  #form-row-1 {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 600px) {
+  #form-row-1 {
+    gap: 20px !important;
+  }
+  #project-type-group {
+    gap: 8px !important;
+  }
+}
+</style>
+</body>
+</html>

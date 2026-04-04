@@ -1,0 +1,185 @@
+/* hero.css — Margin hero section */
+/* Video background, paper surface drift — hero-surface.mp4 */
+/* HERO_TREATMENT: light — paper surface gives warmth to the white field */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  padding-top: var(--space-hero-pt);
+  padding-bottom: var(--space-hero-pb);
+}
+
+/* ── Video background ── */
+.hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.28;
+}
+
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(255,255,255,0.72) 0%,
+    rgba(245,245,245,0.55) 60%,
+    rgba(245,245,245,0.45) 100%
+  );
+}
+
+/* ── Container ── */
+.container {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding-left: var(--grid-container-px);
+  padding-right: var(--grid-container-px);
+  width: 100%;
+}
+
+/* ── Hero content ── */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+.hero-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  line-height: var(--type-mono-line);
+  color: var(--color-muted-text);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 24px 0;
+  opacity: 0; /* GSAP sets to 1 */
+}
+
+.hero-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 7vw, var(--type-display));
+  line-height: 1.04;
+  font-weight: var(--type-display-weight);
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--color-heading-text);
+  margin: 0 0 32px 0;
+  opacity: 0; /* GSAP sets to 1 */
+}
+
+.hero-body {
+  font-size: var(--type-body-lg);
+  line-height: var(--type-body-lg-line);
+  color: var(--color-body-text);
+  max-width: 580px;
+  margin: 0 0 48px 0;
+  opacity: 0; /* GSAP sets to 1 */
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0; /* GSAP sets to 1 */
+}
+
+/* ── Buttons (shared) ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-cta-pt) var(--space-cta-px);
+  font-family: var(--font-body);
+  font-size: var(--type-body-sm);
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-nav);
+  text-transform: capitalize;
+  border-radius: var(--space-cta-radius);
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--btn-transition);
+  border: 1px solid transparent;
+}
+
+.btn--primary {
+  background-color: var(--color-accent);
+  color: var(--color-heading-text);
+  border-color: var(--color-accent);
+}
+.btn--primary:hover {
+  opacity: 0.88;
+}
+.btn--primary:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-heading-text);
+  border-color: var(--color-heading-text);
+}
+.btn--ghost:hover {
+  background-color: var(--color-heading-text);
+  color: #ffffff;
+}
+.btn--ghost:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.btn--outline-light {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: rgba(255,255,255,0.6);
+}
+.btn--outline-light:hover {
+  background-color: rgba(255,255,255,0.12);
+  border-color: #ffffff;
+}
+.btn--outline-light:focus-visible {
+  outline: var(--focus-outline-width) solid #ffffff;
+  outline-offset: var(--focus-outline-offset);
+}
+
+.btn--lg {
+  padding: 18px 36px;
+  font-size: var(--type-body-md);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero-heading {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+  .hero-body {
+    font-size: var(--type-body-md);
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    min-height: 90vh;
+    padding-top: 120px;
+    padding-bottom: 80px;
+  }
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

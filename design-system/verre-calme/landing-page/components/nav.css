@@ -1,0 +1,143 @@
+/* nav.css — verre-calme */
+/* nav.json: height=24px, static position, no backdrop, no scroll transition, itemSpacing=30px */
+/* Letter-spacing: 0.08em on nav links (twist D) */
+
+nav#site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 48px; /* rendered height accounts for padding; token height=24 is content height */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  background: transparent;
+  transition: background 0.39s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+nav#site-nav.scrolled {
+  background: rgba(252, 247, 241, 0.96);
+  backdrop-filter: none;
+}
+
+.nav-logo {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000000;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000000;
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links a:hover {
+  opacity: 0.5;
+}
+
+.nav-links a.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Mobile toggle */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #000000;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+nav#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+nav#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+nav#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Mobile menu overlay */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fcf7f1;
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+}
+
+.nav-mobile-menu a {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000000;
+  text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  nav#site-nav {
+    padding: 0 24px;
+  }
+}

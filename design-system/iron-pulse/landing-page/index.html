@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prismatica Instruments — Precision Spectrographic Systems</title>
+  <meta name="description" content="Prismatica Instruments engineers precision spectrographic analysis systems for materials science, quantum optics, and atmospheric research.">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Components -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo-link">
+    <div class="nav-logo-mark"></div>
+    <span class="nav-logo-wordmark">Prismatica</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="instruments.html" class="nav-link">Instruments</a></li>
+    <li><a href="science.html" class="nav-link">Science</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+
+  <a href="contact.html" class="nav-cta">Request Demo</a>
+
+  <button class="nav-mobile-toggle" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-menu">
+  <a href="instruments.html" class="nav-mobile-link">Instruments</a>
+  <a href="science.html" class="nav-mobile-link">Science</a>
+  <a href="contact.html" class="nav-mobile-link">Contact</a>
+  <a href="contact.html" class="nav-mobile-cta">Request Demo</a>
+</div>
+
+<script>
+  // Nav scroll handler
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Mobile toggle
+  const toggle = document.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile-menu');
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open');
+  });
+</script>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-surface.mp4"
+      autoplay muted loop playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="hero-bg-video-placeholder" style="display:none;">
+      → assets/hero-surface.mp4
+    </div>
+  </div>
+
+  <div id="hero-video-gradient"></div>
+  <div id="hero-spectrum-bar"></div>
+
+  <div id="hero-content" class="hero-content">
+    <p id="hero-eyebrow">Spectrographic Analysis Systems</p>
+    <h1 id="hero-headline">
+      Light as a<br>
+      <span class="accent-word">precision</span><br>
+      instrument.
+    </h1>
+    <div id="hero-body-group">
+      <p id="hero-subtext">
+        Prismatica engineers diffraction-grating spectrometers and optical analysis systems used in materials science, atmospheric monitoring, and quantum research laboratories worldwide.
+      </p>
+      <div id="hero-cta-group">
+        <a href="instruments.html" class="btn-primary">View Instruments</a>
+        <a href="science.html" class="btn-ghost">Our Science</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="hero-scroll-indicator">
+    <div id="hero-scroll-line"></div>
+    <span id="hero-scroll-label">Scroll</span>
+  </div>
+</section>
+
+<!-- ── INSTRUMENTS GRID ── -->
+<section id="instruments-section" class="section-reveal">
+  <div id="instruments-header">
+    <div id="instruments-header-left">
+      <p class="section-label">Systems &amp; Instruments</p>
+      <h2 id="instruments-title">Engineered for the<br>extreme edge of measurement.</h2>
+    </div>
+    <p id="instruments-desc">
+      Each instrument embodies 40 years of optical engineering — from laboratory-grade UV spectrometers to field-deployable Raman analyzers.
+    </p>
+  </div>
+
+  <div id="instruments-grid">
+    <!-- Card 1 — large featured -->
+    <article id="card-axiom" class="instrument-card">
+      <img
+        class="instrument-card-img"
+        src="assets/instrument-axiom.jpeg"
+        alt="Prismatica Axiom-9 high-resolution UV-VIS spectrometer"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div class="instrument-card-placeholder">→ assets/instrument-axiom.jpeg</div>
+      <div class="instrument-card-info">
+        <p class="instrument-card-name">Axiom-9</p>
+        <p class="instrument-card-spec">UV-VIS · 190–1100 nm · 0.03 nm res.</p>
+      </div>
+    </article>
+
+    <!-- Card 2 -->
+    <article id="card-lattice" class="instrument-card">
+      <img
+        class="instrument-card-img"
+        src="assets/instrument-lattice.jpeg"
+        alt="Prismatica Lattice Raman spectrometer"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div class="instrument-card-placeholder">→ assets/instrument-lattice.jpeg</div>
+      <div class="instrument-card-info">
+        <p class="instrument-card-name">Lattice-R</p>
+        <p class="instrument-card-spec">Raman · 532 nm excitation · portable</p>
+      </div>
+    </article>
+
+    <!-- Card 3 -->
+    <article id="card-prism" class="instrument-card">
+      <img
+        class="instrument-card-img"
+        src="assets/instrument-prism.jpeg"
+        alt="Prismatica Prism-X FTIR analyzer"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div class="instrument-card-placeholder">→ assets/instrument-prism.jpeg</div>
+      <div class="instrument-card-info">
+        <p class="instrument-card-name">Prism-X</p>
+        <p class="instrument-card-spec">FTIR · mid-IR · 400–4000 cm⁻¹</p>
+      </div>
+    </article>
+
+    <!-- Card 4 — wide spanning -->
+    <article id="card-eclipse" class="instrument-card">
+      <img
+        class="instrument-card-img"
+        src="assets/instrument-eclipse.jpeg"
+        alt="Prismatica Eclipse atmospheric spectrometer system"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div class="instrument-card-placeholder">→ assets/instrument-eclipse.jpeg</div>
+      <div class="instrument-card-info">
+        <p class="instrument-card-name">Eclipse Array</p>
+        <p class="instrument-card-spec">Atmospheric · multi-channel · field-deployable</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── SCIENCE / ABOUT SECTION ── -->
+<section id="science-section" class="section-reveal">
+  <div id="science-inner">
+    <div id="science-text">
+      <p class="section-label">Our Science</p>
+      <h2 id="science-title">Where quantum optics<br>meets industrial precision.</h2>
+      <p id="science-body">
+        Every Prismatica instrument is built around holographic diffraction gratings manufactured in-house to sub-nanometer tolerances. Our blazed grating technology achieves diffraction efficiencies exceeding 92% — a figure that defines what is measurable at the limits of optical physics.
+      </p>
+      <p id="science-body-2">
+        Founded in 1983 by physicists from the European Synchrotron Radiation Facility, Prismatica has spent four decades at the intersection of fundamental research and precision engineering. Our instruments have contributed to seven Nobel Prize-winning research programs.
+      </p>
+      <div id="science-stats-row">
+        <div class="science-stat">
+          <span class="science-stat-number">0.003</span>
+          <span class="science-stat-label">nm resolution</span>
+        </div>
+        <div class="science-stat">
+          <span class="science-stat-number">92%</span>
+          <span class="science-stat-label">diffraction efficiency</span>
+        </div>
+        <div class="science-stat">
+          <span class="science-stat-number">400+</span>
+          <span class="science-stat-label">research labs</span>
+        </div>
+      </div>
+      <a href="science.html" class="btn-ghost">Read the Science</a>
+    </div>
+
+    <div id="science-media">
+      <video
+        id="science-bg-video"
+        src="assets/about-precision.mp4"
+        autoplay muted loop playsinline
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      ></video>
+      <div id="science-video-placeholder">→ assets/about-precision.mp4</div>
+      <div id="science-media-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS SECTION (light contrast beat) ── -->
+<section id="process-section" class="section-reveal">
+  <div id="process-inner">
+    <p id="process-label" class="section-label" style="color: rgba(8,10,15,0.5);">How We Build</p>
+    <h2 id="process-title">Four stages from<br>photon to data.</h2>
+
+    <div id="process-steps">
+      <div id="step-1" class="process-step">
+        <span class="process-step-num">01</span>
+        <h3 class="process-step-title">Optical Design</h3>
+        <p class="process-step-body">Grating geometry, slit geometry, and detector geometry are co-optimized in ray-trace simulation before any glass is cut.</p>
+        <div class="process-step-accent"></div>
+      </div>
+
+      <div id="step-2" class="process-step">
+        <span class="process-step-num">02</span>
+        <h3 class="process-step-title">Grating Fabrication</h3>
+        <p class="process-step-body">Holographic exposure and ion-beam etching produce master gratings at 2400 grooves/mm with 0.3 nm absolute ruling accuracy.</p>
+        <div class="process-step-accent"></div>
+      </div>
+
+      <div id="step-3" class="process-step">
+        <span class="process-step-num">03</span>
+        <h3 class="process-step-title">Mechanical Integration</h3>
+        <p class="process-step-body">Invar-bodied housings machined to 2 μm tolerance. Thermal compensation is passive, requiring no active cooling in the 15–35°C operational range.</p>
+        <div class="process-step-accent"></div>
+      </div>
+
+      <div id="step-4" class="process-step">
+        <span class="process-step-num">04</span>
+        <h3 class="process-step-title">Calibration &amp; Certification</h3>
+        <p class="process-step-body">Each instrument is wavelength-certified against NIST-traceable atomic emission lamps and ships with a full spectral response curve.</p>
+        <div class="process-step-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA CLOSING SECTION ── -->
+<section id="cta-section" class="section-reveal">
+  <div id="cta-spectrum-top"></div>
+
+  <div id="cta-inner">
+    <p id="cta-eyebrow">Precision for Research</p>
+    <h2 id="cta-title">Measure what<br>cannot be seen.</h2>
+    <p id="cta-subtitle">
+      Request a demonstration of any Prismatica system in your laboratory.
+    </p>
+    <div id="cta-btn-group">
+      <a href="contact.html" class="btn-primary">Request Demo</a>
+      <a href="instruments.html" class="btn-ghost" style="color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.2);">View Full Catalogue</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-brand">
+      <p class="footer-brand-name">Prismatica Instruments</p>
+      <p class="footer-brand-desc">Precision spectrographic systems for research, industry, and atmospheric monitoring. Founded 1983, Geneva.</p>
+    </div>
+
+    <div id="footer-col-instruments" class="footer-col">
+      <p class="footer-col-heading">Instruments</p>
+      <ul class="footer-links">
+        <li><a href="instruments.html">Axiom-9</a></li>
+        <li><a href="instruments.html">Lattice-R</a></li>
+        <li><a href="instruments.html">Prism-X</a></li>
+        <li><a href="instruments.html">Eclipse Array</a></li>
+      </ul>
+    </div>
+
+    <div id="footer-col-science" class="footer-col">
+      <p class="footer-col-heading">Science</p>
+      <ul class="footer-links">
+        <li><a href="science.html">Grating Technology</a></li>
+        <li><a href="science.html">Publications</a></li>
+        <li><a href="science.html">Applications</a></li>
+        <li><a href="science.html">Calibration</a></li>
+      </ul>
+    </div>
+
+    <div id="footer-col-company" class="footer-col">
+      <p class="footer-col-heading">Company</p>
+      <ul class="footer-links">
+        <li><a href="science.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html">Distributors</a></li>
+        <li><a href="contact.html">Support</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="footer-bottom">
+    <p id="footer-copyright">© 2025 Prismatica Instruments SA. All rights reserved.</p>
+    <div class="footer-spectrum"></div>
+  </div>
+</footer>
+
+<!-- ── GSAP ANIMATIONS ── -->
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Read motion tokens from CSS vars
+  const BASE_DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-emphasis')) || 0.7;
+  const EASE_DECEL = getComputedStyle(document.documentElement).getPropertyValue('--ease-decelerate').trim() || 'power2.out';
+  const EASE_SPRING = getComputedStyle(document.documentElement).getPropertyValue('--ease-spring').trim() || 'back.out(1.4)';
+
+  // ── Hero entrance: content resolves from opacity 0 + translateY(24px) ──
+  // runs immediately (hero is in viewport)
+  const heroTl = gsap.timeline({ defaults: { ease: EASE_DECEL } });
+  heroTl
+    .from('#hero-eyebrow', { opacity: 0, y: 20, duration: 0.6 })
+    .from('#hero-headline', { opacity: 0, y: 28, duration: 0.8 }, '-=0.3')
+    .from('#hero-subtext', { opacity: 0, y: 16, duration: 0.7 }, '-=0.4')
+    .from('#hero-cta-group', { opacity: 0, y: 12, duration: 0.6 }, '-=0.35')
+    .from('#hero-scroll-indicator', { opacity: 0, duration: 0.5 }, '-=0.2');
+
+  // Spectrum bar — slow pulse-in
+  gsap.from('#hero-spectrum-bar', {
+    scaleX: 0,
+    transformOrigin: 'left center',
+    duration: 1.2,
+    ease: EASE_DECEL,
+    delay: 0.5
+  });
+
+  // ── Instruments section — masonry cards spring in with stagger ──
+  // Uses spring curve as per motion brief (the one kinetic exception)
+  gsap.from('#instruments-header', {
+    scrollTrigger: { trigger: '#instruments-section', start: 'top 80%' },
+    y: 32,
+    duration: BASE_DUR,
+    ease: EASE_DECEL
+  });
+
+  // Card grid — spring stagger per motion brief
+  gsap.from('.instrument-card', {
+    scrollTrigger: { trigger: '#instruments-grid', start: 'top 85%' },
+    scale: 0.97,
+    duration: 0.6,
+    stagger: 0.1,
+    ease: EASE_SPRING
+  });
+
+  // ── Science section — clip-path wipe on media, text fades in ──
+  gsap.from('#science-media', {
+    scrollTrigger: { trigger: '#science-section', start: 'top 80%' },
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 0.9,
+    ease: EASE_DECEL
+  });
+
+  gsap.from('#science-text', {
+    scrollTrigger: { trigger: '#science-section', start: 'top 75%' },
+    y: 24,
+    duration: BASE_DUR,
+    ease: EASE_DECEL
+  });
+
+  gsap.from('.science-stat', {
+    scrollTrigger: { trigger: '#science-stats-row', start: 'top 88%' },
+    y: 16,
+    duration: 0.5,
+    stagger: 0.12,
+    ease: EASE_SPRING
+  });
+
+  // ── Process section — horizontal slide in from left ──
+  gsap.from('#process-title', {
+    scrollTrigger: { trigger: '#process-section', start: 'top 80%' },
+    x: -32,
+    duration: BASE_DUR,
+    ease: EASE_DECEL
+  });
+
+  // Steps — scale from center (unique pattern, not same as cards)
+  gsap.from('.process-step', {
+    scrollTrigger: { trigger: '#process-steps', start: 'top 85%' },
+    scale: 0.95,
+    duration: 0.65,
+    stagger: 0.1,
+    ease: EASE_DECEL
+  });
+
+  // ── CTA section — opacity + scale from center ──
+  gsap.from('#cta-inner', {
+    scrollTrigger: { trigger: '#cta-section', start: 'top 80%' },
+    scale: 0.97,
+    duration: 0.9,
+    ease: EASE_DECEL
+  });
+
+  // ── Footer — simple opacity reveal (utility zone per motion brief) ──
+  gsap.from('#site-footer', {
+    scrollTrigger: { trigger: '#site-footer', start: 'top 95%' },
+    duration: 0.9,
+    ease: EASE_DECEL,
+    onStart: () => { document.getElementById('site-footer').style.opacity = '0'; },
+    onComplete: () => { document.getElementById('site-footer').style.opacity = '1'; }
+  });
+
+  // Logo mark hover iridescent gradient animate
+  const logoMark = document.querySelector('.nav-logo-mark');
+  if (logoMark) {
+    logoMark.addEventListener('mouseenter', () => {
+      gsap.to(logoMark.querySelector('::before'), { duration: 0.3 });
+    });
+  }
+</script>
+
+</body>
+</html>

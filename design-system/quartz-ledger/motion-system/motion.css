@@ -1,0 +1,97 @@
+/* Motion system — source: moral-skin / Twist A: duration scaling ×1.5 (intensity 3, slower) */
+
+:root {
+  /* Timing tokens — all durations scaled ×1.5 from source */
+  --motion-duration-fast: 0.15s;
+  --motion-duration-base: 0.3s;
+  --motion-duration-slow: 0.75s;
+  --motion-duration-slower: 0.9s;
+  --motion-easing-default: ease;
+  --motion-easing-linear: linear;
+  --motion-easing-in-out: ease-in-out;
+}
+
+/* Keyframe animations */
+@keyframes fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseLoading {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.25; }
+}
+
+/* Site-wide element transitions */
+header,
+.site-header {
+  transition: color var(--motion-duration-base) var(--motion-easing-default),
+              background var(--motion-duration-base) var(--motion-easing-default);
+}
+
+.wrapper,
+.page-content {
+  transition: opacity var(--motion-duration-slower) var(--motion-easing-default),
+              transform var(--motion-duration-slower) var(--motion-easing-default);
+}
+
+nav a,
+.navlink {
+  transition: color var(--motion-duration-base) var(--motion-easing-default);
+}
+
+.slide__image {
+  transition: opacity var(--motion-duration-slow) var(--motion-easing-default);
+}
+
+.product__block,
+.content-block {
+  transition: opacity var(--motion-duration-slower) var(--motion-easing-default),
+              transform var(--motion-duration-slower) var(--motion-easing-default);
+}
+
+img {
+  transition: all var(--motion-duration-fast) var(--motion-easing-in-out);
+}
+
+.announcement-bar {
+  transition: opacity var(--motion-duration-slower) var(--motion-easing-default),
+              transform var(--motion-duration-slower) var(--motion-easing-default);
+}
+
+/* Micro-interactions */
+button,
+.btn,
+[type="button"],
+[type="submit"] {
+  transition: color 0.45s var(--motion-easing-default),
+              border-color 0.45s var(--motion-easing-default),
+              background 0.45s var(--motion-easing-default);
+}
+
+a {
+  transition: color 0.45s var(--motion-easing-default),
+              border-color 0.45s var(--motion-easing-default);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

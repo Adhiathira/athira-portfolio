@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sable — Bespoke Woodworking &amp; Joinery</title>
+  <meta name="description" content="Sable crafts bespoke furniture and interior joinery from carefully selected timber. Each piece is made to last, made to fit the life it enters.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     NAV — canonical block, paste verbatim on all pages
+═══════════════════════════════════════════════════════════════ -->
+<nav id="site-nav" class="site-nav">
+  <a href="index.html" class="nav-logo" aria-label="Sable home">Sable</a>
+
+  <ul class="nav-links" role="list">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="process.html">Process</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+
+  <a href="contact.html" class="nav-cta">Enquire</a>
+
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div id="nav-mobile-menu" class="nav-mobile-menu" aria-hidden="true">
+  <a href="work.html">Work</a>
+  <a href="process.html">Process</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="nav-mobile-cta">Enquire</a>
+</div>
+
+<script>
+(function() {
+  var nav = document.getElementById('site-nav');
+  var spacer = document.getElementById('nav-spacer');
+  var onScroll = function() {
+    if (window.scrollY > 10) {
+      nav.classList.add('fixed');
+    } else {
+      nav.classList.remove('fixed');
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Active nav link
+  var currentFile = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a, .nav-mobile-menu a').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === currentFile || (currentFile === '' && href === 'index.html')) {
+      a.classList.add('nav-link--active');
+    }
+  });
+
+  // Mobile toggle
+  var toggle = nav.querySelector('.nav-mobile-toggle');
+  var mobileMenu = document.getElementById('nav-mobile-menu');
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function() {
+      var isOpen = mobileMenu.classList.toggle('is-open');
+      nav.classList.toggle('nav-mobile-open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen);
+      mobileMenu.setAttribute('aria-hidden', !isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileMenu.classList.remove('is-open');
+        nav.classList.remove('nav-mobile-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════════ -->
+<section class="hero" aria-label="Hero">
+  <div class="hero-inner">
+
+    <div class="hero-content">
+      <span class="hero-label" data-reveal="fade-up">Est. 2009 &mdash; Glasgow</span>
+      <h1 class="hero-heading" data-reveal="fade-up" data-reveal-delay="0.08">
+        Made<br>to last.<br>Made<br>to fit.
+      </h1>
+      <p class="hero-body" data-reveal="fade-up" data-reveal-delay="0.16">
+        Sable makes bespoke furniture and interior joinery from carefully selected timber. Every piece begins with the room it will enter and the life it will hold.
+      </p>
+      <div class="hero-actions" data-reveal="fade-up" data-reveal-delay="0.24">
+        <a href="work.html" class="btn-primary">View Work</a>
+        <a href="process.html" class="btn-secondary">Our Process</a>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <video
+        src="assets/hero-bg.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        aria-label="Slow drift across a warm workshop surface"
+        onerror="this.style.display='none'"
+      ></video>
+      <div class="hero-image-placeholder" aria-hidden="true"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FEATURED WORK — asymmetric 1.4fr 1fr grid, scale-rise animation
+═══════════════════════════════════════════════════════════════ -->
+<section class="section section--cream" aria-label="Featured work">
+  <div class="container">
+
+    <div class="work-header" data-reveal="fade-up">
+      <div class="work-header-text">
+        <p class="section-eyebrow">Selected Work</p>
+        <h2 class="section-heading" style="margin-bottom:0">Recent<br>Commissions</h2>
+      </div>
+      <a href="work.html" class="work-view-all">All Work &rarr;</a>
+    </div>
+
+    <div class="work-grid" data-stagger-group="scale">
+
+      <article class="work-card work-card--featured" data-stagger-item>
+        <div class="work-card__image" style="background: linear-gradient(145deg, #c0b9ae 0%, #8a8472 100%);">
+          <img
+            src="assets/work-featured.jpg"
+            alt="Bespoke dining table in pale ash, Inverness commission"
+            onerror="this.style.display='none'"
+          >
+        </div>
+        <div class="work-card__overlay">
+          <p class="work-card__title">Pale Ash Dining Table</p>
+          <p class="work-card__meta">Inverness, 2025 &mdash; Furniture</p>
+        </div>
+      </article>
+
+      <article class="work-card" data-stagger-item>
+        <div class="work-card__image" style="background: linear-gradient(135deg, #d4cfc8 0%, #a39b8b 100%);">
+          <img
+            src="assets/work-joinery-1.jpg"
+            alt="Library wall joinery in oiled walnut, Edinburgh townhouse"
+            onerror="this.style.display='none'"
+          >
+        </div>
+        <div class="work-card__overlay">
+          <p class="work-card__title">Library Joinery</p>
+          <p class="work-card__meta">Edinburgh, 2025 &mdash; Joinery</p>
+        </div>
+      </article>
+
+      <article class="work-card" data-stagger-item>
+        <div class="work-card__image" style="background: linear-gradient(155deg, #e8e3da 0%, #c8c1b4 100%);">
+          <img
+            src="assets/work-joinery-2.jpg"
+            alt="Kitchen cabinetry in white oak, Glasgow residence"
+            onerror="this.style.display='none'"
+          >
+        </div>
+        <div class="work-card__overlay">
+          <p class="work-card__title">Oak Kitchen</p>
+          <p class="work-card__meta">Glasgow, 2024 &mdash; Cabinetry</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CRAFT APPROACH — numbered step rows, clip animation (different pattern)
+═══════════════════════════════════════════════════════════════ -->
+<section class="section section--warm" aria-label="How we work">
+  <div class="container">
+
+    <div data-reveal="fade-up">
+      <p class="section-eyebrow">How We Work</p>
+      <h2 class="section-heading">Four Acts,<br>One Object</h2>
+    </div>
+
+    <div class="process-list">
+
+      <div class="process-item" data-reveal="clip" data-reveal-delay="0">
+        <span class="process-number"></span>
+        <div class="process-content">
+          <h3 class="process-title">Conversation</h3>
+          <p class="process-desc">Every commission begins with the room it will enter. We visit, measure, and listen — to what you need and what the space already knows. No brief is fixed until both parties are satisfied.</p>
+        </div>
+      </div>
+
+      <div class="process-item" data-reveal="clip" data-reveal-delay="0.1">
+        <span class="process-number"></span>
+        <div class="process-content">
+          <h3 class="process-title">Timber Selection</h3>
+          <p class="process-desc">We source from British and European yards with long relationships and long memories. The board you receive was chosen for your piece specifically — its figure, weight, and warmth considered together.</p>
+        </div>
+      </div>
+
+      <div class="process-item" data-reveal="clip" data-reveal-delay="0.2">
+        <span class="process-number"></span>
+        <div class="process-content">
+          <h3 class="process-title">Making</h3>
+          <p class="process-desc">Work happens in our Glasgow workshop. Joints are cut by hand. Surfaces are finished by touch. Time is not rationed — a piece is done when it is done, not when the schedule says so.</p>
+        </div>
+      </div>
+
+      <div class="process-item" data-reveal="clip" data-reveal-delay="0.3">
+        <span class="process-number"></span>
+        <div class="process-content">
+          <h3 class="process-title">Delivery &amp; Fitting</h3>
+          <p class="process-desc">We deliver and install every piece ourselves. Furniture lives in a room — fitting it is not separate from making it. We leave when it is right.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MATERIALS — bento grid, rotate+rise animation (different pattern)
+═══════════════════════════════════════════════════════════════ -->
+<section class="section section--cream" aria-label="Our materials">
+  <div class="container">
+
+    <div data-reveal="fade-up">
+      <p class="section-eyebrow">The Materials</p>
+      <h2 class="section-heading">What We<br>Work With</h2>
+    </div>
+
+    <div class="materials-grid" data-stagger-group="rotate">
+
+      <div class="material-card material-card--wide" data-stagger-item>
+        <div class="material-card__swatch" style="background: linear-gradient(90deg, #c8b89a 0%, #e8d8c0 100%);"></div>
+        <p class="material-card__label">Primary Timber</p>
+        <h3 class="material-card__name">European Ash</h3>
+        <p class="material-card__desc">Pale, open-grained, and resilient. Ash accepts stain and oil with equal generosity. It is our most-used timber for tables and cabinetry because it ages without drama — just slowly better.</p>
+      </div>
+
+      <div class="material-card" data-stagger-item>
+        <div class="material-card__swatch" style="background: linear-gradient(135deg, #7a5c3c 0%, #a07850 100%);"></div>
+        <p class="material-card__label">Accent Timber</p>
+        <h3 class="material-card__name">British Walnut</h3>
+        <p class="material-card__desc">Richer in figure and darker in tone. Reserved for pieces that need weight — a writing desk, a headboard, a door frame that reads as architecture.</p>
+      </div>
+
+      <div class="material-card" data-stagger-item>
+        <div class="material-card__swatch" style="background: linear-gradient(135deg, #e0d4b4 0%, #c8bc98 100%);"></div>
+        <p class="material-card__label">Joinery Grade</p>
+        <h3 class="material-card__name">Scots Oak</h3>
+        <p class="material-card__desc">The structural timber of Britain for a thousand years. We use it in joinery work where strength and stability must outlast fashion. Often fumed or limed to bring out the medullary ray.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     VIDEO SECTION (services ambient)
+═══════════════════════════════════════════════════════════════ -->
+<section class="section section--charcoal" aria-label="The workshop">
+  <div class="container">
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+      <div data-reveal="fade-right">
+        <p class="section-eyebrow" style="color: var(--color-muted-text);">The Workshop</p>
+        <h2 class="section-heading" style="color: var(--color-page-bg);">Work<br>Done by Hand</h2>
+        <p class="section-body" style="color: rgba(242,239,233,0.7);">Our workshop is in the Southside of Glasgow. Seven people work there. Every piece made in it leaves carrying the mark of a specific person's attention — not a process, but a practice.</p>
+        <div style="margin-top: 36px;">
+          <a href="process.html" class="btn-primary">See How We Work</a>
+        </div>
+      </div>
+      <div class="hero-image" style="height: 420px;" data-reveal="fade-left">
+        <video
+          src="assets/services-ambient.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          aria-label="Overhead time-lapse of workshop arrangement"
+          onerror="this.style.display='none'"
+        ></video>
+        <div class="hero-image-placeholder" aria-hidden="true" style="background: linear-gradient(155deg, #3d3930 0%, #1a1a14 100%);"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CTA
+═══════════════════════════════════════════════════════════════ -->
+<section class="cta-section" aria-label="Start a commission">
+  <div data-reveal="fade-up">
+    <h2 class="section-heading" style="color: var(--color-page-bg); max-width: 14ch; margin: 0 auto 24px; text-align: center;">Begin a<br>Commission</h2>
+    <p style="font-family: var(--font-body); font-size: clamp(1rem, 1.1vw, 1.1rem); line-height: 1.65; color: rgba(242,239,233,0.7); max-width: 44ch; margin: 0 auto 40px; text-align: center;">Tell us about the piece you need. We will reply within two working days with time for a conversation.</p>
+    <div style="text-align: center;">
+      <a href="contact.html" class="btn-primary">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════ -->
+<footer class="footer" aria-label="Site footer">
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">Sable</a>
+    <nav aria-label="Footer navigation">
+      <ul class="footer-links" role="list">
+        <li><a href="work.html">Work</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <span class="footer-copyright">&copy; 2025 Sable Workshop Ltd</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="behaviors/nav.js"></script>
+<script src="behaviors/scroll-reveal.js"></script>
+
+</body>
+</html>

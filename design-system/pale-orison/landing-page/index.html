@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Parable — structured research and annotation workspace for legal teams, academics, and editors who think in arguments.">
+  <title>Parable — Research, Annotated</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV TEMPLATE — paste verbatim into <body> -->
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <a href="index.html">Parable</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="features.html">Features</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="features.html">Features</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+<script>
+(function() {
+  var nav = document.getElementById('site-nav');
+  var mobileMenu = document.getElementById('nav-mobile-menu');
+  var toggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+  function onScroll() {
+    if (window.scrollY > 10) {
+      nav && nav.classList.add('scrolled');
+    } else {
+      nav && nav.classList.remove('scrolled');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  if (toggle) {
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu && mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow = mobileMenu && mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+  }
+})();
+</script>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div id="hero-content-wrapper">
+    <div id="hero-eyebrow">Research workspace</div>
+    <h1 id="hero-headline">Arguments<br>made legible.</h1>
+    <p id="hero-subhead">Parable is a structured annotation workspace for legal teams, academics, and editors who work in argument. Every annotation connects. Every thread resolves.</p>
+    <div id="hero-cta-group">
+      <a href="contact.html" id="hero-cta-primary" class="btn-primary">Request access</a>
+      <a href="features.html" id="hero-cta-secondary" class="btn-ghost">See how it works</a>
+    </div>
+  </div>
+
+  <div id="hero-product-frame">
+    <div id="hero-product-window">
+      <div id="hero-window-chrome">
+        <span class="chrome-dot chrome-dot--close"></span>
+        <span class="chrome-dot chrome-dot--min"></span>
+        <span class="chrome-dot chrome-dot--max"></span>
+      </div>
+      <div id="hero-product-preview">
+        <img
+          id="hero-product-img"
+          src="assets/hero-product-ambient.jpeg"
+          alt="Parable research workspace — annotation threads connected across a legal document"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div
+          id="hero-product-placeholder"
+          style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                 background:var(--color-surface-2);color:rgba(0,0,0,0.3);font-family:var(--font-body);
+                 font-size:0.75rem;letter-spacing:0.04em;"
+        >
+          → assets/hero-product-ambient.jpeg
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUSTED BY ── -->
+<section id="trusted">
+  <div id="trusted-inner">
+    <p id="trusted-label">Used by research teams at</p>
+    <div id="trusted-logos">
+      <span class="trusted-logo-item">Clifford Chance</span>
+      <span class="trusted-logo-item">Harvard Law Review</span>
+      <span class="trusted-logo-item">The Economist Group</span>
+      <span class="trusted-logo-item">Allen &amp; Overy</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES OVERVIEW ── -->
+<section id="features-overview">
+  <div id="features-overview-inner">
+    <div id="features-header">
+      <p id="features-eyebrow">What Parable does</p>
+      <h2 id="features-headline">Every annotation<br>earns its place.</h2>
+    </div>
+    <div id="features-grid">
+      <div class="feature-card" id="feature-card-1">
+        <div class="feature-card-icon" aria-hidden="true">01</div>
+        <h3 class="feature-card-title">Thread-linked annotation</h3>
+        <p class="feature-card-body">Connect notes across documents, pages, and sources. Each annotation knows what it is responding to — and what responds to it.</p>
+      </div>
+      <div class="feature-card" id="feature-card-2">
+        <div class="feature-card-icon" aria-hidden="true">02</div>
+        <h3 class="feature-card-title">Argument structure view</h3>
+        <p class="feature-card-body">Map claims, evidence, and counterarguments into a visual tree. Collapse a branch; examine the trunk.</p>
+      </div>
+      <div class="feature-card" id="feature-card-3">
+        <div class="feature-card-icon" aria-hidden="true">03</div>
+        <h3 class="feature-card-title">Shared reading rooms</h3>
+        <p class="feature-card-body">Invite colleagues into a document session. Annotations from each reader appear in a distinct visual register — separate but legible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRODUCT DETAIL ── -->
+<section id="product-detail">
+  <div id="product-detail-inner">
+    <div id="product-detail-text">
+      <p id="product-detail-eyebrow">The annotation layer</p>
+      <h2 id="product-detail-headline">Dense text,<br>clear margin.</h2>
+      <p id="product-detail-body">Parable keeps the document intact. Your annotations live beside it — never inside it. Toggle the margin to full screen when the argument needs space. Return to reading when it doesn't.</p>
+      <a href="features.html" id="product-detail-link" class="text-link">Explore all features &rarr;</a>
+    </div>
+    <div id="product-detail-visual">
+      <img
+        id="product-detail-img"
+        src="assets/product-annotation-layer.jpeg"
+        alt="Parable annotation layer — clean margin beside a legal document"
+        style="width:100%;height:100%;object-fit:cover;border-radius:4px;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div
+        id="product-detail-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:400px;
+               background:var(--color-surface-2);color:rgba(0,0,0,0.3);font-family:var(--font-body);
+               font-size:0.75rem;letter-spacing:0.04em;border-radius:4px;"
+      >
+        → assets/product-annotation-layer.jpeg
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── QUOTE BAND (dark contrast) ── -->
+<section id="quote-band">
+  <div id="quote-band-inner">
+    <blockquote id="quote-text">
+      &ldquo;Parable changed how our team reads cases. The argument tree alone saved us forty hours on our last brief.&rdquo;
+    </blockquote>
+    <div id="quote-attribution">
+      <span id="quote-author">Senior Associate, Latham &amp; Watkins LLP</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION TRANSITION: How it works ── -->
+<section id="how-it-works">
+  <div id="how-it-works-inner">
+    <p id="how-eyebrow">The workflow</p>
+    <h2 id="how-headline">From source<br>to argument.</h2>
+    <ol id="how-steps" class="how-steps-list">
+      <li class="how-step" id="step-1">
+        <span class="step-number">01</span>
+        <div class="step-content">
+          <h3 class="step-title">Import any document</h3>
+          <p class="step-body">PDF, Word, or pasted text. Parable preserves the original typographic structure — footnotes, headings, case citations.</p>
+        </div>
+      </li>
+      <li class="how-step" id="step-2">
+        <span class="step-number">02</span>
+        <div class="step-content">
+          <h3 class="step-title">Annotate with precision</h3>
+          <p class="step-body">Select any text range. Add a note, a claim tag, an evidence marker, or a counterpoint flag. Each annotation carries its type.</p>
+        </div>
+      </li>
+      <li class="how-step" id="step-3">
+        <span class="step-number">03</span>
+        <div class="step-content">
+          <h3 class="step-title">Build the argument map</h3>
+          <p class="step-body">Connect annotations into a structured tree. See which claims are supported, which are contested, which are unresolved.</p>
+        </div>
+      </li>
+      <li class="how-step" id="step-4">
+        <span class="step-number">04</span>
+        <div class="step-content">
+          <h3 class="step-title">Export to brief or memo</h3>
+          <p class="step-body">One click to structured outline. Your argument map becomes a draft. Your team sees only what's been resolved.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ── CTA BAND ── -->
+<section id="cta-band">
+  <div id="cta-band-inner">
+    <h2 id="cta-headline">Built for arguments<br>that matter.</h2>
+    <p id="cta-subtext">Parable is in private access. Apply for your team.</p>
+    <a href="contact.html" id="cta-btn" class="btn-primary">Request access</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-brand">
+      <span id="footer-wordmark">Parable</span>
+      <p id="footer-tagline">Research, annotated.</p>
+    </div>
+    <nav id="footer-nav" aria-label="Footer navigation">
+      <ul id="footer-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div id="footer-legal">
+      <p id="footer-copyright">&copy; 2026 Parable. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+var BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.468;
+var EASE = (getComputedStyle(document.documentElement).getPropertyValue('--ease-primary') || 'ease-in-out').trim();
+
+// Hero entrance — immediate on load
+var heroTl = gsap.timeline({ delay: 0.1 });
+heroTl
+  .from('#hero-eyebrow', { y: 18, duration: BASE_DURATION, ease: EASE })
+  .from('#hero-headline', { y: 28, duration: BASE_DURATION * 1.2, ease: EASE }, '-=0.24')
+  .from('#hero-subhead', { y: 18, duration: BASE_DURATION, ease: EASE }, '-=0.18')
+  .from('#hero-cta-group', { y: 14, duration: BASE_DURATION, ease: EASE }, '-=0.14')
+  .from('#hero-product-frame', { y: 40, duration: BASE_DURATION * 1.5, ease: EASE }, '-=0.3');
+
+// Trusted section — horizontal sweep
+gsap.from('#trusted-logos .trusted-logo-item', {
+  scrollTrigger: { trigger: '#trusted', start: 'top 85%' },
+  x: -40,
+  duration: BASE_DURATION,
+  stagger: 0.1,
+  ease: EASE
+});
+
+// Features grid — scale + rise with variety (different from hero y-only)
+gsap.from('#features-header', {
+  scrollTrigger: { trigger: '#features-overview', start: 'top 80%' },
+  y: 30,
+  duration: BASE_DURATION,
+  ease: EASE
+});
+gsap.from('#features-grid .feature-card', {
+  scrollTrigger: { trigger: '#features-grid', start: 'top 80%' },
+  scale: 0.96,
+  y: 24,
+  duration: BASE_DURATION * 1.1,
+  stagger: 0.13,
+  ease: 'power2.out'
+});
+
+// Product detail — divergent reveal (text left, image right)
+gsap.from('#product-detail-text', {
+  scrollTrigger: { trigger: '#product-detail', start: 'top 78%' },
+  x: -60,
+  duration: BASE_DURATION * 1.2,
+  ease: EASE
+});
+gsap.from('#product-detail-visual', {
+  scrollTrigger: { trigger: '#product-detail', start: 'top 78%' },
+  x: 60,
+  duration: BASE_DURATION * 1.2,
+  ease: EASE
+});
+
+// Quote band — clip reveal (horizontal wipe)
+gsap.from('#quote-text', {
+  scrollTrigger: { trigger: '#quote-band', start: 'top 80%' },
+  clipPath: 'inset(0 100% 0 0)',
+  duration: BASE_DURATION * 1.4,
+  ease: EASE
+});
+gsap.from('#quote-attribution', {
+  scrollTrigger: { trigger: '#quote-band', start: 'top 75%' },
+  y: 14,
+  duration: BASE_DURATION,
+  ease: EASE
+});
+
+// How-it-works steps — stagger (different pattern: rotate + rise)
+gsap.from('.how-step', {
+  scrollTrigger: { trigger: '#how-it-works', start: 'top 80%' },
+  rotation: 1,
+  y: 36,
+  duration: BASE_DURATION * 1.1,
+  stagger: 0.12,
+  ease: EASE
+});
+
+// CTA band — static, no animation — visual rest before footer
+</script>
+
+</body>
+</html>

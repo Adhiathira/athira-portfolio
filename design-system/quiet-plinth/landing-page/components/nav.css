@@ -1,0 +1,174 @@
+/* NAV — Quiet Plinth */
+/* height: 44px | alignment: center (logo left) | no blur ever | bg-color on scroll */
+
+#site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  background-color: transparent;
+  transition: background-color 0.45s ease;
+  box-sizing: border-box;
+}
+
+#site-nav.scrolled {
+  background-color: #f2f2f2;
+}
+
+/* Logo — left anchor */
+.nav-logo {
+  flex-shrink: 0;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #202020;
+  white-space: nowrap;
+}
+
+/* Links — grow to fill remaining space, centered */
+.nav-links {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: 'Jost', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #202020;
+  text-decoration: none;
+  transition: opacity 0.45s ease-out;
+  display: block;
+}
+
+.nav-links a:hover {
+  opacity: 0.75;
+}
+
+.nav-links a.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Right spacer to balance logo */
+.nav-right {
+  flex-shrink: 0;
+  width: 120px; /* matches approximate logo width */
+}
+
+/* Mobile toggle */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 22px;
+  height: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #202020;
+  transition: transform 0.36s ease, opacity 0.27s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X */
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Mobile menu overlay */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background-color: #f2f2f2;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+}
+
+.nav-mobile-menu a {
+  font-family: 'Jost', Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #202020;
+  text-decoration: none;
+}
+
+/* Nav spacer for sub-pages */
+.nav-spacer {
+  height: 44px;
+  display: none;
+}
+
+.nav-spacer.active {
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .nav-links {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-right {
+    display: none;
+  }
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  #site-nav {
+    padding: 0 16px;
+  }
+}

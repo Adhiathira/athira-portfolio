@@ -1,0 +1,209 @@
+/* nav.css — Calque Press */
+/* Source: calque-press nav-system tokens */
+/* Height: 28px, position: absolute (light hero), logo left, 0.08em tracking */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
+
+/* ─── Base nav ─── */
+#site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 60px; /* visual nav bar height — token is 28px interior, we use 60px for practical usability */
+  display: flex;
+  align-items: center;
+  background: transparent;
+  transition: background 0.39s ease, border-bottom 0.39s ease;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 77px;
+}
+
+/* ─── Logo ─── */
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #222222;
+  text-decoration: none;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ─── Links ─── */
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.nav-links a {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  line-height: 1.3rem;
+  color: #222222;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.5s ease-out;
+}
+
+/* Underline hover — pseudo-element, expands from right, 7px thick */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 7px;
+  background: #222222;
+  transition: width 0.5s ease-out;
+  transform-origin: right;
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus::after {
+  width: 100%;
+}
+
+/* Active link */
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ─── CTA button ─── */
+.nav-cta {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13.3333px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fcfcfc;
+  background: #222222;
+  border: 1px solid #222222;
+  padding: 8px 20px;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out, background 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  cursor: pointer;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.nav-cta:hover {
+  color: #222222;
+  background: transparent;
+}
+
+/* ─── Scrolled state ─── */
+#site-nav.scrolled {
+  background: rgba(252, 252, 252, 0.96);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Mobile toggle ─── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 16px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #222222;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X */
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* ─── Mobile menu overlay ─── */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(252, 252, 252, 0.98);
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+}
+
+.nav-mobile-menu a {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: #222222;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.nav-mobile-menu a:hover {
+  opacity: 0.5;
+}
+
+.nav-mobile-menu .nav-cta {
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .nav-inner {
+    padding: 0 32px;
+  }
+  .nav-links {
+    display: none;
+  }
+  .nav-cta {
+    display: none;
+  }
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-inner {
+    padding: 0 20px;
+  }
+}

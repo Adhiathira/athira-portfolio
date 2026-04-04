@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lattice Bureau — precision structural engineering that bridges architecture and materials science for adaptive buildings.">
+  <title>Lattice Bureau — Structural Engineering Consultancy</title>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component styles -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- ─── NAV ───────────────────────────────────────────────────────────── -->
+<!-- NAV TEMPLATE — paste verbatim into <body> -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <!-- Left: primary nav links -->
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="method.html">Method</a></li>
+    </ul>
+
+    <!-- Center: logo -->
+    <div class="nav-logo">
+      <a href="index.html">Lattice Bureau</a>
+    </div>
+
+    <!-- Right: secondary links + CTA -->
+    <div class="nav-actions">
+      <a href="studio.html">Studio</a>
+      <a href="contact.html" class="nav-cta">Enquire</a>
+    </div>
+
+    <!-- Mobile toggle -->
+    <button class="nav-mobile-toggle" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div id="nav-mobile-menu">
+  <a href="work.html">Work</a>
+  <a href="method.html">Method</a>
+  <a href="studio.html">Studio</a>
+  <a href="contact.html" class="nav-mobile-cta">Enquire</a>
+</div>
+
+<!-- ─── HERO (video background, HERO_TREATMENT=light, lighter overlay) ── -->
+<section id="hero">
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-bg.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="hero-bg-placeholder" class="img-placeholder">→ assets/hero-bg.mp4</div>
+    <div id="hero-video-overlay"></div>
+  </div>
+
+  <div id="hero-content">
+    <span id="hero-eyebrow">Structural Engineering Consultancy</span>
+    <h1 id="hero-headline">Where load meets<br>light</h1>
+    <p id="hero-subheadline">Lattice Bureau works at the intersection of structural precision and architectural vision — designing buildings that perform as beautifully as they endure.</p>
+    <div id="hero-cta-group">
+      <a href="work.html" class="hero-btn-primary">View our work</a>
+      <a href="method.html" class="hero-btn-ghost">Our method</a>
+    </div>
+  </div>
+
+  <div id="hero-scroll-indicator">
+    <div id="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ─── SECTION 2: MANIFESTO (flat white, large editorial type) ─────────── -->
+<section id="manifesto" class="section--light">
+  <div class="section-inner" style="max-width: 880px;">
+    <span class="eyebrow">Our position</span>
+    <h2 id="manifesto-heading" class="section-heading section-heading--large" style="max-width:720px;line-height:1.15;">
+      Structural intelligence is the hidden language of every building that endures.
+    </h2>
+    <p id="manifesto-body" class="section-body" style="max-width:520px;font-size:1.0625rem;line-height:1.7;color:var(--color-muted-text);">
+      We don't separate the structural from the aesthetic. At Lattice Bureau, every load path is a design decision, and every material choice carries structural consequence. This is the discipline we bring to every project.
+    </p>
+    <a href="method.html" class="btn-ghost" id="manifesto-cta">Read our method</a>
+  </div>
+</section>
+
+<!-- ─── SECTION 3: SELECTED WORK GRID (surface tint, asymmetric layout) ── -->
+<section id="selected-work" class="section--surface">
+  <div class="section-inner">
+    <div id="work-header" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;flex-wrap:wrap;gap:24px;">
+      <div>
+        <span class="eyebrow">Selected projects</span>
+        <h2 class="section-heading" style="margin-bottom:0;">Recent work</h2>
+      </div>
+      <a href="work.html" class="btn-ghost" id="work-see-all">All projects</a>
+    </div>
+
+    <!-- Asymmetric grid: featured card (1.4fr) + two smaller cards stacked (1fr) -->
+    <div id="work-grid" class="card-asymmetric">
+      <!-- Featured card -->
+      <div id="work-card-featured" style="position:relative;overflow:hidden;border-radius:2px;">
+        <div style="position:relative;overflow:hidden;height:520px;">
+          <img
+            id="work-img-1"
+            src="assets/work-featured.jpeg"
+            alt="Meridian Pavilion — load-bearing timber lattice canopy in a civic plaza"
+            style="width:100%;height:100%;object-fit:cover;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="img-placeholder" style="height:520px;">→ assets/work-featured.jpeg</div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);pointer-events:none;"></div>
+          <div id="work-card-1-caption" style="position:absolute;bottom:32px;left:32px;right:32px;">
+            <span style="font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);display:block;margin-bottom:8px;">Civic / 2024</span>
+            <h3 style="font-family:var(--font-heading);font-size:1.5rem;font-weight:400;letter-spacing:0.02em;color:#ffffff;margin:0 0 6px;">Meridian Pavilion</h3>
+            <p style="font-family:var(--font-body);font-size:0.875rem;color:rgba(255,255,255,0.65);margin:0;">Load-bearing timber lattice canopy, Edinburgh</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two stacked smaller cards -->
+      <div id="work-cards-stacked" style="display:flex;flex-direction:column;gap:var(--grid-gap);">
+        <div id="work-card-2" style="position:relative;overflow:hidden;border-radius:2px;">
+          <div style="position:relative;overflow:hidden;height:252px;">
+            <img
+              src="assets/work-card-2.jpeg"
+              alt="Tern House — post-tensioned concrete residential with cantilevered upper floor"
+              style="width:100%;height:100%;object-fit:cover;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="img-placeholder" style="height:252px;">→ assets/work-card-2.jpeg</div>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);pointer-events:none;"></div>
+            <div style="position:absolute;bottom:24px;left:24px;right:24px;">
+              <span style="font-family:var(--font-mono);font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;">Residential / 2023</span>
+              <h3 style="font-family:var(--font-heading);font-size:1.125rem;font-weight:400;letter-spacing:0.02em;color:#ffffff;margin:0;">Tern House</h3>
+            </div>
+          </div>
+        </div>
+
+        <div id="work-card-3" style="position:relative;overflow:hidden;border-radius:2px;">
+          <div style="position:relative;overflow:hidden;height:252px;">
+            <img
+              src="assets/work-card-3.jpeg"
+              alt="Fold Research Centre — exposed steel diagrid enclosing a materials testing laboratory"
+              style="width:100%;height:100%;object-fit:cover;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="img-placeholder" style="height:252px;">→ assets/work-card-3.jpeg</div>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);pointer-events:none;"></div>
+            <div style="position:absolute;bottom:24px;left:24px;right:24px;">
+              <span style="font-family:var(--font-mono);font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;">Research / 2023</span>
+              <h3 style="font-family:var(--font-heading);font-size:1.125rem;font-weight:400;letter-spacing:0.02em;color:#ffffff;margin:0;">Fold Research Centre</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 4: PROCESS AMBIENT VIDEO (dark contrast beat, process-ambient.mp4) ── -->
+<section id="process-section" style="position:relative;overflow:hidden;min-height:70vh;display:flex;align-items:center;">
+  <div id="process-video-container" style="position:absolute;inset:0;overflow:hidden;">
+    <video
+      id="process-bg-video"
+      src="assets/process-ambient.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="process-bg-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-2);color:rgba(0,0,0,0.3);font-family:var(--font-body);font-size:0.85rem;">→ assets/process-ambient.mp4</div>
+    <!-- Dark overlay for this contrast section -->
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.72) 100%);pointer-events:none;"></div>
+  </div>
+
+  <div id="process-content" style="position:relative;z-index:2;max-width:var(--grid-container-width);margin:0 auto;padding:100px var(--grid-padding-inline);width:100%;">
+    <div style="max-width:540px;">
+      <span class="eyebrow" style="color:rgba(255,255,255,0.45);">Craft</span>
+      <h2 id="process-heading" style="font-family:var(--font-heading);font-size:clamp(1.875rem,4vw,3rem);font-weight:400;letter-spacing:0.02em;color:#ffffff;margin:0 0 28px;line-height:1.2;">
+        Materials are not inert. They have memory, grain, and tolerance.
+      </h2>
+      <p id="process-body" style="font-family:var(--font-body);font-size:1rem;color:rgba(255,255,255,0.68);line-height:1.7;margin:0 0 44px;">
+        Our structural detailing begins at the material level — understanding how steel, timber, concrete, and composite systems behave not just at yield, but over decades. This depth of material knowledge informs every connection we design.
+      </p>
+      <a href="method.html" class="btn-ghost-light" id="process-cta">Explore our method</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 5: DISCIPLINES (white, stepped-row layout, numbered) ──── -->
+<section id="disciplines" class="section--light">
+  <div class="section-inner">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:60px;flex-wrap:wrap;">
+      <div style="flex:0 0 300px;">
+        <span class="eyebrow">Our disciplines</span>
+        <h2 class="section-heading" style="max-width:260px;">What we bring to each project</h2>
+      </div>
+
+      <!-- Numbered step rows — distinct from card grids -->
+      <ol id="disciplines-list" style="flex:1;list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0;">
+        <li id="discipline-1" class="discipline-row" style="display:grid;grid-template-columns:52px 1fr;gap:24px;padding:32px 0;border-bottom:1px solid rgba(0,0,0,0.07);align-items:start;">
+          <span style="font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.12em;color:var(--color-subtle-text);padding-top:4px;">01</span>
+          <div>
+            <h3 style="font-family:var(--font-heading);font-size:var(--type-h3);font-weight:400;letter-spacing:0.02em;color:var(--color-heading);margin:0 0 10px;">Structural Analysis</h3>
+            <p style="font-family:var(--font-body);font-size:0.9375rem;color:var(--color-muted-text);line-height:1.65;margin:0;">Linear and nonlinear analysis for buildings where standard codes meet their limits — tall, slender, laterally complex, or materially hybrid.</p>
+          </div>
+        </li>
+        <li id="discipline-2" class="discipline-row" style="display:grid;grid-template-columns:52px 1fr;gap:24px;padding:32px 0;border-bottom:1px solid rgba(0,0,0,0.07);align-items:start;">
+          <span style="font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.12em;color:var(--color-subtle-text);padding-top:4px;">02</span>
+          <div>
+            <h3 style="font-family:var(--font-heading);font-size:var(--type-h3);font-weight:400;letter-spacing:0.02em;color:var(--color-heading);margin:0 0 10px;">Adaptive Retrofitting</h3>
+            <p style="font-family:var(--font-body);font-size:0.9375rem;color:var(--color-muted-text);line-height:1.65;margin:0;">Existing structures reimagined for new programs — seismic upgrades, vertical extensions, and the precise surgery of removing load-bearing elements without disturbing the whole.</p>
+          </div>
+        </li>
+        <li id="discipline-3" class="discipline-row" style="display:grid;grid-template-columns:52px 1fr;gap:24px;padding:32px 0;border-bottom:1px solid rgba(0,0,0,0.07);align-items:start;">
+          <span style="font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.12em;color:var(--color-subtle-text);padding-top:4px;">03</span>
+          <div>
+            <h3 style="font-family:var(--font-heading);font-size:var(--type-h3);font-weight:400;letter-spacing:0.02em;color:var(--color-heading);margin:0 0 10px;">Connection Design</h3>
+            <p style="font-family:var(--font-body);font-size:0.9375rem;color:var(--color-muted-text);line-height:1.65;margin:0;">Bespoke connections between dissimilar materials, exposed structural nodes that satisfy both engineering and the architect's eye, and the detailing that makes a building's joints an expression of its design intent.</p>
+          </div>
+        </li>
+        <li id="discipline-4" class="discipline-row" style="display:grid;grid-template-columns:52px 1fr;gap:24px;padding:32px 0;align-items:start;">
+          <span style="font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.12em;color:var(--color-subtle-text);padding-top:4px;">04</span>
+          <div>
+            <h3 style="font-family:var(--font-heading);font-size:var(--type-h3);font-weight:400;letter-spacing:0.02em;color:var(--color-heading);margin:0 0 10px;">Materials Science</h3>
+            <p style="font-family:var(--font-body);font-size:0.9375rem;color:var(--color-muted-text);line-height:1.65;margin:0;">Specification and testing of emerging structural materials — mass timber, cross-laminated bamboo, ultra-high-performance concrete, and hybrid composites at the frontier of what can be built.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 6: STUDIO IMAGE FEATURE (light section, editorial split) ── -->
+<section id="studio-feature" class="section--tint">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+      <!-- Image: studio-interior.mp4 → fallback still image -->
+      <div id="studio-img-container" style="position:relative;overflow:hidden;height:480px;border-radius:2px;">
+        <img
+          id="studio-img"
+          src="assets/studio-interior.jpeg"
+          alt="Lattice Bureau studio — morning light through a drafting room window, drawings and material samples on a long table"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="img-placeholder" style="height:480px;">→ assets/studio-interior.jpeg</div>
+      </div>
+
+      <!-- Text column -->
+      <div id="studio-text" style="display:flex;flex-direction:column;gap:0;">
+        <span class="eyebrow">The studio</span>
+        <h2 class="section-heading" style="max-width:380px;">A practice built on close collaboration</h2>
+        <p class="section-body">Lattice Bureau is a specialist practice of ten structural engineers and two materials scientists. We keep our team small by design — it means every partner is involved in every project, and every decision is taken with the full depth of the practice's knowledge.</p>
+        <div style="display:flex;gap:40px;margin-bottom:44px;flex-wrap:wrap;">
+          <div>
+            <span style="font-family:var(--font-heading);font-size:2.25rem;font-weight:400;color:var(--color-heading);display:block;line-height:1;">12</span>
+            <span style="font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-subtle-text);">People</span>
+          </div>
+          <div>
+            <span style="font-family:var(--font-heading);font-size:2.25rem;font-weight:400;color:var(--color-heading);display:block;line-height:1;">140+</span>
+            <span style="font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-subtle-text);">Projects</span>
+          </div>
+          <div>
+            <span style="font-family:var(--font-heading);font-size:2.25rem;font-weight:400;color:var(--color-heading);display:block;line-height:1;">18</span>
+            <span style="font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-subtle-text);">Years</span>
+          </div>
+        </div>
+        <a href="studio.html" class="btn-ghost" id="studio-learn-more">Meet the studio</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 7: CTA BAND (dark terminal, full-width editorial) ─────── -->
+<section id="cta-band" class="section--dark">
+  <div class="section-inner" style="text-align:center;max-width:800px;">
+    <span class="eyebrow">Work with us</span>
+    <h2 id="cta-heading" class="section-heading section-heading--large" style="max-width:620px;margin:0 auto 28px;">
+      A structural problem worth solving
+    </h2>
+    <p id="cta-body" style="font-family:var(--font-body);font-size:1.0625rem;color:rgba(255,255,255,0.6);line-height:1.7;margin:0 auto 52px;max-width:480px;">
+      We work with architects, developers, and institutions on projects where structural engineering is inseparable from design ambition. Tell us about yours.
+    </p>
+    <a href="contact.html" class="btn-ghost-light" id="cta-contact-btn">Start a conversation</a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────── -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-brand-name">Lattice Bureau</p>
+        <p class="footer-brand-tagline">Structural engineering at the intersection of precision and architectural vision.</p>
+      </div>
+
+      <div class="footer-links-group">
+        <div class="footer-col">
+          <p class="footer-col-heading">Practice</p>
+          <a href="work.html">Work</a>
+          <a href="method.html">Method</a>
+          <a href="studio.html">Studio</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-heading">Disciplines</p>
+          <a href="method.html">Structural Analysis</a>
+          <a href="method.html">Adaptive Retrofitting</a>
+          <a href="method.html">Connection Design</a>
+          <a href="method.html">Materials Science</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-heading">Connect</p>
+          <a href="mailto:studio@latticebureau.com">studio@latticebureau.com</a>
+          <a href="contact.html">Edinburgh</a>
+          <a href="contact.html">London</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-legal">© 2025 Lattice Bureau Ltd. Registered in Scotland.</p>
+      <div class="footer-social">
+        <a href="#">LinkedIn</a>
+        <a href="#">Dezeen</a>
+        <a href="#">Archinect</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── GSAP Animations ────────────────────────────────────────────────── -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const BASE_DURATION = parseFloat(
+  getComputedStyle(document.documentElement).getPropertyValue('--duration-base')
+) || 0.45;
+const EASE_PRIMARY = getComputedStyle(document.documentElement)
+  .getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+// Hero entrance: stagger, transform only (no opacity per page-builder rules)
+const heroTl = gsap.timeline({ delay: 0.2 });
+heroTl
+  .from('#hero-eyebrow', { y: -12, duration: 0.6, ease: 'power2.out' })
+  .from('#hero-headline', { y: 24, duration: 0.8, ease: 'power2.out' }, '-=0.35')
+  .from('#hero-subheadline', { y: 16, duration: 0.6, ease: 'power2.out' }, '-=0.45')
+  .from('#hero-cta-group', { y: 12, duration: 0.5, ease: 'power2.out' }, '-=0.3')
+  .from('#hero-scroll-indicator', { y: 8, duration: 0.6, ease: 'power2.out' }, '-=0.2');
+
+// Manifesto — clip-path wipe reveal (high intensity, unique to this section)
+gsap.from('#manifesto-heading', {
+  scrollTrigger: { trigger: '#manifesto', start: 'top 75%' },
+  clipPath: 'inset(0 100% 0 0)',
+  duration: 1.1,
+  ease: 'power3.out'
+});
+
+gsap.from('#manifesto-body', {
+  scrollTrigger: { trigger: '#manifesto', start: 'top 70%' },
+  y: 18,
+  duration: BASE_DURATION,
+  ease: EASE_PRIMARY,
+  delay: 0.3
+});
+
+gsap.from('#manifesto-cta', {
+  scrollTrigger: { trigger: '#manifesto', start: 'top 65%' },
+  y: 10,
+  duration: BASE_DURATION * 0.8,
+  ease: EASE_PRIMARY,
+  delay: 0.55
+});
+
+// Work grid: featured card slides in from left, stacked cards slide from right
+// Animate container as a unit (not individual cards) to prevent misalignment
+gsap.from('#work-card-featured', {
+  scrollTrigger: { trigger: '#selected-work', start: 'top 72%' },
+  x: -60,
+  duration: BASE_DURATION * 1.4,
+  ease: 'power2.out'
+});
+
+gsap.from('#work-cards-stacked', {
+  scrollTrigger: { trigger: '#selected-work', start: 'top 72%' },
+  x: 60,
+  duration: BASE_DURATION * 1.4,
+  ease: 'power2.out',
+  delay: 0.1
+});
+
+// Process section: scale from center
+gsap.from('#process-heading', {
+  scrollTrigger: { trigger: '#process-section', start: 'top 78%' },
+  scale: 0.96,
+  duration: BASE_DURATION * 1.2,
+  ease: 'power2.out'
+});
+
+gsap.from('#process-body', {
+  scrollTrigger: { trigger: '#process-section', start: 'top 72%' },
+  y: 14,
+  duration: BASE_DURATION,
+  ease: EASE_PRIMARY,
+  delay: 0.2
+});
+
+// Disciplines: stagger rows from left with rotation
+gsap.from('.discipline-row', {
+  scrollTrigger: { trigger: '#disciplines-list', start: 'top 75%' },
+  x: -40,
+  rotation: 0.8,
+  duration: BASE_DURATION * 1.1,
+  stagger: 0.12,
+  ease: 'power2.out'
+});
+
+// Studio feature: image scale-from-center + text slide up
+gsap.from('#studio-img-container', {
+  scrollTrigger: { trigger: '#studio-feature', start: 'top 75%' },
+  scale: 0.96,
+  duration: BASE_DURATION * 1.3,
+  ease: 'power2.out'
+});
+
+gsap.from('#studio-text', {
+  scrollTrigger: { trigger: '#studio-feature', start: 'top 72%' },
+  y: 30,
+  duration: BASE_DURATION,
+  ease: EASE_PRIMARY,
+  delay: 0.15
+});
+
+// CTA band: large heading clip-path from bottom
+gsap.from('#cta-heading', {
+  scrollTrigger: { trigger: '#cta-band', start: 'top 78%' },
+  clipPath: 'inset(100% 0 0 0)',
+  duration: 0.9,
+  ease: 'power3.out'
+});
+
+// Cross-segment: scroll indicator line travels as hero leaves viewport
+gsap.to('#hero-scroll-indicator', {
+  scrollTrigger: {
+    trigger: '#hero',
+    start: 'top top',
+    end: 'bottom 60%',
+    scrub: 1.2
+  },
+  y: 30,
+  ease: 'none'
+});
+</script>
+
+<!-- Nav behavior -->
+<script src="behaviors/nav.js"></script>
+</body>
+</html>

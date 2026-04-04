@@ -1,0 +1,78 @@
+/* ============================================================
+ * GRID SYSTEM — Source: stone-ledger
+ * Twist: A. Container max-width tighten, Intensity 2 (−10%)
+ * maxWidth 1100px → 990px for a tighter editorial column.
+ * ============================================================ */
+
+:root {
+  --grid-gap: 2vw;
+  --grid-space: calc((100% - 11 * var(--grid-gap)) / 12);
+  --container-max-width: 990px;
+  --container-padding-inline: 32px;
+}
+
+.container {
+  max-width: var(--container-max-width);
+  padding-left: var(--container-padding-inline);
+  padding-right: var(--container-padding-inline);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* 12-column grid */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: normal 34.56px;
+}
+
+/* 6-column grid (tablet) */
+.grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: normal 24px;
+}
+
+/* Nav layout */
+.nav-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 9.45px;
+  align-items: center;
+}
+
+.nav-header-right {
+  display: flex;
+  flex-direction: row;
+  gap: 181.44px;
+}
+
+/* Responsive */
+@media (max-width: 380px) {
+  .grid-hide-xs {
+    display: none;
+  }
+}
+
+@media (max-width: 812px) {
+  .grid-12,
+  .grid-6 {
+    grid-template-columns: repeat(6, minmax(0px, 1fr));
+  }
+
+  .nav-header-right {
+    flex-direction: column;
+    flex-wrap: wrap;
+    row-gap: 0.1em;
+    column-gap: 0px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .grid-12 {
+    grid-template-columns: repeat(6, minmax(0px, 1fr));
+    row-gap: 5em;
+  }
+}

@@ -1,0 +1,117 @@
+/* ============================================================
+ * grid-system: iron-vellum
+ * Source: griting
+ * Twist C (intensity 3): Container padding change
+ *   paddingInline 22px → 34px (+12px)
+ *   section-width recalculated: 1440 - (34×2) = 1372px
+ * ============================================================ */
+
+:root {
+  --container-max-width: 1440px;
+  --container-padding-inline: 34px;
+  --grid-cols-features: 3;
+  --grid-cols-footer: 5;
+  --section-width: 1372px;
+
+  /* Blog index */
+  --grid-blog-featured-columns: 60fr 40fr;
+  --grid-blog-list-columns: 1fr;
+  --grid-filter-bar-columns: 1fr auto;
+
+  /* About page */
+  --grid-about-mission-width: 925px;
+  --grid-about-body-copy-width: 785px;
+
+  /* Product/tab UI */
+  --grid-tab-bar-width: 1146px;
+  --grid-tab-bar-height: 86px;
+  --grid-tab-bar-radius: 20px;
+  --grid-content-panel-width: 866px;
+  --grid-content-panel-height: 640px;
+  --grid-product-section-left-col: 33.33%;
+  --grid-product-section-right-col: 60%;
+}
+
+/* Base container */
+.container {
+  max-width: var(--container-max-width);
+  padding-inline: var(--container-padding-inline);
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* Full-bleed */
+.full-bleed {
+  width: 100vw;
+  margin-inline: calc(-1 * var(--container-padding-inline));
+}
+
+/* Feature cards — 3 column */
+.grid-features {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols-features), 1fr);
+}
+
+/* Footer — 5 column */
+.grid-footer {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols-footer), 1fr);
+}
+
+/* Ecosystem cards */
+.grid-ecosystem {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Featured post — asymmetric */
+.grid-featured-post {
+  display: grid;
+  grid-template-columns: var(--grid-blog-featured-columns);
+  gap: 40px;
+}
+
+/* Product section — text + screenshot split */
+.grid-product-section {
+  display: grid;
+  grid-template-columns: var(--grid-product-section-left-col) var(--grid-product-section-right-col);
+  gap: 64px;
+}
+
+/* Testimonials */
+.grid-testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Centered narrow text */
+.grid-centered-mission {
+  max-width: var(--grid-about-mission-width);
+  margin-inline: auto;
+}
+
+.grid-centered-body {
+  max-width: var(--grid-about-body-copy-width);
+  margin-inline: auto;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .grid-features,
+  .grid-testimonials {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-product-section,
+  .grid-featured-post {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-features,
+  .grid-testimonials,
+  .grid-footer {
+    grid-template-columns: 1fr;
+  }
+}

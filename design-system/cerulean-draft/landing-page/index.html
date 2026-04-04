@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strata — Subsurface Data Platform for Infrastructure Engineers</title>
+  <meta name="description" content="Strata layers underground survey data, structural load models, and geological formation data into a unified analysis environment. See beneath the surface.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/features.css">
+  <link rel="stylesheet" href="components/how-it-works.css">
+  <link rel="stylesheet" href="components/showcase.css">
+  <link rel="stylesheet" href="components/cta-band.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV TEMPLATE -->
+<nav id="site-nav" class="on-dark">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Strata home">
+      <span class="nav-logo-text">Strata<span class="nav-logo-dot">.</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="platform.html">Platform</a></li>
+      <li><a href="methodology.html">Methodology</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Request Access</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="platform.html">Platform</a>
+  <a href="methodology.html">Methodology</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html">Request Access</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = nav.querySelector('.nav-mobile-toggle');
+    var mobileMenu = document.getElementById('nav-mobile-menu');
+    var lastScroll = 0;
+
+    // Nav hide on scroll (opacity/visibility as per nav.json scrollTransition)
+    window.addEventListener('scroll', function() {
+      var current = window.scrollY;
+      if (current > 80 && current > lastScroll) {
+        nav.classList.add('hidden');
+      } else {
+        nav.classList.remove('hidden');
+      }
+      lastScroll = current;
+    });
+
+    // Mobile toggle
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+    });
+  })();
+</script>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-bg-ambient.mp4"
+      autoplay muted loop playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="hero-bg-video-placeholder">→ assets/hero-bg-ambient.mp4</div>
+  </div>
+  <div id="hero-grid-pattern"></div>
+  <div id="hero-video-overlay"></div>
+  <div id="hero-content">
+    <p id="hero-label">Geospatial Infrastructure Analysis</p>
+    <h1 id="hero-headline">See beneath<br>the surface.</h1>
+    <p id="hero-subheadline">Strata unifies subsurface survey data, structural load models, and geological formation layers into a single precision analysis environment — before you break ground.</p>
+    <div id="hero-cta-group">
+      <a href="contact.html" class="btn-primary">Request Access</a>
+      <a href="platform.html" class="btn-ghost-light">Explore Platform</a>
+    </div>
+  </div>
+  <div id="hero-scroll-hint">
+    <span>Scroll</span>
+    <div id="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section id="features">
+  <div id="features-inner">
+    <div id="features-header">
+      <p id="features-label">Core Capabilities</p>
+      <h2 id="features-heading">Every layer of the ground,<br>in one analysis surface.</h2>
+      <p id="features-subheading">From borehole logs to seismic risk profiles, Strata integrates disparate survey formats into a coherent model that updates in real time as new data arrives.</p>
+    </div>
+    <div id="features-grid">
+      <!-- Featured wide card -->
+      <div class="feature-card feature-card--featured" id="feature-card-1">
+        <div>
+          <p class="feature-card-number">01</p>
+          <div class="feature-card-icon feature-icon-layers" aria-hidden="true"></div>
+          <h3 class="feature-card-title">Multi-source Data Fusion</h3>
+          <p class="feature-card-body">Ingest borehole logs, CPT profiles, seismic survey outputs, and LiDAR ground models simultaneously. Strata resolves format conflicts and spatial misalignments automatically — no manual preprocessing required.</p>
+        </div>
+        <a href="platform.html" class="feature-card-link">See the platform</a>
+      </div>
+      <!-- Standard cards -->
+      <div class="feature-card" id="feature-card-2">
+        <p class="feature-card-number">02</p>
+        <div class="feature-card-icon feature-icon-grid" aria-hidden="true"></div>
+        <h3 class="feature-card-title">Subsurface Grid Modeling</h3>
+        <p class="feature-card-body">Construct 3D geological models at 0.5m resolution from sparse borehole data using variogram-based interpolation calibrated to site-specific soil classification.</p>
+      </div>
+      <div class="feature-card" id="feature-card-3">
+        <p class="feature-card-number">03</p>
+        <div class="feature-card-icon feature-icon-analysis" aria-hidden="true"></div>
+        <h3 class="feature-card-title">Load-Ground Interaction</h3>
+        <p class="feature-card-body">Model how proposed structural loads interact with identified soil layers — flagging consolidation risk, bearing capacity limits, and pile-depth requirements at each test point.</p>
+      </div>
+      <div class="feature-card" id="feature-card-4">
+        <p class="feature-card-number">04</p>
+        <div class="feature-card-icon feature-icon-report" aria-hidden="true"></div>
+        <h3 class="feature-card-title">Automated Risk Reports</h3>
+        <p class="feature-card-body">Generate geotechnical risk summaries in PDF and structured JSON — formatted to Eurocode 7 and ASTM standards, ready for review board submission.</p>
+      </div>
+      <div class="feature-card" id="feature-card-5">
+        <p class="feature-card-number">05</p>
+        <div class="feature-card-icon feature-icon-collab" aria-hidden="true"></div>
+        <h3 class="feature-card-title">Multi-Discipline Access</h3>
+        <p class="feature-card-body">Project-level sharing for geotechnical engineers, structural teams, and planning consultants — with role-based data visibility and audit trails on every model revision.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section id="how-it-works">
+  <div id="how-it-works-inner">
+    <p id="how-it-works-label">The Process</p>
+    <h2 id="how-it-works-heading">From raw survey data to<br>ground-truth decision.</h2>
+    <ol id="step-list">
+      <li class="step-item" id="step-1">
+        <span class="step-number">01</span>
+        <div class="step-content">
+          <h3 class="step-title">Ingest</h3>
+          <p class="step-body">Upload borehole logs, CPT files, seismic surveys, and ground elevation models in any common format. Strata parses and spatially references each dataset against the site coordinate system you define.</p>
+        </div>
+      </li>
+      <li class="step-item" id="step-2">
+        <span class="step-number">02</span>
+        <div class="step-content">
+          <h3 class="step-title">Model</h3>
+          <p class="step-body">The interpolation engine constructs a 3D subsurface grid, identifying soil classification boundaries, water table depth, and formation discontinuities across the site extent.</p>
+        </div>
+      </li>
+      <li class="step-item" id="step-3">
+        <span class="step-number">03</span>
+        <div class="step-content">
+          <h3 class="step-title">Analyse</h3>
+          <p class="step-body">Apply structural load scenarios to the model. The risk engine computes bearing capacity, settlement estimates, and lateral pressure profiles at each foundation node in the project layout.</p>
+        </div>
+      </li>
+      <li class="step-item" id="step-4">
+        <span class="step-number">04</span>
+        <div class="step-content">
+          <h3 class="step-title">Report</h3>
+          <p class="step-body">Export site investigation reports in structured formats. Model outputs are versioned and traceable — every analysis result links back to the source data that produced it.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ── SHOWCASE (dark contrast) ── -->
+<section id="showcase">
+  <div id="showcase-video-container">
+    <video
+      id="showcase-bg-video"
+      src="assets/instrument-showcase-ambient.mp4"
+      autoplay muted loop playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="showcase-bg-video-placeholder">→ assets/instrument-showcase-ambient.mp4</div>
+  </div>
+  <div id="showcase-overlay"></div>
+  <div id="showcase-inner">
+    <div id="showcase-text">
+      <p id="showcase-label">Precision at Scale</p>
+      <h2 id="showcase-heading">Ground intelligence<br>measured in millimetres.</h2>
+      <p id="showcase-body">Strata is built for the tolerances that infrastructure demands. The platform ingests survey data at 0.5m grid resolution and propagates uncertainty estimates through every model layer — so your risk assessments carry the same precision as the instruments that produced the underlying data.</p>
+      <a href="methodology.html" class="btn-ghost-light" id="showcase-cta">Our Methodology</a>
+    </div>
+    <div id="showcase-stats">
+      <div class="showcase-stat" id="stat-1">
+        <span class="showcase-stat-value">0<span>.5m</span></span>
+        <span class="showcase-stat-label">Grid resolution</span>
+      </div>
+      <div class="showcase-stat" id="stat-2">
+        <span class="showcase-stat-value">40<span>+</span></span>
+        <span class="showcase-stat-label">Survey format parsers</span>
+      </div>
+      <div class="showcase-stat" id="stat-3">
+        <span class="showcase-stat-value">EC<span>7</span></span>
+        <span class="showcase-stat-label">Report standard</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BAND ── -->
+<section id="cta-band">
+  <div id="cta-band-inner">
+    <p id="cta-band-label">Get Started</p>
+    <h2 id="cta-band-heading">Ready to see what's below<br>your next project site?</h2>
+    <p id="cta-band-body">Request early access and a member of our engineering team will walk you through a live analysis of your site data.</p>
+    <div id="cta-band-buttons">
+      <a href="contact.html" class="btn-primary">Request Access</a>
+      <a href="platform.html" class="btn-ghost">Explore Platform</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-grid">
+      <div id="footer-brand">
+        <p id="footer-logo-text">Strata<span>.</span></p>
+        <p id="footer-tagline">Subsurface data platform for infrastructure engineers.</p>
+      </div>
+      <div class="footer-col" id="footer-col-platform">
+        <p class="footer-col-heading">Platform</p>
+        <ul class="footer-links">
+          <li><a href="platform.html">Overview</a></li>
+          <li><a href="platform.html#data-fusion">Data Fusion</a></li>
+          <li><a href="platform.html#modeling">Subsurface Modeling</a></li>
+          <li><a href="platform.html#reporting">Reporting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footer-col-method">
+        <p class="footer-col-heading">Methodology</p>
+        <ul class="footer-links">
+          <li><a href="methodology.html">Our Approach</a></li>
+          <li><a href="methodology.html#standards">Standards</a></li>
+          <li><a href="methodology.html#validation">Validation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footer-col-company">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footer-col-resources">
+        <p class="footer-col-heading">Resources</p>
+        <ul class="footer-links">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Case Studies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-legal">© 2026 Strata Technologies Ltd. All rights reserved.</p>
+      <div id="footer-legal-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Security</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  var BASE_DURATION = 0.35;
+  var EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+
+  // ── Hero entrance timeline (runs on load, opacity safe here) ──
+  var heroTl = gsap.timeline({ delay: 0.2 });
+  heroTl
+    .to('#hero-label',        { opacity: 1, y: 0, duration: BASE_DURATION, ease: EASE }, 0)
+    .to('#hero-headline',     { opacity: 1, y: 0, duration: BASE_DURATION, ease: EASE }, 0.1)
+    .to('#hero-subheadline',  { opacity: 1, y: 0, duration: BASE_DURATION, ease: EASE }, 0.2)
+    .to('#hero-cta-group',    { opacity: 1, y: 0, duration: BASE_DURATION, ease: EASE }, 0.35)
+    .to('#hero-scroll-hint',  { opacity: 1, duration: BASE_DURATION, ease: EASE }, 0.55);
+
+  // Prepare hero elements
+  gsap.set('#hero-label',       { opacity: 0, y: 20 });
+  gsap.set('#hero-headline',    { opacity: 0, y: 20 });
+  gsap.set('#hero-subheadline', { opacity: 0, y: 20 });
+  gsap.set('#hero-cta-group',   { opacity: 0, y: 20 });
+  gsap.set('#hero-scroll-hint', { opacity: 0 });
+
+  // ── Features: horizontal divergent x-axis (distinct from standard y-stagger) ──
+  gsap.from('#features-heading', {
+    scrollTrigger: { trigger: '#features-header', start: 'top 80%' },
+    x: -60,
+    duration: BASE_DURATION * 1.4,
+    ease: EASE
+  });
+  gsap.from('#features-subheading', {
+    scrollTrigger: { trigger: '#features-header', start: 'top 80%' },
+    x: 60,
+    duration: BASE_DURATION * 1.4,
+    ease: EASE
+  });
+
+  // Feature cards: scale-from-center pattern
+  gsap.from('#features-grid .feature-card', {
+    scrollTrigger: { trigger: '#features-grid', start: 'top 75%' },
+    scale: 0.94,
+    stagger: 0.1,
+    duration: BASE_DURATION * 1.2,
+    ease: EASE
+  });
+
+  // ── How it works: clip-path wipe reveal on each step ──
+  // Use immediateRender:false to prevent GSAP from applying from-state before trigger fires
+  document.querySelectorAll('.step-item').forEach(function(item, i) {
+    gsap.fromTo(item,
+      { clipPath: 'inset(0 100% 0 0)' },
+      {
+        clipPath: 'inset(0 0% 0 0)',
+        scrollTrigger: { trigger: item, start: 'top 88%' },
+        duration: BASE_DURATION * 1.5,
+        delay: i * 0.05,
+        ease: EASE,
+        immediateRender: false
+      }
+    );
+  });
+
+  // How-it-works heading: rotation + rise
+  gsap.from('#how-it-works-heading', {
+    scrollTrigger: { trigger: '#how-it-works-heading', start: 'top 80%' },
+    rotation: 1.5,
+    y: 40,
+    duration: BASE_DURATION * 1.6,
+    ease: EASE
+  });
+
+  // ── Showcase: split entrance — text left, stats right ──
+  gsap.from('#showcase-text', {
+    scrollTrigger: { trigger: '#showcase-inner', start: 'top 75%' },
+    x: -80,
+    duration: BASE_DURATION * 1.8,
+    ease: EASE
+  });
+  gsap.from('#showcase-stats', {
+    scrollTrigger: { trigger: '#showcase-inner', start: 'top 75%' },
+    x: 80,
+    duration: BASE_DURATION * 1.8,
+    ease: EASE
+  });
+
+  // Stats values count-up feel (scale)
+  gsap.from('.showcase-stat-value', {
+    scrollTrigger: { trigger: '#showcase-stats', start: 'top 80%' },
+    scale: 0.85,
+    stagger: 0.12,
+    duration: BASE_DURATION * 1.4,
+    ease: 'power2.out'
+  });
+
+  // ── CTA band: staggered y entrance ──
+  gsap.from(['#cta-band-label', '#cta-band-heading', '#cta-band-body', '#cta-band-buttons'], {
+    scrollTrigger: { trigger: '#cta-band-inner', start: 'top 80%' },
+    y: 50,
+    stagger: 0.1,
+    duration: BASE_DURATION * 1.3,
+    ease: EASE
+  });
+
+  // ── Parallax: hero grid pattern drifts slower than scroll ──
+  gsap.to('#hero-grid-pattern', {
+    scrollTrigger: {
+      trigger: '#hero',
+      scrub: 1.5
+    },
+    y: '15%',
+    ease: 'none'
+  });
+</script>
+
+</body>
+</html>

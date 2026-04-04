@@ -1,0 +1,195 @@
+/* hero.css — Iron Chalk hero system */
+/* Torq landing page: full-viewport hero with image bg + gradient overlay */
+
+#hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding-top: var(--nav-height);
+  overflow: hidden;
+  background: var(--color-surface-dark);
+}
+
+/* ── Background image wrapper ── */
+#hero-bg-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+#hero-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(21, 19, 19, 0.35) 0%,
+    rgba(21, 19, 19, 0.55) 40%,
+    rgba(21, 19, 19, 0.90) 80%,
+    rgba(21, 19, 19, 1.00) 100%
+  );
+}
+
+/* ── Hero content ── */
+#hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: var(--space-hero) var(--grid-padding) var(--space-4xl);
+}
+
+#hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--font-letter-spacing-nav);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-lg);
+}
+
+#hero-headline {
+  font-family: var(--font-display);
+  font-size: var(--type-hero);
+  font-weight: var(--font-weight-heading);
+  letter-spacing: var(--font-letter-spacing-heading);
+  line-height: var(--line-height-heading);
+  text-transform: uppercase;
+  color: var(--color-heading-on-dark);
+  margin: 0 0 var(--space-2xl);
+}
+
+#hero-subhead {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-body);
+  color: var(--color-muted-text);
+  max-width: 520px;
+  margin: 0 0 var(--space-xl);
+}
+
+/* ── CTA group ── */
+#hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+#hero-cta-primary {
+  font-family: var(--font-body);
+  font-size: var(--type-nav);
+  font-weight: var(--font-weight-body);
+  letter-spacing: var(--font-letter-spacing-nav);
+  color: var(--color-surface-dark);
+  background: var(--color-accent);
+  text-decoration: none;
+  display: inline-block;
+  padding: var(--space-btn-v) var(--space-btn-h);
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+#hero-cta-primary:hover {
+  opacity: 0.85;
+}
+
+#hero-cta-primary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+#hero-cta-secondary {
+  font-family: var(--font-body);
+  font-size: var(--type-nav);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--font-letter-spacing-nav);
+  color: var(--color-heading-on-dark);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(244, 244, 244, 0.35);
+  padding-bottom: 2px;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              opacity var(--duration-fast) var(--ease-standard);
+}
+
+#hero-cta-secondary:hover {
+  border-color: rgba(244, 244, 244, 0.8);
+  opacity: 0.8;
+}
+
+#hero-cta-secondary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ── Threshold badge ── */
+#hero-threshold-badge {
+  position: absolute;
+  bottom: var(--space-2xl);
+  right: var(--grid-padding);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  background: rgba(21, 19, 19, 0.72);
+  border: 1px solid var(--color-border);
+  padding: var(--space-sm) var(--space-md);
+}
+
+#badge-label {
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--font-letter-spacing-nav);
+  color: var(--color-muted-text);
+}
+
+#badge-value {
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  font-weight: var(--font-weight-body);
+  letter-spacing: var(--font-letter-spacing-nav);
+}
+
+.badge-green {
+  color: var(--color-accent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  #hero-content {
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  #hero-threshold-badge {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero {
+    align-items: flex-end;
+    min-height: 100svh;
+  }
+
+  #hero-content {
+    padding: var(--space-3xl) var(--space-md) var(--space-2xl);
+  }
+
+  #hero-cta-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

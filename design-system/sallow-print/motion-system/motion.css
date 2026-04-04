@@ -1,0 +1,67 @@
+:root {
+  --motion-system-videos-count: 1;
+  --motion-system-videos-animatedGifs: 0;
+  --motion-system-performance-totalAnimatedElements: 39;
+  --motion-system-performance-simultaneousAnimations: 0;
+  --motion-system-performance-videoLoad: light;
+  --motion-system-performance-complexAnimations: 14;
+  --motion-system-performance-summary-videos: 1;
+  --motion-system-performance-summary-animatedGifs: 0;
+  --motion-system-performance-summary-keyframes: 5;
+  --motion-system-performance-summary-scrollLibraries: 0;
+
+  /* Motion timing tokens (duration scaled ×1.3 from hermes base) */
+  --motion-duration-fast: 0.26s;
+  --motion-duration-base: 0.52s;
+  --motion-duration-slow: 0.65s;
+  --motion-duration-badge: 5.2s;
+  --motion-easing-standard: ease-in-out;
+  --motion-easing-linear: linear;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes panel-show {
+  from { transform: translate(510px); }
+  to   { transform: translate(0); }
+}
+
+@keyframes panel-hide {
+  from { transform: translate(0); }
+  to   { transform: translate(510px); }
+}
+
+@keyframes rotate-badge {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+  animation: fade-in var(--motion-duration-base) var(--motion-easing-standard) both;
+}
+
+.animate-slide-up {
+  animation: slide-up var(--motion-duration-slow) var(--motion-easing-standard) both;
+}
+
+.animate-rotate {
+  animation: rotate-badge var(--motion-duration-badge) var(--motion-easing-linear) infinite;
+}
+
+button, a {
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+}

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Method — Torq Material Resistance Testing</title>
+  <meta name="description" content="How Torq's finite element analysis engine resolves material deformation at the microstructure level — per-cell simulation, not regression tables.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <style>
+    /* ── Method page layout ── */
+    .page-body {
+      padding-top: var(--nav-height);
+      background: var(--color-page-bg);
+    }
+
+    /* ── Page header ── */
+    #method-header {
+      background: var(--color-surface-dark);
+      padding: var(--space-hero) var(--grid-padding) var(--space-4xl);
+    }
+
+    #method-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+    }
+
+    #method-header-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-lg);
+    }
+
+    #method-header-headline {
+      font-family: var(--font-display);
+      font-size: var(--type-display);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading);
+      text-transform: uppercase;
+      color: var(--color-heading-on-dark);
+      margin: 0 0 var(--space-xl);
+    }
+
+    #method-header-lead {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-light);
+      line-height: var(--line-height-body);
+      color: var(--color-muted-text);
+      max-width: 540px;
+      margin: 0;
+    }
+
+    /* ── Method content sections ── */
+    .method-section {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: var(--space-section) var(--grid-padding);
+    }
+
+    .method-section + .method-section {
+      border-top: 1px solid var(--color-neutral-400);
+    }
+
+    .method-step-label {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .method-step-label::after {
+      content: '';
+      display: block;
+      flex: 1;
+      height: 1px;
+      background: var(--color-neutral-400);
+    }
+
+    .method-step-title {
+      font-family: var(--font-display);
+      font-size: var(--type-h2);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 var(--space-xl);
+    }
+
+    .method-step-body {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-light);
+      line-height: 1.7;
+      color: var(--color-neutral-525);
+      max-width: 620px;
+    }
+
+    .method-step-body + .method-step-body {
+      margin-top: var(--space-lg);
+    }
+
+    /* ── Method image ── */
+    .method-img-block {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      background: var(--color-neutral-300);
+      overflow: hidden;
+      margin-top: var(--space-2xl);
+      position: relative;
+    }
+
+    .method-img-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .method-img-placeholder {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-neutral-300);
+      color: var(--color-neutral-500);
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+    }
+
+    /* ── Standards table ── */
+    .method-standards {
+      margin-top: var(--space-2xl);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-neutral-400);
+      border: 1px solid var(--color-neutral-400);
+    }
+
+    .standard-item {
+      background: var(--color-page-bg);
+      padding: var(--space-xl);
+    }
+
+    .standard-code {
+      font-family: var(--font-display);
+      font-size: var(--type-h3);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin-bottom: var(--space-sm);
+    }
+
+    .standard-name {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      color: var(--color-neutral-500);
+      line-height: 1.45;
+    }
+
+    /* ── CTA strip ── */
+    #method-cta-strip {
+      background: var(--color-surface-dark);
+      border-top: 1px solid var(--color-border);
+    }
+
+    #method-cta-strip-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: var(--space-3xl) var(--grid-padding);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2xl);
+    }
+
+    #method-cta-text {
+      font-family: var(--font-display);
+      font-size: var(--type-h3);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading-on-dark);
+    }
+
+    #method-cta-link {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: var(--font-weight-body);
+      letter-spacing: var(--font-letter-spacing-nav);
+      color: var(--color-surface-dark);
+      background: var(--color-accent);
+      text-decoration: none;
+      display: inline-block;
+      padding: var(--space-btn-v) var(--space-btn-h);
+      white-space: nowrap;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    #method-cta-link:hover {
+      opacity: 0.85;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .method-standards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      #method-cta-strip-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .method-standards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="page-body">
+
+<!-- NAV TEMPLATE -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo">TORQ</a>
+  <ul class="nav-links">
+    <li><a href="index.html#product">Product</a></li>
+    <li><a href="method.html" class="nav-link--active">Method</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="index.html#access" class="nav-cta">Request Access</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu">
+  <a href="index.html#product">Product</a>
+  <a href="method.html">Method</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="about.html">About</a>
+  <a href="index.html#access" class="nav-mobile-cta">Request Access</a>
+</div>
+<script>
+(function(){
+  var nav = document.getElementById('site-nav');
+  var mobileMenu = document.querySelector('.nav-mobile-menu');
+  var toggle = document.querySelector('.nav-mobile-toggle');
+  toggle.addEventListener('click', function(){
+    nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open');
+  });
+})();
+</script>
+
+<!-- PAGE HEADER -->
+<section id="method-header">
+  <div id="method-header-inner">
+    <div id="method-header-eyebrow">Our Approach</div>
+    <h1 id="method-header-headline">FEA-backed.<br>Not estimated.</h1>
+    <p id="method-header-lead">Torq's simulation engine runs finite element analysis on a per-cell basis. Every threshold value is derived from the actual geometry of the material — not from regression tables or approximated lookup curves.</p>
+  </div>
+</section>
+
+<!-- STEP 01: GEOMETRY INGESTION -->
+<div>
+  <div class="method-section">
+    <div class="method-step-label">Step 01</div>
+    <h2 class="method-step-title">Geometry Ingestion &amp; Mesh Generation</h2>
+    <p class="method-step-body">Torq accepts material specifications in standard formats: ASTM D3039 tensile data sheets, SEM cross-section exports, and CAD-derived material geometry files (.step, .iges). On ingest, the engine auto-generates an adaptive mesh — finer at stress concentrations, coarser in homogeneous regions — without manual tuning.</p>
+    <p class="method-step-body">The mesh generator resolves down to 5-micron cell size for carbon fiber reinforced composites, matching the resolution required for accurate inter-laminar shear failure prediction. For metal alloys, cell size adapts automatically to grain boundary data embedded in the material specification.</p>
+    <div class="method-img-block">
+      <img
+        src="assets/method-mesh-generation.jpeg"
+        alt="Adaptive mesh overlaid on cross-section of carbon fiber composite material"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div class="method-img-placeholder">→ assets/method-mesh-generation.jpeg</div>
+    </div>
+  </div>
+
+  <!-- STEP 02: FEA ENGINE -->
+  <div class="method-section">
+    <div class="method-step-label">Step 02</div>
+    <h2 class="method-step-title">Per-Cell Finite Element Analysis</h2>
+    <p class="method-step-body">Each cell in the mesh is treated as an independent finite element with its own material property tensor. Torq solves the system of equations governing stress, strain, and deformation using a sparse direct solver optimized for composite anisotropy — not a general-purpose FEA kernel.</p>
+    <p class="method-step-body">Simulation resolves at 40ms per node under standard load conditions. For multi-axis loading scenarios (combined tensile + shear), the engine runs load case superposition in a single pipeline pass. No re-meshing between load cases.</p>
+  </div>
+
+  <!-- STEP 03: FATIGUE -->
+  <div class="method-section">
+    <div class="method-step-label">Step 03</div>
+    <h2 class="method-step-title">S-N Curve Modeling &amp; Fatigue Forecasting</h2>
+    <p class="method-step-body">Torq generates S-N curves (stress vs. cycles to failure) from the FEA output using a modified Basquin law, fitted to the material's actual microstructure rather than to population-average empirical data. The curve reflects the specific fiber architecture, void distribution, and resin system of the ingested material.</p>
+    <p class="method-step-body">Fatigue forecasts are probabilistic: Torq outputs a 90th-percentile confidence band alongside the median prediction, enabling engineers to set conservative design thresholds without arbitrary safety factors.</p>
+    <div class="method-img-block">
+      <img
+        src="assets/method-sn-curve.jpeg"
+        alt="S-N curve output chart from Torq simulation with confidence band overlay"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div class="method-img-placeholder">→ assets/method-sn-curve.jpeg</div>
+    </div>
+  </div>
+
+  <!-- STEP 04: COMPLIANCE OUTPUT -->
+  <div class="method-section">
+    <div class="method-step-label">Step 04</div>
+    <h2 class="method-step-title">Compliance-Ready Output Generation</h2>
+    <p class="method-step-body">Every simulation run automatically generates structured output mapped to the relevant test standard. Torq supports the following standards for automatic output generation:</p>
+    <div class="method-standards">
+      <div class="standard-item">
+        <div class="standard-code">ISO 6892</div>
+        <div class="standard-name">Metallic materials — tensile testing at ambient temperature</div>
+      </div>
+      <div class="standard-item">
+        <div class="standard-code">ASTM E8</div>
+        <div class="standard-name">Standard test methods for tension testing of metallic materials</div>
+      </div>
+      <div class="standard-item">
+        <div class="standard-code">EN 10002</div>
+        <div class="standard-name">Tensile testing — method of test at ambient temperature</div>
+      </div>
+      <div class="standard-item">
+        <div class="standard-code">ASTM D3039</div>
+        <div class="standard-name">Tensile properties of polymer matrix composite materials</div>
+      </div>
+      <div class="standard-item">
+        <div class="standard-code">ISO 14129</div>
+        <div class="standard-name">In-plane shear stress/shear strain response of CFRP</div>
+      </div>
+      <div class="standard-item">
+        <div class="standard-code">ASTM E466</div>
+        <div class="standard-name">Conducting force-controlled constant amplitude axial fatigue tests</div>
+      </div>
+    </div>
+    <p class="method-step-body" style="margin-top: var(--space-xl);">Documents are exported as structured PDF with embedded raw data tables, suitable for direct submission to accreditation bodies without manual data transfer or re-formatting.</p>
+  </div>
+</div>
+
+<!-- CTA STRIP -->
+<section id="method-cta-strip">
+  <div id="method-cta-strip-inner">
+    <div id="method-cta-text">Ready to run your first simulation?</div>
+    <a href="index.html#access" id="method-cta-link">Request Access</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div class="section-inner">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <div id="footer-logo">TORQ</div>
+        <div id="footer-tagline">Precision simulation for material engineers.</div>
+        <div id="footer-copyright">&copy; 2026 Torq Technologies, Inc.</div>
+      </div>
+      <div class="footer-col" id="fcol-platform">
+        <div class="footer-col-heading">Platform</div>
+        <ul class="footer-links">
+          <li><a href="index.html#product">Product</a></li>
+          <li><a href="method.html">Method</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="fcol-company">
+        <div class="footer-col-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="fcol-legal">
+        <div class="footer-col-heading">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+var BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.6;
+var EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+// Header entrance
+gsap.from('#method-header-eyebrow', { y: 30, duration: BASE_DURATION, ease: EASE, delay: 0.2 });
+gsap.from('#method-header-headline', { y: 60, duration: BASE_DURATION, ease: EASE, delay: 0.35 });
+gsap.from('#method-header-lead', { y: 30, duration: BASE_DURATION, ease: EASE, delay: 0.5 });
+
+// Scroll-triggered step sections
+gsap.from('.method-step-label', {
+  scrollTrigger: { trigger: '.method-section', start: 'top 80%' },
+  x: -40,
+  duration: BASE_DURATION,
+  stagger: 0.1,
+  ease: EASE
+});
+
+gsap.from('.method-step-title', {
+  scrollTrigger: { trigger: '.method-section', start: 'top 75%' },
+  y: 40,
+  duration: BASE_DURATION,
+  stagger: 0.12,
+  ease: EASE
+});
+
+gsap.from('.method-img-block', {
+  scrollTrigger: { trigger: '.method-img-block', start: 'top 80%' },
+  clipPath: 'inset(0 100% 0 0)',
+  duration: BASE_DURATION + 0.2,
+  ease: EASE
+});
+
+gsap.from('.standard-item', {
+  scrollTrigger: { trigger: '.method-standards', start: 'top 80%' },
+  y: 30,
+  duration: BASE_DURATION,
+  stagger: 0.08,
+  ease: EASE
+});
+</script>
+
+</body>
+</html>

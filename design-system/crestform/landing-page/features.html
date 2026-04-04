@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features — Quire</title>
+  <meta name="description" content="Explore Quire's typographic composition tools — compositional intelligence, variable type control, grid systems, and editorial rhythm for professional designers.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/features-page.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV TEMPLATE -->
+<nav class="site-nav" id="site-nav">
+  <a href="index.html" class="nav-logo">Quire</a>
+  <ul class="nav-links">
+    <li><a href="features.html" class="nav-link nav-link--active">Features</a></li>
+    <li><a href="work.html" class="nav-link">Work</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="features.html" class="nav-link nav-link--active">Features</a>
+  <a href="work.html" class="nav-link">Work</a>
+  <a href="about.html" class="nav-link">About</a>
+</div>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const toggle = nav.querySelector('.nav-mobile-toggle');
+
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  toggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+</script>
+
+<!-- Sub-page spacer: nav is fixed, compensate with padding -->
+<div class="nav-spacer active" aria-hidden="true"></div>
+
+<!-- ── PAGE HEADER ── -->
+<header class="page-header">
+  <p class="section-label">Product</p>
+  <h1 class="page-title">Features</h1>
+  <p class="page-subtitle">The three systems at the heart of Quire's compositional approach.</p>
+</header>
+
+<!-- ── FEATURE ROWS — horizontal two-column, distinct from index grid ── -->
+<section class="features-rows">
+
+  <article class="feature-row">
+    <div class="feature-row-number" aria-hidden="true">01</div>
+    <div class="feature-row-content">
+      <h2 class="feature-row-title">Compositional Intelligence</h2>
+      <p class="feature-row-body">Quire reads your content structure — heading hierarchy, caption density, column count — and proposes grid configurations that serve the material rather than imposing a template. The system does not automate layout. It surfaces the grid options most likely to produce optically correct relationships between elements, then steps back.</p>
+      <p class="feature-row-body">The intelligence is editorial, not algorithmic. It draws on a library of layout decisions made by type directors at major publishing houses over decades — not training data, but structured knowledge encoded as design rules.</p>
+    </div>
+    <div class="feature-row-visual" aria-label="Compositional Intelligence illustration">
+      <div class="feature-visual-block feature-visual-comp" aria-hidden="true">
+        <div class="visual-grid-demo">
+          <div class="vg-col vg-col--wide"></div>
+          <div class="vg-col vg-col--mid"></div>
+          <div class="vg-col vg-col--narrow"></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="feature-row feature-row--reverse">
+    <div class="feature-row-number" aria-hidden="true">02</div>
+    <div class="feature-row-visual" aria-label="Variable Type Control illustration">
+      <div class="feature-visual-block feature-visual-type" aria-hidden="true">
+        <div class="vt-display">Aa</div>
+        <div class="vt-small">Aa</div>
+        <div class="vt-caption">Aa</div>
+      </div>
+    </div>
+    <div class="feature-row-content">
+      <h2 class="feature-row-title">Variable Type Control</h2>
+      <p class="feature-row-body">Optical size correction at every scale. Quire adjusts tracking, spacing, and weight automatically as type scales from caption to display — the same intelligence a type director applies manually, encoded as a responsive system. Fine-tune every parameter or accept the system's recommendations.</p>
+      <p class="feature-row-body">Variable font support is native. Axis ranges are exposed directly in the composition UI — no plugin, no conversion step, no workaround.</p>
+    </div>
+  </article>
+
+  <article class="feature-row">
+    <div class="feature-row-number" aria-hidden="true">03</div>
+    <div class="feature-row-content">
+      <h2 class="feature-row-title">Grid as Structure</h2>
+      <p class="feature-row-body">Build modular grids, baseline grids, column-based systems, or hybrid structures. Every grid configuration exports to CSS custom properties, Adobe InDesign settings, or Figma design tokens — the grid travels with the project across every tool in the workflow.</p>
+      <p class="feature-row-body">Quire treats the grid as a first-class design element, not an afterthought. Grid configurations are saved, versioned, and applied across document families with a single action.</p>
+    </div>
+    <div class="feature-row-visual" aria-label="Grid as Structure illustration">
+      <div class="feature-visual-block feature-visual-grid" aria-hidden="true">
+        <div class="vgrid-demo">
+          <div class="vgrid-line" style="left: 8.33%"></div>
+          <div class="vgrid-line" style="left: 16.66%"></div>
+          <div class="vgrid-line" style="left: 25%"></div>
+          <div class="vgrid-line" style="left: 33.33%"></div>
+          <div class="vgrid-line" style="left: 41.66%"></div>
+          <div class="vgrid-line" style="left: 50%"></div>
+          <div class="vgrid-line" style="left: 58.33%"></div>
+          <div class="vgrid-line" style="left: 66.66%"></div>
+          <div class="vgrid-line" style="left: 75%"></div>
+          <div class="vgrid-line" style="left: 83.33%"></div>
+          <div class="vgrid-line" style="left: 91.66%"></div>
+          <div class="vhorizline" style="top: 20%"></div>
+          <div class="vhorizline" style="top: 40%"></div>
+          <div class="vhorizline" style="top: 60%"></div>
+          <div class="vhorizline" style="top: 80%"></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<!-- ── PRICING ── -->
+<section class="section-pricing" id="pricing">
+  <p class="section-label">Pricing</p>
+  <h2 class="pricing-headline">Simple, transparent</h2>
+  <div class="pricing-grid">
+    <article class="pricing-card">
+      <p class="pricing-tier">Studio</p>
+      <p class="pricing-price">$49<span>/mo</span></p>
+      <ul class="pricing-features">
+        <li>Full compositional system</li>
+        <li>Variable type control</li>
+        <li>Unlimited grid configurations</li>
+        <li>CSS &amp; Figma token export</li>
+      </ul>
+      <a href="#" class="btn-dark">Start Free Trial</a>
+    </article>
+    <article class="pricing-card pricing-card--featured">
+      <p class="pricing-tier">Director</p>
+      <p class="pricing-price">$129<span>/mo</span></p>
+      <ul class="pricing-features">
+        <li>Everything in Studio</li>
+        <li>Team workspaces</li>
+        <li>InDesign integration</li>
+        <li>Priority support</li>
+        <li>Custom type library</li>
+      </ul>
+      <a href="#" class="btn-dark">Start Free Trial</a>
+    </article>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="footer-brand">
+    <a href="index.html" class="footer-logo">Quire</a>
+    <p class="footer-tagline">Type as Architecture</p>
+  </div>
+  <div class="footer-col">
+    <p class="footer-col-label">Product</p>
+    <ul class="footer-links">
+      <li><a href="features.html" class="footer-link">Features</a></li>
+      <li><a href="work.html" class="footer-link">Work</a></li>
+      <li><a href="features.html#pricing" class="footer-link">Pricing</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <p class="footer-col-label">Company</p>
+    <ul class="footer-links">
+      <li><a href="about.html" class="footer-link">About</a></li>
+      <li><a href="about.html#team" class="footer-link">Team</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <p class="footer-col-label">Resources</p>
+    <ul class="footer-links">
+      <li><a href="#" class="footer-link">Documentation</a></li>
+      <li><a href="#" class="footer-link">Type System Guide</a></li>
+    </ul>
+  </div>
+  <div class="footer-legal">
+    <p class="footer-copyright">&copy; 2026 Quire. All rights reserved.</p>
+    <p class="footer-copyright">Type as Architecture</p>
+  </div>
+</footer>
+
+<!-- ── GSAP ── -->
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Page header — fade up
+  gsap.from('.page-title', {
+    opacity: 0,
+    y: 60,
+    duration: 0.9,
+    ease: 'power2.out',
+    delay: 0.2
+  });
+
+  gsap.from('.page-subtitle', {
+    opacity: 0,
+    y: 30,
+    duration: 0.7,
+    ease: 'power2.out',
+    delay: 0.35
+  });
+
+  // Feature rows — rotate + rise, alternating direction
+  document.querySelectorAll('.feature-row').forEach((row, i) => {
+    const dir = i % 2 === 0 ? 1 : -1;
+    gsap.from(row.querySelector('.feature-row-content'), {
+      scrollTrigger: { trigger: row, start: 'top 80%' },
+      opacity: 0,
+      x: -80 * dir,
+      duration: 0.9,
+      ease: 'power2.out'
+    });
+    gsap.from(row.querySelector('.feature-row-visual'), {
+      scrollTrigger: { trigger: row, start: 'top 80%' },
+      opacity: 0,
+      x: 80 * dir,
+      duration: 0.9,
+      ease: 'power2.out',
+      delay: 0.1
+    });
+  });
+
+  // Pricing cards
+  gsap.from('.pricing-headline', {
+    scrollTrigger: { trigger: '.pricing-headline', start: 'top 85%' },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    ease: 'power2.out'
+  });
+
+  gsap.from('.pricing-card', {
+    scrollTrigger: { trigger: '.pricing-grid', start: 'top 80%' },
+    opacity: 0,
+    y: 50,
+    scale: 0.96,
+    duration: 0.7,
+    stagger: 0.1,
+    ease: 'cubic-bezier(0.4, 0, 0.2, 1)'
+  });
+</script>
+
+</body>
+</html>

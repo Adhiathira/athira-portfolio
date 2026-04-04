@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Species Database — Arca Systems</title>
+  <meta name="description" content="Explore the 14,200 species in Arca's acoustic identification model. Birds, bats, frogs, insects — organized by taxonomic group and detection confidence.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/buttons.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    /* Page header */
+    .page-header {
+      background: var(--color-surface-neutral);
+      padding: 100px var(--space-main-inline) 72px;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .page-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+    }
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      color: var(--color-heading);
+      margin: 0 0 20px;
+      max-width: 640px;
+    }
+    .page-header h1 .muted {
+      color: var(--color-muted-text);
+      font-weight: 400;
+    }
+    .page-header-body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      color: var(--color-body-text);
+      opacity: 0.6;
+      max-width: 580px;
+      margin: 0;
+    }
+
+    /* Taxonomy section */
+    .section-taxonomy {
+      padding: var(--space-section) var(--space-main-inline);
+      background: var(--color-white);
+    }
+    .taxonomy-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+    }
+    .taxonomy-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      gap: 24px;
+    }
+
+    /* Group tabs */
+    .group-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--color-surface-neutral);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 48px;
+    }
+    .group-tab {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-heading);
+      opacity: 0.5;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background 0.2s var(--ease-decelerate), opacity 0.2s var(--ease-decelerate);
+    }
+    .group-tab.active {
+      background: var(--color-white);
+      opacity: 1;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .group-tab:hover:not(.active) {
+      opacity: 0.75;
+    }
+
+    /* Species cards — 3-col grid, different from index bento */
+    .species-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .species-card {
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: var(--color-surface-neutral);
+      transition: box-shadow 0.25s var(--ease-primary), transform 0.25s var(--ease-primary);
+      opacity: 0;
+      transform: translateY(30px);
+      cursor: default;
+    }
+    .species-card:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+    .species-card-header {
+      padding: 24px 24px 16px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .species-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .species-confidence {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      padding: 4px 10px;
+    }
+    .conf-high { background: rgba(34, 197, 94, 0.1); color: #16a34a; }
+    .conf-med { background: rgba(234, 179, 8, 0.08); color: #b45309; }
+    .conf-exp { background: rgba(253,53,110,0.08); color: rgb(253,53,110); }
+
+    .species-card-body {
+      padding: 0 24px 24px;
+    }
+    .species-common {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--color-heading);
+      margin: 0 0 4px;
+    }
+    .species-latin {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-muted-text);
+      margin: 0 0 14px;
+    }
+    .species-desc {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+      color: var(--color-body-text);
+      opacity: 0.58;
+      margin: 0;
+    }
+    .species-card-footer {
+      padding: 14px 24px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .species-range {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--color-muted-text);
+    }
+    .species-freq {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--color-muted-text);
+    }
+
+    /* Stats band */
+    .section-stats {
+      background: var(--color-surface-neutral);
+      padding: 72px var(--space-main-inline);
+    }
+    .stats-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .stat-block {
+      background: var(--color-white);
+      padding: 40px 36px;
+      border-radius: 0;
+      text-align: center;
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    .stat-block:first-child { border-radius: 12px 0 0 12px; }
+    .stat-block:last-child { border-radius: 0 12px 12px 0; }
+    .stat-block-val {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+      display: block;
+    }
+    .stat-block-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      display: block;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 1024px) {
+      .species-grid { grid-template-columns: 1fr 1fr; }
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+      .stat-block:first-child { border-radius: 12px 0 0 0; }
+      .stat-block:last-child { border-radius: 0 0 12px 0; }
+      .stat-block:nth-child(2) { border-radius: 0 12px 0 0; }
+      .stat-block:nth-child(3) { border-radius: 0 0 0 12px; }
+    }
+    @media (max-width: 768px) {
+      .page-header { padding: 80px 24px 56px; }
+      .section-taxonomy { padding: 80px 24px; }
+      .section-stats { padding: 56px 24px; }
+      .species-grid { grid-template-columns: 1fr; }
+      .stats-inner { grid-template-columns: 1fr 1fr; gap: 2px; }
+      .taxonomy-header { flex-direction: column; align-items: flex-start; }
+      .group-tabs { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-spacer"></div>
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo" aria-label="Arca Systems home">
+    <span class="nav-logo-text">ARCA<span class="nav-logo-dot"></span></span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="method.html">Method</a></li>
+    <li><a href="species.html" class="nav-link--active">Species</a></li>
+    <li><a href="plans.html">Plans</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="plans.html" class="nav-cta">Get Started</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="method.html">Method</a>
+  <a href="species.html">Species</a>
+  <a href="plans.html">Plans</a>
+  <a href="contact.html">Contact</a>
+  <a href="plans.html" class="nav-cta">Get Started</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var mobileToggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+    window.addEventListener('scroll', function() {
+      if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', function() {
+        var isOpen = mobileMenu.classList.toggle('is-open');
+        nav.classList.toggle('nav-mobile-open', isOpen);
+        mobileToggle.setAttribute('aria-expanded', String(isOpen));
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          mobileToggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+  })();
+</script>
+
+<!-- Page Header -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <p class="section-eyebrow" style="margin-bottom:20px;">Species Database</p>
+    <h1>14,200 species.<br><span class="muted">Every one identified<br>by sound alone.</span></h1>
+    <p class="page-header-body" style="margin-top:20px;">
+      Arca's identification model covers birds, bats, frogs, and selected insects.
+      Accuracy rates and taxonomic coverage expand with each quarterly model update.
+      Regional calibration layers improve subspecies discrimination at local scales.
+    </p>
+  </div>
+</header>
+
+<!-- Stats band -->
+<section class="section-stats" id="stats">
+  <div class="stats-inner" id="stats-inner">
+    <div class="stat-block" data-stat="0">
+      <span class="stat-block-val">14,200</span>
+      <span class="stat-block-label">Species in model</span>
+    </div>
+    <div class="stat-block" data-stat="1">
+      <span class="stat-block-val">99.2%</span>
+      <span class="stat-block-label">Top-1 accuracy</span>
+    </div>
+    <div class="stat-block" data-stat="2">
+      <span class="stat-block-val">3.8M</span>
+      <span class="stat-block-label">Training recordings</span>
+    </div>
+    <div class="stat-block" data-stat="3">
+      <span class="stat-block-val">Quarterly</span>
+      <span class="stat-block-label">Model updates</span>
+    </div>
+  </div>
+</section>
+
+<!-- Species taxonomy grid -->
+<section class="section-taxonomy" id="taxonomy">
+  <div class="taxonomy-inner">
+    <div class="taxonomy-header">
+      <div>
+        <p class="section-eyebrow">By Taxonomic Group</p>
+        <h2 class="section-heading">Detection <span class="muted">coverage</span></h2>
+      </div>
+      <a href="plans.html" class="btn btn-primary">Access Full Database</a>
+    </div>
+
+    <div class="group-tabs" role="tablist">
+      <button class="group-tab active" role="tab">All Groups</button>
+      <button class="group-tab" role="tab">Birds</button>
+      <button class="group-tab" role="tab">Bats</button>
+      <button class="group-tab" role="tab">Amphibians</button>
+      <button class="group-tab" role="tab">Insects</button>
+    </div>
+
+    <div class="species-grid" id="species-grid">
+
+      <div class="species-card" data-card="0">
+        <div class="species-card-header">
+          <div class="species-icon" aria-hidden="true">🦅</div>
+          <span class="species-confidence conf-high">High Confidence</span>
+        </div>
+        <div class="species-card-body">
+          <p class="species-common">Common Nighthawk</p>
+          <p class="species-latin">Chordeiles minor</p>
+          <p class="species-desc">Identified by distinctive "peent" call and wing-boom display. Migratory passage detection available via continental drift model layer.</p>
+        </div>
+        <div class="species-card-footer">
+          <span class="species-range">Americas</span>
+          <span class="species-freq">300–8,000 Hz</span>
+        </div>
+      </div>
+
+      <div class="species-card" data-card="1">
+        <div class="species-card-header">
+          <div class="species-icon" aria-hidden="true">🦇</div>
+          <span class="species-confidence conf-high">High Confidence</span>
+        </div>
+        <div class="species-card-body">
+          <p class="species-common">Greater Horseshoe Bat</p>
+          <p class="species-latin">Rhinolophus ferrumequinum</p>
+          <p class="species-desc">CF echolocation call at 82 kHz — the most diagnostic bat frequency in the European dataset. Population trend monitoring via nightly passage counts.</p>
+        </div>
+        <div class="species-card-footer">
+          <span class="species-range">Eurasia</span>
+          <span class="species-freq">82 kHz CF</span>
+        </div>
+      </div>
+
+      <div class="species-card" data-card="2">
+        <div class="species-card-header">
+          <div class="species-icon" aria-hidden="true">🐸</div>
+          <span class="species-confidence conf-high">High Confidence</span>
+        </div>
+        <div class="species-card-body">
+          <p class="species-common">Pool Frog</p>
+          <p class="species-latin">Pelophylax lessonae</p>
+          <p class="species-desc">Advertisement call chorus detected at 200m range in still conditions. Breeding season onset and peak activity night tracked automatically per site.</p>
+        </div>
+        <div class="species-card-footer">
+          <span class="species-range">Central Europe</span>
+          <span class="species-freq">1.2–3.5 kHz</span>
+        </div>
+      </div>
+
+      <div class="species-card" data-card="3">
+        <div class="species-card-header">
+          <div class="species-icon" aria-hidden="true">🦉</div>
+          <span class="species-confidence conf-high">High Confidence</span>
+        </div>
+        <div class="species-card-body">
+          <p class="species-common">Tawny Owl</p>
+          <p class="species-latin">Strix aluco</p>
+          <p class="species-desc">Territorial song separated from contact calls and alarm vocalisations. Pair presence inferred from duet detection. Active in boreal darkness year-round.</p>
+        </div>
+        <div class="species-card-footer">
+          <span class="species-range">Eurasia</span>
+          <span class="species-freq">500–1,500 Hz</span>
+        </div>
+      </div>
+
+      <div class="species-card" data-card="4">
+        <div class="species-card-header">
+          <div class="species-icon" aria-hidden="true">🦗</div>
+          <span class="species-confidence conf-exp">Experimental</span>
+        </div>
+        <div class="species-card-body">
+          <p class="species-common">Great Green Bush-cricket</p>
+          <p class="species-latin">Tettigonia viridissima</p>
+          <p class="species-desc">Stridulation pattern identified by carrier frequency and pulse rate. Detection range limited to 15m in dense vegetation. Biomass proxy via chorus intensity.</p>
+        </div>
+        <div class="species-card-footer">
+          <span class="species-range">Europe</span>
+          <span class="species-freq">15–40 kHz</span>
+        </div>
+      </div>
+
+      <div class="species-card" data-card="5">
+        <div class="species-card-header">
+          <div class="species-icon" aria-hidden="true">🦢</div>
+          <span class="species-confidence conf-med">Medium Confidence</span>
+        </div>
+        <div class="species-card-body">
+          <p class="species-common">Whooper Swan</p>
+          <p class="species-latin">Cygnus cygnus</p>
+          <p class="species-desc">Bugling calls detected during migratory overflights at altitude. Medium confidence rating reflects reduced call clarity at 200m+ overhead range.</p>
+        </div>
+        <div class="species-card-footer">
+          <span class="species-range">Holarctic</span>
+          <span class="species-freq">400–2,000 Hz</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Dark CTA -->
+<section class="section-cta-dark" id="species-cta">
+  <div class="cta-dark-content">
+    <p class="section-eyebrow" style="justify-content:center;">Full Access</p>
+    <h2 class="section-heading" id="species-cta-heading">14,200 species,<br><span style="color:var(--color-muted-text);font-weight:400;">available on every plan</span></h2>
+    <p class="section-sub" style="margin:0 auto 44px;color:var(--color-muted-text);opacity:0.85;text-align:center;">
+      Every Arca subscription includes the complete species database.
+      No add-on tiers. No regional paywalls.
+    </p>
+    <div class="cta-dark-actions" id="species-cta-actions">
+      <a href="plans.html" class="btn btn-primary-dark">See Plans</a>
+      <a href="contact.html" class="btn btn-ghost" style="color:var(--color-muted-text);border-color:var(--color-muted-text);">Request Species</a>
+    </div>
+  </div>
+</section>
+
+<div class="drip-boundary" aria-hidden="true">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L1200,0 L1200,30 Q1100,60 1000,30 Q900,0 800,40 Q700,60 600,35 Q500,10 400,50 Q300,60 200,30 Q100,0 0,40 Z" fill="var(--color-surface-neutral)"/>
+  </svg>
+</div>
+
+<div class="footer-capsule-wrapper">
+  <footer class="footer-capsule">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo-text">ARCA<span class="nav-logo-dot"></span></span>
+        <p class="footer-tagline">Passive acoustic monitoring for ecologists, conservationists, and land managers. Every sound, identified.</p>
+      </div>
+      <div>
+        <p class="footer-col-label">Platform</p>
+        <ul class="footer-col-links">
+          <li><a href="method.html">Method</a></li>
+          <li><a href="species.html">Species Database</a></li>
+          <li><a href="plans.html">Plans &amp; Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-label">Company</p>
+        <ul class="footer-col-links">
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Field Reports</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-label">Resources</p>
+        <ul class="footer-col-links">
+          <li><a href="#">API Docs</a></li>
+          <li><a href="#">Deployment Guide</a></li>
+          <li><a href="#">Species ID Model</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2025 Arca Systems. All rights reserved.</span>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Header
+  gsap.fromTo('.page-header-inner > *',
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 0.6, stagger: 0.14, ease: 'cubic-bezier(0.16,1,0.3,1)', delay: 0.1 }
+  );
+
+  // Stats — divergent scale entry
+  gsap.utils.toArray('.stat-block').forEach(function(block, i) {
+    gsap.to(block, {
+      opacity: 1, scale: 1,
+      duration: 0.5,
+      delay: i * 0.1,
+      ease: 'cubic-bezier(0.4,0,0.2,1)',
+      scrollTrigger: { trigger: '#stats-inner', start: 'top 82%', once: true }
+    });
+  });
+
+  // Species cards — rotate + rise with stagger
+  gsap.utils.toArray('.species-card').forEach(function(card, i) {
+    gsap.to(card, {
+      opacity: 1, y: 0,
+      duration: 0.6,
+      delay: (i % 3) * 0.12,
+      ease: 'cubic-bezier(0.16,1,0.3,1)',
+      scrollTrigger: { trigger: '#species-grid', start: 'top 80%', once: true }
+    });
+  });
+
+  // Tabs (visual-only, no actual filtering in this prototype)
+  document.querySelectorAll('.group-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.group-tab').forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+    });
+  });
+
+  // CTA
+  gsap.fromTo('#species-cta-heading',
+    { opacity: 0, y: 24 },
+    { opacity: 1, y: 0, duration: 0.75, ease: 'cubic-bezier(0.16,1,0.3,1)',
+      scrollTrigger: { trigger: '#species-cta', start: 'top 75%', once: true }
+    }
+  );
+  gsap.to('#species-cta-actions', {
+    opacity: 1, y: 0, duration: 0.45,
+    scrollTrigger: { trigger: '#species-cta', start: 'top 65%', once: true }
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Method — Arca Systems</title>
+  <meta name="description" content="How Arca's passive acoustic monitoring works — from sensor deployment to on-device species identification to structured biodiversity indices.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/buttons.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    /* Page header */
+    .page-header {
+      background: var(--color-surface-neutral);
+      padding: 100px var(--space-main-inline) 72px;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .page-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+    }
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      color: var(--color-heading);
+      margin: 0;
+    }
+    .page-header h1 .muted {
+      color: var(--color-muted-text);
+      font-weight: 400;
+    }
+    .page-header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .page-header-body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      color: var(--color-body-text);
+      opacity: 0.65;
+      margin: 0;
+    }
+
+    /* Process steps — full-width horizontal rows */
+    .section-process {
+      padding: var(--space-section) var(--space-main-inline);
+      background: var(--color-white);
+    }
+    .process-steps {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .process-step {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr;
+      gap: 56px;
+      padding: 56px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      align-items: start;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .process-step:first-child {
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+    .process-step-num {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--color-muted-text);
+      opacity: 0.4;
+      line-height: 1;
+    }
+    .process-step-left h3 {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 16px;
+    }
+    .process-step-left .step-tag {
+      display: inline-flex;
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      background: rgba(253,53,110,0.08);
+      border-radius: 6px;
+      padding: 4px 10px;
+      margin-bottom: 12px;
+    }
+    .process-step-right p {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.75;
+      color: var(--color-body-text);
+      opacity: 0.62;
+      margin: 0;
+    }
+    .process-step-right .step-metric {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,0.07);
+      display: flex;
+      gap: 48px;
+    }
+    .metric-item {}
+    .metric-val {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--color-heading);
+      display: block;
+    }
+    .metric-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Hardware section */
+    .section-hardware {
+      background: var(--color-surface-neutral);
+      padding: var(--space-section) var(--space-main-inline);
+    }
+    .hardware-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+    }
+    .hardware-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .hardware-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 2px;
+      background: rgba(0,0,0,0.06);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+    }
+    .spec-cell {
+      background: var(--color-white);
+      padding: 36px 28px;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .spec-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .spec-value {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--color-heading);
+      display: block;
+    }
+    .spec-note {
+      font-family: var(--font-body);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--color-body-text);
+      opacity: 0.5;
+      display: block;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 1024px) {
+      .page-header-inner { grid-template-columns: 1fr; gap: 32px; }
+      .process-step { grid-template-columns: 60px 1fr; grid-template-rows: auto auto; }
+      .process-step-right { grid-column: 2; }
+      .hardware-specs { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .page-header { padding: 80px 24px 56px; }
+      .section-process { padding: 80px 24px; }
+      .section-hardware { padding: 80px 24px; }
+      .process-step { grid-template-columns: 1fr; gap: 20px; }
+      .process-step-num { font-size: 1.6rem; }
+      .hardware-specs { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-spacer"></div>
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo" aria-label="Arca Systems home">
+    <span class="nav-logo-text">ARCA<span class="nav-logo-dot"></span></span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="method.html" class="nav-link--active">Method</a></li>
+    <li><a href="species.html">Species</a></li>
+    <li><a href="plans.html">Plans</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="plans.html" class="nav-cta">Get Started</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="method.html">Method</a>
+  <a href="species.html">Species</a>
+  <a href="plans.html">Plans</a>
+  <a href="contact.html">Contact</a>
+  <a href="plans.html" class="nav-cta">Get Started</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var mobileToggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+    window.addEventListener('scroll', function() {
+      if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', function() {
+        var isOpen = mobileMenu.classList.toggle('is-open');
+        nav.classList.toggle('nav-mobile-open', isOpen);
+        mobileToggle.setAttribute('aria-expanded', String(isOpen));
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          mobileToggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+  })();
+</script>
+
+<!-- Page Header -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <p class="section-eyebrow" style="margin-bottom:20px;">The Arca Method</p>
+      <h1>Acoustic monitoring<br><span class="muted">from placement<br>to insight</span></h1>
+    </div>
+    <div class="page-header-right">
+      <p class="page-header-body">
+        Arca's entire pipeline — sensor hardware, on-device inference, data transmission,
+        and dashboard delivery — was designed to remove the gap between a field ecologist
+        placing a sensor and an analyst reading meaningful biodiversity data.
+        No specialist acoustic knowledge is required at any stage.
+      </p>
+      <a href="plans.html" class="btn btn-primary" style="align-self:flex-start;">Deploy Now</a>
+    </div>
+  </div>
+</header>
+
+<!-- Process Steps -->
+<section class="section-process" id="process">
+  <div class="process-steps" id="process-steps">
+
+    <div class="process-step" data-step="0">
+      <span class="process-step-num">01</span>
+      <div class="process-step-left">
+        <span class="step-tag">Hardware</span>
+        <h3>The Arca Capsule</h3>
+      </div>
+      <div class="process-step-right">
+        <p>
+          The capsule is a 140mm squircle-form unit — a continuously curved rectangle
+          that attaches flush to natural surfaces without requiring drilling or permanent
+          fastening. A silicone mounting pad and two stainless banding points secure the
+          unit to trunks up to 600mm diameter, fence posts, or stake mounts.
+          The form has been field-tested at temperatures from &minus;20°C to +55°C.
+        </p>
+        <div class="step-metric">
+          <div class="metric-item">
+            <span class="metric-val">140mm</span>
+            <span class="metric-label">Form factor</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">IP68</span>
+            <span class="metric-label">Water rating</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">18 mo</span>
+            <span class="metric-label">Battery life</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-step" data-step="1">
+      <span class="process-step-num">02</span>
+      <div class="process-step-left">
+        <span class="step-tag">Recording</span>
+        <h3>Continuous Capture</h3>
+      </div>
+      <div class="process-step-right">
+        <p>
+          Two microphones record in parallel: an audible-range channel (20 Hz–20 kHz)
+          at 48 kHz sample rate, and an ultrasonic channel (15 kHz–100 kHz) at 192 kHz.
+          Adaptive noise gating suppresses continuous background (wind, rain) without
+          discarding the acoustic events embedded within it. Approximately 2.3 TB of
+          compressed audio is stored and transmitted per sensor per year.
+        </p>
+        <div class="step-metric">
+          <div class="metric-item">
+            <span class="metric-val">48 kHz</span>
+            <span class="metric-label">Audible channel</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">192 kHz</span>
+            <span class="metric-label">Ultrasonic channel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-step" data-step="2">
+      <span class="process-step-num">03</span>
+      <div class="process-step-left">
+        <span class="step-tag">On-Device AI</span>
+        <h3>Edge Inference</h3>
+      </div>
+      <div class="process-step-right">
+        <p>
+          Species identification runs entirely on the Arca module, using a compressed
+          transformer model occupying 340 MB of onboard flash. The model was trained on
+          3.8 million confirmed recordings across 14,200 species, with a secondary
+          calibration layer per geographic region to account for subspecies dialect
+          variation. Cloud round-trips are not required for any identification result —
+          the module pushes confirmed detections, not raw audio.
+        </p>
+        <div class="step-metric">
+          <div class="metric-item">
+            <span class="metric-val">99.2%</span>
+            <span class="metric-label">Species accuracy</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">14,200</span>
+            <span class="metric-label">Species in model</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">3.8M</span>
+            <span class="metric-label">Training recordings</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-step" data-step="3">
+      <span class="process-step-num">04</span>
+      <div class="process-step-left">
+        <span class="step-tag">Transmission</span>
+        <h3>Low-Power Sync</h3>
+      </div>
+      <div class="process-step-right">
+        <p>
+          Detections are batched and transmitted via LTE-M (Cat-M1) during the daily
+          synchronisation window, typically at local predawn when network load is minimal.
+          Where LTE-M coverage is unavailable, LoRaWAN gateways can receive transmissions
+          at up to 15 km line-of-sight range. A local SD card backup ensures no detection
+          data is lost during connectivity gaps lasting up to 60 days.
+        </p>
+        <div class="step-metric">
+          <div class="metric-item">
+            <span class="metric-val">LTE-M</span>
+            <span class="metric-label">Primary protocol</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">60 days</span>
+            <span class="metric-label">Offline buffer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-step" data-step="4">
+      <span class="process-step-num">05</span>
+      <div class="process-step-left">
+        <span class="step-tag">Dashboard</span>
+        <h3>Indices &amp; Alerts</h3>
+      </div>
+      <div class="process-step-right">
+        <p>
+          Incoming detections are assembled into biodiversity indices — Shannon-Wiener,
+          Simpson's D, Acoustic Complexity Index — computed per site per day.
+          Threshold alerts fire when novel species are detected, established species
+          disappear for &gt;3 days, or ACI drops below a configured baseline.
+          All data is available via REST API and GIS-compatible webhook.
+        </p>
+        <div class="step-metric">
+          <div class="metric-item">
+            <span class="metric-val">Shannon-H</span>
+            <span class="metric-label">Primary index</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">REST + GIS</span>
+            <span class="metric-label">Export formats</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Hardware Specs -->
+<section class="section-hardware" id="hardware">
+  <div class="hardware-inner">
+    <div class="hardware-header">
+      <p class="section-eyebrow" style="justify-content:center;">Technical Specifications</p>
+      <h2 class="section-heading" style="text-align:center;">Arca Capsule <span class="muted" style="font-weight:400;">Mk III</span></h2>
+    </div>
+    <div class="hardware-specs" id="hardware-specs">
+      <div class="spec-cell" data-spec="0">
+        <span class="spec-label">Dimensions</span>
+        <span class="spec-value">140 × 140 × 38mm</span>
+        <span class="spec-note">Squircle form, r=32mm</span>
+      </div>
+      <div class="spec-cell" data-spec="1">
+        <span class="spec-label">Weight</span>
+        <span class="spec-value">380g</span>
+        <span class="spec-note">Without mounting hardware</span>
+      </div>
+      <div class="spec-cell" data-spec="2">
+        <span class="spec-label">Power</span>
+        <span class="spec-value">Solar + LiFePO4</span>
+        <span class="spec-note">3.2V 12,000 mAh</span>
+      </div>
+      <div class="spec-cell" data-spec="3">
+        <span class="spec-label">Battery life</span>
+        <span class="spec-value">18 months</span>
+        <span class="spec-note">Estimated, no solar input</span>
+      </div>
+      <div class="spec-cell" data-spec="4">
+        <span class="spec-label">IP Rating</span>
+        <span class="spec-value">IP68</span>
+        <span class="spec-note">1m submersion, 30 min</span>
+      </div>
+      <div class="spec-cell" data-spec="5">
+        <span class="spec-label">Operating temp</span>
+        <span class="spec-value">&minus;20°C to +55°C</span>
+        <span class="spec-note">Tested, not rated</span>
+      </div>
+      <div class="spec-cell" data-spec="6">
+        <span class="spec-label">Connectivity</span>
+        <span class="spec-value">LTE-M / LoRaWAN</span>
+        <span class="spec-note">Dual-radio module</span>
+      </div>
+      <div class="spec-cell" data-spec="7">
+        <span class="spec-label">Local storage</span>
+        <span class="spec-value">256 GB</span>
+        <span class="spec-note">Raw audio + detections</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dark CTA -->
+<section class="section-cta-dark" id="method-cta">
+  <div class="cta-dark-content">
+    <p class="section-eyebrow" style="justify-content:center;">Ready to deploy</p>
+    <h2 class="section-heading" id="method-cta-heading">Your first sensor<br><span style="color:var(--color-muted-text);font-weight:400;">arrives in 5 business days</span></h2>
+    <p class="section-sub" style="margin:0 auto 44px;color:var(--color-muted-text);opacity:0.85;text-align:center;">
+      Select a plan, specify your habitat coordinates, and receive a pre-configured capsule ready for immediate mounting.
+    </p>
+    <div class="cta-dark-actions" id="method-cta-actions">
+      <a href="plans.html" class="btn btn-primary-dark">View Plans</a>
+      <a href="contact.html" class="btn btn-ghost" style="color:var(--color-muted-text);border-color:var(--color-muted-text);">Request Consultation</a>
+    </div>
+  </div>
+</section>
+
+<div class="drip-boundary" aria-hidden="true">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L1200,0 L1200,30 Q1100,60 1000,30 Q900,0 800,40 Q700,60 600,35 Q500,10 400,50 Q300,60 200,30 Q100,0 0,40 Z" fill="var(--color-surface-neutral)"/>
+  </svg>
+</div>
+
+<div class="footer-capsule-wrapper">
+  <footer class="footer-capsule">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo-text">ARCA<span class="nav-logo-dot"></span></span>
+        <p class="footer-tagline">Passive acoustic monitoring for ecologists, conservationists, and land managers. Every sound, identified.</p>
+      </div>
+      <div>
+        <p class="footer-col-label">Platform</p>
+        <ul class="footer-col-links">
+          <li><a href="method.html">Method</a></li>
+          <li><a href="species.html">Species Database</a></li>
+          <li><a href="plans.html">Plans &amp; Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-label">Company</p>
+        <ul class="footer-col-links">
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Field Reports</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-label">Resources</p>
+        <ul class="footer-col-links">
+          <li><a href="#">API Docs</a></li>
+          <li><a href="#">Deployment Guide</a></li>
+          <li><a href="#">Species ID Model</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2025 Arca Systems. All rights reserved.</span>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Page header entrance
+  gsap.fromTo('.page-header-inner > *',
+    { opacity: 0, y: 24 },
+    { opacity: 1, y: 0, duration: 0.75, stagger: 0.18, ease: 'cubic-bezier(0.16,1,0.3,1)', delay: 0.1 }
+  );
+
+  // Process steps — rotate + rise, individual stagger
+  document.querySelectorAll('.process-step').forEach(function(step, i) {
+    gsap.to(step, {
+      opacity: 1, y: 0,
+      duration: 0.6,
+      ease: 'cubic-bezier(0.4,0,0.2,1)',
+      scrollTrigger: {
+        trigger: step,
+        start: 'top 82%',
+        once: true
+      }
+    });
+  });
+
+  // Hardware specs — clip reveal from bottom
+  gsap.utils.toArray('.spec-cell').forEach(function(cell, i) {
+    gsap.to(cell, {
+      opacity: 1, y: 0,
+      duration: 0.45,
+      delay: (i % 4) * 0.08,
+      ease: 'cubic-bezier(0.4,0,0.2,1)',
+      scrollTrigger: {
+        trigger: '#hardware-specs',
+        start: 'top 80%',
+        once: true
+      }
+    });
+  });
+
+  // CTA
+  gsap.fromTo('#method-cta-heading',
+    { opacity: 0, y: 24 },
+    { opacity: 1, y: 0, duration: 0.75, ease: 'cubic-bezier(0.16,1,0.3,1)',
+      scrollTrigger: { trigger: '#method-cta', start: 'top 75%', once: true }
+    }
+  );
+  gsap.to('#method-cta-actions', {
+    opacity: 1, y: 0, duration: 0.45,
+    scrollTrigger: { trigger: '#method-cta', start: 'top 65%', once: true }
+  });
+
+})();
+</script>
+</body>
+</html>

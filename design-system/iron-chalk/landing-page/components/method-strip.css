@@ -1,0 +1,170 @@
+/* method-strip.css — Iron Chalk dark contrast section */
+/* The architectural chapter break — #151313 bg, 2-col split */
+
+#method-strip {
+  background: var(--color-surface-dark);
+  overflow: hidden;
+}
+
+#method-strip-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: stretch;
+  min-height: 540px;
+}
+
+/* ── Left: text column ── */
+#method-strip-text {
+  padding: var(--space-section) var(--grid-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-lg);
+}
+
+#method-strip-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--font-letter-spacing-nav);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+#method-strip-headline {
+  font-family: var(--font-display);
+  font-size: var(--type-h1);
+  font-weight: var(--font-weight-heading);
+  letter-spacing: var(--font-letter-spacing-heading);
+  line-height: var(--line-height-heading);
+  text-transform: uppercase;
+  color: var(--color-heading-on-dark);
+  margin: 0;
+}
+
+#method-strip-body {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-body);
+  color: var(--color-muted-text);
+  margin: 0;
+  max-width: 380px;
+}
+
+#method-strip-cta {
+  font-family: var(--font-body);
+  font-size: var(--type-nav);
+  font-weight: var(--font-weight-body);
+  letter-spacing: var(--font-letter-spacing-nav);
+  color: var(--color-heading-on-dark);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-accent);
+  padding-bottom: 2px;
+  display: inline-block;
+  align-self: flex-start;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+#method-strip-cta:hover {
+  opacity: 0.7;
+}
+
+#method-strip-cta:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ── Right: visual column ── */
+#method-strip-visual {
+  position: relative;
+  overflow: hidden;
+}
+
+#method-strip-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+#method-strip-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(21, 19, 19, 0.2);
+  pointer-events: none;
+}
+
+/* ── Proof section (attached below method-strip, still light bg) ── */
+#proof {
+  background: var(--color-page-bg);
+}
+
+#proof-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--color-neutral-400);
+  border: 1px solid var(--color-neutral-400);
+}
+
+.proof-stat {
+  background: var(--color-page-bg);
+  padding: var(--space-2xl) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.proof-number {
+  font-family: var(--font-display);
+  font-size: var(--type-display);
+  font-weight: var(--font-weight-heading);
+  letter-spacing: var(--font-letter-spacing-heading);
+  line-height: 1;
+  color: var(--color-heading);
+}
+
+.proof-unit {
+  font-size: 0.5em;
+  font-weight: var(--font-weight-body);
+  opacity: 0.6;
+  vertical-align: super;
+}
+
+.proof-label {
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  font-weight: var(--font-weight-light);
+  line-height: 1.45;
+  color: var(--color-neutral-500);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  #method-strip-inner {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  #method-strip-visual {
+    height: 260px;
+    order: -1;
+  }
+
+  #proof-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  #proof-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #method-strip-text {
+    padding: var(--space-2xl) var(--space-md);
+  }
+}

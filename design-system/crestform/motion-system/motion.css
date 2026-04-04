@@ -1,0 +1,93 @@
+/* Twist E: Delay introduction at intensity 3 — 0.1s stagger delay on sequenced animations */
+
+:root {
+  --motion-system-videos-count: 0;
+  --motion-system-videos-animatedGifs: 0;
+  --motion-system-performance-totalAnimatedElements: 4;
+  --motion-system-performance-simultaneousAnimations: 1;
+  --motion-system-performance-videoLoad: none;
+  --motion-system-performance-complexAnimations: 9;
+  --motion-system-performance-summary-videos: 0;
+  --motion-system-performance-summary-animatedGifs: 0;
+  --motion-system-performance-summary-keyframes: 9;
+  --motion-system-performance-summary-scrollLibraries: 0;
+  --motion-system-stagger-delay: 0.1s;
+  --motion-system-primary-duration: 0.6s;
+  --motion-system-fast-duration: 0.15s;
+}
+
+@keyframes skeleton-wave {
+  0% { transform: translate(-100%); }
+  100% { transform: translate(100%); }
+}
+
+@keyframes moveRightToLeft {
+  0% { opacity: 1; transform: translate(0px); }
+  45% { opacity: 0; transform: translate(-1rem); }
+  55% { opacity: 0; transform: translate(1rem); }
+  100% { opacity: 1; transform: translate(0px); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes pulse {
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  100% { transform: rotate(1turn); }
+}
+
+@keyframes customToastEnter {
+  0% { opacity: 0; transform: translateY(-100%); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+
+@keyframes customToastExit {
+  0% { opacity: 1; transform: translateY(0px); }
+  100% { opacity: 0; transform: translateY(0px); }
+}
+
+@keyframes expandBox {
+  0% { width: 10%; margin-left: 0px; overflow-x: hidden; overflow-y: hidden; top: 90%; height: 5%; }
+  100% { width: 95%; margin-left: auto; overflow-x: hidden; overflow-y: hidden; top: 5%; height: 90%; }
+}
+
+/* Staggered fade-in sequence — 0.1s delay between items */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease 1;
+  animation-delay: 0s;
+}
+
+.animate-fade-in:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.animate-fade-in:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.animate-fade-in:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.absolute {
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#email {
+  transition: box-shadow 0.5s ease, border-color 0.25s ease-in-out;
+  transition-delay: 0.1s;
+}
+
+input {
+  transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
+}

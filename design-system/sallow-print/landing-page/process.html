@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process — Folia Papers</title>
+  <meta name="description" content="How Folia Papers produces archival baryta fiber-based photographic paper. From slurry to surface — a controlled manufacturing process refined over 80 years.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* Process page styles */
+
+    /* Technical specs section: bento-style unequal grid */
+    #specs-section {
+      padding: 80px 0;
+      background: var(--color-surface-secondary);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    #specs-eyebrow {
+      font-family: var(--font-edito);
+      font-size: var(--font-size-label);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 14px;
+    }
+
+    #specs-heading {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-h2);
+      font-weight: 600;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-text-primary);
+      margin-bottom: 48px;
+      max-width: 440px;
+    }
+
+    /* Bento grid */
+    #specs-bento {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 16px;
+    }
+
+    .spec-tile {
+      background: var(--color-page-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius-md);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .spec-tile--wide {
+      grid-row: span 2;
+    }
+
+    .spec-tile--dark {
+      background: var(--color-surface-accent);
+      border-color: transparent;
+    }
+
+    .spec-value {
+      font-family: var(--font-primary);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--color-text-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .spec-tile--dark .spec-value {
+      color: var(--color-text-on-dark);
+    }
+
+    .spec-label {
+      font-family: var(--font-edito);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .spec-tile--dark .spec-label {
+      color: rgba(252, 247, 241, 0.55);
+    }
+
+    .spec-desc {
+      font-size: var(--font-size-body-sm);
+      line-height: 1.6;
+      color: var(--color-text-secondary);
+      margin-top: 20px;
+    }
+
+    .spec-tile--dark .spec-desc {
+      color: rgba(252, 247, 241, 0.65);
+    }
+
+    /* Facility section: full-width editorial image */
+    #facility-section {
+      padding: 80px 0;
+      background: var(--color-page-background);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    #facility-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--grid-gap-lg);
+      align-items: end;
+      margin-bottom: 48px;
+    }
+
+    #facility-heading {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-h2);
+      font-weight: 600;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-text-primary);
+    }
+
+    #facility-body {
+      font-size: var(--font-size-body);
+      line-height: var(--font-line-height-body);
+      color: var(--color-text-secondary);
+    }
+
+    #facility-image-wrap {
+      position: relative;
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+      width: 100%;
+    }
+
+    #facility-image-wrap img {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      object-fit: cover;
+      display: block;
+    }
+
+    #facility-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(252, 247, 241, 0.2) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Process detail: full steps restated with images */
+    #process-detail {
+      padding: 80px 0;
+      background: linear-gradient(180deg, var(--color-surface-secondary) 0%, var(--color-page-background) 100%);
+    }
+
+    #process-detail-heading {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-h2);
+      font-weight: 600;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-text-primary);
+      margin-bottom: 56px;
+    }
+
+    .process-detail-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 32px;
+      padding: 40px 0;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .process-detail-row:last-child {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .detail-num {
+      font-family: var(--font-primary);
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 300;
+      color: var(--color-border-strong);
+      line-height: 1;
+      padding-top: 2px;
+    }
+
+    .detail-body {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .detail-text h3 {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-h3);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-text-primary);
+      margin-bottom: 14px;
+    }
+
+    .detail-text p {
+      font-size: var(--font-size-body-sm);
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+    }
+
+    .detail-image-wrap {
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+    }
+
+    .detail-image-wrap img {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      #specs-bento {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .spec-tile--wide {
+        grid-row: span 1;
+        grid-column: span 2;
+      }
+
+      #facility-intro {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .detail-body {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #specs-bento {
+        grid-template-columns: 1fr;
+      }
+
+      .spec-tile--wide {
+        grid-column: span 1;
+      }
+
+      .process-detail-row {
+        grid-template-columns: 48px 1fr;
+        gap: 16px;
+      }
+
+      #facility-image-wrap img {
+        aspect-ratio: 4 / 3;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="site-nav" class="scrolled">
+  <a href="index.html" class="nav-logo" aria-label="Folia Papers home">Folia Papers</a>
+
+  <ul class="nav-links" role="list">
+    <li><a href="work.html" class="nav-link">Work</a></li>
+    <li><a href="process.html" class="nav-link nav-link--active" aria-current="page">Process</a></li>
+    <li><a href="papers.html" class="nav-link">Papers</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+
+  <a href="contact.html" class="nav-cta">Inquire</a>
+
+  <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="work.html" class="nav-link">Work</a>
+  <a href="process.html" class="nav-link nav-link--active">Process</a>
+  <a href="papers.html" class="nav-link">Papers</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+  <a href="contact.html" class="nav-cta">Inquire</a>
+</div>
+
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = nav.querySelector('.nav-mobile-toggle');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        var isOpen = mobileMenu.classList.toggle('is-open');
+        nav.classList.toggle('nav-mobile-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen.toString());
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+  })();
+</script>
+
+<div class="nav-spacer active" aria-hidden="true"></div>
+
+
+<!-- ─── Header ─── -->
+<header class="subpage-header" id="process-header">
+  <div class="container">
+    <p class="subpage-header-eyebrow">How It's Made</p>
+    <h1 class="subpage-header-heading">From slurry<br>to surface</h1>
+  </div>
+</header>
+
+
+<!-- ─── Technical Specs: bento grid ─── -->
+<section id="specs-section" aria-labelledby="specs-heading">
+  <div class="container">
+    <p id="specs-eyebrow">Manufacturing Precision</p>
+    <h2 id="specs-heading">Numbers the paper<br>must meet</h2>
+
+    <div id="specs-bento" aria-label="Manufacturing specifications">
+      <div class="spec-tile spec-tile--wide" id="spec-dmax">
+        <span class="spec-value">3.85</span>
+        <span class="spec-label">Dmax — Baryta Gloss</span>
+        <p class="spec-desc">The maximum optical density achievable on FG-220. A Dmax of 3.85 means the shadow regions absorb all but 0.014% of incident light — producing absolute black under any illumination condition. Measured at 23°C, relative humidity 50%, D50 illuminant.</p>
+      </div>
+
+      <div class="spec-tile spec-tile--dark" id="spec-thickness">
+        <span class="spec-value">±0.3μm</span>
+        <span class="spec-label">Coating Tolerance</span>
+      </div>
+
+      <div class="spec-tile" id="spec-temp">
+        <span class="spec-value">34°C</span>
+        <span class="spec-label">Application Temp</span>
+      </div>
+
+      <div class="spec-tile" id="spec-particle">
+        <span class="spec-value">0.8–1.2μm</span>
+        <span class="spec-label">Baryta Particle Size</span>
+      </div>
+
+      <div class="spec-tile" id="spec-archival">
+        <span class="spec-value">100+ yr</span>
+        <span class="spec-label">Archival Stability</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── Facility: wide editorial image ─── -->
+<section id="facility-section" aria-labelledby="facility-heading">
+  <div class="container">
+    <div id="facility-intro">
+      <h2 id="facility-heading">Basel Coating Facility</h2>
+      <p id="facility-body">The Folia production facility at Dornacherstrasse has operated continuously since 1938. The building has been extended three times — the coating hall, darkroom wing, and QA laboratory each occupy purpose-built structures added in 1962, 1981, and 2004 respectively.</p>
+    </div>
+    <div id="facility-image-wrap">
+      <img
+        src="assets/facility.jpeg"
+        alt="Folia Papers coating facility interior — Basel, Switzerland"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                  background:var(--color-surface-secondary);color:var(--color-text-muted);font-size:0.85rem;font-family:monospace;aspect-ratio:16/7;">
+        → assets/facility.jpeg
+      </div>
+      <div id="facility-image-overlay" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── Process Detail: numbered step rows with images ─── -->
+<section id="process-detail" aria-labelledby="process-detail-heading">
+  <div class="container">
+    <h2 id="process-detail-heading">The five stages</h2>
+
+    <div class="process-detail-row" id="detail-1">
+      <span class="detail-num">01</span>
+      <div class="detail-body">
+        <div class="detail-text">
+          <h3>Baryta Ground Preparation</h3>
+          <p>Barium sulfate is milled to a particle distribution of 0.8–1.2 μm and suspended in a gelatin matrix. The slurry is checked for viscosity and optical density before application. Any batch outside tolerance is returned for reprocessing. The milling stage takes four to six hours per batch.</p>
+        </div>
+        <div class="detail-image-wrap">
+          <img
+            src="assets/process-baryta.jpeg"
+            alt="Baryta slurry preparation in milling vessel"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                      background:var(--color-surface-secondary);color:var(--color-text-muted);font-size:0.8rem;font-family:monospace;aspect-ratio:3/2;">
+            → assets/process-baryta.jpeg
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-detail-row" id="detail-2">
+      <span class="detail-num">02</span>
+      <div class="detail-body">
+        <div class="detail-text">
+          <h3>Base Coating</h3>
+          <p>The baryta layer is applied to cotton rag or resin-coated base stock at 34°C on a precision slot-die coater. Thickness is controlled to ±0.3 μm. The coated base is chilled and dried in a humidity-controlled chamber before the emulsion stage.</p>
+        </div>
+        <div class="detail-image-wrap">
+          <img
+            src="assets/process-coating.jpeg"
+            alt="Slot-die coating machine applying baryta layer"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                      background:var(--color-surface-secondary);color:var(--color-text-muted);font-size:0.8rem;font-family:monospace;aspect-ratio:3/2;">
+            → assets/process-coating.jpeg
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-detail-row" id="detail-3">
+      <span class="detail-num">03</span>
+      <div class="detail-body">
+        <div class="detail-text">
+          <h3>Emulsion Application</h3>
+          <p>Silver halide emulsion is applied in low red-light conditions. The emulsion is formulated in-house for each paper grade — no licensed emulsion is used. Drying tension is monitored continuously to prevent surface curvature.</p>
+        </div>
+        <div class="detail-image-wrap">
+          <img
+            src="assets/process-emulsion.jpeg"
+            alt="Emulsion application under red safelight"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                      background:var(--color-surface-secondary);color:var(--color-text-muted);font-size:0.8rem;font-family:monospace;aspect-ratio:3/2;">
+            → assets/process-emulsion.jpeg
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-detail-row" id="detail-4">
+      <span class="detail-num">04</span>
+      <div class="detail-body">
+        <div class="detail-text">
+          <h3>Quality Inspection</h3>
+          <p>Each roll is step-wedge tested under standardised illuminant D50. Dmax, Dmin, and contrast curve are logged against the grade specification. Rolls outside specification are destroyed — not discounted, not sold as second-quality stock.</p>
+        </div>
+        <div class="detail-image-wrap">
+          <img
+            src="assets/process-qa.jpeg"
+            alt="Step-wedge QA testing under D50 illuminant"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                      background:var(--color-surface-secondary);color:var(--color-text-muted);font-size:0.8rem;font-family:monospace;aspect-ratio:3/2;">
+            → assets/process-qa.jpeg
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-detail-row" id="detail-5">
+      <span class="detail-num">05</span>
+      <div class="detail-body">
+        <div class="detail-text">
+          <h3>Cut, Package, Ship</h3>
+          <p>Sheet sizes are cut to ±0.5 mm. Packaging is performed in a darkroom environment. Each box is dated, batch-coded, and vacuum-sealed. Cold-chain shipping is available for large studio orders.</p>
+        </div>
+        <div class="detail-image-wrap">
+          <img
+            src="assets/process-packaging.jpeg"
+            alt="Vacuum-sealed Folia paper boxes ready for shipping"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                      background:var(--color-surface-secondary);color:var(--color-text-muted);font-size:0.8rem;font-family:monospace;aspect-ratio:3/2;">
+            → assets/process-packaging.jpeg
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ─── Footer ─── -->
+<footer id="site-footer" aria-label="Site footer">
+  <div class="container">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <p class="footer-brand-name">Folia Papers</p>
+        <p class="footer-brand-desc">Archival photographic printing papers for silver gelatin darkrooms. Made in Basel since 1938.</p>
+      </div>
+      <div id="footer-nav-papers">
+        <p class="footer-col-heading">Papers</p>
+        <ul class="footer-links" role="list">
+          <li><a href="papers.html">Velvet Matte FV-140</a></li>
+          <li><a href="papers.html">Baryta Gloss FG-220</a></li>
+          <li><a href="papers.html">Warm Satin FW-160</a></li>
+          <li><a href="papers.html">Cotton Rag FR-300</a></li>
+        </ul>
+      </div>
+      <div id="footer-nav-company">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links" role="list">
+          <li><a href="work.html">Work</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div id="footer-contact-col">
+        <p class="footer-col-heading">Get in Touch</p>
+        <p class="footer-contact-line">
+          <a href="mailto:papers@folia.ch">papers@folia.ch</a><br>
+          +41 61 270 4400<br>
+          Dornacherstrasse 192<br>
+          4053 Basel, Switzerland
+        </p>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p class="footer-legal">&copy; 2024 Folia Photographic Papers AG.</p>
+      <p class="footer-legal"><a href="#">Privacy</a>&ensp;&middot;&ensp;<a href="#">Terms</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  var rootStyle = getComputedStyle(document.documentElement);
+  var DUR_SLOW = parseFloat(rootStyle.getPropertyValue('--motion-duration-slow')) || 0.65;
+  var DUR_BASE = parseFloat(rootStyle.getPropertyValue('--motion-duration-base')) || 0.52;
+  var EASE = 'power2.out';
+
+  // Header
+  gsap.from('.subpage-header-heading', {
+    y: 24, opacity: 0, duration: DUR_SLOW, ease: EASE, delay: 0.1
+  });
+
+  // Bento tiles: scale from center
+  gsap.from('#specs-bento', {
+    scrollTrigger: { trigger: '#specs-section', start: 'top 75%' },
+    scale: 0.97,
+    y: 24,
+    duration: DUR_SLOW,
+    ease: EASE
+  });
+
+  // Facility image: parallax
+  gsap.to('#facility-image-wrap img', {
+    scrollTrigger: {
+      trigger: '#facility-section',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 2.0
+    },
+    y: '7%',
+    ease: 'none'
+  });
+
+  // Process rows: horizontal clip-path wipe
+  gsap.from('.process-detail-row', {
+    scrollTrigger: {
+      trigger: '#process-detail',
+      start: 'top 80%'
+    },
+    clipPath: 'inset(0 100% 0 0)',
+    stagger: 0.15,
+    duration: DUR_SLOW,
+    ease: 'power2.inOut'
+  });
+</script>
+
+</body>
+</html>

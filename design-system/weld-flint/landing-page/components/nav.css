@@ -1,0 +1,238 @@
+/* nav.css — Weld Flint navigation */
+/* Nav: 937px expanded (large logo hero mode) → 65px on scroll */
+/* Fixed position, transparent → black on scroll, left-aligned */
+/* 0.08em letter spacing, 59px item spacing */
+
+/* ── Base nav ── */
+#site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 65px;
+  background: transparent;
+  transition: background var(--nav-transition-duration, 0.3s) ease,
+              height var(--nav-transition-duration, 0.3s) ease;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 var(--space-nav-x, 60px);
+  max-width: var(--grid-max-width, 1220px);
+  margin: 0 auto;
+}
+
+/* ── Logo ── */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-logo-text {
+  font-family: var(--font-heading, 'Figtree', sans-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-nav-text, #f2f2f2);
+  transition: color var(--duration-hover, 0.75s) ease;
+}
+
+/* ── Nav links ── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: var(--nav-item-spacing, 59px);
+}
+
+.nav-links a {
+  font-family: var(--font-body, 'Nunito', sans-serif);
+  font-size: var(--type-nav, 0.92rem);
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing-nav, 0.08em);
+  text-transform: capitalize;
+  line-height: 1.08rem;
+  color: var(--color-nav-text, #f2f2f2);
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity var(--duration-hover, 0.75s) ease,
+              color var(--duration-hover, 0.75s) ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.8;
+}
+
+/* Active nav link */
+.nav-links a.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ── Nav CTA (right side) ── */
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.nav-cta-btn {
+  font-family: var(--font-heading, 'Figtree', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-label, 0.05em);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-nav-text, #f2f2f2);
+  border: 1px solid var(--color-nav-text, #f2f2f2);
+  padding: 8px 20px;
+  border-radius: var(--radius-button, 5px);
+  background: transparent;
+  transition: background var(--duration-hover, 0.75s) ease,
+              color var(--duration-hover, 0.75s) ease;
+}
+
+.nav-cta-btn:hover {
+  background: var(--color-nav-text, #f2f2f2);
+  color: var(--color-page-bg, #1a1a18);
+}
+
+/* ── Scrolled state ── */
+/* propertiesChanged: ["top", "background-color", "height", "fill", "visibility"] */
+#site-nav.scrolled {
+  background: var(--color-nav-bg-scrolled, #000000);
+  height: 65px;
+}
+
+#site-nav.scrolled .nav-logo-text {
+  color: var(--color-nav-text-scrolled, #f2f2f2);
+}
+
+#site-nav.scrolled .nav-links a {
+  color: var(--color-nav-text-scrolled, #f2f2f2);
+}
+
+#site-nav.scrolled .nav-cta-btn {
+  color: var(--color-nav-text-scrolled, #f2f2f2);
+  border-color: var(--color-nav-text-scrolled, #f2f2f2);
+}
+
+/* ── Nav spacer (sub-pages) ── */
+.nav-spacer {
+  display: none;
+  height: 65px;
+}
+
+.nav-spacer.active {
+  display: block;
+}
+
+/* ── Mobile hamburger ── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-nav-text, #f2f2f2);
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X animation */
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ── Mobile menu overlay ── */
+#nav-mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: var(--color-page-bg, #1a1a18);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  z-index: 1050;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#nav-mobile-menu.is-open {
+  display: flex;
+  opacity: 1;
+}
+
+#nav-mobile-menu a {
+  font-family: var(--font-heading, 'Figtree', sans-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-heading, #f2f2f2);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+#nav-mobile-menu a:hover {
+  opacity: 0.6;
+}
+
+#nav-mobile-menu .mobile-nav-cta {
+  border: 1px solid var(--color-heading, #f2f2f2);
+  padding: 12px 32px;
+  border-radius: var(--radius-button, 5px);
+  font-size: 1rem;
+}
+
+/* ── Responsive breakpoints ── */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-inner {
+    padding: 0 24px;
+  }
+}

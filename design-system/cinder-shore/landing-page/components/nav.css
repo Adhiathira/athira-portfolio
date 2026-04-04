@@ -1,0 +1,268 @@
+/* nav.css — Cinder Shore navigation */
+/* Source: weld-ivory / ochre-ledger base, item spacing +10px twist */
+/* 86px height, fixed position, 0.10em letter spacing, underline hover left-to-right */
+
+/* ─── Base nav ──���──────────────────────────────────────��─ */
+#site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 86px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  transition: background-color 0.3s ease-in-out, height 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#site-nav.scrolled {
+  height: 76px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 0 rgba(43, 43, 41, 0.08);
+}
+
+/* ─── Inner flex container ─────────────────────────────── */
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--grid-max-width, 1200px);
+  margin: 0 auto;
+  padding: 0 36px;
+}
+
+#site-nav {
+  padding: 0;
+}
+
+/* ─── Logo ─────────────────────────────────────────────── */
+.nav-logo {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #2b2b29;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* Homepage: nav over dark teal hero → white logo */
+#site-nav.on-dark .nav-logo {
+  color: #ffffff;
+}
+
+#site-nav.scrolled .nav-logo {
+  color: #2b2b29;
+}
+
+/* ─── Links container ─��────────────────────────────────── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Individual nav links ─────────────────────────────── */
+.nav-links a,
+.nav-link {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #2b2b29;
+  text-decoration: none;
+  position: relative;
+  opacity: 1;
+  transition: opacity 0.17s ease-in-out;
+}
+
+/* On-dark state (homepage only over dark hero) */
+#site-nav.on-dark .nav-links a,
+#site-nav.on-dark .nav-link {
+  color: #ffffff;
+}
+
+#site-nav.scrolled .nav-links a,
+#site-nav.scrolled .nav-link {
+  color: #2b2b29;
+}
+
+/* Underline hover — left to right */
+.nav-links a::after,
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-links a:hover::after,
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-links a:hover,
+.nav-link:hover {
+  opacity: 0.75;
+}
+
+/* Active state */
+.nav-link--active {
+  opacity: 0.45 !important;
+  pointer-events: none;
+}
+
+.nav-link--active::after {
+  width: 100% !important;
+}
+
+/* ─── CTA button ───────────────────────────────────────── */
+.nav-cta {
+  font-family: "Raleway", "Gill Sans MT", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: #df5e12;
+  border: 1px solid #df5e12;
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: opacity 0.17s ease-in-out, transform 0.17s ease-in-out;
+  white-space: nowrap;
+}
+
+.nav-cta:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* On-dark: CTA stays orange (high contrast on dark teal) */
+#site-nav.on-dark .nav-cta {
+  color: #ffffff;
+  background-color: #df5e12;
+  border-color: #df5e12;
+}
+
+/* ─── Nav spacer (for pages without a dark hero) ──────── */
+.nav-spacer {
+  height: 86px;
+  display: none;
+}
+
+.nav-spacer.active {
+  display: block;
+}
+
+/* ─── Mobile hamburger button ──────────────────────────── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  gap: 5px;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background-color: #2b2b29;
+  transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out;
+  transform-origin: center;
+}
+
+#site-nav.on-dark .nav-mobile-toggle span {
+  background-color: #ffffff;
+}
+
+#site-nav.scrolled .nav-mobile-toggle span {
+  background-color: #2b2b29;
+}
+
+/* Hamburger → X */
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ─── Mobile overlay menu ──────────────────────────────── */
+.nav-mobile-menu {
+  position: fixed;
+  inset: 0;
+  background-color: #2b2918;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 999;
+}
+
+.nav-mobile-menu.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.nav-mobile-menu a {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity 0.17s ease-in-out;
+}
+
+.nav-mobile-menu a:hover {
+  opacity: 0.7;
+}
+
+.nav-mobile-menu .nav-cta {
+  font-size: 13px;
+  padding: 12px 28px;
+}
+
+/* ─── Responsive ──��────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nav-links,
+  .nav-cta {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  #site-nav {
+    padding: 0 20px;
+  }
+}

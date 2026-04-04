@@ -1,0 +1,129 @@
+/* hero.css — Quiet Plinth hero section */
+/* 50/50 split: left = photographic panel, right = cream content panel */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+}
+
+.hero--split {
+  flex-direction: row;
+}
+
+/* Left photographic panel */
+.hero-image-panel {
+  flex: 1;
+  position: relative;
+  background-color: var(--color-surface-warm);
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.hero-image-panel .hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.hero-image-panel.hero-image--missing {
+  background: linear-gradient(135deg, #e8e2d9 0%, #dfd8cc 60%, #d5cec4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Right cream content panel */
+.hero-content-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--hero-padding-top) var(--space-2xl) var(--hero-padding-bottom) var(--space-3xl);
+  background-color: var(--color-surface-warm);
+}
+
+.hero-content {
+  max-width: 480px;
+}
+
+.hero-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--type-label-size);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.hero-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(40px, 4.5vw, 72px);
+  font-weight: 700;
+  letter-spacing: var(--font-letter-spacing-heading);
+  line-height: 1.1;
+  color: var(--color-heading-text);
+  margin-bottom: var(--space-xl);
+}
+
+.hero-body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--color-body-text);
+  margin-bottom: var(--space-xl);
+  max-width: 42ch;
+  opacity: 0.8;
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* Mobile: stacked layout */
+@media (max-width: 900px) {
+  .hero--split {
+    flex-direction: column;
+  }
+
+  .hero-image-panel {
+    min-height: 55vw;
+    height: 55vw;
+    max-height: 480px;
+  }
+
+  .hero-content-panel {
+    padding: var(--space-2xl) var(--space-lg);
+    justify-content: center;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-heading {
+    font-size: clamp(32px, 7vw, 52px);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-content-panel {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}

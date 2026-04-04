@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ledgerline — specification and annotation software for architects and contractors. Built for the precision your work demands.">
+  <title>Ledgerline — Specification Software for Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV TEMPLATE — paste verbatim into <body> -->
+<nav id="site-nav">
+  <a href="index.html" id="nav-logo" class="nav-logo">Ledgerline</a>
+  <ul class="nav-links">
+    <li><a href="work.html" class="nav-link">Work</a></li>
+    <li><a href="method.html" class="nav-link">Method</a></li>
+    <li><a href="studio.html" class="nav-link">Studio</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="work.html">Work</a>
+  <a href="method.html">Method</a>
+  <a href="studio.html">Studio</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = nav.querySelector('.nav-mobile-toggle');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+    });
+  })();
+</script>
+
+<!-- ── Hero ── -->
+<section id="hero" aria-label="Hero">
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-bg.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="hero-bg-video-placeholder">→ assets/hero-bg.mp4</div>
+    <div id="hero-video-overlay"></div>
+  </div>
+
+  <div id="hero-content">
+    <div id="hero-text-group">
+      <p id="hero-label">Specification Software</p>
+      <h1 id="hero-title">Every line means something</h1>
+      <p id="hero-tagline">Ledgerline is built for architects and contractors who document work as carefully as they design it. Precision annotation. Version-aware specifications. Always in context.</p>
+      <div id="hero-cta-group">
+        <a href="work.html" class="btn-primary">See the work</a>
+        <a href="contact.html" class="btn-ghost-light">Request access →</a>
+      </div>
+    </div>
+    <div id="hero-meta">
+      <p id="hero-meta-label">Linen Verge &middot; 2026</p>
+      <div id="hero-scroll-indicator">Scroll</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Manifesto ── -->
+<section id="manifesto" aria-label="Manifesto">
+  <div id="manifesto-inner">
+    <p id="manifesto-label">Principle</p>
+    <div id="manifesto-text-group">
+      <h2 id="manifesto-heading">Documentation is not administration. It is design.</h2>
+      <p id="manifesto-body">The gap between intent and execution in architecture lives in the record — in the annotation missed, the spec revised without notation, the version no one can trace. Ledgerline closes that gap. It treats every specification as a designed artifact: something with authorship, history, and consequence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ── -->
+<section id="features" aria-label="Features">
+  <div id="features-inner">
+    <div id="features-header">
+      <h2 id="features-title">Built for how buildings are made</h2>
+      <span id="features-count">03 capabilities</span>
+    </div>
+    <div id="features-grid">
+      <article class="feature-card" id="feature-card-1">
+        <span class="feature-number">01</span>
+        <h3 class="feature-heading">Contextual annotation</h3>
+        <p class="feature-body">Attach notes, dimensions, and material calls directly to drawing coordinates. Annotations travel with the document — no floating sticky notes, no external spreadsheets.</p>
+      </article>
+      <article class="feature-card" id="feature-card-2">
+        <span class="feature-number">02</span>
+        <h3 class="feature-heading">Version-aware specifications</h3>
+        <p class="feature-body">Every spec entry carries a full audit trail: who wrote it, when it changed, what preceded it. Review sessions become conversations with the record rather than reconstructions from memory.</p>
+      </article>
+      <article class="feature-card" id="feature-card-3">
+        <span class="feature-number">03</span>
+        <h3 class="feature-heading">Contractor handoff</h3>
+        <p class="feature-body">Issue packages that arrive complete: drawings, specs, and RFI histories bundled by trade. No missing attachments. No ambiguous revision marks. The contractor receives what was actually intended.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── Product showcase ── -->
+<section id="showcase" aria-label="Product showcase">
+  <div id="showcase-inner">
+    <div id="showcase-visual">
+      <img
+        id="showcase-img"
+        src="assets/process-ambient.jpeg"
+        alt="Ledgerline annotation interface — dimension callouts overlaid on a floor plan"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div id="showcase-visual-placeholder">→ assets/process-ambient.jpeg</div>
+    </div>
+    <div id="showcase-text">
+      <p id="showcase-label">Interface</p>
+      <h2 id="showcase-heading">The drawing is the workspace</h2>
+      <p id="showcase-body">Ledgerline lives inside your drawing environment rather than beside it. Specifications are linked directly to the geometry they describe. Open a wall type and its full spec history is there — not in a separate tab, not in a spreadsheet somewhere else.</p>
+      <a href="work.html" class="btn-ghost-dark">View case studies</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stats band ── -->
+<section id="stats-band" aria-label="Statistics">
+  <div id="stats-inner">
+    <div class="stat-item" id="stat-1">
+      <p class="stat-number">94%</p>
+      <p class="stat-label">Reduction in RFI response time</p>
+    </div>
+    <div class="stat-item" id="stat-2">
+      <p class="stat-number">3×</p>
+      <p class="stat-label">Faster contractor handoff</p>
+    </div>
+    <div class="stat-item" id="stat-3">
+      <p class="stat-number">Zero</p>
+      <p class="stat-label">Orphaned specification revisions</p>
+    </div>
+    <div class="stat-item" id="stat-4">
+      <p class="stat-number">18+</p>
+      <p class="stat-label">Firms in active use</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Process ambient (video) ── -->
+<section id="process" aria-label="Process">
+  <div id="process-video-container">
+    <video
+      id="process-bg-video"
+      src="assets/studio-interior.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="process-bg-video-placeholder">→ assets/studio-interior.mp4</div>
+    <div id="process-overlay"></div>
+  </div>
+  <div id="process-content">
+    <p id="process-label">Method</p>
+    <h2 id="process-heading">Precision is a practice, not a setting.</h2>
+    <p id="process-body">Ledgerline is designed around the workflows of firms who already document well — not as an attempt to install rigor where none exists. It removes the friction from habits that good architects already have.</p>
+  </div>
+</section>
+
+<!-- ── CTA Band ── -->
+<section id="cta-band" aria-label="Call to action">
+  <div id="cta-inner">
+    <div id="cta-text-group">
+      <h2 id="cta-heading">Start with one project</h2>
+      <p id="cta-body">Import existing drawings, connect your team, and close the first issue package within a week. No configuration required. No consultant needed.</p>
+    </div>
+    <div id="cta-action">
+      <a href="contact.html" class="btn-primary-dark">Request access</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer id="site-footer" aria-label="Footer">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div class="footer-brand-col">
+        <p id="footer-brand-name">Ledgerline</p>
+        <p id="footer-brand-tagline">Specification and annotation software for architects and contractors.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Product</p>
+        <ul class="footer-links">
+          <li><a href="work.html">Work</a></li>
+          <li><a href="method.html">Method</a></li>
+          <li><a href="studio.html">Studio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="studio.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Resources</p>
+        <ul class="footer-links">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Release notes</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 Ledgerline. All rights reserved.</p>
+      <ul id="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Read motion tokens from CSS
+  const BASE_DURATION = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--duration-base')
+  ) || 0.975;
+  const EASE_PRIMARY = getComputedStyle(document.documentElement)
+    .getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+  // Hero entrance — runs on load (opacity is safe here, trigger fires immediately)
+  const heroTl = gsap.timeline();
+  heroTl
+    .from('#hero-label', { y: 20, duration: BASE_DURATION, ease: EASE_PRIMARY })
+    .from('#hero-title', { y: 28, duration: BASE_DURATION * 1.2, ease: EASE_PRIMARY }, '-=0.6')
+    .from('#hero-tagline', { y: 20, duration: BASE_DURATION, ease: EASE_PRIMARY }, '-=0.7')
+    .from('#hero-cta-group', { y: 16, duration: BASE_DURATION, ease: EASE_PRIMARY }, '-=0.6')
+    .from('#hero-meta', { y: 16, duration: BASE_DURATION, ease: EASE_PRIMARY }, '-=0.8');
+
+  // Parallax on hero video
+  gsap.to('#hero-bg-video', {
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.5 },
+    y: '18%',
+    ease: 'none'
+  });
+
+  // Manifesto — clip-path reveal from left
+  gsap.from('#manifesto-heading', {
+    scrollTrigger: { trigger: '#manifesto', start: 'top 78%' },
+    clipPath: 'inset(0 100% 0 0)',
+    duration: BASE_DURATION * 1.4,
+    ease: 'power3.out'
+  });
+  gsap.from('#manifesto-body', {
+    scrollTrigger: { trigger: '#manifesto', start: 'top 72%' },
+    x: -40,
+    duration: BASE_DURATION,
+    ease: EASE_PRIMARY
+  });
+  gsap.from('#manifesto-label', {
+    scrollTrigger: { trigger: '#manifesto', start: 'top 82%' },
+    x: -20,
+    duration: BASE_DURATION,
+    ease: EASE_PRIMARY
+  });
+
+  // Features — horizontal stagger from left
+  gsap.from('#features-title, #features-count', {
+    scrollTrigger: { trigger: '#features-header', start: 'top 80%' },
+    x: -50,
+    stagger: 0.15,
+    duration: BASE_DURATION,
+    ease: EASE_PRIMARY
+  });
+
+  // Feature cards — divergent: left-most rises early, right-most later
+  gsap.from('#feature-card-1', {
+    scrollTrigger: { trigger: '#features-grid', start: 'top 80%' },
+    y: 60,
+    duration: BASE_DURATION * 1.2,
+    ease: EASE_PRIMARY
+  });
+  gsap.from('#feature-card-2', {
+    scrollTrigger: { trigger: '#features-grid', start: 'top 75%' },
+    y: 80,
+    duration: BASE_DURATION * 1.3,
+    ease: EASE_PRIMARY
+  });
+  gsap.from('#feature-card-3', {
+    scrollTrigger: { trigger: '#features-grid', start: 'top 70%' },
+    y: 100,
+    duration: BASE_DURATION * 1.4,
+    ease: EASE_PRIMARY
+  });
+
+  // Showcase — scale from center on visual
+  gsap.from('#showcase-visual', {
+    scrollTrigger: { trigger: '#showcase', start: 'top 75%' },
+    scale: 0.96,
+    duration: BASE_DURATION * 1.3,
+    ease: EASE_PRIMARY
+  });
+
+  // Showcase text — rise
+  gsap.from('#showcase-text', {
+    scrollTrigger: { trigger: '#showcase', start: 'top 78%' },
+    y: 50,
+    duration: BASE_DURATION,
+    ease: EASE_PRIMARY
+  });
+
+  // Stats — stagger from bottom
+  gsap.from('.stat-item', {
+    scrollTrigger: { trigger: '#stats-band', start: 'top 80%' },
+    y: 40,
+    stagger: 0.12,
+    duration: BASE_DURATION,
+    ease: EASE_PRIMARY
+  });
+
+  // Process video — subtle parallax
+  gsap.to('#process-bg-video', {
+    scrollTrigger: { trigger: '#process', start: 'top bottom', end: 'bottom top', scrub: 1.8 },
+    y: '12%',
+    ease: 'none'
+  });
+
+  gsap.from('#process-heading, #process-body', {
+    scrollTrigger: { trigger: '#process', start: 'top 75%' },
+    y: 40,
+    stagger: 0.18,
+    duration: BASE_DURATION,
+    ease: EASE_PRIMARY
+  });
+
+  // CTA band — minimal, static — only label animates
+  gsap.from('#cta-heading', {
+    scrollTrigger: { trigger: '#cta-band', start: 'top 80%' },
+    x: -30,
+    duration: BASE_DURATION,
+    ease: EASE_PRIMARY
+  });
+
+  // Footer — no animation (footer is rest)
+</script>
+</body>
+</html>

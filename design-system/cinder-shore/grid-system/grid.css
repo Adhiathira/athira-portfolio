@@ -1,0 +1,124 @@
+/* grid-system: fluent-health source — Twist C: container padding +12px (intensity 3) */
+
+:root {
+  --grid-columns: 12;
+  --grid-column-gap: 24px;
+  --grid-row-gap: 24px;
+  --container-max-width: 1200px;
+  --container-padding-left: 36px;
+  --container-padding-right: 36px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding-left);
+  padding-right: var(--container-padding-right);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: var(--grid-column-gap);
+  row-gap: var(--grid-row-gap);
+}
+
+/* Feature grid — 3 equal columns */
+.grid-3 {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* Two-column split */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* Hero asymmetric split */
+.grid-hero {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Testimonials — 3-col */
+.grid-testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Pricing — 4-col */
+.grid-pricing {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Responsive — mobile */
+@media (max-width: 375px) {
+  :root {
+    --container-padding-left: 20px;
+    --container-padding-right: 20px;
+  }
+
+  .grid-3,
+  .grid-2,
+  .grid-hero,
+  .grid-testimonials,
+  .grid-pricing {
+    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Responsive — tablet small */
+@media (min-width: 376px) and (max-width: 768px) {
+  :root {
+    --container-padding-left: 24px;
+    --container-padding-right: 24px;
+  }
+
+  .grid-3,
+  .grid-2,
+  .grid-hero,
+  .grid-testimonials,
+  .grid-pricing {
+    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Responsive — tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid-3 {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .grid-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .grid-testimonials {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .grid-pricing {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}

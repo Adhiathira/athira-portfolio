@@ -1,0 +1,77 @@
+:root {
+  /* Twist A: Duration scaling ×1.3 from pale-draft source — more deliberate, measured pacing */
+  --motion-duration-fast: 0.127s;
+  --motion-duration-base: 0.254s;
+  --motion-duration-slow: 0.423s;
+  --motion-duration-video: 0.845s;
+  --motion-easing-default: ease;
+  --motion-easing-out: ease-out;
+  --motion-easing-in-out: ease-in-out;
+  --motion-easing-material: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0px, 20px, 0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-20px, 0px, 0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
+  }
+}
+
+@keyframes loading {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.header {
+  transition: all var(--motion-duration-base) var(--motion-easing-default);
+}
+
+.nav-link {
+  transition: opacity var(--motion-duration-fast) var(--motion-easing-default);
+}
+
+.card {
+  transition: opacity var(--motion-duration-base) var(--motion-easing-out),
+              transform var(--motion-duration-base) var(--motion-easing-out);
+}
+
+button, a {
+  transition: all var(--motion-duration-fast) var(--motion-easing-default);
+}
+
+input, textarea {
+  transition: border-color var(--motion-duration-fast) var(--motion-easing-out),
+              box-shadow var(--motion-duration-fast) var(--motion-easing-out);
+}
+
+.loading {
+  animation: loading var(--motion-duration-video) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

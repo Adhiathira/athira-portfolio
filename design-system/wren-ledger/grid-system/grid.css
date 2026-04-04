@@ -1,0 +1,96 @@
+/* ============================================================
+ * GRID SYSTEM — Source: stripe
+ * Twist: A. Container max-width tightened 15% at intensity 3
+ * 1298px → 1103px. More editorial, less immersive.
+ * Column widths scaled proportionally: 88px → 74px.
+ * Creates a tighter, more focused reading column.
+ * ============================================================ */
+
+:root {
+  --grid-container-max-width: 1103px;
+  --grid-container-padding-left: 18px;
+  --grid-container-padding-right: 18px;
+  --grid-column-width: 74px;
+  --grid-column-gap: 16px;
+  --grid-row-gap: 24px;
+}
+
+.container {
+  max-width: var(--grid-container-max-width);
+  padding-left: var(--grid-container-padding-left);
+  padding-right: var(--grid-container-padding-right);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, var(--grid-column-width));
+  gap: var(--grid-row-gap) var(--grid-column-gap);
+}
+
+.grid-3-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-row-gap) var(--grid-column-gap);
+}
+
+.grid-2-col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--grid-row-gap) var(--grid-column-gap);
+}
+
+.grid-4-col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--grid-row-gap) var(--grid-column-gap);
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 28px;
+}
+
+.flex-row-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 64px;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 375px) {
+  .grid-12,
+  .grid-3-col,
+  .grid-2-col,
+  .grid-4-col {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .grid-12,
+  .grid-3-col,
+  .grid-4-col {
+    display: block;
+    max-width: 100%;
+  }
+  .grid-2-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .flex-row,
+  .flex-row-between {
+    flex-direction: row;
+    row-gap: 16px;
+    column-gap: 16px;
+  }
+}

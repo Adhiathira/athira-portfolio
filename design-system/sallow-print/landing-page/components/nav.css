@@ -1,0 +1,210 @@
+/* nav.css — Sallow Print navigation
+ * nav.json tokens: height 46px, fixed, logo-left, uppercase 0.08em letterSpacing
+ * Hover: underline left-to-right, 0.55s duration
+ * Scroll: transparent → cream background
+ */
+
+/* ─── Base nav ─── */
+#site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  background: transparent;
+  transition: background 0.52s ease-in-out, border-color 0.52s ease-in-out;
+  border-bottom: 1px solid transparent;
+}
+
+#site-nav.scrolled {
+  background: #fcf7f1;
+  border-bottom-color: rgba(87, 83, 73, 0.18);
+}
+
+/* ─── Logo ─── */
+.nav-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #1a1a1a;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-logo:hover {
+  opacity: 0.75;
+}
+
+/* ─── Links group ─── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Individual link ─── */
+.nav-link {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+/* Underline left-to-right animation */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #1a1a1a;
+  transition: width 0.55s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Active state — current page */
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.nav-link--active::after {
+  display: none;
+}
+
+/* ─── Nav CTA ─── */
+.nav-cta {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+  border: 1px solid #1a1a1a;
+  padding: 8px 18px;
+  border-radius: 6px;
+  transition: background 0.55s cubic-bezier(0, 0, 0.2, 1),
+              color 0.55s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.nav-cta:hover {
+  background: #1a1a1a;
+  color: #fcf7f1;
+}
+
+/* ─── Mobile hamburger toggle ─── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1010;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: #1a1a1a;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X when open */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ─── Mobile menu overlay ─── */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fcf7f1;
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-mobile-menu.is-open {
+  opacity: 1;
+}
+
+.nav-mobile-menu .nav-link {
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  color: #1a1a1a;
+}
+
+.nav-mobile-menu .nav-link::after {
+  background: #1a1a1a;
+}
+
+.nav-mobile-menu .nav-cta {
+  margin-top: 8px;
+}
+
+/* ─── Responsive: ≤900px ─── */
+@media (max-width: 900px) {
+  #site-nav {
+    padding: 0 32px;
+  }
+
+  .nav-links,
+  .nav-cta {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+
+  .nav-mobile-menu {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  #site-nav {
+    padding: 0 20px;
+  }
+}
