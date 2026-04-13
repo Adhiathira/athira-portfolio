@@ -663,7 +663,7 @@
       description: 'A redesign of Big Island Jeep Rental\u2019s website focused on simplifying the booking flow and modernizing the visual design. The project involved restructuring information architecture, decluttering redundant content, and optimizing for mobile. A green color scheme reflects Hawaii\u2019s natural landscape, while ample white space keeps the interface clean and inviting.',
       tags: ['UI/UX Design', 'Usability Research'],
       screenshotTitle: 'Booking Flow',
-      illustration: 'images/experiment-jeep-rental.svg',
+      illustration: 'images/athira-jeep.png',
       images: [
         { src: 'images/jeep-rentals.png', alt: 'Big Island Jeep Rental — Desktop view', type: 'desktop' },
         { src: 'images/jeep-phone-screen.png', alt: 'Big Island Jeep Rental — Phone mockup', type: 'phone' }
@@ -680,7 +680,7 @@
       subtitle: 'EdTech Platform',
       description: 'A landing page for Pathstitch, an EdTech platform that transforms teacher feedback into targeted support for K-12 educators and school leaders. The design uses bold geometric photo frames with vibrant pink, teal, and blue accent shapes to convey energy and approachability. Content is structured around three audience segments — Teachers, Principals, and Districts — each with clear value propositions.',
       tags: ['UI/UX Design', 'Landing Page'],
-      illustration: 'images/experiment-pathstitch.svg',
+      illustration: 'images/pathstitch-hero.png',
       screenshotTitle: 'Page Sections',
       images: [
         { src: 'images/pathstitch-hero.png', alt: 'Pathstitch — Hero section', type: 'desktop' }
@@ -697,7 +697,7 @@
       subtitle: 'Financial Education Platform',
       description: 'A website for FinEdvance, a financial education platform that offers structured learning tracks for wealth-building — from beginner fundamentals to advanced investment strategies. The design uses a corporate navy-and-white palette with bold red accents, giving it a trust-forward, institutional feel. Course offerings are presented in a clean card grid with clear progression tiers.',
       tags: ['UI/UX Design', 'Website Design'],
-      illustration: 'images/experiment-finedvance.svg',
+      illustration: 'images/finedvance-hero.png',
       screenshotTitle: 'Page Sections',
       images: [
         { src: 'images/finedvance-hero.png', alt: 'FinEdvance — Hero section', type: 'desktop' }
@@ -713,7 +713,7 @@
       subtitle: 'Law Firm Website',
       description: 'A website for Intra Legem Lawyers, a Kerala-based law firm specializing in legal representation for Non-Resident Indians. The design pairs a dark, authoritative hero featuring scales of justice imagery with warm serif typography and cream-toned interior pages.',
       tags: ['UI/UX Design', 'Website Design'],
-      illustration: 'images/experiment-intra-legem.svg',
+      illustration: 'images/intra-legem-hero.png',
       screenshotTitle: 'Page Sections',
       images: [
         { src: 'images/intra-legem-hero.png', alt: 'Intra Legem Lawyers — Hero section', type: 'desktop' }
