@@ -28,11 +28,11 @@
 .item-postcard {
   width: 260px;
   background: #fef9c3;                     /* warm pale yellow — matches reference */
-  border: 2px solid var(--color-text-muted);
+  border: 2px solid transparent;            /* keeps spacing; visible border on ::before */
   border-radius: 12px 26px 16px 22px;      /* heavily asymmetric — hand-drawn feel */
   padding: 16px 16px 52px 16px;            /* thick bottom for Polaroid proportion */
   overflow: visible;
-  filter: url(#sketchy-edge);              /* wobble the card border itself */
+  position: relative;                       /* anchor for ::before */
   cursor: default;
   transition: transform var(--dur-fast) var(--spring),
               box-shadow var(--dur-fast) ease;
@@ -51,12 +51,24 @@
 /* ─── Sketchy border overlays — multiple pen-trace lines that cross ─────── */
 /*
   3 independently wobbling border lines around the card:
-    1. Card's own border (filter: sketchy-edge)
+    1. ::before border (filter: sketchy-edge, matches card edge)
     2. ::after border (filter: sketchy-edge-2, offset -5px)
     3. .postcard-sketch border (filter: sketchy-edge-3, offset -9px)
   Each uses a different SVG filter seed + different border-radius values,
   so the lines naturally diverge, converge, and cross each other.
+  Filter is on pseudo-elements only so text inside stays clean.
 */
+.item-postcard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--color-text-muted);
+  border-radius: 12px 26px 16px 22px;      /* matches the card's own border-radius */
+  filter: url(#sketchy-edge);              /* wobble the border only */
+  pointer-events: none;
+  z-index: -1;
+}
+
 .item-postcard::after {
   content: '';
   position: absolute;
