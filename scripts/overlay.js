@@ -915,6 +915,9 @@
         '<div class="experiment-detail-preview-chrome">' +
           '<div class="experiment-detail-preview-dots"><span></span><span></span><span></span></div>' +
           '<div class="experiment-detail-preview-url">' + data.title.toLowerCase().replace(/\s+/g, '') + '.com</div>' +
+          '<button class="experiment-detail-preview-fullscreen" title="Full Screen">' +
+            '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          '</button>' +
         '</div>' +
         '<div class="experiment-detail-preview-viewport">' +
           '<iframe src="' + data.previewUrl + '" title="' + data.title + ' — Live Preview"></iframe>' +
@@ -969,6 +972,34 @@
           overlay.removeEventListener('transitionend', onClose);
         }
       });
+
+      // Fullscreen button
+      var fsBtn = content.querySelector('.experiment-detail-preview-fullscreen');
+      var previewEl = content.querySelector('.experiment-detail-preview');
+      if (fsBtn && previewEl) {
+        fsBtn.addEventListener('click', function() {
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          } else {
+            previewEl.requestFullscreen();
+          }
+        });
+        document.addEventListener('fullscreenchange', function onFsChange() {
+          if (document.fullscreenElement === previewEl) {
+            previewEl.classList.add('is-fullscreen');
+            // In fullscreen, scale to screen width
+            var fsScale = screen.width / 1440;
+            vp.style.transform = 'scale(' + fsScale + ')';
+            vp.style.height = (900 * fsScale) + 'px';
+          } else {
+            previewEl.classList.remove('is-fullscreen');
+            doScale();
+          }
+          if (!overlay.classList.contains('is-open')) {
+            document.removeEventListener('fullscreenchange', onFsChange);
+          }
+        });
+      }
     }
 
     overlay.classList.add('is-open');
