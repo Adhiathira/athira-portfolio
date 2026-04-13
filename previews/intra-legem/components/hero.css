@@ -1,0 +1,275 @@
+/* ==========================================================================
+   hero.css — Hero and button primitives
+   ========================================================================== */
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--type-nav);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-nav);
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: var(--btn-padding-v) var(--btn-padding-h);
+  border-radius: var(--btn-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-btn);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border-color: var(--btn-primary-bg);
+}
+.btn-primary:hover {
+  background: #e5622d;
+  border-color: #e5622d;
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: var(--btn-ghost-bg);
+  color: var(--btn-ghost-text);
+  border-color: rgba(242, 239, 233, 0.6);
+}
+.btn-ghost:hover {
+  background: rgba(242, 239, 233, 0.12);
+  border-color: var(--btn-ghost-text);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-heading-text);
+  border-color: var(--color-border);
+}
+.btn-outline:hover {
+  background: var(--color-heading-text);
+  color: var(--color-page-bg);
+  border-color: var(--color-heading-text);
+}
+
+.btn-outline-dark {
+  background: transparent;
+  color: var(--color-heading-text);
+  border-color: var(--color-heading-text);
+}
+.btn-outline-dark:hover {
+  background: var(--color-heading-text);
+  color: var(--color-page-bg);
+}
+
+/* ── Hero Section ── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+#hero-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#hero-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(26, 26, 20, 0.92) 0%,
+    rgba(26, 26, 20, 0.65) 40%,
+    rgba(26, 26, 20, 0.28) 70%,
+    rgba(26, 26, 20, 0.18) 100%
+  );
+  pointer-events: none;
+}
+
+#hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-gutter);
+  padding-bottom: 80px;
+  padding-top: 50px; /* nav height */
+  width: 100%;
+}
+
+#hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--type-nav);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary-action);
+  margin: 0 0 20px;
+}
+
+#hero-headline {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
+  font-weight: var(--fw-medium);
+  line-height: 1.08;
+  letter-spacing: var(--ls-heading);
+  color: var(--color-page-bg);
+  margin: 0 0 24px;
+  max-width: 780px;
+}
+
+#hero-subheadline {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.4vw, 1.0625rem);
+  font-weight: var(--fw-regular);
+  line-height: 1.6;
+  color: rgba(242, 239, 233, 0.75);
+  margin: 0 0 36px;
+  max-width: 620px;
+}
+
+#hero-ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ── Page hero variants (sub-pages) ── */
+.page-hero {
+  position: relative;
+  padding: 100px var(--grid-gutter) 72px;
+  background: linear-gradient(135deg, var(--color-hero-bg) 0%, #2a2218 100%);
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 60%, rgba(251, 115, 57, 0.08) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.page-hero-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.page-hero-breadcrumb {
+  display: flex;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 233, 0.5);
+  margin-bottom: 24px;
+}
+
+.page-hero-breadcrumb a {
+  color: rgba(242, 239, 233, 0.5);
+  text-decoration: none;
+}
+.page-hero-breadcrumb a:hover { color: rgba(242, 239, 233, 0.8); }
+.page-hero-breadcrumb span { color: rgba(242, 239, 233, 0.3); }
+
+.page-hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--type-nav);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary-action);
+  margin: 0 0 16px;
+}
+
+.page-hero-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3.5vw, 3.5rem);
+  font-weight: var(--fw-medium);
+  line-height: 1.1;
+  letter-spacing: var(--ls-heading);
+  color: var(--color-page-bg);
+  margin: 0 0 20px;
+  max-width: 700px;
+}
+
+.page-hero-subheading {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.3vw, 1rem);
+  font-weight: var(--fw-regular);
+  line-height: 1.65;
+  color: rgba(242, 239, 233, 0.72);
+  margin: 0 0 32px;
+  max-width: 600px;
+}
+
+.page-hero-body {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.2vw, 0.9375rem);
+  line-height: 1.7;
+  color: rgba(242, 239, 233, 0.65);
+  margin: 0 0 28px;
+  max-width: 620px;
+}
+
+.page-hero-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Compact hero for utility pages */
+.compact-hero {
+  padding: 80px var(--grid-gutter) 48px;
+  background: linear-gradient(135deg, var(--color-hero-bg) 0%, #2a2218 100%);
+}
+
+/* Light page hero for contact/blog */
+.light-hero {
+  padding: 80px var(--grid-gutter) 56px;
+  background: var(--color-page-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.light-hero .page-hero-heading {
+  color: var(--color-heading-text);
+}
+
+.light-hero .page-hero-subheading {
+  color: var(--color-body-text);
+}
+
+@media (max-width: 900px) {
+  #hero-content {
+    padding-bottom: 60px;
+  }
+  #hero-headline {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+  }
+}
+
+@media (max-width: 600px) {
+  #hero-ctas {
+    flex-direction: column;
+  }
+  #hero-ctas .btn {
+    width: 100%;
+    text-align: center;
+  }
+  .page-hero-ctas {
+    flex-direction: column;
+  }
+}

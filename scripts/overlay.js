@@ -714,19 +714,11 @@
       description: 'A website for Intra Legem Lawyers, a Kerala-based law firm specializing in legal representation for Non-Resident Indians. The design pairs a dark, authoritative hero featuring scales of justice imagery with warm serif typography and cream-toned interior pages.',
       tags: ['UI/UX Design', 'Website Design'],
       illustration: 'images/intra-legem-hero.png',
-      screenshotTitle: 'Page Sections',
-      images: [
-        { src: 'images/intra-legem-hero.png', alt: 'Intra Legem Lawyers — Hero section', type: 'desktop' }
-      ],
-      screenshots: [
-        { src: 'images/intra-legem-nri-services.png', alt: 'NRI Legal Services overview' },
-        { src: 'images/intra-legem-nri-detail.png', alt: 'NRI Legal Services — Detailed practice areas' },
-        { src: 'images/intra-legem-contact.png', alt: 'Contact and consultation form' }
-      ]
+      previewUrl: 'previews/intra-legem/index.html'
     }
   };
 
-  var experimentSlugs = ['jeep-rental', 'pathstitch', 'finedvance', 'intra-legem'];
+  var experimentSlugs = ['jeep-rental', 'intra-legem', 'finedvance', 'pathstitch'];
 
   // ── DOM references ─────────────────────────────────────────────────────────
   var overlay = document.getElementById('overlay');
@@ -917,8 +909,21 @@
       '<p>' + data.description + '</p>' +
     '</div>';
 
+    // Live website preview — browsable iframe in browser mockup
+    if (data.previewUrl) {
+      html += '<div class="experiment-detail-preview">' +
+        '<div class="experiment-detail-preview-chrome">' +
+          '<div class="experiment-detail-preview-dots"><span></span><span></span><span></span></div>' +
+          '<div class="experiment-detail-preview-url">' + data.title.toLowerCase().replace(/\s+/g, '') + '.com</div>' +
+        '</div>' +
+        '<div class="experiment-detail-preview-viewport">' +
+          '<iframe src="' + data.previewUrl + '" title="' + data.title + ' — Live Preview"></iframe>' +
+        '</div>' +
+      '</div>';
+    }
+
     // Image collage — desktop + phone mockup
-    if (data.images && data.images.length >= 2) {
+    if (!data.previewUrl && data.images && data.images.length >= 2) {
       html += '<div class="experiment-detail-collage">';
       data.images.forEach(function(img) {
         html += '<div class="experiment-detail-collage-img experiment-detail-collage-img--' + img.type + '">' +
@@ -929,14 +934,14 @@
     }
 
     // Single hero image — no collage, just a full-width desktop shot
-    if (data.images && data.images.length === 1) {
+    if (!data.previewUrl && data.images && data.images.length === 1) {
       html += '<div class="experiment-detail-hero-img">' +
         '<img src="' + data.images[0].src + '" alt="' + data.images[0].alt + '">' +
       '</div>';
     }
 
     // Additional screenshots — booking flow screens
-    if (data.screenshots && data.screenshots.length) {
+    if (!data.previewUrl && data.screenshots && data.screenshots.length) {
       html += '<div class="overlay-body"><h3 class="overlay-section-title">' + (data.screenshotTitle || 'Screenshots') + '</h3></div>';
       html += '<div class="overlay-img-grid">';
       data.screenshots.forEach(function(img) {
@@ -946,6 +951,25 @@
     }
 
     content.innerHTML = html;
+
+    // Scale the widescreen preview viewport to fit the container
+    var vp = content.querySelector('.experiment-detail-preview-viewport');
+    if (vp) {
+      var doScale = function() {
+        var w = vp.parentElement.clientWidth;
+        var s = w / 1440;
+        vp.style.transform = 'scale(' + s + ')';
+        vp.style.height = (900 * s) + 'px';
+      };
+      doScale();
+      window.addEventListener('resize', doScale);
+      overlay.addEventListener('transitionend', function onClose() {
+        if (!overlay.classList.contains('is-open')) {
+          window.removeEventListener('resize', doScale);
+          overlay.removeEventListener('transitionend', onClose);
+        }
+      });
+    }
 
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden', 'false');
