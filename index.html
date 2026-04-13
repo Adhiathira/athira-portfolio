@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Folio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Malayalam:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&family=Noto+Sans+Korean:wght@400;600&family=Noto+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/tokens.css?v=2">
+  <link rel="stylesheet" href="styles/canvas.css?v=2">
+  <link rel="stylesheet" href="styles/items.css?v=13">
+  <link rel="stylesheet" href="styles/overlay.css">
+</head>
+<body>
+
+  <!-- Sketchy edge filters — feTurbulence displacement for hand-drawn wobble.
+       Two filters with different seeds so outer + inner borders wobble independently. -->
+  <svg style="position:absolute;width:0;height:0" aria-hidden="true">
+    <defs>
+      <filter id="sketchy-edge">
+        <feTurbulence type="turbulence" baseFrequency="0.008" numOctaves="3" seed="3" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="sketchy-edge-2">
+        <feTurbulence type="turbulence" baseFrequency="0.01" numOctaves="3" seed="9" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="sketchy-edge-3">
+        <feTurbulence type="turbulence" baseFrequency="0.009" numOctaves="3" seed="17" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div id="viewport">
+    <div id="canvas">
+
+      <!-- Postcards are created by scripts/postcard.js component -->
+
+    </div>
+  </div>
+
+  <!-- ── Floating Nav Bar ──────────────────────────────────────────────── -->
+  <nav class="canvas-navbar" id="navbar">
+    <a href="#" class="navbar-item is-active">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="#" class="navbar-item" id="nav-case-studies">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+      </svg>
+      <span>Case Studies</span>
+    </a>
+    <a href="#" class="navbar-item" id="nav-experiments">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 3h6M10 3v6.5L4.5 19a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9.5V3"/>
+        <path d="M8.5 14h7"/>
+      </svg>
+      <span>Experiments</span>
+    </a>
+    <a href="#" class="navbar-item" id="nav-resume">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      <span>Resume</span>
+    </a>
+  </nav>
+
+  <div id="overlay" class="overlay" aria-hidden="true">
+    <div class="overlay-backdrop"></div>
+    <div class="overlay-sheet">
+      <button class="overlay-close" aria-label="Close">&times;</button>
+      <div class="overlay-panel">
+        <div class="overlay-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="scripts/canvas.js" defer></script>
+  <script src="scripts/postcard.js"></script>
+  <script src="scripts/sticky-note.js"></script>
+  <script src="scripts/text-clip.js"></script>
+  <script src="scripts/polaroid.js?v=2"></script>
+  <script src="scripts/pull-quote.js"></script>
+  <script src="scripts/feature-card.js"></script>
+  <script src="scripts/book-cover.js"></script>
+  <script src="scripts/tape-strip.js"></script>
+  <script src="scripts/flip-card.js"></script>
+  <script src="scripts/split-flap-card.js"></script>
+  <script src="scripts/kodak-photo.js"></script>
+  <script src="scripts/tile-texture.js"></script>
+  <script src="scripts/overlay.js"></script>
+  <script src="scripts/cursor.js?v=2"></script>
+  <script src="scripts/ghost-cursor.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('canvas');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Disable hover during entrance animation
+      if (!reduceMotion) {
+        canvas.classList.add('is-animating');
+      }
+
+      // ── Scatter decorative marks ──────────────────────────────────────────
+      const types = ['dot', 'plus', 'ring', 'diamond'];
+      for (let i = 0; i < 35; i++) {
+        const type = types[i % types.length];
+        const el = document.createElement('div');
+        el.className = 'canvas-mark canvas-mark--' + type;
+        el.style.left = (60 + Math.random() * 3280) + 'px';
+        el.style.top = (60 + Math.random() * 2680) + 'px';
+        el.style.animationDelay = (Math.random() * 8).toFixed(1) + 's, 0s';
+        canvas.appendChild(el);
+      }
+
+      // ── Create postcard with bio content ──────────────────────────────────
+      const bioContent = document.createElement('div');
+      bioContent.className = 'postcard-bio';
+
+      const bioHeader = document.createElement('div');
+      bioHeader.className = 'postcard-bio-header';
+
+      const bioImg = document.createElement('img');
+      bioImg.className = 'postcard-bio-img';
+      bioImg.src = 'images/athira-image.png';
+      bioImg.alt = 'Athira Prakash';
+      bioHeader.appendChild(bioImg);
+
+      const bioTitles = document.createElement('div');
+      const bioName = document.createElement('h2');
+      bioName.className = 'postcard-bio-name';
+      bioName.textContent = 'I\u2019m Athira';
+      bioTitles.appendChild(bioName);
+
+      const bioRole = document.createElement('p');
+      bioRole.className = 'postcard-bio-role';
+      bioRole.textContent = 'UX DESIGNER';
+      bioTitles.appendChild(bioRole);
+
+      bioHeader.appendChild(bioTitles);
+      bioContent.appendChild(bioHeader);
+
+      const bioTexts = [
+        'I\u2019m a UX designer who loves bringing ideas to life through thoughtful, user-centered experiences.',
+        'I\u2019ve taken products from 0 to 1, working at the intersection of design, product, and business to build enterprise SaaS, B2B, B2C, and AI-native systems that solve real problems. I thrive in ambiguity, where there are no clear answers, only direction shaped through iteration, user insight, and execution.',
+        'I\u2019m increasingly exploring and designing for agentic systems, where interactions move beyond static interfaces into intelligent, adaptive workflows that act, respond, and evolve with the user.',
+        'With a background in Business Analytics, I use data to deeply understand user behavior and shape design decisions that are both intuitive and impactful.'
+      ];
+      bioTexts.forEach(t => {
+        const p = document.createElement('p');
+        p.className = 'postcard-bio-text';
+        p.textContent = t;
+        bioContent.appendChild(p);
+      });
+
+      const linksDiv = document.createElement('div');
+      linksDiv.className = 'postcard-bio-links';
+      [
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/athiraprakash282' },
+        { label: 'X.com', href: 'https://x.com/deluludesigner' }
+      ].forEach(link => {
+        const a = document.createElement('a');
+        a.href = link.href;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'postcard-bio-link';
+        a.textContent = link.label;
+        linksDiv.appendChild(a);
+      });
+      bioContent.appendChild(linksDiv);
+
+      const postcard = new Postcard({
+        x: 1550, y: 1200, rotate: -1.5,
+        heart: true, width: 500
+      }).mount(canvas);
+      // Place bio inside the white photo area
+      postcard.el.querySelector('.postcard-photo').appendChild(bioContent);
+      if (!reduceMotion) postcard.animate(0);
+
+      // ── Create sticky notes via component ──────────────────────────────────
+      const stickies = [
+        { x: 2096, y: 1345, rotate: 2.5, text: 'If you don\u2019t share\nsomeone\u2019s pain,\nyou can never\nunderstand them.\n— Pain', size: 170, fold: true, color: '#f8d0d0' }
+      ];
+
+      stickies.forEach((opts, i) => {
+        const s = new StickyNote(opts).mount(canvas);
+        if (!reduceMotion) s.animate(0.3 + i * 0.15);
+      });
+
+      // ── Create text clips via component ────────────────────────────────────
+      const clips = [
+        { x: 2650, y: 953, rotate: 2, headline: 'Growth occurs when one goes beyond one\u2019s limits. Realizing that is also part of training.', annotation: '— Itachi Uchiha', width: 260 }
+      ];
+
+      clips.forEach((opts, i) => {
+        const c = new TextClip(opts).mount(canvas);
+        if (!reduceMotion) c.animate(0.5 + i * 0.15);
+      });
+
+      // ── Create polaroids via component ─────────────────────────────────────
+      const polaroids = [
+        { x: 1040, y: 1963, rotate: -2, src: 'images/cpguard-preview.png', quote: 'cPGuard — Server Security Revamp', name: 'UX Case Study', portfolio: 'juno-testimonial', width: 320 },
+        { x: 1737, y: 2241, rotate: 2.5, src: 'images/pickio-preview.mp4', quote: 'Pickio — AI Dining & Bill Split', name: 'Product Design', portfolio: 'pickio-case-study', width: 320 },
+        { x: 2492, y: 2193, rotate: -1.5, src: 'images/griting-ds-preview.png', quote: 'Griting — Design System Foundation', name: 'Founding Designer', portfolio: 'griting-design-system', width: 320 },
+        { x: 2910, y: 2073, rotate: 3, src: 'images/griting-website-preview.png', quote: 'Griting \u2014 Website & Early Traction', name: 'Founding Designer', portfolio: 'griting-website', width: 320 }
+      ];
+
+      polaroids.forEach((opts, i) => {
+        const pl = new Polaroid(opts).mount(canvas);
+        if (!reduceMotion) pl.animate(0.7 + i * 0.12);
+      });
+
+      // ── Experiment card on canvas — clipboard/lab-note style ────────────────
+      const jeepCard = document.createElement('div');
+      jeepCard.className = 'canvas-item experiment-card experiment-card--canvas';
+      jeepCard.style.left = '1652px';
+      jeepCard.style.top = '645px';
+      jeepCard.style.transform = 'rotate(3deg)';
+      jeepCard.dataset.experiment = 'jeep-rental';
+
+      const jeepIllus = document.createElement('div');
+      jeepIllus.className = 'experiment-card-illustration';
+      const jeepImg = document.createElement('img');
+      jeepImg.src = 'images/experiment-jeep-rental.svg';
+      jeepImg.alt = 'Big Island Jeep Rental';
+      jeepIllus.appendChild(jeepImg);
+      jeepCard.appendChild(jeepIllus);
+
+      const jeepTitle = document.createElement('div');
+      jeepTitle.className = 'experiment-card-title';
+      jeepTitle.textContent = 'Big Island Jeep Rental';
+      jeepCard.appendChild(jeepTitle);
+
+      const jeepSub = document.createElement('div');
+      jeepSub.className = 'experiment-card-subtitle';
+      jeepSub.textContent = 'Website Redesign';
+      jeepCard.appendChild(jeepSub);
+
+      canvas.appendChild(jeepCard);
+      if (!reduceMotion) {
+        gsap.fromTo(jeepCard,
+          { y: -30, rotation: 0, opacity: 0 },
+          { y: 0, rotation: 3, opacity: 1, duration: 0.7, delay: 0.82, ease: 'elastic.out(1, 0.5)' }
+        );
+      }
+
+      // ── Pathstitch experiment card ──────────────────────────────────────────
+      const pathstitchCard = document.createElement('div');
+      pathstitchCard.className = 'canvas-item experiment-card experiment-card--canvas';
+      pathstitchCard.style.left = '3000px';
+      pathstitchCard.style.top = '1205px';
+      pathstitchCard.style.transform = 'rotate(-2deg)';
+      pathstitchCard.dataset.experiment = 'pathstitch';
+
+      const pathstitchIllus = document.createElement('div');
+      pathstitchIllus.className = 'experiment-card-illustration';
+      const pathstitchImg = document.createElement('img');
+      pathstitchImg.src = 'images/experiment-pathstitch.svg';
+      pathstitchImg.alt = 'Pathstitch';
+      pathstitchIllus.appendChild(pathstitchImg);
+      pathstitchCard.appendChild(pathstitchIllus);
+
+      const pathstitchTitle = document.createElement('div');
+      pathstitchTitle.className = 'experiment-card-title';
+      pathstitchTitle.textContent = 'Pathstitch';
+      pathstitchCard.appendChild(pathstitchTitle);
+
+      const pathstitchSub = document.createElement('div');
+      pathstitchSub.className = 'experiment-card-subtitle';
+      pathstitchSub.textContent = 'EdTech Platform';
+      pathstitchCard.appendChild(pathstitchSub);
+
+      canvas.appendChild(pathstitchCard);
+      if (!reduceMotion) {
+        gsap.fromTo(pathstitchCard,
+          { y: -30, rotation: 0, opacity: 0 },
+          { y: 0, rotation: -2, opacity: 1, duration: 0.7, delay: 0.92, ease: 'elastic.out(1, 0.5)' }
+        );
+      }
+
+      // ── FinEdvance experiment card ──────────────────────────────────────────
+      const finedvanceCard = document.createElement('div');
+      finedvanceCard.className = 'canvas-item experiment-card experiment-card--canvas';
+      finedvanceCard.style.left = '587px';
+      finedvanceCard.style.top = '1425px';
+      finedvanceCard.style.transform = 'rotate(1.5deg)';
+      finedvanceCard.dataset.experiment = 'finedvance';
+
+      const finedvanceIllus = document.createElement('div');
+      finedvanceIllus.className = 'experiment-card-illustration';
+      const finedvanceImg = document.createElement('img');
+      finedvanceImg.src = 'images/experiment-finedvance.svg';
+      finedvanceImg.alt = 'FinEdvance';
+      finedvanceIllus.appendChild(finedvanceImg);
+      finedvanceCard.appendChild(finedvanceIllus);
+
+      const finedvanceTitle = document.createElement('div');
+      finedvanceTitle.className = 'experiment-card-title';
+      finedvanceTitle.textContent = 'FinEdvance';
+      finedvanceCard.appendChild(finedvanceTitle);
+
+      const finedvanceSub = document.createElement('div');
+      finedvanceSub.className = 'experiment-card-subtitle';
+      finedvanceSub.textContent = 'Financial Education Platform';
+      finedvanceCard.appendChild(finedvanceSub);
+
+      canvas.appendChild(finedvanceCard);
+      if (!reduceMotion) {
+        gsap.fromTo(finedvanceCard,
+          { y: -30, rotation: 0, opacity: 0 },
+          { y: 0, rotation: 1.5, opacity: 1, duration: 0.7, delay: 1.02, ease: 'elastic.out(1, 0.5)' }
+        );
+      }
+
+      // ── Intra Legem experiment card ─────────────────────────────────────────
+      const intraLegemCard = document.createElement('div');
+      intraLegemCard.className = 'canvas-item experiment-card experiment-card--canvas';
+      intraLegemCard.style.left = '808px';
+      intraLegemCard.style.top = '450px';
+      intraLegemCard.style.transform = 'rotate(-1deg)';
+      intraLegemCard.dataset.experiment = 'intra-legem';
+
+      const intraLegemIllus = document.createElement('div');
+      intraLegemIllus.className = 'experiment-card-illustration';
+      const intraLegemImg = document.createElement('img');
+      intraLegemImg.src = 'images/experiment-intra-legem.svg';
+      intraLegemImg.alt = 'Intra Legem Lawyers';
+      intraLegemIllus.appendChild(intraLegemImg);
+      intraLegemCard.appendChild(intraLegemIllus);
+
+      const intraLegemTitle = document.createElement('div');
+      intraLegemTitle.className = 'experiment-card-title';
+      intraLegemTitle.textContent = 'Intra Legem Lawyers';
+      intraLegemCard.appendChild(intraLegemTitle);
+
+      const intraLegemSub = document.createElement('div');
+      intraLegemSub.className = 'experiment-card-subtitle';
+      intraLegemSub.textContent = 'Law Firm Website';
+      intraLegemCard.appendChild(intraLegemSub);
+
+      canvas.appendChild(intraLegemCard);
+      if (!reduceMotion) {
+        gsap.fromTo(intraLegemCard,
+          { y: -30, rotation: 0, opacity: 0 },
+          { y: 0, rotation: -1, opacity: 1, duration: 0.7, delay: 1.12, ease: 'elastic.out(1, 0.5)' }
+        );
+      }
+
+      // ── Resume preview note on canvas ─────────────────────────────────────
+      const resumeNote = document.createElement('div');
+      resumeNote.className = 'canvas-item resume-note-preview';
+      resumeNote.style.left = '2269px';
+      resumeNote.style.top = '644px';
+      resumeNote.style.transform = 'rotate(-2deg)';
+      resumeNote.dataset.resume = 'true';
+
+      const resumeInner = document.createElement('div');
+      resumeInner.className = 'resume-note-preview-inner';
+
+      const rName = document.createElement('h3');
+      rName.className = 'resume-note-preview-name';
+      rName.textContent = 'Athira Prakash';
+      resumeInner.appendChild(rName);
+
+      const rRole = document.createElement('p');
+      rRole.className = 'resume-note-preview-role';
+      rRole.textContent = 'UX Designer';
+      resumeInner.appendChild(rRole);
+
+      const rLines = document.createElement('div');
+      rLines.className = 'resume-note-preview-lines';
+      ['Griting.AI', 'OpsShield', 'Oracle'].forEach(function(name) {
+        const label = document.createElement('span');
+        label.className = 'resume-note-preview-label';
+        label.textContent = name;
+        rLines.appendChild(label);
+      });
+      resumeInner.appendChild(rLines);
+
+      const rCta = document.createElement('p');
+      rCta.className = 'resume-note-preview-cta';
+      rCta.textContent = 'View Resume \u2192';
+      resumeInner.appendChild(rCta);
+
+      resumeNote.appendChild(resumeInner);
+      canvas.appendChild(resumeNote);
+      if (!reduceMotion) {
+        gsap.fromTo(resumeNote,
+          { y: -30, rotation: -5, opacity: 0 },
+          { y: 0, rotation: -2, opacity: 1, duration: 0.7, delay: 0.9, ease: 'elastic.out(1, 0.5)' }
+        );
+      }
+
+      // ── Personal photos — Kodak prints scattered across the canvas ────────
+      const photos = [
+        { x: 2130, y: 1094, rotate: 5, src: 'images/image-2.jpeg', date: "JUN '24", width: 240 },
+        { x: 1059, y: 1640, rotate: -3.5, src: 'images/Mee-scaled.jpg', date: "OCT '23", width: 220 },
+        { x: 2381, y: 2297, rotate: 2, src: 'images/image-3.jpeg', date: "MAR '24", width: 210 },
+        { x: 1961, y: 1959, rotate: -2.5, src: 'images/image-4.jpeg', date: "FEB '25", width: 215 }
+      ];
+
+      photos.forEach((opts, i) => {
+        const ph = new KodakPhoto(opts).mount(canvas);
+        if (!reduceMotion) ph.animate(0.85 + i * 0.12);
+      });
+
+      // ── Video clip — Kodak print with looping video ───────────────────────
+      const videoClip = new KodakPhoto({
+        x: 1035, y: 737, rotate: -3, video: 'images/athira-video.mp4', date: "APR '26", width: 260
+      }).mount(canvas);
+      if (!reduceMotion) videoClip.animate(1.0);
+
+      // ── Create pull quotes via component ───────────────────────────────────
+      const pqJobs = new PullQuote({
+        x: 2575, y: 1483, rotate: -1.5,
+        text: 'Design is not just what it looks like and feels like. Design is how it works.',
+        attribution: 'Steve Jobs',
+        width: 360
+      }).mount(canvas);
+      if (!reduceMotion) pqJobs.animate(0.95);
+
+      // ── Create book covers via component ──────────────────────────────────
+      const books = [
+        { x: 820, y: 1700, rotate: 5, src: 'images/book_cut 1.png', alt: 'The Kite Runner', width: 140 },
+        { x: 790, y: 920, rotate: -3, src: 'images/book_cut 2.png', alt: 'The Design of Everyday Things', width: 195 },
+        { x: 2360, y: 1820, rotate: 7, src: 'images/book_cut 3.png', alt: 'The Night Circus', width: 190 },
+        { x: 2440, y: 1100, rotate: -5, src: 'images/book_cut 4.png', alt: "I've Got Your Number", width: 135 },
+        { x: 640, y: 2000, rotate: 4, src: 'images/book_cut 5.png', alt: 'Think Again', width: 150 }
+      ];
+
+      books.forEach((opts, i) => {
+        const b = new BookCover(opts).mount(canvas);
+        if (!reduceMotion) b.animate(1.1 + i * 0.12);
+      });
+
+      // ── Loose tape strips — scattered far from center ────────────────────
+      new TapeStrip({ x: 100, y: 100, rotate: 7, width: 95 }).mount(canvas);
+      new TapeStrip({ x: 3040, y: 2700, rotate: -4, width: 85 }).mount(canvas);
+
+
+      // ── Flip card — Hello in 13 languages ─────────────────────────────────
+      const flip = new SplitFlapCard({
+        x: 1020, y: 1150, rotate: -1.5, width: 290,
+        strings: [
+          'Hello', 'Hola', 'Bonjour', 'Ciao',
+          'Hallo', 'Olá', 'Merhaba',
+          'नमस्ते', '안녕하세요', 'مرحبا',
+          'നമസ്കാരം', 'வணக்கம்', 'ನಮസ্ಕಾರ'
+        ],
+        colors: [
+          '#e8e4df', '#f8d0d0', '#d0e8f0', '#d4f0d0',
+          '#f5e6c8', '#e0d0f5', '#f0dce0', '#ffeacc',
+          '#c8e6e0', '#f5dcc8', '#d8e8d0', '#e0d8f0',
+          '#f0e0c8'
+        ],
+        interval: 2000
+      }).mount(canvas);
+      if (!reduceMotion) flip.animate(1.5);
+
+      // ── Remove is-animating after entrance completes (~2s) ────────────────
+      if (!reduceMotion) {
+        setTimeout(() => canvas.classList.remove('is-animating'), 2200);
+      }
+
+      // ── Collaborative cursor — Figma-style pointer with name pill ──────────
+      initCursor({ name: 'Anonymous 🐼', color: '#3d9e5a' });
+
+      // ── Floating navbar entrance ─────────────────────────────────────────
+      if (!reduceMotion) {
+        gsap.fromTo('#navbar',
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: 'back.out(1.7)', delay: 2 }
+        );
+      }
+
+      // ── Ghost cursor — simulates Athira working on the board ──────────
+      initGhostCursor({ name: 'Athira ✨', color: '#d65ba8', delay: 3 });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1089 @@
+/* canvas-folio — Canvas Items */
+
+/* ─── Base item class ───────────────────────────────────────────────────── */
+.canvas-item {
+  position: absolute;
+  z-index: 1;
+  pointer-events: auto;
+  cursor: none;
+}
+
+.canvas-item[data-portfolio] {
+  cursor: pointer;
+}
+
+/* Disable hover during entrance animation */
+.is-animating .canvas-item {
+  pointer-events: none;
+}
+
+/* ─── Postcard — hand-drawn Polaroid-on-a-board ────────────────────────── */
+/*
+  Sketchy border: card's own border (wobbly via filter) + ::after for one
+  extra offset pen stroke. Only 2 lines total — loose and casual, not a
+  thick frame. Card background is warm yellow (like the reference), not
+  plain cream. Shadows stay on a wrapper-level box-shadow so the card's
+  own filter doesn't eat them.
+*/
+.item-postcard {
+  width: 260px;
+  background: #fef9c3;                     /* warm pale yellow — matches reference */
+  border: 2px solid var(--color-text-muted);
+  border-radius: 12px 26px 16px 22px;      /* heavily asymmetric — hand-drawn feel */
+  padding: 16px 16px 52px 16px;            /* thick bottom for Polaroid proportion */
+  overflow: visible;
+  filter: url(#sketchy-edge);              /* wobble the card border itself */
+  cursor: default;
+  transition: transform var(--dur-fast) var(--spring),
+              box-shadow var(--dur-fast) ease;
+  /* Deep layered shadow for physical depth */
+  box-shadow:
+    1px 2px 4px rgba(0, 0, 0, 0.22),
+    4px 8px 16px rgba(0, 0, 0, 0.15),
+    8px 14px 32px rgba(0, 0, 0, 0.10);
+}
+
+.item-postcard:hover {
+  transform: rotate(0deg) translateY(-4px) !important;
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* ─── Sketchy border overlays — multiple pen-trace lines that cross ─────── */
+/*
+  3 independently wobbling border lines around the card:
+    1. Card's own border (filter: sketchy-edge)
+    2. ::after border (filter: sketchy-edge-2, offset -5px)
+    3. .postcard-sketch border (filter: sketchy-edge-3, offset -9px)
+  Each uses a different SVG filter seed + different border-radius values,
+  so the lines naturally diverge, converge, and cross each other.
+*/
+.item-postcard::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 1.5px solid var(--color-text-muted);
+  border-radius: 18px 14px 24px 20px;      /* different from card — lines diverge */
+  filter: url(#sketchy-edge-2);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Third sketchy border — DOM element with its own independent filter */
+.postcard-sketch {
+  position: absolute;
+  inset: -9px;
+  border: 1.5px solid var(--color-text-muted);
+  border-radius: 22px 28px 18px 26px;      /* yet another radius set — crosses the others */
+  filter: url(#sketchy-edge-3);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ─── Tape piece — chunky strip at top center ────────────────────────────── */
+.item-postcard::before {
+  content: '';
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%) rotate(1.5deg);
+  width: 40px;
+  height: 30px;
+  background: #d4b878;                    /* warm golden tan — visible tape */
+  border-radius: 4px;
+  opacity: 0.92;
+  z-index: 2;
+  box-shadow: inset 0 1px 3px rgba(160, 120, 60, 0.2);
+}
+
+/* ─── Photo area — white inner rectangle ─────────────────────────────────── */
+.postcard-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--color-white);
+  border: 2px solid var(--color-text-muted);
+  border-radius: 10px 20px 14px 16px;       /* rounded, asymmetric — matches hand-drawn */
+  margin-bottom: 10px;
+  filter: url(#sketchy-edge-2);             /* wobble the photo border */
+}
+
+/* ─── Heart doodle — sits inside the thick bottom gutter ──────────────────── */
+/*
+  Pure-CSS heart: a single rotated square with two rounded pseudo-circles
+  on top and left. Simpler and more reliable than the dual-lobe approach.
+*/
+.postcard-heart {
+  position: absolute;
+  bottom: 22px;
+  left: 24px;
+  width: 22px;
+  height: 22px;
+  background: #c8796a;
+  transform: rotate(-45deg);
+  opacity: 0.7;
+  border-radius: 2px;
+}
+
+.postcard-heart::before,
+.postcard-heart::after {
+  content: '';
+  position: absolute;
+  background: #c8796a;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+}
+
+.postcard-heart::before {
+  top: -11px;
+  left: 0;
+}
+
+.postcard-heart::after {
+  left: 11px;
+  top: 0;
+}
+
+/* ─── Caption — handwritten label in the Polaroid bottom area ─────────────── */
+.postcard-caption {
+  font-family: var(--font-hand);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: 4px;
+  line-height: var(--lh-label);
+}
+
+/* ─── Content slot — arbitrary content inside the bottom gutter ───────────── */
+.postcard-content {
+  margin-top: 6px;
+  font-family: var(--font-hand);
+  font-size: var(--size-small);
+  color: var(--color-text-muted);
+  line-height: var(--lh-body);
+}
+
+/* ─── Bio content inside postcard photo area ─────────────────────────────── */
+.postcard-photo:has(.postcard-bio) {
+  aspect-ratio: auto;
+  padding: 20px 22px 24px;
+}
+
+.postcard-bio {
+  padding: 0;
+}
+
+.postcard-bio-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.postcard-bio-img {
+  width: 80px;
+  height: 95px;
+  object-fit: cover;
+  border: 2px solid var(--color-text-muted);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.postcard-bio-name {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #5b7fbf;
+  margin: 0 0 2px;
+  line-height: 1.1;
+}
+
+.postcard-bio-role {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px #5b7fbf;
+  margin: 0 0 14px;
+  line-height: 1.1;
+}
+
+.postcard-bio-text {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: #333;
+  line-height: 1.55;
+  margin: 0 0 10px;
+}
+
+.postcard-bio-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.postcard-bio-link {
+  display: inline-block;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+  border: 1.5px solid #333;
+  border-radius: 20px;
+  padding: 5px 14px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.postcard-bio-link:hover {
+  background: #333;
+  color: #fff;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Sticky Note — yellow square with handwritten text ──────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*
+  Modelled on a real sticky note on a mood board:
+    - Square yellow card (#ffd54f) with Caveat handwriting
+    - Translucent tape strip at top center (slightly rotated)
+    - Very small border-radius (2px — paper has natural tiny radius)
+    - Soft paper shadow
+    - Hover: straighten + lift (same physics as postcard)
+    - Optional dog-ear fold on bottom-right corner
+*/
+.item-sticky {
+  --sticky-color: var(--color-sticky, #ffd54f);
+  width: 160px;
+  height: 160px;
+  background-color: var(--sticky-color);
+  border-radius: 2px;
+  padding: var(--space-sticky-pad, 20px);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.10);
+  cursor: default;
+  transition: transform var(--dur-fast) var(--spring),
+              box-shadow var(--dur-fast) ease;
+}
+
+.item-sticky:hover {
+  transform: rotate(0deg) translateY(-4px) !important;
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* ─── Tape strip — translucent yellow on top ───────────────────────────── */
+.item-sticky::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 40px;
+  height: 14px;
+  background-color: rgba(255, 213, 79, 0.40);
+  border-top: 2px solid rgba(44, 36, 22, 0.10);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ─── Text — Caveat handwriting ────────────────────────────────────────── */
+.item-sticky .sticky-text {
+  font-family: var(--font-hand);
+  font-size: var(--size-sticky, 1rem);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary, #2c2416);
+  line-height: 1.45;
+}
+
+/* ─── Custom content slot ──────────────────────────────────────────────── */
+.item-sticky .sticky-content {
+  font-family: var(--font-hand);
+  font-size: var(--size-small);
+  color: var(--color-text-primary, #2c2416);
+  line-height: 1.5;
+}
+
+/* ─── Dog-ear fold — bottom-right corner curl ──────────────────────────── */
+/*
+  Linear gradient triangle simulates a folded corner. The fold is the same
+  color as the card but slightly darkened, with a tiny shadow underneath.
+*/
+.item-sticky--fold::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(
+    225deg,
+    var(--color-page-bg, #f5f0e8) 50%,
+    rgba(0, 0, 0, 0.06) 50%,
+    rgba(0, 0, 0, 0.06) 52%,
+    #edc83d 52%
+  );
+  border-radius: 0 0 0 0;
+  pointer-events: none;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Text Clip — paper snippet pinned to the board ──────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*
+  A clipping from a magazine or notebook pinned to the board:
+    - Light cream paper background (surface-light)
+    - Terracotta pushpin at top center (accent-colored dot with shadow)
+    - Bold Caveat headline + lighter annotation
+    - Small border-radius (2px), paper shadow
+    - Hover: straighten + lift
+*/
+.item-clip {
+  max-width: 220px;
+  background-color: var(--color-surface-light, #fff8e7);
+  border-radius: 2px;
+  padding: var(--space-lg, 24px);
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.12);
+  cursor: default;
+  transition: transform var(--dur-fast) var(--spring),
+              box-shadow var(--dur-fast) ease;
+}
+
+.item-clip:hover {
+  transform: rotate(0deg) translateY(-4px) !important;
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* ─── Pushpin — terracotta dot at top center ───────────────────────────── */
+.item-clip::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background-color: var(--color-accent, #e85d2f);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.30);
+  z-index: 2;
+}
+
+/* ─── Headline — bold Caveat handwriting ───────────────────────────────── */
+.clip-headline {
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary, #2c2416);
+  line-height: 1.25;
+  margin-bottom: var(--space-sm, 8px);
+}
+
+/* ─── Annotation — lighter text below headline ─────────────────────────── */
+.clip-annotation {
+  font-family: var(--font-hand);
+  font-size: var(--size-small, 0.8125rem);
+  font-weight: var(--weight-regular);
+  color: var(--color-text-muted, #5a4e3a);
+  line-height: var(--lh-label, 1.4);
+}
+
+/* ─── Custom content slot ──────────────────────────────────────────────── */
+.clip-content {
+  margin-top: var(--space-sm, 8px);
+  font-family: var(--font-hand);
+  font-size: var(--size-small);
+  color: var(--color-text-muted, #5a4e3a);
+  line-height: 1.5;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Polaroid — white photo card with thick bottom gutter ───────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*
+  Classic Polaroid proportions:
+    - White card, 12px padding on top/sides, thick 44px bottom gutter
+    - Square image placeholder area (1:1 ratio)
+    - Optional initials inside image area (avatar substitute)
+    - Quote + name text in the bottom gutter
+    - Pushpin at top center (terracotta dot)
+    - Deeper polaroid shadow for depth
+    - Hover: straighten + lift
+*/
+.item-polaroid {
+  width: 240px;
+  background-color: var(--color-white, #ffffff);
+  border-radius: 2px;
+  padding: 12px 12px 64px 12px;
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.18);
+  cursor: default;
+  transition: transform var(--dur-fast) var(--spring),
+              box-shadow var(--dur-fast) ease;
+}
+
+.item-polaroid:hover {
+  transform: rotate(0deg) translateY(-6px) !important;
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* ─── Pushpin — terracotta dot ─────────────────────────────────────────── */
+.item-polaroid::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-accent, #e85d2f);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.30);
+  z-index: 2;
+}
+
+/* ─── Image area — square placeholder ──────────────────────────────────── */
+.polaroid-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: var(--color-surface-mid, #ede4d3);
+  border-radius: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Real photo inside polaroid ───────────────────────────────────────── */
+.polaroid-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 1px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.06);
+}
+
+/* ─── Avatar initials — placeholder inside image area ──────────────────── */
+.polaroid-initials {
+  font-family: var(--font-hand);
+  font-size: 2rem;
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted, #5a4e3a);
+  letter-spacing: 0.1em;
+}
+
+/* ─── Handwritten overlay — text scrawled over the photo at an angle ────── */
+/*
+  Text sits in the white bottom gutter of the polaroid card,
+  below the image. Rotated slightly for a handwritten feel.
+*/
+.polaroid-overlay {
+  padding: 8px 14px 4px 14px;
+  transform: rotate(-2deg);
+  transform-origin: bottom left;
+}
+
+.polaroid-quote {
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary, #2c2416);
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+
+.polaroid-name {
+  font-family: var(--font-hand);
+  font-size: 1rem;
+  color: var(--color-text-muted, #5a4e3a);
+}
+
+/* ─── Custom content slot ──────────────────────────────────────────────── */
+.polaroid-content {
+  margin-top: var(--space-sm, 8px);
+  font-family: var(--font-hand);
+  font-size: var(--size-small);
+  color: var(--color-text-muted, #5a4e3a);
+  line-height: 1.5;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Pull Quote — editorial quote floating on the surface ───────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*
+  A typographic element that sits directly on the board surface:
+    - Giant decorative quote mark (Playfair Display, faded accent)
+    - Editorial italic text (Playfair Display)
+    - Handwritten attribution with accent-colored dashes
+    - No attachment (tape/pin) — it's printed on the paper
+    - Mid-tone paper background for contrast
+    - Hover: slight lift only (no rotation change)
+*/
+.item-pullquote {
+  max-width: 400px;
+  background-color: var(--color-surface-mid, #ede4d3);
+  border-radius: 2px;
+  padding: var(--space-xl, 40px) var(--space-lg, 24px) var(--space-lg, 24px);
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.12);
+  cursor: default;
+  text-align: center;
+  transition: transform var(--dur-fast) var(--spring),
+              box-shadow var(--dur-fast) ease;
+}
+
+.item-pullquote:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* ─── Giant quote mark ─────────────────────────────────────────────────── */
+.pullquote-mark {
+  font-family: var(--font-editorial, 'Playfair Display', serif);
+  font-size: 6rem;
+  font-weight: var(--weight-bold);
+  color: rgba(232, 93, 47, 0.12);
+  line-height: 0.6;
+  display: block;
+  margin-bottom: var(--space-md, 16px);
+  pointer-events: none;
+}
+
+/* ─── Quote text — editorial italic ────────────────────────────────────── */
+.pullquote-text {
+  font-family: var(--font-editorial, 'Playfair Display', serif);
+  font-size: var(--size-quote, clamp(1.5rem, 3vw, 2.25rem));
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  line-height: 1.35;
+  color: var(--color-text-primary, #2c2416);
+  margin-bottom: var(--space-lg, 24px);
+}
+
+/* ─── Attribution — handwritten with accent dashes ─────────────────────── */
+.pullquote-attribution {
+  font-family: var(--font-hand);
+  font-size: var(--size-label, 0.875rem);
+  color: var(--color-accent, #e85d2f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm, 8px);
+}
+
+.pullquote-attribution::before,
+.pullquote-attribution::after {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background-color: var(--color-accent, #e85d2f);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Feature Card — info card with icon, title, body ────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*
+  An informational card taped to the board:
+    - Light surface background
+    - Icon circle at top (emoji/symbol character)
+    - Caveat title + Lora body text
+    - Tape strip at top center (translucent yellow)
+    - Paper shadow
+    - Hover: straighten + lift
+*/
+.item-feature {
+  width: 240px;
+  background-color: var(--color-surface-light, #fff8e7);
+  border-radius: 2px;
+  padding: var(--space-card, 28px);
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.12);
+  cursor: default;
+  transition: transform var(--dur-fast) var(--spring),
+              box-shadow var(--dur-fast) ease;
+}
+
+.item-feature:hover {
+  transform: rotate(0deg) translateY(-4px) !important;
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* ─── Tape strip — translucent yellow at top ───────────────────────────── */
+.item-feature::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 48px;
+  height: 16px;
+  background-color: rgba(255, 213, 79, 0.68);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ─── Icon circle ──────────────────────────────────────────────────────── */
+.feature-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-surface-mid, #ede4d3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md, 16px);
+  font-size: 1.25rem;
+}
+
+/* ─── Title — Caveat handwriting ───────────────────────────────────────── */
+.feature-title {
+  font-family: var(--font-hand);
+  font-size: 1.375rem;
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary, #2c2416);
+  margin-bottom: var(--space-sm, 8px);
+  line-height: 1.2;
+}
+
+/* ─── Body — Lora serif ────────────────────────────────────────────────── */
+.feature-body {
+  font-family: var(--font-body, 'Lora', serif);
+  font-size: 0.9375rem;
+  color: var(--color-text-muted, #5a4e3a);
+  line-height: var(--lh-body, 1.7);
+}
+
+/* ─── Custom content slot ──────────────────────────────────────────────── */
+.feature-content {
+  margin-top: var(--space-sm, 8px);
+  font-family: var(--font-body, 'Lora', serif);
+  font-size: var(--size-small);
+  color: var(--color-text-muted, #5a4e3a);
+  line-height: 1.5;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Book Cover — image-based book on the canvas ────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+.item-book {
+  background: transparent;
+  cursor: default;
+  transition: transform var(--dur-fast) var(--spring);
+}
+
+.item-book:hover {
+  transform: rotate(0deg) translateY(-6px) !important;
+}
+
+
+.book-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Tape Strip — decorative translucent tape overlapping items ──────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+.item-tape {
+  height: 26px;
+  background-color: rgba(255, 213, 79, 0.70);
+  border-radius: 2px;
+  pointer-events: auto;
+  z-index: 10;
+  transition: transform var(--dur-fast) var(--spring);
+}
+
+.item-tape:hover {
+  transform: rotate(-6deg) scale(1.05) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Flip Card — split-flap departure board display ─────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*
+  Classic split-flap / departure board animation:
+    - Card is visually split at the horizontal midline (upper + lower halves)
+    - A flap hinged at the midline folds downward to reveal the next string
+    - Upper & lower static panels show clipped halves of the text
+    - Flap front = old text top half, flap back = new text bottom half
+    - GSAP two-phase timeline: 0→−90 (ease-in), −90→−180 (ease-out)
+    - Text swapped on static panels at the 90° midpoint (flap edge-on)
+    - Yellow card + warm panel backgrounds to match mood board aesthetic
+*/
+.item-flip {
+  background-color: #e8e4df;
+  border-radius: 2px;
+  padding: 20px 24px;
+  padding-top: 30px;
+  padding-bottom: 100px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.10);
+  cursor: default;
+}
+
+/* ─── Paper clip — inline SVG via background-image ───────────────────────── */
+.item-flip::before {
+  content: '';
+  position: absolute;
+  top: -44px;
+  right: 20px;
+  left: auto;
+  transform: rotate(12deg);
+  width: 32px;
+  height: 70px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 70'%3E%3Cpath d='M16 2 C8 2 4 7 4 13 L4 52 C4 60 9 66 16 66 C23 66 28 60 28 52 L28 18 C28 12 24 8 19 8 C14 8 11 12 11 18 L11 48' fill='none' stroke='%23666' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.item-flip:hover {
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* ─── Split-flap display container ───────────────────────────────────────── */
+.flap-display {
+  --flap-h: 120px;
+  position: relative;
+  width: 100%;
+  height: var(--flap-h);
+}
+
+/* ─── Static halves — each clips to 50% of the text ──────────────────────── */
+.flap-half {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  background: inherit;
+  z-index: 1;
+}
+
+.flap-upper {
+  top: 0;
+}
+
+.flap-lower {
+  bottom: 0;
+}
+
+/* ─── Shared text styling (Noto Sans + script variants for multilingual) ─── */
+.flap-text {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+  width: 100%;
+  height: var(--flap-h, 120px);
+  font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Malayalam',
+               'Noto Sans Tamil', 'Noto Sans Kannada', 'Noto Sans Korean',
+               'Noto Sans Arabic', system-ui, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #d65ba8;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/*
+  Lower-half text shift: the .flap-text span is full display height (60px)
+  but the .flap-lower container is only 50% (30px) with overflow:hidden.
+  translateY(-50%) shifts the span up by 30px (50% of its own 60px height),
+  so only the bottom portion of the text remains visible.
+  Same trick on .flap-back for the animated flap's back face.
+*/
+.flap-lower .flap-text,
+.flap-back .flap-text {
+  transform: translateY(-50%);
+}
+
+/* ─── Animated flap card — hinged at the midline ─────────────────────────── */
+.flap-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+  z-index: 3;
+  will-change: transform;
+}
+
+/* ─── Flap faces — front (old text top) and back (new text bottom) ────────── */
+.flap-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: inherit;
+}
+
+.flap-front {
+  z-index: 2;
+}
+
+.flap-back {
+  transform: rotateX(180deg);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Split-Flap Card — departure board with per-layer color transitions ─── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*
+  Two-phase split-flap animation with 4-layer color model:
+    - Old color physically departs on the top flap
+    - New color physically arrives on the bottom flap
+    - Outer card wrapper stays neutral (#e8e4df)
+    - Inner half styling is applied inline by the JS component
+    - Only the outer card and paperclip are handled here in CSS
+*/
+.item-splitflap {
+  cursor: default;
+}
+
+/* ─── Paper clip — inline SVG (same as .item-flip) ─────────────────────────── */
+.item-splitflap::before {
+  content: '';
+  position: absolute;
+  top: -44px;
+  right: 20px;
+  left: auto;
+  transform: rotate(12deg);
+  width: 32px;
+  height: 70px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 70'%3E%3Cpath d='M16 2 C8 2 4 7 4 13 L4 52 C4 60 9 66 16 66 C23 66 28 60 28 52 L28 18 C28 12 24 8 19 8 C14 8 11 12 11 18 L11 48' fill='none' stroke='%23666' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.item-splitflap:hover {
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Kodak Photo — classic film camera print ────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*
+  A vintage Kodak camera print lying loose on the board:
+    - 3:2 landscape aspect ratio (distinct from Polaroid's 1:1)
+    - Thin uniform white border (~8px all sides, not thick bottom)
+    - More rounded corners (6px) than other items
+    - Warm sepia placeholder tone for the image area
+    - Orange date stamp in bottom-right (film camera date burn)
+    - Asymmetric shadow for a slight paper curl
+    - No pin/tape — just lying on the surface
+    - Hover: slight lift
+*/
+.item-kodak {
+  background-color: var(--color-white, #ffffff);
+  border-radius: 6px;
+  padding: 8px;
+  /* Asymmetric shadow — heavier bottom-right for paper curl */
+  box-shadow:
+    1px 2px 4px rgba(0, 0, 0, 0.10),
+    3px 5px 12px rgba(0, 0, 0, 0.12),
+    6px 8px 20px rgba(0, 0, 0, 0.06);
+  cursor: default;
+  transition: transform var(--dur-fast) var(--spring),
+              box-shadow var(--dur-fast) ease;
+}
+
+.item-kodak:hover {
+  transform: rotate(0deg) translateY(-5px) !important;
+  box-shadow:
+    2px 3px 6px rgba(0, 0, 0, 0.12),
+    5px 8px 18px rgba(0, 0, 0, 0.14);
+}
+
+/* ─── Image area — 3:2 landscape with warm vintage tone ──────────────────── */
+.kodak-img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background: linear-gradient(
+    160deg,
+    #d4b896 0%,
+    #c9a87c 40%,
+    #bfa07a 100%
+  );
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Initials — placeholder inside image area ───────────────────────────── */
+.kodak-initials {
+  font-family: var(--font-hand);
+  font-size: 1.75rem;
+  font-weight: var(--weight-bold);
+  color: rgba(255, 255, 255, 0.60);
+  letter-spacing: 0.12em;
+}
+
+/* ─── Real photo inside kodak ─────────────────────────────────────────── */
+.kodak-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 3px;
+}
+
+/* ─── Video inside kodak ──────────────────────────────────────────────── */
+.kodak-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 3px;
+}
+
+/* ─── Date stamp — orange text in bottom-right corner ────────────────────── */
+/*
+  Mimics the date burned into film by the camera's internal clock.
+  Monospace-ish, small, warm orange, slightly transparent.
+*/
+.kodak-date {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  font-family: 'Courier New', 'Courier', monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #e89830;
+  opacity: 0.85;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Collaborative Cursor — Figma-style pointer with name pill ──────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.collab-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+
+/* Push cursors behind the overlay (z-index 100) when it's open */
+.overlay-open .collab-cursor {
+  z-index: 50;
+}
+
+.collab-cursor-arrow {
+  display: block;
+}
+
+.collab-cursor-label {
+  display: inline-block;
+  position: relative;
+  top: -4px;
+  left: 6px;
+  padding: 3px 10px;
+  border-radius: 4px 10px 10px 10px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  line-height: 1.4;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+.collab-cursor-emoji {
+  font-size: 1.1rem;
+  vertical-align: -2px;
+  line-height: 1;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Floating Nav Bar — frosted glass pill at bottom center ─────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.canvas-navbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 200, 120, 0.35);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.10),
+    0 1px 3px rgba(0, 0, 0, 0.06);
+  /* Start hidden — GSAP animates in */
+  opacity: 0;
+}
+
+.navbar-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #5a4e3a;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.navbar-item:hover {
+  background: rgba(44, 36, 22, 0.06);
+}
+
+.navbar-item.is-active {
+  background: #2c2416;
+  color: #ffffff;
+}
+
+.navbar-item.is-active svg {
+  stroke: #ffffff;
+}
+
+.navbar-item svg {
+  flex-shrink: 0;
+  stroke: currentColor;
+}

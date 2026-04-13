@@ -1,0 +1,136 @@
+/* canvas-folio — Canvas Layout */
+
+/* ─── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow: hidden; height: 100%; width: 100%; }
+
+/* ─── Viewport — the visible window ─────────────────────────────────────── */
+#viewport {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+  background: var(--color-page-bg);
+}
+
+#viewport.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* ─── Canvas — the large pannable surface ───────────────────────────────── */
+#canvas {
+  width: 3400px;
+  height: 2800px;
+  position: absolute;
+  background: var(--color-page-bg);
+  will-change: transform;
+  transform-origin: 0 0;            /* scale from top-left so translate + scale compose correctly */
+}
+
+/*
+  Tile mosaic texture is generated at runtime by scripts/tile-texture.js
+  and applied as a repeating background-image on #canvas.
+  No ::before or ::after pseudo-elements needed for the grid — they are
+  now free for future use if needed.
+*/
+
+/* ─── Scattered decorative marks ──────────────────────────────────────── */
+/* Small floating shapes that add life to the canvas surface */
+.canvas-mark {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  animation: mark-fade-in 1.5s var(--ease-out) forwards;
+}
+
+/* Circle marks */
+.canvas-mark--dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  --mark-opacity: 0.18;
+  animation: mark-float 12s ease-in-out infinite, mark-fade-in 1.5s var(--ease-out) forwards;
+}
+
+/* Plus/cross marks */
+.canvas-mark--plus {
+  width: 16px;
+  height: 16px;
+  --mark-opacity: 0.15;
+  animation: mark-float-alt 15s ease-in-out infinite, mark-fade-in 1.5s var(--ease-out) forwards;
+}
+.canvas-mark--plus::before,
+.canvas-mark--plus::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 1px;
+}
+.canvas-mark--plus::before {
+  width: 16px;
+  height: 2px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+.canvas-mark--plus::after {
+  width: 2px;
+  height: 16px;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+/* Ring marks */
+.canvas-mark--ring {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  --mark-opacity: 0.15;
+  animation: mark-float 18s ease-in-out infinite reverse, mark-fade-in 1.5s var(--ease-out) forwards;
+}
+
+/* Diamond marks */
+.canvas-mark--diamond {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  --mark-opacity: 0.12;
+  transform: rotate(45deg);
+  animation: mark-float-alt 14s ease-in-out infinite, mark-fade-in 1.5s var(--ease-out) forwards;
+}
+
+/* Floating animations — very slow, very subtle */
+@keyframes mark-float {
+  0%, 100% { transform: translate(0, 0); }
+  25%      { transform: translate(3px, -4px); }
+  50%      { transform: translate(-2px, 3px); }
+  75%      { transform: translate(4px, 2px); }
+}
+
+@keyframes mark-float-alt {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33%      { transform: translate(-3px, -3px) rotate(15deg); }
+  66%      { transform: translate(2px, 4px) rotate(-10deg); }
+}
+
+@keyframes mark-fade-in {
+  from { opacity: 0; }
+  to   { opacity: var(--mark-opacity, 0.1); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .canvas-mark,
+  .canvas-mark--dot,
+  .canvas-mark--plus,
+  .canvas-mark--ring,
+  .canvas-mark--diamond {
+    animation: none;
+  }
+}

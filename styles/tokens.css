@@ -1,0 +1,190 @@
+/* canvas-folio — Design Tokens */
+/* Consolidated from paste-board design system */
+
+/* ─── Google Fonts ─────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* ─── Custom Properties ─────────────────────────────────────────────────── */
+:root {
+  /* Page surfaces */
+  --color-page-bg:        #f08a2e;
+  --color-surface-light:  #fff8e7;
+  --color-surface-mid:    #ede4d3;
+  --color-surface-dark:   #e0d5c0;
+
+  /* Text */
+  --color-text-primary:   #2c2416;
+  --color-text-muted:     #5a4e3a;
+
+  /* Accent */
+  --color-accent:         #e85d2f;
+  --color-secondary:      #3d6b4f;
+  --color-sticky:         #ffd54f;
+
+  /* Utility */
+  --color-border:         #c7b9a5;
+  --color-white:          #ffffff;
+
+  /* Nav */
+  --color-nav-bg:         #f5f0e8;
+  --color-nav-scrolled:   #fff8e7;
+  --color-nav-text:       #2c2416;
+  --color-nav-link:       #2c2416;
+
+  /* Shadows — paper drop shadow only */
+  --shadow-paper:         3px 3px 8px rgba(0, 0, 0, 0.12);
+  --shadow-paper-lift:    4px 4px 0 rgba(0, 0, 0, 0.08);
+  --shadow-polaroid:      2px 4px 12px rgba(0, 0, 0, 0.18);
+
+  /* CTA buttons */
+  --btn-primary-bg:       #e85d2f;
+  --btn-primary-text:     #ffffff;
+  --btn-secondary-bg:     transparent;
+  --btn-secondary-text:   #2c2416;
+  --btn-secondary-border: #2c2416;
+  --btn-sticky-bg:        #ffd54f;
+  --btn-sticky-text:      #2c2416;
+
+  /* Typography */
+  --font-hand:      'Caveat', cursive;
+  --font-editorial: 'Playfair Display', serif;
+  --font-body:      'Lora', serif;
+
+  --size-h1:        clamp(3.5rem, 7vw, 6rem);
+  --size-h2:        clamp(2rem, 4vw, 3rem);
+  --size-h3:        clamp(1.5rem, 2.5vw, 2rem);
+  --size-body:      1rem;
+  --size-label:     0.875rem;
+  --size-sticky:    1rem;
+  --size-quote:     clamp(1.5rem, 3vw, 2.25rem);
+  --size-small:     0.8125rem;
+
+  --weight-regular:  400;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  --lh-heading:     1.05;
+  --lh-subheading:  1.2;
+  --lh-hand-sub:    1.15;
+  --lh-body:        1.7;
+  --lh-label:       1.4;
+  --lh-quote:       1.35;
+
+  /* Spacing */
+  --space-xs:    4px;
+  --space-sm:    8px;
+  --space-md:    16px;
+  --space-lg:    24px;
+  --space-xl:    40px;
+  --space-2xl:   56px;
+  --space-3xl:   80px;
+  --space-4xl:   120px;
+
+  --space-section:       80px;
+  --space-card:          28px;
+  --space-card-gap:      24px;
+  --space-sticky-pad:    20px;
+  --space-polaroid-pad:  12px 12px 40px 12px;
+  --space-inline:        12px;
+  --space-block:         16px;
+  --nav-height:          72px;
+
+  /* Motion */
+  --spring:       cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast:     0.3s;
+  --dur-mid:      0.4s;
+  --dur-slow:     0.5s;
+
+  /* Grid */
+  --container-max:    1280px;
+  --container-pad:    40px;
+  --gap-standard:     24px;
+  --gap-section:      80px;
+  --gap-card:         28px;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────────────────── */
+@keyframes pin-drop {
+  0%   { transform: translateY(-40px) rotate(-3deg); }
+  70%  { transform: translateY(4px) rotate(0.5deg); }
+  85%  { transform: translateY(-2px) rotate(-0.5deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes tape-reveal {
+  0%   { transform: translateX(-30px) skewX(-8deg); }
+  100% { transform: translateX(0) skewX(0deg); }
+}
+
+@keyframes tilt-jiggle {
+  0%   { transform: rotate(-4deg) scale(0.95); }
+  60%  { transform: rotate(1.5deg) scale(1.02); }
+  80%  { transform: rotate(-0.5deg) scale(0.99); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* ─── Reduced Motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Base Typography ───────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-body);
+  color: var(--color-text-primary, #2c2416);
+}
+
+h1 {
+  font-family: var(--font-hand);
+  font-size: var(--size-h1);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-family: var(--font-editorial);
+  font-size: var(--size-h2);
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-subheading);
+}
+
+h3 {
+  font-family: var(--font-hand);
+  font-size: var(--size-h3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-hand-sub);
+}
+
+.label,
+.annotation {
+  font-family: var(--font-hand);
+  font-size: var(--size-label);
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-label);
+}
+
+.sticky-text {
+  font-family: var(--font-hand);
+  font-size: var(--size-sticky);
+  font-weight: var(--weight-semibold);
+  line-height: 1.5;
+}
+
+.pull-quote {
+  font-family: var(--font-editorial);
+  font-size: var(--size-quote);
+  font-weight: var(--weight-regular);
+  font-style: italic;
+  line-height: var(--lh-quote);
+}
