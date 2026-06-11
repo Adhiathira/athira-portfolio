@@ -663,7 +663,7 @@
       description: 'A redesign of Big Island Jeep Rental\u2019s website focused on simplifying the booking flow and modernizing the visual design. The project involved restructuring information architecture, decluttering redundant content, and optimizing for mobile. A green color scheme reflects Hawaii\u2019s natural landscape, while ample white space keeps the interface clean and inviting.',
       tags: ['UI/UX Design', 'Usability Research'],
       screenshotTitle: 'Booking Flow',
-      illustration: 'images/experiment-jeep-rental.svg',
+      illustration: 'images/athira-jeep.png',
       images: [
         { src: 'images/jeep-rentals.png', alt: 'Big Island Jeep Rental — Desktop view', type: 'desktop' },
         { src: 'images/jeep-phone-screen.png', alt: 'Big Island Jeep Rental — Phone mockup', type: 'phone' }
@@ -680,7 +680,7 @@
       subtitle: 'EdTech Platform',
       description: 'A landing page for Pathstitch, an EdTech platform that transforms teacher feedback into targeted support for K-12 educators and school leaders. The design uses bold geometric photo frames with vibrant pink, teal, and blue accent shapes to convey energy and approachability. Content is structured around three audience segments — Teachers, Principals, and Districts — each with clear value propositions.',
       tags: ['UI/UX Design', 'Landing Page'],
-      illustration: 'images/experiment-pathstitch.svg',
+      illustration: 'images/pathstitch-hero.png',
       screenshotTitle: 'Page Sections',
       images: [
         { src: 'images/pathstitch-hero.png', alt: 'Pathstitch — Hero section', type: 'desktop' }
@@ -697,7 +697,7 @@
       subtitle: 'Financial Education Platform',
       description: 'A website for FinEdvance, a financial education platform that offers structured learning tracks for wealth-building — from beginner fundamentals to advanced investment strategies. The design uses a corporate navy-and-white palette with bold red accents, giving it a trust-forward, institutional feel. Course offerings are presented in a clean card grid with clear progression tiers.',
       tags: ['UI/UX Design', 'Website Design'],
-      illustration: 'images/experiment-finedvance.svg',
+      illustration: 'images/finedvance-hero.png',
       screenshotTitle: 'Page Sections',
       images: [
         { src: 'images/finedvance-hero.png', alt: 'FinEdvance — Hero section', type: 'desktop' }
@@ -713,20 +713,12 @@
       subtitle: 'Law Firm Website',
       description: 'A website for Intra Legem Lawyers, a Kerala-based law firm specializing in legal representation for Non-Resident Indians. The design pairs a dark, authoritative hero featuring scales of justice imagery with warm serif typography and cream-toned interior pages.',
       tags: ['UI/UX Design', 'Website Design'],
-      illustration: 'images/experiment-intra-legem.svg',
-      screenshotTitle: 'Page Sections',
-      images: [
-        { src: 'images/intra-legem-hero.png', alt: 'Intra Legem Lawyers — Hero section', type: 'desktop' }
-      ],
-      screenshots: [
-        { src: 'images/intra-legem-nri-services.png', alt: 'NRI Legal Services overview' },
-        { src: 'images/intra-legem-nri-detail.png', alt: 'NRI Legal Services — Detailed practice areas' },
-        { src: 'images/intra-legem-contact.png', alt: 'Contact and consultation form' }
-      ]
+      illustration: 'images/intra-legem-hero.png',
+      previewUrl: 'previews/intra-legem/index.html'
     }
   };
 
-  var experimentSlugs = ['jeep-rental', 'pathstitch', 'finedvance', 'intra-legem'];
+  var experimentSlugs = ['jeep-rental', 'intra-legem', 'finedvance', 'pathstitch'];
 
   // ── DOM references ─────────────────────────────────────────────────────────
   var overlay = document.getElementById('overlay');
@@ -917,8 +909,24 @@
       '<p>' + data.description + '</p>' +
     '</div>';
 
+    // Live website preview — browsable iframe in browser mockup
+    if (data.previewUrl) {
+      html += '<div class="experiment-detail-preview">' +
+        '<div class="experiment-detail-preview-chrome">' +
+          '<div class="experiment-detail-preview-dots"><span></span><span></span><span></span></div>' +
+          '<div class="experiment-detail-preview-url">' + data.title.toLowerCase().replace(/\s+/g, '') + '.com</div>' +
+          '<button class="experiment-detail-preview-fullscreen" title="Full Screen">' +
+            '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          '</button>' +
+        '</div>' +
+        '<div class="experiment-detail-preview-viewport">' +
+          '<iframe src="' + data.previewUrl + '" title="' + data.title + ' — Live Preview"></iframe>' +
+        '</div>' +
+      '</div>';
+    }
+
     // Image collage — desktop + phone mockup
-    if (data.images && data.images.length >= 2) {
+    if (!data.previewUrl && data.images && data.images.length >= 2) {
       html += '<div class="experiment-detail-collage">';
       data.images.forEach(function(img) {
         html += '<div class="experiment-detail-collage-img experiment-detail-collage-img--' + img.type + '">' +
@@ -929,14 +937,14 @@
     }
 
     // Single hero image — no collage, just a full-width desktop shot
-    if (data.images && data.images.length === 1) {
+    if (!data.previewUrl && data.images && data.images.length === 1) {
       html += '<div class="experiment-detail-hero-img">' +
         '<img src="' + data.images[0].src + '" alt="' + data.images[0].alt + '">' +
       '</div>';
     }
 
     // Additional screenshots — booking flow screens
-    if (data.screenshots && data.screenshots.length) {
+    if (!data.previewUrl && data.screenshots && data.screenshots.length) {
       html += '<div class="overlay-body"><h3 class="overlay-section-title">' + (data.screenshotTitle || 'Screenshots') + '</h3></div>';
       html += '<div class="overlay-img-grid">';
       data.screenshots.forEach(function(img) {
@@ -946,6 +954,53 @@
     }
 
     content.innerHTML = html;
+
+    // Scale the widescreen preview viewport to fit the container
+    var vp = content.querySelector('.experiment-detail-preview-viewport');
+    if (vp) {
+      var doScale = function() {
+        var w = vp.parentElement.clientWidth;
+        var s = w / 1440;
+        vp.style.transform = 'scale(' + s + ')';
+        vp.style.height = (900 * s) + 'px';
+      };
+      doScale();
+      window.addEventListener('resize', doScale);
+      overlay.addEventListener('transitionend', function onClose() {
+        if (!overlay.classList.contains('is-open')) {
+          window.removeEventListener('resize', doScale);
+          overlay.removeEventListener('transitionend', onClose);
+        }
+      });
+
+      // Fullscreen button
+      var fsBtn = content.querySelector('.experiment-detail-preview-fullscreen');
+      var previewEl = content.querySelector('.experiment-detail-preview');
+      if (fsBtn && previewEl) {
+        fsBtn.addEventListener('click', function() {
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          } else {
+            previewEl.requestFullscreen();
+          }
+        });
+        document.addEventListener('fullscreenchange', function onFsChange() {
+          if (document.fullscreenElement === previewEl) {
+            previewEl.classList.add('is-fullscreen');
+            // In fullscreen, scale to screen width
+            var fsScale = screen.width / 1440;
+            vp.style.transform = 'scale(' + fsScale + ')';
+            vp.style.height = (900 * fsScale) + 'px';
+          } else {
+            previewEl.classList.remove('is-fullscreen');
+            doScale();
+          }
+          if (!overlay.classList.contains('is-open')) {
+            document.removeEventListener('fullscreenchange', onFsChange);
+          }
+        });
+      }
+    }
 
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden', 'false');
