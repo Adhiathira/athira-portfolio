@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>unseen-vid — Video production with others</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/home.css">
+</head>
+<body>
+
+  <!-- NavBar -->
+  <nav class="navbar" role="navigation">
+    <div class="navbar__brand">unseen-vid</div>
+    <ul class="navbar__links" role="list">
+      <li><a href="/explore.html" class="nav-item">Explore</a></li>
+      <li><a href="/pricing.html" class="nav-item">Pricing</a></li>
+      <li><a href="/about.html" class="nav-item">About</a></li>
+    </ul>
+    <!-- Logged-out panel (visible by default) -->
+    <div class="navbar__auth navbar__auth--public">
+      <a href="/login.html" class="nav-item">Log in</a>
+      <button class="cta-primary navbar__join" onclick="requireAuth()">Join</button>
+    </div>
+    <!-- Logged-in panel (hidden by default; initNav() reveals when __auth exists) -->
+    <div class="navbar__auth navbar__auth--authed" hidden>
+      <a href="/app/community.html" class="nav-item">Community</a>
+      <button type="button" class="navbar__avatar" aria-label="User menu">A</button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Hero: full-viewport split-screen -->
+    <section class="hero" aria-label="Hero">
+
+      <!-- Split panels -->
+      <div class="hero__split">
+
+        <!-- Left panel: before / isolation -->
+        <!-- PLACEHOLDER: replace with /assets/hero-solo.jpg -->
+        <div class="hero-panel hero-panel--before" aria-label="Solo creator, working alone">
+          <span class="hero-panel__label">Before.</span>
+          [hero-solo.jpg — solo creator, limited, working alone]
+        </div>
+
+        <!-- Divider -->
+        <div class="hero__divider" aria-hidden="true"></div>
+
+        <!-- Right panel: after / collaboration -->
+        <!-- PLACEHOLDER: replace with /assets/hero-collab.jpg -->
+        <div class="hero-panel hero-panel--after" aria-label="Same creator, collaborating">
+          <span class="hero-panel__label">After.</span>
+          [hero-collab.jpg — same creator, collaborating, finished]
+        </div>
+
+      </div>
+
+      <!-- Sub-headline + CTA cluster -->
+      <div class="hero__content">
+
+        <p class="hero__headline" aria-label="Video production. With others. At speed.">
+          <span class="hero__word-clip"><span class="hero__word" data-word-index="0">Video</span></span>
+          <span class="hero__word-clip"><span class="hero__word" data-word-index="1">production.</span></span>
+          <span class="hero__word-clip"><span class="hero__word" data-word-index="2">With</span></span>
+          <span class="hero__word-clip"><span class="hero__word" data-word-index="3">others.</span></span>
+          <span class="hero__word-clip"><span class="hero__word" data-word-index="4">At</span></span>
+          <span class="hero__word-clip"><span class="hero__word" data-word-index="5">speed.</span></span>
+        </p>
+
+        <button class="cta-primary" onclick="requireAuth('/app/studio.html')">Start creating</button>
+
+      </div>
+
+    </section>
+
+    <!-- Gallery: The Community Witnessed -->
+    <section class="gallery-section" aria-label="Creator gallery">
+
+      <!-- Filter chips -->
+      <div class="gallery-filter" role="tablist" aria-label="Media type filter">
+        <button class="gallery-filter__chip gallery-filter__chip--active" data-filter="video" role="tab" aria-selected="true">Video</button>
+        <button class="gallery-filter__chip gallery-filter__chip--coming-soon" role="tab" aria-selected="false" aria-disabled="true" tabindex="-1">Animation <span class="chip-label__coming-soon">Coming Soon</span></button>
+        <button class="gallery-filter__chip gallery-filter__chip--coming-soon" role="tab" aria-selected="false" aria-disabled="true" tabindex="-1">Film <span class="chip-label__coming-soon">Coming Soon</span></button>
+      </div>
+
+      <!-- Gallery grid — populated by home.js -->
+      <div class="gallery-grid" id="gallery-grid"></div>
+
+    </section>
+
+    <!-- Post-gallery CTA -->
+    <div class="gallery-cta">
+      <button class="cta-primary" onclick="requireAuth('/app/studio.html')">Make your own</button>
+      <p class="gallery-cta__caption">Made by our community.</p>
+    </div>
+
+    <!-- How It Works: The Mechanism Named -->
+    <section class="section-how-it-works" aria-label="How it works">
+      <p class="how-it-works__label">How it works.</p>
+      <div class="how-it-works__grid">
+
+        <div class="how-step">
+          <div class="how-step__icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="17.5" cy="17.5" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span class="how-step__number">01</span>
+          <p class="how-step__description">Choose your tools</p>
+        </div>
+
+        <div class="how-step">
+          <div class="how-step__icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="16" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span class="how-step__number">02</span>
+          <p class="how-step__description">Collaborate with creators</p>
+        </div>
+
+        <div class="how-step">
+          <div class="how-step__icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3L20 21H4L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="how-step__number">03</span>
+          <p class="how-step__description">Publish your work</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Community Signals: The People Behind the Work -->
+    <section class="section-community-signals" aria-label="Creator community">
+
+      <div class="creator-cards-grid">
+
+        <div class="creator-card">
+          <!-- PLACEHOLDER: replace with /assets/avatars/maya_v-avatar.jpg -->
+          <div class="creator-card__avatar" aria-label="Maya V. avatar"></div>
+          <span class="creator-card__name">Maya V.</span>
+          <span class="creator-card__points">1,240 pts</span>
+          <span class="creator-card__project">Echoes — Documentary Short</span>
+        </div>
+
+        <div class="creator-card">
+          <div class="creator-card__avatar" aria-label="Jordan K. avatar"></div>
+          <span class="creator-card__name">Jordan K.</span>
+          <span class="creator-card__points">980 pts</span>
+          <span class="creator-card__project">Drift — Experimental Short</span>
+        </div>
+
+        <div class="creator-card">
+          <div class="creator-card__avatar" aria-label="Sana M. avatar"></div>
+          <span class="creator-card__name">Sana M.</span>
+          <span class="creator-card__points">2,105 pts</span>
+          <span class="creator-card__project">Threshold — Music Video</span>
+        </div>
+
+        <div class="creator-card">
+          <div class="creator-card__avatar" aria-label="Elias T. avatar"></div>
+          <span class="creator-card__name">Elias T.</span>
+          <span class="creator-card__points">760 pts</span>
+          <span class="creator-card__project">Groundwork — Brand Film</span>
+        </div>
+
+      </div>
+
+      <div class="community-stat">
+        <span class="community-stat__number" data-target="2847" aria-hidden="true">0</span>
+        <span class="community-stat__label">creators making things today</span>
+        <span class="community-stat__announce visually-hidden" aria-live="polite" aria-atomic="true"></span>
+      </div>
+
+    </section>
+
+    <!-- Platform Roadmap Teaser: The Horizon Shown -->
+    <section class="section-roadmap-teaser" aria-label="Platform roadmap">
+
+      <div class="roadmap-cards">
+
+        <div class="roadmap-card roadmap-card--live">
+          <span class="roadmap-card__label">Video</span>
+          <span class="roadmap-card__status roadmap-card__status--live">Live</span>
+        </div>
+
+        <div class="roadmap-card roadmap-card--soon">
+          <span class="roadmap-card__label">Animation</span>
+          <span class="roadmap-card__status">Coming Soon</span>
+        </div>
+
+        <div class="roadmap-card roadmap-card--soon">
+          <span class="roadmap-card__label">Film</span>
+          <span class="roadmap-card__status">Coming Soon</span>
+        </div>
+
+        <div class="roadmap-card roadmap-card--soon">
+          <span class="roadmap-card__label">Audio</span>
+          <span class="roadmap-card__status">Coming Soon</span>
+        </div>
+
+      </div>
+
+      <p class="roadmap-caption">Video is just the beginning.</p>
+
+    </section>
+
+    <!-- Final CTA: The Creative Dare -->
+    <section class="section-final-cta" aria-label="Start creating">
+      <h2 class="final-cta__headline">What will you make?</h2>
+      <button class="cta-primary cta-primary--inverted" onclick="requireAuth('/app/studio.html')">Start creating</button>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer__col">
+      <h3 class="footer__heading">Platform</h3>
+      <ul>
+        <li><a href="/explore.html" class="footer__link">Explore</a></li>
+        <li><a href="/pricing.html" class="footer__link">Pricing</a></li>
+        <li><a href="/about.html" class="footer__link">About</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer__heading">Vision</h3>
+      <ul>
+        <li><a href="#" class="footer__link">Roadmap</a></li>
+        <li><a href="#" class="footer__link">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer__heading">Legal</h3>
+      <ul>
+        <li><a href="#" class="footer__link">Privacy</a></li>
+        <li><a href="#" class="footer__link">Terms</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/shared.js"></script>
+  <script src="js/home.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pellucid Method — how our document intelligence engine parses, layers, and surfaces meaning from institutional documents.">
+  <title>Method — Pellucid</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/method.css">
+</head>
+<body>
+
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Pellucid</a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="method.html" class="nav-link--active">Method</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="about.html#contact" class="nav-cta">Request access</a>
+    <button class="nav-mobile-toggle" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav-mobile-menu" id="mobile-menu">
+  <a href="work.html">Work</a>
+  <a href="method.html">Method</a>
+  <a href="about.html">About</a>
+  <a href="about.html#contact" class="nav-cta">Request access</a>
+</div>
+
+<!-- Page header — dark (product/editorial archetype) -->
+<header id="method-header">
+  <div id="method-header-inner">
+    <p id="method-header-label">How it works</p>
+    <h1 id="method-header-title">The parsing engine behind every layer.</h1>
+    <p id="method-header-sub">Pellucid does not summarise documents. It builds a structured representation of each document's meaning — passage by passage, layer by layer — so that queries are answered with evidence, not inference.</p>
+  </div>
+</header>
+
+<!-- Approach — sidebar TOC + content blocks -->
+<section id="method-intro">
+  <div id="method-intro-inner">
+    <aside id="method-intro-sidebar">
+      <div>
+        <p class="method-intro-toc-label">In this section</p>
+        <ul class="method-toc-list">
+          <li class="method-toc-item"><a href="#method-ingest">01 — Ingest</a></li>
+          <li class="method-toc-item"><a href="#method-parse">02 — Parse</a></li>
+          <li class="method-toc-item"><a href="#method-index">03 — Index</a></li>
+          <li class="method-toc-item"><a href="#method-query">04 — Query</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <div id="method-intro-content">
+
+      <div id="method-ingest" class="method-section-block">
+        <p class="method-section-num">01</p>
+        <h2 class="method-section-title">Document ingest</h2>
+        <p class="method-section-body">Pellucid ingests documents in any format institutional teams actually use: PDF, Word, HTML, and EDGAR filings. The ingest pipeline normalises structure — detecting page hierarchy, footnotes, tables, and embedded exhibits — without discarding the original layout signal. Layout is evidence: a table nested inside a footnote means something different than the same table in the body of a 10-K.</p>
+        <p class="method-section-body">Documents are never passed to a general-purpose language model as raw text. Structure-preserving ingest is the precondition for everything that follows.</p>
+        <div class="method-tag-group">
+          <span class="method-tag">PDF</span>
+          <span class="method-tag">DOCX</span>
+          <span class="method-tag">HTML</span>
+          <span class="method-tag">EDGAR XML</span>
+          <span class="method-tag">Layout-preserving</span>
+        </div>
+      </div>
+
+      <div id="method-parse" class="method-section-block">
+        <p class="method-section-num">02</p>
+        <h2 class="method-section-title">Semantic parsing</h2>
+        <p class="method-section-body">Each ingested document is parsed into a layered semantic graph. Every passage is classified by function: disclosure, risk factor, forward-looking statement, covenant definition, regulatory citation. Classifications are not tags appended to text — they determine how each passage participates in queries, comparisons, and audit trails.</p>
+        <p class="method-section-body">Parsing is trained on a corpus of institutional filings with explicit human review. The engine distinguishes between a covenant and a covenant reference, between a disclosure requirement and its fulfilment, between a material change and a restatement of prior language.</p>
+        <div class="method-tag-group">
+          <span class="method-tag">Semantic graph</span>
+          <span class="method-tag">Passage classification</span>
+          <span class="method-tag">Cross-reference resolution</span>
+        </div>
+      </div>
+
+      <div id="method-index" class="method-section-block">
+        <p class="method-section-num">03</p>
+        <h2 class="method-section-title">Layered indexing</h2>
+        <p class="method-section-body">Pellucid indexes documents in three concurrent layers: structural (section headings, tables, exhibits), semantic (passage meaning, entity relationships), and temporal (version history, amendment tracking, filing sequence). A query that spans document versions does not require re-reading — the temporal index tracks what changed, where, and in which direction.</p>
+        <p class="method-section-body">Institutional document sets are rarely static. Pellucid's index treats a corpus as a living object: new filings update the temporal layer without requiring re-indexing of unchanged content.</p>
+        <div class="method-tag-group">
+          <span class="method-tag">Structural index</span>
+          <span class="method-tag">Semantic index</span>
+          <span class="method-tag">Temporal index</span>
+          <span class="method-tag">Incremental updates</span>
+        </div>
+      </div>
+
+      <div id="method-query" class="method-section-block">
+        <p class="method-section-num">04</p>
+        <h2 class="method-section-title">Evidence-anchored query</h2>
+        <p class="method-section-body">Every Pellucid response is anchored to specific document passages with page, section, and paragraph coordinates. Analysts can navigate from a query answer directly to the source text in the original document. The audit trail is not a log — it is the primary output format. Downstream workflows (credit memos, deal summaries, regulatory gap analyses) are produced with citations embedded at the passage level.</p>
+        <p class="method-section-body">Pellucid does not generate text that is not already in the corpus. It surfaces, structures, and compares. What analysts receive is the document's own language, organised and made queryable.</p>
+        <div class="method-tag-group">
+          <span class="method-tag">Passage citations</span>
+          <span class="method-tag">Audit trail export</span>
+          <span class="method-tag">No hallucination surface</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Layers breakdown — dark, list rows -->
+<section id="method-layers">
+  <div id="method-layers-inner">
+    <div id="method-layers-header">
+      <h2 id="method-layers-title">The seven document layers.</h2>
+      <p id="method-layers-body">Pellucid's semantic graph represents each document across seven distinct layers. Queries traverse any subset of layers simultaneously — enabling cross-document comparison at a precision that section-level search cannot reach.</p>
+    </div>
+
+    <div id="method-layers-list">
+      <div class="layer-row">
+        <span class="layer-num">L1</span>
+        <div class="layer-content">
+          <h3 class="layer-title">Structure</h3>
+          <p class="layer-desc">Document hierarchy — sections, subsections, page regions, headers, footers, and embedded exhibits. The scaffold all other layers attach to.</p>
+        </div>
+        <span class="layer-badge">Structural</span>
+      </div>
+      <div class="layer-row">
+        <span class="layer-num">L2</span>
+        <div class="layer-content">
+          <h3 class="layer-title">Entity</h3>
+          <p class="layer-desc">Named parties, instruments, jurisdictions, and regulatory regimes identified and resolved across passages. A counterparty mentioned in twelve filings is the same node.</p>
+        </div>
+        <span class="layer-badge">Semantic</span>
+      </div>
+      <div class="layer-row">
+        <span class="layer-num">L3</span>
+        <div class="layer-content">
+          <h3 class="layer-title">Obligation</h3>
+          <p class="layer-desc">Covenants, conditions precedent, representations, and warranties — classified by type and linked to the parties they bind.</p>
+        </div>
+        <span class="layer-badge">Semantic</span>
+      </div>
+      <div class="layer-row">
+        <span class="layer-num">L4</span>
+        <div class="layer-content">
+          <h3 class="layer-title">Risk disclosure</h3>
+          <p class="layer-desc">Forward-looking statements, material uncertainty disclosures, and regulatory risk factors — distinguished from factual reporting passages.</p>
+        </div>
+        <span class="layer-badge">Semantic</span>
+      </div>
+      <div class="layer-row">
+        <span class="layer-num">L5</span>
+        <div class="layer-content">
+          <h3 class="layer-title">Quantitative</h3>
+          <p class="layer-desc">Numerical claims — financial ratios, performance metrics, compliance thresholds — extracted with their surrounding context and units.</p>
+        </div>
+        <span class="layer-badge">Semantic</span>
+      </div>
+      <div class="layer-row">
+        <span class="layer-num">L6</span>
+        <div class="layer-content">
+          <h3 class="layer-title">Cross-reference</h3>
+          <p class="layer-desc">Internal citations, external filing references, and exhibit linkages — resolved so that navigating a reference reaches the referenced passage directly.</p>
+        </div>
+        <span class="layer-badge">Relational</span>
+      </div>
+      <div class="layer-row">
+        <span class="layer-num">L7</span>
+        <div class="layer-content">
+          <h3 class="layer-title">Version delta</h3>
+          <p class="layer-desc">Changes between successive filing versions of the same document — tracked at the passage level, not the section level. Material changes surface automatically.</p>
+        </div>
+        <span class="layer-badge">Temporal</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Principles — 3-col grid on light -->
+<section id="method-principles">
+  <div id="method-principles-inner">
+    <div id="method-principles-header">
+      <p class="section-label">Design principles</p>
+      <h2 id="method-principles-title">Built for the nature of institutional documents.</h2>
+    </div>
+    <div id="method-principles-grid">
+      <div class="principle-card">
+        <span class="principle-number">01</span>
+        <h3 class="principle-title">No free generation</h3>
+        <p class="principle-body">Pellucid does not generate text that is not present in the source corpus. Every output passage is the document's own language. This eliminates the hallucination surface entirely, which matters when the output is a credit memo or a regulatory submission.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-number">02</span>
+        <h3 class="principle-title">Audit-first output</h3>
+        <p class="principle-body">The audit trail is not an optional export. It is the primary output format. Every query result includes passage coordinates so analysts can verify claims in seconds, not hours. Downstream outputs are designed to carry citations into the final deliverable.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-number">03</span>
+        <h3 class="principle-title">Corpus as object</h3>
+        <p class="principle-body">Document sets are treated as living objects, not static collections. When a new filing arrives, Pellucid updates the temporal index without re-processing the full corpus. This makes continuous monitoring — not just one-off analysis — operationally practical.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-number">04</span>
+        <h3 class="principle-title">Precision over recall</h3>
+        <p class="principle-body">Pellucid is designed for institutional use where a false positive in a credit assessment or due diligence report has real cost. The system is calibrated to return fewer results with higher precision, not more results that require manual filtering.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-number">05</span>
+        <h3 class="principle-title">Workflow-native export</h3>
+        <p class="principle-body">Outputs are designed to enter existing institutional workflows without transformation. Audit trails export as structured JSON for systems integration. Summaries export in formats compatible with standard deal room and research management platforms.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-number">06</span>
+        <h3 class="principle-title">Data residency by design</h3>
+        <p class="principle-body">Pellucid is deployed in isolated, single-tenant environments. Document corpora do not share infrastructure between clients. For clients with specific jurisdictional requirements, on-premise deployment is available.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo">Pellucid</a>
+      <p class="footer-tagline">Document intelligence for institutional analysts.</p>
+    </div>
+    <div id="footer-col-product" class="footer-col">
+      <p class="footer-col-heading">Product</p>
+      <ul class="footer-links">
+        <li><a href="method.html">Method</a></li>
+        <li><a href="work.html">Work</a></li>
+        <li><a href="about.html#security">Security</a></li>
+      </ul>
+    </div>
+    <div id="footer-col-company" class="footer-col">
+      <p class="footer-col-heading">Company</p>
+      <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="about.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div id="footer-col-legal" class="footer-col">
+      <p class="footer-col-heading">Legal</p>
+      <ul class="footer-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="footer-bottom">
+    <p class="footer-legal">&copy; 2026 Pellucid. All rights reserved.</p>
+    <p class="footer-legal">Every layer, legible.</p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const nav = document.getElementById('site-nav');
+  const toggle = nav.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }, { passive: true });
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(l) {
+      l.addEventListener('click', function() {
+        nav.classList.remove('nav-mobile-open');
+        mobileMenu.classList.remove('is-open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+})();
+</script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const MID = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-mid')) || 0.39;
+const EASE = 'power2.out';
+
+// Header — immediate load animation
+gsap.from('#method-header-inner', { y: 30, duration: MID * 3, ease: EASE, delay: 0.15 });
+
+// Intro content blocks — staggered y reveal
+gsap.utils.toArray('.method-section-block').forEach(function(el, i) {
+  gsap.from(el, {
+    scrollTrigger: { trigger: el, start: 'top 82%' },
+    y: 30,
+    duration: MID * 3,
+    ease: EASE,
+    delay: i * 0.05,
+  });
+});
+
+// TOC sidebar — x slide from left
+gsap.from('#method-intro-sidebar', {
+  scrollTrigger: { trigger: '#method-intro', start: 'top 80%' },
+  x: -30,
+  duration: MID * 3,
+  ease: EASE,
+});
+
+// Layers header — divergent (title left, body right)
+gsap.from('#method-layers-title', {
+  scrollTrigger: { trigger: '#method-layers', start: 'top 78%' },
+  x: -50,
+  duration: MID * 4,
+  ease: EASE,
+});
+gsap.from('#method-layers-body', {
+  scrollTrigger: { trigger: '#method-layers', start: 'top 78%' },
+  x: 50,
+  duration: MID * 4,
+  ease: EASE,
+});
+
+// Layer rows — staggered from bottom
+gsap.utils.toArray('.layer-row').forEach(function(el, i) {
+  gsap.from(el, {
+    scrollTrigger: { trigger: el, start: 'top 88%' },
+    y: 20,
+    duration: MID * 2.5,
+    ease: EASE,
+    delay: i * 0.04,
+  });
+});
+
+// Principle cards — stagger
+gsap.from('.principle-card', {
+  scrollTrigger: { trigger: '#method-principles-grid', start: 'top 80%' },
+  y: 28,
+  stagger: 0.1,
+  duration: MID * 3,
+  ease: EASE,
+});
+</script>
+
+</body>
+</html>

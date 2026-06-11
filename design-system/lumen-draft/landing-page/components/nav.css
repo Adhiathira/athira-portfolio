@@ -1,0 +1,270 @@
+/* nav.css — Foramen Studio navigation */
+/* Canonical nav: thin bar, logo-left, hamburger-right, full-panel slide-in from right */
+/* scroll: hide on scroll-down (transform + opacity), show on scroll-up */
+/* backdrop: null — never any blur */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;700&display=swap');
+
+/* ─── Base Nav Bar ───────────────────────────────────────────────────── */
+#site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background: transparent;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hide on scroll-down */
+#site-nav.nav--hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─── Logo ───────────────────────────────────────────────────────────── */
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-body-text, #000d10);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity 0.25s ease;
+}
+
+.nav-logo:hover {
+  opacity: 0.6;
+}
+
+/* On-dark pages: logo becomes white */
+#site-nav.on-dark .nav-logo {
+  color: #ffffff;
+}
+
+/* ─── Desktop Links (hidden — this nav uses hamburger only) ───────────── */
+.nav-links {
+  display: none;
+}
+
+/* ─── Hamburger Toggle ───────────────────────────────────────────────── */
+.nav-mobile-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  z-index: 1100;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--color-body-text, #000d10);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* On-dark: hamburger lines become white */
+#site-nav.on-dark .nav-mobile-toggle span {
+  background: #ffffff;
+}
+
+/* Hamburger → X when open */
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ─── Full-Panel Slide-In Menu ───────────────────────────────────────── */
+/* Panel: 62.5vw from right edge, full viewport height */
+.nav-mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 62.5vw;
+  height: 100vh;
+  background: #000d10;
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 9.76563vw;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.nav-mobile-menu.is-open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Overlay scrim for the left 37.5vw */
+.nav-menu-scrim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 37.5vw;
+  height: 100vh;
+  background: rgba(0, 13, 16, 0.4);
+  z-index: 1040;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.nav-menu-scrim.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─── Panel Navigation Links ─────────────────────────────────────────── */
+.nav-panel-links {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 48px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.nav-panel-links li {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-panel-links li:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-panel-link {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 1.36719vw 0;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.25s ease;
+}
+
+/* Animated underline hover — pseudo-element scaleX */
+.nav-panel-link::after {
+  content: '';
+  position: absolute;
+  bottom: 1.36719vw;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #bc7155;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-panel-link:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-panel-link:hover {
+  opacity: 0.8;
+}
+
+/* Active state */
+.nav-panel-link.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ─── Panel CTA ──────────────────────────────────────────────────────── */
+.nav-panel-cta {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 500px;
+  padding: 12px 40px;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  align-self: flex-start;
+}
+
+.nav-panel-cta:hover {
+  background: #bc7155;
+  border-color: #bc7155;
+  color: #ffffff;
+}
+
+/* ─── Nav Spacer (sub-pages) ─────────────────────────────────────────── */
+.nav-spacer {
+  height: 64px;
+  display: none;
+}
+
+.nav-spacer.active {
+  display: block;
+}
+
+/* ─── Body scroll lock when menu open ───────────────────────────────── */
+body.nav-open {
+  overflow: hidden;
+}
+
+/* ─── Responsive: smaller screens ───────────────────────────────────── */
+@media (max-width: 768px) {
+  #site-nav {
+    padding: 0 24px;
+  }
+
+  .nav-mobile-menu {
+    width: 100vw;
+  }
+
+  .nav-menu-scrim {
+    display: none;
+  }
+
+  .nav-panel-link {
+    font-size: clamp(24px, 6vw, 36px);
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-mobile-menu {
+    padding: 80px 32px;
+  }
+}

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- FONT NOTICE: proprietary display font → Space Grotesk (geometric sans, closest match for display weight) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Lacuna Grade</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--leading-normal);
+      overflow-x: hidden;
+    }
+
+    /* ── Navigation ── */
+    #site-nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: var(--z-nav); height: 160px;
+      display: flex; align-items: center;
+      padding: 0 var(--grid-container-padding);
+      background: var(--color-nav-bg-scrolled);
+      transition: height var(--duration-base) var(--ease-standard);
+    }
+    #site-nav.scrolled { height: 80px; }
+    #nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: 1440px; margin: 0 auto;
+    }
+    #nav-logo {
+      font-family: var(--font-heading); font-weight: var(--font-weight-medium);
+      font-size: 0.875rem; letter-spacing: var(--tracking-wide);
+      color: var(--color-nav-text); text-decoration: none; text-transform: uppercase;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+    #nav-logo:hover { opacity: var(--hover-opacity); }
+    #nav-links { display: flex; align-items: center; gap: 12px; list-style: none; }
+    #nav-links a {
+      font-family: var(--font-heading); font-weight: var(--font-weight-regular);
+      font-size: 0.75rem; letter-spacing: var(--tracking-wide);
+      color: var(--color-body-text); text-decoration: none; text-transform: uppercase;
+      border: 1px solid var(--color-border-subtle); border-radius: var(--radius-pill);
+      padding: 8px 20px; transition: var(--transition-base);
+    }
+    #nav-links a:hover, #nav-links a.active { color: var(--color-white); border-color: var(--color-white); }
+
+    /* ── About Hero ── */
+    #about-hero {
+      position: relative; overflow: hidden;
+      padding: 220px var(--grid-container-padding) 120px;
+    }
+    #about-hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+      z-index: 0;
+    }
+    #about-hero-content {
+      position: relative; z-index: var(--z-content);
+      max-width: 1280px; margin: 0 auto;
+    }
+    #about-hero-eyebrow {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text); text-transform: uppercase;
+      margin-bottom: 40px; display: block;
+    }
+    #about-hero-headline {
+      font-family: var(--font-heading); font-size: var(--type-h1);
+      font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-tight);
+      color: var(--color-heading); line-height: var(--leading-snug);
+      max-width: 900px; margin-bottom: 60px;
+    }
+    #about-hero-intro-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+      border-top: 1px solid rgba(94,98,102,0.2); padding-top: 60px;
+    }
+    #about-hero-stat-col { display: flex; flex-direction: column; gap: 48px; }
+    .about-stat-item {}
+    .about-stat-value {
+      font-family: var(--font-heading); font-size: var(--type-display);
+      font-weight: var(--font-weight-bold); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight); line-height: 1;
+      display: block; margin-bottom: 8px;
+    }
+    .about-stat-label {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text); text-transform: uppercase;
+    }
+    #about-hero-body-col {}
+    #about-hero-body-text {
+      font-family: var(--font-body); font-size: var(--type-body-lg);
+      font-weight: 300; color: var(--color-body-text);
+      line-height: var(--leading-relaxed); margin-bottom: 40px;
+    }
+    #about-hero-body-text-2 {
+      font-family: var(--font-body); font-size: var(--type-body);
+      color: var(--color-muted-text); line-height: var(--leading-relaxed);
+    }
+
+    /* ── Team photo ── */
+    #team-photo-section {
+      position: relative; overflow: hidden;
+    }
+    #team-photo-img-wrap {
+      position: relative; width: 100%; aspect-ratio: 21/9; overflow: hidden;
+    }
+    #team-photo-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    #team-photo-placeholder {
+      display: none; align-items: center; justify-content: center;
+      position: absolute; inset: 0;
+      background: var(--color-surface-2); color: var(--color-muted-text);
+      font-size: 0.85rem; font-family: var(--font-body); opacity: 0.5;
+    }
+    #team-photo-gradient {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(10,10,10,0.3) 0%, transparent 30%, transparent 70%, rgba(10,10,10,0.5) 100%);
+      pointer-events: none;
+    }
+
+    /* ── People ── */
+    #team {
+      position: relative; padding: 120px var(--grid-container-padding);
+    }
+    #team-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #0a0a0a 0%, #111111 50%, #0a0a0a 100%);
+      z-index: 0;
+    }
+    #team-inner {
+      position: relative; z-index: var(--z-content);
+      max-width: 1280px; margin: 0 auto;
+    }
+    #team-header { margin-bottom: 80px; }
+    #team-label {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text); text-transform: uppercase; margin-bottom: 32px; display: block;
+    }
+    #team-title {
+      font-family: var(--font-heading); font-size: var(--type-h2);
+      font-weight: var(--font-weight-bold); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight); max-width: 600px;
+    }
+    #team-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gutter);
+    }
+    .team-card {
+      position: relative; overflow: hidden;
+    }
+    .team-card-photo {
+      position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden;
+      border-radius: var(--radius-sm); margin-bottom: 24px;
+      background: var(--color-surface-1);
+    }
+    .team-card-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform var(--duration-slow) var(--ease-primary);
+    }
+    .team-card:hover .team-card-photo img { transform: scale(1.04); }
+    .team-card-photo-placeholder {
+      display: none; align-items: center; justify-content: center;
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #1a1a1a, #2c2f31);
+      color: var(--color-muted-text); font-size: 0.75rem; font-family: var(--font-body); opacity: 0.5;
+    }
+    .team-card-photo-gradient {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
+      background: linear-gradient(to top, rgba(10,10,10,0.6), transparent);
+      pointer-events: none;
+    }
+    .team-name {
+      font-family: var(--font-heading); font-size: var(--type-h3);
+      font-weight: var(--font-weight-bold); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight); margin-bottom: 6px;
+    }
+    .team-role {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: var(--color-muted-text); text-transform: uppercase; margin-bottom: 16px;
+    }
+    .team-bio {
+      font-family: var(--font-body); font-size: var(--type-small);
+      color: var(--color-body-text); line-height: var(--leading-relaxed);
+    }
+
+    /* ── Values ── */
+    #values {
+      position: relative; padding: 120px var(--grid-container-padding);
+    }
+    #values-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #0a0a0a 0%, #020b44 100%);
+      z-index: 0;
+    }
+    #values-inner {
+      position: relative; z-index: var(--z-content);
+      max-width: 1280px; margin: 0 auto;
+    }
+    #values-headline {
+      font-family: var(--font-heading); font-size: var(--type-h1);
+      font-weight: var(--font-weight-light); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight); line-height: var(--leading-snug);
+      max-width: 700px; margin-bottom: 80px;
+    }
+    #values-list {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px 80px;
+    }
+    .value-item {}
+    .value-num {
+      font-family: var(--font-heading); font-size: var(--type-label);
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wider);
+      color: rgba(255,255,255,0.25); text-transform: uppercase; margin-bottom: 16px; display: block;
+    }
+    .value-title {
+      font-family: var(--font-heading); font-size: var(--type-h3);
+      font-weight: var(--font-weight-bold); color: var(--color-heading);
+      letter-spacing: var(--tracking-tight); margin-bottom: 16px;
+    }
+    .value-desc {
+      font-family: var(--font-body); font-size: var(--type-body);
+      color: rgba(255,255,255,0.45); line-height: var(--leading-relaxed);
+    }
+
+    /* ── Footer ── */
+    #site-footer {
+      padding: 40px var(--grid-container-padding);
+      background: #020b44; border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    #footer-inner {
+      max-width: 1440px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    #footer-logo {
+      font-family: var(--font-heading); font-size: 0.75rem;
+      font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-wide);
+      color: rgba(255,255,255,0.3); text-transform: uppercase;
+    }
+    #footer-copy { font-family: var(--font-body); font-size: var(--type-label); color: rgba(255,255,255,0.2); }
+
+    @media (max-width: 1024px) {
+      #site-nav, #about-hero, #team, #values { padding-left: 32px; padding-right: 32px; }
+      #about-hero-intro-grid { grid-template-columns: 1fr; gap: 48px; }
+      #team-grid { grid-template-columns: 1fr 1fr; }
+      #values-list { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      #site-nav { height: 80px; padding-left: 20px; padding-right: 20px; }
+      #about-hero { padding: 140px 20px 80px; }
+      #team, #values { padding: 60px 20px; }
+      #team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="site-nav" role="navigation" aria-label="Main navigation">
+    <div id="nav-inner">
+      <a id="nav-logo" href="index.html">Lacuna Grade</a>
+      <ul id="nav-links">
+        <li><a href="work.html">Work</a></li>
+        <li><a href="technology.html">Technology</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- About Hero -->
+  <header id="about-hero" aria-label="About Lacuna Grade">
+    <div id="about-hero-bg"></div>
+    <div id="about-hero-content">
+      <span id="about-hero-eyebrow">About</span>
+      <h1 id="about-hero-headline">Built by engineers who've lost signal in production and refused to accept it.</h1>
+      <div id="about-hero-intro-grid">
+        <div id="about-hero-stat-col">
+          <div id="stat-founded" class="about-stat-item">
+            <span class="about-stat-value">2019</span>
+            <span class="about-stat-label">Founded</span>
+          </div>
+          <div id="stat-installs" class="about-stat-item">
+            <span class="about-stat-value">840+</span>
+            <span class="about-stat-label">Active Installs</span>
+          </div>
+          <div id="stat-countries" class="about-stat-item">
+            <span class="about-stat-value">34</span>
+            <span class="about-stat-label">Countries</span>
+          </div>
+        </div>
+        <div id="about-hero-body-col">
+          <p id="about-hero-body-text">Lacuna Grade was founded after a live broadcast interruption that cost our founding engineer's team an entire night of production. The root cause — a 4ms latency drift in a signal path no one was watching — was entirely preventable. We spent the next year building the instrument we needed.</p>
+          <p id="about-hero-body-text-2">Today Lacuna Grade instruments are deployed in broadcast facilities, recording studios, and live event productions across 34 countries. Our singular focus remains unchanged: give signal engineers the clarity they need to prevent problems before they reach air.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Team photo -->
+  <div id="team-photo-section">
+    <div id="team-photo-img-wrap">
+      <img
+        src="assets/about-team-office.jpg"
+        alt="Lacuna Grade engineering team in the hardware lab, two engineers examining a circuit board at a workbench surrounded by oscilloscopes and measurement equipment"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      >
+      <div id="team-photo-placeholder">→ assets/about-team-office.jpg</div>
+      <div id="team-photo-gradient"></div>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <section id="team" aria-label="Leadership team">
+    <div id="team-bg"></div>
+    <div id="team-inner">
+      <div id="team-header">
+        <span id="team-label">Leadership</span>
+        <h2 id="team-title">The people behind the instrument.</h2>
+      </div>
+      <div id="team-grid">
+
+        <article id="team-card-elena" class="team-card">
+          <div class="team-card-photo">
+            <img
+              src="assets/team-elena.jpg"
+              alt="Elena Reyes, CEO, woman with warm brown skin and dark straight hair, face visible, neutral studio portrait with overhead key lighting at 45 degrees from left"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            >
+            <div class="team-card-photo-placeholder">→ assets/team-elena.jpg</div>
+            <div class="team-card-photo-gradient"></div>
+          </div>
+          <h3 class="team-name">Elena Reyes</h3>
+          <span class="team-role">Co-founder & CEO</span>
+          <p class="team-bio">Fifteen years in broadcast operations. Former signal chain director at two major European television networks. Elena wrote the architecture spec for Grade's differential tap circuit in a hotel room in Munich in 2018.</p>
+        </article>
+
+        <article id="team-card-james" class="team-card">
+          <div class="team-card-photo">
+            <img
+              src="assets/team-james.jpg"
+              alt="James Okoye, CTO, man with dark brown skin and close-cropped hair, face visible, neutral studio portrait with single side-window light from right creating directional shadow"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            >
+            <div class="team-card-photo-placeholder">→ assets/team-james.jpg</div>
+            <div class="team-card-photo-gradient"></div>
+          </div>
+          <h3 class="team-name">James Okoye</h3>
+          <span class="team-role">Co-founder & CTO</span>
+          <p class="team-bio">FPGA engineer with deep background in precision measurement systems. Designed the DSP analysis layer that gives Grade sub-millisecond anomaly detection at full channel capacity.</p>
+        </article>
+
+        <article id="team-card-sara" class="team-card">
+          <div class="team-card-photo">
+            <img
+              src="assets/team-sara.jpg"
+              alt="Sara Lindqvist, VP Engineering, woman with light olive skin and shoulder-length dark hair, face visible, natural diffused overhead light in neutral studio setting"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            >
+            <div class="team-card-photo-placeholder">→ assets/team-sara.jpg</div>
+            <div class="team-card-photo-gradient"></div>
+          </div>
+          <h3 class="team-name">Sara Lindqvist</h3>
+          <span class="team-role">VP Engineering</span>
+          <p class="team-bio">Previously at Neve and SSL. Brought analog expertise to a digital-first instrument — the Grade front end's noise floor spec is the direct result of Sara's work on the analog stages.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section id="values" aria-label="Company values">
+    <div id="values-bg"></div>
+    <div id="values-inner">
+      <h2 id="values-headline">We make instruments, not software that pretends to be one.</h2>
+      <div id="values-list">
+        <div id="value-precision" class="value-item">
+          <span class="value-num">01</span>
+          <h3 class="value-title">Precision first</h3>
+          <p class="value-desc">Every specification is a real number from a real measurement. We publish our noise floor, our latency, and our resolution — because signal engineers deserve instruments they can rely on to the decimal.</p>
+        </div>
+        <div id="value-transparency" class="value-item">
+          <span class="value-num">02</span>
+          <h3 class="value-title">Transparent signal path</h3>
+          <p class="value-desc">Grade sits in your signal chain without altering it. Observation without interference is the core architectural principle — and it extends to how we write documentation, too.</p>
+        </div>
+        <div id="value-simplicity" class="value-item">
+          <span class="value-num">03</span>
+          <h3 class="value-title">Zero-install operations</h3>
+          <p class="value-desc">A tool that requires a long setup process fails in live production. Grade deploys in minutes, monitors via browser, and alerts via webhook. It should be the easiest thing in your rack.</p>
+        </div>
+        <div id="value-support" class="value-item">
+          <span class="value-num">04</span>
+          <h3 class="value-title">Built for the engineer, not the procurement manager</h3>
+          <p class="value-desc">We write documentation that assumes expertise. We answer technical questions directly. We do not sell through a channel that adds distance between our team and the person using the instrument.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <span id="footer-logo">Lacuna Grade</span>
+      <span id="footer-copy">© 2026 Lacuna Grade. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const rootStyle = getComputedStyle(document.documentElement);
+    const DUR_SLOW = parseFloat(rootStyle.getPropertyValue('--duration-slow')) || 0.9;
+    const DUR_BASE = parseFloat(rootStyle.getPropertyValue('--duration-base')) || 0.54;
+    const EASE_PRIMARY = rootStyle.getPropertyValue('--ease-primary').trim() || 'cubic-bezier(0.19,1,0.22,1)';
+
+    const nav = document.getElementById('site-nav');
+    ScrollTrigger.create({
+      start: 'top -80px',
+      onEnter: () => nav.classList.add('scrolled'),
+      onLeaveBack: () => nav.classList.remove('scrolled'),
+    });
+
+    const heroTl = gsap.timeline({ delay: 0.3 });
+    heroTl
+      .from('#about-hero-eyebrow', { opacity: 0, y: 16, duration: DUR_BASE, ease: EASE_PRIMARY })
+      .from('#about-hero-headline', { clipPath: 'inset(0 100% 0 0)', duration: DUR_SLOW * 1.5, ease: EASE_PRIMARY }, '-=0.2')
+      .from('#about-hero-intro-grid', { opacity: 0, y: 30, duration: DUR_SLOW, ease: EASE_PRIMARY }, '-=0.5');
+
+    // Stats count-up feel
+    gsap.from('.about-stat-value', {
+      scrollTrigger: { trigger: '#about-hero-stat-col', start: 'top 80%' },
+      opacity: 0, y: 20, duration: DUR_SLOW, stagger: 0.2, ease: EASE_PRIMARY,
+    });
+
+    // Team photo parallax
+    gsap.to('#team-photo-img-wrap img', {
+      scrollTrigger: { trigger: '#team-photo-section', start: 'top bottom', end: 'bottom top', scrub: 1.5 },
+      y: '10%', ease: 'none',
+    });
+
+    // Team cards stagger
+    gsap.from('.team-card', {
+      scrollTrigger: { trigger: '#team-grid', start: 'top 80%' },
+      y: 50, opacity: 0, duration: DUR_SLOW, stagger: 0.15, ease: EASE_PRIMARY,
+    });
+
+    // Values clip-path
+    gsap.from('#values-headline', {
+      scrollTrigger: { trigger: '#values', start: 'top 75%' },
+      clipPath: 'inset(0 100% 0 0)', duration: DUR_SLOW * 1.4, ease: EASE_PRIMARY,
+    });
+    gsap.from('.value-item', {
+      scrollTrigger: { trigger: '#values-list', start: 'top 80%' },
+      y: 40, opacity: 0, duration: DUR_SLOW, stagger: 0.12, ease: EASE_PRIMARY,
+    });
+  </script>
+</body>
+</html>

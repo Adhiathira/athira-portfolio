@@ -1,0 +1,164 @@
+/* =============================================================================
+   community-signals.css — Community Signals Section
+   Task 253: [goyard-vid][6/12] Home — How It Works + Community Signals Sections
+
+   Token source: tokens.css (all --var references defined there)
+   Layout:       layout.css → .col-3 → repeat(3, 1fr), gap: --grid-gap
+   Motion:       animations.js → ScrollTrigger reveals (.creator-profile-card opacity 0 → 1)
+
+   NOTE: .creator-displayname does NOT use .text-nav class (white = invisible on white card).
+   Color is explicitly set to var(--color-heading) in this file.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Section
+   ----------------------------------------------------------------------------- */
+
+.community-signals {
+  background-color: var(--color-page-bg);
+  padding-bottom: calc(var(--space-section-top) * 2);
+}
+
+/* -----------------------------------------------------------------------------
+   Heading
+   ----------------------------------------------------------------------------- */
+
+.community-signals__heading {
+  margin-bottom: 48px;
+  text-transform: uppercase;
+}
+
+/* -----------------------------------------------------------------------------
+   Creator Profile Card
+   ----------------------------------------------------------------------------- */
+
+.creator-profile-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  opacity: 0; /* ScrollTrigger initial state — animations.js animates to 1 */
+}
+
+/* -----------------------------------------------------------------------------
+   Avatar Placeholder
+   ----------------------------------------------------------------------------- */
+
+.creator-avatar-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--color-hero-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto 0;
+  gap: 4px;
+  text-align: center;
+  padding: 4px;
+}
+
+.creator-avatar-placeholder .placeholder-label {
+  font-family: var(--font-heading);
+  font-size: 8px;
+  color: var(--color-accent);
+}
+
+.creator-avatar-placeholder .placeholder-note {
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* -----------------------------------------------------------------------------
+   Creator Meta
+   ----------------------------------------------------------------------------- */
+
+.creator-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.creator-displayname {
+  font-family: var(--font-heading);
+  font-size: var(--type-nav-size);
+  font-weight: var(--type-nav-fw);
+  color: var(--color-heading);
+  letter-spacing: 0.5px;
+}
+
+.creator-points {
+  color: var(--color-accent);
+}
+
+/* -----------------------------------------------------------------------------
+   Featured Work Placeholder
+   ----------------------------------------------------------------------------- */
+
+.creator-featured-work-placeholder {
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-hero-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+  text-align: center;
+  flex: 1;
+}
+
+.creator-featured-work-placeholder .placeholder-label {
+  font-family: var(--font-heading);
+  font-size: var(--type-nav-size);
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.creator-featured-work-placeholder .placeholder-note {
+  font-family: var(--font-body);
+  font-size: var(--type-small-size);
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.4;
+}
+
+/* -----------------------------------------------------------------------------
+   Platform Stat Banner
+   ----------------------------------------------------------------------------- */
+
+.platform-stat-banner {
+  text-align: center;
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-label {
+  color: var(--color-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   Responsive
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .community-signals__heading {
+    margin-bottom: 32px;
+  }
+
+  .creator-cards-row {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .platform-stat-banner {
+    margin-top: 40px;
+  }
+}

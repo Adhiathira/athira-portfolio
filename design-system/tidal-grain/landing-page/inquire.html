@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inquire about a commission or restoration with Vellum &amp; Iron — bespoke book binding and restoration studio in Portland, Oregon.">
+  <title>Inquire — Vellum &amp; Iron</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/inquire.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+
+<div id="inquire-page">
+
+  <!-- NAV -->
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <ul class="nav-links" role="list">
+        <li><a href="work.html" class="nav-link">Work</a></li>
+        <li><a href="process.html" class="nav-link">Process</a></li>
+      </ul>
+      <a href="index.html" class="nav-logo" aria-label="Vellum &amp; Iron — home">V&amp;I</a>
+      <div class="nav-cta-wrap"><a href="inquire.html" class="nav-cta nav-link--active">Inquire <span aria-hidden="true">→</span></a></div>
+    </div>
+    <button class="nav-mobile-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-mobile-menu-inq" type="button"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav-spacer active" aria-hidden="true"></div>
+  <div class="nav-mobile-menu" id="nav-mobile-menu-inq" aria-hidden="true" role="dialog" aria-label="Mobile navigation">
+    <a href="work.html" class="nav-mobile-link">Work</a>
+    <a href="process.html" class="nav-mobile-link">Process</a>
+    <a href="inquire.html" class="nav-mobile-link">Inquire</a>
+  </div>
+  <script>
+  (function(){
+    var nav=document.querySelector('.site-nav');
+    var spacer=document.querySelector('.nav-spacer');
+    var toggle=nav.querySelector('.nav-mobile-toggle');
+    var menu=document.querySelector('.nav-mobile-menu');
+    var THRESHOLD=60;
+    function onScroll(){var past=window.scrollY>THRESHOLD;nav.classList.toggle('fixit--scrolled',past);if(spacer)spacer.style.height=past?'80px':'153.5859375px';}
+    window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+    toggle.addEventListener('click',function(){var isOpen=menu.classList.contains('is-open');nav.classList.toggle('nav-mobile-open',!isOpen);menu.classList.toggle('is-open',!isOpen);toggle.setAttribute('aria-expanded',String(!isOpen));menu.setAttribute('aria-hidden',String(isOpen));document.body.style.overflow=isOpen?'':'hidden';});
+    menu.querySelectorAll('.nav-mobile-link').forEach(function(l){l.addEventListener('click',function(){nav.classList.remove('nav-mobile-open');menu.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');menu.setAttribute('aria-hidden','true');document.body.style.overflow='';});});
+  })();
+  </script>
+
+  <!-- PAGE HEADER -->
+  <header id="inquire-header">
+    <div id="inquire-header-inner">
+      <p id="inquire-label">Commissions &amp; Inquiries</p>
+      <h1 id="inquire-heading">Begin an inquiry.</h1>
+      <p id="inquire-sub">We respond to all inquiries within two business days. For urgent restoration needs, please note this in your message.</p>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT — two-column split -->
+  <section id="inquire-main">
+    <div id="inquire-main-inner">
+
+      <!-- LEFT SIDEBAR -->
+      <aside id="inquire-sidebar">
+
+        <div id="sidebar-studio-block">
+          <p class="sidebar-section-label">Studio</p>
+          <address id="sidebar-address">
+            Vellum &amp; Iron Studio<br>
+            4211 SE Hawthorne Blvd<br>
+            Portland, Oregon 97214
+          </address>
+        </div>
+
+        <div id="sidebar-contact-block">
+          <p class="sidebar-section-label">Contact</p>
+          <div id="sidebar-contact-links">
+            <a href="mailto:hello@vellumand.iron" class="sidebar-link">hello@vellumand.iron</a><br>
+            <a href="tel:+15035550147" class="sidebar-link">(503) 555-0147</a>
+          </div>
+        </div>
+
+        <div id="sidebar-timeline-block">
+          <p class="sidebar-section-label">Commission Timeline</p>
+          <p id="sidebar-timeline-text">
+            New commissions: 6–12 weeks<br>
+            Rush restorations: upon assessment<br>
+            Current availability: Q2 2025
+          </p>
+        </div>
+
+        <div id="sidebar-clients-block">
+          <p class="sidebar-section-label">We work with</p>
+          <ul id="sidebar-clients-list">
+            <li>Private collectors</li>
+            <li>Rare book dealers</li>
+            <li>University libraries</li>
+            <li>Estate archivists</li>
+            <li>Institutions seeking conservation services</li>
+          </ul>
+        </div>
+
+      </aside>
+
+      <!-- RIGHT — FORM -->
+      <div id="inquire-form-wrap">
+        <form id="commission-form" action="#" method="post" novalidate>
+
+          <div class="form-field">
+            <label for="field-name">Your name</label>
+            <input type="text" id="field-name" name="name" required autocomplete="name" placeholder="Full name">
+          </div>
+
+          <div class="form-field">
+            <label for="field-email">Email address</label>
+            <input type="email" id="field-email" name="email" required autocomplete="email" placeholder="you@example.com">
+          </div>
+
+          <div class="form-field">
+            <label for="field-type">Type of commission</label>
+            <select id="field-type" name="commission_type" required>
+              <option value="" disabled selected>Select one...</option>
+              <option value="journal">New journal or book</option>
+              <option value="restoration">Antique restoration</option>
+              <option value="folio">Custom folio or portfolio</option>
+              <option value="other">Other / unsure</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="field-message">Describe your commission</label>
+            <textarea id="field-message" name="message" rows="6" required placeholder="Tell us about the piece — its current condition if restoring, the materials or aesthetic you have in mind, and any deadline considerations."></textarea>
+          </div>
+
+          <div class="form-submit">
+            <button type="submit" class="btn-submit">Send Inquiry →</button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="inquire-footer">
+    <div id="inquire-footer-inner">
+      <div id="footer-grid">
+
+        <div id="footer-brand-col">
+          <p id="footer-logo">V&amp;I</p>
+          <address id="footer-address">
+            Vellum &amp; Iron Studio<br>
+            4211 SE Hawthorne Blvd<br>
+            Portland, Oregon 97214<br>
+            Est. 1994
+          </address>
+        </div>
+
+        <div id="footer-nav-col">
+          <p class="footer-col-label">Studio</p>
+          <nav id="footer-nav" aria-label="Footer navigation">
+            <a href="work.html" class="footer-nav-link">Work</a>
+            <a href="process.html" class="footer-nav-link">Process</a>
+            <a href="inquire.html" class="footer-nav-link">Inquire</a>
+          </nav>
+        </div>
+
+        <div id="footer-contact-col">
+          <p class="footer-col-label">Contact</p>
+          <div id="footer-contact-info">
+            <a href="mailto:hello@vellumand.iron" class="footer-contact-link">hello@vellumand.iron</a>
+            <a href="tel:+15035550147" class="footer-contact-link">(503) 555-0147</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="footer-copyright-row">
+        <p id="footer-copyright">&copy; 2025 Vellum &amp; Iron. All rights reserved.</p>
+        <p id="footer-tagline">Bound to Last.</p>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /#inquire-page -->
+
+<script>
+(function () {
+  // Page-load entrance animation — not scroll-triggered
+  gsap.from(['#inquire-label', '#inquire-heading', '#inquire-sub'], {
+    y: 24,
+    duration: 0.7,
+    stagger: 0.12,
+    ease: 'power3.out'
+  });
+
+  // Sidebar blocks — gentle stagger entrance
+  gsap.from([
+    '#sidebar-studio-block',
+    '#sidebar-contact-block',
+    '#sidebar-timeline-block',
+    '#sidebar-clients-block'
+  ], {
+    y: 16,
+    duration: 0.6,
+    stagger: 0.09,
+    delay: 0.25,
+    ease: 'power2.out'
+  });
+
+  // Form entrance as a unit
+  gsap.from('#inquire-form-wrap', {
+    y: 20,
+    duration: 0.7,
+    delay: 0.3,
+    ease: 'power2.out'
+  });
+
+  // Form submission — prevent default and show confirmation
+  var form = document.getElementById('commission-form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('.btn-submit');
+      btn.textContent = 'Message sent — we\'ll be in touch.';
+      btn.disabled = true;
+      btn.style.background = 'var(--color-accent-dark)';
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

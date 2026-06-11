@@ -1,0 +1,178 @@
+/*
+ * motion.css — griting-ellipsus merged motion system
+ *
+ * Base: griting (primary brand — static Figma, no original motion tokens)
+ * Incorporated: ellipsus motion patterns (keyframes, transitions, scroll patterns)
+ * Color scheme for assets: background #003620, primary #00693e (griting brand)
+ *
+ * Keyframe naming convention: semantic names replacing ellipsus framework class hashes.
+ */
+
+/* ─── Timing Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --duration-fast:             0.15s;
+  --duration-base:             0.3s;
+  --duration-reveal-opacity:   0.4s;
+  --duration-reveal-transform: 0.5s;
+
+  --ease-standard: ease;
+  --ease-snap:     cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-linear:   linear;
+
+  /* Composite shorthand tokens */
+  --transition-button:     color var(--duration-base) var(--ease-standard),
+                           background-color var(--duration-base) var(--ease-standard),
+                           border-color var(--duration-base) var(--ease-standard),
+                           box-shadow var(--duration-base) var(--ease-standard);
+
+  --transition-button-bg:  border-color var(--duration-base) var(--ease-standard),
+                           background-color var(--duration-base) var(--ease-standard),
+                           box-shadow var(--duration-base) var(--ease-standard);
+
+  --transition-reveal:     opacity var(--duration-reveal-opacity) var(--ease-linear),
+                           transform var(--duration-reveal-transform) var(--ease-snap);
+
+  --transition-image:      opacity var(--duration-base) var(--ease-standard);
+  --transition-nav-action: opacity var(--duration-fast) var(--ease-standard);
+
+  /* Video asset note: replace video sources with griting-brand content.
+     Color scheme: background #003620, primary #00693e.
+     Concept: AI-powered growth, green innovation, startup incubation.
+     See project-documentation/unavailable-content-prompts.md for Kling prompts. */
+  --motion-system-videos-count:                          6;
+  --motion-system-videos-animatedGifs:                   0;
+  --motion-system-performance-totalAnimatedElements:     22;
+  --motion-system-performance-simultaneousAnimations:    0;
+  --motion-system-performance-videoLoad:                 heavy;
+  --motion-system-performance-complexAnimations:         1;
+  --motion-system-performance-summary-videos:            6;
+  --motion-system-performance-summary-animatedGifs:      0;
+  --motion-system-performance-summary-keyframes:         11;
+  --motion-system-performance-summary-scrollLibraries:   0;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────────────────────── */
+
+/* Loading spinner — continuous 360deg rotation */
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(1turn); }
+}
+
+/* Hard binary blink — for cursors, indicators, active state markers */
+@keyframes blink {
+  0%   { opacity: 0; }
+  49%  { opacity: 0; }
+  50%  { opacity: 1; }
+  99%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Particle / sparkle staggered sequence — 5 offset variants for natural scatter effect */
+@keyframes sprinkle-1 {
+  0%   { opacity: 0; }
+  25%  { opacity: 0; }
+  50%  { opacity: 1; }
+  60%  { opacity: 1; }
+  85%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes sprinkle-2 {
+  0%   { opacity: 0; }
+  5%   { opacity: 0; }
+  30%  { opacity: 1; }
+  45%  { opacity: 1; }
+  65%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes sprinkle-3 {
+  0%   { opacity: 0; }
+  20%  { opacity: 1; }
+  35%  { opacity: 1; }
+  55%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes sprinkle-4 {
+  0%   { opacity: 0; }
+  35%  { opacity: 0; }
+  60%  { opacity: 1; }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes sprinkle-5 {
+  0%   { opacity: 0; }
+  47%  { opacity: 0; }
+  77%  { opacity: 1; }
+  86%  { opacity: 1; }
+  95%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Lamp ray flicker — stuttered multi-burst illumination for light/highlight elements */
+@keyframes lamp-rays {
+  0%   { opacity: 0; }
+  19%  { opacity: 0; }
+  20%  { opacity: 1; }
+  25%  { opacity: 1; }
+  26%  { opacity: 0; }
+  30%  { opacity: 0; }
+  31%  { opacity: 1; }
+  35%  { opacity: 1; }
+  36%  { opacity: 0; }
+  50%  { opacity: 0; }
+  51%  { opacity: 1; }
+  99%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Vapor / mist — 3 offset variants for layered atmospheric effect */
+@keyframes vapor-1 {
+  0%   { opacity: 0; }
+  30%  { opacity: 0; }
+  50%  { opacity: 1; }
+  80%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes vapor-2 {
+  0%   { opacity: 0; }
+  40%  { opacity: 0; }
+  60%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes vapor-3 {
+  0%   { opacity: 0; }
+  50%  { opacity: 0; }
+  70%  { opacity: 1; }
+  90%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ─── Scroll Animation Patterns ─────────────────────────────────────────────── */
+
+.fade-in {
+  opacity: 0;
+  transition: var(--transition-reveal);
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

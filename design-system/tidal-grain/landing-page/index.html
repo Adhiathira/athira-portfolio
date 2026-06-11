@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Vellum &amp; Iron — Bespoke book binding, antique book restoration, and custom folios for collectors and archivists. Portland, Oregon. Est. 1994.">
+  <title>Vellum &amp; Iron — Bound to Last</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- HOMEPAGE NAV — Vellum & Iron -->
+<nav class="site-nav on-dark" aria-label="Main navigation">
+  <div class="nav-inner">
+    <ul class="nav-links" role="list">
+      <li><a href="work.html" class="nav-link">Work</a></li>
+      <li><a href="process.html" class="nav-link">Process</a></li>
+    </ul>
+    <a href="index.html" class="nav-logo nav-link--active" aria-label="Vellum &amp; Iron — home">V&amp;I</a>
+    <div class="nav-cta-wrap">
+      <a href="inquire.html" class="nav-cta">Inquire <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <button class="nav-mobile-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-mobile-menu-home" type="button">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu-home" aria-hidden="true" role="dialog" aria-label="Mobile navigation">
+  <a href="work.html" class="nav-mobile-link">Work</a>
+  <a href="process.html" class="nav-mobile-link">Process</a>
+  <a href="inquire.html" class="nav-mobile-link">Inquire</a>
+</div>
+<script>
+(function(){
+  var nav=document.querySelector('.site-nav');
+  var toggle=nav.querySelector('.nav-mobile-toggle');
+  var menu=document.querySelector('.nav-mobile-menu');
+  var THRESHOLD=60;
+  function onScroll(){var past=window.scrollY>THRESHOLD;nav.classList.toggle('fixit--scrolled',past);}
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  toggle.addEventListener('click',function(){
+    var isOpen=menu.classList.contains('is-open');
+    nav.classList.toggle('nav-mobile-open',!isOpen);
+    menu.classList.toggle('is-open',!isOpen);
+    toggle.setAttribute('aria-expanded',String(!isOpen));
+    menu.setAttribute('aria-hidden',String(isOpen));
+    document.body.style.overflow=isOpen?'':'hidden';
+  });
+  menu.querySelectorAll('.nav-mobile-link').forEach(function(l){l.addEventListener('click',function(){nav.classList.remove('nav-mobile-open');menu.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');menu.setAttribute('aria-hidden','true');document.body.style.overflow='';});});
+})();
+</script>
+
+<!-- =============================================
+     SECTION 1: HERO
+     ============================================= -->
+<section id="hero" aria-label="Hero">
+  <div id="hero-video-container">
+    <video class="hero-video" autoplay loop muted playsinline>
+      <source src="assets/hero-bg.mp4" type="video/mp4">
+    </video>
+    <div id="hero-video-placeholder">→ assets/hero-bg.mp4</div>
+    <div id="hero-video-overlay"></div>
+  </div>
+
+  <div id="hero-content">
+    <p id="hero-label">EST. 1994 &middot; PORTLAND, OREGON</p>
+    <h1 id="hero-title">VELLUM &amp; IRON</h1>
+    <p id="hero-sub">Bespoke binding. Meticulous restoration.</p>
+    <div id="hero-ctas">
+      <a href="work.html" id="hero-cta-primary" class="btn-ghost-dark">Explore Our Work →</a>
+      <a href="inquire.html" id="hero-cta-secondary" class="hero-text-link">Begin a commission</a>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SECTION 2: CRAFT STATEMENT
+     ============================================= -->
+<section id="craft-statement" aria-label="Craft Statement">
+  <div id="craft-statement-inner">
+    <p id="craft-label">Our Belief</p>
+    <blockquote id="craft-statement-text">
+      "Each book is a record of time made material. We work with the assumption that what we make should outlast us — the leather should soften, the thread should hold, the paper breathe for another century."
+    </blockquote>
+    <p id="craft-support">
+      Since 1994, we have bound journals, restored first editions, and pressed custom folios for private collectors, rare book dealers, and institutional archives across the Pacific Northwest.
+    </p>
+  </div>
+</section>
+
+<!-- =============================================
+     SECTION 3: COLLECTIONS GRID
+     ============================================= -->
+<section id="collections" aria-label="Collections">
+  <div id="collections-accent-line" aria-hidden="true"></div>
+  <div id="collections-grid">
+
+    <!-- Panel 1: Journals -->
+    <article id="panel-1" class="collection-panel">
+      <div class="panel-media-wrap">
+        <video class="panel-video" autoplay loop muted playsinline>
+          <source src="assets/category-ambient-1.mp4" type="video/mp4">
+        </video>
+        <div class="panel-video-placeholder">→ assets/category-ambient-1.mp4</div>
+      </div>
+      <div class="panel-overlay panel-overlay--journals"></div>
+      <div class="panel-content">
+        <h2 class="panel-label">Journals</h2>
+        <p class="panel-body">Hand-bound in full-grain leather and archival paper.</p>
+        <a href="work.html#journals" class="btn-ghost-light">Explore →</a>
+      </div>
+    </article>
+
+    <!-- Panel 2: Restoration -->
+    <article id="panel-2" class="collection-panel">
+      <div class="panel-media-wrap">
+        <img
+          class="panel-image"
+          src="assets/category-ambient-2.jpeg"
+          alt="Antique book restoration in progress — careful hands working on aged leather spine"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="panel-image-placeholder">→ assets/category-ambient-2.jpeg</div>
+      </div>
+      <div class="panel-overlay panel-overlay--restoration"></div>
+      <div class="panel-content">
+        <h2 class="panel-label">Restoration</h2>
+        <p class="panel-body">We return antique books to working condition with period-appropriate materials.</p>
+        <a href="work.html#restoration" class="btn-ghost-light">Explore →</a>
+      </div>
+    </article>
+
+    <!-- Panel 3: Custom Folios -->
+    <article id="panel-3" class="collection-panel">
+      <div class="panel-media-wrap">
+        <img
+          class="panel-image"
+          src="assets/category-ambient-3.jpeg"
+          alt="Custom leather folio — pressed and hand-finished for a private collector"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="panel-image-placeholder">→ assets/category-ambient-3.jpeg</div>
+      </div>
+      <div class="panel-overlay panel-overlay--folios"></div>
+      <div class="panel-content">
+        <h2 class="panel-label">Custom Folios</h2>
+        <p class="panel-body">Made to specification for estates, archivists, and collectors who need something that has never existed before.</p>
+        <a href="work.html#folios" class="btn-ghost-light">Explore →</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- =============================================
+     SECTION 4: PROCESS GLIMPSE
+     ============================================= -->
+<section id="process-glimpse" aria-label="Process">
+  <div id="process-video-container">
+    <video id="process-bg-video" autoplay loop muted playsinline>
+      <source src="assets/subbrand-ambient.mp4" type="video/mp4">
+    </video>
+    <div id="process-video-placeholder">→ assets/subbrand-ambient.mp4</div>
+    <div id="process-video-overlay"></div>
+  </div>
+
+  <div id="process-content">
+    <p id="process-label">The Workshop</p>
+    <h2 id="process-headline">Made by hand.</h2>
+    <p id="process-sub">Forty years of technique. No shortcuts.</p>
+    <a href="process.html" id="process-cta" class="btn-ghost-warm">See How We Work →</a>
+  </div>
+</section>
+
+<!-- =============================================
+     SECTION 5: FOOTER
+     ============================================= -->
+<footer id="site-footer" aria-label="Site footer">
+  <div id="footer-inner">
+    <div id="footer-grid">
+
+      <div id="footer-col-brand">
+        <p id="footer-brand-name">Vellum &amp; Iron</p>
+        <p id="footer-tagline">Bound to last.</p>
+        <address id="footer-address">Portland, Oregon</address>
+      </div>
+
+      <nav id="footer-col-nav" aria-label="Footer navigation">
+        <ul id="footer-nav-list" role="list">
+          <li><a href="work.html" class="footer-link">Work</a></li>
+          <li><a href="process.html" class="footer-link">Process</a></li>
+          <li><a href="inquire.html" class="footer-link">Inquire</a></li>
+        </ul>
+      </nav>
+
+      <div id="footer-col-contact">
+        <a href="mailto:hello@vellumand.iron" class="footer-contact-link" id="footer-email">hello@vellumand.iron</a>
+        <p id="footer-contact-note">Orders &amp; inquiries welcome.</p>
+        <div id="footer-social-links">
+          <a href="mailto:hello@vellumand.iron" class="footer-social-link" aria-label="Email Vellum &amp; Iron">Email</a>
+          <a href="https://instagram.com/vellumand.iron" class="footer-social-link" aria-label="Vellum &amp; Iron on Instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+      </div>
+
+    </div>
+
+    <hr id="footer-rule">
+
+    <div id="footer-bottom">
+      <p id="footer-copyright">© 2025 Vellum &amp; Iron</p>
+      <p id="footer-rights">All rights reserved</p>
+    </div>
+  </div>
+</footer>
+
+<!-- =============================================
+     GSAP ANIMATIONS
+     ============================================= -->
+<script>
+(function () {
+  gsap.registerPlugin(ScrollTrigger);
+
+  var BASE_DURATION = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--duration-base')
+  ) || 0.7;
+  var EASE = getComputedStyle(document.documentElement)
+    .getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+  /* ── VIDEO FALLBACK: apply CSS fallback class if video fails ── */
+  document.querySelectorAll('.hero-video, #process-bg-video').forEach(function (vid) {
+    vid.addEventListener('error', function () {
+      var section = vid.closest('section');
+      if (section) section.classList.add('video-fallback');
+    });
+    // Also catch source errors
+    vid.querySelectorAll('source').forEach(function (src) {
+      src.addEventListener('error', function () {
+        var section = vid.closest('section');
+        if (section) section.classList.add('video-fallback');
+        var placeholder = vid.nextElementSibling;
+        if (placeholder) placeholder.style.display = 'flex';
+        vid.style.display = 'none';
+      });
+    });
+  });
+
+  document.querySelectorAll('.panel-video').forEach(function (vid) {
+    vid.addEventListener('error', function () {
+      var panel = vid.closest('.collection-panel');
+      if (panel) panel.classList.add('video-fallback');
+    });
+    vid.querySelectorAll('source').forEach(function (src) {
+      src.addEventListener('error', function () {
+        var panel = vid.closest('.collection-panel');
+        if (panel) panel.classList.add('video-fallback');
+        var placeholder = vid.nextElementSibling;
+        if (placeholder) placeholder.style.display = 'flex';
+        vid.style.display = 'none';
+      });
+    });
+  });
+
+  /* ── HERO ENTRANCE TIMELINE ─────────────────────────────── */
+  var heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  heroTl
+    .from('#hero-label',  { y: 20, duration: 0.6 })
+    .from('#hero-title',  { y: 40, duration: 0.8 }, '-=0.3')
+    .from('#hero-sub',    { y: 20, duration: 0.6 }, '-=0.4')
+    .from('#hero-ctas',   { y: 20, duration: 0.5 }, '-=0.3');
+
+  /* ── CRAFT STATEMENT — clip-path wipe ───────────────────── */
+  gsap.from('#craft-statement-text', {
+    scrollTrigger: { trigger: '#craft-statement', start: 'top 75%' },
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 1.2,
+    ease: 'power2.inOut'
+  });
+
+  gsap.from('#craft-label', {
+    scrollTrigger: { trigger: '#craft-statement', start: 'top 80%' },
+    y: 16,
+    duration: 0.7,
+    ease: 'power2.out'
+  });
+
+  gsap.from('#craft-support', {
+    scrollTrigger: { trigger: '#craft-statement', start: 'top 65%' },
+    y: 20,
+    duration: 0.8,
+    ease: 'power2.out',
+    delay: 0.3
+  });
+
+  /* ── COLLECTIONS — divergent vertical entry ─────────────── */
+  ScrollTrigger.create({
+    trigger: '#collections-grid',
+    start: 'top 80%',
+    onEnter: function () {
+      gsap.from('#panel-1', { y: 60, duration: 0.9, ease: 'power2.out' });
+      gsap.from('#panel-2', { y: 40, duration: 0.9, ease: 'power2.out', delay: 0.1 });
+      gsap.from('#panel-3', { y: 20, duration: 0.9, ease: 'power2.out', delay: 0.2 });
+    },
+    once: true
+  });
+
+  /* ── CROSS-SEGMENT: accent line travels from collections into process ── */
+  gsap.to('#collections-accent-line', {
+    scrollTrigger: {
+      trigger: '#collections-grid',
+      endTrigger: '#process-glimpse',
+      start: 'bottom 70%',
+      end: 'top 30%',
+      scrub: 1.2
+    },
+    y: '80%',
+    ease: 'none'
+  });
+
+  /* ── PROCESS GLIMPSE — scale + rise ────────────────────── */
+  gsap.from('#process-content', {
+    scrollTrigger: { trigger: '#process-glimpse', start: 'top 70%' },
+    scale: 0.95,
+    y: 30,
+    duration: 0.8,
+    ease: 'power2.out'
+  });
+
+})();
+</script>
+
+</body>
+</html>

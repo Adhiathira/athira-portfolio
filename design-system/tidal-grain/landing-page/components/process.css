@@ -1,0 +1,658 @@
+/* =============================================================
+   PROCESS.CSS — Vellum & Iron
+   Page: process.html
+   Design tokens sourced from styles/tokens.css
+   ============================================================= */
+
+/* ── Base body override for this page ─────────────────────── */
+body {
+  background-color: var(--color-page-bg);
+}
+
+/* =============================================================
+   SECTION 1 — PAGE HEADER
+   Background: #f5f5f0 (page-bg). Compact editorial header.
+   ============================================================= */
+#page-header {
+  background: linear-gradient(
+    to bottom,
+    var(--color-page-bg) 0%,
+    rgba(245, 245, 240, 0.94) 100%
+  );
+  padding-top: calc(var(--nav-height) + 3rem);
+  padding-bottom: 4.5rem;
+  padding-left: var(--space-section-x);
+  padding-right: var(--space-section-x);
+  border-bottom: 1px solid rgba(38, 38, 38, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative ruled line at far left — adds visual depth */
+#page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--color-accent) 0%,
+    var(--color-accent-dark) 100%
+  );
+}
+
+#page-header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#page-header-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 1.25rem 0;
+}
+
+#page-header-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  color: var(--color-heading);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem 0;
+}
+
+#page-header-body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-body-text);
+  line-height: var(--line-height-body);
+  margin: 0;
+  max-width: 620px;
+}
+
+/* =============================================================
+   SECTION 2 — FOUR STEPS
+   Background: #ffffff — contrast surface against page-bg.
+   Single-column container; each step is a 2-col grid row.
+   ============================================================= */
+#process-steps {
+  background-color: var(--color-surface);
+  padding: 80px var(--space-section-x);
+  box-shadow:
+    inset 0 1px 0 rgba(38, 38, 38, 0.06),
+    inset 0 -1px 0 rgba(38, 38, 38, 0.06);
+}
+
+#process-steps-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+}
+
+/* ── Individual step row ──────────────────────────────────── */
+.process-step {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  column-gap: 2.5rem;
+  align-items: start;
+  padding: 3rem 0;
+  margin: 0;
+}
+
+/* Horizontal rule between steps */
+.process-rule {
+  border: none;
+  border-top: 1px solid rgba(38, 38, 38, 0.1);
+  margin: 0;
+}
+
+/* ── Large number ─────────────────────────────────────────── */
+.process-step-number {
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  font-weight: 400;
+  color: rgba(112, 37, 115, 0.2);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+/* ── Step content ─────────────────────────────────────────── */
+.process-step-content {
+  padding-top: 0.4rem; /* optical alignment with the number baseline */
+}
+
+.process-step-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-heading);
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.01em;
+}
+
+.process-step-desc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-muted);
+  line-height: 1.7;
+  margin: 0;
+  max-width: 640px;
+}
+
+/* =============================================================
+   SECTION 3 — MATERIALS GRID
+   Background: #f5f5f0. 4-column bento at desktop.
+   ============================================================= */
+#materials-section {
+  background-color: var(--color-page-bg);
+  padding: 80px var(--space-section-x);
+}
+
+#materials-section-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+}
+
+#materials-header {
+  margin-bottom: 2.5rem;
+}
+
+#materials-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+/* ── 4-column bento grid ──────────────────────────────────── */
+#materials-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+/* ── Material card ────────────────────────────────────────── */
+.material-card {
+  background: var(--color-surface);
+  border-radius: 4px;
+  box-shadow:
+    0 1px 3px rgba(38, 38, 38, 0.08),
+    0 0 0 1px rgba(38, 38, 38, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow var(--duration-medium) var(--ease-primary);
+}
+
+.material-card:hover {
+  box-shadow:
+    0 4px 16px rgba(38, 38, 38, 0.13),
+    0 0 0 1px rgba(38, 38, 38, 0.08);
+}
+
+/* ── Card image wrapper ───────────────────────────────────── */
+.material-card-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background-color: rgba(38, 38, 38, 0.05);
+}
+
+.material-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s var(--ease-primary);
+}
+
+.material-card:hover .material-card-img {
+  transform: scale(1.04);
+}
+
+.material-card-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(38, 38, 38, 0.06);
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* ── Card text ────────────────────────────────────────────── */
+.material-card-text {
+  padding: 1.25rem 1.25rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.material-card-name {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-heading);
+  margin: 0 0 0.6rem 0;
+  letter-spacing: -0.01em;
+}
+
+.material-card-desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* =============================================================
+   SECTION 4 — WORKSHOP VIDEO
+   Full-width dark atmospheric section. min-height: 480px.
+   ============================================================= */
+#workshop-section {
+  position: relative;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── Video container ──────────────────────────────────────── */
+#workshop-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#workshop-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Dark overlay — rgba so video bleeds through */
+#workshop-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(9, 31, 44, 0.5) 0%,
+    rgba(9, 31, 44, 0.72) 50%,
+    rgba(9, 31, 44, 0.6) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Centered text content ────────────────────────────────── */
+#workshop-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 5rem var(--space-section-x);
+  max-width: 640px;
+}
+
+#workshop-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.02em;
+}
+
+#workshop-body {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(245, 245, 240, 0.8);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* =============================================================
+   SECTION 5 — CTA BAND
+   Gradient background: #702573 → #3e143f
+   ============================================================= */
+#cta-section {
+  background: linear-gradient(to right, #702573, #3e143f);
+  padding: 80px var(--space-section-x);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle texture layer */
+#cta-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 70% 50%,
+    rgba(255, 255, 255, 0.04) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+#cta-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#cta-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.01em;
+}
+
+#cta-body {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.65;
+  margin: 0 0 2rem 0;
+}
+
+/* ── CTA button — white border pill ──────────────────────── */
+.cta-btn {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: none;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  padding: 0.7rem 1.75rem;
+  letter-spacing: 0.04em;
+  transition:
+    background-color var(--duration-medium) var(--ease-primary),
+    color var(--duration-medium) var(--ease-primary),
+    border-color var(--duration-medium) var(--ease-primary);
+}
+
+.cta-btn:hover {
+  background-color: #ffffff;
+  color: var(--color-accent-dark);
+  border-color: #ffffff;
+}
+
+/* =============================================================
+   SECTION 6 — FOOTER
+   Background: #f5f5f0. Three-column layout.
+   ============================================================= */
+#site-footer {
+  background-color: var(--color-page-bg);
+  border-top: 1px solid rgba(38, 38, 38, 0.1);
+  padding: var(--space-footer-top) var(--space-section-x) 0;
+}
+
+#footer-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid rgba(38, 38, 38, 0.08);
+}
+
+/* ── Brand column ─────────────────────────────────────────── */
+#footer-brand-name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-heading);
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+#footer-address {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-style: normal;
+  color: var(--color-muted);
+  line-height: 1.8;
+  margin: 0 0 0.75rem 0;
+}
+
+#footer-est {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(97, 97, 97, 0.65);
+  margin: 0;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Column headings ──────────────────────────────────────── */
+.footer-col-heading {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0 0 1.25rem 0;
+}
+
+/* ── Nav and contact lists ────────────────────────────────── */
+#footer-nav-list,
+#footer-contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-nav-link {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color var(--duration-medium) ease;
+}
+
+.footer-nav-link:hover {
+  color: var(--color-heading);
+}
+
+.footer-contact-note {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(97, 97, 97, 0.7);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* ── Copyright row ────────────────────────────────────────── */
+#footer-copyright-row {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 1.5rem 0;
+}
+
+#footer-copyright {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(97, 97, 97, 0.6);
+  margin: 0;
+}
+
+/* =============================================================
+   RESPONSIVE — ≤ 900px (tablet)
+   ============================================================= */
+@media (max-width: 900px) {
+
+  /* Page header */
+  #page-header {
+    padding-top: calc(80px + 2.5rem);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Steps */
+  #process-steps {
+    padding: 56px 1.5rem;
+  }
+
+  .process-step {
+    grid-template-columns: 60px 1fr;
+    column-gap: 1.5rem;
+    padding: 2.25rem 0;
+  }
+
+  .process-step-number {
+    font-size: 2.75rem;
+  }
+
+  /* Materials — 2-column at tablet */
+  #materials-section {
+    padding: 56px 1.5rem;
+  }
+
+  #materials-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* Workshop */
+  #workshop-section {
+    min-height: 360px;
+  }
+
+  #workshop-content {
+    padding: 3.5rem 1.5rem;
+  }
+
+  /* CTA */
+  #cta-section {
+    padding: 60px 1.5rem;
+  }
+
+  /* Footer — single column stacked */
+  #site-footer {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 3rem;
+  }
+
+  #footer-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+}
+
+/* =============================================================
+   RESPONSIVE — ≤ 600px (mobile)
+   ============================================================= */
+@media (max-width: 600px) {
+
+  /* Page header */
+  #page-header {
+    padding-top: calc(80px + 2rem);
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  #page-header-heading {
+    font-size: clamp(1.75rem, 7vw, 2.25rem);
+  }
+
+  /* Steps */
+  #process-steps {
+    padding: 40px 1.25rem;
+  }
+
+  .process-step {
+    grid-template-columns: 1fr;
+    padding: 2rem 0;
+  }
+
+  .process-step-number {
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .process-step-content {
+    padding-top: 0;
+  }
+
+  /* Materials — single column on mobile */
+  #materials-section {
+    padding: 40px 1.25rem;
+  }
+
+  #materials-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .material-card-image-wrap {
+    height: 200px;
+  }
+
+  /* CTA button full-width on mobile */
+  .cta-btn {
+    width: 100%;
+    text-align: center;
+    align-self: stretch;
+  }
+
+  /* Workshop */
+  #workshop-content {
+    padding: 3rem 1.25rem;
+  }
+
+  /* CTA */
+  #cta-section {
+    padding: 48px 1.25rem;
+  }
+
+  #cta-inner {
+    align-items: stretch;
+  }
+
+  /* Footer */
+  #site-footer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 2.5rem;
+  }
+
+}

@@ -1,0 +1,29 @@
+# Devon Windsor — Concept by Image
+
+## Brand Premise
+
+A fashion model's eponymous beauty product brand. The site moves between two registers — editorial storytelling and product commerce — and the design system bridges these through a consistent typographic authority and a distinctive structural signature: an organic drip-shaped section divider that appears at the bottom of every light informational section, causing the content to visually "melt" into the dark transitional zones below. The brand operates at the intersection of personal voice and product category. The site does not read as a generic beauty e-commerce platform — it reads as the extension of a specific person's aesthetic world, where the product object (a 3D rendered bottle) navigates the page as a visual protagonist throughout the scroll journey.
+
+## Color Architecture
+
+Near-white (#fcfcfc) is the base surface for all informational and product content sections. Near-black (#222222) handles body text throughout. Heading text is defined as white (#ffffff) in the system — indicating that primary display headings appear on dark section backgrounds rather than on the light surface. The page alternates deliberately between the light (#fcfcfc) informational register and dark background sections that serve as transitional and typographic emphasis zones. A single vibrant accent color is reserved for primary CTA buttons — appearing as the most chromatically active element in an otherwise near-monochromatic system. The color system is minimal in declaration but high-contrast in effect, using the light/dark alternation as the primary pacing device.
+
+## Typography System
+
+Two fonts define a clear editorial split. Brandon Grotesque (bold 700) handles all headings, navigation, and display-scale labels — a condensed geometric sans-serif that carries commercial authority without cold formality. The bold weight at headline scale makes text declarations feel confident and directional. EB Garamond handles body copy, paragraphs, and — unusually — button labels at 17.64px: using a classical serif for buttons signals that the brand's interactive voice is literary rather than utilitarian. The split is: brandon-grotesque for identity and structure; EB Garamond for content and transaction. This pairing sits in a well-established fashion editorial tradition — condensed grotesque display + classical serif text — but the extension of EB Garamond to button labels is a distinctive detail that makes even the CTA text feel editorial rather than commercial.
+
+## Spatial System
+
+The page operates in five distinct spatial modes. The hero is a full-viewport composition with a background video, a centrally animated 3D product object as the primary focal point, and a text block positioned behind the product but in front of the video — establishing depth through Z-layer composition rather than grid. Split media-text sections use a two-column container grid, alternating which side carries the media; all media containers have heavily rounded corners (squircle shape), and a prominent organic drip shape defines each section's bottom boundary. A centered headline section — single typographic element on a dark background, surrounded by extreme whitespace — functions as a visual chapter break between informational sections. A product showcase section uses a static text column alongside a vertically scrolling filmstrip media column — the text is pinned while the images scroll behind it in a masked, rounded container. A horizontal media carousel section breaks the vertical axis for a gallery-browsing interaction before returning to the vertical scroll.
+
+## Photography and Editorial Voice
+
+Photography across the split-media and carousel sections is high-quality, lifestyle-focused, and art-directed with compositional awareness: subjects are often positioned to one side of the frame, creating negative space that balances against the opposing content column. The 3D product object — a rendered beauty product bottle — serves as the dominant media throughout the hero and persists as a scroll actor through subsequent sections, appearing in the foreground of each split-media section before eventually moving to the background as subsequent sections scroll over it. Photography subjects are styled and lit to match the brand's near-monochromatic base palette.
+
+## Navigation and Wayfinding
+
+The navigation bar is sticky throughout the scroll. Over the hero section, it is transparent with dark-colored text. Once the user scrolls past the hero into the content sections, the nav transitions to a glassmorphic solid-light-with-blur treatment — maintaining legibility against both the light content sections and the dark transitional zones. A single CTA button (the accent color) sits on the far right of the nav bar. Nav links are set in brandon-grotesque bold at 13px. The horizontal media carousel introduces the site's only instance of scroll-axis switching — the vertical scroll pauses while the horizontal gallery is navigated.
+
+## Overall Design Character
+
+Devon Windsor is a fashion-editorial beauty site with one defining structural move: the organic drip section divider. Used consistently at the bottom of every light-background informational section, this irregular liquid-spill shape creates a signature visual rhythm down the page — the content does not end, it flows into the next zone. Combined with the persistent 3D product scroll actor (which travels with the user from the hero through subsequent sections, alternately appearing in front of and behind content), the site creates a scroll experience that feels cohesive and choreographed rather than sectional and static. The brandon-grotesque / EB Garamond pairing, the near-monochromatic base palette, the pill-shaped primary CTAs, and the squircle image containers are all system-level decisions that read as brand-specific rather than template-derived.

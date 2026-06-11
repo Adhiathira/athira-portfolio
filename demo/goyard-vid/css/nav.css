@@ -1,0 +1,333 @@
+/* =============================================================================
+   nav.css — Dual-bar sticky navigation for goyard-vid
+   Depends on: tokens.css (must be loaded before this file)
+   Sources:
+     - nav-system/nav.json          (geometry, typography, linkHover, linkActive, background)
+     - interaction-states/interactions.json (navigation link default/hover states)
+     - tokens.css                   (all CSS custom property references)
+   ============================================================================= */
+
+
+/* =============================================================================
+   .site-nav — outer block wrapper
+   Not a sticky container itself; each bar carries its own sticky context.
+   display: block ensures no inline gaps from anonymous box formatting.
+   ============================================================================= */
+
+.site-nav {
+  display: block;  /* block wrapper — no additional stacking; each bar is individually sticky */
+  width:   100%;   /* full-bleed across viewport */
+}
+
+
+/* =============================================================================
+   .nav-utility-bar — top utility strip
+   Source: nav.json geometry.height 49.9765625 → 50px
+           tokens.css --color-nav-bg (deep forest green)
+   Sticky at top:0 so it anchors first; primary bar stacks directly below.
+   ============================================================================= */
+
+.nav-utility-bar {
+  position:        sticky;                  /* nav.json geometry.position "absolute" on source; overridden to sticky for demo two-bar layout */
+  top:             0;                       /* anchors to top of viewport — utility bar is first in stacking order */
+  z-index:         1000;                    /* nav layer above all page content */
+  display:         flex;                    /* three-column flex: left icons | center wordmark | right icon */
+  align-items:     center;                  /* vertically centre all children within the 50px bar */
+  justify-content: space-between;           /* push left group, center group, and right group to their edges */
+  width:           100%;                    /* full viewport width */
+  height:          50px;                    /* nav.json geometry.height 49.9765625px → 50px */
+  background-color: var(--color-nav-bg);    /* tokens.css --color-nav-bg #183f26 deep forest green */
+  padding-left:    var(--space-wrapper-x);  /* tokens.css --space-wrapper-x 100px — horizontal gutter from spacing.json wrapper */
+  padding-right:   var(--space-wrapper-x);  /* tokens.css --space-wrapper-x 100px */
+}
+
+
+/* =============================================================================
+   .nav-icon-btn — utility icon button (Search, Language, Account)
+   Source: tokens.css --color-nav-text #ffffff — inherits nav icon colour
+           interactions.json navigation default cursor "pointer"
+   Resets all UA button chrome; renders only the SVG icon with a clean hit area.
+   ============================================================================= */
+
+.nav-icon-btn {
+  display:          inline-flex;          /* flex so SVG centres within the hit area */
+  align-items:      center;               /* vertically centre SVG icon */
+  justify-content:  center;              /* horizontally centre SVG icon */
+  width:            32px;                 /* square hit area — comfortable for pointer interaction */
+  height:           32px;                 /* matches width for square target */
+  padding:          0;                    /* remove UA button padding */
+  background:       transparent;          /* remove UA button background (grey) */
+  border:           none;                 /* remove UA button border */
+  color:            var(--color-nav-text); /* tokens.css --color-nav-text #ffffff — SVG uses currentColor */
+  cursor:           pointer;              /* interactions.json navigation default cursor "pointer" */
+  line-height:      1;                    /* prevent line-height from adding phantom height */
+  -webkit-appearance: none;              /* remove Safari UA button chrome */
+  appearance:       none;                /* remove UA button chrome cross-browser */
+}
+
+.nav-icon-btn:hover {
+  opacity:          1;                    /* interactions.json navigation default-link-1 hover opacity "1" — mirrors link hover treatment */
+}
+
+.nav-icon-btn svg {
+  display:          block;               /* remove inline SVG descender gap */
+  flex-shrink:      0;                   /* prevent SVG from shrinking in flex context */
+}
+
+
+/* =============================================================================
+   .nav-utility-left / .nav-utility-right — flanking icon slots
+   These flex items sit at the far ends of the utility bar.
+   ============================================================================= */
+
+.nav-utility-left {
+  display:     flex;            /* flex row for icon group — aligns icon buttons horizontally */
+  align-items: center;          /* vertically center icons within the 50px bar */
+  gap:         16px;            /* comfortable gap between icon buttons; no token for icon gap — nearest is --space-cta-x 15px rounded up */
+  flex:        1;               /* takes equal share of space alongside center wordmark slot */
+}
+
+.nav-utility-right {
+  display:         flex;        /* flex row for right icon group */
+  align-items:     center;      /* vertically center icons */
+  justify-content: flex-end;    /* push icon to the far right edge */
+  gap:             16px;        /* mirrors .nav-utility-left gap for symmetry */
+  flex:            1;           /* equal share — keeps wordmark truly centered */
+}
+
+
+/* =============================================================================
+   .nav-wordmark — centered wordmark slot
+   Sits as the middle flex item between left and right groups.
+   ============================================================================= */
+
+.nav-wordmark {
+  display:         flex;        /* flex so inner .nav-logo-text aligns precisely */
+  align-items:     center;      /* vertically center logo text */
+  justify-content: center;      /* horizontally center within its flex cell */
+  flex:            0 0 auto;    /* do not grow or shrink — wordmark is fixed width to its content */
+  white-space:     nowrap;      /* prevent line-wrap on the brand name */
+  text-decoration: none;        /* override base.css a:hover { text-decoration: underline } — wordmark anchor never underlines */
+}
+
+.nav-wordmark:hover {
+  text-decoration: none;        /* explicit hover override — base.css a:hover sets underline; this cancels it on the anchor */
+}
+
+
+/* =============================================================================
+   .nav-logo-text — brand name typeset
+   Source: nav.json typography.fontFamily "Goyard, sans-serif" → --font-heading (Plus Jakarta Sans substitute per font-db.json)
+           nav.json typography.fontSize "0.5625rem" → tokens.css --type-nav-size 12px (equivalent; token preferred)
+           nav.json typography.fontWeight "400" → tokens.css --type-nav-fw 400
+           nav.json typography.letterSpacing "0.0819rem"
+           nav.json typography.textTransform "uppercase"
+           tokens.css --color-nav-text #ffffff
+   ============================================================================= */
+
+.nav-logo-text {
+  font-family:    var(--font-heading);   /* tokens.css --font-heading 'Plus Jakarta Sans' — substitutes Goyard proprietary typeface per font-db.json */
+  font-size:      var(--type-nav-size);  /* tokens.css --type-nav-size 12px — nav.json typography.fontSize 0.5625rem */
+  font-weight:    var(--type-nav-fw);    /* tokens.css --type-nav-fw 400 — nav.json typography.fontWeight "400" */
+  color:          var(--color-nav-text); /* tokens.css --color-nav-text #ffffff — utility bar text/icon color */
+  text-transform: uppercase;             /* nav.json typography.textTransform "uppercase" */
+  letter-spacing: 0.0819rem;            /* nav.json typography.letterSpacing "0.0819rem" — aggressive spacing signals luxury restraint */
+  line-height:    2.22;                 /* nav.json typography.lineHeight "2.22" */
+  text-decoration: none;                /* override base.css a { } — wordmark never underlines */
+}
+
+
+/* =============================================================================
+   .nav-primary-bar — secondary navigation strip
+   Source: nav.json geometry.height 49.9765625 → 50px
+           tokens.css --color-nav-bg-scrolled #2d5a3d (lighter forest green)
+           nav.json background.borderBottomScrolled "1px solid rgba(255, 255, 255, 0.5)"
+   Stacks directly below utility bar via top: 50px.
+   ============================================================================= */
+
+.nav-primary-bar {
+  position:        sticky;                       /* sticky within document flow — follows user on scroll */
+  top:             50px;                         /* nav.json geometry.height 49.9765625 → 50px — directly beneath utility bar */
+  z-index:         999;                          /* one level below utility bar (1000) so it slides under on fast scroll */
+  display:         flex;                         /* flex row: nav links on left, auth controls on right */
+  align-items:     center;                       /* vertically center all children in the 50px height */
+  justify-content: space-between;               /* push links and auth to opposite ends */
+  width:           100%;                         /* full viewport width */
+  height:          50px;                         /* nav.json geometry.height 49.9765625px → 50px (matches utility bar) */
+  background-color: var(--color-nav-bg-scrolled); /* tokens.css --color-nav-bg-scrolled #2d5a3d — medium forest green */
+  border-bottom:   1px solid rgba(255, 255, 255, 0.5); /* nav.json background.borderBottomScrolled "1px solid rgba(255,255,255,0.5)" */
+  padding-left:    var(--space-wrapper-x);        /* tokens.css --space-wrapper-x 100px — horizontal gutter from spacing.json wrapper */
+  padding-right:   var(--space-wrapper-x);        /* tokens.css --space-wrapper-x 100px */
+}
+
+
+/* =============================================================================
+   .nav-links — horizontal list of 4 primary nav items
+   Centered within their flex area on the left side of the primary bar.
+   ============================================================================= */
+
+.nav-links {
+  display:     flex;                    /* horizontal flex row for nav items */
+  align-items: center;                  /* vertically center links within the bar */
+  gap:         32px;                    /* comfortable spacing between items; closest token is --space-cta-x (15px) × 2 = 30px; 32px from nav.json itemSpacing=0 base with visual breathing room — no dedicated token for link gap */
+  list-style:  none;                    /* base.css already resets ul list-style; explicit here for robustness */
+  margin:      0;                       /* reset any browser UA margin on ul */
+  padding:     0;                       /* reset any browser UA padding on ul */
+}
+
+
+/* =============================================================================
+   .nav-link — individual navigation anchor
+   Default state: opacity 0.5 (exclusivity signal — Goyard "deliberate understatement")
+   Source: interactions.json navigation default-link-1/2/3/4 — opacity "0.5", color "rgb(255,255,255)", fontWeight "400"
+           nav.json typography (font-family, font-size, font-weight, letter-spacing, text-transform)
+           nav.json linkHover.transition → "color 0.15s ease-in-out" for link hover
+   position: relative required for ::after dot indicator on .nav-link--active
+   ============================================================================= */
+
+.nav-link {
+  display:         inline-block;         /* inline-block so ::after dot can be positioned relative to the text */
+  position:        relative;             /* establishes containing block for ::after active dot */
+  font-family:     var(--font-heading);  /* tokens.css --font-heading 'Plus Jakarta Sans' — nav.json typography.fontFamily substitute */
+  font-size:       var(--type-nav-size); /* tokens.css --type-nav-size 12px — nav.json typography.fontSize 0.5625rem */
+  font-weight:     var(--type-nav-fw);   /* tokens.css --type-nav-fw 400 — interactions.json navigation default fontWeight "400" */
+  color:           var(--color-nav-text); /* tokens.css --color-nav-text #ffffff — interactions.json navigation default color "rgb(255,255,255)" */
+  opacity:         0.5;                  /* interactions.json navigation default-link-1 default opacity "0.5" — resting exclusivity state */
+  text-transform:  uppercase;            /* nav.json typography.textTransform "uppercase" */
+  letter-spacing:  0.0819rem;            /* nav.json typography.letterSpacing "0.0819rem" */
+  line-height:     2.22;                 /* nav.json typography.lineHeight "2.22" */
+  text-decoration: none;                 /* override base.css a:hover { text-decoration: underline } — nav links never underline */
+  cursor:          pointer;              /* interactions.json navigation default-link-1 default cursor "pointer" */
+  transition:      color 0.15s ease-in-out; /* nav.json linkHover.transition "color 0.15s ease-in-out" */
+  white-space:     nowrap;               /* prevent link text from wrapping inside the nav bar */
+}
+
+
+/* =============================================================================
+   .nav-link:hover — hover state
+   Source: interactions.json navigation default-link-1 hover — opacity "1", color "rgb(255,255,255)"
+   Opacity lifts to 1; color stays white (no color change, only opacity change).
+   text-decoration: none overrides base.css a:hover rule explicitly.
+   ============================================================================= */
+
+.nav-link:hover {
+  opacity:         1;    /* interactions.json navigation default-link-1 hover opacity "1" — link becomes fully opaque */
+  text-decoration: none; /* base.css a:hover sets text-decoration: underline — this override is required */
+}
+
+
+/* =============================================================================
+   .nav-link--active — currently active page link
+   Source: nav.json linkActive.fontWeight "400", linkActive.indicator "dot"
+           interactions.json navigation default — opacity 1 for active state (visible page)
+   Dot indicator: amber circle centered below the link text via ::after.
+   ============================================================================= */
+
+.nav-link--active {
+  opacity:     1;    /* active link is fully opaque — user's current location is always readable */
+  font-weight: var(--type-nav-fw); /* nav.json linkActive.fontWeight "400" — no weight change for active, matches nav.json */
+}
+
+
+/* =============================================================================
+   .nav-link--active::after — amber dot indicator
+   Source: nav.json linkActive.indicator "dot"
+           tokens.css --color-accent #e8b14d (golden amber)
+   A 4px × 4px circle centered horizontally below the link text.
+   nav.json linkHover.underline.thickness "4px" informs dot diameter.
+   ============================================================================= */
+
+.nav-link--active::after {
+  content:          '';                    /* pseudo-element — no text content, only visual dot */
+  display:          block;                 /* block so width/height apply and margin auto centers it */
+  position:         absolute;              /* positioned relative to .nav-link (position: relative) */
+  bottom:           -6px;                  /* places dot just below the link text baseline with breathing room */
+  left:             50%;                   /* start from horizontal center of parent */
+  transform:        translateX(-50%);      /* shift back by half dot width to truly center */
+  width:            4px;                   /* nav.json linkHover.underline.thickness "4px" — jewel-like precision diameter */
+  height:           4px;                   /* equal to width — perfect circle */
+  border-radius:    50%;                   /* makes the 4×4 square a circle */
+  background-color: var(--color-accent);   /* tokens.css --color-accent #e8b14d golden amber — house identity accent */
+}
+
+
+/* =============================================================================
+   .nav-auth — authentication controls container (right side of primary bar)
+   Holds Log in + Join button.
+   ============================================================================= */
+
+.nav-auth {
+  display:     flex;                   /* flex row for log-in and join button */
+  align-items: center;                 /* vertically center controls within the 50px bar */
+  gap:         var(--space-cta-x);     /* tokens.css --space-cta-x 15px — spacing.json cta-button horizontal padding reused as gap */
+}
+
+
+/* =============================================================================
+   .nav-login — Log in link
+   Matches .nav-link typographic treatment; no border, transparent background.
+   Source: interactions.json navigation default-link-1 default/hover
+           nav.json typography
+   ============================================================================= */
+
+.nav-login {
+  display:         inline-block;          /* inline-block consistent with .nav-link */
+  position:        relative;              /* establishes stacking context; future-proof for dot if needed */
+  font-family:     var(--font-heading);   /* tokens.css --font-heading 'Plus Jakarta Sans' — nav.json typography.fontFamily substitute */
+  font-size:       var(--type-nav-size);  /* tokens.css --type-nav-size 12px — nav.json typography.fontSize 0.5625rem */
+  font-weight:     var(--type-nav-fw);    /* tokens.css --type-nav-fw 400 — interactions.json navigation default fontWeight "400" */
+  color:           var(--color-nav-text); /* tokens.css --color-nav-text #ffffff — nav text color */
+  opacity:         0.5;                   /* interactions.json navigation default-link-1 default opacity "0.5" — same resting state as nav links */
+  text-transform:  uppercase;             /* nav.json typography.textTransform "uppercase" */
+  letter-spacing:  0.0819rem;             /* nav.json typography.letterSpacing "0.0819rem" */
+  line-height:     2.22;                  /* nav.json typography.lineHeight "2.22" */
+  text-decoration: none;                  /* override base.css a:hover — log-in never underlines */
+  background:      transparent;           /* no background — utility label only */
+  border:          none;                  /* no border on log-in — distinguishes from Join button */
+  cursor:          pointer;               /* interactions.json navigation default cursor "pointer" */
+  transition:      color 0.15s ease-in-out; /* nav.json linkHover.transition "color 0.15s ease-in-out" */
+  padding:         0;                     /* no padding — pure text label; Join button carries padding */
+  white-space:     nowrap;                /* prevent text wrap inside nav bar */
+}
+
+.nav-login:hover {
+  opacity:         1;    /* interactions.json navigation default-link-1 hover opacity "1" */
+  text-decoration: none; /* base.css a:hover override — log-in never underlines on hover */
+}
+
+
+/* =============================================================================
+   .nav-join — primary CTA "Join" button
+   Transparent background with golden amber border — Goyard CTA pattern.
+   Source: tokens.css --cta-primary-border #e8b14d
+           tokens.css --cta-primary-text #ffffff
+           tokens.css --radius-button 3px (spacing.json cta-button)
+           tokens.css --space-cta-y 7px / --space-cta-x 15px (spacing.json cta-button)
+           nav.json typography (font-family, font-size, font-weight, letter-spacing, text-transform)
+   ============================================================================= */
+
+.nav-join {
+  display:         inline-flex;              /* inline-flex so padding and border render correctly as button */
+  align-items:     center;                   /* vertically center label text within button */
+  justify-content: center;                   /* horizontally center label */
+  background:      transparent;              /* tokens.css CTA pattern — all Goyard CTAs use transparent backgrounds */
+  border:          1px solid var(--cta-primary-border); /* tokens.css --cta-primary-border #e8b14d — golden amber border */
+  color:           var(--cta-primary-text);  /* tokens.css --cta-primary-text #ffffff — white label on dark nav background */
+  padding:         var(--space-cta-y) var(--space-cta-x); /* tokens.css --space-cta-y 7px, --space-cta-x 15px — spacing.json cta-button */
+  border-radius:   var(--radius-button);     /* tokens.css --radius-button 3px — spacing.json cta-button border-radius */
+  font-family:     var(--font-heading);      /* tokens.css --font-heading 'Plus Jakarta Sans' — nav.json typography.fontFamily substitute */
+  font-size:       var(--type-nav-size);     /* tokens.css --type-nav-size 12px — nav.json typography.fontSize 0.5625rem */
+  font-weight:     var(--type-nav-fw);       /* tokens.css --type-nav-fw 400 — nav.json typography.fontWeight "400" */
+  text-transform:  uppercase;                /* nav.json typography.textTransform "uppercase" */
+  letter-spacing:  0.0819rem;               /* nav.json typography.letterSpacing "0.0819rem" */
+  line-height:     1;                        /* tighten line-height inside button so padding controls visual height precisely */
+  text-decoration: none;                     /* override base.css a:hover — Join button never underlines */
+  cursor:          pointer;                  /* interactive element — pointer cursor */
+  transition:      color 0.15s ease-in-out, border-color 0.15s ease-in-out; /* nav.json linkHover.transition extended for border */
+  white-space:     nowrap;                   /* prevent label from wrapping */
+}
+
+.nav-join:hover {
+  text-decoration: none; /* base.css a:hover override — Join button never underlines on hover */
+  opacity:         1;    /* ensure full opacity on hover; no opacity transition defined for Join but maintains consistent hover behaviour */
+}

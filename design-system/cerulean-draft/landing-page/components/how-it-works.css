@@ -1,0 +1,132 @@
+/* ── How It Works Section — Cerulean Draft / Strata ── */
+/* Distinct from features: numbered step rows, 52px counter + 1fr content, light bg */
+
+#how-it-works {
+  background: var(--color-page-bg);
+  padding: var(--space-section) 0;
+  border-bottom: 1px solid rgba(27, 27, 55, 0.06);
+  position: relative;
+}
+
+/* Subtle geometric accent top-right */
+#how-it-works::before {
+  content: '';
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 240px;
+  height: 240px;
+  border: 1px solid rgba(99, 202, 190, 0.12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#how-it-works-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-gutter);
+}
+
+#how-it-works-label {
+  font-family: var(--font-heading);
+  font-size: var(--type-h4);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--color-accent-violet);
+  margin: 0 0 24px;
+}
+
+#how-it-works-heading {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2);
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--color-heading);
+  margin: 0 0 80px;
+  max-width: 560px;
+}
+
+/* ── Step list: numbered rows ── */
+#step-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.step-item {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  column-gap: 40px;
+  align-items: start;
+  padding: 40px 0;
+  border-top: 1px solid var(--color-border);
+  position: relative;
+}
+
+.step-item:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.step-number {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: var(--weight-regular);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+  padding-top: 4px;
+  /* position: sticky with scroll could be added — skip for clean impl */
+}
+
+.step-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 60px;
+  align-items: start;
+}
+
+.step-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--color-heading);
+  margin: 0;
+}
+
+.step-body {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  letter-spacing: var(--letter-spacing-body);
+  color: var(--color-muted);
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .step-content {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .step-item {
+    grid-template-columns: 40px 1fr;
+    column-gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  #how-it-works-heading {
+    margin-bottom: 48px;
+  }
+  .step-item {
+    padding: 28px 0;
+  }
+}

@@ -1,0 +1,47 @@
+:root {
+  --motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-decelerate: cubic-bezier(0.76, 0, 0.24, 1);
+  --motion-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-easing-sharp: cubic-bezier(0.4, 0, 0.6, 1);
+  --motion-duration-fast: 0.2s;
+  --motion-duration-standard: 0.4s;
+  --motion-duration-emphasis: 0.7s;
+  --motion-duration-reveal: 0.9s;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes revealClip {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0% 0 0); }
+}
+
+.motion-fade-up {
+  animation: fadeUp var(--motion-duration-emphasis) var(--motion-easing-decelerate) both;
+}
+
+.motion-fade-in {
+  animation: fadeIn var(--motion-duration-standard) var(--motion-easing-standard) both;
+}
+
+.motion-reveal {
+  animation: revealClip var(--motion-duration-reveal) var(--motion-easing-decelerate) both;
+}
+
+.gsap-hidden {
+  opacity: 0;
+}

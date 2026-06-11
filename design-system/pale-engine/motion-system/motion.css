@@ -1,0 +1,92 @@
+/* pale-engine / motion-system
+ *
+ * Source: griting-formless
+ * Motion tokens: single universal easing, three durations
+ *
+ * TWIST APPLIED: Duration scaling ×1.5 (intensity 3 — slower)
+ *   Original durations: 0.2s / 0.3s / 0.5s
+ *   Twisted durations:  0.3s / 0.45s / 0.75s
+ *   Easing curve unchanged: cubic-bezier(0.4, 0, 0.2, 1)
+ */
+
+/* ─── Timing tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --duration-fast:     0.3s;
+  --duration-standard: 0.45s;
+  --duration-slow:     0.75s;
+
+  --transition-standard: all var(--duration-standard) var(--easing-standard);
+  --transition-fast:     all var(--duration-fast)     var(--easing-standard);
+  --transition-slow:     all var(--duration-slow)     var(--easing-standard);
+}
+
+/* ─── Ghost-to-fill button hover ────────────────────────────────────────────── */
+.btn-ghost {
+  transition:
+    background-color var(--duration-standard) var(--easing-standard),
+    color            var(--duration-standard) var(--easing-standard),
+    border-color     var(--duration-standard) var(--easing-standard);
+}
+
+/* ─── Opacity-step link hover ───────────────────────────────────────────────── */
+.nav-link,
+.icon-link {
+  opacity: 1;
+  transition: opacity var(--duration-standard) var(--easing-standard);
+}
+.nav-link:hover,
+.icon-link:hover {
+  opacity: 0.6;
+}
+
+/* ─── Standard interactive element transitions ──────────────────────────────── */
+.fixed,
+.mx-auto {
+  transition: var(--transition-standard);
+}
+
+.interactive-opacity,
+.text-button {
+  transition:
+    color            var(--duration-standard) var(--easing-standard),
+    background-color var(--duration-standard) var(--easing-standard),
+    border-color     var(--duration-standard) var(--easing-standard),
+    opacity          var(--duration-standard) var(--easing-standard),
+    box-shadow       var(--duration-standard) var(--easing-standard),
+    transform        var(--duration-standard) var(--easing-standard),
+    filter           var(--duration-standard) var(--easing-standard),
+    backdrop-filter  var(--duration-standard) var(--easing-standard);
+}
+
+.text-base {
+  transition:
+    color            var(--duration-fast) var(--easing-standard),
+    background-color var(--duration-fast) var(--easing-standard),
+    border-color     var(--duration-fast) var(--easing-standard),
+    opacity          var(--duration-fast) var(--easing-standard),
+    transform        var(--duration-fast) var(--easing-standard);
+}
+
+.s-full {
+  transition:
+    color            var(--duration-slow) var(--easing-standard),
+    background-color var(--duration-slow) var(--easing-standard),
+    border-color     var(--duration-slow) var(--easing-standard),
+    opacity          var(--duration-slow) var(--easing-standard),
+    transform        var(--duration-slow) var(--easing-standard),
+    filter           var(--duration-slow) var(--easing-standard),
+    backdrop-filter  var(--duration-slow) var(--easing-standard);
+}
+
+/* ─── GSAP safety rules (enforced in JS, documented here for reference) ──────── */
+/*                                                                                */
+/*  SAFE:   gsap.from(el, { y: 40, duration: 0.9, ease: "power2.out",            */
+/*                   scrollTrigger: { trigger: el, start: "top 85%" } })          */
+/*                                                                                */
+/*  UNSAFE: gsap.from(el, { opacity: 0, y: 40 })  <- NEVER use opacity:0         */
+/*          opacity:0 in from() hides content before ScrollTrigger fires.         */
+/*                                                                                */
+/*  Screenshot mode:                                                               */
+/*    gsap.set("*", { clearProps: "all" }); ScrollTrigger.killAll();              */

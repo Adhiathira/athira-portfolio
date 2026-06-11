@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volt Studio — Design the web in three dimensions</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--color-page-bg);
+      color: var(--color-body);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--leading-body);
+      letter-spacing: var(--tracking-body);
+      overflow-x: hidden;
+    }
+
+    /* ── Announcement Bar ── */
+    #announcement-bar {
+      background: var(--color-announcement-bg);
+      color: var(--color-muted);
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: var(--weight-medium);
+      text-align: center;
+      padding: 9px var(--space-lg);
+      letter-spacing: 0.02em;
+      position: relative;
+      z-index: 100;
+    }
+
+    #announcement-bar a {
+      color: var(--color-accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(253, 53, 110, 0.3);
+      transition: border-color var(--duration-base) var(--ease-standard);
+    }
+
+    #announcement-bar a:hover { border-color: var(--color-accent); }
+
+    /* ── Navigation ── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      transition: background var(--duration-medium) var(--ease-standard),
+                  backdrop-filter var(--duration-medium) var(--ease-standard),
+                  box-shadow var(--duration-medium) var(--ease-standard);
+    }
+
+    /* nav top is set dynamically in JS based on announcement bar scroll position */
+
+    #nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 60px;
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+    }
+
+    #nav-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: var(--weight-bold);
+      color: var(--color-heading);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #nav-logo-mark {
+      width: 22px;
+      height: 22px;
+      background: var(--color-accent);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #nav-logo-mark svg { width: 12px; height: 12px; }
+
+    #nav-left {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-right: auto;
+    }
+
+    #nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-left: auto;
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: var(--weight-medium);
+      color: var(--color-muted);
+      text-decoration: none;
+      letter-spacing: var(--tracking-normal);
+      transition: color var(--duration-medium) var(--ease-hover);
+    }
+
+    .nav-link:hover { color: var(--color-heading); }
+
+    #nav-cta {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: var(--weight-semibold);
+      padding: var(--btn-padding-v) 20px;
+      border-radius: var(--btn-radius);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: box-shadow var(--duration-medium) var(--ease-smooth),
+                  transform var(--duration-base) var(--ease-standard);
+    }
+
+    #nav-cta:hover {
+      box-shadow: var(--shadow-accent-glow);
+      transform: translateY(-1px);
+    }
+
+    #nav.scrolled {
+      background: rgba(25, 25, 28, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    /* ── Hero Section ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      background: var(--color-hero-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 120px 40px 80px;
+    }
+
+    /* Animated spatial grid background */
+    #hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(253, 53, 110, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(253, 53, 110, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at 50% 40%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 40%, black 0%, transparent 70%);
+    }
+
+    /* Radial glow */
+    #hero-glow {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(253, 53, 110, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 900px;
+    }
+
+    #hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(253, 53, 110, 0.1);
+      border: 1px solid rgba(253, 53, 110, 0.2);
+      border-radius: var(--btn-radius);
+      padding: 6px 16px;
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: var(--weight-medium);
+      color: var(--color-accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    #hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    #hero-headline {
+      font-family: var(--font-display);
+      font-size: var(--type-hero);
+      font-weight: var(--weight-extrabold);
+      color: var(--color-heading);
+      line-height: 1.04;
+      letter-spacing: -0.032em;
+      margin-bottom: 24px;
+    }
+
+    #hero-headline-accent {
+      color: var(--color-accent);
+      display: block;
+    }
+
+    #hero-subhead {
+      font-family: var(--font-body);
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      font-weight: var(--weight-regular);
+      color: var(--color-muted);
+      line-height: 1.6;
+      letter-spacing: var(--tracking-paragraph);
+      max-width: 580px;
+      margin: 0 auto 40px;
+    }
+
+    #hero-cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      font-family: var(--font-body);
+      font-size: var(--type-button);
+      font-weight: var(--weight-semibold);
+      line-height: 1;
+      padding: 12px var(--btn-padding-h);
+      border-radius: var(--btn-radius);
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: box-shadow var(--duration-medium) var(--ease-smooth),
+                  transform var(--duration-base) var(--ease-standard);
+    }
+
+    .btn-primary:hover {
+      box-shadow: var(--shadow-accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-body);
+      font-family: var(--font-body);
+      font-size: var(--type-button);
+      font-weight: var(--weight-medium);
+      line-height: 1;
+      padding: 12px var(--btn-padding-h);
+      border-radius: var(--btn-radius);
+      text-decoration: none;
+      border: 1px solid rgba(228, 228, 231, 0.2);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color var(--duration-medium) var(--ease-standard),
+                  color var(--duration-base) var(--ease-standard),
+                  background var(--duration-base) var(--ease-standard);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(228, 228, 231, 0.5);
+      color: var(--color-heading);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* Hero product mockup */
+    #hero-mockup-wrapper {
+      position: relative;
+      margin-top: 72px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 2;
+    }
+
+    #hero-mockup-frame {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        0 0 0 1px rgba(253, 53, 110, 0.08),
+        0 32px 80px rgba(0,0,0,0.6),
+        0 8px 24px rgba(0,0,0,0.4);
+      background: var(--color-surface-2);
+      aspect-ratio: 16 / 9;
+    }
+
+    #hero-mockup-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #hero-mockup-placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background: var(--color-surface-2);
+      color: var(--color-muted);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+    }
+
+    /* Subtle edge vignette on mockup */
+    #hero-mockup-vignette {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 60%,
+        rgba(15, 15, 16, 0.8) 100%
+      );
+      pointer-events: none;
+      border-radius: 16px;
+    }
+
+    /* Section browser bar decoration */
+    #hero-mockup-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 36px;
+      background: rgba(44, 44, 48, 0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 6px;
+    }
+
+    .mockup-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .mockup-dot-red { background: #ff5f57; }
+    .mockup-dot-yellow { background: #febc2e; }
+    .mockup-dot-green { background: #28c840; }
+
+    #hero-mockup-url {
+      flex: 1;
+      margin: 0 16px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    #hero-mockup-url span {
+      font-size: 0.7rem;
+      color: var(--color-muted);
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Logo Belt ── */
+    #logo-belt {
+      background: linear-gradient(180deg, var(--color-hero-bg) 0%, var(--color-page-bg) 100%);
+      padding: 56px 40px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #logo-belt-label {
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: var(--weight-medium);
+      color: var(--color-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+      opacity: 0.6;
+    }
+
+    #logo-belt-track {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 56px;
+      flex-wrap: wrap;
+    }
+
+    .logo-belt-item {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: var(--weight-semibold);
+      color: rgba(172, 172, 175, 0.4);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: color var(--duration-medium) var(--ease-standard);
+    }
+
+    .logo-belt-item:hover { color: var(--color-muted); }
+
+    /* ── Features Highlight ── */
+    #features-highlight {
+      padding: var(--space-3xl) 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #features-highlight::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(253, 53, 110, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    #features-highlight-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 72px;
+    }
+
+    #features-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: var(--weight-semibold);
+      color: var(--color-accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    #features-title {
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      font-weight: var(--weight-bold);
+      color: var(--color-heading);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 20px;
+    }
+
+    #features-subtitle {
+      font-family: var(--font-body);
+      font-size: var(--type-p);
+      color: var(--color-muted);
+      line-height: 1.6;
+    }
+
+    #features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: var(--grid-container);
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      position: relative;
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      overflow: hidden;
+      transition: transform var(--duration-medium) var(--ease-smooth),
+                  border-color var(--duration-medium) var(--ease-standard),
+                  box-shadow var(--duration-medium) var(--ease-standard);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(253, 53, 110, 0.04) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity var(--duration-medium) var(--ease-standard);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(253, 53, 110, 0.2);
+      box-shadow: var(--shadow-elevated), 0 0 0 1px rgba(253, 53, 110, 0.08);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(253, 53, 110, 0.1);
+      border: 1px solid rgba(253, 53, 110, 0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--color-accent);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .feature-card-title {
+      font-family: var(--font-display);
+      font-size: 1.1875rem;
+      font-weight: var(--weight-semibold);
+      color: var(--color-heading);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card-body {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--color-muted);
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Feature image card thumbnail */
+    .feature-card-img-wrapper {
+      position: relative;
+      margin-top: 28px;
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      background: var(--color-surface-3);
+    }
+
+    .feature-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .feature-card-img-placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: 0.75rem;
+      color: var(--color-muted);
+      opacity: 0.5;
+    }
+
+    /* ── Feature Spotlight ── */
+    #feature-spotlight {
+      padding: var(--space-3xl) 40px;
+      background: linear-gradient(180deg, var(--color-page-bg) 0%, rgba(44,44,48,0.3) 50%, var(--color-page-bg) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #feature-spotlight-inner {
+      max-width: var(--grid-container);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 45fr 55fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    #spotlight-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    #spotlight-eyebrow {
+      font-size: 0.75rem;
+      font-weight: var(--weight-semibold);
+      color: var(--color-accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    #spotlight-title {
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      font-weight: var(--weight-bold);
+      color: var(--color-heading);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 24px;
+    }
+
+    #spotlight-body {
+      font-size: var(--type-p);
+      color: var(--color-muted);
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+
+    #spotlight-feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .spotlight-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9375rem;
+      color: var(--color-body);
+      line-height: 1.5;
+    }
+
+    .spotlight-feature-item::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      background: rgba(253, 53, 110, 0.15);
+      border: 1px solid rgba(253, 53, 110, 0.3);
+      border-radius: 50%;
+      margin-top: 2px;
+      position: relative;
+    }
+
+    .spotlight-feature-item::after {
+      content: '';
+      /* accent dot inside the circle */
+    }
+
+    #spotlight-image-wrapper {
+      position: relative;
+    }
+
+    #spotlight-image-frame {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow-elevated);
+      aspect-ratio: 4 / 3;
+      background: var(--color-surface-2);
+    }
+
+    #spotlight-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #spotlight-img-placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      opacity: 0.5;
+    }
+
+    /* Floating stat card */
+    #spotlight-stat-card {
+      position: absolute;
+      bottom: -24px;
+      left: -32px;
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow-card);
+      z-index: 2;
+    }
+
+    #spotlight-stat-number {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: var(--weight-extrabold);
+      color: var(--color-accent);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    #spotlight-stat-label {
+      font-size: 0.75rem;
+      color: var(--color-muted);
+      font-weight: var(--weight-medium);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Testimonials ── */
+    #testimonials {
+      padding: var(--space-3xl) 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #testimonials::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--color-border) 30%, var(--color-border) 70%, transparent 100%);
+    }
+
+    #testimonials-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    #testimonials-title {
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      font-weight: var(--weight-bold);
+      color: var(--color-heading);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+    }
+
+    #testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: var(--grid-container);
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--duration-medium) var(--ease-smooth),
+                  border-color var(--duration-medium) var(--ease-standard);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(228, 228, 231, 0.2);
+    }
+
+    /* Subtle top-edge highlight */
+    .testimonial-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(253, 53, 110, 0.3) 50%, transparent 100%);
+    }
+
+    .testimonial-quote {
+      font-size: 0.9375rem;
+      color: var(--color-body);
+      line-height: 1.65;
+      margin-bottom: 24px;
+      font-style: italic;
+      opacity: 0.9;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testimonial-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-surface-3);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .testimonial-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .testimonial-avatar-placeholder {
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--color-surface-3), var(--color-surface-raised));
+    }
+
+    .testimonial-name {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: var(--weight-semibold);
+      color: var(--color-heading);
+    }
+
+    .testimonial-role {
+      font-size: 0.8125rem;
+      color: var(--color-muted);
+    }
+
+    /* ── CTA Section ── */
+    #cta-section {
+      padding: var(--space-3xl) 40px;
+      background: radial-gradient(ellipse at 50% 50%, rgba(253, 53, 110, 0.1) 0%, transparent 60%),
+                  linear-gradient(180deg, var(--color-page-bg) 0%, rgba(44,44,48,0.4) 50%, var(--color-page-bg) 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #cta-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    #cta-title {
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      font-weight: var(--weight-extrabold);
+      color: var(--color-heading);
+      letter-spacing: -0.028em;
+      line-height: 1.08;
+      margin-bottom: 20px;
+    }
+
+    #cta-subtitle {
+      font-size: var(--type-p);
+      color: var(--color-muted);
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    #cta-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Footer ── */
+    #footer {
+      background: var(--color-footer-bg);
+      border-top: 1px solid var(--color-border);
+      padding: 72px 40px 40px;
+    }
+
+    #footer-inner {
+      max-width: var(--grid-container);
+      margin: 0 auto;
+    }
+
+    #footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: var(--grid-gap);
+      margin-bottom: 64px;
+    }
+
+    #footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: var(--weight-bold);
+      color: var(--color-heading);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    #footer-logo-mark {
+      width: 20px;
+      height: 20px;
+      background: var(--color-accent);
+      border-radius: 4px;
+    }
+
+    #footer-tagline {
+      font-size: 0.9rem;
+      color: var(--color-footer-text);
+      line-height: 1.55;
+      max-width: 280px;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: var(--weight-semibold);
+      color: var(--color-heading);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 0.9rem;
+      color: var(--color-footer-text);
+      text-decoration: none;
+      transition: color var(--duration-medium) var(--ease-standard);
+    }
+
+    .footer-links a:hover { color: var(--color-heading); }
+
+    #footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    #footer-copy {
+      font-size: 0.8125rem;
+      color: var(--color-footer-text);
+    }
+
+    #footer-legal {
+      display: flex;
+      gap: 24px;
+    }
+
+    #footer-legal a {
+      font-size: 0.8125rem;
+      color: var(--color-footer-text);
+      text-decoration: none;
+      transition: color var(--duration-base) var(--ease-standard);
+    }
+
+    #footer-legal a:hover { color: var(--color-heading); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      #hero {
+        flex-direction: column;
+        padding: 100px 24px 60px;
+        gap: 48px;
+        min-height: auto;
+      }
+
+      #hero-content {
+        text-align: left;
+        max-width: 100%;
+      }
+
+      #hero-eyebrow { margin-bottom: 20px; }
+
+      #hero-mockup-wrapper {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 0;
+      }
+
+      .btn-primary, .btn-secondary {
+        padding: 12px 20px;
+      }
+
+      #nav-inner {
+        padding: 0 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #hero { padding: 88px 20px 48px; gap: 36px; }
+
+      #hero-cta-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 20px;
+      }
+
+      #nav-left, #nav-right { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div id="announcement-bar">
+    Introducing Volt Studio 2.0 — <a href="features.html">See what's new →</a>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav" class="announcement-offset">
+    <div id="nav-inner">
+      <div id="nav-left">
+        <a href="features.html" class="nav-link">Features</a>
+        <a href="showcase.html" class="nav-link">Showcase</a>
+      </div>
+
+      <a href="index.html" id="nav-logo">
+        <div id="nav-logo-mark">
+          <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="1.8">
+            <path d="M6 1L10 6L6 11L2 6L6 1Z"/>
+          </svg>
+        </div>
+        Volt Studio
+      </a>
+
+      <div id="nav-right">
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="docs.html" class="nav-link">Docs</a>
+        <a href="pricing.html" id="nav-cta">Get started free</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <div id="hero-grid-bg"></div>
+    <div id="hero-glow"></div>
+
+    <div id="hero-content">
+      <div id="hero-eyebrow">
+        <div id="hero-eyebrow-dot"></div>
+        Now in public beta
+      </div>
+      <h1 id="hero-headline">
+        Design the web
+        <span id="hero-headline-accent">in three dimensions.</span>
+      </h1>
+      <p id="hero-subhead">
+        Volt Studio is a browser-based 3D experience builder for interaction designers.
+        Prototype, animate, and ship dimensional web interfaces — without touching WebGL code.
+      </p>
+      <div id="hero-cta-group">
+        <a href="pricing.html" class="btn-primary">
+          Start building free
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+        <a href="showcase.html" class="btn-secondary">
+          See live examples
+        </a>
+      </div>
+    </div>
+
+    <div id="hero-mockup-wrapper">
+      <div id="hero-mockup-frame">
+        <div id="hero-mockup-bar">
+          <div class="mockup-dot mockup-dot-red"></div>
+          <div class="mockup-dot mockup-dot-yellow"></div>
+          <div class="mockup-dot mockup-dot-green"></div>
+          <div id="hero-mockup-url">
+            <span>app.voltstudio.io/editor</span>
+          </div>
+        </div>
+        <img
+          id="hero-mockup-img"
+          src="assets/hero-editor-ui.jpeg"
+          alt="Volt Studio 3D scene editor showing a floating island with neon-lit architectural elements, dark interface with pink-red accent controls"
+          style="width:100%;height:100%;object-fit:cover;padding-top:36px;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div id="hero-mockup-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;padding-top:36px;background:var(--color-surface-2);color:var(--color-muted);font-family:var(--font-body);font-size:0.85rem;opacity:0.5;">
+          → assets/hero-editor-ui.jpeg
+        </div>
+        <div id="hero-mockup-vignette"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logo Belt -->
+  <section id="logo-belt">
+    <p id="logo-belt-label">Trusted by teams at</p>
+    <div id="logo-belt-track">
+      <span class="logo-belt-item">Figma</span>
+      <span class="logo-belt-item">Vercel</span>
+      <span class="logo-belt-item">Linear</span>
+      <span class="logo-belt-item">Framer</span>
+      <span class="logo-belt-item">Stripe</span>
+      <span class="logo-belt-item">Notion</span>
+      <span class="logo-belt-item">Loom</span>
+    </div>
+  </section>
+
+  <!-- Features Highlight -->
+  <section id="features-highlight">
+    <div id="features-highlight-header">
+      <p id="features-eyebrow">Core capabilities</p>
+      <h2 id="features-title">Everything you need to build for the spatial web</h2>
+      <p id="features-subtitle">
+        From scene composition to physics-aware animations, Volt Studio gives designers
+        the tools to create 3D web experiences that ship as standard HTML.
+      </p>
+    </div>
+
+    <div id="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3l4 4-4 4-4-4 4-4zM3 12l4-4 4 4-4 4-4-4zM21 12l-4-4-4 4 4 4 4-4zM12 21l4-4-4-4-4 4 4 4z"/></svg>
+        </div>
+        <h3 class="feature-card-title">Scene Editor</h3>
+        <p class="feature-card-body">
+          A node-based 3D composition canvas directly in the browser. Drag, layer, and animate
+          objects with isometric or perspective projection — no 3D software expertise required.
+        </p>
+        <div class="feature-card-img-wrapper">
+          <img
+            class="feature-card-img"
+            src="assets/feature-scene-editor.jpeg"
+            alt="Volt Studio node-based 3D scene editor with layered objects, dark interface, pink-red connection lines"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="feature-card-img-placeholder" style="display:none;align-items:center;justify-content:center;font-size:0.75rem;color:var(--color-muted);opacity:0.5;">
+            → assets/feature-scene-editor.jpeg
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3 class="feature-card-title">Motion System</h3>
+        <p class="feature-card-body">
+          Stagger choreography, scroll-triggered parallax, and physics springs — all driven by
+          Material Standard easing with visual timeline controls. What you design is what ships.
+        </p>
+        <div class="feature-card-img-wrapper">
+          <img
+            class="feature-card-img"
+            src="assets/feature-motion-timeline.jpeg"
+            alt="Volt Studio motion timeline panel with stagger curves, easing graph, and scroll trigger controls on dark background"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="feature-card-img-placeholder" style="display:none;align-items:center;justify-content:center;font-size:0.75rem;color:var(--color-muted);opacity:0.5;">
+            → assets/feature-motion-timeline.jpeg
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <h3 class="feature-card-title">Live Preview</h3>
+        <p class="feature-card-body">
+          See your 3D scene render in real time as you design it. Preview across device
+          breakpoints, test scroll behavior, and share a live URL — all before you export.
+        </p>
+        <div class="feature-card-img-wrapper">
+          <img
+            class="feature-card-img"
+            src="assets/feature-live-preview.jpeg"
+            alt="Volt Studio live preview panel showing a 3D web scene on multiple device frames simultaneously"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="feature-card-img-placeholder" style="display:none;align-items:center;justify-content:center;font-size:0.75rem;color:var(--color-muted);opacity:0.5;">
+            → assets/feature-live-preview.jpeg
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Feature Spotlight -->
+  <section id="feature-spotlight">
+    <div id="feature-spotlight-inner">
+      <div id="spotlight-text">
+        <p id="spotlight-eyebrow">Export pipeline</p>
+        <h2 id="spotlight-title">Design once. Ship everywhere.</h2>
+        <p id="spotlight-body">
+          Volt Studio compiles your 3D compositions to production-ready HTML, CSS,
+          and minimal JavaScript. No WebGL boilerplate. No canvas management. Just clean,
+          performant code that works in any modern browser.
+        </p>
+        <ul id="spotlight-feature-list">
+          <li class="spotlight-feature-item">Outputs standard HTML5 + CSS custom properties — no runtime dependency</li>
+          <li class="spotlight-feature-item">GSAP export path with ScrollTrigger baked in automatically</li>
+          <li class="spotlight-feature-item">Three.js scene export for high-fidelity 3D renders</li>
+          <li class="spotlight-feature-item">Figma plugin for importing design tokens directly</li>
+        </ul>
+        <a href="docs.html" class="btn-primary">
+          Read the docs
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+
+      <div id="spotlight-image-wrapper">
+        <div id="spotlight-image-frame">
+          <img
+            id="spotlight-img"
+            src="assets/spotlight-export-code.jpeg"
+            alt="Volt Studio export panel showing clean HTML and JavaScript code output on a dark code editor interface"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div id="spotlight-img-placeholder" style="display:none;align-items:center;justify-content:center;font-size:0.85rem;color:var(--color-muted);opacity:0.5;">
+            → assets/spotlight-export-code.jpeg
+          </div>
+        </div>
+        <div id="spotlight-stat-card">
+          <div id="spotlight-stat-number">2.3kb</div>
+          <div id="spotlight-stat-label">avg. runtime overhead</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <div id="testimonials-header">
+      <h2 id="testimonials-title">Designers who live in three dimensions</h2>
+    </div>
+
+    <div id="testimonials-grid">
+
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"Volt Studio finally makes 3D web design feel like design — not engineering. I built our product hero in half a day and it shipped untouched."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            <img src="assets/avatar-1.jpeg" alt="Portrait of Maya Chen, Lead Designer at Luma Labs" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <div class="testimonial-avatar-placeholder"></div>
+          </div>
+          <div>
+            <div class="testimonial-name">Maya Chen</div>
+            <div class="testimonial-role">Lead Designer, Luma Labs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"The motion system is the killer feature. Stagger choreography that reads like a choreographer wrote it — not a developer who learned easing curves last week."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            <img src="assets/avatar-2.jpeg" alt="Portrait of Tariq Osei, Creative Director at Superflux" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <div class="testimonial-avatar-placeholder"></div>
+          </div>
+          <div>
+            <div class="testimonial-name">Tariq Osei</div>
+            <div class="testimonial-role">Creative Director, Superflux</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"Our engineering team was skeptical — until they saw the export. Clean HTML, no mystery runtime. They asked us to use it for the entire marketing site."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            <img src="assets/avatar-3.jpeg" alt="Portrait of Priya Nair, Head of Brand at Meridian" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <div class="testimonial-avatar-placeholder"></div>
+          </div>
+          <div>
+            <div class="testimonial-name">Priya Nair</div>
+            <div class="testimonial-role">Head of Brand, Meridian</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="cta-section">
+    <div id="cta-inner">
+      <h2 id="cta-title">Start building your first 3D experience today.</h2>
+      <p id="cta-subtitle">
+        Free forever for solo designers. No credit card. No WebGL experience needed.
+        Just open Volt Studio and start designing.
+      </p>
+      <div id="cta-buttons">
+        <a href="pricing.html" class="btn-primary">
+          Start for free
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+        <a href="showcase.html" class="btn-secondary">Browse examples</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div id="footer-inner">
+      <div id="footer-top">
+        <div id="footer-brand">
+          <a href="index.html" id="footer-logo">
+            <div id="footer-logo-mark"></div>
+            Volt Studio
+          </a>
+          <p id="footer-tagline">
+            Design the web in three dimensions. Build 3D web experiences with visual tools that ship production-ready code.
+          </p>
+        </div>
+
+        <div id="footer-col-product">
+          <h4 class="footer-col-title">Product</h4>
+          <ul class="footer-links">
+            <li><a href="features.html">Features</a></li>
+            <li><a href="showcase.html">Showcase</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="#">Changelog</a></li>
+          </ul>
+        </div>
+
+        <div id="footer-col-learn">
+          <h4 class="footer-col-title">Learn</h4>
+          <ul class="footer-links">
+            <li><a href="docs.html">Documentation</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Templates</a></li>
+            <li><a href="#">Community</a></li>
+          </ul>
+        </div>
+
+        <div id="footer-col-company">
+          <h4 class="footer-col-title">Company</h4>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <div id="footer-col-updates">
+          <h4 class="footer-col-title">Latest</h4>
+          <div id="footer-update-card" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:10px;padding:16px;">
+            <div style="font-size:0.7rem;color:var(--color-accent);font-weight:var(--weight-semibold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">v2.0.4</div>
+            <div style="font-size:0.875rem;color:var(--color-heading);font-weight:var(--weight-medium);margin-bottom:4px;">Physics springs & improved export</div>
+            <div style="font-size:0.8rem;color:var(--color-muted);">March 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer-bottom">
+        <div id="footer-copy">© 2026 Volt Studio. All rights reserved.</div>
+        <div id="footer-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-enter')) || 0.7;
+    const EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-standard').trim() || 'cubic-bezier(0.4,0,0.2,1)';
+    const EASE_SMOOTH = getComputedStyle(document.documentElement).getPropertyValue('--ease-smooth').trim() || 'cubic-bezier(0.165,0.84,0.44,1)';
+    const STAGGER = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stagger-step')) || 0.1;
+
+    // ── Announcement offset correction
+    const announcementBar = document.getElementById('announcement-bar');
+    const nav = document.getElementById('nav');
+    const barHeight = announcementBar ? announcementBar.offsetHeight : 0;
+
+    // ── Nav scroll state
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      nav.style.top = Math.max(0, barHeight - scrollY) + 'px';
+      if (scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Set initial top
+    nav.style.top = barHeight + 'px';
+
+    // ── Hero entrance — staggered reveal
+    const heroTl = gsap.timeline({ delay: 0.15 });
+    heroTl
+      .from('#hero-eyebrow', { y: 20, opacity: 0, duration: BASE_DURATION * 0.7, ease: EASE })
+      .from('#hero-headline', { y: 40, opacity: 0, duration: BASE_DURATION, ease: EASE }, '-=0.3')
+      .from('#hero-subhead', { y: 30, opacity: 0, duration: BASE_DURATION * 0.8, ease: EASE }, '-=0.5')
+      .from('#hero-cta-group', {
+        y: 20, opacity: 0, duration: BASE_DURATION * 0.7, ease: EASE
+      }, '-=0.4')
+      .from('#hero-mockup-wrapper', {
+        y: 60, opacity: 0, duration: BASE_DURATION * 1.2, ease: EASE_SMOOTH
+      }, '-=0.4');
+
+    // ── Parallax on hero mockup
+    gsap.to('#hero-mockup-wrapper', {
+      scrollTrigger: { trigger: '#hero', scrub: 1.8, start: 'top top', end: 'bottom top' },
+      y: '14%',
+      ease: 'none'
+    });
+
+    // ── Hero grid bg slow drift
+    gsap.to('#hero-grid-bg', {
+      scrollTrigger: { trigger: '#hero', scrub: 2, start: 'top top', end: 'bottom top' },
+      y: '-8%',
+      ease: 'none'
+    });
+
+    // ── Logo belt fade-in
+    gsap.from('.logo-belt-item', {
+      scrollTrigger: { trigger: '#logo-belt', start: 'top 85%' },
+      y: 16, opacity: 0, duration: 0.5, ease: EASE, stagger: STAGGER * 0.8
+    });
+
+    // ── Features: clip-path wipe reveal
+    gsap.from('.feature-card', {
+      scrollTrigger: { trigger: '#features-grid', start: 'top 75%' },
+      clipPath: 'inset(0 100% 0 0)',
+      opacity: 0,
+      duration: BASE_DURATION * 1.1,
+      ease: EASE_SMOOTH,
+      stagger: STAGGER * 1.5
+    });
+
+    gsap.from('#features-highlight-header', {
+      scrollTrigger: { trigger: '#features-highlight', start: 'top 80%' },
+      y: 30, opacity: 0, duration: BASE_DURATION, ease: EASE
+    });
+
+    // ── Spotlight: split entrance
+    gsap.from('#spotlight-text', {
+      scrollTrigger: { trigger: '#feature-spotlight', start: 'top 70%' },
+      x: -40, opacity: 0, duration: BASE_DURATION * 1.1, ease: EASE_SMOOTH
+    });
+
+    gsap.from('#spotlight-image-wrapper', {
+      scrollTrigger: { trigger: '#feature-spotlight', start: 'top 70%' },
+      x: 40, opacity: 0, duration: BASE_DURATION * 1.1, ease: EASE_SMOOTH, delay: 0.1
+    });
+
+    gsap.from('#spotlight-stat-card', {
+      scrollTrigger: { trigger: '#feature-spotlight', start: 'top 60%' },
+      scale: 0.8, opacity: 0, duration: BASE_DURATION * 0.8, ease: EASE_SMOOTH, delay: 0.3
+    });
+
+    // ── Testimonials: scale-from-center
+    gsap.from('.testimonial-card', {
+      scrollTrigger: { trigger: '#testimonials-grid', start: 'top 78%' },
+      scale: 0.94, opacity: 0, y: 24,
+      duration: BASE_DURATION, ease: EASE_SMOOTH, stagger: STAGGER * 1.2
+    });
+
+    // ── CTA section entrance
+    gsap.from('#cta-inner', {
+      scrollTrigger: { trigger: '#cta-section', start: 'top 75%' },
+      y: 40, opacity: 0, duration: BASE_DURATION * 1.1, ease: EASE_SMOOTH
+    });
+  </script>
+</body>
+</html>

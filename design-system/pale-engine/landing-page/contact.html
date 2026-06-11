@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Meridian Grain Precision Film Laboratory</title>
+  <meta name="description" content="Book a film processing run with Meridian Grain. Submit your order details, shipping address, and development requirements.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <style>
+    .nav-spacer {
+      height: var(--nav-height, 154px);
+      width: 100%;
+    }
+
+    /* Contact page — split layout */
+    .contact-page {
+      min-height: calc(100vh - var(--nav-height, 154px));
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* Left: info panel */
+    .contact-info-panel {
+      background-color: var(--color-heading-text, #3d3930);
+      padding: var(--space-2xl, 101.25px) var(--space-xl, 54px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-info-panel::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -20%;
+      width: 80%;
+      aspect-ratio: 1;
+      background: radial-gradient(circle, rgba(251, 115, 57, 0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .contact-info-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl, 54px);
+    }
+
+    .contact-info-label {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-primary-action, #fb7339);
+    }
+
+    .contact-info-title {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: var(--letter-spacing-heading, 0.06em);
+      text-transform: uppercase;
+      color: var(--color-surface-neutral, #f2efe9);
+      margin: 0;
+    }
+
+    .contact-info-body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.65;
+      color: rgba(242, 239, 233, 0.6);
+      max-width: 44ch;
+    }
+
+    .contact-details {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl, 54px);
+      border-top: 1px solid rgba(242, 239, 233, 0.1);
+      padding-top: var(--space-xl, 54px);
+    }
+
+    .contact-detail-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs, 10.8px);
+    }
+
+    .contact-detail-label {
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(242, 239, 233, 0.35);
+    }
+
+    .contact-detail-value {
+      font-family: var(--font-mono, 'Roboto Mono', monospace);
+      font-size: 0.8125rem;
+      color: rgba(242, 239, 233, 0.8);
+      letter-spacing: 0.04em;
+    }
+
+    .contact-detail-value a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--duration-fast, 0.3s) ease;
+    }
+
+    .contact-detail-value a:hover {
+      color: var(--color-primary-action, #fb7339);
+    }
+
+    .contact-hours {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs, 10.8px);
+    }
+
+    .contact-hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .contact-hours-day {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(242, 239, 233, 0.4);
+    }
+
+    .contact-hours-time {
+      font-family: var(--font-mono, 'Roboto Mono', monospace);
+      font-size: 0.75rem;
+      color: rgba(242, 239, 233, 0.7);
+    }
+
+    .contact-hours-time.closed {
+      color: rgba(242, 239, 233, 0.25);
+    }
+
+    /* Right: form panel */
+    .contact-form-panel {
+      background-color: var(--color-surface-neutral, #f2efe9);
+      padding: var(--space-2xl, 101.25px) var(--space-xl, 54px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .booking-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl, 54px);
+      max-width: 520px;
+    }
+
+    .form-title {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-heading-text, #3d3930);
+      margin: 0;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm, 13.5px);
+    }
+
+    .form-group-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--grid-gap, 22px);
+    }
+
+    .form-label {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-warm-gray, #575349);
+    }
+
+    .form-label span {
+      color: var(--color-primary-action, #fb7339);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--color-heading-text, #3d3930);
+      background-color: var(--color-white, #ffffff);
+      border: 1px solid var(--color-border-default, #d4cfc8);
+      border-radius: var(--space-input-radius, 12px);
+      padding: var(--space-lg, 27px);
+      width: 100%;
+      transition: border-color var(--duration-base, 0.45s) var(--ease-primary),
+                  box-shadow var(--duration-base, 0.45s) var(--ease-primary);
+      appearance: none;
+      outline: none;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--color-primary-action, #fb7339);
+      box-shadow: 0 0 0 3px rgba(251, 115, 57, 0.1);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--color-muted-text, #c8c1b4);
+    }
+
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a39b8b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 20px center;
+      padding-right: 44px;
+      cursor: pointer;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    .form-hint {
+      font-family: var(--font-mono, 'Roboto Mono', monospace);
+      font-size: 0.6875rem;
+      color: var(--color-muted-text, #c8c1b4);
+      letter-spacing: 0.04em;
+    }
+
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: var(--type-button, 0.833rem);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 18px var(--space-cta-h, 33.75px);
+      border-radius: var(--space-cta-radius, 10px);
+      background-color: var(--color-primary-action, #fb7339);
+      color: var(--color-surface-neutral, #f2efe9);
+      border: 1px solid var(--color-primary-action, #fb7339);
+      cursor: pointer;
+      transition: background-color var(--duration-base, 0.45s) var(--ease-primary),
+                  color var(--duration-base, 0.45s) var(--ease-primary),
+                  border-color var(--duration-base, 0.45s) var(--ease-primary);
+      width: 100%;
+    }
+
+    .form-submit:hover {
+      background-color: var(--color-heading-text, #3d3930);
+      border-color: var(--color-heading-text);
+    }
+
+    .form-footer-note {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--color-muted-text, #c8c1b4);
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    /* Confirmation message (hidden by default) */
+    .form-confirmation {
+      display: none;
+      flex-direction: column;
+      gap: var(--space-xl, 54px);
+      align-items: flex-start;
+      max-width: 520px;
+    }
+
+    .form-confirmation.is-visible {
+      display: flex;
+    }
+
+    .booking-form.is-submitted {
+      display: none;
+    }
+
+    .confirm-icon {
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--color-primary-action, #fb7339);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary-action, #fb7339);
+      font-size: 1.25rem;
+    }
+
+    .confirm-title {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-heading-text, #3d3930);
+      margin: 0;
+    }
+
+    .confirm-body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--color-warm-gray, #575349);
+    }
+
+    /* Additional info section */
+    .contact-info-section {
+      background-color: var(--color-white, #ffffff);
+      padding: var(--space-3xl, 202.5px) var(--space-xl, 54px);
+    }
+
+    .contact-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--grid-gap-wide, 45px);
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-top: var(--space-2xl, 101.25px);
+    }
+
+    .contact-info-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg, 27px);
+      padding: var(--space-xl, 54px);
+      border: 1px solid var(--color-border-default, #d4cfc8);
+    }
+
+    .contact-info-card-icon {
+      font-family: var(--font-mono, 'Roboto Mono', monospace);
+      font-size: 1.5rem;
+      color: var(--color-primary-action, #fb7339);
+    }
+
+    .contact-info-card-title {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-heading-text, #3d3930);
+      margin: 0;
+    }
+
+    .contact-info-card-body {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--color-warm-gray, #575349);
+    }
+
+    @media (max-width: 968px) {
+      .contact-page {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-info-panel {
+        padding: var(--space-xl, 54px) var(--grid-padding-left, 24px);
+        gap: var(--space-xl, 54px);
+      }
+
+      .contact-form-panel {
+        padding: var(--space-xl, 54px) var(--grid-padding-left, 24px);
+      }
+
+      .contact-info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .form-group-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav" class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="nav-links-left">
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="process.html" class="nav-link">Process</a>
+      </div>
+      <a href="index.html" class="nav-logo" aria-label="Meridian Grain — Home">
+        <span class="nav-logo-text">Meridian Grain</span>
+      </a>
+      <div class="nav-links-right">
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="contact.html" class="nav-cta">Book a Run</a>
+      </div>
+      <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="process.html" class="nav-link">Process</a>
+    <a href="work.html" class="nav-link">Work</a>
+    <a href="contact.html" class="nav-cta nav-link--active">Book a Run</a>
+  </div>
+
+  <div class="nav-spacer" aria-hidden="true"></div>
+
+  <!-- CONTACT SPLIT LAYOUT -->
+  <main class="contact-page" id="contact-page">
+
+    <!-- Left info panel -->
+    <div class="contact-info-panel" id="contact-info-panel">
+      <div class="contact-info-top">
+        <span class="contact-info-label">Book a Run</span>
+        <h1 class="contact-info-title">Send Us<br>Your Film</h1>
+        <p class="contact-info-body">
+          Use the form to tell us about your order. We confirm all details before you ship anything.
+          Rush orders are booked directly — include your deadline in the notes field.
+        </p>
+      </div>
+
+      <div class="contact-details">
+        <div class="contact-detail-group">
+          <span class="contact-detail-label">Email</span>
+          <span class="contact-detail-value">
+            <a href="mailto:lab@meridiangrain.com">lab@meridiangrain.com</a>
+          </span>
+        </div>
+
+        <div class="contact-detail-group">
+          <span class="contact-detail-label">Mailing Address</span>
+          <span class="contact-detail-value">
+            Meridian Grain<br>
+            421 West 18th Ave<br>
+            Vancouver, BC V5Y 2A6<br>
+            Canada
+          </span>
+        </div>
+
+        <div class="contact-detail-group">
+          <span class="contact-detail-label">Studio Hours</span>
+          <div class="contact-hours">
+            <div class="contact-hours-row">
+              <span class="contact-hours-day">Mon–Fri</span>
+              <span class="contact-hours-time">08:00–18:00 PT</span>
+            </div>
+            <div class="contact-hours-row">
+              <span class="contact-hours-day">Saturday</span>
+              <span class="contact-hours-time">09:00–14:00 PT</span>
+            </div>
+            <div class="contact-hours-row">
+              <span class="contact-hours-day">Sunday</span>
+              <span class="contact-hours-time closed">Closed</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-detail-group">
+          <span class="contact-detail-label">Appointments</span>
+          <span class="contact-detail-value">Tuesdays & Thursdays · 10:00–16:00 PT</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="contact-form-panel" id="contact-form-panel">
+
+      <!-- Booking form -->
+      <form class="booking-form" id="booking-form" novalidate>
+        <h2 class="form-title">Order Details</h2>
+
+        <div class="form-group-row">
+          <div class="form-group">
+            <label class="form-label" for="first-name">First name <span>*</span></label>
+            <input class="form-input" id="first-name" type="text" placeholder="Elise" required autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="last-name">Last name <span>*</span></label>
+            <input class="form-input" id="last-name" type="text" placeholder="Marchetti" required autocomplete="family-name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email <span>*</span></label>
+          <input class="form-input" id="email" type="email" placeholder="elise@studio.com" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="service-type">Service <span>*</span></label>
+          <select class="form-select" id="service-type" required>
+            <option value="" disabled selected>Select a service</option>
+            <option value="dev-bw">B&W Development only</option>
+            <option value="dev-color">Color Development (C-41 / E-6)</option>
+            <option value="dev-scan">Development + Scanning</option>
+            <option value="lf-dev-scan">Large Format Development + Scanning</option>
+            <option value="contact-print">Archival Contact Printing</option>
+            <option value="rush">Rush Processing</option>
+            <option value="consultation">Consultation</option>
+          </select>
+        </div>
+
+        <div class="form-group-row">
+          <div class="form-group">
+            <label class="form-label" for="film-format">Format <span>*</span></label>
+            <select class="form-select" id="film-format" required>
+              <option value="" disabled selected>Format</option>
+              <option value="35mm">35mm</option>
+              <option value="120">120</option>
+              <option value="4x5">4×5</option>
+              <option value="5x7">5×7</option>
+              <option value="8x10">8×10</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="quantity">Quantity <span>*</span></label>
+            <input class="form-input" id="quantity" type="text" placeholder="e.g. 3 rolls" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="emulsion">Film stock & EI rating</label>
+          <input class="form-input" id="emulsion" type="text" placeholder="Tri-X 400 @ 1600 EI">
+          <span class="form-hint">// Specify your target EI if different from box speed</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="development">Development notes</label>
+          <textarea class="form-textarea" id="development" placeholder="Push compensation target, preferred developer, agitation method, any special instructions..."></textarea>
+          <span class="form-hint">// Include push/pull stops, specific developer if you have a preference, any notes about exposure conditions</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="rush-check">
+            <input type="checkbox" id="rush-check" style="accent-color: var(--color-primary-action);">
+            &nbsp;This is a rush order
+          </label>
+        </div>
+
+        <button type="submit" class="form-submit">Submit Order Request</button>
+
+        <p class="form-footer-note">
+          We will confirm receipt and full details by email within 2 hours during studio hours.
+          Do not ship film until you receive confirmation.
+        </p>
+      </form>
+
+      <!-- Confirmation message -->
+      <div class="form-confirmation" id="form-confirmation">
+        <div class="confirm-icon" aria-hidden="true">✓</div>
+        <h2 class="confirm-title">Order Received</h2>
+        <p class="confirm-body">
+          We'll review your order details and confirm by email within 2 hours during studio hours.
+          Please do not ship your film until you receive a confirmation with full instructions.
+        </p>
+        <p class="confirm-body" style="color: var(--color-primary-action);">
+          Check your inbox at the address you provided.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ADDITIONAL INFO -->
+  <section class="contact-info-section" id="contact-info-section" aria-labelledby="info-heading">
+    <div class="container--wide">
+      <span class="section-label section-label--muted">Before You Ship</span>
+      <h2 class="section-heading" id="info-heading">Good to<br>Know</h2>
+
+      <div class="contact-info-grid" id="contact-info-grid">
+        <div class="contact-info-card">
+          <span class="contact-info-card-icon">→</span>
+          <h3 class="contact-info-card-title">Shipping</h3>
+          <p class="contact-info-card-body">
+            We accept film via any tracked courier. For international orders, declare film as
+            "undeveloped photographic film — no commercial value" on customs forms.
+            We can provide a supporting letter for customs if needed.
+          </p>
+        </div>
+
+        <div class="contact-info-card">
+          <span class="contact-info-card-icon">◎</span>
+          <h3 class="contact-info-card-title">Packaging</h3>
+          <p class="contact-info-card-body">
+            Film cassettes travel well in their original black film canisters or Jobo cassette holders.
+            Flat rate priority boxes lined with bubble wrap work well for large-format film holders.
+            Do not use envelopes for large-format sheets.
+          </p>
+        </div>
+
+        <div class="contact-info-card">
+          <span class="contact-info-card-icon">◈</span>
+          <h3 class="contact-info-card-title">Returns</h3>
+          <p class="contact-info-card-body">
+            Negatives are returned in archival polypropylene sleeves via tracked courier.
+            We will use your carrier account if you provide a label. Otherwise, return shipping
+            is billed at cost — we do not mark up shipping.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">Meridian Grain</a>
+          <p class="footer-tagline">Precision film developing and scanning laboratory.</p>
+        </div>
+        <nav class="footer-nav-col" aria-label="Services links">
+          <h3 class="footer-nav-heading">Services</h3>
+          <ul class="footer-nav-links">
+            <li><a href="services.html#development">Push-Pull Development</a></li>
+            <li><a href="services.html#scanning">Large-Format Scanning</a></li>
+            <li><a href="services.html#printing">Archival Printing</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-nav-col" aria-label="Studio links">
+          <h3 class="footer-nav-heading">Studio</h3>
+          <ul class="footer-nav-links">
+            <li><a href="process.html">Our Process</a></li>
+            <li><a href="work.html">Client Work</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-nav-col" aria-label="Technical links">
+          <h3 class="footer-nav-heading">Technical</h3>
+          <ul class="footer-nav-links">
+            <li><a href="process.html#chemistry">Chemistry Configurations</a></li>
+            <li><a href="process.html#formats">Supported Formats</a></li>
+            <li><a href="services.html#pricing">Pricing</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Meridian Grain. All rights reserved.</p>
+        <ul class="footer-legal-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var nav = document.getElementById('site-nav');
+      var toggle = nav.querySelector('.nav-mobile-toggle');
+      var mobileMenu = document.querySelector('.nav-mobile-menu');
+      var scrolled = false;
+      function onScroll() {
+        var isScrolled = window.scrollY > 60;
+        if (isScrolled !== scrolled) {
+          scrolled = isScrolled;
+          nav.classList.toggle('scrolled', isScrolled);
+          nav.classList.toggle('fixed-nav', isScrolled);
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen.toString());
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('.nav-link, .nav-cta').forEach(function(link) {
+        link.addEventListener('click', function() {
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+
+      // Form submission demo
+      var form = document.getElementById('booking-form');
+      var confirmation = document.getElementById('form-confirmation');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          form.classList.add('is-submitted');
+          confirmation.classList.add('is-visible');
+        });
+      }
+    })();
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof gsap === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Contact info panel — horizontal sweep left
+      gsap.from('#contact-info-panel .contact-info-top > *', {
+        x: -70, stagger: 0.12, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '#contact-info-panel', start: 'top 80%' }
+      });
+
+      gsap.from('#contact-info-panel .contact-details > *', {
+        x: -50, stagger: 0.1, duration: 0.75, ease: 'power2.out',
+        scrollTrigger: { trigger: '#contact-info-panel .contact-details', start: 'top 80%' }
+      });
+
+      // Form panel — scale + rise
+      gsap.from('#contact-form-panel .booking-form > *', {
+        y: 30, scale: 0.98, stagger: 0.08, duration: 0.75, ease: 'power2.out',
+        scrollTrigger: { trigger: '#contact-form-panel', start: 'top 80%' }
+      });
+
+      // Info cards — rotate + rise
+      gsap.from('#contact-info-grid .contact-info-card', {
+        rotation: 1.5, y: 40, stagger: 0.12, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '#contact-info-grid', start: 'top 80%' }
+      });
+    });
+  </script>
+</body>
+</html>

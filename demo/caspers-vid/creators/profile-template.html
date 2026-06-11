@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>caspers-vid — Creator Profile</title>
+  <!-- Google Fonts: Barlow Condensed (display), Barlow (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&family=Barlow:wght@300;400&family=Lexend+Giga:wght@400&display=swap" rel="stylesheet">
+  <!-- Design system CSS -->
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/motion.css">
+  <link rel="stylesheet" href="../css/components/nav.css">
+  <link rel="stylesheet" href="../css/components/profile.css">
+</head>
+<body>
+
+  <!-- NAV (same markup as explore.html) -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-left">
+      <a href="../explore.html" class="nav-link regular">Explore</a>
+      <a href="../pricing.html" class="nav-link regular">Pricing</a>
+      <a href="../about.html" class="nav-link regular">About</a>
+    </div>
+    <div class="nav-center">
+      <a href="../index.html" class="nav-wordmark" id="nav-wordmark">CASPERS-VID</a>
+    </div>
+    <div class="nav-right">
+      <a href="../login.html" class="nav-link regular">Log in</a>
+      <a href="../signup.html" class="nav-link regular">Sign up</a>
+    </div>
+  </nav>
+
+  <main class="profile-page">
+
+    <!-- Section 1: "The Creator Introduced" -->
+    <section class="creator-header" aria-label="Creator identity">
+      <div class="creator-header-inner">
+        <!-- Left: avatar placeholder — No Silent Visual Fallbacks rule: filename shown -->
+        <div class="creator-avatar-placeholder" aria-label="Creator avatar placeholder">
+          <span class="placeholder-label">[creator-avatar.jpg]</span>
+        </div>
+        <!-- Right: identity info — populated by profile.js -->
+        <div class="creator-identity">
+          <h1 class="creator-name" id="creator-name"></h1>
+          <p class="creator-role" id="creator-role"></p>
+          <div class="creator-meta">
+            <span class="creator-points" id="creator-points"></span>
+            <span class="creator-project-count" id="creator-project-count"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: "The Work Exhibited" -->
+    <section class="portfolio-section" id="portfolio-section" aria-label="Creator portfolio">
+      <!-- Header row -->
+      <div class="portfolio-header">
+        <h2 class="portfolio-title">Work</h2>
+        <button class="portfolio-follow-btn" id="portfolio-follow-btn">Follow this creator →</button>
+      </div>
+      <!-- 3-col grid — cards populated by profile.js -->
+      <div class="portfolio-grid section-grid-3col" id="portfolio-grid"></div>
+      <!-- Sentinel at 70% of portfolio section — triggers CTA -->
+      <div class="portfolio-cta-sentinel" id="portfolio-cta-sentinel" aria-hidden="true"></div>
+    </section>
+
+    <!-- Section 3: "The Platform Surfaced" -->
+    <section class="platform-mention" aria-label="Platform attribution">
+      <p class="platform-mention-text">Made on CASPERS-VID</p>
+    </section>
+
+  </main>
+
+  <!-- Section 4: "The Invitation Timed" — fixed CTA, outside main, logged-out only -->
+  <div class="profile-cta" id="profileCta" aria-hidden="true">
+    <span class="profile-cta-text">Make your own <span class="profile-cta-arrow">→</span></span>
+  </div>
+
+  <script type="module">
+    import { initNav } from '../js/components/nav.js';
+    import { initProfile } from '../js/components/profile.js';
+    initNav();
+    initProfile();
+  </script>
+
+</body>
+</html>

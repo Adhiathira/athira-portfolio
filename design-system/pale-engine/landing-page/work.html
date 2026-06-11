@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — Meridian Grain Precision Film Laboratory</title>
+  <meta name="description" content="Selected film work processed and scanned by Meridian Grain. Documentary, editorial, large-format, and experimental work from photographers around the world.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <style>
+    .nav-spacer {
+      height: var(--nav-height, 154px);
+      width: 100%;
+    }
+
+    /* Work page header — dark with orange grain texture */
+    .work-header {
+      background-color: var(--color-hero-bg, #1a1a14);
+      padding: var(--space-2xl, 101.25px) var(--space-xl, 54px) var(--space-2xl, 101.25px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grain texture overlay using SVG noise */
+    .work-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .work-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--grid-gap-expanded, 134px);
+      align-items: end;
+    }
+
+    .work-header-left {}
+
+    .work-header-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-primary-action, #fb7339);
+      margin-bottom: var(--space-lg, 27px);
+    }
+
+    .work-header-title {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: var(--letter-spacing-heading, 0.06em);
+      text-transform: uppercase;
+      color: var(--color-surface-neutral, #f2efe9);
+      margin: 0;
+    }
+
+    .work-header-right {
+      padding-bottom: 8px;
+    }
+
+    .work-header-body {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      line-height: 1.65;
+      color: rgba(242, 239, 233, 0.6);
+      max-width: 44ch;
+    }
+
+    /* Filter bar */
+    .work-filter-bar {
+      background-color: var(--color-surface-neutral, #f2efe9);
+      padding: var(--space-lg, 27px) var(--space-xl, 54px);
+      border-bottom: 1px solid var(--color-border-default, #d4cfc8);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .work-filter-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: var(--space-lg, 27px);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-muted-text, #c8c1b4);
+      flex-shrink: 0;
+    }
+
+    .filter-btn {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-warm-gray, #575349);
+      background: none;
+      border: 1px solid var(--color-border-default, #d4cfc8);
+      border-radius: 20px;
+      padding: 6px 16px;
+      cursor: pointer;
+      transition: all var(--duration-base, 0.45s) var(--ease-primary);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.is-active {
+      background-color: var(--color-heading-text, #3d3930);
+      color: var(--color-surface-neutral, #f2efe9);
+      border-color: var(--color-heading-text);
+    }
+
+    /* Work masonry grid */
+    .work-masonry {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .work-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 1;
+      background-color: var(--color-heading-text, #3d3930);
+    }
+
+    /* Vary heights for masonry feel */
+    .work-card:nth-child(4n+1) { aspect-ratio: 1/1.3; }
+    .work-card:nth-child(4n+2) { aspect-ratio: 1/0.8; }
+    .work-card:nth-child(4n+3) { aspect-ratio: 1; }
+    .work-card:nth-child(4n+4) { aspect-ratio: 1/1.2; }
+
+    .work-card-bg {
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-accent, #8a8472);
+      transition: transform 0.75s var(--ease-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Grain texture variants */
+    .work-card:nth-child(3n+1) .work-card-bg {
+      background-color: #3d3930;
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent 0,
+        transparent 2px,
+        rgba(242,239,233,0.02) 2px,
+        rgba(242,239,233,0.02) 4px
+      );
+    }
+
+    .work-card:nth-child(3n+2) .work-card-bg {
+      background-color: #575349;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent 0,
+        transparent 3px,
+        rgba(242,239,233,0.015) 3px,
+        rgba(242,239,233,0.015) 6px
+      );
+    }
+
+    .work-card:nth-child(3n+3) .work-card-bg {
+      background-color: #1a1a14;
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent 0,
+        transparent 1px,
+        rgba(242,239,233,0.025) 1px,
+        rgba(242,239,233,0.025) 2px
+      );
+    }
+
+    .work-card:hover .work-card-bg {
+      transform: scale(1.03);
+    }
+
+    .work-card-spec {
+      font-family: var(--font-mono, 'Roboto Mono', monospace);
+      font-size: 0.5625rem;
+      letter-spacing: 0.08em;
+      color: rgba(242, 239, 233, 0.25);
+      text-align: center;
+      padding: var(--space-sm, 13.5px);
+    }
+
+    .work-card-info {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-xl, 54px);
+      background: linear-gradient(to top, rgba(26,26,20,0.9) 0%, rgba(26,26,20,0.2) 40%, transparent 70%);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity var(--duration-base, 0.45s) var(--ease-primary),
+                  transform var(--duration-base, 0.45s) var(--ease-primary);
+    }
+
+    .work-card:hover .work-card-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .work-card-format {
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-primary-action, #fb7339);
+      margin-bottom: 6px;
+    }
+
+    .work-card-name {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-surface-neutral, #f2efe9);
+      margin: 0 0 4px 0;
+    }
+
+    .work-card-detail {
+      font-family: var(--font-mono, 'Roboto Mono', monospace);
+      font-size: 0.625rem;
+      color: rgba(242, 239, 233, 0.55);
+      letter-spacing: 0.06em;
+    }
+
+    /* Work section wrapper */
+    .work-section {
+      background-color: var(--color-hero-bg, #1a1a14);
+      padding: 0 0 var(--space-3xl, 202.5px);
+    }
+
+    /* Featured case study */
+    .case-section {
+      background-color: var(--color-surface-neutral, #f2efe9);
+      padding: var(--space-3xl, 202.5px) var(--space-xl, 54px);
+    }
+
+    .case-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: var(--grid-gap-expanded, 134px);
+      align-items: center;
+    }
+
+    .case-image {
+      aspect-ratio: 4/5;
+      background-color: var(--color-heading-text, #3d3930);
+      background-image: repeating-linear-gradient(
+        30deg,
+        transparent 0,
+        transparent 1px,
+        rgba(242,239,233,0.025) 1px,
+        rgba(242,239,233,0.025) 2px
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .case-image-label {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: rgba(242,239,233,0.25);
+      letter-spacing: 0.08em;
+      text-align: center;
+      padding: var(--space-lg);
+    }
+
+    .case-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl, 54px);
+    }
+
+    .case-label {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-primary-action, #fb7339);
+    }
+
+    .case-title {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-heading-text, #3d3930);
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .case-body {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: var(--color-warm-gray, #575349);
+    }
+
+    .case-spec-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs, 10.8px);
+      border-top: 1px solid var(--color-border-default, #d4cfc8);
+      padding-top: var(--space-lg, 27px);
+    }
+
+    .case-spec-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .case-spec-k {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted-text, #c8c1b4);
+    }
+
+    .case-spec-v {
+      font-family: var(--font-mono, 'Roboto Mono', monospace);
+      font-size: 0.75rem;
+      color: var(--color-heading-text, #3d3930);
+    }
+
+    @media (max-width: 968px) {
+      .work-header-inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl, 54px);
+      }
+
+      .work-masonry {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .case-inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl, 54px);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .work-masonry {
+        grid-template-columns: 1fr;
+      }
+
+      .work-card:nth-child(4n+1),
+      .work-card:nth-child(4n+2),
+      .work-card:nth-child(4n+3),
+      .work-card:nth-child(4n+4) {
+        aspect-ratio: 4/3;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav" class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="nav-links-left">
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="process.html" class="nav-link">Process</a>
+      </div>
+      <a href="index.html" class="nav-logo" aria-label="Meridian Grain — Home">
+        <span class="nav-logo-text">Meridian Grain</span>
+      </a>
+      <div class="nav-links-right">
+        <a href="work.html" class="nav-link nav-link--active">Work</a>
+        <a href="contact.html" class="nav-cta">Book a Run</a>
+      </div>
+      <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="process.html" class="nav-link">Process</a>
+    <a href="work.html" class="nav-link nav-link--active">Work</a>
+    <a href="contact.html" class="nav-cta">Book a Run</a>
+  </div>
+
+  <div class="nav-spacer" aria-hidden="true"></div>
+
+  <!-- WORK HEADER -->
+  <header class="work-header" id="work-header">
+    <div class="work-header-inner">
+      <div class="work-header-left">
+        <span class="work-header-label">Client Work</span>
+        <h1 class="work-header-title">The Negative<br>Tells the<br>Truth</h1>
+      </div>
+      <div class="work-header-right">
+        <p class="work-header-body">
+          Every image shown here was processed and scanned at Meridian Grain. The chemistry, resolution,
+          and development approach for each are documented below the work.
+          We show work not as portfolio — as proof of protocol.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- FILTER BAR -->
+  <div class="work-filter-bar" role="toolbar" aria-label="Filter work by type">
+    <div class="work-filter-inner">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn is-active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="35mm">35mm</button>
+      <button class="filter-btn" data-filter="120">120</button>
+      <button class="filter-btn" data-filter="4x5">4×5</button>
+      <button class="filter-btn" data-filter="8x10">8×10</button>
+      <button class="filter-btn" data-filter="color">Color</button>
+      <button class="filter-btn" data-filter="bw">B&W</button>
+    </div>
+  </div>
+
+  <!-- WORK GRID -->
+  <div class="work-section">
+    <div class="work-masonry" id="work-masonry">
+
+      <div class="work-card" data-format="35mm" data-process="bw">
+        <div class="work-card-bg">
+          <span class="work-card-spec">Tri-X 400 @ 1600 EI · 4-stop push · Rodinal 1:25 · 18min · 20°C</span>
+        </div>
+        <div class="work-card-info">
+          <span class="work-card-format">35mm · B&W Push</span>
+          <h3 class="work-card-name">Tri-X @ 1600</h3>
+          <span class="work-card-detail">Elise Marchetti · Rodinal 1:25 · N+4</span>
+        </div>
+      </div>
+
+      <div class="work-card" data-format="4x5" data-process="bw">
+        <div class="work-card-bg">
+          <span class="work-card-spec">HP5 Plus 4×5 · Normal − 1 · Pyrocat-HD 1:1:100 · 11.5min · 20°C</span>
+        </div>
+        <div class="work-card-info">
+          <span class="work-card-format">4×5 · B&W N-1</span>
+          <h3 class="work-card-name">HP5 N-1</h3>
+          <span class="work-card-detail">Owen St. Claire · Pyrocat-HD · Contact print</span>
+        </div>
+      </div>
+
+      <div class="work-card" data-format="120" data-process="color">
+        <div class="work-card-bg">
+          <span class="work-card-spec">Portra 800 · 120 · 2-stop push · C-41 RA · 3:15 at 38°C</span>
+        </div>
+        <div class="work-card-info">
+          <span class="work-card-format">120 · Color Push</span>
+          <h3 class="work-card-name">Portra 800 +2</h3>
+          <span class="work-card-detail">Yuna Takahashi · C-41 extended · Rush order</span>
+        </div>
+      </div>
+
+      <div class="work-card" data-format="8x10" data-process="bw">
+        <div class="work-card-bg">
+          <span class="work-card-spec">FP4 Plus 8×10 · Normal · D-76 Stock · 8min · 20°C · Contact print Pt-Pd</span>
+        </div>
+        <div class="work-card-info">
+          <span class="work-card-format">8×10 · Pt-Pd Print</span>
+          <h3 class="work-card-name">FP4 Contact</h3>
+          <span class="work-card-detail">Archive order · Arches Platine · Ferric Oxalate</span>
+        </div>
+      </div>
+
+      <div class="work-card" data-format="35mm" data-process="bw">
+        <div class="work-card-bg">
+          <span class="work-card-spec">Delta 3200 · 35mm · Normal · D-76 1:1 · 13min · 20°C</span>
+        </div>
+        <div class="work-card-info">
+          <span class="work-card-format">35mm · High Speed</span>
+          <h3 class="work-card-name">Delta 3200</h3>
+          <span class="work-card-detail">Documentary · D-76 1:1 · Box speed</span>
+        </div>
+      </div>
+
+      <div class="work-card" data-format="120" data-process="bw">
+        <div class="work-card-bg">
+          <span class="work-card-spec">Pan F Plus 120 · Normal + 1 · Rodinal 1:50 · 14min · 20°C</span>
+        </div>
+        <div class="work-card-info">
+          <span class="work-card-format">120 · Fine Grain</span>
+          <h3 class="work-card-name">Pan F N+1</h3>
+          <span class="work-card-detail">Architecture · Rodinal 1:50 · Full resolution</span>
+        </div>
+      </div>
+
+      <div class="work-card" data-format="35mm" data-process="color">
+        <div class="work-card-bg">
+          <span class="work-card-spec">Ektachrome E100 · 35mm · 1-stop push · E-6 3-bath extended</span>
+        </div>
+        <div class="work-card-info">
+          <span class="work-card-format">35mm · E-6 Push</span>
+          <h3 class="work-card-name">Ektachrome +1</h3>
+          <span class="work-card-detail">Editorial · E-6 extended · Slide output</span>
+        </div>
+      </div>
+
+      <div class="work-card" data-format="4x5" data-process="color">
+        <div class="work-card-bg">
+          <span class="work-card-spec">Ektar 100 4×5 · Normal · C-41 RA · 3:15 at 38°C · 6400 dpi scan</span>
+        </div>
+        <div class="work-card-info">
+          <span class="work-card-format">4×5 · Color Normal</span>
+          <h3 class="work-card-name">Ektar 100</h3>
+          <span class="work-card-detail">Commercial · 6400 dpi Flextight · 16-bit TIFF</span>
+        </div>
+      </div>
+
+      <div class="work-card" data-format="120" data-process="bw">
+        <div class="work-card-bg">
+          <span class="work-card-spec">Ilford SFX 200 · 120 · Normal · HC-110 Dil B · 7min · 20°C · IR filter</span>
+        </div>
+        <div class="work-card-info">
+          <span class="work-card-format">120 · Infrared</span>
+          <h3 class="work-card-name">SFX 200 IR</h3>
+          <span class="work-card-detail">Landscape · HC-110 Dil B · IR treatment</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FEATURED CASE STUDY -->
+  <section class="case-section" id="case-section" aria-labelledby="case-heading">
+    <div class="case-inner">
+      <div class="case-image">
+        <span class="case-image-label">HP5 Plus 4×5 · N-1 · Pyrocat-HD 1:1:100<br>Platinum-Palladium contact print on Arches Platine</span>
+      </div>
+      <div class="case-content">
+        <span class="case-label">Featured Case</span>
+        <h2 class="case-title" id="case-heading">Owen St. Claire — British Columbia Survey</h2>
+        <p class="case-body">
+          Owen St. Claire's landscape work requires extreme tonal control.
+          The foggy conditions of the British Columbia coast produce naturally low-contrast
+          negatives — he exposes to the high end of Zone VII for local detail, then pulls
+          development to compress highlights without sacrificing midtone separation.
+        </p>
+        <p class="case-body">
+          We developed this series in Pyrocat-HD at N-1, then printed platinum-palladium contact
+          prints for his exhibition. The staining developer provided additional UV density
+          for the contact printing process — the prints hold detail in zones that silver gelatin
+          would block entirely.
+        </p>
+        <div class="case-spec-block">
+          <div class="case-spec-line">
+            <span class="case-spec-k">Film</span>
+            <span class="case-spec-v">HP5 Plus 4×5</span>
+          </div>
+          <div class="case-spec-line">
+            <span class="case-spec-k">EI rating</span>
+            <span class="case-spec-v">200 (box: 400)</span>
+          </div>
+          <div class="case-spec-line">
+            <span class="case-spec-k">Developer</span>
+            <span class="case-spec-v">Pyrocat-HD 1:1:100</span>
+          </div>
+          <div class="case-spec-line">
+            <span class="case-spec-k">Development</span>
+            <span class="case-spec-v">N-1 · 11.5min · 20°C ±0.1°C</span>
+          </div>
+          <div class="case-spec-line">
+            <span class="case-spec-k">Print process</span>
+            <span class="case-spec-v">Platinum-palladium · Arches Platine</span>
+          </div>
+          <div class="case-spec-line">
+            <span class="case-spec-k">Print permanence</span>
+            <span class="case-spec-v">500+ year projection</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta-section" aria-labelledby="work-cta-heading">
+    <div class="cta-content">
+      <span class="cta-eyebrow">Your Turn</span>
+      <h2 class="cta-heading" id="work-cta-heading">Send Us<br>Your Best<br>Exposed Film</h2>
+      <p class="cta-body">The chemistry is ready. The documentation will follow.</p>
+      <a href="contact.html" class="cta-btn-primary">Book a Run</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">Meridian Grain</a>
+          <p class="footer-tagline">Precision film developing and scanning laboratory.</p>
+        </div>
+        <nav class="footer-nav-col" aria-label="Services links">
+          <h3 class="footer-nav-heading">Services</h3>
+          <ul class="footer-nav-links">
+            <li><a href="services.html#development">Push-Pull Development</a></li>
+            <li><a href="services.html#scanning">Large-Format Scanning</a></li>
+            <li><a href="services.html#printing">Archival Printing</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-nav-col" aria-label="Studio links">
+          <h3 class="footer-nav-heading">Studio</h3>
+          <ul class="footer-nav-links">
+            <li><a href="process.html">Our Process</a></li>
+            <li><a href="work.html">Client Work</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-nav-col" aria-label="Technical links">
+          <h3 class="footer-nav-heading">Technical</h3>
+          <ul class="footer-nav-links">
+            <li><a href="process.html#chemistry">Chemistry Configurations</a></li>
+            <li><a href="process.html#formats">Supported Formats</a></li>
+            <li><a href="services.html#pricing">Pricing</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Meridian Grain. All rights reserved.</p>
+        <ul class="footer-legal-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var nav = document.getElementById('site-nav');
+      var toggle = nav.querySelector('.nav-mobile-toggle');
+      var mobileMenu = document.querySelector('.nav-mobile-menu');
+      var scrolled = false;
+      function onScroll() {
+        var isScrolled = window.scrollY > 60;
+        if (isScrolled !== scrolled) {
+          scrolled = isScrolled;
+          nav.classList.toggle('scrolled', isScrolled);
+          nav.classList.toggle('fixed-nav', isScrolled);
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen.toString());
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('.nav-link, .nav-cta').forEach(function(link) {
+        link.addEventListener('click', function() {
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+
+      // Filter buttons
+      var filterBtns = document.querySelectorAll('.filter-btn');
+      var cards = document.querySelectorAll('.work-card');
+      filterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(function(b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          var filter = btn.dataset.filter;
+          cards.forEach(function(card) {
+            if (filter === 'all') {
+              card.style.display = '';
+            } else if (filter === 'bw') {
+              card.style.display = card.dataset.process === 'bw' ? '' : 'none';
+            } else if (filter === 'color') {
+              card.style.display = card.dataset.process === 'color' ? '' : 'none';
+            } else {
+              card.style.display = (card.dataset.format && card.dataset.format.replace(/×/, 'x') === filter) ? '' : 'none';
+            }
+          });
+        });
+      });
+    })();
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof gsap === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Header — divergent: left from left, right from right
+      gsap.from('.work-header-left > *', {
+        x: -80, stagger: 0.12, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '.work-header', start: 'top 85%' }
+      });
+      gsap.from('.work-header-right > *', {
+        x: 80, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '.work-header', start: 'top 85%' }
+      });
+
+      // Work cards — rotate + rise in batches
+      var cards = document.querySelectorAll('.work-card');
+      cards.forEach(function(card, i) {
+        gsap.from(card, {
+          rotation: (i % 2 === 0 ? 1.5 : -1.5),
+          y: 40,
+          duration: 0.9,
+          ease: 'power2.out',
+          delay: (i % 3) * 0.1,
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 90%'
+          }
+        });
+      });
+
+      // Case study — clip from left
+      gsap.from('#case-section .case-image', {
+        clipPath: 'inset(0 100% 0 0)',
+        duration: 1.0, ease: 'power2.out',
+        scrollTrigger: { trigger: '#case-section', start: 'top 80%' }
+      });
+      gsap.from('#case-section .case-content > *', {
+        y: 40, stagger: 0.12, duration: 0.9, ease: 'power2.out',
+        scrollTrigger: { trigger: '#case-section', start: 'top 80%' }
+      });
+    });
+  </script>
+</body>
+</html>

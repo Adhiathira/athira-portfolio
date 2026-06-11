@@ -1,0 +1,81 @@
+/* motion-system: andrea-ventura source — Twist E: delay introduction (intensity 3, 0.1s stagger) */
+
+:root {
+  --motion-duration-base: 0.48s;
+  --motion-duration-transition: 0.17s;
+  --motion-duration-overlay: 0.2s;
+  --motion-easing-primary: ease-out;
+  --motion-easing-ui: ease-in-out;
+  --motion-stagger-delay: 0.1s;
+}
+
+@keyframes fade-up-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fonts-loading {
+  0%, 99% {
+    color: transparent;
+  }
+}
+
+/* Hero sequence with stagger delays */
+.hero-heading {
+  animation: fade-up-reveal var(--motion-duration-base) var(--motion-easing-primary) 0s both;
+}
+
+.hero-subheading {
+  animation: fade-up-reveal var(--motion-duration-base) var(--motion-easing-primary) calc(var(--motion-stagger-delay) * 1) both;
+}
+
+.hero-cta {
+  animation: fade-up-reveal var(--motion-duration-base) var(--motion-easing-primary) calc(var(--motion-stagger-delay) * 2) both;
+}
+
+/* Stagger items */
+.stagger-item:nth-child(1) {
+  animation: fade-up-reveal var(--motion-duration-base) var(--motion-easing-primary) 0s both;
+}
+.stagger-item:nth-child(2) {
+  animation: fade-up-reveal var(--motion-duration-base) var(--motion-easing-primary) calc(var(--motion-stagger-delay) * 1) both;
+}
+.stagger-item:nth-child(3) {
+  animation: fade-up-reveal var(--motion-duration-base) var(--motion-easing-primary) calc(var(--motion-stagger-delay) * 2) both;
+}
+.stagger-item:nth-child(4) {
+  animation: fade-up-reveal var(--motion-duration-base) var(--motion-easing-primary) calc(var(--motion-stagger-delay) * 3) both;
+}
+
+/* UI transitions */
+.nav-item,
+nav a {
+  transition: color var(--motion-duration-transition) var(--motion-easing-ui),
+              background-color var(--motion-duration-transition) var(--motion-easing-ui);
+}
+
+a {
+  transition: background-color var(--motion-duration-transition) var(--motion-easing-ui);
+}
+
+.card {
+  transition: opacity var(--motion-duration-overlay) var(--motion-easing-primary),
+              transform var(--motion-duration-overlay) var(--motion-easing-primary);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

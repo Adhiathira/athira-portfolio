@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — Kesslar &amp; Vane Instruments</title>
+  <meta name="description" content="Browse the complete instrument register of Kesslar &amp; Vane. Each numbered instrument, from theodolites to micrometers.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/work.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" id="nav-logo-link">
+      <span class="nav-logo-wordmark">Kesslar &amp; Vane</span>
+    </a>
+    <ul class="nav-links" id="nav-links-list">
+      <li><a href="work.html" class="nav-link nav-link--active" id="nav-link-work">Work</a></li>
+      <li><a href="process.html" class="nav-link" id="nav-link-process">Process</a></li>
+      <li><a href="studio.html" class="nav-link" id="nav-link-studio">Studio</a></li>
+      <li><a href="contact.html" class="nav-link" id="nav-link-contact">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="work.html" class="nav-link nav-link--active" id="nav-mobile-work">Work</a>
+  <a href="process.html" class="nav-link" id="nav-mobile-process">Process</a>
+  <a href="studio.html" class="nav-link" id="nav-mobile-studio">Studio</a>
+  <a href="contact.html" class="nav-link" id="nav-mobile-contact">Contact</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = document.getElementById('nav-mobile-toggle');
+    var mobileMenu = document.getElementById('nav-mobile-menu');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    }, { passive: true });
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open');
+        var isOpen = mobileMenu.classList.contains('is-open');
+        toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      });
+    }
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('.nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.classList.remove('is-open');
+        });
+      });
+    }
+  })();
+</script>
+
+<!-- Sub-page: always-active spacer since no dark hero -->
+<div class="nav-spacer active" id="nav-spacer"></div>
+
+<!-- ============================================================
+     WORK HERO — medium 40–60vh (product/portfolio archetype)
+     ============================================================ -->
+<section id="work-hero" class="work-hero-section">
+  <div id="work-hero-inner" class="work-hero-inner">
+    <div id="work-hero-media" class="work-hero-media">
+      <img
+        id="work-hero-img"
+        src="assets/work-hero.jpeg"
+        alt="Collection of numbered instruments on a survey bench"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div class="work-hero-img-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/work-hero.jpeg</div>
+      <div id="work-hero-overlay" class="work-hero-overlay"></div>
+      <div id="work-hero-text-over" class="work-hero-text-over">
+        <h3 class="section-label section-label--light">The Register</h3>
+        <h1 id="work-hero-title" class="work-hero-title">1,847 Instruments</h1>
+        <p id="work-hero-sub" class="work-hero-sub">Every instrument we have made, numbered from No. 1.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FILTER BAR
+     ============================================================ -->
+<section id="filter-bar" class="filter-bar-section">
+  <div id="filter-bar-inner" class="filter-bar-inner">
+    <div id="filter-tabs" class="filter-tabs">
+      <button class="filter-tab filter-tab--active" id="tab-all" data-filter="all">All</button>
+      <button class="filter-tab" id="tab-theodolite" data-filter="theodolite">Theodolites</button>
+      <button class="filter-tab" id="tab-level" data-filter="level">Levels</button>
+      <button class="filter-tab" id="tab-micrometer" data-filter="micrometer">Micrometers</button>
+      <button class="filter-tab" id="tab-spectrometer" data-filter="spectrometer">Spectrometers</button>
+    </div>
+    <span id="filter-count" class="filter-count">Showing 1,847 instruments</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     INSTRUMENT REGISTER — full-width feature rows
+     Grid: 1-col container, wide horizontal cards (title left, image right)
+     Animation: rotate + rise, stagger 0.12
+     ============================================================ -->
+<section id="register" class="register-section">
+  <div id="register-inner" class="register-inner">
+
+    <article id="register-item-1" class="register-item" data-category="theodolite">
+      <div id="register-item-1-content" class="register-item-content">
+        <div id="register-item-1-meta" class="register-item-meta">
+          <span class="register-no">No. 1,847</span>
+          <span class="register-year">2024</span>
+          <span class="register-category">Theodolite</span>
+        </div>
+        <h2 class="register-name">Survey Theodolite</h2>
+        <p class="register-desc">Brass body with optical glass telescope. 20-second accuracy, graduated horizontal and vertical circles. Commissioned by the British Geological Survey for Arctic fieldwork.</p>
+        <a href="contact.html" class="btn-ghost-dark register-enquire">Enquire about this instrument</a>
+      </div>
+      <div id="register-item-1-media" class="register-item-media">
+        <img
+          id="register-img-1"
+          src="assets/register-theodolite.jpeg"
+          alt="Survey Theodolite No. 1,847 — brass and optical glass on a white survey cloth"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/register-theodolite.jpeg</div>
+      </div>
+    </article>
+
+    <article id="register-item-2" class="register-item register-item--reversed" data-category="level">
+      <div id="register-item-2-content" class="register-item-content">
+        <div id="register-item-2-meta" class="register-item-meta">
+          <span class="register-no">No. 1,829</span>
+          <span class="register-year">2023</span>
+          <span class="register-category">Level</span>
+        </div>
+        <h2 class="register-name">Precision Dumpy Level</h2>
+        <p class="register-desc">Tilting screw, bubble chamber, 28× magnification. Standard instrument for civil engineering surveys demanding better than ±0.5mm per kilometre accuracy.</p>
+        <a href="contact.html" class="btn-ghost-dark register-enquire">Enquire about this instrument</a>
+      </div>
+      <div id="register-item-2-media" class="register-item-media">
+        <img
+          id="register-img-2"
+          src="assets/register-level.jpeg"
+          alt="Precision Dumpy Level No. 1,829 — tilting screw and bubble chamber detail"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/register-level.jpeg</div>
+      </div>
+    </article>
+
+    <article id="register-item-3" class="register-item" data-category="micrometer">
+      <div id="register-item-3-content" class="register-item-content">
+        <div id="register-item-3-meta" class="register-item-meta">
+          <span class="register-no">No. 1,814</span>
+          <span class="register-year">2023</span>
+          <span class="register-category">Micrometer</span>
+        </div>
+        <h2 class="register-name">Outside Micrometer Gauge</h2>
+        <p class="register-desc">Ground and lapped anvil faces, 25mm range, 0.001mm graduation. Supplied to the National Physical Laboratory for dimensional metrology reference work.</p>
+        <a href="contact.html" class="btn-ghost-dark register-enquire">Enquire about this instrument</a>
+      </div>
+      <div id="register-item-3-media" class="register-item-media">
+        <img
+          id="register-img-3"
+          src="assets/register-micrometer.jpeg"
+          alt="Micrometer Gauge No. 1,814 — thimble scale and anvil face detail"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/register-micrometer.jpeg</div>
+      </div>
+    </article>
+
+    <article id="register-item-4" class="register-item register-item--reversed" data-category="spectrometer">
+      <div id="register-item-4-content" class="register-item-content">
+        <div id="register-item-4-meta" class="register-item-meta">
+          <span class="register-no">No. 1,801</span>
+          <span class="register-year">2022</span>
+          <span class="register-category">Spectrometer</span>
+        </div>
+        <h2 class="register-name">Prism Spectrometer</h2>
+        <p class="register-desc">Crown glass prism, 1-second angular read, rack-and-pinion focussing. Commissioned by the University of Edinburgh for undergraduate optics laboratories.</p>
+        <a href="contact.html" class="btn-ghost-dark register-enquire">Enquire about this instrument</a>
+      </div>
+      <div id="register-item-4-media" class="register-item-media">
+        <img
+          id="register-img-4"
+          src="assets/register-spectrometer.jpeg"
+          alt="Prism Spectrometer No. 1,801 — crown glass prism and eyepiece arm"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/register-spectrometer.jpeg</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     AMBIENT VIDEO SECTION — product-ambient.mp4
+     From concept_by_video.md: close-up macro drift across product surface
+     Dark contrast beat; 5s loop
+     ============================================================ -->
+<section id="product-ambient" class="product-ambient-section">
+  <div id="product-ambient-video-wrap" class="product-ambient-video-wrap">
+    <video
+      id="product-ambient-video"
+      src="assets/product-ambient.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-dark);color:rgba(255,255,255,0.3);font-size:0.8rem;letter-spacing:0.06em;">→ assets/product-ambient.mp4</div>
+    <div id="product-ambient-overlay" class="product-ambient-overlay"></div>
+    <div id="product-ambient-text" class="product-ambient-text">
+      <p id="product-ambient-quote" class="product-ambient-quote">
+        "The precision of an instrument is the precision of the mind that made it."
+      </p>
+      <span id="product-ambient-attr" class="product-ambient-attr">— Workshop maxim, Kesslar &amp; Vane</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA — commission enquiry
+     ============================================================ -->
+<section id="work-cta" class="work-cta-section">
+  <div id="work-cta-inner" class="work-cta-inner">
+    <h2 id="work-cta-heading" class="work-cta-heading">Commission an instrument</h2>
+    <p id="work-cta-body" class="work-cta-body">Every instrument begins with a brief. Tell us what you need to measure.</p>
+    <a href="contact.html" class="btn-primary" id="work-cta-btn">Begin a commission</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer" class="site-footer">
+  <div id="footer-inner" class="footer-inner">
+    <div id="footer-top" class="footer-top">
+      <div id="footer-brand" class="footer-brand">
+        <span id="footer-wordmark" class="footer-wordmark">Kesslar &amp; Vane</span>
+        <p class="footer-tagline-text">Precision scientific instruments.<br>Edinburgh, Scotland.</p>
+      </div>
+      <div id="footer-nav" class="footer-nav">
+        <div id="footer-nav-col-1" class="footer-nav-col">
+          <p class="footer-nav-heading">Studio</p>
+          <ul class="footer-nav-list">
+            <li><a href="work.html" class="footer-link">Work</a></li>
+            <li><a href="process.html" class="footer-link">Process</a></li>
+            <li><a href="studio.html" class="footer-link">Studio</a></li>
+          </ul>
+        </div>
+        <div id="footer-nav-col-2" class="footer-nav-col">
+          <p class="footer-nav-heading">Contact</p>
+          <ul class="footer-nav-list">
+            <li><a href="contact.html" class="footer-link">Commission an instrument</a></li>
+            <li><a href="contact.html" class="footer-link">General enquiries</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="footer-address" class="footer-address">
+        <p class="footer-nav-heading">Location</p>
+        <p class="footer-address-text">14 Grassmarket<br>Edinburgh EH1 2JU<br>Scotland</p>
+      </div>
+    </div>
+    <div id="footer-bottom" class="footer-bottom">
+      <span class="footer-legal">© 2026 Kesslar &amp; Vane. All rights reserved.</span>
+      <span class="footer-legal">Est. Edinburgh, 1887</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  const BASE = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.78;
+  const CARD = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-card')) || 0.52;
+  const SLOW = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-slow')) || 1.3;
+  const EASE_E = getComputedStyle(document.documentElement).getPropertyValue('--ease-enter').trim() || 'power3.out';
+  const EASE_P = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.inOut';
+
+  // Work hero — rise
+  gsap.from('#work-hero-text-over', {
+    y: 32, duration: SLOW, ease: EASE_E
+  });
+
+  // Filter bar — fade up
+  gsap.from('#filter-bar', {
+    scrollTrigger: { trigger: '#filter-bar', start: 'top 90%' },
+    y: 16, duration: CARD, ease: EASE_E
+  });
+
+  // Register items — rotate + rise, stagger 0.12
+  var registerItems = document.querySelectorAll('.register-item');
+  registerItems.forEach(function(item, i) {
+    gsap.from(item, {
+      scrollTrigger: { trigger: item, start: 'top 78%' },
+      rotation: 1.2,
+      y: 40,
+      duration: BASE,
+      ease: EASE_P,
+      delay: 0
+    });
+  });
+
+  // Product ambient video text
+  gsap.from('#product-ambient-quote', {
+    scrollTrigger: { trigger: '#product-ambient', start: 'top 65%' },
+    y: 30, duration: SLOW, ease: EASE_E
+  });
+  gsap.from('#product-ambient-attr', {
+    scrollTrigger: { trigger: '#product-ambient', start: 'top 60%' },
+    y: 20, duration: BASE, ease: EASE_E,
+    delay: 0.3
+  });
+
+  // CTA section
+  gsap.from('#work-cta-inner', {
+    scrollTrigger: { trigger: '#work-cta', start: 'top 78%' },
+    scale: 0.97, duration: BASE, ease: EASE_P
+  });
+
+  // Filter tab switching
+  var filterTabs = document.querySelectorAll('.filter-tab');
+  var filterItems = document.querySelectorAll('.register-item');
+  filterTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      filterTabs.forEach(function(t) { t.classList.remove('filter-tab--active'); });
+      tab.classList.add('filter-tab--active');
+      var filter = tab.getAttribute('data-filter');
+      filterItems.forEach(function(item) {
+        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      var count = filter === 'all' ? 1847 : filterItems.length;
+      document.getElementById('filter-count').textContent = 'Showing ' + (filter === 'all' ? '1,847' : document.querySelectorAll('.register-item:not([style*="none"])').length) + ' instruments';
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community — vid-prod</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/tokens.css" />
+  <link rel="stylesheet" href="../../css/typography.css" />
+  <link rel="stylesheet" href="../../css/layout.css" />
+  <link rel="stylesheet" href="../../css/components.css" />
+  <style>
+    /* =========================================================================
+       WORKSPACE LAYOUT — sidebar + main CSS Grid
+       ========================================================================= */
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+    }
+
+    /* =========================================================================
+       SIDEBAR
+       ========================================================================= */
+
+    .sidebar {
+      background: var(--color-heading);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-section-gap);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar__wordmark {
+      font-family: var(--font-family);
+      font-size: var(--font-size-nav);
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      display: block;
+    }
+
+    .sidebar__nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-btn-gap);
+    }
+
+    .sidebar__nav-item {
+      display: block;
+      font-family: var(--font-family);
+      font-size: var(--font-size-body);
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: var(--spacing-btn-radius);
+      border-left: 2px solid transparent;
+      transition: var(--motion-color);
+    }
+
+    .sidebar__nav-item--active {
+      background: rgba(255, 255, 255, 0.1);
+      border-left: 2px solid var(--color-primary);
+      color: #ffffff;
+    }
+
+    .sidebar__nav-item:hover:not(.sidebar__nav-item--active) {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+    }
+
+    .sidebar__user {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-btn-gap);
+    }
+
+    .sidebar__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      font-weight: 600;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar__username {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .sidebar__logout {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-muted);
+      text-decoration: none;
+    }
+
+    .sidebar__logout:hover {
+      color: #ffffff;
+    }
+
+    /* =========================================================================
+       MAIN CONTENT
+       ========================================================================= */
+
+    .main-content {
+      background: var(--color-surface);
+      padding: var(--spacing-section-gap);
+      min-height: 100vh;
+    }
+
+    /* =========================================================================
+       PAGE HEADING
+       ========================================================================= */
+
+    .page-heading {
+      font-family: var(--font-family);
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-h2);
+      color: var(--color-heading);
+      margin: 0 0 var(--spacing-section-gap);
+      letter-spacing: var(--letter-spacing-h2);
+    }
+
+    /* =========================================================================
+       FEED TABS
+       ========================================================================= */
+
+    .feed-tabs {
+      display: flex;
+      gap: var(--spacing-section-gap);
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--spacing-section-gap);
+    }
+
+    .feed-tab {
+      font-family: var(--font-family);
+      font-size: var(--font-size-body);
+      color: var(--color-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: var(--spacing-btn-gap) 0;
+      margin-bottom: -1px;
+      cursor: pointer;
+      transition: var(--motion-color);
+    }
+
+    .feed-tab--active {
+      color: var(--color-heading);
+      border-bottom-color: var(--color-primary);
+    }
+
+    .feed-tab:hover:not(.feed-tab--active) {
+      color: var(--color-heading);
+    }
+
+    /* =========================================================================
+       FEED GRID
+       ========================================================================= */
+
+    .feed-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-section-gap);
+      max-width: 900px;
+      margin-bottom: var(--spacing-section-gap);
+    }
+
+    .feed-load-more {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* =========================================================================
+       FEED CARD
+       ========================================================================= */
+
+    .feed-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--spacing-wrapper-radius);
+      padding: 20px;
+      transition: var(--motion-card);
+    }
+
+    .feed-card:hover {
+      transform: matrix(1, 0, 0, 1, 4.7, -4);
+    }
+
+    .feed-card__header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-btn-gap);
+      margin-bottom: var(--spacing-section-gap);
+    }
+
+    .feed-card__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      font-weight: 600;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .feed-card__meta {
+      flex: 1;
+    }
+
+    .feed-card__display-name {
+      font-family: var(--font-family);
+      font-size: var(--font-size-body);
+      font-weight: 600;
+      color: var(--color-heading);
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .feed-card__username {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-muted);
+      margin: 0;
+    }
+
+    .feed-card__badge {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-interactive);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      padding: 2px 6px;
+      white-space: nowrap;
+    }
+
+    .feed-card__thumbnail {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--color-border);
+      border-radius: var(--spacing-btn-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-muted);
+      margin-bottom: var(--spacing-btn-gap);
+    }
+
+    .feed-card__title {
+      font-family: var(--font-family);
+      font-size: var(--font-size-h4);
+      font-weight: var(--font-weight-h4);
+      color: var(--color-heading);
+      margin: 0 0 var(--spacing-btn-gap);
+    }
+
+    .feed-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .feed-card__points {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-muted);
+    }
+
+    .feed-card__link {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-interactive);
+      text-decoration: none;
+      transition: var(--motion-color);
+    }
+
+    .feed-card__link:hover {
+      color: var(--color-interactive-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="workspace">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <a href="/public/index.html" class="sidebar__wordmark">vid-prod</a>
+      <nav class="sidebar__nav">
+        <a href="/public/app/studio.html" class="sidebar__nav-item">Studio</a>
+        <a href="/public/app/community.html" class="sidebar__nav-item sidebar__nav-item--active">Community</a>
+        <a href="/public/app/profile.html" class="sidebar__nav-item">Profile</a>
+      </nav>
+      <div style="flex: 1;"></div>
+      <div class="sidebar__user">
+        <div class="sidebar__avatar" id="sidebar-avatar">--</div>
+        <span class="sidebar__username" id="sidebar-username">@username</span>
+        <a href="#" class="sidebar__logout" id="logout-btn">Log out</a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <h1 class="page-heading">Community</h1>
+
+      <!-- Filter tabs -->
+      <div class="feed-tabs">
+        <button class="feed-tab feed-tab--active" data-tab="all">All</button>
+        <button class="feed-tab" data-tab="following">Following</button>
+        <button class="feed-tab" data-tab="trending">Trending</button>
+      </div>
+
+      <!-- Feed grid — cards injected by JS -->
+      <div class="feed-grid" id="feed-grid"></div>
+
+      <div class="feed-load-more">
+        <button class="btn btn-secondary">Load more</button>
+      </div>
+    </main>
+
+  </div>
+
+  <script type="module">
+    import { isLoggedIn, getUsername, logout } from '../../js/auth.js';
+
+    // Auth gate
+    if (!isLoggedIn()) {
+      window.location.href = '/public/login.html?returnTo=' + encodeURIComponent(window.location.pathname);
+    }
+
+    // Sidebar user block
+    const username = getUsername() || 'user';
+    document.getElementById('sidebar-avatar').textContent = username.slice(0, 2).toUpperCase();
+    document.getElementById('sidebar-username').textContent = '@' + username;
+
+    document.getElementById('logout-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      logout();
+      window.location.href = '/public/index.html';
+    });
+
+    // Feed data
+    const feedItems = [
+      { username: 'mira_creates', displayName: 'Mira Chen', points: 3240, mediaType: 'Animation', title: 'Neon City Loop', avatar: 'MC' },
+      { username: 'wave_studio', displayName: 'Wave Studio', points: 1820, mediaType: 'Video', title: 'Brand Anthem 2026', avatar: 'WS' },
+      { username: 'luca_film', displayName: 'Luca Ferrara', points: 2760, mediaType: 'Short Film', title: 'Golden Hour', avatar: 'LF' },
+      { username: 'nova_motion', displayName: 'Nova Motion', points: 940, mediaType: 'Animation', title: 'Orbital Drift', avatar: 'NM' },
+      { username: 'jade_cuts', displayName: 'Jade Liu', points: 4100, mediaType: 'Video', title: 'Product Launch 24', avatar: 'JL' },
+      { username: 'arctic_frame', displayName: 'Arctic Frame', points: 1550, mediaType: 'Documentary', title: 'Ice Season', avatar: 'AF' },
+      { username: 'pixel_pulse', displayName: 'Pixel Pulse', points: 2200, mediaType: 'Animation', title: 'System Reboot', avatar: 'PP' },
+      { username: 'kira_makes', displayName: 'Kira Santos', points: 3890, mediaType: 'Video', title: 'Summer Collection', avatar: 'KS' },
+      { username: 'echo_studio', displayName: 'Echo Studio', points: 710, mediaType: 'Short Film', title: 'Stillwater', avatar: 'ES' },
+      { username: 'theo_lens', displayName: 'Theo Park', points: 1330, mediaType: 'Documentary', title: 'Market Day', avatar: 'TP' },
+      { username: 'vex_motion', displayName: 'Vex Motion', points: 2980, mediaType: 'Animation', title: 'Chrome Dreams', avatar: 'VM' },
+      { username: 'iris_vid', displayName: 'Iris Webb', points: 4450, mediaType: 'Video', title: 'Heritage Brand', avatar: 'IW' }
+    ];
+
+    /**
+     * buildCard — constructs a .feed-card DOM node from a feed item object.
+     * Uses DOM APIs exclusively (no innerHTML) to avoid XSS surface.
+     * @param {{ username: string, displayName: string, points: number, mediaType: string, title: string, avatar: string }} item
+     * @returns {HTMLDivElement}
+     */
+    function buildCard(item) {
+      // Root card
+      const card = document.createElement('div');
+      card.className = 'feed-card';
+
+      // --- Header ---
+      const header = document.createElement('div');
+      header.className = 'feed-card__header';
+
+      const avatarEl = document.createElement('div');
+      avatarEl.className = 'feed-card__avatar';
+      avatarEl.textContent = item.avatar;
+
+      const meta = document.createElement('div');
+      meta.className = 'feed-card__meta';
+
+      const displayName = document.createElement('p');
+      displayName.className = 'feed-card__display-name';
+      displayName.textContent = item.displayName;
+
+      const usernameEl = document.createElement('p');
+      usernameEl.className = 'feed-card__username';
+      usernameEl.textContent = '@' + item.username;
+
+      meta.appendChild(displayName);
+      meta.appendChild(usernameEl);
+
+      const badge = document.createElement('span');
+      badge.className = 'feed-card__badge';
+      badge.textContent = item.mediaType;
+
+      header.appendChild(avatarEl);
+      header.appendChild(meta);
+      header.appendChild(badge);
+
+      // --- Thumbnail ---
+      const thumbnail = document.createElement('div');
+      thumbnail.className = 'feed-card__thumbnail';
+      thumbnail.textContent = '[community-thumb.jpg]';
+
+      // --- Title ---
+      const titleEl = document.createElement('h4');
+      titleEl.className = 'feed-card__title';
+      titleEl.textContent = item.title;
+
+      // --- Footer ---
+      const footer = document.createElement('div');
+      footer.className = 'feed-card__footer';
+
+      const points = document.createElement('span');
+      points.className = 'feed-card__points';
+      points.textContent = '\u2605 ' + item.points.toLocaleString() + ' pts';
+
+      const link = document.createElement('a');
+      link.className = 'feed-card__link';
+      link.href = '/creators/' + item.username + '.html';
+      link.textContent = 'View project \u2192';
+
+      footer.appendChild(points);
+      footer.appendChild(link);
+
+      // Assemble card
+      card.appendChild(header);
+      card.appendChild(thumbnail);
+      card.appendChild(titleEl);
+      card.appendChild(footer);
+
+      return card;
+    }
+
+    const grid = document.getElementById('feed-grid');
+    const fragment = document.createDocumentFragment();
+    feedItems.forEach(item => fragment.appendChild(buildCard(item)));
+    grid.appendChild(fragment);
+
+    // Filter tabs (visual only — no filtering logic needed)
+    document.querySelectorAll('.feed-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.feed-tab').forEach(t => t.classList.remove('feed-tab--active'));
+        tab.classList.add('feed-tab--active');
+      });
+    });
+  </script>
+</body>
+</html>

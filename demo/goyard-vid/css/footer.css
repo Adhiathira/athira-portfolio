@@ -1,0 +1,266 @@
+/* =============================================================================
+   footer.css — Shared footer component for goyard-vid
+   Depends on: tokens.css (must be loaded before this file)
+   Sources:
+     - spacing-system/spacing.json     (padding, margin, gap values)
+     - color-system/colors.json        (footer background, text colours)
+     - type-system/typography.json     (heading and link typography)
+     - interaction-states/interactions.json (link hover opacity)
+     - motion-system/motion.json       (hover transition)
+     - nav-system/nav.json             (letter-spacing, font-weight, text-transform)
+   ============================================================================= */
+
+
+/* =============================================================================
+   .site-footer — full-bleed dark green footer block
+   Source: concept_by_image.md "dark green field"
+           tokens.css --color-hero-bg #183f26 (colors.json hero-background role)
+           tokens.css --space-footer-top 40px (spacing.json footer.paddingTop)
+   ============================================================================= */
+
+.site-footer {
+  width:            100%;                      /* full viewport width — full-bleed */
+  background-color: var(--color-hero-bg);      /* tokens.css --color-hero-bg #183f26 — colors.json hero-background; matches Goyard dark green field */
+  padding-top:      var(--space-footer-top);   /* tokens.css --space-footer-top 40px — spacing.json footer.paddingTop */
+  padding-bottom:   40px;                      /* symmetric bottom — no dedicated token; mirrors --space-footer-top 40px for visual balance */
+  color:            var(--color-nav-text);     /* tokens.css --color-nav-text #ffffff — all footer text inherits white */
+}
+
+
+/* =============================================================================
+   .footer-columns — 4-column equal-width flex grid
+   Source: concept_by_image.md "four equal-width columns of centered text links"
+           tokens.css --space-wrapper-x 100px (spacing.json wrapper.paddingLeft/Right)
+           tokens.css --space-container-gap 80px (spacing.json container.columnGap)
+   ============================================================================= */
+
+.footer-columns {
+  display:          flex;                       /* flex row — 4 equal columns side by side */
+  justify-content:  space-between;             /* equal distribution across full width */
+  padding-left:     var(--space-wrapper-x);    /* tokens.css --space-wrapper-x 100px — spacing.json wrapper horizontal gutter */
+  padding-right:    var(--space-wrapper-x);    /* tokens.css --space-wrapper-x 100px — mirrors left gutter */
+  gap:              var(--space-container-gap); /* tokens.css --space-container-gap 80px — spacing.json container columnGap */
+  padding-bottom:   40px;                      /* section breathing room before bottom bar — mirrors --space-footer-top; no dedicated token */
+  border-bottom:    1px solid rgba(255, 255, 255, 0.12); /* subtle divider — no border token; rgba(255,255,255,0.12) is minimum perceptible white on --color-hero-bg */
+}
+
+
+/* =============================================================================
+   .footer-col — individual column within the 4-column grid
+   Centers content as described in concept_by_image.md.
+   ============================================================================= */
+
+.footer-col {
+  flex:        1;             /* equal width — each of 4 columns takes identical share */
+  display:     flex;          /* flex column so heading and list stack vertically */
+  flex-direction: column;     /* stack heading above link list */
+  align-items: center;        /* concept_by_image.md "centered text links" — column content centered */
+  text-align:  center;        /* center-aligns text within each column */
+}
+
+
+/* =============================================================================
+   .footer-col-heading — uppercase section heading
+   Source: typography.json typeScale.h3 (font-size 20px, font-weight 300, letter-spacing 3.2px)
+           nav.json typography.textTransform "uppercase"
+           tokens.css --color-nav-text #ffffff
+   ============================================================================= */
+
+.footer-col-heading {
+  font-family:    var(--font-heading);       /* tokens.css --font-heading 'Plus Jakarta Sans' — substitutes Goyard proprietary typeface per font-db.json */
+  font-size:      var(--type-h3-size);       /* tokens.css --type-h3-size 20px — typography.json typeScale.h3.fontSize */
+  font-weight:    var(--type-h3-fw);         /* tokens.css --type-h3-fw 300 — typography.json typeScale.h3.fontWeight light */
+  line-height:    var(--type-h3-lh);         /* tokens.css --type-h3-lh 22px — typography.json typeScale.h3.lineHeight */
+  letter-spacing: calc(var(--type-h3-ls));   /* tokens.css --type-h3-ls 3.2px — typography.json typeScale.h3.letterSpacing */
+  text-transform: uppercase;                 /* nav.json typography.textTransform "uppercase" — column headings always uppercased */
+  color:          var(--color-nav-text);     /* tokens.css --color-nav-text #ffffff — all footer text white */
+  margin:         0 0 16px 0;               /* no dedicated token for heading-to-list gap; spacing.json elements.li.marginBottom 16px reused — same visual rhythm */
+  padding:        0;                         /* reset any UA h4 margin */
+}
+
+
+/* =============================================================================
+   .footer-links — unstyled link list within a column
+   ============================================================================= */
+
+.footer-links {
+  list-style:  none;   /* remove UA bullet points */
+  margin:      0;      /* reset UA ul margin */
+  padding:     0;      /* reset UA ul padding */
+  display:     flex;   /* flex column for stacked links */
+  flex-direction: column;
+  gap:         0;      /* gap handled by li margin-bottom per spacing.json li */
+}
+
+
+/* =============================================================================
+   .footer-links li — individual list item
+   Source: spacing.json elements.li.marginTop 2px, marginBottom 16px
+   ============================================================================= */
+
+.footer-links li {
+  margin-top:    2px;   /* spacing.json elements.li.marginTop 2px */
+  margin-bottom: 16px;  /* spacing.json elements.li.marginBottom 16px */
+}
+
+.footer-links li:last-child {
+  margin-bottom: 0;     /* remove trailing margin on last item — no token; prevents double-spacing at column bottom */
+}
+
+
+/* =============================================================================
+   .footer-link — individual navigation anchor within a column
+   Source: typography.json typeScale.nav (fontSize 12px, fontWeight 400)
+           interactions.json navigation default-link-1 opacity "0.5" / hover opacity "1"
+           nav.json linkHover.transition "color 0.15s ease-in-out"
+           tokens.css --color-nav-text #ffffff
+   ============================================================================= */
+
+.footer-link {
+  display:         inline-block;           /* inline-block consistent with nav link pattern */
+  font-family:     var(--font-heading);    /* tokens.css --font-heading 'Plus Jakarta Sans' — nav.json typography.fontFamily substitute */
+  font-size:       var(--type-nav-size);   /* tokens.css --type-nav-size 12px — typography.json nav/link fontSize */
+  font-weight:     var(--type-nav-fw);     /* tokens.css --type-nav-fw 400 — interactions.json navigation default fontWeight "400" */
+  line-height:     var(--type-small-lh);   /* tokens.css --type-small-lh 20px — typography.json small.lineHeight; closest match for 12px link text */
+  color:           var(--color-nav-text);  /* tokens.css --color-nav-text #ffffff — footer links are always white */
+  opacity:         0.6;                    /* interactions.json navigation default-link-1 default opacity "0.5"; footer links use 0.6 — slightly more readable on dark bg */
+  text-decoration: none;                   /* override base.css a hover underline — footer links never underline */
+  text-transform:  none;                   /* footer links are sentence-case, not uppercase like headings */
+  letter-spacing:  normal;                 /* no letter-spacing on footer body links — unlike nav links which use 0.0819rem */
+  cursor:          pointer;                /* interactions.json navigation default cursor "pointer" */
+  transition:      opacity 0.15s ease-in-out; /* nav.json linkHover.transition "color 0.15s ease-in-out" — opacity transition matches duration/easing */
+  white-space:     nowrap;                 /* prevent link text from wrapping */
+}
+
+.footer-link:hover {
+  opacity:         1;    /* interactions.json navigation default-link-1 hover opacity "1" — link becomes fully opaque */
+  text-decoration: none; /* base.css a:hover sets text-decoration: underline — explicit override required */
+}
+
+
+/* =============================================================================
+   .footer-bottom — bottom bar: locale | wordmark | social
+   Source: spacing.json wrapper.paddingLeft/Right 100px (--space-wrapper-x)
+   Three-slot flex layout mirroring the utility nav bar pattern.
+   ============================================================================= */
+
+.footer-bottom {
+  display:          flex;                       /* three-slot flex: locale (left) | wordmark (center) | social (right) */
+  align-items:      center;                     /* vertically center all three slots */
+  justify-content:  space-between;             /* push locale to left, social to right; wordmark is middle flex item */
+  padding-left:     var(--space-wrapper-x);    /* tokens.css --space-wrapper-x 100px — spacing.json wrapper horizontal gutter */
+  padding-right:    var(--space-wrapper-x);    /* tokens.css --space-wrapper-x 100px */
+  padding-top:      24px;                      /* top breathing room above bottom bar — no dedicated token; 24px aligns to nearest spacing.json base-4 rhythm */
+}
+
+
+/* =============================================================================
+   .footer-locale — language/locale selector button
+   Source: tokens.css --color-nav-text #ffffff — icon and text white
+           interactions.json navigation default cursor "pointer"
+           nav.json linkHover.transition "color 0.15s ease-in-out"
+   ============================================================================= */
+
+.footer-locale {
+  display:          inline-flex;           /* flex so SVG globe + text + caret align inline */
+  align-items:      center;               /* vertically center icon and text */
+  gap:              6px;                   /* tight gap between globe icon, text, and caret — no dedicated token; 6px is visually minimal */
+  font-family:      var(--font-heading);   /* tokens.css --font-heading 'Plus Jakarta Sans' */
+  font-size:        var(--type-nav-size);  /* tokens.css --type-nav-size 12px */
+  font-weight:      var(--type-nav-fw);    /* tokens.css --type-nav-fw 400 */
+  color:            var(--color-nav-text); /* tokens.css --color-nav-text #ffffff */
+  opacity:          0.6;                   /* matches footer-link resting opacity — utility label at rest */
+  background:       transparent;           /* no background — reset UA button chrome */
+  border:           none;                  /* no border */
+  padding:          0;                     /* no padding — pure text + icon label */
+  cursor:           pointer;               /* interactions.json navigation default cursor "pointer" */
+  transition:       opacity 0.15s ease-in-out; /* nav.json linkHover.transition duration + easing */
+  -webkit-appearance: none;               /* remove Safari UA button chrome */
+  appearance:       none;                 /* remove UA button chrome cross-browser */
+}
+
+.footer-locale:hover {
+  opacity: 1;  /* interactions.json navigation default-link-1 hover opacity "1" */
+}
+
+.footer-locale svg {
+  display:    block;      /* remove inline SVG descender gap */
+  flex-shrink: 0;         /* prevent SVG from shrinking in flex context */
+}
+
+.footer-locale-caret {
+  margin-left: 2px;   /* extra micro-gap before caret; no dedicated token — 2px is minimum perceptible visual separation */
+}
+
+
+/* =============================================================================
+   .footer-wordmark — centered brand name
+   Source: nav.json typography (fontFamily, fontSize, fontWeight, letterSpacing, textTransform)
+           tokens.css --color-nav-text #ffffff
+   Mirrors .nav-wordmark from nav.css.
+   ============================================================================= */
+
+.footer-wordmark {
+  display:         flex;        /* flex so text aligns precisely */
+  align-items:     center;      /* vertically center text */
+  justify-content: center;      /* horizontally center */
+  text-decoration: none;        /* override base.css a:hover — wordmark never underlines */
+  flex:            1;           /* grow to fill center space; locale and social have fixed content width */
+}
+
+.footer-wordmark:hover {
+  text-decoration: none;  /* explicit hover override — base.css a:hover sets underline; this cancels it */
+}
+
+.footer-wordmark-text {
+  font-family:    var(--font-heading);   /* tokens.css --font-heading 'Plus Jakarta Sans' — nav.json typography.fontFamily substitute */
+  font-size:      var(--type-nav-size);  /* tokens.css --type-nav-size 12px — nav.json typography.fontSize 0.5625rem */
+  font-weight:    var(--type-nav-fw);    /* tokens.css --type-nav-fw 400 — nav.json typography.fontWeight "400" */
+  color:          var(--color-nav-text); /* tokens.css --color-nav-text #ffffff */
+  text-transform: uppercase;             /* nav.json typography.textTransform "uppercase" */
+  letter-spacing: 0.0819rem;            /* nav.json typography.letterSpacing "0.0819rem" — luxury restraint signal */
+  line-height:    2.22;                 /* nav.json typography.lineHeight "2.22" */
+  text-decoration: none;                /* override base.css — wordmark never underlines */
+}
+
+
+/* =============================================================================
+   .footer-social — social icon group (right slot in bottom bar)
+   ============================================================================= */
+
+.footer-social {
+  display:     flex;                   /* flex row for icon group */
+  align-items: center;                 /* vertically center icons */
+  gap:         16px;                   /* icon group gap — no dedicated token; mirrors --nav-utility-left gap (16px) for visual system consistency */
+}
+
+
+/* =============================================================================
+   .footer-social-link — individual social icon anchor
+   Source: tokens.css --color-nav-text #ffffff (inherited via color: currentColor on SVG)
+           interactions.json navigation default cursor "pointer"
+           nav.json linkHover.transition "color 0.15s ease-in-out"
+   ============================================================================= */
+
+.footer-social-link {
+  display:          inline-flex;           /* flex so SVG centres within the hit area */
+  align-items:      center;               /* vertically center SVG icon */
+  justify-content:  center;              /* horizontally center SVG icon */
+  width:            32px;                 /* square hit area — mirrors .nav-icon-btn 32px */
+  height:           32px;                 /* matches width */
+  color:            var(--color-nav-text); /* tokens.css --color-nav-text #ffffff — SVG uses currentColor */
+  opacity:          0.6;                   /* matches footer-link resting opacity */
+  text-decoration:  none;                 /* no underline on icon anchors */
+  cursor:           pointer;              /* interactions.json navigation default cursor "pointer" */
+  transition:       opacity 0.15s ease-in-out; /* nav.json linkHover.transition duration + easing */
+}
+
+.footer-social-link:hover {
+  opacity:         1;    /* interactions.json navigation default-link-1 hover opacity "1" */
+  text-decoration: none; /* base.css a:hover override */
+}
+
+.footer-social-link svg {
+  display:     block;    /* remove inline SVG descender gap */
+  flex-shrink: 0;        /* prevent shrink in flex context */
+}

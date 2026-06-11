@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Torq Material Resistance Testing</title>
+  <meta name="description" content="Torq was built by engineers who spent years waiting for simulation infrastructure to catch up with materials science. It has.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <style>
+    .page-body {
+      padding-top: var(--nav-height);
+      background: var(--color-page-bg);
+    }
+
+    /* ── Page header ── */
+    #about-header {
+      background: var(--color-surface-dark);
+      padding: var(--space-hero) var(--grid-padding) var(--space-4xl);
+    }
+
+    #about-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+    }
+
+    #about-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-lg);
+    }
+
+    #about-headline {
+      font-family: var(--font-display);
+      font-size: var(--type-display);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading);
+      text-transform: uppercase;
+      color: var(--color-heading-on-dark);
+      margin: 0 0 var(--space-xl);
+    }
+
+    #about-lead {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-light);
+      line-height: var(--line-height-body);
+      color: var(--color-muted-text);
+      max-width: 520px;
+      margin: 0;
+    }
+
+    /* ── Mission section ── */
+    #about-mission {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: var(--space-section) var(--grid-padding);
+    }
+
+    #about-mission-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3xl);
+      align-items: start;
+    }
+
+    .about-section-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+      margin-bottom: var(--space-lg);
+    }
+
+    .about-section-title {
+      font-family: var(--font-display);
+      font-size: var(--type-h2);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 var(--space-xl);
+    }
+
+    .about-body {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-light);
+      line-height: 1.7;
+      color: var(--color-neutral-525);
+      margin: 0;
+    }
+
+    .about-body + .about-body {
+      margin-top: var(--space-lg);
+    }
+
+    /* ── Values section ── */
+    #about-values {
+      background: var(--color-surface-dark);
+      border-top: 1px solid var(--color-border);
+    }
+
+    #about-values-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: var(--space-section) var(--grid-padding);
+    }
+
+    #values-header {
+      margin-bottom: var(--space-3xl);
+    }
+
+    #values-header .about-section-eyebrow {
+      color: var(--color-accent);
+    }
+
+    #values-header .about-section-title {
+      color: var(--color-heading-on-dark);
+    }
+
+    #values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+    }
+
+    .value-item {
+      background: var(--color-surface-dark);
+      padding: var(--space-2xl) var(--space-xl);
+    }
+
+    .value-number {
+      font-family: var(--font-display);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-body);
+      letter-spacing: var(--font-letter-spacing-nav);
+      color: var(--color-accent);
+      margin-bottom: var(--space-lg);
+    }
+
+    .value-title {
+      font-family: var(--font-display);
+      font-size: var(--type-h3);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading-on-dark);
+      margin: 0 0 var(--space-md);
+    }
+
+    .value-body {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      line-height: 1.6;
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    /* ── Team section ── */
+    #about-team {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: var(--space-section) var(--grid-padding);
+    }
+
+    #team-header {
+      margin-bottom: var(--space-3xl);
+    }
+
+    #team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-neutral-400);
+      border: 1px solid var(--color-neutral-400);
+    }
+
+    .team-member {
+      background: var(--color-page-bg);
+      padding: var(--space-2xl) var(--space-xl);
+    }
+
+    .team-member-photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--color-neutral-300);
+      margin-bottom: var(--space-lg);
+      overflow: hidden;
+    }
+
+    .team-member-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .team-member-photo-placeholder {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-neutral-300);
+      color: var(--color-neutral-500);
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+    }
+
+    .team-member-name {
+      font-family: var(--font-display);
+      font-size: var(--type-h3);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin-bottom: var(--space-xs);
+    }
+
+    .team-member-role {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      color: var(--color-neutral-500);
+      margin-bottom: var(--space-md);
+    }
+
+    .team-member-bio {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      line-height: 1.6;
+      color: var(--color-neutral-525);
+      margin: 0;
+    }
+
+    /* ── CTA strip ── */
+    #about-cta-strip {
+      background: var(--color-surface-dark);
+      border-top: 1px solid var(--color-border);
+    }
+
+    #about-cta-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: var(--space-3xl) var(--grid-padding);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2xl);
+    }
+
+    #about-cta-text {
+      font-family: var(--font-display);
+      font-size: var(--type-h3);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading-on-dark);
+    }
+
+    #about-cta-link {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: var(--font-weight-body);
+      letter-spacing: var(--font-letter-spacing-nav);
+      color: var(--color-surface-dark);
+      background: var(--color-accent);
+      text-decoration: none;
+      display: inline-block;
+      padding: var(--space-btn-v) var(--space-btn-h);
+      white-space: nowrap;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    #about-cta-link:hover { opacity: 0.85; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      #about-mission-inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+      }
+
+      #values-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #team-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      #about-cta-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="page-body">
+
+<!-- NAV TEMPLATE -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo">TORQ</a>
+  <ul class="nav-links">
+    <li><a href="index.html#product">Product</a></li>
+    <li><a href="method.html">Method</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html" class="nav-link--active">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="index.html#access" class="nav-cta">Request Access</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu">
+  <a href="index.html#product">Product</a>
+  <a href="method.html">Method</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="about.html">About</a>
+  <a href="index.html#access" class="nav-mobile-cta">Request Access</a>
+</div>
+<script>
+(function(){
+  var nav = document.getElementById('site-nav');
+  var mobileMenu = document.querySelector('.nav-mobile-menu');
+  var toggle = document.querySelector('.nav-mobile-toggle');
+  toggle.addEventListener('click', function(){
+    nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open');
+  });
+})();
+</script>
+
+<!-- PAGE HEADER -->
+<section id="about-header">
+  <div id="about-header-inner">
+    <div id="about-eyebrow">The Company</div>
+    <h1 id="about-headline">Built by<br>Engineers.</h1>
+    <p id="about-lead">Torq was founded by materials scientists and simulation engineers who spent years working around inadequate tooling. We built the platform we couldn't find.</p>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="about-mission">
+  <div id="about-mission-inner">
+    <div id="about-mission-text">
+      <div class="about-section-eyebrow">Our Mission</div>
+      <h2 class="about-section-title">Precision over<br>approximation.</h2>
+    </div>
+    <div>
+      <p class="about-body">The materials simulation industry has relied on regression-table approximations for decades — population-average data fitted to generic curves, handed to engineers as if it were specific to their material. It is not. The gap between approximation and measurement is where structural failures live.</p>
+      <p class="about-body">Torq was built on a single premise: every material deserves a simulation derived from its actual geometry, not borrowed from a population average. Our FEA engine resolves at the microstructure level because that is the level at which composite materials actually behave differently from each other.</p>
+      <p class="about-body">The result is simulation output that engineering teams can rely on — not as an estimate, but as a measurement-quality prediction they can put in front of an accreditation body without caveat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section id="about-values">
+  <div id="about-values-inner">
+    <div id="values-header">
+      <div class="about-section-eyebrow">What We Hold To</div>
+      <h2 class="about-section-title">Principles.</h2>
+    </div>
+    <div id="values-grid">
+      <div class="value-item">
+        <div class="value-number">01</div>
+        <h3 class="value-title">No Rounding</h3>
+        <p class="value-body">Every threshold value in a Torq simulation is derived from the input material geometry. We do not round to the nearest standard value, and we do not substitute population-average data when material-specific data is unavailable. We tell you what we know and what we don't.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-number">02</div>
+        <h3 class="value-title">Output First</h3>
+        <p class="value-body">Simulation that does not produce usable documentation is incomplete work. Every Torq run ends in structured, standards-compliant output — not a data dump that requires interpretation. The report is part of the simulation, not an afterthought.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-number">03</div>
+        <h3 class="value-title">Engineer-Paced</h3>
+        <p class="value-body">We do not design for analysts who need visual dashboards. Torq is built for engineers who know what they are looking for and need infrastructure that does not slow them down. The interface surfaces precision, not decoration.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="about-team">
+  <div id="team-header">
+    <div class="about-section-eyebrow">The Team</div>
+    <h2 class="about-section-title">Who Builds Torq.</h2>
+  </div>
+  <div id="team-grid">
+    <div class="team-member">
+      <div class="team-member-photo">
+        <img
+          src="assets/team-nadia-reinholt.jpeg"
+          alt="Nadia Reinholt, Co-founder and CEO of Torq"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="team-member-photo-placeholder">→ assets/team-nadia-reinholt.jpeg</div>
+      </div>
+      <div class="team-member-name">Nadia Reinholt</div>
+      <div class="team-member-role">Co-founder &amp; CEO</div>
+      <p class="team-member-bio">Previously Senior Simulation Lead at a major European aerospace structural testing division. PhD in Composite Materials Mechanics from TU Delft. Spent twelve years watching teams work around simulation tools that couldn't match their materials.</p>
+    </div>
+    <div class="team-member">
+      <div class="team-member-photo">
+        <img
+          src="assets/team-anders-kjeld.jpeg"
+          alt="Anders Kjeld, Co-founder and CTO of Torq"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="team-member-photo-placeholder">→ assets/team-anders-kjeld.jpeg</div>
+      </div>
+      <div class="team-member-name">Anders Kjeld</div>
+      <div class="team-member-role">Co-founder &amp; CTO</div>
+      <p class="team-member-bio">Built high-performance sparse direct solvers for structural mechanics at the computational level for eight years before co-founding Torq. MSc in Computational Engineering from ETH Zürich. Architect of Torq's per-cell FEA engine.</p>
+    </div>
+    <div class="team-member">
+      <div class="team-member-photo">
+        <img
+          src="assets/team-priya-balakumar.jpeg"
+          alt="Priya Balakumar, Head of Standards and Compliance at Torq"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="team-member-photo-placeholder">→ assets/team-priya-balakumar.jpeg</div>
+      </div>
+      <div class="team-member-name">Priya Balakumar</div>
+      <div class="team-member-role">Head of Standards &amp; Compliance</div>
+      <p class="team-member-bio">Former technical committee member on ISO TC 164 (mechanical testing of metals). Responsible for Torq's compliance output architecture and accreditation body relationships. Ensures every report leaving the platform meets submission standards.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section id="about-cta-strip">
+  <div id="about-cta-inner">
+    <div id="about-cta-text">Join the engineers already in the queue.</div>
+    <a href="index.html#access" id="about-cta-link">Request Access</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div class="section-inner">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <div id="footer-logo">TORQ</div>
+        <div id="footer-tagline">Precision simulation for material engineers.</div>
+        <div id="footer-copyright">&copy; 2026 Torq Technologies, Inc.</div>
+      </div>
+      <div class="footer-col" id="fcol-platform">
+        <div class="footer-col-heading">Platform</div>
+        <ul class="footer-links">
+          <li><a href="index.html#product">Product</a></li>
+          <li><a href="method.html">Method</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="fcol-company">
+        <div class="footer-col-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="fcol-legal">
+        <div class="footer-col-heading">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+var BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.6;
+var EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+// Header entrance
+gsap.from('#about-eyebrow', { y: 30, duration: BASE_DURATION, ease: EASE, delay: 0.2 });
+gsap.from('#about-headline', { y: 60, duration: BASE_DURATION, ease: EASE, delay: 0.35 });
+gsap.from('#about-lead', { y: 30, duration: BASE_DURATION, ease: EASE, delay: 0.5 });
+
+// Mission section
+gsap.from('#about-mission-text > *', {
+  scrollTrigger: { trigger: '#about-mission', start: 'top 80%' },
+  x: -50,
+  duration: BASE_DURATION,
+  stagger: 0.1,
+  ease: EASE
+});
+
+gsap.from('#about-mission > #about-mission-inner > div:last-child > *', {
+  scrollTrigger: { trigger: '#about-mission', start: 'top 75%' },
+  y: 30,
+  duration: BASE_DURATION,
+  stagger: 0.12,
+  ease: EASE
+});
+
+// Values
+gsap.from('.value-item', {
+  scrollTrigger: { trigger: '#values-grid', start: 'top 80%' },
+  y: 40,
+  duration: BASE_DURATION,
+  stagger: 0.14,
+  ease: EASE
+});
+
+// Team
+gsap.from('.team-member', {
+  scrollTrigger: { trigger: '#team-grid', start: 'top 80%' },
+  y: 50,
+  duration: BASE_DURATION,
+  stagger: 0.14,
+  ease: EASE
+});
+</script>
+
+</body>
+</html>

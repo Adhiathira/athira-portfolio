@@ -1,0 +1,112 @@
+/* =============================================================================
+   final-cta.css — Final CTA Section
+   Task 254: [goyard-vid][7/12] Home — Platform Roadmap Teaser + Final CTA Section
+
+   Token source: tokens.css (all --var references defined there)
+   Layout:       full-bleed section, flex-centered content
+   Motion:       animations.js → ScrollTrigger reveal (.final-cta-headline, .final-cta-btn opacity 0 → 1)
+   Design note:  Background is var(--color-hero-bg) = #183f26 — the deliberate gear shift from cream
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Section — Full-bleed deep green container
+   ----------------------------------------------------------------------------- */
+
+.final-cta {
+  background-color: var(--color-hero-bg);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: calc(var(--space-section-top) * 3);
+  padding-bottom: calc(var(--space-section-top) * 3);
+}
+
+/* -----------------------------------------------------------------------------
+   Content wrapper — centered column
+   ----------------------------------------------------------------------------- */
+
+.final-cta-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  text-align: center;
+}
+
+/* -----------------------------------------------------------------------------
+   Headline
+   ----------------------------------------------------------------------------- */
+
+.final-cta-headline {
+  font-family: var(--font-heading);
+  font-size: var(--type-h1-size);
+  line-height: var(--type-h1-lh);
+  font-weight: 400;
+  letter-spacing: var(--type-h1-ls);
+  color: var(--color-nav-text);
+  opacity: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   CTA Button — ghost/outline style on dark background
+   ----------------------------------------------------------------------------- */
+
+.final-cta-btn {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid var(--cta-primary-border);
+  color: var(--cta-primary-text);
+  font-family: var(--font-heading);
+  font-weight: var(--type-button-fw);
+  line-height: var(--type-button-lh);
+  font-size: var(--type-nav-size);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: var(--space-cta-y) var(--space-cta-x);
+  border-radius: var(--radius-button);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  opacity: 0;
+}
+
+.final-cta-btn:hover {
+  opacity: 0.8;
+}
+
+/* -----------------------------------------------------------------------------
+   Responsive — 768px and below
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .final-cta {
+    padding-top: calc(var(--space-section-top) * 2);
+    padding-bottom: calc(var(--space-section-top) * 2);
+  }
+
+  .final-cta-headline {
+    font-size: clamp(28px, 5.5vw, var(--type-h1-size));
+    line-height: 1.1;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Responsive — 480px and below
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  .final-cta {
+    padding-top: calc(var(--space-section-top) * 1.5);
+    padding-bottom: calc(var(--space-section-top) * 1.5);
+  }
+
+  .final-cta-headline {
+    font-size: clamp(24px, 7vw, 32px);
+    line-height: 1.15;
+  }
+
+  .final-cta-content {
+    gap: 28px;
+  }
+}

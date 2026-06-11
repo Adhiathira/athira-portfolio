@@ -1,0 +1,496 @@
+/* ──────────────────────────────────────────────────────────────────────────────
+   home.css — Hero section styles for unseen-vid home page
+   All values reference CSS custom properties from tokens.css.
+   No raw hex values, no raw font names, no raw timing values.
+   ────────────────────────────────────────────────────────────────────────────── */
+
+
+/* ── Hero wrapper ────────────────────────────────────────────────────────────
+   Outer section element. Fills the viewport below the sticky navbar.
+   Uses flex column so .hero__split (panels) and .hero__content (cluster)
+   stack vertically. ───────────────────────────────────────────────────────── */
+
+.hero {
+  height: calc(100vh - var(--nav-height));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* ── Split panels container ──────────────────────────────────────────────────
+   Row that holds the left panel, vertical divider, and right panel.
+   flex: 1 lets it absorb all remaining vertical space above .hero__content. */
+
+.hero__split {
+  display: flex;
+  width: 100%;
+  flex: 1;
+}
+
+
+/* ── Hero panels — shared base ───────────────────────────────────────────────
+   Both panels share this base. Each panel takes equal horizontal space
+   via flex: 1, centres its content, and clips any overflow. ────────────────── */
+
+.hero-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  text-align: center;
+  padding: var(--space-header-h);
+  overflow: hidden;
+}
+
+/* Left panel — "Before." — isolation state, dark brownish-gray background */
+.hero-panel--before {
+  background-color: var(--color-text-body);
+  color: var(--color-bg);
+}
+
+/* Right panel — "After." — collaboration state, near-black background */
+.hero-panel--after {
+  background-color: var(--color-action);
+  color: var(--color-bg);
+}
+
+/* Small uppercase label ("Before." / "After.") rendered above the panel copy */
+.hero-panel__label {
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-fw);
+  letter-spacing: var(--type-ls-caps);
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: var(--space-cta-v);
+  display: block;
+}
+
+
+/* ── Divider ─────────────────────────────────────────────────────────────────
+   1px vertical line between the two panels. align-self: stretch ensures it
+   runs the full height of .hero__split regardless of panel content height.
+   1px is acceptable — it maps directly to a border token pattern. ─────────── */
+
+.hero__divider {
+  width: 1px;
+  background-color: var(--color-border);
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+
+/* ── Content cluster ─────────────────────────────────────────────────────────
+   Sub-headline + CTA button cluster positioned below the split panels.
+   max-width: var(--content-cluster-width) enforces the 300px constraint
+   from layout.md. ─────────────────────────────────────────────────────────── */
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-cta-h);
+  padding: var(--space-cta-h) var(--space-header-h);
+  max-width: var(--content-cluster-width);
+  text-align: center;
+}
+
+/* Sub-headline paragraph inside the content cluster.
+   overflow: hidden is intentionally omitted here — it lives on .hero__word
+   so each word clips its own translateY reveal independently. ───────────────── */
+.hero__headline {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+  color: var(--color-text-body);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3em;
+}
+
+/* Two-span word reveal pattern:
+   .hero__word-clip — outer wrapper that clips the transform. overflow: hidden
+   here clips the INNER span while the outer's layout stays in place.
+   .hero__word — inner span that transforms. CSS transforms move the visual
+   output AND the clipping box together, so overflow: hidden must live on a
+   NON-transforming parent for the clip to work correctly. ──────────────────── */
+
+.hero__word-clip {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.hero__word {
+  display: inline-block;
+  transform: translateY(100%);
+  transition: transform var(--duration-reveal) var(--ease-reveal);
+}
+
+
+/* ── Responsive — mobile (max-width: 768px) ──────────────────────────────────
+   Stack the two panels vertically on small screens. The divider becomes a
+   horizontal 1px rule. Panels get a fixed min-height so neither collapses. */
+
+@media (max-width: 768px) {
+  .hero__split {
+    flex-direction: column;
+  }
+
+  .hero-panel {
+    min-height: 200px;
+    flex: none;
+    width: 100%;
+  }
+
+  .hero__divider {
+    width: 100%;
+    height: 1px;
+    align-self: auto;
+  }
+}
+
+
+/* ── Gallery section ─────────────────────────────────────────────────────────
+   Full-bleed — no max-width constraint. Bleeds to page edges.
+   Section padding uses spacing tokens only. ────────────────────────────────── */
+
+.gallery-section {
+  padding: 48px 0;
+  background-color: var(--color-bg);
+}
+
+/* Filter chip bar */
+.gallery-filter {
+  display: flex;
+  gap: var(--space-cta-h);
+  padding: 0 var(--space-header-h);
+  margin-bottom: var(--space-header-h);
+}
+
+.gallery-filter__chip {
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-fw);
+  line-height: var(--type-button-lh);
+  letter-spacing: var(--type-ls-caps);
+  text-transform: uppercase;
+  padding: var(--space-cta-v) var(--space-cta-h);
+  border-radius: var(--space-cta-radius);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-body);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+}
+
+.gallery-filter__chip--active {
+  background: var(--color-action);
+  color: var(--color-surface);
+  border-color: var(--color-action);
+}
+
+.gallery-filter__chip--coming-soon {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.chip-label__coming-soon {
+  font-size: var(--type-button);
+  opacity: 0.8;
+}
+
+/* Gallery grid — 3 columns on desktop */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-header-h);
+  padding: 0 var(--space-header-h);
+}
+
+/* ── Post-gallery CTA ─────────────────────────────────────────────────────────
+   Centered cluster immediately after the gallery grid. ───────────────────────── */
+
+.gallery-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-cta-v);
+  padding: 48px var(--space-header-h);
+  background-color: var(--color-bg);
+  text-align: center;
+}
+
+.gallery-cta__caption {
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ── Responsive — mobile (max-width: 768px) ──────────────────────────────────
+   Stack gallery to single column. ─────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   SECTION: HOW IT WORKS
+   ═══════════════════════════════════════════════════════ */
+
+.section-how-it-works {
+  padding: calc(var(--space-p-mb) * 4) var(--space-header-h);
+  text-align: center;
+  background-color: var(--color-bg);
+}
+
+.how-it-works__label {
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-fw);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: calc(var(--space-p-mb) * 3);
+}
+
+.how-it-works__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(var(--space-p-mb) * 2);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.how-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-p-mb);
+}
+
+.how-step__icon {
+  color: var(--color-action);
+  width: 24px;
+  height: 24px;
+}
+
+.how-step__number {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.how-step__description {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  color: var(--color-text-body);
+  line-height: 1.4;
+  margin: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   SECTION: COMMUNITY SIGNALS
+   ═══════════════════════════════════════════════════════ */
+
+.section-community-signals {
+  padding: calc(var(--space-p-mb) * 4) var(--space-header-h);
+  text-align: center;
+  background-color: var(--color-bg);
+}
+
+.creator-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: calc(var(--space-p-mb) * 1.5);
+  margin-bottom: calc(var(--space-p-mb) * 3);
+}
+
+.creator-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--space-p-mb) * 0.5);
+}
+
+.creator-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-text-body);
+  margin-bottom: calc(var(--space-p-mb) * 0.5);
+}
+
+.creator-card__name {
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  font-weight: 600;
+  color: var(--color-text-body);
+}
+
+.creator-card__points {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  color: var(--color-action);
+}
+
+.creator-card__project {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.community-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--space-p-mb) * 0.5);
+}
+
+.community-stat__number {
+  font-family: var(--font-primary);
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--color-text-body);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.community-stat__label {
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  color: var(--color-text-muted);
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   SECTION: ROADMAP TEASER
+   ═══════════════════════════════════════════════════════ */
+
+.section-roadmap-teaser {
+  padding: calc(var(--space-p-mb) * 4) var(--space-header-h);
+  text-align: center;
+  background-color: var(--color-bg);
+}
+
+.roadmap-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-p-mb);
+  margin-bottom: calc(var(--space-p-mb) * 2);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.roadmap-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--space-p-mb) * 0.75);
+  padding: calc(var(--space-p-mb) * 1.5);
+  border-radius: 4px;
+}
+
+.roadmap-card--live {
+  background: var(--color-action);
+  color: var(--color-bg);
+}
+
+.roadmap-card--soon {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  opacity: 0.6;
+}
+
+.roadmap-card__label {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.roadmap-card__status {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.roadmap-card__status--live {
+  color: var(--color-bg);
+  opacity: 0.7;
+}
+
+.roadmap-caption {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--color-text-muted);
+  margin: calc(var(--space-p-mb) * 2) 0 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   SECTION: FINAL CTA — THE CREATIVE DARE
+   ═══════════════════════════════════════════════════════ */
+
+.section-final-cta {
+  background: var(--color-action);
+  color: var(--color-bg);
+  text-align: center;
+  padding: calc(var(--space-p-mb) * 6) var(--space-header-h);
+}
+
+.final-cta__headline {
+  font-family: var(--font-primary);
+  font-size: var(--type-display);
+  font-weight: var(--type-display-fw);
+  line-height: var(--type-display-lh);
+  color: var(--color-bg);
+  margin: 0 0 calc(var(--space-p-mb) * 3);
+}
+
+.cta-primary--inverted {
+  background: var(--color-bg) !important;
+  color: var(--color-action) !important;
+}
+
+
+/* ── Responsive — below 768px collapse grids to single column ────────────── */
+
+@media (max-width: 768px) {
+  .how-it-works__grid {
+    grid-template-columns: 1fr;
+    gap: calc(var(--space-p-mb) * 2);
+  }
+
+  .creator-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .roadmap-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .final-cta__headline {
+    font-size: 48px;
+  }
+}

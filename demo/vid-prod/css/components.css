@@ -1,0 +1,924 @@
+/* =============================================================================
+   COMPONENTS — vid-prod
+   Source: project-documentation/design-system/
+   All values via CSS variables from tokens.css — no hardcoded values except
+   where noted (60px navbar height: measured structure, not a spacing token).
+   ============================================================================= */
+
+/* =============================================================================
+   NAVBAR — 3-zone fixed layout
+   Source: spacing.json nav, interactions.json navigation, motion.json link
+   Structure: [logo left] [links center] [CTAs right]
+   ============================================================================= */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-nav-v) var(--spacing-container-h);
+  height: 60px; /* measured structure — not a spacing token */
+  box-sizing: border-box;
+}
+
+/* Left zone — brand logo */
+.navbar__logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-heading);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-weight: 600;
+  font-size: var(--font-size-nav);
+}
+
+/* Center zone — navigation links */
+/* Source: grid.json grids navigation-menu (display: flex, gap: 28px) */
+.navbar__links {
+  display: flex;
+  gap: var(--spacing-nav-gap);
+  align-items: center;
+}
+
+/* Right zone — CTA buttons */
+.navbar__cta {
+  display: flex;
+  gap: var(--spacing-btn-gap);
+  align-items: center;
+}
+
+/* Nav link states — Source: interactions.json navigation default-link-1
+   color: rgb(83,58,253) = #533afd = --color-interactive
+   hover color: rgb(46,43,140) = #2e2b8c = --color-interactive-hover
+   transition: opacity 0.24s cubic-bezier(0.45, 0.05, 0.55, 0.95) = --motion-link */
+.navbar__link {
+  font-family: var(--font-family);
+  font-size: var(--font-size-nav);
+  font-weight: 400;
+  color: var(--color-interactive); /* #533afd — measured from Stripe nav element */
+  text-decoration: none;
+  font-feature-settings: var(--font-feature);
+  transition: var(--motion-link);
+}
+
+.navbar__link:hover {
+  opacity: 0.6;
+  color: var(--color-interactive-hover); /* #2e2b8c */
+}
+
+/* Scrolled state — triggered by scroll.js when scrollY > 10
+   Box-shadow color: rgba derived from --color-heading (#0a2540) components: 10, 37, 64 */
+.navbar--scrolled {
+  box-shadow: 0 2px 8px rgba(10, 37, 64, 0.08);
+}
+
+/* =============================================================================
+   BUTTONS
+   Source: spacing.json button, interactions.json hds-button--primary + secondary,
+           motion.json transitionElements .hds-button
+   ============================================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-btn-gap);
+  padding: var(--spacing-btn-top) var(--spacing-btn-right) var(--spacing-btn-bottom) var(--spacing-btn-left);
+  border-radius: var(--spacing-btn-radius);
+  font-family: var(--font-family);
+  font-size: var(--font-size-button);
+  font-weight: 400;
+  font-feature-settings: var(--font-feature);
+  line-height: var(--line-height-button);
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: var(--motion-btn);
+  box-sizing: border-box;
+}
+
+/* Primary button — Source: interactions.json hds-button--primary-link-4 default
+   backgroundColor: rgb(83,58,253) = #533afd = --color-interactive
+   hover backgroundColor: rgb(64,50,200) = #4032c8 = --color-primary-hover */
+.btn-primary {
+  background-color: var(--color-interactive); /* #533afd */
+  color: var(--color-bg);
+  border-color: transparent;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover); /* #4032c8 */
+}
+
+/* Secondary button — Source: interactions.json hds-button--secondary-on-quiet-link-3
+   default: color #533afd, borderColor #fff (1px solid white shown on dark bg context)
+   For light bg use: color --color-interactive, border --color-interactive
+   hover: bg #fff, color #2e2b8c, borderColor rgb(64,50,200) = --color-primary-hover */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-interactive);
+  border-color: var(--color-interactive);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-bg);
+  color: var(--color-interactive-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* =============================================================================
+   CARD BASE
+   Source: spacing.json card (paddingRight: 60px), wrapper (borderRadius: 6px),
+           interactions.json cards default-card-2 (transition, hover transform),
+           motion.json card (transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1))
+   ============================================================================= */
+
+.card {
+  border-radius: var(--spacing-wrapper-radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  padding-right: var(--spacing-card-right);
+  overflow: hidden;
+  transition: var(--motion-card);
+}
+
+/* Hover transform — Source: interactions.json cards default-card-2 hover
+   transform: matrix(1, 0, 0, 1, 4.73509, -3.96128) — ~4–5px diagonal translate */
+.card:hover {
+  transform: translate(4px, -4px);
+}
+
+/* =============================================================================
+   FOOTER
+   Source: spacing.json container (paddingTop/Bottom: 96px), footer (h: 16px),
+           color-system/colors.json heading-text (#0a2540) as dark footer bg
+   ============================================================================= */
+
+.footer {
+  background: var(--color-heading); /* #0a2540 — deep navy */
+  color: var(--color-bg);
+  padding: var(--spacing-container-v) var(--spacing-container-h);
+}
+
+.footer__inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding-h);
+}
+
+/* Source: grid.json grids navigation-menu (display: flex, gap: 28px) */
+.footer__links {
+  display: flex;
+  gap: var(--spacing-nav-gap);
+  flex-wrap: wrap;
+}
+
+/* Footer link color — muted default, white on hover
+   transition: --motion-color (color 0.3s cubic-bezier(0.25, 1, 0.5, 1)) */
+.footer__link {
+  color: var(--color-muted);
+  text-decoration: none;
+  font-size: var(--font-size-nav);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  transition: var(--motion-color);
+}
+
+.footer__link:hover {
+  color: var(--color-bg);
+}
+
+/* =============================================================================
+   HERO SECTION — vid-prod [2/10]
+   Source: design-system/grid-system/layout.md §3 (asymmetric 2-col, full-bleed)
+           design-system/concept-summary/concept.md (gradient blob = only exuberance)
+   ============================================================================= */
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--spacing-hero-v);
+  padding-bottom: var(--spacing-hero-v);
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--spacing-container-gap);
+  position: relative;
+  z-index: 1; /* text sits above blob */
+  width: 100%;
+}
+
+.hero-content {
+  max-width: 560px;
+}
+
+/* Gradient blob — right half, no container box, bleeds freely
+   Source: colors.json gradient-pink, gradient-orange, accent-lavender
+   CSS-only: radial-gradient + filter: blur — no image assets */
+.hero-blob {
+  position: absolute;
+  right: -120px;
+  top: -80px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(ellipse at 60% 40%,
+    var(--color-gradient-lavender) 0%,
+    var(--color-gradient-pink) 35%,
+    var(--color-gradient-orange) 65%,
+    transparent 100%);
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-stat {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  color: var(--color-muted);
+  margin-bottom: var(--spacing-btn-gap);
+  margin-top: 0;
+}
+
+.hero-heading {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--letter-spacing-h1);
+  color: var(--color-heading);
+  margin: 0 0 var(--spacing-btn-gap);
+}
+
+.hero-sub {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-body);
+  color: var(--color-body);
+  margin: 0 0 var(--spacing-section-gap);
+  line-height: 1.6;
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: var(--spacing-btn-gap);
+  align-items: center;
+}
+
+/* =============================================================================
+   SOCIAL PROOF STRIP — vid-prod [2/10]
+   Source: layout.md §3 — directly below hero, full-width centered row, top border
+   ============================================================================= */
+
+.social-proof-strip {
+  border-top: 1px solid var(--color-border);
+  padding: var(--spacing-nav-v) var(--spacing-container-h);
+}
+
+.social-proof-strip .container {
+  display: flex;
+  gap: var(--spacing-container-gap);
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.proof-item {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+/* =============================================================================
+   GALLERY SECTION — vid-prod [3/10]
+   Source: design-system/spacing.json (btn-gap, grid-pad, section-gap, content-radius),
+           interactions.json cards default-card-2 (hover transform, motion-card),
+           motion.json link (opacity transition = --motion-link)
+   ============================================================================= */
+
+/* GALLERY FILTERS
+   ---------------------------------------------------------------------- */
+
+.gallery-filters {
+  display: flex;
+  gap: var(--spacing-btn-gap);
+  margin-bottom: var(--spacing-grid-pad);
+}
+
+/* Filter button — base state
+   padding: 6px 14px — measured micro-values, no spacing token covers filter btn padding */
+.filter-btn {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  padding: 6px 14px; /* measured — no token for filter btn padding */
+  border-radius: var(--spacing-content-radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: var(--motion-link); /* opacity transition for state changes */
+}
+
+/* Active filter — Source: interactions.json primary color highlight */
+.filter-btn--active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-bg);
+}
+
+/* Disabled filter — not-yet-available media types */
+.filter-btn--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* "Coming soon" inline label inside disabled filter buttons
+   font-size: 11px — measured micro-value, no token for sub-label size */
+.coming-soon {
+  font-size: 11px; /* measured — no token for sub-label size */
+  margin-left: 4px; /* measured — no token for inline label offset */
+  opacity: 0.7;
+}
+
+/* GALLERY GRID
+   ---------------------------------------------------------------------- */
+
+/* 4-column grid — Source: grid.json grids (4 equal columns, gap = --spacing-section-gap) */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-section-gap);
+}
+
+/* GALLERY CARD
+   ---------------------------------------------------------------------- */
+
+/* Card base — Source: interactions.json cards default-card-2, motion.json card */
+.gallery-card {
+  position: relative;
+  border-radius: var(--spacing-content-radius);
+  overflow: hidden;
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: var(--motion-card);
+}
+
+/* Hover lift — Source: interactions.json cards default-card-2 hover
+   transform: matrix(1, 0, 0, 1, 4.73509, -3.96128) — ~4–5px diagonal translate */
+.gallery-card:hover {
+  transform: translate(4px, -4px);
+}
+
+/* CARD MEDIA + PLACEHOLDER
+   ---------------------------------------------------------------------- */
+
+/* 16:9 aspect ratio container — no height token needed, ratio enforces it */
+.gallery-card__media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+/* Placeholder shown when video/image is not yet generated
+   padding: --spacing-btn-gap — reuses smallest spacing token for inner breathing room */
+.gallery-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  text-align: center;
+  padding: var(--spacing-btn-gap);
+  box-sizing: border-box;
+}
+
+/* CARD OVERLAY — hover reveal
+   ---------------------------------------------------------------------- */
+
+/* Gradient overlay using rgba from --color-heading (#0a2540) components: 10, 37, 64
+   No CSS variable for rgba — rgba(10, 37, 64, 0.85) matches --color-heading exactly */
+.gallery-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(10, 37, 64, 0.85)); /* rgba derived from --color-heading (#0a2540) */
+  padding: var(--spacing-grid-pad);
+  opacity: 0;
+  transition: var(--motion-link);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.gallery-card:hover .gallery-card__overlay {
+  opacity: 1;
+}
+
+/* On touch/coarse-pointer devices, :hover is unreliable — keep overlay always visible */
+@media (hover: none) {
+  .gallery-card__overlay {
+    opacity: 1;
+  }
+}
+
+/* Overlay text — both name and points use bg color (white) on dark gradient */
+.gallery-card__name,
+.gallery-card__points {
+  color: var(--color-bg);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+}
+
+/* MEDIA TYPE BADGE
+   ---------------------------------------------------------------------- */
+
+/* Badge — absolute top-right corner
+   top/right: --spacing-btn-gap — smallest token, appropriate for badge inset
+   padding: 4px 8px — measured micro-values, no token for badge padding
+   font-size: 11px — measured micro-value, no token for badge label size */
+.gallery-card__badge {
+  position: absolute;
+  top: var(--spacing-btn-gap);
+  right: var(--spacing-btn-gap);
+  padding: 4px 8px; /* measured — no token for badge padding */
+  border-radius: var(--spacing-content-radius);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: 11px; /* measured — no token for badge label size */
+  font-weight: 400;
+}
+
+/* Video badge — primary color fill, white label */
+.gallery-card__badge--video {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+/* Animation / Film badges — surface fill, muted label */
+.gallery-card__badge--animation,
+.gallery-card__badge--film {
+  background: var(--color-surface);
+  color: var(--color-muted);
+}
+
+/* SKELETON CARD — loading state
+   ---------------------------------------------------------------------- */
+
+/* Skeleton shares aspect ratio with media; pulse animation conveys loading
+   Source: concept.md motion principle — subtle, purposeful animation */
+.gallery-card--skeleton {
+  background: var(--color-surface);
+  border-radius: var(--spacing-content-radius);
+  aspect-ratio: 16 / 9;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+/* GALLERY CTA — "Make your own" section
+   ---------------------------------------------------------------------- */
+
+.gallery-cta {
+  text-align: center;
+}
+
+/* Sub-text below CTA heading — muted, button-scale font */
+.gallery-cta__sub {
+  margin-top: var(--spacing-btn-gap);
+  color: var(--color-muted);
+  font-size: var(--font-size-button);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+}
+
+/* =============================================================================
+   HOW IT WORKS SECTION — vid-prod [4/10]
+   Source: spacing.json (grid-pad, btn-gap, content-radius), colors.json primary
+   3-column step grid, no card borders — white space separates columns.
+   ============================================================================= */
+
+/* Step card — padding via grid-pad token, no border, no background */
+.step-card {
+  padding: var(--spacing-grid-pad);
+}
+
+/* Large numeral step icon — primary color, display-scale weight */
+.step-icon {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h2);
+  color: var(--color-primary);
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--letter-spacing-h2);
+  margin-bottom: var(--spacing-btn-gap);
+}
+
+/* Step heading — h3 scale */
+.step-heading {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-h3);
+  line-height: var(--line-height-h3);
+  letter-spacing: var(--letter-spacing-h3);
+  color: var(--color-heading);
+  margin: 0 0 var(--spacing-btn-gap);
+}
+
+/* Step body copy */
+.step-body {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-body);
+  color: var(--color-body);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =============================================================================
+   COMMUNITY SIGNALS SECTION — vid-prod [4/10]
+   Source: colors.json dark-bg (#1a1a6e), dark-accent (#3d3dcc), muted (#8898aa)
+           spacing.json (container-gap, btn-gap, grid-pad, content-radius)
+   Dark indigo section with oversized stat and creator mini-cards.
+   ============================================================================= */
+
+/* Oversized stat number — display weight 300, dark-accent color
+   font-size: calc h1 * 2.4 — no token for display-scale, multiplier documented here */
+.community-stat {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: calc(var(--font-size-h1) * 2.4); /* display-scale: 2.4× h1 — no token */
+  font-weight: 300;
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--letter-spacing-h1);
+  color: var(--color-dark-accent);
+  margin: 0 0 var(--spacing-btn-gap);
+}
+
+/* Descriptor label below stat */
+.community-stat-label {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-body);
+  color: var(--color-muted);
+  margin: 0 0 var(--spacing-container-gap);
+}
+
+/* 4-column grid container for mini-cards */
+.community-cards-grid {
+  margin-top: var(--spacing-section-gap);
+}
+
+/* Creator mini-card — slightly translucent white on dark bg */
+.creator-mini-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-btn-gap);
+  background: rgba(255, 255, 255, 0.06); /* rgba — no token for translucent overlay on dark bg */
+  border-radius: var(--spacing-wrapper-radius);
+  padding: var(--spacing-grid-pad);
+}
+
+/* Circular avatar placeholder — 56px measured structural value */
+.creator-mini-card__avatar {
+  width: 56px;  /* measured — no spacing token for avatar diameter */
+  height: 56px; /* measured — no spacing token for avatar diameter */
+  border-radius: 50%;
+  background: var(--color-surface);
+  flex-shrink: 0;
+}
+
+/* Info block beside avatar */
+.creator-mini-card__info {
+  min-width: 0; /* allow text truncation if needed */
+}
+
+/* Creator name — white on dark bg */
+.creator-mini-card__name {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  font-weight: 400;
+  color: var(--color-bg);
+  margin: 0 0 4px; /* 4px measured — no token for inter-label gap */
+}
+
+/* Points + project title — muted on dark */
+.creator-mini-card__meta {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  color: var(--color-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* =============================================================================
+   ROADMAP TEASER SECTION — vid-prod [4/10]
+   Source: colors.json surface (#f6f9fc), primary (#635bff), muted (#8898aa)
+           spacing.json (wrapper-radius, grid-pad, content-radius, btn-gap)
+   3-tile grid on white bg. Live tile has accent left border; soon tiles are dimmed.
+   ============================================================================= */
+
+/* Roadmap section heading */
+.roadmap-heading {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h2);
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--letter-spacing-h2);
+  color: var(--color-heading);
+  margin: 0 0 var(--spacing-container-gap);
+}
+
+/* Base roadmap tile — surface bg, radius, internal padding */
+.roadmap-tile {
+  background: var(--color-surface);
+  border-radius: var(--spacing-wrapper-radius);
+  padding: var(--spacing-grid-pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-btn-gap);
+}
+
+/* Live tile — accent left border signals active state */
+.roadmap-tile--live {
+  border-left: 4px solid var(--color-primary);
+}
+
+/* Soon tiles — dimmed, non-interactive */
+.roadmap-tile--soon {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Tile title — h3 scale */
+.roadmap-tile__title {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-h3);
+  line-height: var(--line-height-h3);
+  color: var(--color-heading);
+  margin: 0;
+}
+
+/* Tile description */
+.roadmap-tile__desc {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-body);
+  color: var(--color-body);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Explore link inside live tile */
+.roadmap-tile__link {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-top: auto; /* push to bottom of flex column */
+  transition: var(--motion-color);
+}
+
+.roadmap-tile__link:hover {
+  color: var(--color-primary-hover);
+}
+
+/* Small badge pill — base
+   padding: 4px 8px — measured micro-values, no token for badge padding */
+.tile-badge {
+  display: inline-block;
+  border-radius: var(--spacing-content-radius);
+  padding: 4px 8px; /* measured — no token for badge padding */
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: 11px; /* measured — no token for badge label size */
+  font-weight: 400;
+  line-height: 1;
+  width: fit-content;
+}
+
+/* Live badge — primary bg, white text */
+.tile-badge--live {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+/* Soon badge — bordered surface on white, muted text */
+.tile-badge--soon {
+  background: var(--color-surface);
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+}
+
+/* =============================================================================
+   FINAL CTA SECTION — vid-prod [4/10]
+   Source: colors.json heading-text (#0a2540) as bg, bg (#ffffff) as text
+           spacing.json (container-v, btn-top, btn-right, btn-bottom, btn-left)
+   Minimal emotional close: headline + single CTA button. No other content.
+   ============================================================================= */
+
+/* Dark navy full-bleed section — heading color becomes background */
+.section--final-cta {
+  background: var(--color-heading); /* #0a2540 — deep navy as bg per spec */
+  text-align: center;
+}
+
+/* Large display headline — weight 300, white on navy */
+.final-cta-headline {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-h1);
+  font-weight: 300;
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--letter-spacing-h1);
+  color: var(--color-bg);
+  margin: 0 0 var(--spacing-container-gap);
+}
+
+/* Larger padding variant of btn-primary — 50% increase on all padding sides
+   calc() applied so increase stays proportional if base tokens change */
+.btn-primary--large {
+  padding: calc(var(--spacing-btn-top) * 1.5)
+           calc(var(--spacing-btn-right) * 1.5)
+           calc(var(--spacing-btn-bottom) * 1.5)
+           calc(var(--spacing-btn-left) * 1.5);
+}
+
+/* =============================================================================
+   FOOTER MULTI-COLUMN GRID — vid-prod [4/10]
+   Source: spacing.json (container-gap, section-gap, btn-gap), colors.json muted
+           grid.json (4-col = repeat(4, 1fr))
+   Additive alongside existing .footer__links flat pattern — no existing CSS removed.
+   ============================================================================= */
+
+/* 4-column footer link grid */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-container-gap);
+  margin-bottom: var(--spacing-section-gap);
+}
+
+/* Individual column container */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Column heading — white, button-scale, normal weight */
+.footer-col__title {
+  color: var(--color-bg);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  font-weight: 400;
+  margin: 0 0 var(--spacing-btn-gap);
+}
+
+/* Footer column links — muted default, display block, no underline */
+.footer-col a {
+  display: block;
+  color: var(--color-muted);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  text-decoration: none;
+  margin-bottom: 4px; /* 4px measured — no token for inter-link gap */
+  transition: var(--motion-color);
+}
+
+/* Hover — lift to white */
+.footer-col a:hover {
+  color: var(--color-bg);
+}
+
+/* Legal line — centered, muted, button-scale */
+.footer-legal {
+  color: var(--color-muted);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  text-align: center;
+  margin: 0;
+}
+
+/* =============================================================================
+   STICKY CTA BAR — vid-prod [5/10]
+   Source: colors.json heading-text (#0a2540) as bg, motion.json transitionElements
+           cubic-bezier(0.25, 1, 0.5, 1) as easing, spacing.json nav + container tokens
+   Appears after 50% gallery scroll depth — triggered by JS toggling .sticky-cta--visible
+   ============================================================================= */
+
+.sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: var(--color-heading); /* #0a2540 — deep navy, same as footer/final-cta bg */
+  padding: var(--spacing-nav-v) var(--spacing-container-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-section-gap);
+  transform: translateY(100%);
+  opacity: 0;
+  /* motion.json cubic-bezier(0.25, 1, 0.5, 1) — same easing as btn hover */
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+              opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+}
+
+.sticky-cta--visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Label text inside the bar — white on navy */
+.sticky-cta__label {
+  color: var(--color-bg);
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+}
+
+/* =============================================================================
+   GALLERY CARD FOLLOW BUTTON — vid-prod [5/10]
+   Source: interactions.json hds-button primary color + secondary border style
+           motion.json --motion-btn for transition
+   Visible in card overlay on hover — auth-gated, stops propagation to card click
+   ============================================================================= */
+
+/* Follow button — ghost/secondary style on dark overlay background */
+.gallery-card__follow {
+  font-family: var(--font-family);
+  font-feature-settings: var(--font-feature);
+  font-size: var(--font-size-button);
+  font-weight: 400;
+  padding: 4px 10px; /* measured — no token for overlay action button padding */
+  border-radius: var(--spacing-content-radius);
+  border: 1px solid var(--color-bg); /* white border on dark overlay */
+  background: transparent;
+  color: var(--color-bg);
+  cursor: pointer;
+  transition: var(--motion-btn);
+  flex-shrink: 0;
+}
+
+.gallery-card__follow:hover {
+  background: var(--color-bg);
+  color: var(--color-heading); /* navy text on white hover — uses --color-heading */
+}
+
+/* Following state — filled primary bg */
+.gallery-card__follow--following {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-bg);
+  cursor: default;
+}
+
+/* Left group in overlay — name stacked above points */
+.gallery-card__overlay-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* 2px measured — no token for stacked label gap */
+}

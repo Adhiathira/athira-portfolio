@@ -1,0 +1,188 @@
+/* =============================================================================
+   deep-signal — Type System
+   Source: formless-ai (scale structure) | Twist: Letter spacing injection (intensity 3)
+   Sub-Phase B: Fonts replaced → Plus Jakarta Sans (headings) + Inter (body)
+   ============================================================================= */
+
+/* Google Fonts CDN imports — both fonts are on the known-google-fonts list */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Font families */
+  --font-primary: 'Plus Jakarta Sans', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+  --font-mono: 'Inter', monospace;
+
+  /* Twist: Letter spacing injection — 0.06em on headings and buttons */
+  --font-letter-spacing-heading: 0.06em;
+
+  /* Type scale */
+  --font-size-h1: 7.560rem;
+  --font-size-h2: 4.320rem;
+  --font-size-h3: 2.592rem;
+  --font-size-h4: 1.944rem;
+  --font-size-body: 1rem;
+  --font-size-small: 0.875rem;
+  --font-size-button: 0.833rem;
+  --font-size-link: 1.25rem;
+  --font-size-nav: 1rem;
+
+  /* Weights */
+  --font-weight-heading: 700;
+  --font-weight-subheading: 600;
+  --font-weight-body: 400;
+  --font-weight-medium: 500;
+
+  /* Line heights */
+  --font-line-height-tight: 1.05;
+  --font-line-height-normal: 1.5;
+  --font-line-height-relaxed: 1.7;
+}
+
+/* =============================================================================
+   Base type elements
+   ============================================================================= */
+
+h1 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-heading);
+  line-height: 0.9;
+  letter-spacing: -0.04em; /* Tight tracking at display scale — authoritative precision */
+  word-spacing: 0px;
+}
+
+h2 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-heading);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  word-spacing: 0px;
+}
+
+h3 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-heading);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  word-spacing: 0px;
+}
+
+h4 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-subheading);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  word-spacing: 0px;
+}
+
+body,
+.body-text {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--font-line-height-normal);
+  letter-spacing: 0px;
+}
+
+p,
+.paragraph {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-link);
+  font-weight: var(--font-weight-body);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.small-text {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-body);
+  line-height: var(--font-line-height-normal);
+}
+
+/* =============================================================================
+   Buttons — Twist applied: 0.06em letter spacing injection
+   ============================================================================= */
+
+button,
+.btn,
+[role="button"] {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-subheading);
+  letter-spacing: var(--font-letter-spacing-heading); /* 0.06em — Twist applied */
+  line-height: normal;
+  text-transform: none;
+}
+
+/* =============================================================================
+   Navigation
+   ============================================================================= */
+
+nav,
+.nav-link {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-nav);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--font-line-height-normal);
+  letter-spacing: 0.01em;
+}
+
+/* =============================================================================
+   Links
+   ============================================================================= */
+
+a,
+.link {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-link);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+}
+
+/* =============================================================================
+   Mono / code
+   ============================================================================= */
+
+code,
+pre,
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-small);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* =============================================================================
+   Responsive fluid type — desktop-first
+   ============================================================================= */
+
+@media (max-width: 1024px) {
+  :root {
+    --font-size-h1: clamp(3rem, 7vw, 7.560rem);
+    --font-size-h2: clamp(2rem, 5vw, 4.320rem);
+    --font-size-h3: clamp(1.5rem, 3.5vw, 2.592rem);
+    --font-size-h4: clamp(1.25rem, 2.5vw, 1.944rem);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --font-size-h1: clamp(2.5rem, 10vw, 4rem);
+    --font-size-h2: clamp(1.75rem, 6vw, 2.5rem);
+    --font-size-h3: clamp(1.25rem, 4vw, 1.75rem);
+    --font-size-h4: clamp(1.125rem, 3vw, 1.5rem);
+  }
+}
+
+@media (max-width: 375px) {
+  :root {
+    --font-size-h1: clamp(2rem, 12vw, 2.5rem);
+    --font-size-h2: clamp(1.5rem, 8vw, 2rem);
+  }
+}

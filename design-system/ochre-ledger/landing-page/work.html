@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practices — Burnham</title>
+  <meta name="description" content="How architectural practices use Burnham to manage specifications from tender to handover.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* Nav spacer for sub-pages */
+    .nav-spacer {
+      height: 86px;
+    }
+
+    /* Page header — medium hero (40-60vh) */
+    #page-header {
+      background: var(--color-surface-1);
+      min-height: 50vh;
+      display: flex;
+      align-items: flex-end;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle gradient depth */
+    #page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(30, 58, 110, 0.04) 0%,
+        transparent 60%
+      );
+      pointer-events: none;
+    }
+
+    #page-header-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter) 60px;
+      width: 100%;
+    }
+
+    #page-eyebrow {
+      font-family: var(--font-heading);
+      font-size: var(--type-eyebrow);
+      font-weight: 500;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin: 0 0 20px;
+    }
+
+    #page-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--weight-display);
+      line-height: var(--leading-heading);
+      letter-spacing: var(--tracking-heading);
+      color: var(--color-heading);
+      margin: 0 0 20px;
+      max-width: 620px;
+    }
+
+    #page-intro {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: var(--color-muted-text);
+      margin: 0;
+      max-width: 520px;
+    }
+
+    /* Case studies grid */
+    #practices {
+      background: var(--color-page-bg);
+      padding: var(--space-section-y) 0;
+    }
+
+    #practices-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+    }
+
+    #practices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--grid-featured-gap);
+    }
+
+    .practice-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding-top: 32px;
+    }
+
+    .practice-card-image {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      margin-bottom: 28px;
+      background: var(--color-surface-2);
+    }
+
+    .practice-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s var(--ease-primary);
+    }
+
+    .practice-card:hover .practice-card-img {
+      transform: scale(1.03);
+    }
+
+    .practice-img-placeholder {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0, 0, 0, 0.3);
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+    }
+
+    .practice-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .practice-type {
+      font-family: var(--font-heading);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .practice-scale {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      color: var(--color-muted-text);
+    }
+
+    .practice-card-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 2vw, 1.4375rem);
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: var(--tracking-heading);
+      color: var(--color-heading);
+      margin: 0 0 14px;
+    }
+
+    .practice-card-body {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: var(--color-muted-text);
+      margin: 0 0 20px;
+    }
+
+    .practice-result {
+      font-family: var(--font-heading);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--color-heading);
+      border-top: 1px solid rgba(0, 0, 0, 0.07);
+      padding-top: 16px;
+      margin-top: auto;
+    }
+
+    /* Stats row */
+    #stats {
+      background: var(--color-dark-surface);
+      padding: 80px 0;
+    }
+
+    #stats-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .stat-item {
+      padding: 0 32px;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat-item:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+
+    .stat-value {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 700;
+      letter-spacing: var(--tracking-display);
+      color: #ffffff;
+      margin: 0 0 8px;
+    }
+
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.45);
+      margin: 0;
+    }
+
+    /* CTA strip */
+    #work-cta {
+      background: var(--color-surface-1);
+      padding: 80px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    #work-cta-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    #work-cta-text h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: var(--weight-display);
+      line-height: var(--leading-heading);
+      letter-spacing: var(--tracking-heading);
+      color: var(--color-heading);
+      margin: 0 0 12px;
+    }
+
+    #work-cta-text p {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    /* Footer */
+    #footer {
+      background: var(--color-surface-2);
+      padding: 40px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    #footer-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-logo-text {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: var(--tracking-heading);
+      color: var(--color-heading);
+      text-decoration: none;
+    }
+
+    .footer-copyright-p {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-nav a {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      color: var(--color-muted-text);
+      text-decoration: none;
+    }
+
+    .footer-nav a:hover {
+      color: var(--color-heading);
+    }
+
+    /* btn-ghost for this page */
+    .btn-ghost {
+      font-family: var(--font-heading);
+      font-size: var(--type-eyebrow);
+      font-weight: 500;
+      letter-spacing: var(--tracking-nav);
+      color: var(--color-btn-ghost-text);
+      background: var(--color-btn-ghost-bg);
+      border: 1px solid var(--color-btn-ghost-border);
+      padding: var(--space-btn-y) var(--space-btn-x);
+      text-decoration: none;
+      display: inline-block;
+      align-self: flex-start;
+      cursor: pointer;
+      transition: background var(--duration-xfast) var(--ease-primary),
+                  color var(--duration-xfast) var(--ease-primary);
+    }
+
+    .btn-ghost:hover {
+      background: var(--color-body-text);
+      color: var(--color-page-bg);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      #practices-grid { grid-template-columns: 1fr; gap: 40px; }
+      #stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .stat-item { padding: 24px 0 0; border-left: none; border-top: 1px solid rgba(255,255,255,0.08); }
+      .stat-item:first-child { border-top: none; padding-top: 0; }
+      #work-cta-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 600px) {
+      #stats-inner { grid-template-columns: 1fr; }
+      #footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Burnham home">
+      <span class="nav-logo-text">Burnham</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="work.html" class="nav-link--active">Practices</a></li>
+      <li><a href="method.html">Method</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Request demo</a>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div id="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="work.html">Practices</a>
+  <a href="method.html">Method</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="nav-cta-mobile">Request demo</a>
+</div>
+
+<!-- Nav spacer — always active on sub-pages -->
+<div class="nav-spacer" aria-hidden="true"></div>
+
+<!-- Page header — medium hero -->
+<header id="page-header" aria-label="Practices header">
+  <div id="page-header-inner">
+    <p id="page-eyebrow">Practices</p>
+    <h1 id="page-title">How architectural practices use Burnham.</h1>
+    <p id="page-intro">From a sole practitioner managing a single listed building project to a 60-person office running 40 concurrent specifications — Burnham scales to the practice, not the other way around.</p>
+  </div>
+</header>
+
+<!-- Case studies -->
+<section id="practices" aria-label="Practice case studies">
+  <div id="practices-inner">
+    <div id="practices-grid">
+
+      <article class="practice-card" data-reveal="fade-up">
+        <div class="practice-card-image">
+          <img
+            class="practice-card-img section-image"
+            src="assets/practice-1.jpeg"
+            alt="Haverfield Studio architecture practice, London"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="practice-img-placeholder">→ assets/practice-1.jpeg</div>
+        </div>
+        <div class="practice-meta">
+          <span class="practice-type">Conservation</span>
+          <span class="practice-scale">12-person practice, London</span>
+        </div>
+        <h2 class="practice-card-heading">Haverfield Studio</h2>
+        <p class="practice-card-body">Haverfield specialises in listed building conservation work — every project involves negotiating NBS clauses with heritage officers, managing approved materials lists, and issuing formal consent documents. Burnham replaced their previous Word-based specification system in four weeks.</p>
+        <p class="practice-result">&rarr; Reduced specification drafting time by 58% on typical conservation project</p>
+      </article>
+
+      <article class="practice-card" data-reveal="fade-up" data-reveal-delay="0.1">
+        <div class="practice-card-image">
+          <img
+            class="practice-card-img section-image"
+            src="assets/practice-2.jpeg"
+            alt="Alford and Weale Architects large project team"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="practice-img-placeholder">→ assets/practice-2.jpeg</div>
+        </div>
+        <div class="practice-meta">
+          <span class="practice-type">Housing</span>
+          <span class="practice-scale">60-person practice, Manchester</span>
+        </div>
+        <h2 class="practice-card-heading">Alford &amp; Weale</h2>
+        <p class="practice-card-body">Running up to 40 housing projects simultaneously, Alford &amp; Weale needed a practice-wide specification library that project architects could branch from without creating uncontrolled variants. The Burnham library model solved what four years of Excel and SharePoint could not.</p>
+        <p class="practice-result">&rarr; Practice library now covers 3,400 clauses across all housing typologies</p>
+      </article>
+
+      <article class="practice-card" data-reveal="fade-up" data-reveal-delay="0.05">
+        <div class="practice-card-image">
+          <img
+            class="practice-card-img section-image"
+            src="assets/practice-3.jpeg"
+            alt="Coldbrook Office interior architecture studio"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="practice-img-placeholder">→ assets/practice-3.jpeg</div>
+        </div>
+        <div class="practice-meta">
+          <span class="practice-type">Interior architecture</span>
+          <span class="practice-scale">8-person studio, Edinburgh</span>
+        </div>
+        <h2 class="practice-card-heading">Coldbrook Office</h2>
+        <p class="practice-card-body">Interior architecture involves a different specification vocabulary — FF&amp;E schedules, upholstery specs, bespoke joinery details. Coldbrook built a custom taxonomy in Burnham that mirrors their own design language rather than standard NBS sections.</p>
+        <p class="practice-result">&rarr; Specification handover package now takes 3 hours rather than 3 days</p>
+      </article>
+
+      <article class="practice-card" data-reveal="fade-up" data-reveal-delay="0.15">
+        <div class="practice-card-image">
+          <img
+            class="practice-card-img section-image"
+            src="assets/practice-4.jpeg"
+            alt="Verdon Partnership sole practitioner architecture"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="practice-img-placeholder">→ assets/practice-4.jpeg</div>
+        </div>
+        <div class="practice-meta">
+          <span class="practice-type">Residential</span>
+          <span class="practice-scale">Sole practitioner, Bristol</span>
+        </div>
+        <h2 class="practice-card-heading">Verdon Partnership</h2>
+        <p class="practice-card-body">For a sole practitioner, specification time is unbillable time. Burnham's template library gave Sarah Verdon a starting point for every new residential project — a specification she could complete in an afternoon rather than a weekend.</p>
+        <p class="practice-result">&rarr; Average 14 hours saved per project on specification writing</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Stats row -->
+<section id="stats" aria-label="Burnham statistics">
+  <div id="stats-inner">
+    <div class="stat-item" data-reveal="fade-up">
+      <p class="stat-value">340+</p>
+      <p class="stat-label">practices across the UK and Ireland</p>
+    </div>
+    <div class="stat-item" data-reveal="fade-up" data-reveal-delay="0.07">
+      <p class="stat-value">98%</p>
+      <p class="stat-label">annual renewal rate</p>
+    </div>
+    <div class="stat-item" data-reveal="fade-up" data-reveal-delay="0.14">
+      <p class="stat-value">4.2d</p>
+      <p class="stat-label">median onboarding time</p>
+    </div>
+    <div class="stat-item" data-reveal="fade-up" data-reveal-delay="0.21">
+      <p class="stat-value">SOC 2</p>
+      <p class="stat-label">Type II certified infrastructure</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA strip -->
+<section id="work-cta" aria-label="Get started">
+  <div id="work-cta-inner">
+    <div id="work-cta-text">
+      <h2>Ready to see Burnham with your practice's work?</h2>
+      <p>We'll walk you through how the library model maps to your existing specifications.</p>
+    </div>
+    <a href="contact.html" class="btn-ghost">Request a demo</a>
+  </div>
+</section>
+
+<!-- Minimal footer -->
+<footer id="footer" aria-label="Site footer">
+  <div id="footer-inner">
+    <a href="index.html" aria-label="Burnham home">
+      <span class="footer-logo-text">Burnham</span>
+    </a>
+    <p class="footer-copyright-p">&copy; 2026 Burnham Ltd.</p>
+    <ul class="footer-nav" role="list">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    'use strict';
+    const nav = document.getElementById('site-nav');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    const toggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 10);
+      }, { passive: true });
+      nav.classList.add('scrolled');
+    }
+
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('is-open');
+        nav.classList.toggle('nav-mobile-open', isOpen);
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+  })();
+</script>
+
+<script>
+  (function () {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const BASE_DURATION = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue('--duration-slow')
+    ) || 0.9;
+    const EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+    // Page header entrance
+    const headerEls = document.querySelectorAll('#page-eyebrow, #page-title, #page-intro');
+    gsap.set(headerEls, { y: 24 });
+    gsap.to(headerEls, { y: 0, duration: BASE_DURATION, ease: 'power2.out', stagger: 0.12, delay: 0.15 });
+
+    // Practice cards
+    document.querySelectorAll('.practice-card').forEach((card, i) => {
+      gsap.set(card, { y: 40 });
+      gsap.to(card, {
+        y: 0,
+        duration: BASE_DURATION,
+        ease: EASE,
+        delay: i * 0.07,
+        scrollTrigger: { trigger: card, start: 'top 82%', once: true }
+      });
+    });
+
+    // Stats
+    document.querySelectorAll('.stat-item').forEach((stat, i) => {
+      gsap.set(stat, { y: 30 });
+      gsap.to(stat, {
+        y: 0,
+        duration: BASE_DURATION,
+        ease: EASE,
+        delay: i * 0.09,
+        scrollTrigger: { trigger: '#stats', start: 'top 80%', once: true }
+      });
+    });
+
+    // Section images
+    document.querySelectorAll('.practice-card-img').forEach(img => {
+      gsap.set(img, { scale: 1.04 });
+      gsap.to(img, {
+        scale: 1,
+        duration: BASE_DURATION * 1.2,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: img, start: 'top 80%', once: true }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

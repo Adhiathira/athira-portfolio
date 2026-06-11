@@ -1,0 +1,340 @@
+/* =============================================================================
+   PROFILE PAGE — caspers-vid
+   Scoped to: .profile-page, .creator-header, .portfolio-section,
+              .platform-mention, .profile-cta
+   No bare element selectors.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Page wrapper — clear fixed nav
+   --------------------------------------------------------------------------- */
+.profile-page {
+  padding-top: var(--spacing-section);
+}
+
+/* ---------------------------------------------------------------------------
+   Section 1: Creator header — "The Creator Introduced"
+   Custom identity layout — not a standard section pattern.
+   --------------------------------------------------------------------------- */
+.creator-header {
+  padding: var(--spacing-section) var(--spacing-base);
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.creator-header-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-double);
+}
+
+/* Avatar placeholder — 120px circle with filename label visible
+   No Silent Visual Fallbacks: filename shown, not a grey box */
+.creator-avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #2a2a2a;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+}
+
+/* Placeholder label — shared by avatar and card media placeholders */
+.placeholder-label {
+  /* Barlow — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif (browser picks any system font; visual will differ) */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-muted);
+  word-break: break-all;
+  user-select: none;
+}
+
+/* Creator identity block */
+.creator-identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-base);
+}
+
+/* Creator name — Barlow Condensed, large fluid, uppercase */
+.creator-name {
+  /* Barlow Condensed — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif condensed equivalent; visual will differ significantly (no condensed weight) */
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+/* Creator role / tagline */
+.creator-role {
+  /* Barlow — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif (browser picks any system font; visual will differ) */
+  font-family: 'Barlow', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  color: var(--color-body);
+}
+
+/* Creator metadata row */
+.creator-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-double);
+}
+
+/* Points badge — accent-colored */
+.creator-points {
+  /* Barlow — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif (browser picks any system font; visual will differ) */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-accent);
+}
+
+/* Project count — muted */
+.creator-project-count {
+  /* Barlow — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif (browser picks any system font; visual will differ) */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Section 2: Portfolio section — "The Work Exhibited"
+   --------------------------------------------------------------------------- */
+.portfolio-section {
+  position: relative;
+  padding: var(--spacing-section) 0;
+}
+
+/* Portfolio header row */
+.portfolio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-base) var(--spacing-base);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Portfolio section heading */
+.portfolio-title {
+  /* Barlow Condensed — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif condensed equivalent; visual will differ significantly (no condensed weight) */
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  letter-spacing: 0.04em;
+}
+
+/* Follow button */
+.portfolio-follow-btn {
+  /* Barlow — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif (browser picks any system font; visual will differ) */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-link-default);
+  background: none;
+  border: 1px solid var(--color-border);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition:
+    color var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard);
+}
+
+.portfolio-follow-btn:hover {
+  color: var(--color-heading);
+  border-color: var(--color-heading);
+}
+
+/* Portfolio grid — overrides section-grid-3col gap: 0 */
+.portfolio-grid {
+  gap: 14.08px;
+  padding: var(--spacing-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Portfolio card
+   --------------------------------------------------------------------------- */
+.portfolio-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* 16:9 media placeholder — filename label visible
+   No Silent Visual Fallbacks: filename shown, not a grey box */
+.card-media-placeholder {
+  aspect-ratio: 16 / 9;
+  background: #242424;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-base);
+}
+
+/* Card hover overlay — gradient with title + view prompt */
+.card-hover-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--spacing-base);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-standard);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 60%);
+}
+
+.portfolio-card:hover .card-hover-overlay {
+  opacity: 1;
+}
+
+/* Card project title in overlay */
+.card-project-title {
+  /* Barlow — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif (browser picks any system font; visual will differ) */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Card view prompt in overlay */
+.card-view-prompt {
+  /* Barlow — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif (browser picks any system font; visual will differ) */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-link-default);
+  margin-top: 4px;
+  transition: color var(--duration-base) var(--ease-standard);
+}
+
+.portfolio-card:hover .card-view-prompt:hover {
+  color: var(--color-link-hover); /* #202020 — DARKENS, correct per interactions.json */
+}
+
+/* Sentinel: positioned at 70% of portfolio section height (30% from bottom) */
+.portfolio-cta-sentinel {
+  position: absolute;
+  bottom: 30%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Section 3: Platform mention — "The Platform Surfaced"
+   --------------------------------------------------------------------------- */
+.platform-mention {
+  padding: var(--spacing-section) var(--spacing-base);
+  text-align: center;
+}
+
+.platform-mention-text {
+  /* Barlow — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif (browser picks any system font; visual will differ) */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ---------------------------------------------------------------------------
+   Section 4: Profile CTA — "The Invitation Timed"
+   Fixed bottom bar, logged-out only.
+   Uses fadeIn keyframe from motion.css — no new keyframe defined here.
+   --------------------------------------------------------------------------- */
+.profile-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: rgba(26, 26, 26, 0.92);
+  border-top: 1px solid var(--color-accent);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 90;
+  cursor: pointer;
+}
+
+/* .is-visible: added by profile.js after scroll sentinel fires (one-shot) */
+.profile-cta.is-visible {
+  animation: fadeIn 0.4s var(--ease-standard) forwards;
+  pointer-events: auto;
+}
+
+/* CTA text */
+.profile-cta-text {
+  /* Barlow — install via Google Fonts if not rendering correctly.
+     Fallback: sans-serif (browser picks any system font; visual will differ) */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-body);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* CTA arrow — accent-colored */
+.profile-cta-arrow {
+  color: var(--color-accent);
+  margin-left: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive breakpoints
+   --------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .creator-header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .creator-avatar-placeholder {
+    width: 96px;
+    height: 96px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-base);
+  }
+}
+
+@media (max-width: 375px) {
+  .creator-header {
+    padding: var(--spacing-double) var(--spacing-base);
+  }
+}

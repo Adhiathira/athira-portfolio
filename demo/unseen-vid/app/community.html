@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community — unseen-vid</title>
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/components.css">
+
+  <script src="../js/shared.js"></script>
+  <script>guardPage();</script>
+
+  <style>
+    /* ── Page reset ───────────────────────────────────────────────────────────── */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    /* ── Dropdown ─────────────────────────────────────────────────────────────── */
+    .ws-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      min-width: 140px;
+      z-index: 200;
+    }
+
+    .ws-dropdown__item {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 10px var(--space-header-h);
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      line-height: var(--type-body-lh);
+      color: var(--color-text-body);
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color var(--duration-fast) var(--ease-standard);
+    }
+
+    .ws-dropdown__item:hover {
+      color: var(--color-text-heading);
+      background: var(--color-bg);
+    }
+
+    /* ── Two-column community grid ────────────────────────────────────────────── */
+    .community-grid {
+      display: grid;
+      grid-template-columns: 65fr 35fr;
+      min-height: calc(100vh - var(--nav-height));
+      gap: 0;
+    }
+
+    .community-feed {
+      padding: var(--space-header-h);
+      border-right: 1px solid var(--color-border);
+    }
+
+    .collab-sidebar {
+      padding: var(--space-header-h);
+    }
+
+    /* ── Section titles ───────────────────────────────────────────────────────── */
+    .community-section-title {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-text-heading);
+      margin-bottom: var(--space-header-h);
+    }
+
+    /* ── Feed list ────────────────────────────────────────────────────────────── */
+    .feed-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-header-h);
+      padding: 0;
+      margin: 0;
+    }
+
+    .feed-card {
+      border: 1px solid var(--color-border);
+      padding: var(--space-header-h);
+      background: var(--color-surface);
+    }
+
+    .feed-card__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .feed-card__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--space-button-radius);
+      background: var(--color-action);
+      color: var(--color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      flex-shrink: 0;
+    }
+
+    .feed-card__creator {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      font-weight: var(--type-button-fw);
+      color: var(--color-text-heading);
+    }
+
+    .feed-card__points {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      margin-left: 4px;
+    }
+
+    .feed-card__action {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      color: var(--color-text-body);
+      margin: 0 0 4px 0;
+    }
+
+    .feed-card__project {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      font-weight: var(--type-button-fw);
+      color: var(--color-text-heading);
+      margin: 0;
+    }
+
+    .feed-card__tag {
+      display: inline-block;
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+      padding: 2px 8px;
+      margin-top: 4px;
+    }
+
+    .feed-card__thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--color-action);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-surface);
+      font-size: var(--type-button);
+      border-radius: 2px;
+      margin: 12px 0;
+    }
+
+    .feed-card__footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* ── Follow button ────────────────────────────────────────────────────────── */
+    .follow-btn {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      padding: var(--space-cta-v) var(--space-cta-h);
+      border-radius: var(--space-cta-radius);
+      border: 1px solid var(--color-border);
+      background: none;
+      color: var(--color-text-body);
+      cursor: pointer;
+      transition: background var(--duration-fast) var(--ease-standard),
+                  color var(--duration-fast) var(--ease-standard);
+    }
+
+    .follow-btn--following {
+      background: var(--color-action);
+      color: var(--color-surface);
+      border-color: var(--color-action);
+    }
+
+    /* ── Collab cards ─────────────────────────────────────────────────────────── */
+    .collab-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-header-v);
+      padding: 0;
+      margin: 0;
+    }
+
+    .collab-card {
+      border: 1px solid var(--color-border);
+      padding: var(--space-header-h);
+      background: var(--color-surface);
+    }
+
+    .collab-card__title {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      font-weight: var(--type-button-fw);
+      color: var(--color-text-heading);
+      margin: 0 0 6px 0;
+    }
+
+    .collab-card__meta {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      color: var(--color-text-muted);
+      margin: 0 0 var(--space-div-mb) 0;
+    }
+
+    .join-btn {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      padding: var(--space-cta-v) var(--space-cta-h);
+      border-radius: var(--space-cta-radius);
+      border: 1px solid var(--color-action);
+      background: var(--color-action);
+      color: var(--color-surface);
+      cursor: pointer;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    .join-btn:hover {
+      opacity: 0.85;
+    }
+
+    .collab-confirm {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      color: var(--color-text-muted);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Workspace navbar (hardcoded authed state) ───────────────────────────── -->
+  <nav class="navbar" role="navigation">
+    <a href="/index.html" class="navbar__brand">unseen-vid</a>
+    <ul class="navbar__links" role="list">
+      <li><a href="/app/studio.html" class="nav-item">Create</a></li>
+      <li><a href="/explore.html" class="nav-item">Explore</a></li>
+      <li><a href="/app/community.html" class="nav-item">Community</a></li>
+    </ul>
+    <div style="position:relative;display:flex;align-items:center;">
+      <button type="button" class="navbar__avatar" id="avatarBtn" aria-label="User menu" aria-expanded="false">A</button>
+      <div class="ws-dropdown" id="avatarDropdown" hidden>
+        <a href="/app/profile.html" class="ws-dropdown__item">Profile</a>
+        <a href="#" class="ws-dropdown__item">Settings</a>
+        <button type="button" class="ws-dropdown__item" id="logoutBtn">Log out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Two-column layout ──────────────────────────────────────────────────── -->
+  <div class="community-grid">
+
+    <!-- Left: Activity feed -->
+    <section class="community-feed" aria-label="Community feed">
+      <h1 class="community-section-title">Community feed</h1>
+      <ul class="feed-list" id="feedList">
+        <!-- populated by JS -->
+      </ul>
+      <div style="margin-top:var(--space-header-h);">
+        <a href="/app/studio.html" class="cta-primary">Start a new project</a>
+      </div>
+    </section>
+
+    <!-- Right: Collab sidebar -->
+    <aside class="collab-sidebar" aria-label="Open collaborations">
+      <h2 class="community-section-title">Open collaborations</h2>
+      <ul class="collab-list" id="collabList">
+        <!-- populated by JS -->
+      </ul>
+    </aside>
+
+  </div>
+
+  <!-- ── Mock data + scripts ────────────────────────────────────────────────── -->
+  <script>
+    var mockFeed = [
+      { id: 1, creator: 'Mia Tanaka',   username: 'miatanaka', points: 3200, action: 'published', project: 'Neon City Timelapse',      type: 'video' },
+      { id: 2, creator: 'Jordan Lee',   username: 'jordanlee', points: 890,  action: 'joined',    project: 'Desert Campaign Collab',   type: 'video' },
+      { id: 3, creator: 'Sam Rivera',   username: 'samrivera', points: 2100, action: 'published', project: 'Studio Session Vol. 2',    type: 'video' }
+    ];
+
+    var mockCollabProjects = [
+      { id: 1, title: 'City Lights Documentary', creators: ['Mia Tanaka', 'Jordan Lee'], openSlots: 2 },
+      { id: 2, title: 'Abstract Motion Study',   creators: ['Sam Rivera'],               openSlots: 1 }
+    ];
+
+    // ── Avatar initial from auth state ──────────────────────────────────────
+    var user = window.__auth || { name: 'A', communityPoints: 0 };
+    var avatarBtn = document.getElementById('avatarBtn');
+    if (avatarBtn && user.name) {
+      avatarBtn.textContent = user.name.charAt(0).toUpperCase();
+    }
+
+    // ── Avatar dropdown toggle ───────────────────────────────────────────────
+    var dropdown = document.getElementById('avatarDropdown');
+    avatarBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isHidden = dropdown.hasAttribute('hidden');
+      if (isHidden) {
+        dropdown.removeAttribute('hidden');
+        avatarBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        dropdown.setAttribute('hidden', '');
+        avatarBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('click', function () {
+      dropdown.setAttribute('hidden', '');
+      avatarBtn.setAttribute('aria-expanded', 'false');
+    });
+    document.getElementById('logoutBtn').addEventListener('click', function () {
+      localStorage.removeItem('user');
+      window.__auth = null;
+      window.location.href = '/index.html';
+    });
+
+    // ── Helper: create element with text content ────────────────────────────
+    function el(tag, className, text) {
+      var node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    }
+
+    // ── Render feed cards (DOM API — no innerHTML for dynamic data) ──────────
+    var feedList = document.getElementById('feedList');
+    mockFeed.forEach(function (item) {
+      var li = el('li', 'feed-card');
+
+      // header row
+      var header = el('div', 'feed-card__header');
+      var avatar = el('div', 'feed-card__avatar', item.creator.charAt(0));
+      var headerText = el('div');
+      var creatorSpan = el('span', 'feed-card__creator', item.creator);
+      var pointsSpan  = el('span', 'feed-card__points', (item.points / 1000).toFixed(1) + 'k pts');
+      headerText.appendChild(creatorSpan);
+      headerText.appendChild(pointsSpan);
+      header.appendChild(avatar);
+      header.appendChild(headerText);
+
+      // meta rows
+      var actionP  = el('p', 'feed-card__action',  item.action);
+      var projectP = el('p', 'feed-card__project', item.project);
+      var tagSpan  = el('span', 'feed-card__tag',  item.type);
+
+      // thumbnail placeholder
+      var thumb = el('div', 'feed-card__thumb', '[video thumbnail]');
+      // Note: replace with /assets/<username>-thumb.jpg when assets are available
+
+      // follow button — read persisted state
+      var isFollowing = !!localStorage.getItem('following_' + item.username);
+      var footer = el('div', 'feed-card__footer');
+      var followBtn = el('button', 'follow-btn' + (isFollowing ? ' follow-btn--following' : ''), isFollowing ? 'Following' : 'Follow');
+      followBtn.type = 'button';
+      followBtn.dataset.username = item.username;
+      footer.appendChild(followBtn);
+
+      li.appendChild(header);
+      li.appendChild(actionP);
+      li.appendChild(projectP);
+      li.appendChild(tagSpan);
+      li.appendChild(thumb);
+      li.appendChild(footer);
+
+      feedList.appendChild(li);
+    });
+
+    // ── Follow toggle (event delegation) ────────────────────────────────────
+    feedList.addEventListener('click', function (e) {
+      var btn = e.target.closest('.follow-btn');
+      if (!btn) return;
+      var username = btn.dataset.username;
+      var isFollowing = btn.classList.contains('follow-btn--following');
+      if (isFollowing) {
+        btn.classList.remove('follow-btn--following');
+        btn.textContent = 'Follow';
+        localStorage.removeItem('following_' + username);
+      } else {
+        btn.classList.add('follow-btn--following');
+        btn.textContent = 'Following';
+        localStorage.setItem('following_' + username, 'true');
+      }
+    });
+
+    // ── Render collab cards (DOM API — no innerHTML for dynamic data) ────────
+    var collabList = document.getElementById('collabList');
+    mockCollabProjects.forEach(function (project) {
+      var li = el('li', 'collab-card');
+
+      var titleP = el('p', 'collab-card__title', project.title);
+      var metaP  = el('p', 'collab-card__meta');
+      metaP.textContent = project.creators.join(', ') + ' \u00b7 ' + project.openSlots + ' open slot' + (project.openSlots !== 1 ? 's' : '');
+
+      var joinBtn = el('button', 'join-btn', 'Join this project');
+      joinBtn.type = 'button';
+
+      var confirmP = el('p', 'collab-confirm', 'Collaboration request sent!');
+      confirmP.setAttribute('hidden', '');
+
+      joinBtn.addEventListener('click', function () {
+        joinBtn.setAttribute('hidden', '');
+        confirmP.removeAttribute('hidden');
+      });
+
+      li.appendChild(titleP);
+      li.appendChild(metaP);
+      li.appendChild(joinBtn);
+      li.appendChild(confirmP);
+
+      collabList.appendChild(li);
+    });
+  </script>
+
+</body>
+</html>

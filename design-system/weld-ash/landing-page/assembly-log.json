@@ -1,0 +1,84 @@
+{
+  "skill": "create-webpage-using-design-system",
+  "designSystemPath": "weld-ash",
+  "productConcept": {
+    "name": "Filum",
+    "tagline": "Precision Film Scanning",
+    "description": "Filum is an archival digitization studio based in Amsterdam, specialising in drum scanning of large-format film, Flextight medium-format and 35mm scanning, cine film digitization, and institutional archive projects. Intake by appointment. Emphasises the materiality of the photographic object — the scan as a faithful translation of light embedded in silver and dye.",
+    "city": "Amsterdam",
+    "entity": "Filum BV"
+  },
+  "heroTreatment": "light",
+  "animationMode": "animated",
+  "assetMode": "generated",
+  "assetGenerationStatus": "skipped",
+  "assetGenerationSkipReason": "Caller instruction: skip Steps 7-8, do not write prompt files, do not invoke use-higgsfield",
+  "videoAssetReferences": [
+    {
+      "file": "assets/hero-surface.mp4",
+      "prompt": "hero-surface.mp4 — 10s slow migration of light across an off-white powder-coated surface",
+      "placement": "index.html hero section background"
+    },
+    {
+      "file": "assets/material-study.mp4",
+      "prompt": "material-study.mp4 — 10s extreme close-ups of film grain, emulsion texture, scanner glass",
+      "placement": "index.html cta-band section background"
+    },
+    {
+      "file": "assets/workshop-ambient.mp4",
+      "prompt": "workshop-ambient.mp4 — 5s empty scanning room, drum scanner visible, amber task lighting",
+      "placement": "process.html workshop section background"
+    }
+  ],
+  "pages": [
+    {
+      "file": "index.html",
+      "title": "Homepage",
+      "sections": ["hero", "about", "services", "work-preview", "cta-band", "footer"],
+      "cssFiles": ["styles/tokens.css", "styles/base.css", "components/nav.css", "components/hero.css", "components/about.css", "components/services.css", "components/work.css", "components/cta-band.css", "components/footer.css"]
+    },
+    {
+      "file": "process.html",
+      "title": "Process",
+      "sections": ["page-header", "intro-band", "steps-list", "equipment-grid", "workshop-section", "footer"],
+      "cssFiles": ["styles/tokens.css", "styles/base.css", "components/nav.css", "components/process.css", "components/footer.css"]
+    },
+    {
+      "file": "work.html",
+      "title": "Work",
+      "sections": ["page-header", "projects-bento", "projects-row-2", "featured-section", "footer"],
+      "cssFiles": ["styles/tokens.css", "styles/base.css", "components/nav.css", "components/work-page.css", "components/footer.css"]
+    },
+    {
+      "file": "contact.html",
+      "title": "Contact / Enquire",
+      "sections": ["page-header", "contact-info", "enquiry-form", "footer"],
+      "cssFiles": ["styles/tokens.css", "styles/base.css", "components/nav.css", "components/contact.css", "components/footer.css"]
+    }
+  ],
+  "behaviors": [
+    {
+      "file": "behaviors/nav.js",
+      "description": "Fixed nav scroll class toggle, hamburger mobile menu open/close"
+    },
+    {
+      "file": "behaviors/scroll-reveal.js",
+      "description": "GSAP ScrollTrigger reveal system for staggered element entrances"
+    }
+  ],
+  "gsapAnimations": {
+    "library": "GSAP 3.12.5 + ScrollTrigger (CDN)",
+    "opacityRule": "PASS — no opacity:0 used in gsap.from() scroll-triggered animations",
+    "transforms": ["y (vertical translate)", "x (horizontal translate)", "scale", "rotation"]
+  },
+  "qaChecks": {
+    "noInlineStyleBlocks": "PASS — zero <style> blocks in any HTML file after QA fix",
+    "allCssFilesExist": "PASS — all referenced CSS files present on disk",
+    "navLinksConsistent": "PASS — all 4 pages link to index.html, process.html, work.html, contact.html",
+    "activeNavClass": "PASS — each page has nav-link--active on its own nav entry",
+    "onerrorHandlers": "PASS — all img and video elements have onerror fallback handlers",
+    "gsapOpacityRule": "PASS — no opacity:0 in gsap.from() calls",
+    "responsiveBreakpoints": "PASS — 900px and 600px breakpoints in all page CSS files",
+    "rgbaOverlays": "PASS — all video overlay gradients use rgba() not hex"
+  }
+}

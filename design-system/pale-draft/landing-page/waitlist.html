@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waitlist — Draftform Hardware Design IDE</title>
+  <meta name="description" content="Request early access to Draftform — the AI hardware design IDE that generates production-ready STL files, DXF drawings, and PCB layouts from natural language.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;600;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Overpass+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/waitlist.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Draftform home">
+      <span class="nav-logo-wordmark">Draftform</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="product.html" class="nav-link">Product</a></li>
+      <li><a href="artifacts.html" class="nav-link">Artifacts</a></li>
+      <li><a href="waitlist.html" class="nav-link nav-link--active">Waitlist</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="waitlist.html" class="nav-cta">Request Access</a>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <ul class="nav-links" role="list">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="product.html" class="nav-link">Product</a></li>
+    <li><a href="artifacts.html" class="nav-link">Artifacts</a></li>
+    <li><a href="waitlist.html" class="nav-link nav-link--active">Waitlist</a></li>
+  </ul>
+  <a href="waitlist.html" class="nav-cta nav-link--active">Request Access</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var toggle = document.querySelector('.nav-mobile-toggle');
+    // Waitlist page is full height — nav should be static/fixed from start
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 10) {
+        nav.classList.add('fixed');
+      } else {
+        nav.classList.remove('fixed');
+      }
+    }, { passive: true });
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+  })();
+</script>
+
+<!-- ═══════════════════════════════════════════════
+     TWO-COLUMN LAYOUT
+     Left: editorial context
+     Right: access request form
+     ═══════════════════════════════════════════════ -->
+<main id="waitlist-page" role="main">
+
+  <!-- ── Left: Context column ── -->
+  <div id="waitlist-context">
+    <div id="waitlist-context-top">
+      <p id="waitlist-eyebrow">Early access program</p>
+      <h1 id="waitlist-title">Request<br>early access</h1>
+      <p id="waitlist-description">
+        Draftform is currently in closed beta. We are inviting engineers, hardware designers, and
+        founders who are actively building products to join the first cohort. Access is allocated
+        manually — not by queue position.
+      </p>
+
+      <ul id="waitlist-benefits" aria-label="Early access benefits">
+        <li class="waitlist-benefit-item">
+          <span class="waitlist-benefit-marker">01</span>
+          <p class="waitlist-benefit-text">
+            Generate STL, DXF, and PCB files from natural language descriptions — no CAD experience required
+          </p>
+        </li>
+        <li class="waitlist-benefit-item">
+          <span class="waitlist-benefit-marker">02</span>
+          <p class="waitlist-benefit-text">
+            Adaptive workspace that assembles controls appropriate for each artifact type you generate
+          </p>
+        </li>
+        <li class="waitlist-benefit-item">
+          <span class="waitlist-benefit-marker">03</span>
+          <p class="waitlist-benefit-text">
+            Direct export to fabrication-ready formats: .stl, .dxf, .kicad_pcb, Gerber
+          </p>
+        </li>
+        <li class="waitlist-benefit-item">
+          <span class="waitlist-benefit-marker">04</span>
+          <p class="waitlist-benefit-text">
+            Early cohort members shape the product roadmap and receive extended beta access
+          </p>
+        </li>
+      </ul>
+    </div>
+
+    <div id="waitlist-context-bottom">
+      <p id="waitlist-context-note">
+        Draftform &nbsp;&bull;&nbsp; Hardware Design IDE &nbsp;&bull;&nbsp; Closed Beta 2026
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Right: Form column ── -->
+  <div id="waitlist-form-col">
+    <h2 id="waitlist-form-heading">Tell us what you're building</h2>
+
+    <form id="waitlist-form" novalidate aria-label="Early access request form">
+
+      <div class="form-field" id="field-name">
+        <label class="form-label" for="input-name">Full name</label>
+        <input
+          type="text"
+          id="input-name"
+          name="name"
+          class="form-input"
+          placeholder="Your name"
+          required
+          autocomplete="name"
+        >
+      </div>
+
+      <div class="form-field" id="field-email">
+        <label class="form-label" for="input-email">Work email</label>
+        <input
+          type="email"
+          id="input-email"
+          name="email"
+          class="form-input"
+          placeholder="you@company.com"
+          required
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="form-field form-use-type" id="field-use-type">
+        <div class="form-field" id="field-role" style="margin-bottom:0;">
+          <label class="form-label" for="input-role">Role</label>
+          <select id="input-role" name="role" class="form-select">
+            <option value="">Select role</option>
+            <option value="hardware-engineer">Hardware engineer</option>
+            <option value="firmware-engineer">Firmware engineer</option>
+            <option value="mechanical-engineer">Mechanical engineer</option>
+            <option value="electronics-designer">Electronics designer</option>
+            <option value="founder">Founder / Builder</option>
+            <option value="researcher">Researcher</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-field" id="field-artifact" style="margin-bottom:0;">
+          <label class="form-label" for="input-artifact">Primary artifact type</label>
+          <select id="input-artifact" name="artifact" class="form-select">
+            <option value="">Select format</option>
+            <option value="stl">STL — 3D solid geometry</option>
+            <option value="dxf">DXF — fabrication drawings</option>
+            <option value="pcb">PCB — layout and routing</option>
+            <option value="all">All three</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-field" id="field-project">
+        <label class="form-label" for="input-project">What are you building?</label>
+        <textarea
+          id="input-project"
+          name="project"
+          class="form-textarea"
+          placeholder="Describe what you're working on — the product, the hardware challenge, or the specific artifact you want to generate."
+          rows="4"
+        ></textarea>
+      </div>
+
+      <button type="submit" id="waitlist-submit">
+        Submit access request
+      </button>
+
+    </form>
+
+    <!-- Success state (shown after submit) -->
+    <div id="waitlist-success" aria-live="polite" aria-atomic="true">
+      <h3 id="waitlist-success-heading">Request received.</h3>
+      <p id="waitlist-success-body">
+        We review every request and allocate access based on project fit and cohort capacity.
+        We'll follow up within a few days. In the meantime, explore the artifact formats
+        Draftform generates.
+      </p>
+      <a href="artifacts.html" class="btn btn--ghost" style="margin-top:8px;">Browse artifacts</a>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+  // Page entrance — stagger left column, then form
+  var wlTl = gsap.timeline({ delay: 0.1 });
+  wlTl
+    .from('#waitlist-eyebrow', { y: 8, duration: 0.3, ease: 'power2.out' })
+    .from('#waitlist-title', { y: 18, duration: 0.45, ease: 'power2.out' }, '-=0.1')
+    .from('#waitlist-description', { y: 10, duration: 0.35, ease: 'power2.out' }, '-=0.15')
+    .from('.waitlist-benefit-item', { x: -24, stagger: 0.08, duration: 0.4, ease: 'power2.out' }, '-=0.1')
+    .from('#waitlist-form-col > *', { y: 16, stagger: 0.06, duration: 0.35, ease: 'power2.out' }, '-=0.3');
+
+  // Form submission — simple client-side handling
+  var form = document.getElementById('waitlist-form');
+  var successEl = document.getElementById('waitlist-success');
+
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Client-side validation
+      var name = document.getElementById('input-name').value.trim();
+      var email = document.getElementById('input-email').value.trim();
+      if (!name || !email) {
+        return;
+      }
+      // Show success state
+      form.style.display = 'none';
+      successEl.style.display = 'flex';
+      // Entrance animation for success block
+      gsap.from('#waitlist-success > *', { y: 12, stagger: 0.1, duration: 0.4, ease: 'power2.out' });
+    });
+  }
+</script>
+
+</body>
+</html>

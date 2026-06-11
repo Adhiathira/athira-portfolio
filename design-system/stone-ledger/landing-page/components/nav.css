@@ -1,0 +1,317 @@
+/* ==========================================================================
+   NAV — Stone Ledger / Aravindan & Co.
+   50px editorial strip | center alignment | no blur ever | fixed on scroll
+   ========================================================================== */
+
+/* Google Fonts imports are handled in the HTML <head> */
+
+/* --------------------------------------------------------------------------
+   Base nav — absolute, overlays dark hero from the very top
+   -------------------------------------------------------------------------- */
+.site-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  z-index: 100;
+  /* No backdrop-filter — ever. backdropFilter: null */
+  transition: background 0.3s ease;
+}
+
+/* Fixed state — gains background color, becomes fixed to top */
+.site-nav.scrolled {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #f2efe9;
+  /* No backdrop-filter on scroll either — null means null */
+}
+
+/* --------------------------------------------------------------------------
+   Nav inner — single flat row, all items centered
+   alignment: "center" = one horizontal line, logo left of center content
+   -------------------------------------------------------------------------- */
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+}
+
+/* Logo — left side */
+.nav-logo {
+  flex-shrink: 0;
+  margin-right: auto;
+}
+
+.nav-logo a {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3d3930;
+  text-decoration: none;
+  line-height: 50px;
+  white-space: nowrap;
+}
+
+.nav-logo a:hover {
+  color: #3d3930;
+}
+
+/* Links — centered, all in one row */
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 0.8125rem;
+  color: #575349;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Hairline underline — pseudo-element, wipes right-to-left on hover */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background: #575349;
+  transition: width 0.3s ease-in-out;
+}
+
+/* On hover: underline expands from right-to-left (width grows, right stays 0) */
+.nav-links a:hover::after {
+  width: 100%;
+  right: auto;
+  left: 0;
+}
+
+/* Hover color */
+.nav-links a:hover {
+  color: #3d3930;
+}
+
+/* Active nav link — dim to opacity 0.45, no pointer events, full underline */
+.nav-links a.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.nav-links a.nav-link--active::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
+/* CTA area — right side */
+.nav-cta {
+  flex-shrink: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.nav-cta a {
+  font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f2efe9;
+  background: #fb7339;
+  text-decoration: none;
+  padding: 8px 24px;
+  border-radius: 18px;
+  border: 1px solid #fb7339;
+  transition: color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.nav-cta a:hover {
+  background: #3d3930;
+  border-color: #3d3930;
+  color: #f2efe9;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile hamburger toggle button
+   -------------------------------------------------------------------------- */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: auto;
+  z-index: 201;
+  position: relative;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: #3d3930;
+  transform-origin: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hamburger → X animation when nav is open */
+.site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Mobile toggle with white bars (for dark hero overlay) */
+.site-nav.on-dark .nav-mobile-toggle span {
+  background: #f2efe9;
+}
+
+/* On-dark state — nav overlays dark hero, invert all text to off-white */
+.site-nav.on-dark .nav-logo a,
+.site-nav.on-dark .nav-links a {
+  color: #f2efe9;
+}
+
+.site-nav.on-dark .nav-links a::after {
+  background: #f2efe9;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile menu overlay — fullscreen fixed, hidden by default
+   -------------------------------------------------------------------------- */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #1a1a14;
+  z-index: 200;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Open state — both display and opacity */
+.nav-mobile-menu.is-open {
+  display: flex;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.nav-mobile-menu a {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f2efe9;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-mobile-menu a:hover {
+  color: #fb7339;
+}
+
+.nav-mobile-menu .nav-mobile-cta {
+  margin-top: 16px;
+}
+
+.nav-mobile-menu .nav-mobile-cta a {
+  font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  color: #f2efe9;
+  background: #fb7339;
+  padding: 12px 32px;
+  border-radius: 18px;
+  display: inline-block;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive breakpoints
+   -------------------------------------------------------------------------- */
+
+/* ≤ 900px — hide desktop links and CTA, show hamburger */
+@media (max-width: 900px) {
+  .nav-links,
+  .nav-cta {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+/* ≤ 600px */
+@media (max-width: 600px) {
+  .nav-inner {
+    padding: 0 20px;
+  }
+
+  .nav-logo a {
+    font-size: 12px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Spacer — prevents content jump when nav becomes fixed
+   -------------------------------------------------------------------------- */
+.nav-spacer {
+  display: none;
+  height: 50px;
+}
+
+.nav-spacer.active {
+  display: block;
+}

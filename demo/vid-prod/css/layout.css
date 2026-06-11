@@ -1,0 +1,88 @@
+/* =============================================================================
+   LAYOUT — vid-prod
+   Source: project-documentation/design-system/grid-system/grid.json
+           project-documentation/design-system/spacing-system/spacing.json
+   All values via CSS variables from tokens.css — no hardcoded px values.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Container — Source: grid.json container (maxWidth: 1298px, padding: 18px)
+   --------------------------------------------------------------------------- */
+.container {
+  max-width: var(--grid-max-width);
+  padding-left: var(--grid-padding-h);
+  padding-right: var(--grid-padding-h);
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
+   Section — Source: spacing.json container (paddingTop/Bottom: 96px, h: 16px)
+   --------------------------------------------------------------------------- */
+.section {
+  padding: var(--spacing-container-v) var(--spacing-container-h);
+}
+
+/* Section surface variants — alternating background pattern */
+.section--light {
+  background: var(--color-bg);
+}
+
+.section--dark {
+  background: var(--color-dark-bg);
+  color: var(--color-bg);
+}
+
+.section--surface {
+  background: var(--color-surface);
+}
+
+/* ---------------------------------------------------------------------------
+   12-column grid — Source: grid.json grids primary-12col
+   templateColumns: repeat(12, 86.5px), gap: 24px 16px
+   --------------------------------------------------------------------------- */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, var(--grid-col-width));
+  column-gap: var(--grid-col-gap);
+  row-gap: var(--grid-row-gap);
+}
+
+/* ---------------------------------------------------------------------------
+   3-column grid — Source: grid.json grids feature-detail-grid
+   templateColumns: 394px 394px 394px, gap: 32px 16px
+   --------------------------------------------------------------------------- */
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 394px);
+  gap: var(--spacing-section-gap) var(--grid-col-gap);
+}
+
+/* ---------------------------------------------------------------------------
+   2-column equal grid — utility for 2-up layouts
+   gap: spacing-container-gap (64px) from spacing.json container gap
+   --------------------------------------------------------------------------- */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-container-gap);
+}
+
+/* ---------------------------------------------------------------------------
+   4-column equal grid — utility for 4-up card rows
+   gap: grid-col-gap (16px) from grid.json
+   --------------------------------------------------------------------------- */
+.grid-4col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--grid-col-gap);
+}
+
+/* ---------------------------------------------------------------------------
+   Navbar spacer — offset fixed navbar (height: 60px, hardcoded in components.css)
+   from page content. 60px matches the measured .navbar height.
+   --------------------------------------------------------------------------- */
+.navbar-spacer {
+  height: 60px;
+}

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methodology — Strata Subsurface Analysis Approach</title>
+  <meta name="description" content="How Strata builds geotechnical models that meet infrastructure engineering standards. Our approach to interpolation, uncertainty quantification, and standards compliance.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sub-page-header.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* ── Methodology page styles ── */
+
+    .method-section {
+      padding: var(--space-section) 0;
+      border-bottom: 1px solid rgba(27, 27, 55, 0.06);
+    }
+
+    .method-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+    }
+
+    /* ── Process video section (dark) ── */
+    #process {
+      background: var(--color-midnight);
+      padding: var(--space-section) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #process-video-container {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    #process-bg-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+    }
+
+    #process-bg-video-placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background: var(--color-midnight);
+      color: rgba(255, 255, 255, 0.2);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+    }
+
+    #process-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(27, 27, 55, 0.92) 0%,
+        rgba(27, 27, 55, 0.75) 50%,
+        rgba(71, 124, 190, 0.3) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    #process-inner {
+      position: relative;
+      z-index: 2;
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+    }
+
+    #process-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-h4);
+      font-weight: var(--weight-regular);
+      letter-spacing: var(--letter-spacing-label);
+      text-transform: uppercase;
+      color: var(--color-accent-teal);
+      margin: 0 0 24px;
+    }
+
+    #process-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--weight-regular);
+      line-height: var(--lh-h2);
+      letter-spacing: var(--letter-spacing-heading);
+      color: #ffffff;
+      margin: 0 0 20px;
+      max-width: 560px;
+    }
+
+    #process-body {
+      font-family: var(--font-body);
+      font-size: var(--type-p);
+      font-weight: var(--weight-light);
+      line-height: var(--lh-p);
+      letter-spacing: var(--letter-spacing-body);
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0;
+      max-width: 520px;
+    }
+
+    /* ── Standards section — light surface, masonry-style 2-col ── */
+    #standards {
+      background: var(--color-surface-1);
+      padding: var(--space-section) 0;
+      border-bottom: 1px solid rgba(27, 27, 55, 0.06);
+    }
+
+    #standards-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+    }
+
+    #standards-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-h4);
+      font-weight: var(--weight-regular);
+      letter-spacing: var(--letter-spacing-label);
+      text-transform: uppercase;
+      color: var(--color-accent-blue);
+      margin: 0 0 24px;
+    }
+
+    #standards-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--weight-regular);
+      line-height: var(--lh-h2);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0 0 60px;
+      max-width: 560px;
+    }
+
+    /* Masonry-style: explicit grid-row placement */
+    #standards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 32px;
+      row-gap: 24px;
+    }
+
+    .standard-card {
+      background: var(--color-page-bg);
+      border: 1px solid var(--color-border);
+      padding: 36px;
+      position: relative;
+    }
+
+    /* Explicit row placement for masonry stagger */
+    .standard-card:nth-child(1) { grid-row: 1; }
+    .standard-card:nth-child(2) { grid-row: 1; margin-top: 40px; }
+    .standard-card:nth-child(3) { grid-row: 2; }
+    .standard-card:nth-child(4) { grid-row: 2; margin-top: -20px; }
+    .standard-card:nth-child(5) { grid-row: 3; }
+    .standard-card:nth-child(6) { grid-row: 3; margin-top: 60px; }
+
+    .standard-card-code {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: var(--weight-light);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-accent-teal);
+      margin: 0 0 8px;
+    }
+
+    .standard-card:nth-child(2) .standard-card-code { color: var(--color-accent-violet); }
+    .standard-card:nth-child(4) .standard-card-code { color: var(--color-accent-blue); }
+    .standard-card:nth-child(6) .standard-card-code { color: var(--color-accent-teal); }
+
+    .standard-card-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(27, 27, 55, 0.4);
+      margin: 0 0 16px;
+    }
+
+    .standard-card-body {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--weight-light);
+      line-height: var(--lh-body);
+      letter-spacing: var(--letter-spacing-body);
+      color: var(--color-muted);
+      margin: 0;
+    }
+
+    /* ── Validation section — light, asymmetric 3fr 2fr split ── */
+    #validation {
+      background: var(--color-page-bg);
+      padding: var(--space-section) 0;
+    }
+
+    #validation-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      column-gap: 80px;
+      align-items: start;
+    }
+
+    #validation-text-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    #validation-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-h4);
+      font-weight: var(--weight-regular);
+      letter-spacing: var(--letter-spacing-label);
+      text-transform: uppercase;
+      color: var(--color-accent-violet);
+      margin: 0 0 24px;
+    }
+
+    #validation-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--weight-regular);
+      line-height: var(--lh-h2);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0 0 24px;
+    }
+
+    #validation-body {
+      font-family: var(--font-body);
+      font-size: var(--type-p);
+      font-weight: var(--weight-light);
+      line-height: var(--lh-p);
+      letter-spacing: var(--letter-spacing-body);
+      color: var(--color-muted);
+      margin: 0 0 44px;
+    }
+
+    #validation-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .validation-metric {
+      padding: 28px 0;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .validation-metric:last-child {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .validation-metric-value {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: var(--weight-light);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-accent-teal);
+      line-height: 1;
+    }
+
+    .validation-metric:nth-child(2) .validation-metric-value { color: var(--color-accent-violet); }
+    .validation-metric:nth-child(3) .validation-metric-value { color: var(--color-accent-blue); }
+
+    .validation-metric-label {
+      font-family: var(--font-body);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(27, 27, 55, 0.45);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      #standards-grid {
+        grid-template-columns: 1fr;
+      }
+      .standard-card:nth-child(n) {
+        grid-row: auto;
+        margin-top: 0;
+      }
+      #validation-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #standards-heading { margin-bottom: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Strata home">
+      <span class="nav-logo-text">Strata<span class="nav-logo-dot">.</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="platform.html">Platform</a></li>
+      <li><a href="methodology.html" class="nav-link--active">Methodology</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Request Access</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="platform.html">Platform</a>
+  <a href="methodology.html">Methodology</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html">Request Access</a>
+</div>
+<div class="nav-spacer active"></div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = nav.querySelector('.nav-mobile-toggle');
+    var mobileMenu = document.getElementById('nav-mobile-menu');
+    var last = 0;
+    window.addEventListener('scroll', function() {
+      var cur = window.scrollY;
+      if (cur > 80 && cur > last) nav.classList.add('hidden');
+      else nav.classList.remove('hidden');
+      last = cur;
+    });
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+    });
+  })();
+</script>
+
+<!-- ── PAGE HEADER ── -->
+<header class="subpage-header" id="methodology-header">
+  <div class="subpage-header-inner">
+    <p class="subpage-header-label">Methodology</p>
+    <h1 class="subpage-header-title">Precision is a design decision,<br>not an accident.</h1>
+    <p class="subpage-header-tagline">How Strata builds geotechnical models that meet the tolerance demands of infrastructure engineering — and the audit requirements of the engineers who sign off on them.</p>
+  </div>
+</header>
+
+<!-- ── PROCESS (dark, video) ── -->
+<section id="process">
+  <div id="process-video-container">
+    <video
+      id="process-bg-video"
+      src="assets/process-ambient.mp4"
+      autoplay muted loop playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="process-bg-video-placeholder">→ assets/process-ambient.mp4</div>
+  </div>
+  <div id="process-overlay"></div>
+  <div id="process-inner">
+    <p id="process-label">The Core Principle</p>
+    <h2 id="process-heading">Every output is traceable<br>to the data that produced it.</h2>
+    <p id="process-body">Strata's analysis pipeline is designed around a single constraint: every number in a report must be derivable from first principles, starting from the uploaded survey files. No intermediate steps are hidden, no assumptions are unrecorded. If a reviewer questions a bearing capacity estimate, they can trace it back through the load-ground model, through the interpolation grid, to the specific CPT test points that informed that node.</p>
+  </div>
+</section>
+
+<!-- ── STANDARDS ── -->
+<section id="standards">
+  <div id="standards-inner">
+    <p id="standards-label">Standards Compliance</p>
+    <h2 id="standards-heading">Built to the standards<br>your review board requires.</h2>
+    <div id="standards-grid">
+      <div class="standard-card" id="std-en1997">
+        <p class="standard-card-code">EN 1997</p>
+        <p class="standard-card-title">Eurocode 7 — Geotechnical Design</p>
+        <p class="standard-card-body">ULS and SLS verifications using characteristic value derivation per Annex B. Partial factors applied per the National Annex of the project jurisdiction.</p>
+      </div>
+      <div class="standard-card" id="std-astmd">
+        <p class="standard-card-code">ASTM D</p>
+        <p class="standard-card-title">ASTM — Geotechnical Standards</p>
+        <p class="standard-card-body">Soil classification per ASTM D 2487 (USCS). CPT interpretation per D 3441. Pile load testing per D 1143. All output parameters reference the applicable ASTM designation.</p>
+      </div>
+      <div class="standard-card" id="std-bs5930">
+        <p class="standard-card-code">BS 5930</p>
+        <p class="standard-card-title">Code of Practice for Ground Investigations</p>
+        <p class="standard-card-body">Site investigation reporting structured to BS 5930:2015+A1:2020, including factual and interpretative reporting phases with defined data quality categories.</p>
+      </div>
+      <div class="standard-card" id="std-iso22282">
+        <p class="standard-card-code">ISO 22282</p>
+        <p class="standard-card-title">Geohydraulic Testing</p>
+        <p class="standard-card-body">Permeability and hydraulic testing data processed per ISO 22282-1 through 22282-6. Piezometric data ingested and interpreted to ISO 22282-4 compliance.</p>
+      </div>
+      <div class="standard-card" id="std-ifc">
+        <p class="standard-card-code">IFC 4.3</p>
+        <p class="standard-card-title">BIM Integration Standard</p>
+        <p class="standard-card-body">Model exports in IFC 4.3 format, including IfcGeotechnicalElement entities for direct import into Revit, Archicad, and OpenBIM-compatible infrastructure platforms.</p>
+      </div>
+      <div class="standard-card" id="std-iso31000">
+        <p class="standard-card-code">ISO 31000</p>
+        <p class="standard-card-title">Risk Management Framework</p>
+        <p class="standard-card-body">Risk scoring and prioritisation matrices structured to ISO 31000:2018, with site hazard classifications that map directly to project risk registers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VALIDATION ── -->
+<section id="validation">
+  <div id="validation-inner">
+    <div id="validation-text-col">
+      <p id="validation-label">Validation</p>
+      <h2 id="validation-heading">Calibrated against<br>real project outcomes.</h2>
+      <p id="validation-body">The Strata interpolation engine has been validated against back-analysis data from 140 completed infrastructure projects across eight European countries — comparing modelled predictions to observed settlement, bearing failure, and groundwater behaviour during and after construction. Calibration is ongoing and site-type specific: offshore foundations, road embankments, and deep basement excavations each use separate validation datasets.</p>
+      <a href="contact.html" class="btn-ghost" id="validation-cta">Request Technical Brief</a>
+    </div>
+    <div id="validation-metrics">
+      <div class="validation-metric" id="vm-1">
+        <span class="validation-metric-value">140</span>
+        <span class="validation-metric-label">Projects in validation set</span>
+      </div>
+      <div class="validation-metric" id="vm-2">
+        <span class="validation-metric-value">8</span>
+        <span class="validation-metric-label">European country datasets</span>
+      </div>
+      <div class="validation-metric" id="vm-3">
+        <span class="validation-metric-value">±12<span style="font-size: 0.65em">mm</span></span>
+        <span class="validation-metric-label">Settlement prediction accuracy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-grid">
+      <div id="footer-brand">
+        <p id="footer-logo-text">Strata<span>.</span></p>
+        <p id="footer-tagline">Subsurface data platform for infrastructure engineers.</p>
+      </div>
+      <div class="footer-col" id="footer-col-platform">
+        <p class="footer-col-heading">Platform</p>
+        <ul class="footer-links">
+          <li><a href="platform.html">Overview</a></li>
+          <li><a href="platform.html#data-fusion">Data Fusion</a></li>
+          <li><a href="platform.html#modeling">Subsurface Modeling</a></li>
+          <li><a href="platform.html#reporting">Reporting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footer-col-method">
+        <p class="footer-col-heading">Methodology</p>
+        <ul class="footer-links">
+          <li><a href="methodology.html">Our Approach</a></li>
+          <li><a href="methodology.html#standards">Standards</a></li>
+          <li><a href="methodology.html#validation">Validation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footer-col-company">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footer-col-resources">
+        <p class="footer-col-heading">Resources</p>
+        <ul class="footer-links">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Case Studies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-legal">© 2026 Strata Technologies Ltd. All rights reserved.</p>
+      <div id="footer-legal-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Security</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  var EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+  var DUR = 0.35;
+
+  // Header fade-up
+  gsap.from('.subpage-header-title, .subpage-header-tagline', {
+    y: 30, stagger: 0.1, duration: DUR * 1.4, ease: EASE, delay: 0.1
+  });
+
+  // Process section: text slides in from left
+  gsap.from('#process-heading, #process-body', {
+    scrollTrigger: { trigger: '#process-inner', start: 'top 75%' },
+    x: -60, stagger: 0.1, duration: DUR * 1.8, ease: EASE
+  });
+
+  // Standards: masonry cards rotate+rise
+  gsap.from('.standard-card', {
+    scrollTrigger: { trigger: '#standards-grid', start: 'top 75%' },
+    rotation: 1.5, y: 40, stagger: 0.08, duration: DUR * 1.6, ease: EASE
+  });
+
+  // Validation: divergent entrance
+  gsap.from('#validation-text-col', {
+    scrollTrigger: { trigger: '#validation-inner', start: 'top 75%' },
+    x: -60, duration: DUR * 1.8, ease: EASE
+  });
+  gsap.from('#validation-metrics', {
+    scrollTrigger: { trigger: '#validation-inner', start: 'top 75%' },
+    x: 60, duration: DUR * 1.8, ease: EASE
+  });
+  gsap.from('.validation-metric', {
+    scrollTrigger: { trigger: '#validation-metrics', start: 'top 85%' },
+    y: 30, stagger: 0.12, duration: DUR * 1.4, ease: EASE
+  });
+</script>
+
+</body>
+</html>

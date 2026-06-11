@@ -1,0 +1,185 @@
+import { downloadGoogleFonts } from '../lib/font-downloader.js';
+
+const GENERIC_FONT_FAMILIES = new Set([
+  'serif', 'sans-serif', 'monospace', 'cursive', 'fantasy',
+  'system-ui', 'ui-serif', 'ui-sans-serif', 'ui-monospace', 'ui-rounded',
+  'emoji', 'math', 'fangsong',
+  '-apple-system', 'blinkmacsystemfont',
+  'inherit', 'initial', 'unset', 'revert',
+]);
+
+export const metadata = { tag: 'type-system' };
+
+const TYPE_VAR_KEYWORDS = ['font', 'type', 'text', 'size', 'weight', 'line-height', 'letter', 'heading', 'body', 'caption'];
+
+// Defaults that add no signal — skip these values
+const SKIP_DEFAULTS = {
+  letterSpacing: 'normal',
+  wordSpacing: 'normal',
+  textTransform: 'none',
+  fontStyle: 'normal',
+  textDecoration: 'none',
+  fontFeatureSettings: 'normal',
+};
+
+function annotateFontAvailability(data) {
+  // Build set of locally available families (successfully downloaded woff2s have src starting with 'fonts/')
+  const localFamilies = new Set(
+    (data.fontFaces || [])
+      .filter(f => String(f.src || '').startsWith('fonts/'))
+      .flatMap(f => [
+        String(f.family || '').toLowerCase(),
+        String(f.resolvedName || '').toLowerCase(),
+      ])
+  );
+
+  const proprietaryFonts = [];
+  const seen = new Set();
+
+  const typeScale = Object.fromEntries(
+    Object.entries(data.typeScale || {}).map(([label, entry]) => {
+      const primary = entry.primaryFont;
+      if (!primary) return [label, entry];
+      const norm = primary.toLowerCase().trim();
+      if (GENERIC_FONT_FAMILIES.has(norm) || localFamilies.has(norm)) return [label, entry];
+
+      // Font is proprietary — not downloadable from Google Fonts
+      const note = `${primary} is proprietary and not web-accessible. Use /get-fallback-font skill to get a recommended alternative.`;
+      if (!seen.has(primary)) { seen.add(primary); proprietaryFonts.push(primary); }
+      return [label, { ...entry, webAccessible: false, _note: note }];
+    })
+  );
+
+  // Mark fontFace entries served from the site's CDN that were not downloaded from Google Fonts.
+  // These hashed URLs are inaccessible to downstream generators.
+  const fontFaces = (data.fontFaces || []).map(face => {
+    const src = String(face.src || '');
+    if (src.startsWith('fonts/') || src.startsWith('data:')) return face;
+    const name = String(face.resolvedName || face.family || '');
+    if (!name) return face;
+    const norm = name.toLowerCase().trim();
+    if (GENERIC_FONT_FAMILIES.has(norm) || localFamilies.has(norm)) return face;
+    if (!seen.has(name)) { seen.add(name); proprietaryFonts.push(name); }
+    return { ...face, webAccessible: false };
+  });
+
+  return { ...data, fontFaces, typeScale, proprietaryFonts };
+}
+
+export async function extract(page, { outputDir } = {}) {
+  const data = await page.evaluate(({ keywords, skipDefaults }) => {
+    function stripQuotes(s) {
+      return s.replace(/['"]/g, '').trim();
+    }
+    function isTypeVar(name) {
+      const lower = name.toLowerCase();
+      return keywords.some(k => lower.includes(k));
+    }
+
+    // Pass 1: CSS custom properties from :root + @font-face declarations
+    const cssVars = {};
+    const fontFaces = [];
+    const seenFaces = new Set();
+
+    for (const sheet of document.styleSheets) {
+      try {
+        for (const rule of sheet.cssRules) {
+          // CSS vars from :root / html
+          if (rule.selectorText?.split(',').map(s => s.trim()).some(s => s === ':root' || s === 'html')) {
+            for (const prop of rule.style) {
+              if (!prop.startsWith('--')) continue;
+              if (!isTypeVar(prop)) continue;
+              const val = rule.style.getPropertyValue(prop).trim();
+              if (val) cssVars[prop.slice(2)] = val;
+            }
+          }
+          // @font-face
+          if (rule.type === CSSRule.FONT_FACE_RULE) {
+            const family = stripQuotes(rule.style.getPropertyValue('font-family'));
+            const weight = rule.style.getPropertyValue('font-weight') || 'normal';
+            const style  = rule.style.getPropertyValue('font-style')  || 'normal';
+            const srcRaw = rule.style.getPropertyValue('src') || '';
+            // Extract first url() value
+            const srcMatch = srcRaw.match(/url\(['"]?([^'")\s]+)['"]?\)/);
+            const src = srcMatch ? srcMatch[1] : srcRaw;
+            const key = `${family}|${weight}|${style}`;
+            if (family && !seenFaces.has(key)) {
+              seenFaces.add(key);
+              fontFaces.push({ family, weight, style, src });
+            }
+          }
+        }
+      } catch (_) { /* cross-origin sheet — skip */ }
+    }
+
+    // Inline CSS vars on <html> (Next.js sets these as inline styles, not in stylesheets)
+    for (const prop of document.documentElement.style) {
+      if (!prop.startsWith('--')) continue;
+      if (!isTypeVar(prop)) continue;
+      const val = document.documentElement.style.getPropertyValue(prop).trim();
+      if (val) cssVars[prop.slice(2)] = val;
+    }
+
+    // Decode Next.js hashed font names: __Inter_f367f3 → "Inter", __Source_Code_Pro_a06722 → "Source Code Pro"
+    function resolveNextJsName(family) {
+      const m = family.match(/^__([A-Za-z][A-Za-z0-9_]*)_[a-f0-9]+$/);
+      if (!m) return null;
+      let name = m[1].replace(/_Fallback$/, '');
+      if (name.includes('_')) {
+        // Underscore-separated: Source_Code_Pro → Source Code Pro
+        return name.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      }
+      // PascalCase: SourceCodePro → Source Code Pro
+      return name.replace(/([A-Z])/g, ' $1').trim();
+    }
+
+    // Annotate fontFaces with resolvedName
+    for (const face of fontFaces) {
+      face.resolvedName = resolveNextJsName(face.family) || face.family;
+    }
+
+    // Pass 2: computed element styles on key selectors
+    const selectors = [
+      ['h1', 'h1'], ['h2', 'h2'], ['h3', 'h3'], ['h4', 'h4'],
+      ['body', 'body'], ['p', 'p'], ['button', 'button'], ['small', 'small'],
+      ['link', 'a'], ['nav', 'nav a'],
+    ];
+    const props = [
+      'fontFamily', 'fontSize', 'fontWeight', 'lineHeight',
+      'letterSpacing', 'wordSpacing', 'textTransform', 'fontStyle',
+      'textDecoration', 'fontFeatureSettings',
+    ];
+
+    const typeScale = {};
+    for (const [label, sel] of selectors) {
+      const el = document.querySelector(sel);
+      if (!el) continue;
+      const cs = getComputedStyle(el);
+      const entry = {};
+      for (const prop of props) {
+        let val = cs[prop];
+        if (!val) continue;
+        if (skipDefaults[prop] && val === skipDefaults[prop]) continue;
+        if (prop === 'fontFamily') val = stripQuotes(val);
+        entry[prop] = val;
+      }
+      if (Object.keys(entry).length > 0) typeScale[label] = entry;
+    }
+
+    // Cross-reference typeScale with resolved @font-face names to surface primaryFont
+    const knownFonts = new Set(fontFaces.map(f => f.family.toLowerCase()));
+    const resolvedNames = Object.fromEntries(
+      fontFaces.map(f => [f.family.toLowerCase(), f.resolvedName || f.family])
+    );
+    for (const entry of Object.values(typeScale)) {
+      if (!entry.fontFamily) continue;
+      const tokens = entry.fontFamily.split(',').map(s => s.trim());
+      const match = tokens.find(t => knownFonts.has(t.toLowerCase()));
+      entry.primaryFont = match ? (resolvedNames[match.toLowerCase()] || match) : tokens[0];
+    }
+
+    return { cssVars, fontFaces, typeScale };
+  }, { keywords: TYPE_VAR_KEYWORDS, skipDefaults: SKIP_DEFAULTS });
+  const downloaded = await downloadGoogleFonts(data, outputDir);
+  return annotateFontAvailability(downloaded);
+}

@@ -1,0 +1,188 @@
+/* ============================================================
+ * hero.css — Iron Vellum / Solum — Homepage Hero
+ * Split layout: 45% text left / 55% video right
+ * HERO_TREATMENT=light, so text is on warm off-white ground
+ * ============================================================ */
+
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 45fr 55fr;
+  position: relative;
+  padding-top: 50px; /* nav height */
+}
+
+/* Left column — warm off-white text panel */
+#hero-text-col {
+  background: var(--color-page-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 var(--grid-gutter) 80px calc(var(--grid-gutter) + 8px);
+  position: relative;
+}
+
+#hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 400;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-body-mid);
+  margin: 0 0 28px;
+}
+
+#hero-headline {
+  font-family: var(--font-display);
+  font-size: var(--type-hero);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-heading);
+  margin: 0 0 28px;
+}
+
+#hero-tagline {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: var(--tracking-section-body);
+  color: var(--color-body-mid);
+  max-width: 480px;
+  margin: 0 0 44px;
+}
+
+#hero-cta-group {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.btn-primary {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: var(--font-size-btn-primary);
+  font-weight: 500;
+  letter-spacing: var(--tracking-btn);
+  color: var(--color-page-bg);
+  background: var(--color-heading);
+  border: 1px solid var(--color-heading);
+  padding: var(--space-cta-v) var(--space-cta-h);
+  border-radius: var(--space-btn-radius);
+  text-decoration: none;
+  transition: var(--transition-hover);
+}
+
+.btn-primary:hover {
+  background: var(--color-body-mid);
+  border-color: var(--color-body-mid);
+}
+
+.btn-ghost-dark {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: var(--font-size-btn-secondary);
+  font-weight: 400;
+  letter-spacing: var(--tracking-btn);
+  color: var(--color-body-text);
+  background: transparent;
+  border: 1px solid rgba(1,1,1,0.3);
+  padding: var(--space-cta-v) var(--space-cta-h);
+  border-radius: var(--space-btn-radius);
+  text-decoration: none;
+  transition: var(--transition-hover);
+}
+
+.btn-ghost-dark:hover {
+  border-color: var(--color-body-text);
+}
+
+/* Right column — video panel */
+#hero-video-col {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-hero-bg);
+}
+
+#hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+#hero-bg-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--color-hero-bg);
+  color: rgba(1,1,1,0.3);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+}
+
+#hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to left,
+    transparent 30%,
+    rgba(249, 248, 243, 0.15) 80%,
+    rgba(249, 248, 243, 0.45) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Scroll indicator */
+#hero-scroll-hint {
+  position: absolute;
+  bottom: 36px;
+  left: var(--grid-gutter);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(1,1,1,0.35);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#hero-scroll-hint::before {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 32px;
+  background: rgba(1,1,1,0.25);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  #hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 50vh;
+  }
+
+  #hero-text-col {
+    padding: 80px var(--grid-gutter) 60px;
+    justify-content: center;
+  }
+
+  #hero-tagline { max-width: none; }
+
+  #hero-scroll-hint { display: none; }
+}
+
+@media (max-width: 600px) {
+  #hero-headline { font-size: clamp(2.5rem, 10vw, 3.5rem); }
+  #hero-cta-group { flex-direction: column; align-items: flex-start; }
+  .btn-primary, .btn-ghost-dark { width: 100%; text-align: center; }
+}

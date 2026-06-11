@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Forme</title>
+  <meta name="description" content="Forme pricing: start with three parts free, then choose a plan that scales with your engineering team.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    /* ── Pricing page specific ── */
+
+    #pricing-section {
+      padding: var(--space-section-v) 0;
+      background: var(--color-page-bg);
+    }
+
+    #pricing-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    #pricing-eyebrow {
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-accent-indigo);
+      margin: 0 0 16px;
+    }
+
+    #pricing-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0 0 16px;
+      line-height: var(--line-height-h2);
+    }
+
+    #pricing-sub {
+      font-size: var(--type-body);
+      color: var(--color-heading-alt);
+      line-height: var(--line-height-body);
+      margin: 0 auto;
+      max-width: 480px;
+    }
+
+    #pricing-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-grid-gap);
+      align-items: stretch;
+    }
+
+    .pricing-card {
+      background: var(--color-page-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 2px;
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: transform var(--duration-hover) var(--ease-primary),
+                  box-shadow var(--duration-hover) var(--ease-primary);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .pricing-card--featured {
+      background: var(--color-accent-indigo);
+      border-color: var(--color-accent-indigo);
+    }
+
+    .pricing-card--featured .pricing-plan-name,
+    .pricing-card--featured .pricing-price,
+    .pricing-card--featured .pricing-period,
+    .pricing-card--featured .pricing-desc,
+    .pricing-card--featured .pricing-feature-item {
+      color: rgba(255,255,255,0.9);
+    }
+
+    .pricing-card--featured .pricing-price {
+      color: #fff;
+    }
+
+    .pricing-card--featured .pricing-feature-item::before {
+      color: var(--color-accent-cyan);
+    }
+
+    .pricing-card--featured .pricing-divider {
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .pricing-badge {
+      font-size: 10px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent-cyan);
+      border: 1px solid var(--color-accent-cyan);
+      border-radius: 2px;
+      padding: 3px 8px;
+      display: inline-block;
+      align-self: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .pricing-plan-name {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 20px;
+    }
+
+    .pricing-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .pricing-price {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: var(--font-weight-light);
+      letter-spacing: -0.01em;
+      color: var(--color-heading);
+      line-height: 1;
+    }
+
+    .pricing-period {
+      font-size: 13px;
+      color: var(--color-muted-text);
+      letter-spacing: 0.04em;
+    }
+
+    .pricing-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--color-heading-alt);
+      margin: 0 0 32px;
+    }
+
+    .pricing-divider {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: 0 0 28px;
+    }
+
+    .pricing-features-label {
+      font-size: 10px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin: 0 0 16px;
+    }
+
+    .pricing-feature-list {
+      list-style: none;
+      margin: 0 0 40px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      flex: 1;
+    }
+
+    .pricing-feature-item {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--color-heading-alt);
+      padding: 7px 0;
+      border-bottom: 1px solid var(--color-border);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .pricing-card--featured .pricing-feature-item {
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+
+    .pricing-feature-item::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      top: 7px;
+      font-size: 11px;
+      color: var(--color-accent-indigo);
+    }
+
+    .pricing-card-cta {
+      display: block;
+      text-align: center;
+      font-size: var(--type-link);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius-cta);
+      padding: 14px 32px;
+      text-decoration: none;
+      transition: border-color var(--duration-hover) var(--ease-primary),
+                  background var(--duration-hover) var(--ease-primary),
+                  color var(--duration-hover) var(--ease-primary);
+      margin-top: auto;
+      align-self: flex-start;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .pricing-card-cta:hover {
+      border-color: var(--color-heading);
+      background: rgba(0,0,0,0.03);
+    }
+
+    .pricing-card--featured .pricing-card-cta {
+      color: var(--color-accent-indigo);
+      background: #fff;
+      border-color: #fff;
+    }
+
+    .pricing-card--featured .pricing-card-cta:hover {
+      background: rgba(255,255,255,0.9);
+    }
+
+    /* ── FAQ ── */
+    #faq {
+      padding: var(--space-section-v) 0;
+      background: var(--color-surface-1);
+      border-top: 1px solid var(--color-border);
+    }
+
+    #faq-header {
+      margin-bottom: 56px;
+    }
+
+    #faq-eyebrow {
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin: 0 0 16px;
+    }
+
+    #faq-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0;
+      line-height: var(--line-height-h2);
+      max-width: 480px;
+    }
+
+    #faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+    }
+
+    .faq-item {
+      padding: 28px 0;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .faq-q {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: var(--font-weight-regular);
+      letter-spacing: 0.03em;
+      color: var(--color-heading);
+      margin: 0 0 12px;
+      line-height: 1.4;
+    }
+
+    .faq-a {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    /* ── Enterprise band ── */
+    #enterprise-band {
+      padding: 80px 0;
+      background: var(--color-surface-2);
+      border-top: 1px solid var(--color-border);
+    }
+
+    #enterprise-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-section-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+    }
+
+    #enterprise-text {
+      max-width: 520px;
+    }
+
+    #enterprise-eyebrow {
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-accent-indigo);
+      margin: 0 0 16px;
+    }
+
+    #enterprise-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0 0 16px;
+      line-height: 1.2;
+    }
+
+    #enterprise-body {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--color-heading-alt);
+      margin: 0;
+    }
+
+    #enterprise-cta {
+      display: inline-block;
+      font-size: var(--type-link);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius-cta);
+      padding: 14px 32px;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: border-color var(--duration-hover) var(--ease-primary),
+                  background var(--duration-hover) var(--ease-primary);
+    }
+
+    #enterprise-cta:hover {
+      border-color: var(--color-heading);
+      background: rgba(0,0,0,0.03);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      #pricing-cards {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+      #faq-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      #enterprise-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #enterprise-inner {
+        padding: 0 20px;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Forme home">Forme</a>
+    <ul class="nav-links">
+      <li><a href="method.html">Method</a></li>
+      <li><a href="system.html">System</a></li>
+      <li><a href="pricing.html" class="nav-link--active" aria-current="page">Pricing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="pricing.html" class="nav-cta">Start free →</a>
+    <button class="nav-mobile-toggle" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="method.html">Method</a>
+  <a href="system.html">System</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="pricing.html" class="nav-mobile-cta">Start free →</a>
+</div>
+<div class="nav-spacer active" style="height:48px;"></div>
+<script>
+  (function(){
+    var nav=document.getElementById('site-nav');
+    var toggle=nav.querySelector('.nav-mobile-toggle');
+    var mobileMenu=document.querySelector('.nav-mobile-menu');
+    window.addEventListener('scroll',function(){
+      nav.classList.toggle('scrolled',window.scrollY>8);
+    });
+    toggle.addEventListener('click',function(){
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow=mobileMenu.classList.contains('is-open')?'hidden':'';
+    });
+  })();
+</script>
+
+<!-- ── Subpage Hero ── -->
+<header class="subpage-hero">
+  <div class="section-inner">
+    <p class="subpage-hero-eyebrow">Pricing</p>
+    <h1 class="subpage-hero-title">Start with three parts. No card required.</h1>
+    <p class="subpage-hero-sub">Forme's trial gives you the full system for three specification records. If it changes how you work, the plan pricing is straightforward from there.</p>
+  </div>
+</header>
+
+<!-- ── Pricing Cards ── -->
+<section id="pricing-section">
+  <div class="section-inner">
+    <div id="pricing-header">
+      <p id="pricing-eyebrow">Plans</p>
+      <h2 id="pricing-heading">Choose what your team requires.</h2>
+      <p id="pricing-sub">All plans include the core record system. Higher tiers add integrations, team workflows, and API access.</p>
+    </div>
+    <div id="pricing-cards">
+
+      <div class="pricing-card">
+        <p class="pricing-plan-name">Starter</p>
+        <div class="pricing-price-row">
+          <span class="pricing-price">$0</span>
+          <span class="pricing-period">/ mo</span>
+        </div>
+        <p class="pricing-desc">Three complete specification records. Full system access during trial. No card, no export limits.</p>
+        <hr class="pricing-divider">
+        <p class="pricing-features-label">Includes</p>
+        <ul class="pricing-feature-list">
+          <li class="pricing-feature-item">3 specification records</li>
+          <li class="pricing-feature-item">All tolerance models</li>
+          <li class="pricing-feature-item">Surface finish call-outs</li>
+          <li class="pricing-feature-item">Material chain records</li>
+          <li class="pricing-feature-item">JSON and PDF export</li>
+          <li class="pricing-feature-item">1 user</li>
+        </ul>
+        <a href="#" class="pricing-card-cta">Start free</a>
+      </div>
+
+      <div class="pricing-card pricing-card--featured">
+        <span class="pricing-badge">Most used</span>
+        <p class="pricing-plan-name">Studio</p>
+        <div class="pricing-price-row">
+          <span class="pricing-price">$49</span>
+          <span class="pricing-period">/ user / mo</span>
+        </div>
+        <p class="pricing-desc">Full record system with team collaboration, revision branching, and supplier view generation. For engineering teams on active programs.</p>
+        <hr class="pricing-divider">
+        <p class="pricing-features-label" style="color:rgba(255,255,255,0.5);">Includes everything in Starter, plus</p>
+        <ul class="pricing-feature-list">
+          <li class="pricing-feature-item">Unlimited specification records</li>
+          <li class="pricing-feature-item">STEP file import</li>
+          <li class="pricing-feature-item">Revision branching and comparison</li>
+          <li class="pricing-feature-item">Supplier view generation</li>
+          <li class="pricing-feature-item">Team collaboration</li>
+          <li class="pricing-feature-item">Engineering review workflow</li>
+          <li class="pricing-feature-item">Up to 10 users</li>
+        </ul>
+        <a href="#" class="pricing-card-cta">Start Studio trial</a>
+      </div>
+
+      <div class="pricing-card">
+        <p class="pricing-plan-name">Program</p>
+        <div class="pricing-price-row">
+          <span class="pricing-price">$149</span>
+          <span class="pricing-period">/ user / mo</span>
+        </div>
+        <p class="pricing-desc">For programs with multiple parts, suppliers, and engineering teams. Includes API access, SSO, and audit logging.</p>
+        <hr class="pricing-divider">
+        <p class="pricing-features-label">Includes everything in Studio, plus</p>
+        <ul class="pricing-feature-list">
+          <li class="pricing-feature-item">REST API access</li>
+          <li class="pricing-feature-item">SSO / SAML 2.0</li>
+          <li class="pricing-feature-item">Audit log export</li>
+          <li class="pricing-feature-item">Multi-program management</li>
+          <li class="pricing-feature-item">Priority support</li>
+          <li class="pricing-feature-item">Unlimited users</li>
+        </ul>
+        <a href="contact.html" class="pricing-card-cta">Talk to the team</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Enterprise Band ── -->
+<section id="enterprise-band">
+  <div id="enterprise-inner">
+    <div id="enterprise-text">
+      <p id="enterprise-eyebrow">Enterprise</p>
+      <h2 id="enterprise-heading">Custom contracts, on-premise deployment, and dedicated support.</h2>
+      <p id="enterprise-body">For defense contractors, regulated industries, and teams with data residency requirements, Forme offers enterprise agreements with on-premise or private cloud deployment, custom SLAs, and dedicated engineering support.</p>
+    </div>
+    <a href="contact.html" id="enterprise-cta">Contact for enterprise</a>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+  <div class="section-inner">
+    <div id="faq-header">
+      <p id="faq-eyebrow">Common questions</p>
+      <h2 id="faq-heading">What engineers ask before committing.</h2>
+    </div>
+    <div id="faq-grid">
+      <div class="faq-item">
+        <h3 class="faq-q">What counts as a "part" in the free trial?</h3>
+        <p class="faq-a">One specification record per part number. A record can have unlimited revisions, unlimited fields, and multiple geometry references. Three records means three distinct part numbers.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Can I import from our existing CAD system?</h3>
+        <p class="faq-a">STEP import is available on Studio and Program plans. We read dimensional features from STEP files and populate nominal values automatically. Other CAD formats are on the roadmap — contact us if you need something specific.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">What does the supplier view expose?</h3>
+        <p class="faq-a">Only the call-outs relevant to the supplier's process scope. Machining suppliers see dimensional tolerances and surface finishes. Finishing suppliers see coating specifications and surface requirements. Internal revision history, material costing data, and design intent notes are never included.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Does Forme work offline?</h3>
+        <p class="faq-a">The web application requires an internet connection. The API is available on the Program plan for integration into local build systems. Offline desktop clients are on the enterprise roadmap.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">How is data stored? Where?</h3>
+        <p class="faq-a">Specification records are stored encrypted at rest in ISO 27001-certified infrastructure. US and EU regions available. Enterprise customers can specify data residency requirements. We never share specification data with third parties.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Can we cancel anytime?</h3>
+        <p class="faq-a">Yes, on monthly plans. Annual plans are cancellable with 30-day notice. All your data exports in full before cancellation — specification records in JSON and PDF, revision history included.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand-col">
+        <a href="index.html" id="footer-logo">Forme</a>
+        <p id="footer-tagline">Structured specification for hardware that cannot afford imprecision.</p>
+        <ul id="footer-social">
+          <li><a href="#" aria-label="Forme on GitHub">GitHub</a></li>
+          <li><a href="#" aria-label="Forme on LinkedIn">LinkedIn</a></li>
+          <li><a href="#" aria-label="Forme changelog">Changelog</a></li>
+        </ul>
+      </div>
+      <div id="footer-product-col">
+        <p class="footer-col-heading">Product</p>
+        <ul class="footer-links">
+          <li><a href="method.html">Method</a></li>
+          <li><a href="system.html">System</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="system.html#step-import">STEP Import</a></li>
+          <li><a href="system.html#supplier-view">Supplier View</a></li>
+        </ul>
+      </div>
+      <div id="footer-company-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="method.html#about">About Forme</a></li>
+          <li><a href="method.html#principles">Design principles</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html#press">Press</a></li>
+        </ul>
+      </div>
+      <div id="footer-resources-col">
+        <p class="footer-col-heading">Resources</p>
+        <ul class="footer-links">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Tolerance standards</a></li>
+          <li><a href="#">ISO fit reference</a></li>
+          <li><a href="#">Surface finish guide</a></li>
+          <li><a href="#">API reference</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-copyright">© 2026 Forme. Precision measurement tools for hardware engineers.</p>
+      <ul id="footer-legal">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Security</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from('.subpage-hero-title', {
+    y: 16,
+    duration: 0.65,
+    ease: 'power2.out',
+    delay: 0.05
+  });
+
+  // Pricing cards — divergent: outer cards spread outward, center rises
+  gsap.from('.pricing-card:nth-child(1)', {
+    scrollTrigger: { trigger: '#pricing-cards', start: 'top 80%' },
+    x: -32,
+    duration: 0.65,
+    ease: 'power2.out'
+  });
+  gsap.from('.pricing-card:nth-child(2)', {
+    scrollTrigger: { trigger: '#pricing-cards', start: 'top 80%' },
+    y: 24,
+    duration: 0.65,
+    ease: 'power2.out'
+  });
+  gsap.from('.pricing-card:nth-child(3)', {
+    scrollTrigger: { trigger: '#pricing-cards', start: 'top 80%' },
+    x: 32,
+    duration: 0.65,
+    ease: 'power2.out'
+  });
+
+  // Enterprise band
+  gsap.from('#enterprise-heading', {
+    scrollTrigger: { trigger: '#enterprise-band', start: 'top 78%' },
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 0.7,
+    ease: 'power2.inOut'
+  });
+
+  // FAQ items — vertical stagger
+  gsap.from('.faq-item', {
+    scrollTrigger: { trigger: '#faq-grid', start: 'top 80%' },
+    y: 20,
+    stagger: 0.08,
+    duration: 0.5,
+    ease: 'power2.out'
+  });
+</script>
+</body>
+</html>

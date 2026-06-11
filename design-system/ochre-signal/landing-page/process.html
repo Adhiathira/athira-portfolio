@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process — Pellum Natural Ink Studio</title>
+  <meta name="description" content="How Pellum sources, mills, and tests each batch of natural pigment. Every step traced, every material named.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    .process-page-hero {
+      background: var(--color-heading, #3d3930);
+      padding: 100px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .process-page-hero__bg-text {
+      position: absolute;
+      right: -40px;
+      bottom: -60px;
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: clamp(8rem, 22vw, 18rem);
+      font-weight: 200;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(242, 239, 233, 0.05);
+      pointer-events: none;
+      user-select: none;
+      line-height: 0.85;
+    }
+    .process-page-hero__eyebrow {
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-surface, #a39b8b);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .process-page-hero__heading {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-page-bg, #f2efe9);
+      margin: 0 0 24px;
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+    }
+    .process-page-hero__body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--color-muted-text, #c8c1b4);
+      max-width: 480px;
+      margin: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Principles — asymmetric split with ambient video on right */
+    .principles-split {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .principles-split__left {
+      padding-top: 8px;
+    }
+    .principle-item {
+      padding: 32px 0;
+      border-top: 1px solid var(--color-border, #d4cfc8);
+    }
+    .principle-item:last-child {
+      border-bottom: 1px solid var(--color-border, #d4cfc8);
+    }
+    .principle-item__number {
+      font-family: var(--font-body);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted-text, #c8c1b4);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .principle-item__heading {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: 17px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-heading, #3d3930);
+      margin: 0 0 10px;
+    }
+    .principle-item__body {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--color-body-text, #575349);
+      margin: 0;
+    }
+    .principles-split__right {
+      position: sticky;
+      top: 80px;
+    }
+    .principles-video {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      border-radius: 2px;
+      position: relative;
+    }
+    .principles-video video,
+    .principles-video img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .principles-video__caption {
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted-text, #c8c1b4);
+      margin-top: 12px;
+      display: block;
+    }
+
+    /* Sourcing map — full-width feature */
+    .sourcing-section {
+      background: #ede9e1;
+      padding: 80px 40px;
+    }
+    .sourcing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--grid-gap, 22px);
+      margin-top: 48px;
+    }
+    .source-item {
+      border-top: 1px solid var(--color-border, #d4cfc8);
+      padding-top: 24px;
+    }
+    .source-item__region {
+      font-family: var(--font-body);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-accent, #fb7339);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .source-item__name {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-heading, #3d3930);
+      margin: 0 0 8px;
+    }
+    .source-item__material {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--color-body-text, #575349);
+      margin: 0;
+    }
+
+    @media (max-width: 900px) {
+      .principles-split {
+        grid-template-columns: 1fr;
+      }
+      .principles-split__right {
+        position: relative;
+        top: auto;
+        order: -1;
+      }
+      .principles-video {
+        aspect-ratio: 4/3;
+      }
+      .sourcing-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .process-page-hero { padding: 80px 24px 60px; }
+    }
+    @media (max-width: 600px) {
+      .sourcing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav" class="nav-light-page">
+  <a href="index.html" class="nav-logo">Pellum</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="pigments.html" class="nav-link">Pigments</a></li>
+    <li><a href="process.html" class="nav-link nav-link--active">Process</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+  </ul>
+  <a href="pigments.html" class="nav-cta">Order</a>
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="pigments.html" class="nav-link">Pigments</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="pigments.html" class="nav-cta">Order</a>
+</div>
+<script>
+(function() {
+  var toggle = document.querySelector('.nav-mobile-toggle');
+  var mobileMenu = document.querySelector('.nav-mobile-menu');
+  var nav = document.getElementById('site-nav');
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function() {
+      var isOpen = mobileMenu.classList.contains('is-open');
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      mobileMenu.classList.toggle('is-open');
+      nav.classList.toggle('nav-mobile-open');
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+  }
+})();
+</script>
+<!-- END NAV -->
+
+<!-- Dark hero -->
+<section class="process-page-hero" aria-label="Process introduction">
+  <div class="process-page-hero__bg-text" aria-hidden="true">Method</div>
+  <div class="container" style="position:relative;z-index:2;">
+    <span class="process-page-hero__eyebrow" data-reveal="fade-up">The Studio Method</span>
+    <h1 class="process-page-hero__heading" data-reveal="fade-up">From Ground<br>to Bottle</h1>
+    <p class="process-page-hero__body" data-reveal="fade-up">Every Pellum pigment follows the same four-step discipline: forage, mill, test, number. Nothing is shortcuts. Nothing is anonymous.</p>
+  </div>
+</section>
+
+<!-- Principles + sticky video -->
+<section class="section section--cream" aria-label="Production principles">
+  <div class="container">
+    <div class="principles-split">
+      <div class="principles-split__left">
+        <span class="section__eyebrow" data-reveal="fade-up">Our Commitments</span>
+        <h2 class="section__heading" data-reveal="fade-up">The Principles</h2>
+        <div data-stagger-group="fade-up">
+          <div class="principle-item">
+            <span class="principle-item__number">Principle 01</span>
+            <h3 class="principle-item__heading">Named Materials Only</h3>
+            <p class="principle-item__body">Every raw pigment is traceable to a named source — a specific deposit, a named grower, an identified region. We do not buy from distributors who cannot tell us where their material originates.</p>
+          </div>
+          <div class="principle-item">
+            <span class="principle-item__number">Principle 02</span>
+            <h3 class="principle-item__heading">Small Batch, Full Documentation</h3>
+            <p class="principle-item__body">No batch exceeds 120 units. Each batch is milled, tested, and released as a single lot with its own number, date, and material notes. When it sells, it's gone.</p>
+          </div>
+          <div class="principle-item">
+            <span class="principle-item__number">Principle 03</span>
+            <h3 class="principle-item__heading">Tested Before Release</h3>
+            <p class="principle-item__body">Every ink is tested for flow across five paper stocks — hot press, cold press, handmade, Japanese, and cotton — and assessed for 30-day UV fade resistance before a batch is offered.</p>
+          </div>
+          <div class="principle-item">
+            <span class="principle-item__number">Principle 04</span>
+            <h3 class="principle-item__heading">No Synthetic Additives</h3>
+            <p class="principle-item__body">Suspension mediums are limited to gum arabic, ox gall, and distilled water. No synthetic preservatives, no brighteners, no stabilisers derived from petrochemical processes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="principles-split__right" data-reveal="fade-left">
+        <div class="principles-video">
+          <video
+            src="assets/material-detail.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            aria-label="Abstract light passing through woven linen mesh surface"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+          ></video>
+          <div class="asset-placeholder" style="display:none; aspect-ratio:3/4;">
+            <span class="asset-placeholder__label">Material Surface</span>
+          </div>
+        </div>
+        <span class="principles-video__caption">Material under studio light — batch testing in progress</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sourcing map -->
+<section class="sourcing-section" aria-label="Material sourcing">
+  <div class="container">
+    <span class="section__eyebrow" data-reveal="fade-up">Where It Comes From</span>
+    <h2 class="section__heading" data-reveal="fade-up">Known Origins</h2>
+    <p class="section__subheading" data-reveal="fade-up">Each material source in the Pellum supply chain is documented. The following are active suppliers for the current collection.</p>
+    <div class="sourcing-grid" data-stagger-group="scale">
+      <div class="source-item">
+        <span class="source-item__region">Roussillon, France</span>
+        <p class="source-item__name">Ochre Quarries</p>
+        <p class="source-item__material">Iron oxide ochre and sienna from natural clay deposits. Unprocessed raw pigment, purchased direct from the quarry.</p>
+      </div>
+      <div class="source-item">
+        <span class="source-item__region">Umbria, Italy</span>
+        <p class="source-item__name">Terre Verte Deposit</p>
+        <p class="source-item__material">Green earth (celadonite/glauconite), hand-quarried. Limited annual supply. Used in the Umbrian Green batch when available.</p>
+      </div>
+      <div class="source-item">
+        <span class="source-item__region">County Wexford, Ireland</span>
+        <p class="source-item__name">Weld Grower</p>
+        <p class="source-item__material">Reseda luteola harvested from a single 3-acre plot. Spring and autumn harvest. The only certified organic Weld source in our supply chain.</p>
+      </div>
+      <div class="source-item">
+        <span class="source-item__region">Punjab, India</span>
+        <p class="source-item__name">Madder Cooperative</p>
+        <p class="source-item__material">Rubia tinctorum root from a cooperative of 12 smallholders. Third-generation cultivation, traditional alizarin extraction method.</p>
+      </div>
+      <div class="source-item">
+        <span class="source-item__region">Burgundy, France</span>
+        <p class="source-item__name">Vine Prunings</p>
+        <p class="source-item__material">Charred Pinot Noir prunings for Vine Black. Sourced annually from a single domaine whose vines average 38 years old.</p>
+      </div>
+      <div class="source-item">
+        <span class="source-item__region">Luberon, France</span>
+        <p class="source-item__name">Oak Gall</p>
+        <p class="source-item__material">Quercus pubescens galls for iron gall variants. Foraged seasonally. Supply varies; batches produced when material quality is sufficient.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA band -->
+<section class="cta-band" aria-label="See the pigments">
+  <div class="container" data-reveal="fade-up">
+    <h2 class="cta-band__heading">The Result of<br>the Method</h2>
+    <p class="cta-band__body">Methodology matters only if it produces better colour. Browse the current collection and judge for yourself.</p>
+    <div class="cta-band__cta-group">
+      <a href="pigments.html" class="btn-primary">Current Collection</a>
+      <a href="about.html" class="btn-ghost" style="color:rgba(242,239,233,0.7);border-color:rgba(242,239,233,0.3);">About the Studio</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer" data-reveal="fade-up">
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <a href="index.html" class="footer__logo">Pellum</a>
+      <p class="footer__tagline">Colour drawn from the ground. Small-batch natural inks for studio practice.</p>
+    </div>
+    <div>
+      <p class="footer__col-heading">Studio</p>
+      <ul class="footer__links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="process.html">Sourcing</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__col-heading">Collection</p>
+      <ul class="footer__links">
+        <li><a href="pigments.html">All Pigments</a></li>
+        <li><a href="pigments.html">Mineral Series</a></li>
+        <li><a href="pigments.html">Botanical Series</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__col-heading">Contact</p>
+      <ul class="footer__links">
+        <li><a href="about.html">Stockists</a></li>
+        <li><a href="about.html">Press</a></li>
+        <li><a href="about.html">Wholesale</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p class="footer__copyright">© 2026 Pellum. All rights reserved.</p>
+    <p class="footer__copyright" style="opacity:0.6;">Small-batch natural ink studio.</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="behaviors/scroll-reveal.js"></script>
+<script>
+(function() {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+  document.querySelectorAll('[data-reveal]').forEach(function(el) {
+    var type = el.getAttribute('data-reveal');
+    var from = { opacity: 0 };
+    if (type === 'fade-up') from.y = 24;
+    else if (type === 'fade-left') from.x = 32;
+    gsap.set(el, from);
+    gsap.to(el, { opacity: 1, y: 0, x: 0, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+    });
+  });
+  document.querySelectorAll('[data-stagger-group]').forEach(function(group) {
+    var type = group.getAttribute('data-stagger-group');
+    var children = Array.from(group.children);
+    var from = { opacity: 0 };
+    var to = { opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.09 };
+    if (type === 'fade-up') { from.y = 24; to.y = 0; }
+    else if (type === 'scale') { from.scale = 0.94; from.y = 16; to.scale = 1; to.y = 0; }
+    gsap.set(children, from);
+    to.scrollTrigger = { trigger: group, start: 'top 85%', toggleActions: 'play none none none' };
+    gsap.to(children, to);
+  });
+})();
+</script>
+
+</body>
+</html>

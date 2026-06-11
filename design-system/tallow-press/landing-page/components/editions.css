@@ -1,0 +1,193 @@
+/* editions.css — Guldmark Press editions showcase grid */
+/* Distinct layout: asymmetric featured card (1.4fr 1fr) with featured spanning 2 rows */
+
+#editions {
+  padding: var(--space-3xl) var(--nav-padding-inline);
+  background: var(--color-page-bg);
+}
+
+#editions-header {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+#editions-label {
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+#editions-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-transform: uppercase;
+  color: var(--color-heading-text);
+  margin: 0;
+  flex: 1;
+}
+
+#editions-all-link {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-body-text);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+#editions-all-link:hover {
+  opacity: var(--hover-opacity);
+}
+
+/* Asymmetric grid: featured card on left spans full height, 2 stacked on right */
+#editions-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: var(--grid-gutter);
+  max-width: var(--grid-max-width);
+  min-height: 600px;
+}
+
+/* Featured card spans both rows */
+.edition-card--featured {
+  grid-row: 1 / 3;
+}
+
+.edition-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-surface-bg);
+}
+
+.edition-card-media {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.edition-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-base) var(--ease-primary);
+}
+
+.edition-card:hover .edition-card-media img {
+  transform: scale(1.04);
+}
+
+.edition-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(10, 18, 16, 0.42) 100%
+  );
+  pointer-events: none;
+}
+
+.edition-card-body {
+  padding: 20px 24px 24px;
+  background: var(--color-page-bg);
+  border-top: 1px solid var(--color-border-default);
+}
+
+.edition-card--featured .edition-card-body {
+  padding: 24px 28px 28px;
+}
+
+.edition-card-edition {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.edition-card-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-heading-text);
+  margin: 0 0 6px;
+}
+
+.edition-card--featured .edition-card-title {
+  font-size: clamp(1.125rem, 2.2vw, 1.625rem);
+}
+
+.edition-card-meta {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: rgba(43, 43, 41, 0.55);
+  margin: 0 0 14px;
+  letter-spacing: 0.02em;
+}
+
+.edition-card-link {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-body-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-body-text);
+  padding-bottom: 1px;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+.edition-card-link:hover {
+  opacity: var(--hover-opacity);
+}
+
+@media (max-width: 900px) {
+  #editions {
+    padding: var(--space-2xl) 32px;
+  }
+  #editions-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    min-height: auto;
+  }
+  .edition-card--featured {
+    grid-row: auto;
+  }
+  .edition-card-media {
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 600px) {
+  #editions {
+    padding: var(--space-xl) 20px;
+  }
+  #editions-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

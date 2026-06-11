@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pellucid — research document intelligence for institutional analysts. Every layer, legible.">
+  <title>Pellucid — Every layer, legible.</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Tokens + Components -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     NAV — canonical template
+══════════════════════════════════════════ -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Pellucid</a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="method.html">Method</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="about.html#contact" class="nav-cta">Request access</a>
+    <button class="nav-mobile-toggle" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav-mobile-menu" id="mobile-menu">
+  <a href="work.html">Work</a>
+  <a href="method.html">Method</a>
+  <a href="about.html">About</a>
+  <a href="about.html#contact" class="nav-cta">Request access</a>
+</div>
+
+<!-- ══════════════════════════════════════════
+     HERO — ambient video, light overlay
+══════════════════════════════════════════ -->
+<section id="hero">
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-ambient.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="hero-bg-video-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-page-bg);color:rgba(34,34,34,0.2);font-family:var(--font-body);font-size:0.85rem;">
+      → assets/hero-ambient.mp4
+    </div>
+    <div id="hero-video-overlay"></div>
+  </div>
+
+  <div id="hero-content">
+    <div id="hero-headline-group">
+      <p id="hero-label">Document Intelligence</p>
+      <h1 id="hero-title">Every<br>layer,<br>legible.</h1>
+    </div>
+    <div id="hero-right">
+      <p id="hero-tagline">Pellucid structures and surfaces the signal inside complex institutional documents — annual reports, prospectuses, research filings — so analysts read faster and think further.</p>
+      <div class="hero-cta-group">
+        <a href="about.html#contact" class="btn-primary">Request access</a>
+        <a href="method.html" class="btn-ghost">See the method &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="hero-divider"></div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FEATURES — Bento asymmetric, clip-path reveal
+     Section 2 (light): distinct grid 1.6fr 1fr 1fr
+══════════════════════════════════════════ -->
+<section id="features">
+  <div class="section-inner">
+    <p class="section-label">Capabilities</p>
+    <div id="features-grid">
+
+      <div id="feature-lead" class="feature-card feature-card--lead">
+        <p class="feature-number">01</p>
+        <h3 class="feature-title">Structural parsing at institutional scale</h3>
+        <p class="feature-body">Pellucid ingests multi-hundred-page documents — 10-Ks, offering memoranda, Basel disclosures — and maps every section, table, footnote, and cross-reference into a queryable layer graph. The document is no longer a PDF. It is a navigable object.</p>
+        <a href="method.html" class="feature-link">How it works &rarr;</a>
+      </div>
+
+      <div id="feature-2" class="feature-card">
+        <p class="feature-number">02</p>
+        <h4 class="feature-title">Cross-document comparison</h4>
+        <p class="feature-body">Surface material changes between filing vintages. Pellucid aligns document versions at the paragraph level, highlighting additions, deletions, and reframings.</p>
+      </div>
+
+      <div id="feature-3" class="feature-card">
+        <p class="feature-number">03</p>
+        <h4 class="feature-title">Footnote and exhibit resolution</h4>
+        <p class="feature-body">Every footnote, exhibit reference, and cross-reference is resolved in-context. Nothing requires a second tab. The document's full argumentative structure is always visible.</p>
+      </div>
+
+      <div id="feature-4" class="feature-card">
+        <p class="feature-number">04</p>
+        <h4 class="feature-title">Institutional audit trail</h4>
+        <p class="feature-body">All queries, summaries, and annotations are logged with provenance. Every insight traces back to a specific line in a specific filing. Reproducibility is built in.</p>
+      </div>
+
+      <div id="feature-5" class="feature-card">
+        <p class="feature-number">05</p>
+        <h4 class="feature-title">Private deployment</h4>
+        <p class="feature-body">Pellucid runs inside your infrastructure. Documents never leave your environment. The intelligence layer is yours; the processing stays private.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     HOW IT WORKS — 2-col split, steps left + visual right
+     Section 3 (light surface): distinct layout
+     Animation: horizontal sweep from left x:-70
+══════════════════════════════════════════ -->
+<section id="how-it-works">
+  <div id="how-it-works-inner">
+    <div id="how-it-left">
+      <h2 id="how-it-works-title">From filing<br>to signal,<br>in minutes.</h2>
+      <ol class="step-list">
+        <li class="step-item">
+          <span class="step-num">01</span>
+          <div class="step-text">
+            <h4 class="step-title">Ingest</h4>
+            <p class="step-desc">Connect Pellucid to your document repository — EDGAR, a shared drive, a data room. Files are parsed on arrival.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-num">02</span>
+          <div class="step-text">
+            <h4 class="step-title">Structure</h4>
+            <p class="step-desc">The parser maps sections, tables, exhibits, and footnotes into a layer graph. Structure is identified, not assumed.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-num">03</span>
+          <div class="step-text">
+            <h4 class="step-title">Surface</h4>
+            <p class="step-desc">Query across your entire document corpus in natural language. Results are cited to the exact source passage.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-num">04</span>
+          <div class="step-text">
+            <h4 class="step-title">Annotate</h4>
+            <p class="step-desc">Add analyst notes, flag material changes, and export structured summaries. Every annotation carries full provenance.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <div id="how-it-right">
+      <div id="how-it-visual">
+        <img
+          id="how-it-img"
+          src="assets/method-document-layer.jpeg"
+          alt="Pellucid document layer interface showing structured parsing of an institutional filing"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div id="how-it-visual-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;aspect-ratio:4/5;background:var(--color-surface-1);color:rgba(34,34,34,0.3);font-size:0.8rem;font-family:var(--font-body);">
+          → assets/method-document-layer.jpeg
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     PROCESS — Dark contrast section, video bg
+     Section 4 (dark): deliberate contrast beat
+     Animation: divergent x (left x:-80, right x:80)
+══════════════════════════════════════════ -->
+<section id="process">
+  <div id="process-video-container">
+    <video
+      id="process-bg-video"
+      src="assets/process-close.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="process-bg-video-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:#111;color:rgba(252,252,252,0.2);font-size:0.8rem;font-family:var(--font-body);">
+      → assets/process-close.mp4
+    </div>
+    <div id="process-overlay"></div>
+  </div>
+
+  <div id="process-content">
+    <div id="process-left">
+      <p class="process-label">The problem</p>
+      <h2 id="process-title">Institutional documents are designed to be complete,<br>not legible.</h2>
+      <p id="process-body">A modern 10-K runs to 200 pages. A leveraged buyout credit agreement to 600. Analysts spend the majority of their time locating information, not using it. Pellucid inverts this ratio: the document becomes a surface to query, not a text to read end-to-end.</p>
+      <a href="about.html#contact" id="process-cta">Request early access</a>
+    </div>
+    <div id="process-right">
+      <div class="process-stat">
+        <p class="process-stat-value">73%</p>
+        <p class="process-stat-label">of analyst time spent locating information, not analysing it</p>
+      </div>
+      <div class="process-stat">
+        <p class="process-stat-value">4.2×</p>
+        <p class="process-stat-label">faster time-to-insight in pilot deployments</p>
+      </div>
+      <div class="process-stat">
+        <p class="process-stat-value">100%</p>
+        <p class="process-stat-label">of results cited to exact source passage</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     TESTIMONIALS — Light, 2-col quote cards
+     Section 5 (light): different from features
+     Animation: scale from center (scale 0.96→1)
+══════════════════════════════════════════ -->
+<section id="testimonials">
+  <div id="testimonials-grid">
+    <div id="testimonial-1" class="testimonial-card">
+      <p class="testimonial-quote">"We used to spend the first three hours of any deal review just finding the right passages across the data room. Pellucid collapses that to minutes. The citations mean our compliance team trusts the output."</p>
+      <div class="testimonial-meta">
+        <p class="testimonial-author">Head of Credit Research</p>
+        <p class="testimonial-role">European asset management firm, pilot participant</p>
+      </div>
+    </div>
+    <div id="testimonial-2" class="testimonial-card">
+      <p class="testimonial-quote">"What struck us wasn't the speed — it was the legibility of the reasoning. Every answer shows its working. That traceability is what makes it usable in an institutional setting."</p>
+      <div class="testimonial-meta">
+        <p class="testimonial-author">Managing Director, Research</p>
+        <p class="testimonial-role">Global investment bank, pilot participant</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CTA CLOSING — Centered, ambient video
+     Section 6: terminal, pill button
+══════════════════════════════════════════ -->
+<section id="cta-closing">
+  <div id="cta-video-container">
+    <video
+      id="cta-bg-video"
+      src="assets/closing-ambient.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="cta-bg-video-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:rgba(34,34,34,0.25);font-size:0.8rem;font-family:var(--font-body);">
+      → assets/closing-ambient.mp4
+    </div>
+    <div id="cta-overlay"></div>
+  </div>
+  <div id="cta-content">
+    <h2 id="cta-title">Institutional documents deserve institutional-grade intelligence.</h2>
+    <p id="cta-body">Pellucid is in limited pilot with a small number of asset management and investment banking teams. Applications reviewed on a rolling basis.</p>
+    <a href="about.html#contact" class="btn-pill">Request access</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo">Pellucid</a>
+      <p class="footer-tagline">Document intelligence for institutional analysts.</p>
+    </div>
+    <div id="footer-col-product" class="footer-col">
+      <p class="footer-col-heading">Product</p>
+      <ul class="footer-links">
+        <li><a href="method.html">Method</a></li>
+        <li><a href="work.html">Work</a></li>
+        <li><a href="about.html#security">Security</a></li>
+      </ul>
+    </div>
+    <div id="footer-col-company" class="footer-col">
+      <p class="footer-col-heading">Company</p>
+      <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="about.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div id="footer-col-legal" class="footer-col">
+      <p class="footer-col-heading">Legal</p>
+      <ul class="footer-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="footer-bottom">
+    <p class="footer-legal">&copy; 2026 Pellucid. All rights reserved.</p>
+    <p class="footer-legal">Every layer, legible.</p>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script>
+// ─── Nav: scroll + mobile ───
+(function() {
+  const nav = document.getElementById('site-nav');
+  const toggle = nav.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  // Scroll: add .scrolled class
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 40) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Mobile toggle
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        nav.classList.remove('nav-mobile-open');
+        mobileMenu.classList.remove('is-open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+})();
+</script>
+
+<script>
+// ─── GSAP Animations ───
+gsap.registerPlugin(ScrollTrigger);
+
+const BASE_DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.26;
+const MID_DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-mid')) || 0.39;
+const EASE = 'power2.out';
+const EASE_SLOW = 'power1.out';
+
+// ── Hero entrance (immediate timeline, no ScrollTrigger) ──
+const heroTl = gsap.timeline({ defaults: { ease: EASE_SLOW } });
+heroTl
+  .from('#hero-label', { y: 20, duration: MID_DUR * 2, delay: 0.1 })
+  .from('#hero-title', { y: 40, duration: MID_DUR * 3, ease: 'power1.out' }, '-=0.3')
+  .from('#hero-tagline', { y: 20, duration: MID_DUR * 2 }, '-=0.4')
+  .from('.hero-cta-group', { y: 16, duration: MID_DUR * 2 }, '-=0.3');
+
+// ── Features: clip-path reveal left-to-right (scroll) ──
+// Animate container as a whole to avoid grid misalignment
+gsap.from('#features-grid', {
+  scrollTrigger: {
+    trigger: '#features',
+    start: 'top 78%',
+  },
+  clipPath: 'inset(0 100% 0 0)',
+  duration: MID_DUR * 4,
+  ease: 'power2.inOut',
+});
+
+// Individual cards stagger after grid is visible
+gsap.from('#features-grid .feature-card', {
+  scrollTrigger: {
+    trigger: '#features-grid',
+    start: 'top 75%',
+  },
+  y: 30,
+  stagger: 0.1,
+  duration: MID_DUR * 3,
+  ease: EASE,
+});
+
+// ── How it works: horizontal sweep from left ──
+gsap.from('#how-it-left', {
+  scrollTrigger: {
+    trigger: '#how-it-works',
+    start: 'top 75%',
+  },
+  x: -70,
+  duration: MID_DUR * 4,
+  ease: EASE,
+});
+
+gsap.from('#how-it-right', {
+  scrollTrigger: {
+    trigger: '#how-it-works',
+    start: 'top 75%',
+  },
+  x: 50,
+  duration: MID_DUR * 4,
+  ease: EASE,
+  delay: 0.1,
+});
+
+// Steps stagger
+gsap.from('.step-item', {
+  scrollTrigger: {
+    trigger: '.step-list',
+    start: 'top 80%',
+  },
+  y: 20,
+  stagger: 0.12,
+  duration: MID_DUR * 3,
+  ease: EASE,
+});
+
+// ── Process: divergent — left comes from left, right from right ──
+gsap.from('#process-left', {
+  scrollTrigger: {
+    trigger: '#process',
+    start: 'top 72%',
+  },
+  x: -80,
+  duration: MID_DUR * 5,
+  ease: EASE,
+});
+
+gsap.from('#process-right', {
+  scrollTrigger: {
+    trigger: '#process',
+    start: 'top 72%',
+  },
+  x: 80,
+  duration: MID_DUR * 5,
+  ease: EASE,
+  delay: 0.08,
+});
+
+// Stats stagger
+gsap.from('.process-stat', {
+  scrollTrigger: {
+    trigger: '#process-right',
+    start: 'top 80%',
+  },
+  y: 24,
+  stagger: 0.15,
+  duration: MID_DUR * 3,
+  ease: EASE,
+});
+
+// ── Testimonials: scale from center ──
+gsap.from('.testimonial-card', {
+  scrollTrigger: {
+    trigger: '#testimonials',
+    start: 'top 80%',
+  },
+  scale: 0.97,
+  stagger: 0.18,
+  duration: MID_DUR * 4,
+  ease: EASE,
+});
+
+// ── CTA: fade-up (scroll) ──
+gsap.from('#cta-content', {
+  scrollTrigger: {
+    trigger: '#cta-closing',
+    start: 'top 75%',
+  },
+  y: 32,
+  duration: MID_DUR * 4,
+  ease: EASE,
+});
+
+// ── Footer: simple reveal ──
+gsap.from('#footer-inner', {
+  scrollTrigger: {
+    trigger: '#site-footer',
+    start: 'top 90%',
+  },
+  y: 20,
+  duration: MID_DUR * 3,
+  ease: EASE,
+});
+</script>
+
+</body>
+</html>

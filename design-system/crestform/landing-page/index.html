@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quire — Type as Architecture</title>
+  <meta name="description" content="Quire is a professional typographic composition platform for editorial designers and type directors. Precision layout tools built for the precision-minded.">
+
+  <!-- Design System: Crestform | Source: prabal-gurung (colors), tim-brack (type), serenata-flowers (motion), opal-camera (grid), linen-tempo (spacing), hackathon-pump-fun (interactions), flayks (nav), cartier (concept) -->
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV TEMPLATE -->
+<nav class="site-nav" id="site-nav">
+  <a href="index.html" class="nav-logo">Quire</a>
+  <ul class="nav-links">
+    <li><a href="features.html" class="nav-link">Features</a></li>
+    <li><a href="work.html" class="nav-link">Work</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="features.html" class="nav-link">Features</a>
+  <a href="work.html" class="nav-link">Work</a>
+  <a href="about.html" class="nav-link">About</a>
+</div>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const toggle = nav.querySelector('.nav-mobile-toggle');
+
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  toggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+</script>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <video
+      src="assets/hero-ambient.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="none"
+      onerror="this.style.display='none'">
+    </video>
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Typographic composition</p>
+    <h1 class="hero-headline">Type as Architecture</h1>
+    <p class="hero-sub">Quire is a professional layout environment for editorial designers and type directors. Every column, every kern, every grid decision — made with precision.</p>
+    <div class="hero-actions">
+      <a href="features.html" class="hero-cta hero-cta-primary">Explore Features</a>
+      <a href="work.html" class="hero-cta">See the Work</a>
+    </div>
+  </div>
+  <p class="hero-scroll-hint" aria-hidden="true">Scroll</p>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="section-features">
+  <p class="section-label">How it works</p>
+  <div class="features-header">
+    <h2 class="features-headline">Precision built for precision work</h2>
+    <p class="features-intro">Three interconnected systems — composition, type, and grid — designed to work together without compromise.</p>
+  </div>
+  <div class="features-grid">
+    <article class="feature-card">
+      <p class="feature-number">01</p>
+      <h3 class="feature-title">Compositional Intelligence</h3>
+      <p class="feature-body">Quire reads your content and proposes grid structures that honor both the type hierarchy and the page architecture. Not automation — augmentation. The decisions remain yours.</p>
+    </article>
+    <article class="feature-card">
+      <p class="feature-number">02</p>
+      <h3 class="feature-title">Variable Type Control</h3>
+      <p class="feature-body">Fine-grained optical sizing, tracking, and leading at every scale. Designed for typefaces that live at the extremes — from 6pt caption to 400px display.</p>
+    </article>
+    <article class="feature-card">
+      <p class="feature-number">03</p>
+      <h3 class="feature-title">Grid as Structure</h3>
+      <p class="feature-body">Build modular grids, baseline grids, or hybrid systems. Export to CSS, InDesign, or Figma tokens — the grid travels with the design.</p>
+    </article>
+    <article class="feature-card">
+      <p class="feature-number">04</p>
+      <h3 class="feature-title">Editorial Rhythm</h3>
+      <p class="feature-body">Quire understands the rhythm of the spread — white space as punctuation, column breaks as breath. Measure and adjust every interval with optical precision.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ── SHOWCASE — Dark contrast section ── -->
+<section class="section-showcase">
+  <div class="showcase-bg" aria-hidden="true">
+    <video
+      src="assets/brand-surface.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="none"
+      onerror="this.style.display='none'">
+    </video>
+  </div>
+  <div class="showcase-inner">
+    <p class="showcase-label">Typographic System</p>
+    <h2 class="showcase-wordmark" aria-label="Quire display wordmark">Quire</h2>
+    <div class="showcase-specimens">
+      <article class="specimen">
+        <p class="specimen-label">Display / Clash Display 700</p>
+        <p class="specimen-display">AaBbCc</p>
+        <p class="specimen-body">Geometric authority at every scale. The letterforms carry precision at 400px and clarity at 14px.</p>
+      </article>
+      <article class="specimen">
+        <p class="specimen-label">Text / EB Garamond 400</p>
+        <p class="specimen-display" style="font-family: 'EB Garamond', serif; font-weight: 400; font-style: italic; font-size: clamp(2rem, 4vw, 4rem);">AaBbCc</p>
+        <p class="specimen-body">Classical humanist serif for reading lengths that demand comfort without sacrificing distinction.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── MANIFESTO ── -->
+<section class="section-manifesto">
+  <aside class="manifesto-aside" aria-hidden="true">
+    <p class="manifesto-label">Manifesto</p>
+    <p class="manifesto-index">III</p>
+  </aside>
+  <div class="manifesto-main">
+    <h2 class="manifesto-headline">Typography is not decoration. It is structure.</h2>
+    <div class="manifesto-paragraphs">
+      <p class="manifesto-p">Every editorial decision is a spatial decision. Where a heading sits relative to a column edge, the measure of a paragraph line, the interval between a title and its subtitle — these are not aesthetic preferences. They are the architecture of comprehension.</p>
+      <p class="manifesto-p">Quire was built by type directors for type directors. Not as an automation layer, but as a precision instrument. The intelligence in the system is the intelligence of its makers — decades of editorial judgment encoded as tooling, then placed entirely in your hands.</p>
+      <p class="manifesto-p">We believe the best typographic tools disappear. They impose no style, suggest no aesthetic, prescribe no system. They measure, they reveal, they confirm. The design remains yours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="section-cta">
+  <h2 class="cta-headline">Begin your composition</h2>
+  <p class="cta-sub">Join the editorial designers and type directors who have made Quire the precision instrument at the center of their process.</p>
+  <div class="cta-actions">
+    <a href="features.html" class="btn-primary">Start Free Trial</a>
+    <a href="about.html" class="btn-ghost">About Quire</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="footer-brand">
+    <a href="index.html" class="footer-logo">Quire</a>
+    <p class="footer-tagline">Type as Architecture</p>
+  </div>
+  <div class="footer-col">
+    <p class="footer-col-label">Product</p>
+    <ul class="footer-links">
+      <li><a href="features.html" class="footer-link">Features</a></li>
+      <li><a href="work.html" class="footer-link">Work</a></li>
+      <li><a href="features.html#pricing" class="footer-link">Pricing</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <p class="footer-col-label">Company</p>
+    <ul class="footer-links">
+      <li><a href="about.html" class="footer-link">About</a></li>
+      <li><a href="about.html#team" class="footer-link">Team</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <p class="footer-col-label">Resources</p>
+    <ul class="footer-links">
+      <li><a href="#" class="footer-link">Documentation</a></li>
+      <li><a href="#" class="footer-link">Type System Guide</a></li>
+    </ul>
+  </div>
+  <div class="footer-legal">
+    <p class="footer-copyright">&copy; 2026 Quire. All rights reserved.</p>
+    <p class="footer-copyright">Type as Architecture</p>
+  </div>
+</footer>
+
+<!-- ── GSAP Animations ── -->
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero entrance — stagger 0.1s (from motion system)
+  const heroItems = [
+    '.hero-eyebrow',
+    '.hero-headline',
+    '.hero-sub',
+    '.hero-actions',
+    '.hero-scroll-hint'
+  ];
+
+  gsap.to(heroItems, {
+    opacity: 1,
+    y: 0,
+    duration: 0.9,
+    stagger: 0.1,
+    ease: 'power2.out',
+    delay: 0.3
+  });
+
+  // Features header — horizontal sweep from left
+  gsap.to('.features-headline', {
+    scrollTrigger: {
+      trigger: '.features-headline',
+      start: 'top 85%',
+    },
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    ease: 'power2.out'
+  });
+
+  gsap.to('.features-intro', {
+    scrollTrigger: {
+      trigger: '.features-intro',
+      start: 'top 85%',
+    },
+    opacity: 1,
+    x: 0,
+    duration: 0.8,
+    ease: 'power2.out',
+    delay: 0.15
+  });
+
+  // Feature cards — scale + rise with stagger 0.1s
+  gsap.to('.feature-card', {
+    scrollTrigger: {
+      trigger: '.features-grid',
+      start: 'top 80%',
+    },
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    duration: 0.6,
+    stagger: 0.1,
+    ease: 'cubic-bezier(0.4, 0, 0.2, 1)'
+  });
+
+  // Showcase wordmark — clip reveal
+  gsap.to('.showcase-wordmark', {
+    scrollTrigger: {
+      trigger: '.showcase-wordmark',
+      start: 'top 85%',
+    },
+    clipPath: 'inset(0 0% 0 0)',
+    duration: 1.2,
+    ease: 'power3.out'
+  });
+
+  // Specimens — divergent horizontal
+  gsap.to('.specimen:nth-child(1)', {
+    scrollTrigger: {
+      trigger: '.showcase-specimens',
+      start: 'top 85%',
+    },
+    opacity: 1,
+    x: 0,
+    duration: 0.8,
+    ease: 'power2.out'
+  });
+
+  gsap.to('.specimen:nth-child(2)', {
+    scrollTrigger: {
+      trigger: '.showcase-specimens',
+      start: 'top 85%',
+    },
+    opacity: 1,
+    x: 0,
+    duration: 0.8,
+    ease: 'power2.out',
+    delay: 0.1
+  });
+
+  // Manifesto — vertical stagger with 0.1s delay
+  gsap.to('.manifesto-headline', {
+    scrollTrigger: {
+      trigger: '.manifesto-headline',
+      start: 'top 85%',
+    },
+    opacity: 1,
+    y: 0,
+    duration: 0.9,
+    ease: 'power2.out'
+  });
+
+  gsap.to('.manifesto-p', {
+    scrollTrigger: {
+      trigger: '.manifesto-paragraphs',
+      start: 'top 85%',
+    },
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    stagger: 0.1,
+    ease: 'cubic-bezier(0.4, 0, 0.2, 1)'
+  });
+
+  // CTA section — scale + rise
+  gsap.to('.cta-headline', {
+    scrollTrigger: {
+      trigger: '.cta-headline',
+      start: 'top 85%',
+    },
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    duration: 0.8,
+    ease: 'power2.out'
+  });
+
+  gsap.to('.cta-sub', {
+    scrollTrigger: {
+      trigger: '.cta-sub',
+      start: 'top 85%',
+    },
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    ease: 'power2.out',
+    delay: 0.1
+  });
+
+  gsap.to('.btn-primary, .btn-ghost', {
+    scrollTrigger: {
+      trigger: '.cta-actions',
+      start: 'top 90%',
+    },
+    opacity: 1,
+    duration: 0.6,
+    stagger: 0.1,
+    ease: 'power2.out'
+  });
+</script>
+
+</body>
+</html>

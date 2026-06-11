@@ -1,0 +1,151 @@
+/* =========================================================
+   NAV — Ordnance Press
+   72px height · logo-left · links-right · no blur ever
+   Static position — in normal document flow
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;600&family=Josefin+Sans:wght@400&family=Nunito:wght@400&display=swap');
+
+/* ----- Base nav ----- */
+.site-nav {
+  position: static;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  height: 72px;
+  padding-inline: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  /* NO backdrop-filter — ever */
+}
+
+/* ----- Logo ----- */
+.nav-logo {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 36px;
+  letter-spacing: -1.61px;
+  line-height: 76.8px;
+  color: #1d1d1f;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ----- Link group ----- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: #1d1d1f;
+  text-decoration: none;
+  transition: color 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: #2997ff;
+}
+
+/* Active link — dims to ~0.45 opacity and disables pointer events */
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+  color: #1d1d1f;
+}
+
+/* ----- Mobile hamburger toggle ----- */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: #1d1d1f;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X when open */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7.25px) rotate(45deg);
+}
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7.25px) rotate(-45deg);
+}
+
+/* ----- Mobile menu overlay ----- */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(253, 253, 253, 0.97);
+  z-index: 1000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+  opacity: 1;
+}
+
+.nav-mobile-menu .nav-link {
+  font-size: 28px;
+  letter-spacing: 0.05em;
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 900px) {
+  .site-nav {
+    padding-inline: 24px;
+  }
+  .nav-links {
+    display: none;
+  }
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-nav {
+    padding-inline: 16px;
+    height: 60px;
+  }
+  .nav-logo {
+    font-size: 26px;
+  }
+}

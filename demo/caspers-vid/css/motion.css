@@ -1,0 +1,74 @@
+/* =============================================================================
+   MOTION — caspers-vid
+   Source: design-system/motion-system/motion.json (cssAnimations.keyframes)
+   All keyframes, durations, and easings from token files exactly.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Keyframes — exact definitions from motion.json cssAnimations.keyframes
+   --------------------------------------------------------------------------- */
+
+/* fadeIn — opacity 0 → 1 */
+@keyframes fadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* oldPage — current page scales down during navigation exit
+   Uses xywh() clip-path — modern browsers only.
+   @supports fallback below for browsers without xywh() support. */
+@keyframes oldPage {
+  0%   { clip-path: xywh(0px 0px 100% 100%); transform: scale(1); }
+  100% { clip-path: xywh(0px 0px 100% 100%); transform: scale(0.95); }
+}
+
+/* newPage — incoming page rises from bottom half of viewport */
+@keyframes newPage {
+  0%   { clip-path: xywh(0px 50% 100% 100%); transform: translateY(50%); }
+  100% { clip-path: xywh(0px 0px 100% 100%); transform: translate(0px); }
+}
+
+/* @supports fallback — browsers that don't support xywh() clip-path */
+@supports not (clip-path: xywh(0 0 100% 100%)) {
+  @keyframes oldPage {
+    0%   { transform: scale(1); }
+    100% { transform: scale(0.95); opacity: 0; }
+  }
+
+  @keyframes newPage {
+    0%   { transform: translateY(50%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Transition utility classes
+   Source: motion.json cssAnimations.transitionElements (duration + easing tokens)
+   --------------------------------------------------------------------------- */
+
+/* Navigation links — 0.3s standard
+   Source: transitionElements .navigation (duration: 0.3s, easing: standard) */
+.transition-nav {
+  transition: color var(--duration-base) var(--ease-standard),
+              background-color var(--duration-base) var(--ease-standard);
+}
+
+/* Sweep button — 1s sweep easing
+   Source: transitionElements .button-icon-sweep (duration: 1s, easing: sweep) */
+.transition-sweep {
+  transition: all var(--duration-cinematic) var(--ease-sweep);
+}
+
+/* Overlay / image fades — 0.5s standard
+   Source: transitionElements .absolute (duration: 0.5s, easing: standard) */
+.transition-overlay {
+  transition: opacity var(--duration-slow) var(--ease-standard);
+}
+
+/* Button micro-interactions — 0.15s standard
+   Source: microInteractions.buttonTransitions button (duration: 0.15s) */
+.transition-btn {
+  transition: color var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}

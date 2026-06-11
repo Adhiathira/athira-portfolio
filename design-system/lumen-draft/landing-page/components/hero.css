@@ -1,0 +1,349 @@
+/* hero.css — Foramen Studio hero section */
+
+/* ─── Full-Viewport Hero (index.html) ─────────────────────────────── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 10vh;
+  background: var(--color-page-bg);
+}
+
+#hero-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#hero-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #0a1a1f;
+  color: rgba(255,255,255,0.25);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+}
+
+#hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 13, 16, 0.85) 0%,
+    rgba(0, 13, 16, 0.45) 40%,
+    rgba(0, 13, 16, 0.15) 75%,
+    rgba(0, 13, 16, 0.05) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+#hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 80px;
+  max-width: 900px;
+}
+
+#hero-label {
+  font-family: var(--font-heading);
+  font-size: var(--type-label, 0.7rem);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 28px 0;
+}
+
+#hero-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-hero);
+  font-weight: 300;
+  letter-spacing: var(--font-letter-spacing-heading);
+  line-height: 0.92;
+  color: #ffffff;
+  margin: 0 0 36px 0;
+}
+
+#hero-title em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+#hero-desc {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 420px;
+  margin: 0 0 48px 0;
+}
+
+#hero-cta-group {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.btn-primary {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-primary-action-text);
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--btn-border-radius);
+  padding: 14px 46px;
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #a5614a;
+  border-color: #a5614a;
+}
+
+.btn-ghost-light {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.75);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--btn-border-radius);
+  padding: 14px 46px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-ghost-light:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-ghost-dark {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-heading-text);
+  background: transparent;
+  border: 1px solid var(--color-heading-text);
+  border-radius: var(--btn-border-radius);
+  padding: 14px 46px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.btn-ghost-dark:hover {
+  background: var(--color-heading-text);
+  color: #ffffff;
+}
+
+#hero-scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  right: 80px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+#hero-scroll-line {
+  width: 48px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+#hero-scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--color-accent);
+  animation: scrollLineFlow 2.5s ease-in-out infinite;
+}
+
+@keyframes scrollLineFlow {
+  0% { left: -100%; }
+  50% { left: 0; }
+  100% { left: 100%; }
+}
+
+/* ─── Sub-page compact headers ───────────────────────────────────── */
+.page-header {
+  padding: 120px 80px 60px;
+  background: var(--color-surface-1);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.page-header-label {
+  font-family: var(--font-heading);
+  font-size: var(--type-label, 0.7rem);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 16px 0;
+  display: block;
+}
+
+.page-header-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: var(--color-heading-text);
+  margin: 0 0 20px 0;
+  max-width: 700px;
+}
+
+.page-header-subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-muted-text);
+  max-width: 520px;
+  margin: 0;
+}
+
+/* ─── Medium hero (work/process pages) ─────────────────────────── */
+.hero-medium {
+  min-height: 55vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 60px;
+  background: var(--color-page-bg);
+}
+
+.hero-medium-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-medium-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-medium-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 13, 16, 0.88) 0%,
+    rgba(0, 13, 16, 0.4) 60%,
+    rgba(0, 13, 16, 0.1) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-medium-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 80px;
+}
+
+.hero-medium-content .page-header-label {
+  color: rgba(188, 113, 85, 0.9);
+}
+
+.hero-medium-content .page-header-title {
+  color: #ffffff;
+  max-width: 680px;
+}
+
+.hero-medium-content .page-header-subtitle {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ─── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  #hero-content {
+    padding: 0 48px;
+  }
+
+  #hero-scroll-indicator {
+    right: 48px;
+  }
+
+  .page-header,
+  .hero-medium-content {
+    padding: 100px 48px 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero-content {
+    padding: 0 24px;
+    max-width: 100%;
+  }
+
+  #hero-cta-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .btn-primary,
+  .btn-ghost-light,
+  .btn-ghost-dark {
+    width: 100%;
+    text-align: center;
+    padding: 14px 24px;
+  }
+
+  #hero-scroll-indicator {
+    display: none;
+  }
+
+  .page-header,
+  .hero-medium-content {
+    padding: 90px 24px 36px;
+  }
+
+  #hero-title {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+}

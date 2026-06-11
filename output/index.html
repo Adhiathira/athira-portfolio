@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinetic — Video production. With others. At speed.</title>
+
+  <!-- Google Fonts: Inter Variable (hero overlay sub-headline) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+  <!-- Google Fonts: Plus Jakarta Sans (display font — Goyard fallback per font-db.json) -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+  <!-- Google Fonts: JetBrains Mono (approved mono fallback) -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+  <!-- Design system CSS — import order: tokens → typography → layout → components → hero -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/typography.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/gallery.css">
+</head>
+
+<body class="hero-page">
+
+  <!-- ================================================================
+       Navigation — from Task 262
+       nav.json: height 50px, class-toggle sticky, Hermes horizontal
+       On .hero-page: nav is position: fixed (hero.css) so it overlays
+       the full-viewport hero from page load.
+       ================================================================ -->
+  <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+    <div class="nav-inner">
+
+      <!-- Left: Logo -->
+      <a href="/" class="nav-logo" aria-label="Kinetic home">
+        <span class="nav-logo-text">kinetic</span>
+      </a>
+
+      <!-- Center: Public state links -->
+      <ul class="nav-links nav-links--public" role="list">
+        <li><a href="/create" class="nav-link">Create</a></li>
+        <li><a href="/explore.html" class="nav-link">Explore</a></li>
+        <li><a href="/pricing.html" class="nav-link">Pricing</a></li>
+        <li><a href="/about.html" class="nav-link">About</a></li>
+      </ul>
+
+      <!-- Center: Logged-in state links (hidden by default) -->
+      <ul class="nav-links nav-links--auth" role="list" aria-hidden="true">
+        <li><a href="/create" class="nav-link">Create</a></li>
+        <li><a href="/explore.html" class="nav-link">Explore</a></li>
+        <li><a href="/community.html" class="nav-link">Community</a></li>
+      </ul>
+
+      <!-- Right: Public auth actions -->
+      <div class="nav-actions nav-actions--public">
+        <a href="/login.html" class="nav-link nav-login">Log in</a>
+        <a href="/signup.html" class="nav-cta-btn">
+          <span>Join</span>
+        </a>
+      </div>
+
+      <!-- Right: Logged-in avatar + dropdown -->
+      <div class="nav-actions nav-actions--auth" aria-hidden="true">
+        <div class="nav-avatar-wrap" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">
+          <div class="nav-avatar" aria-label="Creator menu"></div>
+          <ul class="nav-dropdown" role="menu" aria-label="Account menu">
+            <li><a href="/creator-profile.html" role="menuitem">Profile</a></li>
+            <li><a href="/settings" role="menuitem">Settings</a></li>
+            <li><a href="#" role="menuitem" id="nav-logout">Log out</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ================================================================
+       Hero — Split-screen before/after
+       Left:  solo creator, slow, limited  (#1a1a6e dark/moody)
+       Right: same creator, collaborating, faster, finished (#f6f9fc bright)
+       Overlay: sub-headline + "Start creating" CTA
+       Layout: 2-column-equal CSS Grid, 100vh, full-bleed
+       ================================================================ -->
+  <section class="hero" aria-label="Hero — video production platform">
+
+    <!-- Left panel: dark/moody — solo creator before platform -->
+    <div class="hero-panel hero-panel--left">
+      <div class="hero-panel-image">
+        <!--
+          IMAGE SLOT — Left panel
+          Background: var(--color-kv-dark-section) #1a1a6e
+          When asset is ready: replace background-color with background-image: url(...)
+          Generation prompt: project-documentation/design-system/hero-left-panel.md
+        -->
+        <div class="hero-panel-placeholder-label" aria-hidden="true">
+          [Image] Solo creator — dim room, single monitor, slow<br>
+          Prompt: design-system/hero-left-panel.md
+        </div>
+      </div>
+    </div>
+
+    <!-- Right panel: bright/energetic — same creator on platform -->
+    <div class="hero-panel hero-panel--right">
+      <div class="hero-panel-image">
+        <!--
+          IMAGE SLOT — Right panel
+          Background: var(--color-kv-surface-light) #f6f9fc
+          When asset is ready: replace background-color with background-image: url(...)
+          Generation prompt: project-documentation/design-system/hero-right-panel.md
+        -->
+        <div class="hero-panel-placeholder-label" aria-hidden="true">
+          [Image] Same creator — bright workspace, collaborating, faster<br>
+          Prompt: design-system/hero-right-panel.md
+        </div>
+      </div>
+    </div>
+
+    <!-- Centered overlay: sub-headline + CTA -->
+    <div class="hero-overlay">
+      <p class="hero-sub-headline">Video production. With others. At speed.</p>
+      <a href="/signup.html" class="btn-hero-cta" data-cta="signup" aria-label="Start creating — join Kinetic">
+        Start creating
+      </a>
+    </div>
+
+  </section>
+
+  <!-- ================================================================
+       Creator Gallery — Task 265
+       Full-bleed creator showcase: 3-column grid, hover overlays,
+       filter tabs, skeleton states, scroll-depth CTA bar.
+       Background: var(--color-kv-surface-light) #f6f9fc
+       ================================================================ -->
+  <section class="creator-gallery" aria-label="Creator Gallery" id="creator-gallery">
+
+    <div class="creator-gallery__inner">
+
+      <!-- Section header -->
+      <header class="creator-gallery__header">
+        <h2 class="creator-gallery__title">Made by creators like you</h2>
+
+        <!-- Media-type filter tabs — plain buttons, no tablist semantics -->
+        <div class="gallery-filters" aria-label="Filter by media type">
+          <button
+            class="gallery-filter-tab is-active"
+            data-filter="video"
+            aria-pressed="true"
+          >Video</button>
+          <button
+            class="gallery-filter-tab gallery-filter-tab--coming-soon"
+            data-filter="animation"
+            disabled
+            aria-disabled="true"
+          >Animation <span class="coming-soon-badge">Coming Soon</span></button>
+          <button
+            class="gallery-filter-tab gallery-filter-tab--coming-soon"
+            data-filter="film"
+            disabled
+            aria-disabled="true"
+          >Film <span class="coming-soon-badge">Coming Soon</span></button>
+        </div>
+      </header>
+
+      <!-- Gallery grid — 3-column-equal, 6 cards -->
+      <div class="gallery-grid" id="gallery-grid">
+
+        <!-- Card 1 -->
+        <article class="gallery-card" data-tag="video" data-id="gallery-1" aria-label="Creator video by Mia Chen">
+          <div class="gallery-card__video-wrap">
+            <div class="gallery-card__video-placeholder skeleton skeleton--image">
+              <div class="gallery-card__video-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <polygon points="5,3 13,8 5,13" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="gallery-card__video-label">Video</span>
+            </div>
+            <div class="gallery-card__overlay">
+              <p class="gallery-card__creator-name">Mia Chen</p>
+              <p class="gallery-card__creator-pts">2,140 pts</p>
+              <a href="/signup.html" class="gallery-card__make-link" data-cta="signup">Make your own →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="gallery-card" data-tag="video" data-id="gallery-2" aria-label="Creator video by Jordan Park">
+          <div class="gallery-card__video-wrap">
+            <div class="gallery-card__video-placeholder skeleton skeleton--image">
+              <div class="gallery-card__video-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <polygon points="5,3 13,8 5,13" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="gallery-card__video-label">Video</span>
+            </div>
+            <div class="gallery-card__overlay">
+              <p class="gallery-card__creator-name">Jordan Park</p>
+              <p class="gallery-card__creator-pts">1,875 pts</p>
+              <a href="/signup.html" class="gallery-card__make-link" data-cta="signup">Make your own →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="gallery-card" data-tag="video" data-id="gallery-3" aria-label="Creator video by Leila Santos">
+          <div class="gallery-card__video-wrap">
+            <div class="gallery-card__video-placeholder skeleton skeleton--image">
+              <div class="gallery-card__video-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <polygon points="5,3 13,8 5,13" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="gallery-card__video-label">Video</span>
+            </div>
+            <div class="gallery-card__overlay">
+              <p class="gallery-card__creator-name">Leila Santos</p>
+              <p class="gallery-card__creator-pts">3,290 pts</p>
+              <a href="/signup.html" class="gallery-card__make-link" data-cta="signup">Make your own →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="gallery-card" data-tag="video" data-id="gallery-4" aria-label="Creator video by Finn Okafor">
+          <div class="gallery-card__video-wrap">
+            <div class="gallery-card__video-placeholder skeleton skeleton--image">
+              <div class="gallery-card__video-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <polygon points="5,3 13,8 5,13" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="gallery-card__video-label">Video</span>
+            </div>
+            <div class="gallery-card__overlay">
+              <p class="gallery-card__creator-name">Finn Okafor</p>
+              <p class="gallery-card__creator-pts">1,240 pts</p>
+              <a href="/signup.html" class="gallery-card__make-link" data-cta="signup">Make your own →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="gallery-card" data-tag="video" data-id="gallery-5" aria-label="Creator video by Yuki Tanaka">
+          <div class="gallery-card__video-wrap">
+            <div class="gallery-card__video-placeholder skeleton skeleton--image">
+              <div class="gallery-card__video-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <polygon points="5,3 13,8 5,13" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="gallery-card__video-label">Video</span>
+            </div>
+            <div class="gallery-card__overlay">
+              <p class="gallery-card__creator-name">Yuki Tanaka</p>
+              <p class="gallery-card__creator-pts">4,550 pts</p>
+              <a href="/signup.html" class="gallery-card__make-link" data-cta="signup">Make your own →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="gallery-card" data-tag="video" data-id="gallery-6" aria-label="Creator video by Amara Diallo">
+          <div class="gallery-card__video-wrap">
+            <div class="gallery-card__video-placeholder skeleton skeleton--image">
+              <div class="gallery-card__video-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <polygon points="5,3 13,8 5,13" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="gallery-card__video-label">Video</span>
+            </div>
+            <div class="gallery-card__overlay">
+              <p class="gallery-card__creator-name">Amara Diallo</p>
+              <p class="gallery-card__creator-pts">980 pts</p>
+              <a href="/signup.html" class="gallery-card__make-link" data-cta="signup">Make your own →</a>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /.gallery-grid -->
+
+      <!-- Caption below gallery -->
+      <p class="creator-gallery__caption">Made by our community.</p>
+
+    </div><!-- /.creator-gallery__inner -->
+
+  </section><!-- /.creator-gallery -->
+
+  <!-- Scroll-depth CTA bar — shown when gallery is 50% in viewport -->
+  <div class="gallery-cta-bar" id="gallery-cta-bar" aria-live="polite" aria-atomic="true">
+    <span class="gallery-cta-bar__text">Ready to create your own?</span>
+    <a href="/signup.html" class="gallery-cta-bar__btn" data-cta="signup" aria-label="Make your own — sign up to Kinetic">Make your own</a>
+  </div>
+
+  <!-- ================================================================
+       Footer — from Task 263
+       background: var(--color-hero-background) #183f26 deep forest green
+       ================================================================ -->
+  <footer class="site-footer">
+
+    <!-- Upper footer body -->
+    <div class="footer-body">
+      <div class="footer-inner">
+
+        <!-- Brand logo -->
+        <div class="footer-logo">
+          <a href="/" class="footer-logo__link">Kinetic</a>
+        </div>
+
+        <!-- Utility links row -->
+        <nav class="footer-utility" aria-label="Footer utility links">
+          <a href="/about" class="footer-utility__link">About</a>
+          <a href="/pricing" class="footer-utility__link">Pricing</a>
+          <a href="/signup" class="footer-utility__link">Sign Up</a>
+          <a href="/login" class="footer-utility__link">Log in</a>
+        </nav>
+
+        <!-- 4-column link grid -->
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h3 class="footer-col__header">Platform</h3>
+            <ul class="footer-col__links">
+              <li><a href="/explore">Explore</a></li>
+              <li><a href="/pricing">Pricing</a></li>
+              <li><a href="/about">About</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-col__header">Vision</h3>
+            <ul class="footer-col__links">
+              <li><a href="/roadmap">Roadmap</a></li>
+              <li><a href="/blog">Blog</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-col__header">Legal</h3>
+            <ul class="footer-col__links">
+              <li><a href="/privacy">Privacy</a></li>
+              <li><a href="/terms">Terms</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-col__header">Social</h3>
+            <ul class="footer-col__links">
+              <li><a href="https://twitter.com/kinetic" target="_blank" rel="noopener">Twitter</a></li>
+              <li><a href="https://instagram.com/kinetic" target="_blank" rel="noopener">Instagram</a></li>
+              <li><a href="https://linkedin.com/company/kinetic" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Lower footer / legal bar -->
+    <div class="footer-legal-bar">
+      <div class="footer-legal-bar__inner">
+        <span class="footer-legal-bar__copy">&copy; 2026 Kinetic. All rights reserved.</span>
+        <nav class="footer-legal-bar__links" aria-label="Legal links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </nav>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- GSAP from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Design system JavaScript -->
+  <script src="js/nav.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/gallery.js"></script>
+
+</body>
+</html>

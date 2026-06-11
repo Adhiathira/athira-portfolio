@@ -1,0 +1,221 @@
+/* process.css — Guldmark Press process page */
+/* Layout: two-column hero (text + image), then numbered step rows (52px counter + 1fr) */
+
+/* ── Page Hero ── */
+#process-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 480px;
+  background: var(--color-surface-bg);
+  overflow: hidden;
+}
+
+#process-hero-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 80px 64px 72px var(--nav-padding-inline);
+}
+
+#process-hero-label {
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+  margin: 0 0 20px;
+}
+
+#process-hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-transform: uppercase;
+  color: var(--color-heading-text);
+  margin: 0 0 20px;
+  line-height: 1.0;
+}
+
+#process-hero-title em {
+  font-style: normal;
+  color: var(--color-accent);
+}
+
+#process-hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--color-body-text);
+  margin: 0;
+  max-width: 400px;
+  opacity: 0.8;
+}
+
+#process-hero-image-wrap {
+  overflow: hidden;
+}
+
+#process-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Step List ── */
+#process-main {
+  background: var(--color-page-bg);
+}
+
+#process-steps {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--nav-padding-inline);
+  counter-reset: process-counter;
+}
+
+/* Numbered step row: counter col + text col + image col */
+.process-step {
+  counter-increment: process-counter;
+  padding: 72px 0;
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.process-step-inner {
+  display: grid;
+  grid-template-columns: 52px 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.process-step-inner::before {
+  content: counter(process-counter, decimal-leading-zero);
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-border-default);
+  line-height: 1;
+  align-self: flex-start;
+  padding-top: 4px;
+}
+
+.process-step-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-transform: uppercase;
+  color: var(--color-heading-text);
+  margin: 0 0 20px;
+  line-height: 1.05;
+}
+
+.process-step-body {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-body-text);
+  margin: 0;
+}
+
+.process-step-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-surface-bg);
+}
+
+.process-step-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-base) var(--ease-primary);
+}
+
+.process-step:hover .process-step-media img {
+  transform: scale(1.03);
+}
+
+/* ── Commission CTA ── */
+#process-cta {
+  background: var(--color-hero-bg);
+  padding: var(--space-2xl) var(--nav-padding-inline);
+}
+
+#process-cta-inner {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#process-cta-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 20px;
+}
+
+#process-cta-body {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 36px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .process-step-inner {
+    grid-template-columns: 52px 1fr;
+    grid-template-rows: auto auto;
+  }
+  .process-step-media {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 7;
+  }
+}
+
+@media (max-width: 900px) {
+  #process-hero {
+    grid-template-columns: 1fr;
+  }
+  #process-hero-image-wrap {
+    min-height: 300px;
+  }
+  #process-hero-inner {
+    padding: 56px 32px 48px;
+  }
+  #process-steps {
+    padding: 0 32px;
+  }
+  #process-cta {
+    padding: var(--space-xl) 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  #process-hero-inner {
+    padding: 48px 20px 40px;
+  }
+  #process-steps {
+    padding: 0 20px;
+  }
+  .process-step-inner {
+    grid-template-columns: 1fr;
+  }
+  .process-step-inner::before {
+    font-size: 2rem;
+  }
+  #process-cta {
+    padding: var(--space-lg) 20px;
+  }
+}

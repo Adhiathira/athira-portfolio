@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Showcase — Volt Studio</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--color-page-bg); color: var(--color-body); font-family: var(--font-body); font-size: var(--type-body); line-height: var(--leading-body); overflow-x: hidden; }
+
+    /* Nav */
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 99; transition: background var(--duration-medium) var(--ease-standard), backdrop-filter var(--duration-medium) var(--ease-standard); }
+    #nav-inner { display: flex; align-items: center; justify-content: center; height: 60px; max-width: var(--grid-max-width); margin: 0 auto; padding: 0 40px; position: relative; }
+    #nav-logo { position: absolute; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 1.125rem; font-weight: var(--weight-bold); color: var(--color-heading); text-decoration: none; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    #nav-logo-mark { width: 22px; height: 22px; background: var(--color-accent); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+    #nav-left { display: flex; align-items: center; gap: 28px; margin-right: auto; }
+    #nav-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+    .nav-link { font-family: var(--font-body); font-size: 0.9375rem; font-weight: var(--weight-medium); color: var(--color-muted); text-decoration: none; transition: color var(--duration-medium) var(--ease-hover); }
+    .nav-link:hover, .nav-link.active { color: var(--color-heading); }
+    #nav-cta { background: var(--btn-primary-bg); color: var(--btn-primary-text); font-family: var(--font-body); font-size: 0.875rem; font-weight: var(--weight-semibold); padding: var(--btn-padding-v) 20px; border-radius: var(--btn-radius); text-decoration: none; transition: box-shadow var(--duration-medium) var(--ease-smooth), transform var(--duration-base) var(--ease-standard); }
+    #nav-cta:hover { box-shadow: var(--shadow-accent-glow); transform: translateY(-1px); }
+    #nav.scrolled { background: rgba(25,25,28,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+
+    /* Page header */
+    #page-header { padding: 140px 40px 72px; text-align: center; background: linear-gradient(180deg, var(--color-hero-bg) 0%, var(--color-page-bg) 100%); position: relative; overflow: hidden; }
+    #page-header-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(253,53,110,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(253,53,110,0.035) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 60%); -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 60%); }
+    #page-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(253,53,110,0.08); border: 1px solid rgba(253,53,110,0.18); border-radius: var(--btn-radius); padding: 6px 16px; font-size: 0.8125rem; font-weight: var(--weight-medium); color: var(--color-accent); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 24px; position: relative; z-index: 1; }
+    #page-title { font-family: var(--font-display); font-size: var(--type-h1); font-weight: var(--weight-extrabold); color: var(--color-heading); letter-spacing: -0.028em; line-height: 1.06; max-width: 700px; margin: 0 auto 20px; position: relative; z-index: 1; }
+    #page-subtitle { font-size: clamp(1rem, 1.8vw, 1.2rem); color: var(--color-muted); line-height: 1.6; max-width: 520px; margin: 0 auto; position: relative; z-index: 1; }
+
+    /* Filters */
+    #showcase-filters { padding: 40px 40px 0; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .filter-btn { background: transparent; color: var(--color-muted); border: 1px solid var(--color-border); border-radius: var(--btn-radius); padding: 7px 18px; font-family: var(--font-body); font-size: 0.875rem; font-weight: var(--weight-medium); cursor: pointer; transition: all var(--duration-base) var(--ease-standard); }
+    .filter-btn:hover { border-color: rgba(228,228,231,0.3); color: var(--color-body); }
+    .filter-btn.active { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+
+    /* Showcase grid */
+    #showcase-grid-wrapper { padding: 48px 40px var(--space-3xl); max-width: var(--grid-container); margin: 0 auto; }
+
+    /* Masonry-style: 3 columns */
+    #showcase-grid { columns: 3; column-gap: 20px; }
+
+    .showcase-card {
+      break-inside: avoid;
+      margin-bottom: 20px;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      cursor: pointer;
+      transition: transform var(--duration-medium) var(--ease-smooth),
+                  box-shadow var(--duration-medium) var(--ease-standard),
+                  border-color var(--duration-medium) var(--ease-standard);
+      display: block;
+      text-decoration: none;
+    }
+    .showcase-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-elevated); border-color: rgba(253,53,110,0.2); }
+
+    .showcase-card-img-wrapper { position: relative; overflow: hidden; }
+    .showcase-card-img { width: 100%; display: block; object-fit: cover; transition: transform 0.6s var(--ease-smooth); }
+    .showcase-card:hover .showcase-card-img { transform: scale(1.04); }
+    .showcase-card-img-placeholder { display: none; width: 100%; padding-bottom: 56.25%; background: var(--color-surface-3); position: relative; }
+    .showcase-card-img-placeholder span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--color-muted); opacity: 0.5; }
+
+    /* Gradient overlay on card images */
+    .showcase-card-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(180deg, transparent 0%, rgba(15,15,16,0.9) 100%); pointer-events: none; }
+
+    .showcase-card-info { padding: 18px 20px 20px; }
+    .showcase-card-tag { display: inline-block; background: rgba(253,53,110,0.1); border: 1px solid rgba(253,53,110,0.2); border-radius: 4px; padding: 2px 8px; font-size: 0.7rem; font-weight: var(--weight-semibold); color: var(--color-accent); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+    .showcase-card-title { font-family: var(--font-display); font-size: 1.0625rem; font-weight: var(--weight-semibold); color: var(--color-heading); letter-spacing: -0.015em; margin-bottom: 6px; }
+    .showcase-card-author { font-size: 0.8125rem; color: var(--color-muted); }
+
+    /* Featured showcase card (first, full-width) */
+    .showcase-card.featured { margin-bottom: 20px; }
+
+    /* Stats bar */
+    #showcase-stats { padding: 0 40px 64px; max-width: var(--grid-container); margin: 0 auto; display: flex; gap: 40px; }
+    .stat-item { flex: 1; background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: 14px; padding: 24px 28px; position: relative; overflow: hidden; }
+    .stat-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--color-accent), transparent); }
+    .stat-number { font-family: var(--font-display); font-size: 2.5rem; font-weight: var(--weight-extrabold); color: var(--color-heading); letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+    .stat-number span { color: var(--color-accent); }
+    .stat-label { font-size: 0.875rem; color: var(--color-muted); font-weight: var(--weight-medium); }
+
+    /* Submit section */
+    #showcase-submit { padding: 80px 40px; text-align: center; background: radial-gradient(ellipse at 50% 50%, rgba(253,53,110,0.08) 0%, transparent 65%); }
+    #submit-title { font-family: var(--font-display); font-size: var(--type-h2); font-weight: var(--weight-bold); color: var(--color-heading); letter-spacing: -0.022em; margin-bottom: 16px; }
+    #submit-sub { font-size: var(--type-p); color: var(--color-muted); line-height: 1.6; margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .btn-primary { background: var(--btn-primary-bg); color: var(--btn-primary-text); font-family: var(--font-body); font-size: var(--type-button); font-weight: var(--weight-semibold); padding: 12px var(--btn-padding-h); border-radius: var(--btn-radius); text-decoration: none; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: box-shadow var(--duration-medium) var(--ease-smooth), transform var(--duration-base) var(--ease-standard); }
+    .btn-primary:hover { box-shadow: var(--shadow-accent-glow); transform: translateY(-2px); }
+
+    /* Footer */
+    #footer { background: var(--color-footer-bg); border-top: 1px solid var(--color-border); padding: 48px 40px 32px; }
+    #footer-inner { max-width: var(--grid-container); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    #footer-logo { font-family: var(--font-display); font-size: 1rem; font-weight: var(--weight-bold); color: var(--color-heading); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    #footer-logo-mark { width: 18px; height: 18px; background: var(--color-accent); border-radius: 4px; }
+    #footer-links-row { display: flex; gap: 24px; }
+    #footer-links-row a { font-size: 0.875rem; color: var(--color-footer-text); text-decoration: none; transition: color var(--duration-base) var(--ease-standard); }
+    #footer-links-row a:hover { color: var(--color-heading); }
+    #footer-copy { font-size: 0.8rem; color: var(--color-footer-text); }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div id="nav-inner">
+      <div id="nav-left">
+        <a href="features.html" class="nav-link">Features</a>
+        <a href="showcase.html" class="nav-link active">Showcase</a>
+      </div>
+      <a href="index.html" id="nav-logo">
+        <div id="nav-logo-mark">
+          <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="1.8" width="12" height="12">
+            <path d="M6 1L10 6L6 11L2 6L6 1Z"/>
+          </svg>
+        </div>
+        Volt Studio
+      </a>
+      <div id="nav-right">
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="docs.html" class="nav-link">Docs</a>
+        <a href="pricing.html" id="nav-cta">Get started free</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="page-header">
+    <div id="page-header-grid"></div>
+    <div id="page-eyebrow">Built with Volt Studio</div>
+    <h1 id="page-title">The web in three dimensions, crafted by our community.</h1>
+    <p id="page-subtitle">Real sites and experiences built by interaction designers using Volt Studio. Every one of them ships as clean HTML.</p>
+  </header>
+
+  <!-- Stats bar -->
+  <div id="showcase-stats">
+    <div class="stat-item">
+      <div class="stat-number">2<span>,</span>400<span>+</span></div>
+      <div class="stat-label">Experiences built</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">840<span>+</span></div>
+      <div class="stat-label">Designers in community</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">98<span>%</span></div>
+      <div class="stat-label">Lighthouse performance score avg.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">< 2<span>s</span></div>
+      <div class="stat-label">Average load time on 3G</div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div id="showcase-filters">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Hero Experiences</button>
+    <button class="filter-btn">Product Sites</button>
+    <button class="filter-btn">Portfolios</button>
+    <button class="filter-btn">Marketing Pages</button>
+    <button class="filter-btn">Experimental</button>
+  </div>
+
+  <!-- Grid -->
+  <div id="showcase-grid-wrapper">
+    <div id="showcase-grid">
+
+      <!-- Card 1 -->
+      <a href="#" class="showcase-card">
+        <div class="showcase-card-img-wrapper">
+          <img
+            class="showcase-card-img"
+            src="assets/showcase-1.jpeg"
+            alt="3D product hero experience for a wearable tech brand, isometric floating device on dark purple gradient with pink accent neon rings"
+            style="aspect-ratio:16/10;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          >
+          <div class="showcase-card-img-placeholder" style="display:none">
+            <span>→ assets/showcase-1.jpeg</span>
+          </div>
+          <div class="showcase-card-overlay"></div>
+        </div>
+        <div class="showcase-card-info">
+          <span class="showcase-card-tag">Product Site</span>
+          <div class="showcase-card-title">Lumina Wearables — Hero Experience</div>
+          <div class="showcase-card-author">by Yuki Tanaka</div>
+        </div>
+      </a>
+
+      <!-- Card 2 (taller) -->
+      <a href="#" class="showcase-card">
+        <div class="showcase-card-img-wrapper">
+          <img
+            class="showcase-card-img"
+            src="assets/showcase-2.jpeg"
+            alt="Portfolio homepage with 3D floating typography letterforms orbiting a dark central scene, dimensional depth with pink-red ambient light"
+            style="aspect-ratio:3/4;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          >
+          <div class="showcase-card-img-placeholder" style="display:none">
+            <span>→ assets/showcase-2.jpeg</span>
+          </div>
+          <div class="showcase-card-overlay"></div>
+        </div>
+        <div class="showcase-card-info">
+          <span class="showcase-card-tag">Portfolio</span>
+          <div class="showcase-card-title">Andile Khumalo — Design Portfolio 2026</div>
+          <div class="showcase-card-author">by Andile Khumalo</div>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="#" class="showcase-card">
+        <div class="showcase-card-img-wrapper">
+          <img
+            class="showcase-card-img"
+            src="assets/showcase-3.jpeg"
+            alt="Marketing landing page for a SaaS product with animated 3D dashboard floating above dark background with spatial grid overlay"
+            style="aspect-ratio:16/10;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          >
+          <div class="showcase-card-img-placeholder" style="display:none">
+            <span>→ assets/showcase-3.jpeg</span>
+          </div>
+          <div class="showcase-card-overlay"></div>
+        </div>
+        <div class="showcase-card-info">
+          <span class="showcase-card-tag">Marketing Page</span>
+          <div class="showcase-card-title">Forma Analytics — Product Launch</div>
+          <div class="showcase-card-author">by Lena Hoffmann</div>
+        </div>
+      </a>
+
+      <!-- Card 4 (shorter) -->
+      <a href="#" class="showcase-card">
+        <div class="showcase-card-img-wrapper">
+          <img
+            class="showcase-card-img"
+            src="assets/showcase-4.jpeg"
+            alt="Experimental web experience with particle field and floating 3D text labels in kinetic motion, deep space dark background"
+            style="aspect-ratio:4/3;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          >
+          <div class="showcase-card-img-placeholder" style="display:none">
+            <span>→ assets/showcase-4.jpeg</span>
+          </div>
+          <div class="showcase-card-overlay"></div>
+        </div>
+        <div class="showcase-card-info">
+          <span class="showcase-card-tag">Experimental</span>
+          <div class="showcase-card-title">Kinetic Field No. 7</div>
+          <div class="showcase-card-author">by Zara Obi</div>
+        </div>
+      </a>
+
+      <!-- Card 5 -->
+      <a href="#" class="showcase-card">
+        <div class="showcase-card-img-wrapper">
+          <img
+            class="showcase-card-img"
+            src="assets/showcase-5.jpeg"
+            alt="Luxury fragrance brand hero with 3D glass bottle render floating in ambient fog, deep dark background with pink-gold light refraction"
+            style="aspect-ratio:16/10;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          >
+          <div class="showcase-card-img-placeholder" style="display:none">
+            <span>→ assets/showcase-5.jpeg</span>
+          </div>
+          <div class="showcase-card-overlay"></div>
+        </div>
+        <div class="showcase-card-info">
+          <span class="showcase-card-tag">Product Site</span>
+          <div class="showcase-card-title">Nuit Secrète — Fragrance Launch</div>
+          <div class="showcase-card-author">by Camille Rousseau</div>
+        </div>
+      </a>
+
+      <!-- Card 6 (tall) -->
+      <a href="#" class="showcase-card">
+        <div class="showcase-card-img-wrapper">
+          <img
+            class="showcase-card-img"
+            src="assets/showcase-6.jpeg"
+            alt="Architecture firm portfolio with 3D building model rotating on scroll, axonometric perspective, near-black background with structural highlight lines"
+            style="aspect-ratio:3/4;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          >
+          <div class="showcase-card-img-placeholder" style="display:none">
+            <span>→ assets/showcase-6.jpeg</span>
+          </div>
+          <div class="showcase-card-overlay"></div>
+        </div>
+        <div class="showcase-card-info">
+          <span class="showcase-card-tag">Portfolio</span>
+          <div class="showcase-card-title">Takeda Architecture Studio — 2026</div>
+          <div class="showcase-card-author">by Hiroshi Takeda</div>
+        </div>
+      </a>
+
+      <!-- Card 7 -->
+      <a href="#" class="showcase-card">
+        <div class="showcase-card-img-wrapper">
+          <img
+            class="showcase-card-img"
+            src="assets/showcase-7.jpeg"
+            alt="Hero experience for a generative music app with 3D audio waveform visualization, dark background with rhythmic pink-red pulse rings"
+            style="aspect-ratio:16/9;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          >
+          <div class="showcase-card-img-placeholder" style="display:none">
+            <span>→ assets/showcase-7.jpeg</span>
+          </div>
+          <div class="showcase-card-overlay"></div>
+        </div>
+        <div class="showcase-card-info">
+          <span class="showcase-card-tag">Hero Experience</span>
+          <div class="showcase-card-title">Resonance — Generative Audio App</div>
+          <div class="showcase-card-author">by Marcus Webb</div>
+        </div>
+      </a>
+
+      <!-- Card 8 -->
+      <a href="#" class="showcase-card">
+        <div class="showcase-card-img-wrapper">
+          <img
+            class="showcase-card-img"
+            src="assets/showcase-8.jpeg"
+            alt="Developer tools product page with 3D API diagram visualization floating over dark grid background, blue and pink connection nodes"
+            style="aspect-ratio:4/3;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          >
+          <div class="showcase-card-img-placeholder" style="display:none">
+            <span>→ assets/showcase-8.jpeg</span>
+          </div>
+          <div class="showcase-card-overlay"></div>
+        </div>
+        <div class="showcase-card-info">
+          <span class="showcase-card-tag">Product Site</span>
+          <div class="showcase-card-title">Meshline API — Developer Platform</div>
+          <div class="showcase-card-author">by Aisha Dlamini</div>
+        </div>
+      </a>
+
+      <!-- Card 9 -->
+      <a href="#" class="showcase-card">
+        <div class="showcase-card-img-wrapper">
+          <img
+            class="showcase-card-img"
+            src="assets/showcase-9.jpeg"
+            alt="Fashion brand campaign page with 3D fabric simulation draping over geometric forms, near-black background with warm gold ambient highlights"
+            style="aspect-ratio:16/10;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          >
+          <div class="showcase-card-img-placeholder" style="display:none">
+            <span>→ assets/showcase-9.jpeg</span>
+          </div>
+          <div class="showcase-card-overlay"></div>
+        </div>
+        <div class="showcase-card-info">
+          <span class="showcase-card-tag">Marketing Page</span>
+          <div class="showcase-card-title">Reverie Collection — SS 2026 Campaign</div>
+          <div class="showcase-card-author">by Sofia Ivanova</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- Submit CTA -->
+  <section id="showcase-submit">
+    <h2 id="submit-title">Built something with Volt Studio?</h2>
+    <p id="submit-sub">Submit your project to be featured in the showcase. We highlight exceptional work every month.</p>
+    <a href="#" class="btn-primary">
+      Submit your project
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+    </a>
+  </section>
+
+  <footer id="footer">
+    <div id="footer-inner">
+      <a href="index.html" id="footer-logo">
+        <div id="footer-logo-mark"></div>
+        Volt Studio
+      </a>
+      <div id="footer-links-row">
+        <a href="features.html">Features</a>
+        <a href="showcase.html">Showcase</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="docs.html">Docs</a>
+      </div>
+      <div id="footer-copy">© 2026 Volt Studio</div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-standard').trim();
+    const EASE_S = getComputedStyle(document.documentElement).getPropertyValue('--ease-smooth').trim();
+    const DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-enter')) || 0.7;
+    const ST = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stagger-step')) || 0.1;
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    gsap.from('#page-eyebrow, #page-title, #page-subtitle', { y: 30, opacity: 0, duration: DUR, ease: EASE, stagger: ST * 1.5 });
+
+    gsap.from('.stat-item', {
+      scrollTrigger: { trigger: '#showcase-stats', start: 'top 82%' },
+      y: 24, opacity: 0, duration: 0.55, ease: EASE, stagger: ST
+    });
+
+    gsap.from('#showcase-filters .filter-btn', {
+      scrollTrigger: { trigger: '#showcase-filters', start: 'top 88%' },
+      y: 16, opacity: 0, duration: 0.4, ease: EASE, stagger: ST * 0.7
+    });
+
+    // Masonry card stagger
+    gsap.from('.showcase-card', {
+      scrollTrigger: { trigger: '#showcase-grid', start: 'top 80%' },
+      y: 32, opacity: 0, duration: DUR * 0.85, ease: EASE_S, stagger: { amount: 0.8 }
+    });
+
+    gsap.from('#submit-title, #submit-sub, #showcase-submit .btn-primary', {
+      scrollTrigger: { trigger: '#showcase-submit', start: 'top 78%' },
+      y: 24, opacity: 0, duration: DUR, ease: EASE_S, stagger: ST * 1.5
+    });
+
+    // Filter buttons (basic)
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

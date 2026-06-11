@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pigments — Pellum Natural Ink Studio</title>
+  <meta name="description" content="Browse Pellum's current collection of small-batch natural pigments milled from minerals, plants, and carbon sources.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    /* Pigments page — additional styles */
+    .pigments-hero {
+      background: var(--color-page-bg, #f2efe9);
+      border-bottom: 1px solid var(--color-border, #d4cfc8);
+      padding: 80px 40px 60px;
+    }
+    .pigments-hero__heading {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-heading, #3d3930);
+      margin: 0 0 16px;
+    }
+    .pigments-hero__sub {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--color-body-text, #575349);
+      max-width: 480px;
+      margin: 0;
+    }
+    .filter-bar {
+      background: var(--color-page-bg, #f2efe9);
+      border-bottom: 1px solid var(--color-border, #d4cfc8);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .filter-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted-text, #c8c1b4);
+      flex-shrink: 0;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-heading, #3d3930);
+      border: 1px solid var(--color-border, #d4cfc8);
+      background: transparent;
+      padding: 5px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: var(--transition-base);
+    }
+    .filter-pill:hover,
+    .filter-pill.active {
+      background: var(--color-heading, #3d3930);
+      color: var(--color-page-bg, #f2efe9);
+      border-color: var(--color-heading, #3d3930);
+    }
+
+    /* Pigments full grid — bento layout: 4-col with featured first item spanning 2 rows */
+    .pigments-bento {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto;
+      gap: var(--grid-gap, 22px);
+    }
+    .pigments-bento .pigment-card:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+    .pigments-bento .pigment-card:first-child .pigment-card__swatch {
+      aspect-ratio: 1/1;
+    }
+    .pigments-bento .pigment-card:first-child .pigment-card__name {
+      font-size: 22px;
+    }
+
+    /* Seasonal availability notice */
+    .batch-notice {
+      background: #ede9e1;
+      border: 1px solid var(--color-border, #d4cfc8);
+      border-radius: 2px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .batch-notice__dot {
+      width: 6px;
+      height: 6px;
+      background: var(--color-accent, #fb7339);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .batch-notice__text {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-body-text, #575349);
+      margin: 0;
+    }
+
+    @media (max-width: 1024px) {
+      .pigments-bento {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .pigments-bento .pigment-card:first-child {
+        grid-column: span 2;
+      }
+    }
+    @media (max-width: 600px) {
+      .pigments-bento {
+        grid-template-columns: 1fr;
+      }
+      .pigments-bento .pigment-card:first-child {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+      .filter-bar { padding: 16px 24px; }
+      .pigments-hero { padding: 60px 24px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav" class="nav-light-page">
+  <a href="index.html" class="nav-logo">Pellum</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="pigments.html" class="nav-link nav-link--active">Pigments</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+  </ul>
+  <a href="pigments.html" class="nav-cta">Order</a>
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="pigments.html" class="nav-link">Pigments</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="pigments.html" class="nav-cta">Order</a>
+</div>
+<script>
+(function() {
+  var toggle = document.querySelector('.nav-mobile-toggle');
+  var mobileMenu = document.querySelector('.nav-mobile-menu');
+  var nav = document.getElementById('site-nav');
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function() {
+      var isOpen = mobileMenu.classList.contains('is-open');
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      mobileMenu.classList.toggle('is-open');
+      nav.classList.toggle('nav-mobile-open');
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+  }
+})();
+</script>
+<!-- END NAV -->
+
+<!-- Page header -->
+<section class="pigments-hero">
+  <div class="container">
+    <span class="section__eyebrow" data-reveal="fade-up">Current Collection</span>
+    <h1 class="pigments-hero__heading" data-reveal="fade-up">The Pigments</h1>
+    <p class="pigments-hero__sub" data-reveal="fade-up">Each ink in the collection originates from a named material source. Batches are numbered and produced in quantities of 50–120 units.</p>
+  </div>
+</section>
+
+<!-- Filter bar -->
+<div class="filter-bar" data-reveal="fade-up">
+  <span class="filter-label">Filter:</span>
+  <div class="filter-pills">
+    <button class="filter-pill active">All</button>
+    <button class="filter-pill">Mineral</button>
+    <button class="filter-pill">Botanical</button>
+    <button class="filter-pill">Carbon</button>
+    <button class="filter-pill">Available Now</button>
+  </div>
+</div>
+
+<!-- Pigments bento grid -->
+<section class="section section--cream" aria-label="Pigment collection">
+  <div class="container">
+    <div class="batch-notice" data-reveal="fade-up">
+      <div class="batch-notice__dot"></div>
+      <p class="batch-notice__text">Spring 2026 botanical batches now available. Madder and Weld limited to 60 units each.</p>
+    </div>
+
+    <div class="pigments-bento" data-stagger-group="fade-up">
+      <!-- Featured: first card spans 2×2 -->
+      <article class="pigment-card" tabindex="0">
+        <div class="pigment-card__swatch">
+          <div class="pigment-card__swatch-color" style="background: linear-gradient(135deg, #c4762a 0%, #9e5a1f 100%);"></div>
+        </div>
+        <div class="pigment-card__body">
+          <span class="pigment-card__category">Mineral · Batch 24A · Featured</span>
+          <h2 class="pigment-card__name">Burnt Sienna</h2>
+          <p class="pigment-card__desc">Calcined iron-rich clay from coastal limestone deposits. Warm reddish brown with exceptional granulation on wet media. Highest lightfastness rating in the collection — suited to archival printmaking and permanent calligraphic work.</p>
+        </div>
+      </article>
+
+      <article class="pigment-card" tabindex="0">
+        <div class="pigment-card__swatch">
+          <div class="pigment-card__swatch-color" style="background: #6b5c34;"></div>
+        </div>
+        <div class="pigment-card__body">
+          <span class="pigment-card__category">Mineral · Batch 24B</span>
+          <h3 class="pigment-card__name">Raw Umber</h3>
+          <p class="pigment-card__desc">Unheated manganese-iron deposit. Neutral brown with subtle green undertone.</p>
+        </div>
+      </article>
+
+      <article class="pigment-card" tabindex="0">
+        <div class="pigment-card__swatch">
+          <div class="pigment-card__swatch-color" style="background: #d9a84e;"></div>
+        </div>
+        <div class="pigment-card__body">
+          <span class="pigment-card__category">Mineral · Batch 24C</span>
+          <h3 class="pigment-card__name">Yellow Ochre</h3>
+          <p class="pigment-card__desc">Classic iron oxide yellow from French deposits. Warm straw tone, earthy undertone.</p>
+        </div>
+      </article>
+
+      <article class="pigment-card" tabindex="0">
+        <div class="pigment-card__swatch">
+          <div class="pigment-card__swatch-color" style="background: #8c3f22;"></div>
+        </div>
+        <div class="pigment-card__body">
+          <span class="pigment-card__category">Plant · Batch 23W · Seasonal</span>
+          <h3 class="pigment-card__name">Madder Lake</h3>
+          <p class="pigment-card__desc">Alizarin extracted from Rubia tinctorum root. Transparent warm red. Limited autumn batches.</p>
+        </div>
+      </article>
+
+      <article class="pigment-card" tabindex="0">
+        <div class="pigment-card__swatch">
+          <div class="pigment-card__swatch-color" style="background: #c9a03c;"></div>
+        </div>
+        <div class="pigment-card__body">
+          <span class="pigment-card__category">Plant · Batch 26S · New</span>
+          <h3 class="pigment-card__name">Weld Yellow</h3>
+          <p class="pigment-card__desc">Luteolin-rich extract from Reseda luteola. Bright clear yellow. Spring 2026 batch now shipping.</p>
+        </div>
+      </article>
+
+      <article class="pigment-card" tabindex="0">
+        <div class="pigment-card__swatch">
+          <div class="pigment-card__swatch-color" style="background: #2c2416;"></div>
+        </div>
+        <div class="pigment-card__body">
+          <span class="pigment-card__category">Carbon · Batch 25V</span>
+          <h3 class="pigment-card__name">Vine Black</h3>
+          <p class="pigment-card__desc">Charred grapevine. Softer, warmer than lamp black. Ideal for brushwork and wash techniques.</p>
+        </div>
+      </article>
+
+      <article class="pigment-card" tabindex="0">
+        <div class="pigment-card__swatch">
+          <div class="pigment-card__swatch-color" style="background: #171510;"></div>
+        </div>
+        <div class="pigment-card__body">
+          <span class="pigment-card__category">Carbon · Batch 25L</span>
+          <h3 class="pigment-card__name">Lamp Black</h3>
+          <p class="pigment-card__desc">Pure carbon soot, intense near-neutral black. The oldest ink material in continuous use.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA band -->
+<section class="cta-band" aria-label="Ordering">
+  <div class="container" data-reveal="fade-up">
+    <h2 class="cta-band__heading">Request a Sample Set</h2>
+    <p class="cta-band__body">New to Pellum? A seven-pigment sample set is available for studio evaluation. No subscription, no minimum order.</p>
+    <div class="cta-band__cta-group">
+      <a href="about.html" class="btn-primary">Contact the Studio</a>
+      <a href="process.html" class="btn-ghost" style="color:rgba(242,239,233,0.7);border-color:rgba(242,239,233,0.3);">Read the Method</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer" data-reveal="fade-up">
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <a href="index.html" class="footer__logo">Pellum</a>
+      <p class="footer__tagline">Colour drawn from the ground. Small-batch natural inks for studio practice.</p>
+    </div>
+    <div>
+      <p class="footer__col-heading">Studio</p>
+      <ul class="footer__links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="process.html">Sourcing</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__col-heading">Collection</p>
+      <ul class="footer__links">
+        <li><a href="pigments.html">All Pigments</a></li>
+        <li><a href="pigments.html">Mineral Series</a></li>
+        <li><a href="pigments.html">Botanical Series</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__col-heading">Contact</p>
+      <ul class="footer__links">
+        <li><a href="about.html">Stockists</a></li>
+        <li><a href="about.html">Press</a></li>
+        <li><a href="about.html">Wholesale</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p class="footer__copyright">© 2026 Pellum. All rights reserved.</p>
+    <p class="footer__copyright" style="opacity:0.6;">Small-batch natural ink studio.</p>
+  </div>
+</footer>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="behaviors/scroll-reveal.js"></script>
+<script>
+(function() {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  // Scroll reveals
+  document.querySelectorAll('[data-reveal]').forEach(function(el) {
+    var type = el.getAttribute('data-reveal');
+    var from = { opacity: 0 };
+    if (type === 'fade-up') from.y = 24;
+    gsap.set(el, from);
+    gsap.to(el, {
+      opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+    });
+  });
+
+  // Stagger groups
+  document.querySelectorAll('[data-stagger-group]').forEach(function(group) {
+    var type = group.getAttribute('data-stagger-group');
+    var children = Array.from(group.children);
+    var from = { opacity: 0, y: 24 };
+    gsap.set(children, from);
+    gsap.to(children, {
+      opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', stagger: 0.08,
+      scrollTrigger: { trigger: group, start: 'top 85%', toggleActions: 'play none none none' }
+    });
+  });
+
+  // Filter pills (decorative only)
+  document.querySelectorAll('.filter-pill').forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      document.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+      this.classList.add('active');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

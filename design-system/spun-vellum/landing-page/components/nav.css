@@ -1,0 +1,213 @@
+/* ============================================================
+   NAV — Spun Vellum
+   Source: ochre-signal (twist E: itemSpacing 24→34px)
+   Height: 50px | Alignment: center | Position: static → fixed on scroll
+   ============================================================ */
+
+/* ---- Base nav layout ---- */
+.site-nav {
+  position: static;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  transition: background-color 0.26s ease, box-shadow 0.26s ease;
+}
+
+.site-nav.scrolled {
+  position: fixed;
+  background-color: #ffffff;
+  box-shadow: 0 1px 0 rgba(5, 5, 5, 0.06);
+}
+
+/* ---- Inner container ---- */
+.nav-inner {
+  width: 100%;
+  max-width: 1440px;
+  padding-inline: 34px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ---- Logo ---- */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-logo-wordmark {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-body-text, #050505);
+  line-height: 0.8125rem;
+}
+
+/* ---- Nav links ---- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 0.8125rem;
+  color: var(--color-nav-link, #030303);
+  white-space: nowrap;
+}
+
+/* ---- Underline pseudo-element — wipes right to left on hover ---- */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width 0.26s ease-in-out;
+  transform-origin: right center;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+  transform-origin: left center;
+}
+
+/* ---- Active state: current page ---- */
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.nav-link--active::after {
+  width: 100%;
+}
+
+/* ---- Scrolled state: text color stays, bg fills ---- */
+.site-nav.scrolled .nav-logo-wordmark {
+  color: var(--color-body-text, #050505);
+}
+
+.site-nav.scrolled .nav-link {
+  color: var(--color-nav-link, #030303);
+}
+
+/* ---- Mobile toggle button ---- */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-body-text, #050505);
+  transition: transform 0.26s ease-in-out, opacity 0.26s ease-in-out;
+  transform-origin: center;
+}
+
+/* ---- Hamburger → X animation ---- */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ---- Mobile overlay menu ---- */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: #ffffff;
+  z-index: 1050;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.26s ease-in-out;
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.nav-mobile-menu .nav-link {
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  opacity: 1;
+}
+
+.nav-mobile-menu .nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ---- Nav spacer (active on sub-pages when nav becomes fixed) ---- */
+.nav-spacer {
+  height: 0;
+  transition: height 0.26s ease;
+}
+
+.nav-spacer.active {
+  height: 50px;
+}
+
+/* ---- Responsive breakpoints ---- */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-inner {
+    padding-inline: 20px;
+  }
+}

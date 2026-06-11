@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile — vid-prod</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/tokens.css" />
+  <link rel="stylesheet" href="../../css/typography.css" />
+  <link rel="stylesheet" href="../../css/layout.css" />
+  <link rel="stylesheet" href="../../css/components.css" />
+  <style>
+    /* =========================================================================
+       WORKSPACE LAYOUT — CSS Grid, sidebar + main
+       ========================================================================= */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--color-heading);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-section-gap);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .main-content {
+      background: var(--color-surface);
+      padding: var(--spacing-section-gap);
+      min-height: 100vh;
+    }
+
+    /* =========================================================================
+       SIDEBAR ELEMENTS
+       ========================================================================= */
+    .sidebar__wordmark {
+      font-family: var(--font-family);
+      font-size: var(--font-size-nav);
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      display: block;
+    }
+
+    .sidebar__nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-btn-gap);
+    }
+
+    .sidebar__nav-item {
+      display: block;
+      font-family: var(--font-family);
+      font-size: var(--font-size-body);
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: var(--spacing-btn-radius);
+      border-left: 2px solid transparent;
+      transition: var(--motion-color);
+    }
+
+    .sidebar__nav-item--active {
+      background: rgba(255, 255, 255, 0.1);
+      border-left: 2px solid var(--color-primary);
+      color: #ffffff;
+    }
+
+    .sidebar__nav-item:hover:not(.sidebar__nav-item--active) {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+    }
+
+    .sidebar__user {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-btn-gap);
+    }
+
+    .sidebar__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      font-weight: 600;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar__username {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .sidebar__logout {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-muted);
+      text-decoration: none;
+    }
+
+    .sidebar__logout:hover {
+      color: #ffffff;
+    }
+
+    /* =========================================================================
+       PROFILE HEADER
+       ========================================================================= */
+    .profile-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-section-gap);
+      padding-bottom: var(--spacing-section-gap);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .profile-header__identity {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-section-gap);
+    }
+
+    .profile-header__avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family);
+      font-size: var(--font-size-h3);
+      font-weight: 600;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .profile-header__name {
+      font-family: var(--font-family);
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-h2);
+      color: var(--color-heading);
+      margin: 0 0 var(--spacing-btn-gap);
+      letter-spacing: var(--letter-spacing-h2);
+      line-height: var(--line-height-h2);
+    }
+
+    .profile-header__handle {
+      font-family: var(--font-family);
+      font-size: var(--font-size-body);
+      color: var(--color-muted);
+      margin: 0 0 var(--spacing-btn-gap);
+    }
+
+    .profile-header__stats {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-btn-gap);
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-body);
+    }
+
+    .stat-divider {
+      color: var(--color-muted);
+    }
+
+    .profile-header__actions {
+      display: flex;
+      gap: var(--spacing-btn-gap);
+      flex-shrink: 0;
+    }
+
+    /* =========================================================================
+       PORTFOLIO SECTION
+       ========================================================================= */
+    .portfolio-heading {
+      font-family: var(--font-family);
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-h3);
+      color: var(--color-heading);
+      margin: 0 0 var(--spacing-section-gap);
+      letter-spacing: var(--letter-spacing-h3);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-section-gap);
+    }
+
+    .portfolio-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--spacing-wrapper-radius);
+      overflow: hidden;
+      transition: var(--motion-card);
+      cursor: pointer;
+    }
+
+    .portfolio-card:hover {
+      transform: matrix(1, 0, 0, 1, 4.7, -4);
+    }
+
+    .portfolio-card__thumbnail {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-muted);
+    }
+
+    .portfolio-card__body {
+      padding: 16px;
+    }
+
+    .portfolio-card__title {
+      font-family: var(--font-family);
+      font-size: var(--font-size-h4);
+      font-weight: var(--font-weight-h4);
+      color: var(--color-heading);
+      margin: 0 0 var(--spacing-btn-gap);
+    }
+
+    .portfolio-card__badge {
+      font-family: var(--font-family);
+      font-size: var(--font-size-button);
+      color: var(--color-interactive);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      padding: 2px 6px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="workspace">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="/public/index.html" class="sidebar__wordmark">vid-prod</a>
+      <nav class="sidebar__nav">
+        <a href="/public/app/studio.html" class="sidebar__nav-item">Studio</a>
+        <a href="/public/app/community.html" class="sidebar__nav-item">Community</a>
+        <a href="/public/app/profile.html" class="sidebar__nav-item sidebar__nav-item--active">Profile</a>
+      </nav>
+      <div style="flex: 1;"></div>
+      <div class="sidebar__user">
+        <div class="sidebar__avatar" id="sidebar-avatar">--</div>
+        <span class="sidebar__username" id="sidebar-username">@username</span>
+        <a href="#" class="sidebar__logout" id="logout-btn">Log out</a>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+
+      <!-- Profile header -->
+      <div class="profile-header">
+        <div class="profile-header__identity">
+          <div class="profile-header__avatar" id="profile-avatar">--</div>
+          <div>
+            <h2 class="profile-header__name" id="profile-name">username</h2>
+            <p class="profile-header__handle" id="profile-handle">@username</p>
+            <div class="profile-header__stats">
+              <span>6 Projects</span>
+              <span class="stat-divider">&middot;</span>
+              <span>1,240 Points</span>
+              <span class="stat-divider">&middot;</span>
+              <span>48 Followers</span>
+              <span class="stat-divider">&middot;</span>
+              <span>12 Following</span>
+            </div>
+          </div>
+        </div>
+        <div class="profile-header__actions">
+          <button class="btn btn-secondary">Edit profile</button>
+          <button class="btn btn-secondary">Share profile</button>
+        </div>
+      </div>
+
+      <!-- Portfolio grid -->
+      <div class="portfolio-section">
+        <h3 class="portfolio-heading">Projects</h3>
+        <div class="portfolio-grid" id="portfolio-grid">
+          <!-- 6 cards injected by JS -->
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module">
+    import { isLoggedIn, getUsername, logout } from '../../js/auth.js';
+
+    // Auth gate
+    if (!isLoggedIn()) {
+      window.location.href = '/public/login.html?returnTo=' + encodeURIComponent(window.location.pathname);
+    }
+
+    const username = getUsername() || 'user';
+
+    // Sidebar user block
+    document.getElementById('sidebar-avatar').textContent = username.slice(0, 2).toUpperCase();
+    document.getElementById('sidebar-username').textContent = '@' + username;
+
+    document.getElementById('logout-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      logout();
+      window.location.href = '/public/index.html';
+    });
+
+    // Profile header — populate from auth state
+    const initials = username.slice(0, 2).toUpperCase();
+    document.getElementById('profile-avatar').textContent = initials;
+
+    // Format display name: replace underscores/hyphens with spaces, title case
+    const displayName = username.replace(/[_-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    document.getElementById('profile-name').textContent = displayName;
+    document.getElementById('profile-handle').textContent = '@' + username;
+
+    // Portfolio cards — 6 static projects (all values are static string literals)
+    const projects = [
+      { title: 'Brand Anthem 2025', mediaType: 'Video' },
+      { title: 'Product Launch',    mediaType: 'Animation' },
+      { title: 'Documentary Cut',   mediaType: 'Documentary' },
+      { title: 'Summer Reel',       mediaType: 'Video' },
+      { title: 'Motion Study',      mediaType: 'Animation' },
+      { title: 'Client Showcase',   mediaType: 'Short Film' }
+    ];
+
+    const portfolioGrid = document.getElementById('portfolio-grid');
+
+    projects.forEach(p => {
+      // Build card using DOM methods — no user input reaches the DOM
+      const card = document.createElement('div');
+      card.className = 'portfolio-card';
+
+      const thumbnail = document.createElement('div');
+      thumbnail.className = 'portfolio-card__thumbnail';
+      thumbnail.textContent = '[project-thumb.jpg]';
+
+      const body = document.createElement('div');
+      body.className = 'portfolio-card__body';
+
+      const title = document.createElement('h4');
+      title.className = 'portfolio-card__title';
+      title.textContent = p.title;
+
+      const badge = document.createElement('span');
+      badge.className = 'portfolio-card__badge';
+      badge.textContent = p.mediaType;
+
+      body.appendChild(title);
+      body.appendChild(badge);
+      card.appendChild(thumbnail);
+      card.appendChild(body);
+      portfolioGrid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>caspers-vid — Profile</title>
+  <!-- Google Fonts: Barlow Condensed (display), Barlow (body) -->
+  <!-- Font substitution note: Barlow and Barlow Condensed are loaded via Google Fonts.
+       If this font fails to load, the browser substitutes a system sans-serif font,
+       which will not match the design specification. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+  <!-- Design system CSS -->
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/motion.css">
+  <link rel="stylesheet" href="../css/components/nav.css">
+  <link rel="stylesheet" href="../css/components/grid.css">
+  <style>
+    body {
+      background-color: #1a1a1a;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    .profile-page {
+      padding: 70.4px 14.08px;
+      animation: newPage var(--duration-cinematic, 1s) var(--ease-sweep, cubic-bezier(0.625, 0.05, 0, 1)) both;
+    }
+
+    /* ---- Spotlight header ---- */
+    .profile-header {
+      display: flex;
+      gap: 28.16px;
+      align-items: flex-start;
+      margin-bottom: 70.4px;
+      flex-wrap: wrap;
+    }
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #3a3530;
+      border: 2px solid #4a4540;
+      flex-shrink: 0;
+    }
+
+    .profile-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 14.08px;
+    }
+
+    .profile-name-row {
+      display: flex;
+      align-items: baseline;
+      gap: 14.08px;
+      flex-wrap: wrap;
+    }
+
+    .profile-username {
+      font-family: 'Barlow Condensed', sans-serif; /* Font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #f5f0e8;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .profile-edit-label {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 12px;
+      color: #9e9588;
+    }
+
+    .profile-stats {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .profile-stat {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      color: #e8e2d8;
+    }
+
+    .stat-value.accent {
+      color: #d4c9b4;
+      font-weight: 400;
+    }
+
+    .profile-stat-sep {
+      color: #4a4540;
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+    }
+
+    .profile-actions {
+      display: flex;
+      align-items: center;
+      gap: 28.16px;
+      flex-wrap: wrap;
+    }
+
+    .profile-cta-btn {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      background: #111111;
+      color: #f5f0e8;
+      border: none;
+      border-radius: 2px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .profile-cta-btn:hover { background: #1f1f1f; }
+
+    .profile-share-link {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      color: #d4c9b4;
+      text-decoration: none;
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .profile-share-link:hover { color: #b8ad9a; }
+
+    /* ---- Portfolio section ---- */
+    .portfolio-section {
+      margin-bottom: 70.4px;
+    }
+
+    .portfolio-headline {
+      font-family: 'Barlow Condensed', sans-serif; /* Font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-size: 24px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #f5f0e8;
+      margin: 0 0 28.16px 0;
+    }
+
+    .portfolio-card {
+      background: #3a3530;
+      border: 1px solid #4a4540;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-2px);
+      border-color: #5a5550;
+    }
+
+    .portfolio-card-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #2a2520;
+      /* placeholder: represents image asset [my-project-N.jpg] */
+    }
+
+    .portfolio-card-body {
+      padding: 14.08px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .portfolio-card-title {
+      font-family: 'Barlow Condensed', sans-serif; /* Font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #f5f0e8;
+      margin: 0;
+    }
+
+    .portfolio-card-date {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 10.56px;
+      color: #9e9588;
+      margin: 0;
+    }
+
+    .portfolio-card-view {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      color: #f2f2f2;
+      text-decoration: none;
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 6px;
+    }
+
+    .portfolio-card-view:hover { color: #202020; }
+
+    /* ---- Empty-state card ---- */
+    .portfolio-empty-state {
+      border: 1px dashed #4a4540;
+      background: #3a3530;
+      padding: 42.24px 14.08px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 14.08px;
+      min-height: 160px;
+    }
+
+    .portfolio-empty-text {
+      font-family: 'Barlow Condensed', sans-serif; /* Font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #9e9588;
+      margin: 0;
+    }
+
+    .portfolio-empty-sub {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 12px;
+      color: #9e9588;
+      margin: 0;
+    }
+
+    /* Font diagnostic banner */
+    .font-diagnostic-banner {
+      background: #3d1a1a;
+      border-bottom: 1px solid #7a3a3a;
+      color: #f5f0e8;
+      font-family: monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      padding: 10px 14.08px;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+    .font-diagnostic-banner strong { color: #d4c9b4; }
+  </style>
+</head>
+<body>
+
+  <!-- WORKSPACE NAV -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-left">
+      <a href="../app/studio.html" class="nav-link regular">Studio</a>
+      <a href="../app/community.html" class="nav-link regular">Community</a>
+    </div>
+    <div class="nav-center">
+      <a href="../index.html" class="nav-wordmark" id="nav-wordmark">CASPERS-VID</a>
+    </div>
+    <div class="nav-right">
+      <a href="../app/profile.html" class="nav-link regular">Profile</a>
+      <button class="nav-link regular" id="logout-btn" style="background:none;border:none;cursor:pointer;color:inherit;">Log out</button>
+    </div>
+  </nav>
+
+  <main class="profile-page">
+
+    <!-- Spotlight header -->
+    <section class="profile-header">
+      <div class="profile-avatar"></div>
+      <div class="profile-meta">
+        <div class="profile-name-row">
+          <h1 class="profile-username" id="profile-username">—</h1>
+          <span class="profile-edit-label">(edit profile)</span>
+        </div>
+        <div class="profile-stats" id="profile-stats">
+          <span class="profile-stat"><span class="stat-value accent">0</span> projects published</span>
+          <span class="profile-stat-sep">·</span>
+          <span class="profile-stat"><span class="stat-value accent">0</span> community points</span>
+          <span class="profile-stat-sep">·</span>
+          <span class="profile-stat"><span class="stat-value accent">0</span> followers</span>
+        </div>
+        <div class="profile-actions">
+          <button class="profile-cta-btn" id="new-project-btn">Start a new project →</button>
+          <a href="#" class="profile-share-link" id="share-profile-link">Share my profile →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio grid -->
+    <section class="portfolio-section">
+      <h2 class="portfolio-headline">YOUR WORK</h2>
+
+      <div class="section-grid-3col portfolio-grid">
+
+        <!-- Placeholder project cards (2) — represents sample projects -->
+        <article class="portfolio-card">
+          <!-- placeholder: [my-project-1.jpg] -->
+          <div class="portfolio-card-thumb" aria-label="placeholder: my-project-1.jpg"></div>
+          <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">City Reel — Draft</h3>
+            <p class="portfolio-card-date">Added Jan 2026</p>
+            <a href="#" class="portfolio-card-view">View →</a>
+          </div>
+        </article>
+
+        <article class="portfolio-card">
+          <!-- placeholder: [my-project-2.jpg] -->
+          <div class="portfolio-card-thumb" aria-label="placeholder: my-project-2.jpg"></div>
+          <div class="portfolio-card-body">
+            <h3 class="portfolio-card-title">Summer Cut</h3>
+            <p class="portfolio-card-date">Added Dec 2025</p>
+            <a href="#" class="portfolio-card-view">View →</a>
+          </div>
+        </article>
+
+        <!-- Empty-state placeholder — always rendered (below existing cards, or alone if no cards) -->
+        <article class="portfolio-empty-state">
+          <p class="portfolio-empty-text">YOUR FIRST PROJECT WILL APPEAR HERE</p>
+          <p class="portfolio-empty-sub">Head to the Studio to create your first project.</p>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module">
+    import { isLoggedIn, getUser } from '../js/auth.js';
+    if (!isLoggedIn()) { window.location.href = '../login.html'; }
+
+    import { initNav } from '../js/components/nav.js';
+    initNav();
+
+    // Populate username from auth session
+    const user = getUser();
+    if (user) {
+      document.getElementById('profile-username').textContent = (user.username || user.email || 'CREATOR').toUpperCase();
+    }
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      import('../js/auth.js').then(({ logout }) => {
+        logout();
+        window.location.href = '../login.html';
+      });
+    });
+
+    // New project CTA
+    document.getElementById('new-project-btn').addEventListener('click', () => {
+      window.location.href = './studio.html';
+    });
+
+    // Share profile link
+    document.getElementById('share-profile-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      const u = getUser();
+      const username = u ? (u.username || u.email || 'creator') : 'creator';
+      alert('Your profile: /creators/' + username);
+    });
+
+    // Font diagnostic
+    (async () => {
+      await document.fonts.ready;
+      const missing = [];
+      if (!document.fonts.check('400 16px "Barlow Condensed"')) missing.push('Barlow Condensed');
+      if (!document.fonts.check('400 16px "Barlow"')) missing.push('Barlow');
+      if (missing.length === 0) return;
+      const banner = document.createElement('div');
+      banner.className = 'font-diagnostic-banner';
+      const label = document.createElement('strong');
+      label.textContent = 'Font load failure';
+      banner.appendChild(label);
+      missing.forEach((fontName, i) => {
+        banner.appendChild(document.createTextNode(i === 0 ? ' — ' : ' and '));
+        const nameEl = document.createElement('span');
+        nameEl.textContent = fontName;
+        banner.appendChild(nameEl);
+      });
+      banner.appendChild(document.createTextNode(' could not be loaded from Google Fonts. Typography is not faithful to the design spec.'));
+      document.body.prepend(banner);
+    })();
+  </script>
+
+</body>
+</html>

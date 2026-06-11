@@ -1,0 +1,262 @@
+/* ==========================================================================
+   HERO — Stone Ledger / Aravindan & Co.
+   Full viewport hero with video background, dark overlay
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Hero section wrapper
+   -------------------------------------------------------------------------- */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--color-hero-bg);
+  padding-top: 80px; /* space for absolute nav (50px) + breathing room */
+  padding-bottom: 80px;
+}
+
+/* --------------------------------------------------------------------------
+   Video container — full-bleed background
+   -------------------------------------------------------------------------- */
+.hero-video-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+}
+
+/* Gradient overlay — heavier on left where text lives, lets colonnade show right */
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(20, 18, 14, 0.92) 0%,
+    rgba(20, 18, 14, 0.75) 40%,
+    rgba(20, 18, 14, 0.35) 70%,
+    rgba(20, 18, 14, 0.15) 100%
+  );
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Hero content — anchored lower-left
+   -------------------------------------------------------------------------- */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding);
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--type-xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+  margin-bottom: 24px;
+}
+
+.hero-headline-group {
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: var(--color-page-bg);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hero-tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 2vw, 1.375rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--color-muted-text);
+  margin: 0 0 40px 0;
+  max-width: 420px;
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll indicator
+   -------------------------------------------------------------------------- */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.scroll-line {
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: var(--color-muted-text);
+  opacity: 0.5;
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 0.7; transform: scaleY(0.6); }
+}
+
+/* --------------------------------------------------------------------------
+   Button primitives (shared across pages)
+   -------------------------------------------------------------------------- */
+.btn {
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-btn-v) var(--space-btn-h);
+  border-radius: var(--space-btn-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-btn);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--color-primary-action);
+  color: var(--color-page-bg);
+  border-color: var(--color-primary-action);
+}
+
+.btn-primary:hover {
+  background: var(--color-heading-text);
+  border-color: var(--color-heading-text);
+  color: var(--color-page-bg);
+  transform: translateY(var(--hover-lift));
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-page-bg);
+  border-color: rgba(242, 239, 233, 0.5);
+}
+
+.btn-ghost:hover {
+  background: rgba(242, 239, 233, 0.1);
+  border-color: var(--color-page-bg);
+}
+
+.btn-outline-dark {
+  background: transparent;
+  color: var(--color-heading-text);
+  border-color: var(--color-heading-text);
+}
+
+.btn-outline-dark:hover {
+  background: var(--color-heading-text);
+  color: var(--color-page-bg);
+}
+
+.btn-lg {
+  padding: 14px 40px;
+  font-size: var(--type-body);
+}
+
+/* --------------------------------------------------------------------------
+   On-dark nav variant — white logo and links
+   -------------------------------------------------------------------------- */
+.site-nav.on-dark .nav-logo a {
+  color: var(--color-page-bg);
+}
+
+.site-nav.on-dark .nav-links a {
+  color: rgba(242, 239, 233, 0.75);
+}
+
+.site-nav.on-dark .nav-links a::after {
+  background: var(--color-page-bg);
+}
+
+.site-nav.on-dark .nav-links a:hover {
+  color: var(--color-page-bg);
+}
+
+.site-nav.on-dark .nav-cta a {
+  background: var(--color-primary-action);
+  border-color: var(--color-primary-action);
+  color: var(--color-page-bg);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  #hero {
+    align-items: flex-start;
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 12vw, 6rem);
+  }
+
+  .hero-scroll-indicator {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero {
+    padding-bottom: 48px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 14vw, 4.5rem);
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

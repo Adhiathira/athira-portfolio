@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request a Demo — Burnham</title>
+  <meta name="description" content="Book a 30-minute walkthrough with the Burnham team. See how precision specification software fits your practice.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ── Nav spacer ── */
+    .nav-spacer { height: 86px; }
+
+    /* ── Contact layout ── */
+    #contact-page {
+      min-height: calc(100vh - 86px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      gap: var(--grid-featured-gap);
+      align-items: start;
+    }
+
+    /* ── Left column: headline + supporting info ── */
+    #contact-left {
+      padding: 72px 0 80px;
+      position: sticky;
+      top: calc(86px + 40px);
+    }
+
+    #contact-eyebrow {
+      font-family: var(--font-heading);
+      font-size: var(--type-eyebrow);
+      font-weight: 500;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin: 0 0 24px;
+    }
+
+    #contact-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: var(--weight-display);
+      line-height: var(--leading-display);
+      letter-spacing: var(--tracking-display);
+      color: var(--color-heading);
+      margin: 0 0 28px;
+      max-width: 420px;
+    }
+
+    #contact-intro {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-muted-text);
+      margin: 0 0 48px;
+      max-width: 380px;
+    }
+
+    /* What to expect */
+    #contact-expect {
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 40px;
+    }
+
+    #contact-expect-label {
+      font-family: var(--font-heading);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin: 0 0 20px;
+    }
+
+    .expect-item {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 16px;
+      align-items: baseline;
+      margin: 0 0 18px;
+    }
+
+    .expect-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .expect-num {
+      font-family: var(--font-heading);
+      font-size: 0.6875rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--color-accent);
+      padding-top: 2px;
+    }
+
+    .expect-text {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--color-body-text);
+      margin: 0;
+    }
+
+    /* ── Right column: form ── */
+    #contact-right {
+      padding: 72px 0 80px;
+    }
+
+    #contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 2px;
+    }
+
+    .form-field label {
+      font-family: var(--font-heading);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin: 0 0 8px;
+      padding-top: 24px;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--color-body-text);
+      background: var(--color-page-bg);
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 0;
+      padding: 14px 16px;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+      appearance: none;
+      -webkit-appearance: none;
+      transition:
+        border-color var(--duration-xfast) var(--ease-primary),
+        background var(--duration-xfast) var(--ease-primary);
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--color-accent);
+      background: rgba(255,255,255,0.85);
+      outline: 2px solid transparent; /* Focus state: Twist E */
+      outline-offset: 2px;
+      box-shadow: 0 0 0 2px rgba(30,58,110,0.15);
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: rgba(0,0,0,0.28);
+    }
+
+    .form-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23000' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* Practice size checkboxes */
+    .form-field--checks .check-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--color-page-bg);
+      border: 1px solid rgba(0,0,0,0.12);
+      cursor: pointer;
+      user-select: none;
+      transition: background var(--duration-xfast) var(--ease-primary);
+    }
+
+    .check-item:hover {
+      background: var(--color-surface-2);
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      border: 1px solid rgba(0,0,0,0.3);
+      background: var(--color-page-bg);
+      border-radius: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      transition: background var(--duration-xfast) var(--ease-primary),
+                  border-color var(--duration-xfast) var(--ease-primary);
+    }
+
+    .check-item input[type="checkbox"]:checked {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    .check-item input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 1px;
+      width: 6px;
+      height: 9px;
+      border: 1.5px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .check-item input[type="checkbox"]:focus {
+      outline: 2px solid rgba(30,58,110,0.3);
+      outline-offset: 2px;
+    }
+
+    .check-label {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--color-body-text);
+    }
+
+    /* Submit */
+    #form-submit-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    #form-submit {
+      font-family: var(--font-heading);
+      font-size: var(--type-eyebrow);
+      font-weight: 500;
+      letter-spacing: var(--tracking-nav);
+      color: var(--color-page-bg);
+      background: var(--color-body-text);
+      border: 1px solid var(--color-body-text);
+      padding: var(--space-btn-y) var(--space-btn-x);
+      cursor: pointer;
+      transition:
+        background var(--duration-xfast) var(--ease-primary),
+        color var(--duration-xfast) var(--ease-primary);
+    }
+
+    #form-submit:hover {
+      background: transparent;
+      color: var(--color-body-text);
+    }
+
+    #form-submit:focus {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    #form-note {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    /* ── Divider line between columns ── */
+    #contact-page::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 86px;
+      bottom: 0;
+      width: 1px;
+      background: rgba(0,0,0,0.07);
+      pointer-events: none;
+    }
+
+    #contact-page {
+      position: relative;
+    }
+
+    /* ── Office strip (below form area) ── */
+    #offices-strip {
+      border-top: 1px solid rgba(0,0,0,0.08);
+      background: var(--color-surface-2);
+      padding: 56px 0;
+    }
+
+    #offices-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: var(--grid-featured-gap);
+      align-items: start;
+    }
+
+    #offices-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-eyebrow);
+      font-weight: 500;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin: 0;
+      padding-top: 4px;
+    }
+
+    #offices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .office-name {
+      font-family: var(--font-heading);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      letter-spacing: var(--tracking-heading);
+      color: var(--color-heading);
+      margin: 0 0 12px;
+    }
+
+    .office-address {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--color-muted-text);
+      margin: 0 0 16px;
+    }
+
+    .office-contact {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: var(--color-muted-text);
+      text-decoration: none;
+      display: block;
+      line-height: 1.6;
+      transition: color var(--duration-xfast) var(--ease-primary);
+    }
+
+    .office-contact:hover {
+      color: var(--color-accent);
+    }
+
+    /* ── Minimal footer ── */
+    #footer {
+      background: var(--color-surface-2);
+      padding: 40px 0;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    #footer-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-logo-text {
+      font-family: var(--font-heading);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      letter-spacing: var(--tracking-heading);
+      color: var(--color-heading);
+      text-decoration: none;
+    }
+
+    .footer-copy {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    .footer-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--color-muted-text);
+      text-decoration: none;
+      transition: color var(--duration-xfast) var(--ease-primary);
+    }
+
+    .footer-links a:hover { color: var(--color-body-text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      #contact-page {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      #contact-page::after {
+        display: none;
+      }
+
+      #contact-left {
+        position: static;
+        padding-bottom: 40px;
+      }
+
+      #contact-right {
+        padding-top: 0;
+        border-top: 1px solid rgba(0,0,0,0.08);
+      }
+
+      #offices-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      #offices-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .form-field--checks .check-grid { grid-template-columns: 1fr; }
+      #form-submit-row { flex-direction: column; align-items: flex-start; }
+      #offices-grid { grid-template-columns: 1fr; }
+      #footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Burnham home">
+      <span class="nav-logo-text">Burnham</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="work.html">Practices</a></li>
+      <li><a href="method.html">Method</a></li>
+      <li><a href="contact.html" class="nav-link--active">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Request demo</a>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div id="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="work.html">Practices</a>
+  <a href="method.html">Method</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="nav-cta-mobile">Request demo</a>
+</div>
+<div class="nav-spacer" aria-hidden="true"></div>
+
+<!-- ── Contact layout ── -->
+<main id="contact-page" aria-label="Request a demo">
+
+  <!-- Left: Headline + supporting detail -->
+  <aside id="contact-left" aria-label="Demo information">
+
+    <p id="contact-eyebrow">Request a demo</p>
+    <h1 id="contact-heading">See Burnham in your practice's context.</h1>
+    <p id="contact-intro">A 30-minute walkthrough with the Burnham team. We load a sample specification library based on your typology, run through the full workflow, and answer any integration questions your team has.</p>
+
+    <div id="contact-expect" aria-label="What to expect">
+      <p id="contact-expect-label">What to expect</p>
+
+      <div class="expect-item" data-reveal="fade-up">
+        <span class="expect-num">01</span>
+        <p class="expect-text">A live demonstration using a specification library in your building typology — not a generic demo dataset.</p>
+      </div>
+
+      <div class="expect-item" data-reveal="fade-up" data-reveal-delay="0.08">
+        <span class="expect-num">02</span>
+        <p class="expect-text">Walkthrough of the import process — NBS, RIBA, or your existing Word and PDF specifications.</p>
+      </div>
+
+      <div class="expect-item" data-reveal="fade-up" data-reveal-delay="0.16">
+        <span class="expect-num">03</span>
+        <p class="expect-text">A pricing discussion based on your practice size and current CAD/BIM stack.</p>
+      </div>
+
+      <div class="expect-item" data-reveal="fade-up" data-reveal-delay="0.24">
+        <span class="expect-num">04</span>
+        <p class="expect-text">A follow-up summary with your specific integration notes and a 14-day trial offer if it's the right fit.</p>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- Right: Form -->
+  <div id="contact-right">
+    <form id="contact-form" novalidate aria-label="Demo request form">
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="field-first-name">First name</label>
+          <input type="text" id="field-first-name" name="first_name" autocomplete="given-name" placeholder="Anna">
+        </div>
+        <div class="form-field">
+          <label for="field-last-name">Last name</label>
+          <input type="text" id="field-last-name" name="last_name" autocomplete="family-name" placeholder="Kellman">
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="field-email">Work email</label>
+        <input type="email" id="field-email" name="email" autocomplete="email" placeholder="anna@practice.com">
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="field-practice">Practice name</label>
+          <input type="text" id="field-practice" name="practice" autocomplete="organization" placeholder="Kellman Architecture">
+        </div>
+        <div class="form-field">
+          <label for="field-role">Your role</label>
+          <select id="field-role" name="role">
+            <option value="" disabled selected>Select role</option>
+            <option value="director">Director / Principal</option>
+            <option value="associate">Associate</option>
+            <option value="architect">Architect</option>
+            <option value="project-manager">Project Manager</option>
+            <option value="spec-lead">Specifications Lead</option>
+            <option value="it-operations">IT / Operations</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="field-typology">Primary building typology</label>
+        <select id="field-typology" name="typology">
+          <option value="" disabled selected>Select typology</option>
+          <option value="residential-private">Residential — private</option>
+          <option value="residential-social">Residential — social / affordable</option>
+          <option value="commercial-office">Commercial — office</option>
+          <option value="commercial-retail">Commercial — retail / mixed use</option>
+          <option value="education">Education</option>
+          <option value="healthcare">Healthcare</option>
+          <option value="cultural">Cultural / heritage</option>
+          <option value="hospitality">Hospitality</option>
+          <option value="industrial">Industrial / logistics</option>
+          <option value="mixed">Mixed — multiple typologies</option>
+        </select>
+      </div>
+
+      <div class="form-field form-field--checks">
+        <label as="legend">Practice size</label>
+        <div class="check-grid" role="group" aria-label="Practice size">
+          <label class="check-item">
+            <input type="checkbox" name="practice_size" value="1-5">
+            <span class="check-label">1–5 people</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="practice_size" value="6-20">
+            <span class="check-label">6–20 people</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="practice_size" value="21-60">
+            <span class="check-label">21–60 people</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="practice_size" value="60+">
+            <span class="check-label">60+ people</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="field-cad">Current CAD / BIM stack</label>
+        <select id="field-cad" name="cad_stack">
+          <option value="" disabled selected>Select primary tool</option>
+          <option value="revit">Autodesk Revit</option>
+          <option value="autocad">AutoCAD</option>
+          <option value="archicad">ArchiCAD</option>
+          <option value="vectorworks">Vectorworks</option>
+          <option value="rhino">Rhino / Grasshopper</option>
+          <option value="allplan">Allplan</option>
+          <option value="bentley">Bentley OpenBuildings</option>
+          <option value="mixed">Mixed / multiple</option>
+          <option value="none">No current BIM</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="field-notes">Anything specific you'd like us to cover?</label>
+        <textarea id="field-notes" name="notes" placeholder="E.g. we currently manage specs in Excel and Word, and need to understand how import works across 40 live projects..."></textarea>
+      </div>
+
+      <div id="form-submit-row">
+        <button type="submit" id="form-submit">Request demo</button>
+        <p id="form-note">We respond within one business day. No sales pressure — just a technical walkthrough.</p>
+      </div>
+
+    </form>
+  </div>
+
+</main>
+
+<!-- ── Offices ── -->
+<section id="offices-strip" aria-label="Our offices">
+  <div id="offices-inner">
+    <p id="offices-label">Offices</p>
+    <div id="offices-grid">
+
+      <address class="office">
+        <p class="office-name">London</p>
+        <p class="office-address">
+          12 Clerkenwell Green<br>
+          London EC1R 0DP<br>
+          United Kingdom
+        </p>
+        <a href="mailto:london@burnham.io" class="office-contact">london@burnham.io</a>
+        <a href="tel:+442071234567" class="office-contact">+44 20 7123 4567</a>
+      </address>
+
+      <address class="office">
+        <p class="office-name">Amsterdam</p>
+        <p class="office-address">
+          Keizersgracht 241<br>
+          1016 EA Amsterdam<br>
+          The Netherlands
+        </p>
+        <a href="mailto:amsterdam@burnham.io" class="office-contact">amsterdam@burnham.io</a>
+        <a href="tel:+31202345678" class="office-contact">+31 20 234 5678</a>
+      </address>
+
+      <address class="office">
+        <p class="office-name">Sydney</p>
+        <p class="office-address">
+          Level 4, 117 York Street<br>
+          Sydney NSW 2000<br>
+          Australia
+        </p>
+        <a href="mailto:sydney@burnham.io" class="office-contact">sydney@burnham.io</a>
+        <a href="tel:+61292345678" class="office-contact">+61 2 9234 5678</a>
+      </address>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer id="footer" aria-label="Site footer">
+  <div id="footer-inner">
+    <a href="index.html" class="footer-logo-text" aria-label="Burnham home">Burnham</a>
+    <p class="footer-copy">&copy; 2026 Burnham Technology Ltd.</p>
+    <ul class="footer-links" role="list">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ── Nav JS ── -->
+<script>
+  (function () {
+    const nav = document.getElementById('site-nav');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    const toggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+    if (nav) {
+      window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+      nav.classList.add('scrolled');
+    }
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('is-open');
+        nav.classList.toggle('nav-mobile-open', isOpen);
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('a').forEach(l => {
+        l.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+  })();
+</script>
+
+<!-- ── GSAP animations ── -->
+<script>
+  (function () {
+    if (typeof gsap === 'undefined') return;
+
+    const DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-slow')) || 0.9;
+    const EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+    // Left column: stagger entrance
+    const leftEls = document.querySelectorAll('#contact-eyebrow, #contact-heading, #contact-intro');
+    gsap.set(leftEls, { y: 24, opacity: 0 });
+    gsap.to(leftEls, { y: 0, opacity: 1, duration: DUR, ease: 'power2.out', stagger: 0.12, delay: 0.1 });
+
+    // Form fields stagger in
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Expect items
+      const expectItems = document.querySelectorAll('.expect-item');
+      gsap.set(expectItems, { y: 20, opacity: 0 });
+      ScrollTrigger.create({
+        trigger: '#contact-expect', start: 'top 80%', once: true,
+        onEnter: () => gsap.to(expectItems, {
+          y: 0, opacity: 1, duration: DUR, ease: EASE, stagger: 0.08
+        })
+      });
+
+      // Form: slide in from right on desktop
+      const formEl = document.getElementById('contact-form');
+      if (formEl && window.innerWidth > 900) {
+        gsap.set(formEl, { x: 32, opacity: 0 });
+        gsap.to(formEl, { x: 0, opacity: 1, duration: DUR * 1.1, ease: 'power2.out', delay: 0.2 });
+      }
+
+      // Offices strip
+      const officeEls = document.querySelectorAll('.office');
+      gsap.set(officeEls, { y: 24, opacity: 0 });
+      ScrollTrigger.create({
+        trigger: '#offices-strip', start: 'top 80%', once: true,
+        onEnter: () => gsap.to(officeEls, {
+          y: 0, opacity: 1, duration: DUR, ease: EASE, stagger: 0.1
+        })
+      });
+    }
+
+    // Form submit micro-interaction
+    const submitBtn = document.getElementById('form-submit');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        gsap.to(this, { scale: 0.97, duration: 0.1, ease: 'power2.in',
+          onComplete: () => gsap.to(this, { scale: 1, duration: 0.15, ease: 'power2.out' })
+        });
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

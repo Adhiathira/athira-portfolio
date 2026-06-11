@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Request access to Parable — the structured annotation workspace for legal, academic, and editorial teams.">
+  <title>Contact — Parable</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/contact.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <a href="index.html">Parable</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="features.html">Features</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-link--active">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="features.html">Features</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+<script>
+(function() {
+  var nav = document.getElementById('site-nav');
+  var mobileMenu = document.getElementById('nav-mobile-menu');
+  var toggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+  function onScroll() {
+    if (window.scrollY > 10) {
+      nav && nav.classList.add('scrolled');
+    } else {
+      nav && nav.classList.remove('scrolled');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  if (toggle) {
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu && mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow = mobileMenu && mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+  }
+})();
+</script>
+
+<!-- ── PAGE HEADER ── -->
+<header id="contact-header">
+  <div id="contact-header-inner">
+    <p id="contact-eyebrow">Access</p>
+    <h1 id="contact-title">Request<br>early access.</h1>
+    <p id="contact-subtitle">We are onboarding legal, academic, and editorial teams now. Tell us about your work and we will follow up within two business days.</p>
+  </div>
+</header>
+
+<!-- ── MAIN CONTACT AREA ── -->
+<main id="contact-main">
+  <div id="contact-main-inner">
+
+    <!-- ── FORM ── -->
+    <div id="contact-form-col">
+      <form id="contact-form" novalidate>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="field-name">Full name</label>
+            <input
+              class="form-input"
+              type="text"
+              id="field-name"
+              name="name"
+              autocomplete="name"
+              required
+              placeholder="Jane Smith"
+            >
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-email">Work email</label>
+            <input
+              class="form-input"
+              type="email"
+              id="field-email"
+              name="email"
+              autocomplete="email"
+              required
+              placeholder="jane@firm.com"
+            >
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="field-org">Organisation</label>
+            <input
+              class="form-input"
+              type="text"
+              id="field-org"
+              name="organisation"
+              autocomplete="organization"
+              placeholder="Latham & Watkins LLP"
+            >
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-team-size">Team size</label>
+            <select class="form-input form-select" id="field-team-size" name="team_size">
+              <option value="" disabled selected>Select range</option>
+              <option value="1">Just me</option>
+              <option value="2-5">2 – 5</option>
+              <option value="6-20">6 – 20</option>
+              <option value="21+">21 or more</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group form-group--full">
+          <label class="form-label" for="field-context">How does your team currently manage research and annotation?</label>
+          <textarea
+            class="form-input form-textarea"
+            id="field-context"
+            name="context"
+            rows="5"
+            placeholder="Describe your current workflow — tools you use, friction points, what a better solution would mean for your team."
+          ></textarea>
+        </div>
+
+        <div class="form-group form-group--full">
+          <label class="form-label" for="field-use-case">Primary use case</label>
+          <select class="form-input form-select" id="field-use-case" name="use_case">
+            <option value="" disabled selected>Select category</option>
+            <option value="legal">Legal research & brief preparation</option>
+            <option value="academic">Academic research & peer review</option>
+            <option value="editorial">Editorial & long-form journalism</option>
+            <option value="policy">Policy analysis & government</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div id="form-submit-row">
+          <button type="submit" id="contact-submit" class="contact-btn-primary">
+            Send application
+          </button>
+          <p id="form-note">We read every application. No automated replies.</p>
+        </div>
+
+        <!-- ── Success state ── -->
+        <div id="form-success" aria-live="polite">
+          <p id="form-success-headline">Application received.</p>
+          <p id="form-success-body">We will be in touch within two business days. In the meantime, explore <a href="features.html">what Parable does</a>.</p>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- ── SIDEBAR ── -->
+    <aside id="contact-sidebar">
+      <div class="contact-aside-block" id="aside-who">
+        <p class="contact-aside-label">Who we accept</p>
+        <ul class="contact-aside-list">
+          <li>Legal teams: litigation, appellate, regulatory</li>
+          <li>Academic researchers across disciplines</li>
+          <li>Investigative and long-form editorial teams</li>
+          <li>Policy analysts and government research offices</li>
+        </ul>
+      </div>
+
+      <div class="contact-aside-block" id="aside-what">
+        <p class="contact-aside-label">What to expect</p>
+        <ol class="contact-aside-list contact-aside-list--numbered">
+          <li>Application reviewed within 48 hours</li>
+          <li>30-minute onboarding call with a team member</li>
+          <li>Workspace provisioned and configured for your documents</li>
+          <li>Ongoing access with direct line to our team</li>
+        </ol>
+      </div>
+
+      <div class="contact-aside-block" id="aside-quote">
+        <blockquote class="contact-pullquote">
+          &ldquo;The onboarding was the most useful product conversation we have had in three years.&rdquo;
+        </blockquote>
+        <p class="contact-pullquote-attr">Research Director, The Economist Group</p>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<!-- ── FOOTER ── -->
+<footer id="contact-footer">
+  <div id="contact-footer-inner">
+    <div>
+      <span class="contact-footer-brand">Parable</span>
+      <p class="contact-footer-tagline">Research, annotated.</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <ul id="contact-footer-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <p class="contact-footer-copy">&copy; 2026 Parable.</p>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+var DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.468;
+var EAS = (getComputedStyle(document.documentElement).getPropertyValue('--ease-primary') || 'ease-in-out').trim();
+
+// Header entrance
+gsap.from('#contact-header-inner > *', {
+  y: 18,
+  duration: DUR,
+  stagger: 0.1,
+  ease: EAS,
+  delay: 0.1
+});
+
+// Form columns slide in from opposite sides
+gsap.from('#contact-form-col', {
+  scrollTrigger: { trigger: '#contact-main', start: 'top 85%' },
+  x: -48,
+  duration: DUR * 1.2,
+  ease: EAS
+});
+
+gsap.from('#contact-sidebar', {
+  scrollTrigger: { trigger: '#contact-main', start: 'top 85%' },
+  x: 48,
+  duration: DUR * 1.2,
+  ease: EAS
+});
+
+// Sidebar blocks stagger
+gsap.from('.contact-aside-block', {
+  scrollTrigger: { trigger: '#contact-sidebar', start: 'top 80%' },
+  y: 24,
+  duration: DUR * 1.1,
+  stagger: 0.14,
+  ease: EAS
+});
+
+// Form submit handler
+var form = document.getElementById('contact-form');
+var success = document.getElementById('form-success');
+if (form && success) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Simulate submission — replace with real endpoint
+    form.style.display = 'none';
+    success.style.display = 'block';
+    gsap.from(success, { y: 20, duration: DUR, ease: EAS });
+  });
+}
+</script>
+
+</body>
+</html>

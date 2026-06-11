@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Compendium</title>
+  <meta name="description" content="Contact Compendium to request access, discuss an institutional partnership, or speak with our collections team about your manuscript material.">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/page-header.css">
+  <link rel="stylesheet" href="components/footer.css">
+
+  <style>
+  /* Contact page */
+  #contact-body {
+    background: var(--color-page-bg);
+    padding: var(--space-section) 0;
+  }
+
+  #contact-body-inner {
+    max-width: var(--grid-max-width);
+    margin: 0 auto;
+    padding: 0 var(--grid-gutter);
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 96px;
+    align-items: start;
+  }
+
+  /* Left column — contact info */
+  #contact-info {
+    position: sticky;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  #contact-info-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  #contact-info-label {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted-text);
+    margin: 0;
+  }
+
+  #contact-info-heading {
+    font-family: var(--font-heading);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  #contact-info-body {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--color-body-text);
+    margin: 0;
+  }
+
+  /* Contact channels */
+  #contact-channels {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .contact-channel {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .contact-channel-type {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted-text);
+    margin: 0;
+  }
+
+  .contact-channel-value {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-heading);
+    text-decoration: none;
+    transition: var(--hover-transition);
+    display: inline-block;
+  }
+
+  .contact-channel-value:hover {
+    opacity: 0.55;
+  }
+
+  .contact-channel-note {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--color-muted-text);
+    margin: 0;
+  }
+
+  /* Right column — form */
+  #contact-form-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  #contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .form-label {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted-text);
+  }
+
+  .form-label span.required {
+    color: var(--color-accent);
+    margin-left: 2px;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-heading);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-radius: 0;
+    padding: 10px 0;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.45s ease-in-out;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23696969'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    padding-right: 24px;
+  }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    border-bottom-width: 2px;
+    border-bottom-color: #000000;
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: rgba(0,0,0,0.3);
+    font-style: italic;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+  }
+
+  #form-submit {
+    align-self: flex-start;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #000000;
+    background: transparent;
+    border: 1px solid #000000;
+    border-radius: var(--radius-btn);
+    padding: var(--space-cta-v) var(--space-cta-h);
+    cursor: pointer;
+    transition: var(--hover-transition);
+  }
+
+  #form-submit:hover {
+    background: #000000;
+    color: var(--color-page-bg);
+  }
+
+  /* Form success message */
+  #form-success {
+    display: none;
+    padding: 24px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-body-text);
+    line-height: 1.6;
+    background: rgba(30,58,110,0.04);
+    border-left: 2px solid var(--color-accent);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    #contact-body-inner {
+      grid-template-columns: 1fr;
+      gap: 56px;
+    }
+    #contact-info {
+      position: relative;
+      top: 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    #form-submit {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Compendium</a>
+    <ul class="nav-links">
+      <li><a href="collections.html">Collections</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="contact.html" class="nav-link--active">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+<div id="nav-mobile-menu" class="nav-mobile-menu">
+  <a href="collections.html">Collections</a>
+  <a href="about.html">About</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <span class="page-header-eyebrow">Get in touch</span>
+    <h1 class="page-header-title">Contact</h1>
+  </div>
+</header>
+
+<main id="contact-body">
+  <div id="contact-body-inner">
+
+    <!-- Left: contact info -->
+    <aside id="contact-info">
+      <div id="contact-info-intro">
+        <p id="contact-info-label">Write to us</p>
+        <h2 id="contact-info-heading">We read everything.</h2>
+        <p id="contact-info-body">Whether you're a doctoral candidate with three months left on a dissertation, or the head of a national archive with 400,000 undigitized folios — we want to hear about it. Tell us what you're working with.</p>
+      </div>
+
+      <div id="contact-channels">
+        <div class="contact-channel">
+          <p class="contact-channel-type">General enquiries</p>
+          <a href="mailto:hello@compendium.io" class="contact-channel-value">hello@compendium.io</a>
+          <p class="contact-channel-note">Response within one business day</p>
+        </div>
+        <div class="contact-channel">
+          <p class="contact-channel-type">Institutional partnerships</p>
+          <a href="mailto:collections@compendium.io" class="contact-channel-value">collections@compendium.io</a>
+          <p class="contact-channel-note">For libraries, archives, and research institutions</p>
+        </div>
+        <div class="contact-channel">
+          <p class="contact-channel-type">Technical support</p>
+          <a href="mailto:support@compendium.io" class="contact-channel-value">support@compendium.io</a>
+          <p class="contact-channel-note">For existing account holders</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right: form -->
+    <div id="contact-form-wrap">
+      <form id="contact-form" novalidate>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contact-name" class="form-label">Name <span class="required">*</span></label>
+            <input
+              type="text"
+              id="contact-name"
+              class="form-input"
+              placeholder="Your full name"
+              required
+            >
+          </div>
+          <div class="form-group">
+            <label for="contact-email" class="form-label">Email <span class="required">*</span></label>
+            <input
+              type="email"
+              id="contact-email"
+              class="form-input"
+              placeholder="you@institution.edu"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="contact-institution" class="form-label">Institution or affiliation</label>
+          <input
+            type="text"
+            id="contact-institution"
+            class="form-input"
+            placeholder="University, library, archive, or independent"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="contact-enquiry" class="form-label">Type of enquiry <span class="required">*</span></label>
+          <select id="contact-enquiry" class="form-select" required>
+            <option value="" disabled selected>Select one</option>
+            <option value="access">Request access — Scholar plan</option>
+            <option value="institution">Institutional partnership</option>
+            <option value="archive">Archive / custom deployment</option>
+            <option value="demo">Request a demonstration</option>
+            <option value="support">Technical support</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="contact-material" class="form-label">Tell us about your material</label>
+          <textarea
+            id="contact-material"
+            class="form-textarea"
+            placeholder="Language, approximate date, number of folios, current state of digitization..."
+          ></textarea>
+        </div>
+
+        <button type="submit" id="form-submit">Send enquiry</button>
+      </form>
+
+      <div id="form-success">
+        Your enquiry has been received. A member of the Compendium team will respond within one business day.
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand">
+        <p id="footer-brand-name">Compendium</p>
+        <p id="footer-brand-tagline">Manuscript intelligence for the materials that endure.</p>
+      </div>
+      <div id="footer-nav-columns">
+        <div class="footer-nav-col">
+          <p class="footer-nav-col-heading">Platform</p>
+          <ul class="footer-nav-list">
+            <li><a href="collections.html">Collections</a></li>
+            <li><a href="about.html">Method</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <p class="footer-nav-col-heading">Resources</p>
+          <ul class="footer-nav-list">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">TEI Export guide</a></li>
+            <li><a href="#">Scribal hand library</a></li>
+            <li><a href="#">Research partnerships</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-copyright">© 2025 Compendium. All rights reserved.</p>
+      <ul id="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="behaviors/nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const BASE_DURATION = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--duration-base')
+  ) || 0.75;
+  const EASE = (getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim()) || 'power2.out';
+
+  // Page header
+  gsap.from('.page-header-inner', { y: 24, duration: BASE_DURATION, ease: EASE, delay: 0.2 });
+
+  // Contact info — slide from left
+  gsap.from('#contact-info', {
+    scrollTrigger: { trigger: '#contact-body', start: 'top 85%' },
+    x: -36,
+    duration: BASE_DURATION,
+    ease: EASE,
+  });
+
+  // Form — slide from right
+  gsap.from('#contact-form-wrap', {
+    scrollTrigger: { trigger: '#contact-body', start: 'top 85%' },
+    x: 36,
+    duration: BASE_DURATION,
+    ease: EASE,
+  });
+
+  // Form channels — stagger
+  document.querySelectorAll('.contact-channel').forEach((ch, i) => {
+    gsap.from(ch, {
+      scrollTrigger: { trigger: '#contact-channels', start: 'top 88%' },
+      y: 18,
+      duration: BASE_DURATION * 0.8,
+      delay: i * 0.1,
+      ease: EASE,
+    });
+  });
+
+  // Form submission (demo — prevents default, shows success)
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+
+  if (form && success) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Basic validation
+      const name = form.querySelector('#contact-name').value.trim();
+      const email = form.querySelector('#contact-email').value.trim();
+      const enquiry = form.querySelector('#contact-enquiry').value;
+
+      if (!name || !email || !enquiry) {
+        // Shake the submit button
+        gsap.fromTo('#form-submit', { x: -6 }, { x: 6, repeat: 3, yoyo: true, duration: 0.1, ease: 'none' });
+        return;
+      }
+
+      // Hide form, show success
+      gsap.to(form, {
+        opacity: 0,
+        y: -12,
+        duration: 0.45,
+        ease: EASE,
+        onComplete: () => {
+          form.style.display = 'none';
+          success.style.display = 'block';
+          gsap.from(success, { y: 12, duration: BASE_DURATION, ease: EASE });
+        }
+      });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

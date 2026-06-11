@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>caspers-vid — Studio</title>
+  <!-- Google Fonts: Barlow Condensed (display), Barlow (body) -->
+  <!-- Font substitution note: Barlow and Barlow Condensed are loaded via Google Fonts.
+       If this font fails to load, the browser substitutes a system sans-serif font,
+       which will not match the design specification. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+  <!-- Design system CSS — paths one level up from /app/ -->
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/motion.css">
+  <link rel="stylesheet" href="../css/components/nav.css">
+  <style>
+    /* Font diagnostic banner — shown only when Google Fonts fails to load */
+    .font-diagnostic-banner {
+      background: #3d1a1a;
+      border-bottom: 1px solid #7a3a3a;
+      color: #f5f0e8;
+      font-family: monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      padding: 10px 14.08px;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+    .font-diagnostic-banner strong { color: #d4c9b4; }
+    .font-diagnostic-banner .font-name { font-style: italic; }
+    .font-diagnostic-banner a { color: #d4c9b4; }
+
+    /* -------------------------------------------------------------------------
+       Page base
+       ------------------------------------------------------------------------- */
+    body {
+      background-color: #1a1a1a; /* page-bg */
+      margin: 0;
+      overflow: hidden; /* workspace fills viewport — no page scroll */
+    }
+
+    /* -------------------------------------------------------------------------
+       Workspace container
+       Two-column flex layout below the fixed nav (56px nav height).
+       newPage entrance animation rises from bottom of viewport on load.
+       Source: motion.css @keyframes newPage
+       Duration: var(--duration-cinematic) = 1s
+       Easing: var(--ease-sweep) = cubic-bezier(0.625, 0.05, 0, 1)
+       ------------------------------------------------------------------------- */
+    .workspace {
+      display: flex;
+      height: calc(100vh - 56px); /* 56px = nav height */
+      margin-top: 56px; /* push below fixed nav */
+
+      /* newPage entrance animation — incoming page rises from bottom half of viewport */
+      animation: newPage var(--duration-cinematic, 1s) var(--ease-sweep, cubic-bezier(0.625, 0.05, 0, 1)) both;
+    }
+
+    /* -------------------------------------------------------------------------
+       Sidebar — left panel, 240px fixed width
+       font: Barlow Condensed (section labels), Barlow (project names)
+       ------------------------------------------------------------------------- */
+    .workspace-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: #1c1c1c; /* workspace sidebar bg */
+      padding: 14.08px; /* sidebar padding */
+      box-sizing: border-box;
+      overflow-y: auto;
+      border-right: 1px solid #4a4540; /* border / divider */
+    }
+
+    /* Section label — "PROJECTS", "TOOLS"
+       font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+    .sidebar-label {
+      font-family: 'Barlow Condensed', sans-serif; /* Font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-size: 10.56px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9e9588; /* muted text */
+      margin: 0 0 14.08px 0; /* margin-bottom 14.08px */
+    }
+
+    .sidebar-label--tools {
+      margin-top: 28.16px; /* 2× spacing-base above TOOLS label */
+    }
+
+    /* Project name rows — Barlow, muted, separated by bottom border */
+    .sidebar-project {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      font-weight: 400;
+      color: #9e9588; /* muted text */
+      padding: 8px 0;
+      border-bottom: 1px solid #4a4540; /* border / divider */
+      cursor: pointer;
+      transition: color var(--duration-fast, 0.15s) var(--ease-standard, cubic-bezier(0.4, 0, 0.2, 1));
+    }
+
+    .sidebar-project:hover {
+      color: #e8e2d8; /* body text — lightens on hover */
+    }
+
+    /* Tools grid — 2×2 grid of icon-slot placeholders */
+    .sidebar-tools-grid {
+      display: grid;
+      grid-template-columns: 40px 40px;
+      gap: 8px;
+    }
+
+    /* Individual icon slot — empty placeholder, 40×40px */
+    .sidebar-tool-slot {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #4a4540; /* border / divider */
+      background: transparent;
+    }
+
+    /* -------------------------------------------------------------------------
+       Main canvas — fills remaining width
+       ------------------------------------------------------------------------- */
+    .workspace-canvas {
+      flex: 1;
+      position: relative; /* anchor for absolute children */
+      background: #1c1c1c; /* canvas bg */
+      overflow: hidden;
+    }
+
+    /* Canvas placeholder text overlay — centered absolutely
+       font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+    .canvas-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none; /* non-interactive */
+    }
+
+    .canvas-overlay-text {
+      font-family: 'Barlow Condensed', sans-serif; /* Font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #f5f0e8; /* primary heading text */
+      margin: 0;
+    }
+
+    /* -------------------------------------------------------------------------
+       Canvas action bar — top-right of canvas area
+       "Publish" and "Share" buttons
+       ------------------------------------------------------------------------- */
+    .canvas-action-bar {
+      position: absolute;
+      top: 14.08px; /* base spacing from top of canvas */
+      right: 14.08px; /* base spacing from right of canvas */
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Action button base — shared by Publish and Share
+       font: Barlow — install via Google Fonts if not rendering correctly */
+    .canvas-btn {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: #f5f0e8; /* primary heading text */
+      background: #111111; /* primary action button background */
+      border: none;
+      border-radius: 2px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color var(--duration-fast, 0.15s) var(--ease-standard, cubic-bezier(0.4, 0, 0.2, 1));
+    }
+
+    .canvas-btn:hover {
+      background: #1f1f1f; /* slightly lighter on hover */
+    }
+
+    /* -------------------------------------------------------------------------
+       Tutorial overlay card — injected by JS on first session
+       ------------------------------------------------------------------------- */
+    .tutorial-card {
+      background: #1c1c1c;
+      padding: 42.24px;
+      max-width: 480px;
+      width: 90%;
+      border: 1px solid #4a4540; /* border / divider */
+    }
+
+    .tutorial-heading {
+      font-family: 'Barlow Condensed', sans-serif; /* Font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-size: 28px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #f5f0e8; /* primary heading text */
+      margin: 0 0 28.16px 0;
+    }
+
+    .tutorial-step {
+      font-family: 'Barlow', sans-serif; /* Font: Barlow — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      color: #e8e2d8; /* body text */
+      margin: 0 0 14.08px 0;
+      line-height: 1.6;
+    }
+
+    .tutorial-step--last {
+      margin-bottom: 28.16px;
+    }
+
+    .tutorial-dismiss-btn {
+      font-family: 'Barlow Condensed', sans-serif; /* Font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-size: 14.08px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: #111111; /* primary action button background */
+      color: #f5f0e8; /* primary heading text */
+      border: none;
+      padding: 14.08px 28.16px;
+      cursor: pointer;
+      transition: background-color var(--duration-fast, 0.15s) var(--ease-standard, cubic-bezier(0.4, 0, 0.2, 1));
+    }
+
+    .tutorial-dismiss-btn:hover {
+      background: #1f1f1f;
+    }
+
+    /* Studio nav — always show background (workspace, not marketing pages) */
+    #site-nav {
+      background: #1c1c1c; /* nav bg — always visible in workspace, no scroll trigger needed */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WORKSPACE NAV — gated in-product nav, replaces marketing nav -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-left">
+      <a href="../app/studio.html" class="nav-link regular">Studio</a>
+      <a href="../app/community.html" class="nav-link regular">Community</a>
+    </div>
+    <div class="nav-center">
+      <a href="../index.html" class="nav-wordmark" id="nav-wordmark">CASPERS-VID</a>
+    </div>
+    <div class="nav-right">
+      <a href="../app/profile.html" class="nav-link regular">Profile</a>
+      <button class="nav-link regular" id="logout-btn" style="background:none;border:none;cursor:pointer;color:inherit;">Log out</button>
+    </div>
+  </nav>
+
+  <!-- WORKSPACE — two-column layout, fills viewport below nav -->
+  <div class="workspace">
+
+    <!-- LEFT SIDEBAR — 240px fixed, projects + tools -->
+    <aside class="workspace-sidebar">
+
+      <!-- Projects section -->
+      <div class="sidebar-label">Projects</div>
+
+      <!-- Placeholder project entries — Barlow, muted, bottom-border separated -->
+      <div class="sidebar-project">Untitled Project</div>
+      <div class="sidebar-project">City Reel — Draft</div>
+      <div class="sidebar-project">Summer Cut</div>
+
+      <!-- Tools section -->
+      <div class="sidebar-label sidebar-label--tools">Tools</div>
+
+      <!-- 2×2 grid of empty icon-slot placeholders — 40×40px each, 8px gap -->
+      <div class="sidebar-tools-grid">
+        <div class="sidebar-tool-slot" aria-hidden="true"></div>
+        <div class="sidebar-tool-slot" aria-hidden="true"></div>
+        <div class="sidebar-tool-slot" aria-hidden="true"></div>
+        <div class="sidebar-tool-slot" aria-hidden="true"></div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN CANVAS — fills remaining width, relative for absolute children -->
+    <main class="workspace-canvas">
+
+      <!-- Top-right action bar: Publish + Share -->
+      <div class="canvas-action-bar">
+        <button class="canvas-btn" type="button">Publish</button>
+        <button class="canvas-btn" type="button">Share</button>
+      </div>
+
+      <!-- Centered canvas placeholder overlay.
+           Replace with [studio-canvas.mp4/jpg] once asset is available. -->
+      <div class="canvas-overlay">
+        <p class="canvas-overlay-text">Start Your Project</p>
+      </div>
+
+    </main>
+
+  </div><!-- /.workspace -->
+
+  <script type="module">
+    // -------------------------------------------------------------------------
+    // Auth guard — redirect immediately before any DOM manipulation or render logic
+    // -------------------------------------------------------------------------
+    import { isLoggedIn, isFirstSession, clearFirstSession, getUser } from '../js/auth.js';
+    import { initNav } from '../js/components/nav.js';
+
+    if (!isLoggedIn()) {
+      window.location.href = '../login.html';
+    }
+
+    // Init nav scroll behavior
+    initNav();
+
+    // Logout handler — clears session and redirects to login
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      import('../js/auth.js').then(({ logout }) => {
+        logout();
+        window.location.href = '../login.html';
+      });
+    });
+
+    // -------------------------------------------------------------------------
+    // First-session tutorial overlay — shown once per browser session.
+    // Constructed entirely with safe DOM methods (no innerHTML with dynamic content).
+    // -------------------------------------------------------------------------
+    if (isFirstSession()) {
+      const overlay = document.createElement('div');
+      overlay.id = 'tutorial-overlay';
+      overlay.style.cssText = [
+        'position:fixed',
+        'inset:0',
+        'background:rgba(0,0,0,0.7)',
+        'z-index:1000',
+        'display:flex',
+        'align-items:center',
+        'justify-content:center',
+        'animation:fadeIn 0.4s cubic-bezier(0.4,0,0.2,1) both',
+      ].join(';');
+
+      // Card container
+      const card = document.createElement('div');
+      card.className = 'tutorial-card';
+
+      // Heading — "Welcome to Your Studio"
+      const heading = document.createElement('h2');
+      heading.className = 'tutorial-heading';
+      heading.textContent = 'Welcome to Your Studio';
+      card.appendChild(heading);
+
+      // Step 1
+      const step1 = document.createElement('p');
+      step1.className = 'tutorial-step';
+      step1.textContent = '1. Your projects live in the left sidebar.';
+      card.appendChild(step1);
+
+      // Step 2
+      const step2 = document.createElement('p');
+      step2.className = 'tutorial-step';
+      step2.textContent = '2. The canvas is your workspace.';
+      card.appendChild(step2);
+
+      // Step 3 — last step, larger bottom margin
+      const step3 = document.createElement('p');
+      step3.className = 'tutorial-step tutorial-step--last';
+      step3.textContent = "3. Hit Publish when you're ready to share.";
+      card.appendChild(step3);
+
+      // Dismiss button — "GOT IT"
+      const dismissBtn = document.createElement('button');
+      dismissBtn.id = 'tutorial-dismiss';
+      dismissBtn.className = 'tutorial-dismiss-btn';
+      dismissBtn.type = 'button';
+      dismissBtn.textContent = 'GOT IT';
+      card.appendChild(dismissBtn);
+
+      overlay.appendChild(card);
+      document.body.appendChild(overlay);
+
+      dismissBtn.addEventListener('click', () => {
+        clearFirstSession();
+        overlay.remove();
+      });
+    }
+
+    // -------------------------------------------------------------------------
+    // Font load diagnostic — detect if Google Fonts failed to load.
+    // Matches login.html pattern: check after fonts.ready, prepend sticky banner.
+    // -------------------------------------------------------------------------
+    (async () => {
+      await document.fonts.ready;
+      const missing = [];
+      if (!document.fonts.check('400 16px "Barlow Condensed"')) missing.push('Barlow Condensed');
+      if (!document.fonts.check('400 16px "Barlow"')) missing.push('Barlow');
+      if (missing.length === 0) return;
+
+      const banner = document.createElement('div');
+      banner.className = 'font-diagnostic-banner';
+
+      const label = document.createElement('strong');
+      label.textContent = 'Font load failure';
+      banner.appendChild(label);
+
+      missing.forEach((fontName, i) => {
+        banner.appendChild(document.createTextNode(i === 0 ? ' \u2014 ' : ' and '));
+        const nameEl = document.createElement('span');
+        nameEl.className = 'font-name';
+        nameEl.textContent = fontName;
+        banner.appendChild(nameEl);
+      });
+
+      banner.appendChild(document.createTextNode(
+        ' could not be loaded from Google Fonts. Typography on this page is not faithful to the design.'
+        + ' Fix: check network connectivity, disable ad blockers that block fonts.googleapis.com,'
+        + ' or install the font locally and restart the browser.'
+      ));
+
+      document.body.prepend(banner);
+    })();
+  </script>
+
+</body>
+</html>

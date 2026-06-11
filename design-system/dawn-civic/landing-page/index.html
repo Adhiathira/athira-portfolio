@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ordnance Press produces hand-drafted city survey maps, topographic atlases, and institutional cartography for archives and urban planning offices worldwide.">
+  <title>Ordnance Press — The Discipline of the Surveyed Line</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&family=Josefin+Sans:wght@400;600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV TEMPLATE -->
+<nav class="site-nav" id="site-nav">
+  <a href="index.html" class="nav-logo">Ordnance Press</a>
+  <ul class="nav-links">
+    <li><a href="atlas.html" class="nav-link">Atlas</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="commission.html" class="nav-link">Commission</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="atlas.html" class="nav-link">Atlas</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="commission.html" class="nav-link">Commission</a>
+</div>
+<script>
+(function() {
+  var toggle = document.querySelector('.nav-mobile-toggle');
+  var menu = document.querySelector('.nav-mobile-menu');
+  var nav = document.querySelector('.site-nav');
+  if (toggle && menu) {
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      menu.classList.toggle('is-open');
+      var expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', !expanded);
+    });
+  }
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 1: HERO — Full viewport, video background
+     ═══════════════════════════════════════════════════ -->
+<section id="hero" aria-label="Hero">
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-civic-morning.mp4"
+      autoplay muted loop playsinline
+      aria-hidden="true"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div
+      id="hero-bg-video-placeholder"
+      aria-hidden="true"
+    >
+      → assets/hero-civic-morning.mp4
+    </div>
+    <!-- Light-friendly overlay — max 0.30 opacity to preserve airy feel -->
+    <div id="hero-video-overlay" aria-hidden="true"></div>
+  </div>
+  <div id="hero-content">
+    <div id="hero-eyebrow">Est. cartographic authority since 1923</div>
+    <h1 id="hero-wordmark">Ordnance<br>Press</h1>
+    <p id="hero-tagline">The discipline of the surveyed line.</p>
+    <a href="atlas.html" id="hero-cta" class="btn-primary">Explore the Atlas</a>
+  </div>
+  <div id="hero-scroll-indicator" aria-hidden="true">
+    <span class="scroll-label">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 2: INTRODUCTION — Pure typographic
+     ═══════════════════════════════════════════════════ -->
+<section id="introduction" aria-label="Introduction">
+  <div id="intro-inner">
+    <div id="intro-rule"></div>
+    <p id="intro-statement">
+      Every map is an argument about the world. We make that argument in ink, in linen, and in the measured patience of hand-drafted survey work. Ordnance Press exists at the boundary between document and artefact — producing cartographic publications that belong in institutional archives, municipal planning offices, and the collections of people who understand that precision is a form of care.
+    </p>
+    <div id="intro-meta">
+      <span class="intro-meta-item">London · Zürich · Montréal</span>
+      <span class="intro-meta-sep">·</span>
+      <span class="intro-meta-item">Since 1923</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 3: ATLAS PREVIEW — Masonry category cards
+     ═══════════════════════════════════════════════════ -->
+<section id="atlas-preview" aria-label="Publication categories">
+  <div id="atlas-preview-inner">
+    <div id="atlas-preview-header">
+      <h2 id="atlas-preview-heading">Three disciplines.<br>One press.</h2>
+      <a href="atlas.html" id="atlas-preview-link" class="text-link">View full atlas →</a>
+    </div>
+    <div id="atlas-cards-grid">
+      <!-- Card 1: City Survey Maps -->
+      <article id="card-city" class="atlas-card atlas-card--featured">
+        <div id="card-city-image-wrap" class="atlas-card-image-wrap">
+          <img
+            id="card-city-img"
+            src="assets/atlas-preview.jpeg"
+            alt="Detailed city survey map showing urban block structure and civic landmarks"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div id="card-city-img-placeholder" class="img-placeholder">
+            → assets/atlas-preview.jpeg
+          </div>
+          <div class="atlas-card-img-overlay" aria-hidden="true"></div>
+        </div>
+        <div id="card-city-body" class="atlas-card-body">
+          <span class="atlas-card-ordinal">01</span>
+          <h3 class="atlas-card-title">City Survey Maps</h3>
+          <p class="atlas-card-desc">Precise block-level surveys of historic urban centres, rendered at 1:2,000 scale in archival linen-finish stock.</p>
+        </div>
+      </article>
+
+      <!-- Card 2: Topographic Atlases -->
+      <article id="card-topo" class="atlas-card">
+        <div id="card-topo-body" class="atlas-card-body atlas-card-body--no-image">
+          <span class="atlas-card-ordinal">02</span>
+          <h3 class="atlas-card-title">Topographic Atlases</h3>
+          <p class="atlas-card-desc">Elevation studies and contour atlases for mountain regions, river watersheds, and coastal territories. Each atlas is a hydrological argument.</p>
+        </div>
+      </article>
+
+      <!-- Card 3: Institutional Cartography -->
+      <article id="card-inst" class="atlas-card">
+        <div id="card-inst-body" class="atlas-card-body atlas-card-body--no-image">
+          <span class="atlas-card-ordinal">03</span>
+          <h3 class="atlas-card-title">Institutional Cartography</h3>
+          <p class="atlas-card-desc">Custom-commissioned survey documents for municipalities, archives, and planning authorities. Produced under institutional brief with archival provenance documentation.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 4: ATELIER — Dark contrast, video bg
+     ═══════════════════════════════════════════════════ -->
+<section id="atelier" aria-label="Atelier story">
+  <div id="atelier-video-container">
+    <video
+      id="atelier-bg-video"
+      src="assets/atelier-light.mp4"
+      autoplay muted loop playsinline
+      aria-hidden="true"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div
+      id="atelier-bg-placeholder"
+      aria-hidden="true"
+    >
+      → assets/atelier-light.mp4
+    </div>
+    <div id="atelier-overlay" aria-hidden="true"></div>
+  </div>
+  <div id="atelier-content">
+    <div id="atelier-rule"></div>
+    <h2 id="atelier-headline">Made by hand.<br>Made to last.</h2>
+    <p id="atelier-body">Every sheet that leaves Ordnance Press has been measured twice, drawn once, and reviewed by a cartographer who will sign it. We do not produce files. We produce documents.</p>
+    <a href="process.html" id="atelier-cta" class="btn-ghost-light">Our process</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 5: FOOTER CTA — Light, warm gradient
+     ═══════════════════════════════════════════════════ -->
+<section id="footer-cta" aria-label="Commission invitation">
+  <div id="footer-cta-inner">
+    <p id="footer-cta-label" class="footer-cta-label">Bespoke cartography</p>
+    <h2 id="footer-cta-headline">Commission a map.</h2>
+    <p id="footer-cta-body">We work with architects, municipalities, libraries, and individuals who require a map made to a specific brief. Every commission begins with a conversation.</p>
+    <a href="commission.html" id="footer-cta-btn" class="btn-primary">Begin a commission</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-brand">
+      <span id="footer-logo">Ordnance Press</span>
+      <span id="footer-tagline-small">The discipline of the surveyed line.</span>
+    </div>
+    <nav id="footer-nav" aria-label="Footer navigation">
+      <a href="atlas.html" class="footer-link">Atlas</a>
+      <a href="process.html" class="footer-link">Process</a>
+      <a href="commission.html" class="footer-link">Commission</a>
+    </nav>
+    <p id="footer-copy">&copy; 2026 Ordnance Press. London, Zürich, Montréal.</p>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const BASE = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.7;
+const EASE = 'cubic-bezier(0.4, 0.0, 0.2, 1)';
+
+// ── Hero entrance (runs immediately on load, opacity allowed)
+gsap.from('#hero-eyebrow', { opacity: 0, y: 20, duration: 0.6, ease: EASE, delay: 0.3 });
+gsap.from('#hero-wordmark', { opacity: 0, y: 30, duration: 0.9, ease: EASE, delay: 0.5 });
+gsap.from('#hero-tagline', { opacity: 0, y: 20, duration: 0.7, ease: EASE, delay: 0.8 });
+gsap.from('#hero-cta', { opacity: 0, y: 15, duration: 0.6, ease: EASE, delay: 1.0 });
+gsap.from('#hero-scroll-indicator', { opacity: 0, duration: 0.8, ease: EASE, delay: 1.4 });
+
+// ── Intro: clip-path reveal on paragraph (scroll-triggered — transform only)
+gsap.from('#intro-rule', {
+  scrollTrigger: { trigger: '#introduction', start: 'top 78%' },
+  scaleX: 0,
+  transformOrigin: 'left center',
+  duration: 0.9,
+  ease: EASE
+});
+gsap.from('#intro-statement', {
+  scrollTrigger: { trigger: '#introduction', start: 'top 72%' },
+  y: 50,
+  duration: BASE,
+  ease: EASE
+});
+gsap.from('#intro-meta', {
+  scrollTrigger: { trigger: '#introduction', start: 'top 65%' },
+  y: 20,
+  duration: 0.6,
+  ease: EASE,
+  delay: 0.2
+});
+
+// ── Atlas preview header: horizontal sweep left
+gsap.from('#atlas-preview-heading', {
+  scrollTrigger: { trigger: '#atlas-preview', start: 'top 75%' },
+  x: -60,
+  duration: BASE,
+  ease: EASE
+});
+gsap.from('#atlas-preview-link', {
+  scrollTrigger: { trigger: '#atlas-preview', start: 'top 70%' },
+  x: 40,
+  duration: 0.6,
+  ease: EASE
+});
+
+// ── Atlas cards: divergent animation (outer cards push from sides, center rises)
+gsap.from('#card-city', {
+  scrollTrigger: { trigger: '#atlas-cards-grid', start: 'top 78%' },
+  x: -70,
+  duration: BASE,
+  ease: EASE
+});
+gsap.from('#card-topo', {
+  scrollTrigger: { trigger: '#atlas-cards-grid', start: 'top 78%' },
+  y: 50,
+  duration: BASE,
+  ease: EASE,
+  delay: 0.1
+});
+gsap.from('#card-inst', {
+  scrollTrigger: { trigger: '#atlas-cards-grid', start: 'top 78%' },
+  x: 70,
+  duration: BASE,
+  ease: EASE,
+  delay: 0.2
+});
+
+// ── Atelier: fade-translate text group on enter
+gsap.from('#atelier-rule', {
+  scrollTrigger: { trigger: '#atelier', start: 'top 65%' },
+  scaleX: 0,
+  transformOrigin: 'left center',
+  duration: 0.7,
+  ease: EASE
+});
+gsap.from('#atelier-headline', {
+  scrollTrigger: { trigger: '#atelier', start: 'top 65%' },
+  y: 40,
+  duration: BASE,
+  ease: EASE,
+  delay: 0.15
+});
+gsap.from('#atelier-body', {
+  scrollTrigger: { trigger: '#atelier', start: 'top 60%' },
+  y: 30,
+  duration: BASE,
+  ease: EASE,
+  delay: 0.3
+});
+gsap.from('#atelier-cta', {
+  scrollTrigger: { trigger: '#atelier', start: 'top 55%' },
+  y: 20,
+  duration: 0.6,
+  ease: EASE,
+  delay: 0.45
+});
+
+// ── Footer CTA: scale + rise
+gsap.from('#footer-cta-headline', {
+  scrollTrigger: { trigger: '#footer-cta', start: 'top 78%' },
+  scale: 0.94,
+  y: 30,
+  duration: BASE,
+  ease: EASE
+});
+gsap.from('#footer-cta-body', {
+  scrollTrigger: { trigger: '#footer-cta', start: 'top 72%' },
+  y: 20,
+  duration: 0.6,
+  ease: EASE,
+  delay: 0.15
+});
+gsap.from('#footer-cta-btn', {
+  scrollTrigger: { trigger: '#footer-cta', start: 'top 68%' },
+  y: 15,
+  duration: 0.5,
+  ease: EASE,
+  delay: 0.3
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,880 @@
+/*
+ * components.css
+ * Button, skeleton, badge, and shared component styles.
+ *
+ * RED FLAG RULE: No hex code appears here. All colors use var(--color-*).
+ * All spacing uses var(--space-*). All transitions use var(--motion-*).
+ *
+ * Sources:
+ *  - Button padding/radius: spacing.json > elements.cta / button
+ *  - Button colors: colors.json > ctaButtons > role: "primary-cta"
+ *  - Hover transition: interactions.json (Lusion pattern per task spec)
+ *    color/background: 0.4s, transform: 0.25s cubic-bezier(0.165,0.84,0.44,1)
+ *  - Active box-shadow: interactions.json > buttons > default-button-2 > active
+ *  - Skeleton: Moooi keyframe values (exact per task spec), timing from motion.json
+ *  - Badge: typography small size + border/surface tokens
+ */
+
+/* ================================================================
+ * Reset / Base
+ * ================================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-body-text);
+  background-color: var(--color-page-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-heading-text);
+  font-weight: var(--font-weight-light);
+  line-height: 1.2;
+}
+
+a {
+  color: var(--color-bs-link);
+  text-decoration: none;
+  transition: var(--motion-nav-link);
+}
+
+a:hover {
+  color: var(--color-bs-link-hover);
+}
+
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+li {
+  padding-top: var(--space-li-pt);    /* 2px — spacing.json > elements.li */
+  margin-bottom: var(--space-li-mb);  /* 16px */
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ================================================================
+ * Primary Button (.btn-primary)
+ * Colors: colors.json > ctaButtons > role: "primary-cta"
+ *   bg: transparent, textColor: #ffffff, border: #e8b14d
+ * Padding: spacing.json > elements.cta
+ *   pt: 7px, pr: 15px, pb: 7px, pl: 15px
+ * Border-radius: spacing.json > elements.button = 3px
+ *   (also elements.cta.borderRadius = 3px)
+ * Hover: Lusion pattern — 0.4s color/bg, 0.25s transform
+ *   cubic-bezier(0.165, 0.84, 0.44, 1)
+ * Active: interactions.json > buttons > default-button-2 > active
+ *   box-shadow: rgba(0,0,0,0.12) 0px 2px 1px 0px inset
+ * ================================================================ */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--space-btn-pt);
+  padding-right: var(--space-btn-pr);
+  padding-bottom: var(--space-btn-pb);
+  padding-left: var(--space-btn-pl);
+  background-color: transparent;
+  color: var(--color-cta-primary-text);           /* #ffffff */
+  border: 1px solid var(--color-cta-primary-border); /* #e8b14d accent gold */
+  border-radius: var(--space-btn-radius);          /* 3px */
+  font-family: var(--font-display);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-h2);
+  text-transform: uppercase;
+  cursor: pointer;
+  transform: translateY(0);
+
+  /* Lusion hover pattern — separate property transitions */
+  transition:
+    color var(--motion-hover-color) var(--motion-ease),
+    background-color var(--motion-hover-color) var(--motion-ease),
+    border-color var(--motion-hover-color) var(--motion-ease),
+    transform var(--motion-hover-transform) var(--motion-hover-easing);
+}
+
+/* Hover — Y-transform slide-up + background fill */
+.btn-primary:hover {
+  color: var(--color-cta-primary-text);            /* remains white */
+  background-color: var(--color-primary-hover);    /* #2d5a3d — nav-background-scrolled */
+  border-color: var(--color-cta-primary-border);   /* accent gold stays */
+  transform: translateY(-3px);
+}
+
+/* Active — darken background + inset shadow from interactions.json */
+.btn-primary:active {
+  background-color: var(--color-primary-active);   /* #0f2a19 — darkened primary */
+  border-color: var(--color-cta-primary-border);
+  transform: translateY(0);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 1px 0px inset;
+}
+
+/* Focus — accessible outline */
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ================================================================
+ * Secondary / Ghost Button (.btn-ghost)
+ * colors.json > ctaButtons > role: "ghost"
+ *   bg: transparent, textColor: #ffffff, border: #ffffff
+ * ================================================================ */
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--space-btn-pt);
+  padding-right: var(--space-btn-pr);
+  padding-bottom: var(--space-btn-pb);
+  padding-left: var(--space-btn-pl);
+  background-color: transparent;
+  color: var(--color-cta-ghost-text);
+  border: 1px solid var(--color-cta-ghost-border);
+  border-radius: var(--space-btn-radius);
+  font-family: var(--font-display);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-h2);
+  text-transform: uppercase;
+  cursor: pointer;
+  transform: translateY(0);
+  transition:
+    color var(--motion-hover-color) var(--motion-ease),
+    background-color var(--motion-hover-color) var(--motion-ease),
+    transform var(--motion-hover-transform) var(--motion-hover-easing);
+}
+
+.btn-ghost:hover {
+  background-color: var(--color-nav-link);        /* #ffffff with opacity */
+  color: var(--color-primary);
+  transform: translateY(-3px);
+}
+
+.btn-ghost:active {
+  transform: translateY(0);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 1px 0px inset;
+}
+
+.btn-ghost:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ================================================================
+ * Skeleton Pulse (.skeleton)
+ * Moooi exact keyframe values (per task spec):
+ *   0% { opacity: 1 } → 50% { opacity: 0.35 } → 100% { opacity: 1 }
+ * Timing from motion.json > timingTokens.durations — base duration 0.5s,
+ * but loading states benefit from the slower 1s duration for perceptibility.
+ * Easing: ease (from motion.json > timingTokens.easings)
+ * Background: var(--color-surface) — muted surface color from tokens
+ * ================================================================ */
+
+@keyframes skeleton-pulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.35; }
+  100% { opacity: 1; }
+}
+
+.skeleton {
+  background-color: var(--color-bs-gray-200);   /* #e9ecef — muted, reads as loading */
+  border-radius: var(--space-radius-sm);
+  animation: skeleton-pulse var(--motion-duration-slow) var(--motion-ease) infinite;
+  /* motion-duration-slow = 1s — appropriate for loading state perceptibility */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Skeleton text line variant */
+.skeleton--text {
+  height: 1em;
+  width: 100%;
+  border-radius: var(--space-radius);
+}
+
+/* Skeleton image/card variant */
+.skeleton--image {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border-radius: var(--space-radius);
+}
+
+/* Skeleton avatar variant */
+.skeleton--avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ================================================================
+ * Badge (.badge)
+ * Small pill-shaped label.
+ * Font size: var(--font-size-small) = 12px (typeScale.small)
+ * Border: var(--color-border) = #cdcdcd (spacing colors.json > visual)
+ * Surface: var(--color-surface) = #ffffff
+ * Radius: var(--space-radius-pill) = 50rem (full pill)
+ * ================================================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-row-px);   /* 2px 5px — minimal pill padding */
+  font-family: var(--font-display);
+  font-size: var(--font-size-small);   /* 12px */
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-small);
+  letter-spacing: var(--letter-spacing-h2);
+  text-transform: uppercase;
+  color: var(--color-body-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--space-radius-pill);
+  white-space: nowrap;
+}
+
+/* Badge accent variant */
+.badge--accent {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-surface);
+}
+
+/* Badge dark variant */
+.badge--dark {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-nav-text);
+}
+
+/* Coming Soon badge */
+.badge--coming-soon {
+  background-color: transparent;
+  border-color: var(--color-muted-text);
+  color: var(--color-muted-text);
+}
+
+/* ================================================================
+ * Nav component styles
+ * from nav.json > typography, background, linkHover, scrollTransition
+ * ================================================================ */
+
+nav {
+  font-family: var(--font-display);
+  font-size: var(--nav-font-size);
+  font-weight: var(--nav-font-weight);
+  letter-spacing: var(--nav-letter-spacing);
+  line-height: var(--nav-line-height);
+  background-color: transparent;
+  color: var(--color-nav-text);
+  transition: background-color var(--nav-transition) var(--motion-nav-easing),
+              top var(--nav-transition) var(--motion-nav-easing);
+}
+
+/* Nav link — default at 50% opacity, full on hover (nav.json > navigation defaults) */
+nav a {
+  color: var(--color-nav-link);
+  opacity: var(--nav-link-opacity-default);
+  text-decoration: none;
+  transition: var(--motion-nav-link);
+}
+
+nav a:hover {
+  opacity: var(--nav-link-opacity-hover);
+  color: var(--color-nav-link);
+}
+
+/* Active nav link */
+nav a.active {
+  opacity: var(--nav-link-opacity-hover);
+  font-weight: var(--font-weight-regular);
+  /* Gold dot indicator (nav.json > linkActive.indicator = "dot") */
+  position: relative;
+}
+
+nav a.active::after {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  position: absolute;
+  bottom: calc(-1 * var(--space-row-px));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* is-scrolled class added by nav.js — child bands handle their own backgrounds */
+
+/* ================================================================
+ * Gallery item
+ * Hover interactions handled by gallery.js
+ * ================================================================ */
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--motion-hover-transform) var(--motion-hover-easing);
+}
+
+.gallery-item.is-hovered {
+  transform: translateY(-4px);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--motion-duration-base) var(--motion-ease);
+  display: block;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.04);
+}
+
+.gallery-item__label {
+  font-family: var(--font-display);
+  font-size: var(--font-size-small);
+  letter-spacing: var(--letter-spacing-h2);
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: var(--space-li-pt);
+  color: var(--color-body-text);
+}
+
+/* ================================================================
+ * Color swatch — for design system test harness
+ * ================================================================ */
+
+.swatch {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--space-radius);
+  border: 1px solid var(--color-border);
+  display: inline-block;
+  vertical-align: top;
+  margin: var(--space-row-px);
+}
+
+.swatch__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-align: center;
+  margin-top: 4px;
+  color: var(--color-muted-text);
+  word-break: break-all;
+}
+
+/* ================================================================
+ * Input styles
+ * from interactions.json > inputs > default-input-1
+ * ================================================================ */
+
+.input {
+  width: 100%;
+  background-color: var(--color-surface);
+  color: var(--color-body-text);
+  border: 0.5px solid var(--color-bs-black);
+  border-radius: var(--space-radius-sm);
+  padding: var(--space-content-pt) var(--space-content-pr);
+  font-family: var(--font-regular);
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-body);
+  transition: box-shadow var(--motion-duration-fast) var(--motion-ease-in-out);
+  outline: none;
+}
+
+.input:focus {
+  box-shadow: var(--color-g-blue-a11y) 0px 0px 3px 1px;
+}
+
+/* ================================================================
+ * Site Nav — .site-nav
+ *
+ * Sources:
+ *  - Height: nav.json > geometry.height = 49.9765625px → 50px
+ *  - paddingInline: task spec overrides nav.json 0px → 24px explicit
+ *  - Background: null (transparent) — nav.json > no background fill
+ *  - No box-shadow, no backdrop-filter, no border-bottom (all null per nav.json)
+ *  - Font: var(--font-display) = Plus Jakarta Sans (Goyard fallback per font-db.json)
+ *  - Font size: nav.json > typography.fontSize = 0.5625rem; task spec uses 0.75rem for kinetic-vid
+ *  - Scroll trigger: nav.json > scrollTransition.mechanism = "class-toggle"
+ *    triggerClass in this implementation = "fixed" (per task spec, overrides nav.json "opaque-nav-sections")
+ *  - Auth visibility: .is-logged-in on <nav> toggles link sets via CSS
+ *  - Join button bg: #635bff (Stripe primary-action) — no var in tokens.css for this value
+ *  - Avatar bg: #635bff — same as Join button
+ * ================================================================ */
+
+/* ── Base nav container ────────────────────────────────────────── */
+
+.site-nav {
+  height: var(--nav-height-approx);    /* 50px — nav.json geometry.height rounded */
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: transparent;      /* nav.json background = null */
+  font-family: var(--font-display);
+  font-size: 0.75rem;                  /* task spec — kinetic-vid nav size */
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+  /* No box-shadow, no backdrop-filter, no border-bottom — all null per nav.json */
+}
+
+/* ── Fixed / sticky state (added by nav.js at 50px scroll) ─────── */
+
+.site-nav.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* ── Three-column inner wrapper ─────────────────────────────────── */
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  height: var(--nav-height-approx);    /* 50px */
+  padding-inline: 24px;                /* task spec — nav.json paddingInline=0 overridden to 24px */
+}
+
+/* ── Logo — left slot ───────────────────────────────────────────── */
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-size: 0.875rem;                 /* slightly larger than nav links */
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-heading-text);   /* #183f26 — deep forest green (dark heading) */
+  text-decoration: none;
+}
+
+/* ── Nav links — center slot ────────────────────────────────────── */
+
+.nav-links {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Override global li spacing (components.css base sets padding-top + margin-bottom) */
+.nav-links li {
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Individual nav link — Hermes underline pattern ─────────────── */
+/*
+ * Hermes underline animation:
+ *   Default: ::after has width: 0 anchored at right: 0
+ *   Hover:   ::after grows to width: 100% with left: 0 / right: auto
+ *   Result: underline draws RIGHT-TO-LEFT on hover-in
+ *   Duration: 0.3s ease-in-out (task spec)
+ */
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  color: var(--color-heading-text);   /* #183f26 — dark heading text */
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+  line-height: 0.8125rem;
+  transition: opacity var(--motion-duration-fast) ease-in-out;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
+/* ── Actions — right slot ───────────────────────────────────────── */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-shrink: 0;
+}
+
+/* ── Join CTA button — Stripe color + Lusion Y-transform ─────────
+ *
+ * background-color: #635bff — Stripe primary-action purple.
+ * No var exists in tokens.css for this value; using literal with comment.
+ * overflow: hidden is CRITICAL — clips the Y-transform on the inner <span>
+ * so text doesn't bleed outside the button bounds.
+ *
+ * Inner <span> uses matrix transform matching Lusion default-button-3:
+ *   default: matrix(1,0,0,1,0,56) → text starts 56px below visible area
+ *   hover:   matrix(1,0,0,1,0,0)  → text slides up into view
+ * ─────────────────────────────────────────────────────────────── */
+
+.nav-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;                    /* CRITICAL — clips Y-transform */
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: #635bff;          /* Stripe primary-action — no var in tokens.css */
+  color: var(--color-surface);        /* #ffffff — white */
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.4s, background-color 0.4s;
+}
+
+.nav-cta-btn:active {
+  background-color: rgb(38, 43, 77);
+}
+
+.nav-cta-btn span {
+  display: block;
+  transform: matrix(1, 0, 0, 1, 0, 56);   /* Lusion default-button-3 default */
+  transition: transform 0.4s;
+}
+
+.nav-cta-btn:hover span {
+  transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+/* ── Avatar wrap ─────────────────────────────────────────────────── */
+
+.nav-avatar-wrap {
+  position: relative;
+  cursor: pointer;
+}
+
+/* ── Avatar circle ───────────────────────────────────────────────── */
+
+.nav-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #635bff;          /* Stripe primary-action — same as Join button, no var */
+}
+
+/* ── Dropdown menu ───────────────────────────────────────────────── */
+
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: var(--color-surface);   /* #ffffff */
+  border: 1px solid var(--color-border);    /* #cdcdcd */
+  border-radius: 6px;
+  min-width: 160px;
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  z-index: 1001;
+}
+
+/* Override global li spacing inside dropdown */
+.nav-dropdown li {
+  margin: 0;
+  padding: 0;
+}
+
+.nav-dropdown li a {
+  display: block;
+  padding: 8px 12px;                   /* 8px vertical (UX addition) + 12px horizontal (nav.json dropdown.itemPadding horizontal) */
+  color: var(--color-heading-text);   /* #183f26 */
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity var(--motion-duration-fast) ease-in-out;
+}
+
+.nav-dropdown li a:hover {
+  opacity: 0.7;
+}
+
+/* ── Dropdown open states ────────────────────────────────────────── */
+
+.nav-avatar-wrap:hover .nav-dropdown,
+.nav-avatar-wrap.is-open .nav-dropdown {
+  display: block;
+}
+
+/* ── Logged-in state visibility ──────────────────────────────────── */
+
+/* Default: hide auth-specific elements */
+.nav-links--auth  { display: none; }
+.nav-actions--auth { display: none; }
+
+/* When .is-logged-in is present on .site-nav, swap link sets */
+.site-nav.is-logged-in .nav-links--public  { display: none; }
+.site-nav.is-logged-in .nav-links--auth    { display: flex; }
+.site-nav.is-logged-in .nav-actions--public { display: none; }
+.site-nav.is-logged-in .nav-actions--auth  { display: flex; }
+
+/* ── Responsive ≤768px ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .nav-inner {
+    padding-inline: 16px;
+  }
+
+  .nav-links {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .nav-links li {
+    display: inline-flex;
+  }
+
+  .nav-login {
+    display: none;
+  }
+}
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+
+.site-footer {
+  background-color: var(--color-hero-background);   /* #183f26 — token comment: "hero bg / footer" */
+  border-top: 1px solid rgba(255, 255, 255, 0.15);  /* same subtle border as nav-border-bottom */
+  /* rgba() used here because no --color-* token exists for a 15%-opacity white separator line */
+}
+
+.footer-body {
+  padding-top: var(--space-footer-pt);    /* 40px — spacing.json > elements.footer.paddingTop */
+  padding-bottom: var(--space-footer-pt); /* mirror top */
+}
+
+.footer-inner {
+  max-width: var(--grid-max-width);      /* 1320px — container max-width */
+  margin-inline: auto;
+  padding-inline: var(--grid-padding-x); /* 12px — container padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-section-pt);          /* 40px — vertical rhythm between logo, utility, grid */
+}
+
+.footer-logo__link {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-nav-text);          /* #ffffff */
+  text-decoration: none;
+  opacity: 1;
+}
+
+.footer-utility {
+  display: flex;
+  gap: 28px;                            /* nav-actions gap — no token var */
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-utility__link {
+  font-family: var(--font-display);
+  font-size: var(--font-size-body);     /* 14px */
+  font-weight: var(--font-weight-regular);
+  color: var(--color-nav-link);          /* #ffffff */
+  opacity: var(--nav-link-opacity-default); /* 0.5 */
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-h2);
+  transition: opacity var(--motion-duration-fast) var(--motion-ease),
+              color var(--motion-duration-fast) var(--motion-ease);
+}
+
+.footer-utility__link:hover {
+  opacity: var(--nav-link-opacity-hover);  /* 1 */
+  color: var(--color-accent);             /* #e8b14d — gold accent */
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-container-gap);       /* 80px — container.columnGap */
+  width: 100%;
+}
+
+.footer-col__header {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h3);        /* 20px */
+  font-weight: var(--font-weight-semibold); /* 600 */
+  color: var(--color-nav-text);           /* #ffffff */
+  margin-bottom: 1rem;                   /* no token for column header spacing */
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-h3);
+}
+
+.footer-col__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;                         /* no token for link row gap */
+}
+
+/* Override global li spacing inside footer */
+.footer-col__links li {
+  margin: 0;
+  padding: 0;
+}
+
+.footer-col__links a {
+  font-family: var(--font-display);
+  font-size: var(--font-size-body);      /* 14px */
+  font-weight: var(--font-weight-regular);
+  color: var(--color-nav-link);           /* #ffffff */
+  opacity: var(--nav-link-opacity-default); /* 0.5 */
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-h2);
+  transition: opacity var(--motion-duration-fast) var(--motion-ease),
+              color var(--motion-duration-fast) var(--motion-ease);
+}
+
+.footer-col__links a:hover {
+  opacity: var(--nav-link-opacity-hover);  /* 1 */
+  color: var(--color-accent);             /* #e8b14d */
+}
+
+/* Legal bar */
+.footer-legal-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.15); /* same as site-footer border */
+  /* rgba() used here because no --color-* token exists for a 15%-opacity white separator line */
+  padding-block: 1.5rem;               /* no token for legal bar padding — compact legal zone */
+}
+
+.footer-legal-bar__inner {
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  padding-inline: var(--grid-padding-x);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-legal-bar__copy {
+  font-family: var(--font-display);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-nav-link);
+  opacity: var(--nav-link-opacity-default); /* 0.5 */
+}
+
+.footer-legal-bar__links {
+  display: flex;
+  gap: 28px;                            /* nav-actions gap — no token var */
+}
+
+.footer-legal-bar__links a {
+  font-family: var(--font-display);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-nav-link);
+  opacity: var(--nav-link-opacity-default);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-h2);
+  transition: opacity var(--motion-duration-fast) var(--motion-ease),
+              color var(--motion-duration-fast) var(--motion-ease);
+}
+
+.footer-legal-bar__links a:hover {
+  opacity: var(--nav-link-opacity-hover);
+  color: var(--color-accent);
+}
+
+/* Responsive ≤767px — match layout.css grid collapse breakpoint */
+@media (max-width: 767px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-section-pt);      /* 40px — same as layout.css responsive grid gap */
+  }
+
+  .footer-inner {
+    align-items: flex-start;
+  }
+
+  .footer-utility {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

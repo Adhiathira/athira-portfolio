@@ -1,0 +1,30 @@
+:root {
+  /* Twist A: Duration scaling slower (×1.3 from superlist 0.2s base) */
+  --motion-duration-base: 0.26s;
+  --motion-easing-primary: cubic-bezier(0.44, 0, 0.56, 1);
+
+  --motion-transition-color: color var(--motion-duration-base) var(--motion-easing-primary);
+  --motion-transition-all: all var(--motion-duration-base) var(--motion-easing-primary);
+
+  --motion-video-count: 1;
+  --motion-animated-elements: 22;
+  --motion-video-load: light;
+}
+
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Apply consistent transition timing across interactive elements */
+button,
+a,
+input,
+[role="button"] {
+  transition: var(--motion-transition-all);
+}
+
+.text,
+[class*="text"] {
+  transition: var(--motion-transition-color);
+}

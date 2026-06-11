@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plinth Press — small-edition letterpress and fine printing studio in Edinburgh. Handset type, dampened paper, every page pressed.">
+  <title>Plinth Press — Edinburgh Letterpress Studio</title>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Tokens + components -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/footer.css">
+</head>
+<body>
+
+  <!-- ── Nav ──────────────────────────────────────────────── -->
+  <nav id="site-nav" class="site-nav">
+    <a href="index.html" class="nav-logo">Plinth Press</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="books.html">Books</a></li>
+        <li><a href="commission.html">Commission</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <a href="commission.html" class="nav-cta">Enquire</a>
+    </div>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <nav class="nav-mobile-menu" id="nav-mobile-menu" aria-label="Mobile navigation">
+    <a href="books.html">Books</a>
+    <a href="commission.html">Commission</a>
+    <a href="about.html">About</a>
+    <a href="commission.html" class="nav-mobile-cta">Enquire</a>
+  </nav>
+
+  <!-- ── Hero — full viewport, video background ───────────── -->
+  <section id="hero">
+    <div id="hero-video-container">
+      <video
+        id="hero-bg-video"
+        src="assets/hero-bg.mp4"
+        autoplay muted loop playsinline
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      ></video>
+      <div
+        id="hero-bg-video-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+               background:var(--color-surface-1);color:rgba(0,0,0,0.3);font-family:var(--font-body);
+               font-size:0.85rem;"
+      >
+        → assets/hero-bg.mp4
+      </div>
+      <div id="hero-video-overlay"></div>
+    </div>
+    <div id="hero-content">
+      <div id="hero-label-group">
+        <span id="hero-label">Edinburgh · Est. 2009</span>
+      </div>
+      <div id="hero-headline-group">
+        <h1 id="hero-title">Every page,<br>pressed.</h1>
+      </div>
+      <p id="hero-body">Small-edition letterpress printing. Handset metal type, dampened cotton paper, one sheet at a time.</p>
+      <div id="hero-actions">
+        <a href="books.html" id="hero-cta-primary" class="btn-primary">View the press</a>
+        <a href="commission.html" id="hero-cta-secondary" class="btn-ghost-light">Commission work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Craft section — dark contrast, clip-path reveal ───── -->
+  <section id="craft">
+    <div id="craft-inner" class="section-inner">
+      <div id="craft-text-col">
+        <span id="craft-label" class="section-label--light">The Process</span>
+        <h2 id="craft-heading">Type set by hand.<br>Ink mixed by eye.</h2>
+        <p id="craft-body-1">Letterpress printing demands patience. Each forme is set one character at a time from a compositor's case of handcast metal type. Ink is rolled, paper dampened, impression adjusted until the bite is right — just enough to leave a felt memory in the sheet.</p>
+        <p id="craft-body-2">We work in small editions. Twenty copies is a large run. Most books leave the press in editions of eight to twelve.</p>
+        <a href="about.html" class="btn-ghost-dark" id="craft-cta">Learn about the studio</a>
+      </div>
+      <div id="craft-image-col">
+        <div id="craft-image-wrapper">
+          <img
+            id="craft-img"
+            src="assets/craft-process.jpeg"
+            alt="Letterpress type being set in a composing stick"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div id="craft-img-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:#2a2a2c;color:rgba(255,255,255,0.3);font-family:var(--font-body);font-size:0.8rem;">→ assets/craft-process.jpeg</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Collection — light section, asymmetric bento grid ─── -->
+  <section id="collection">
+    <div id="collection-inner" class="section-inner">
+      <div id="collection-header">
+        <span id="collection-label" class="section-label">Current Editions</span>
+        <h2 id="collection-heading">Books in print</h2>
+        <p id="collection-subhead">A small shelf. Each title available in a signed, numbered edition.</p>
+      </div>
+      <div id="collection-grid">
+        <!-- Featured wide card -->
+        <div id="book-card-featured" class="book-card book-card--featured">
+          <div id="book-featured-img-wrap" class="book-card-image">
+            <img
+              id="book-featured-img"
+              src="assets/book-featured.jpeg"
+              alt="The Tide Tables — cover detail"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:rgba(0,0,0,0.3);font-size:0.8rem;font-family:var(--font-body);">→ assets/book-featured.jpeg</div>
+          </div>
+          <div id="book-featured-meta" class="book-card-meta">
+            <span class="book-card-edition">Edition 14/20</span>
+            <h3 class="book-card-title">The Tide Tables</h3>
+            <p class="book-card-desc">Poems by A. M. Farquhar. 32pp, handset Bembo, dampened Zerkall mould-made.</p>
+            <a href="books.html" class="book-card-link">View edition</a>
+          </div>
+        </div>
+        <!-- Two small cards -->
+        <div id="book-card-2" class="book-card book-card--small">
+          <div class="book-card-image">
+            <img
+              src="assets/book-card-2.jpeg"
+              alt="Estuary — cover detail"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:rgba(0,0,0,0.3);font-size:0.8rem;font-family:var(--font-body);">→ assets/book-card-2.jpeg</div>
+          </div>
+          <div class="book-card-meta">
+            <span class="book-card-edition">Edition 8/12</span>
+            <h3 class="book-card-title">Estuary</h3>
+            <p class="book-card-desc">Photographs by D. Skeoch. Photopolymer plates, Fabriano Artistico.</p>
+            <a href="books.html" class="book-card-link">View edition</a>
+          </div>
+        </div>
+        <div id="book-card-3" class="book-card book-card--small">
+          <div class="book-card-image">
+            <img
+              src="assets/book-card-3.jpeg"
+              alt="Marginal Notes — cover detail"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:rgba(0,0,0,0.3);font-size:0.8rem;font-family:var(--font-body);">→ assets/book-card-3.jpeg</div>
+          </div>
+          <div class="book-card-meta">
+            <span class="book-card-edition">Edition 10/10</span>
+            <h3 class="book-card-title">Marginal Notes</h3>
+            <p class="book-card-desc">Essays. Handset Gill Sans, letterpress on Hahnemühle.</p>
+            <a href="books.html" class="book-card-link">View edition</a>
+          </div>
+        </div>
+      </div>
+      <div id="collection-footer">
+        <a href="books.html" class="btn-primary" id="view-all-cta">Browse all editions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Studio ambient — video section, dark contrast beat ── -->
+  <section id="studio">
+    <div id="studio-video-container">
+      <video
+        id="studio-bg-video"
+        src="assets/studio-light.mp4"
+        autoplay muted loop playsinline
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      ></video>
+      <div
+        id="studio-bg-video-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+               background:#111;color:rgba(255,255,255,0.3);font-family:var(--font-body);font-size:0.85rem;"
+      >
+        → assets/studio-light.mp4
+      </div>
+      <div id="studio-video-overlay"></div>
+    </div>
+    <div id="studio-content">
+      <blockquote id="studio-quote">
+        <p id="studio-quote-text">"There is no shortcut to the weight of the impression. Every page tells you whether you got it right."</p>
+        <cite id="studio-quote-cite">— Plinth Press, Edinburgh</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ── Commission teaser — light, horizontal feature row ─── -->
+  <section id="commission-teaser">
+    <div id="commission-inner" class="section-inner">
+      <div id="commission-text">
+        <span id="commission-label" class="section-label">Commission</span>
+        <h2 id="commission-heading">Bespoke printing for your words</h2>
+        <p id="commission-body">We take a small number of commissions each year — poetry pamphlets, artists' books, wedding invitations, limited-edition documents. The work begins with conversation.</p>
+        <a href="commission.html" class="btn-primary" id="commission-cta">Begin a conversation</a>
+      </div>
+      <div id="commission-image">
+        <img
+          id="commission-img"
+          src="assets/commission-detail.jpeg"
+          alt="Dampened cotton paper on the press bed"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:rgba(0,0,0,0.3);font-size:0.8rem;font-family:var(--font-body);">→ assets/commission-detail.jpeg</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ────────────────────────────────────────────── -->
+  <footer id="site-footer">
+    <div id="footer-inner" class="section-inner">
+      <div id="footer-brand">
+        <a href="index.html" id="footer-logo">Plinth Press</a>
+        <p id="footer-tagline">Edinburgh letterpress studio.<br>Every page, pressed.</p>
+      </div>
+      <div id="footer-nav-cols">
+        <div id="footer-col-studio" class="footer-col">
+          <p class="footer-col-heading">Studio</p>
+          <ul class="footer-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="commission.html">Commission</a></li>
+            <li><a href="books.html">Books</a></li>
+          </ul>
+        </div>
+        <div id="footer-col-contact" class="footer-col">
+          <p class="footer-col-heading">Contact</p>
+          <ul class="footer-links">
+            <li><a href="mailto:press@plinthpress.co.uk">press@plinthpress.co.uk</a></li>
+            <li><a href="commission.html">Enquire</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="footer-copyright">
+      <p>© 2024 Plinth Press. Edinburgh.</p>
+    </div>
+  </footer>
+
+  <!-- ── Behaviors ─────────────────────────────────────────── -->
+  <script src="behaviors/nav.js"></script>
+
+  <!-- ── GSAP Animations ───────────────────────────────────── -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const BASE = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.45;
+    const EASE = 'power2.out';
+
+    // Hero content — entrance on load (opacity allowed, runs immediately)
+    const heroTl = gsap.timeline({ delay: 0.3 });
+    heroTl
+      .from('#hero-label', { opacity: 0, y: 14, duration: BASE, ease: EASE })
+      .from('#hero-title',  { opacity: 0, y: 22, duration: BASE * 1.6, ease: EASE }, '-=0.2')
+      .from('#hero-body',   { opacity: 0, y: 14, duration: BASE, ease: EASE }, '-=0.2')
+      .from('#hero-actions',{ opacity: 0, y: 12, duration: BASE, ease: EASE }, '-=0.15');
+
+    // Craft section — clip-path wipe (horizontal, left to right)
+    gsap.set('#craft-image-wrapper', { clipPath: 'inset(0 100% 0 0)' });
+    ScrollTrigger.create({
+      trigger: '#craft',
+      start: 'top 75%',
+      once: true,
+      onEnter: () => {
+        gsap.to('#craft-image-wrapper', {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 1.08,
+          ease: 'power3.inOut'
+        });
+        gsap.from('#craft-text-col > *', {
+          x: -40,
+          duration: BASE * 1.2,
+          stagger: 0.15,
+          ease: EASE
+        });
+      }
+    });
+
+    // Collection grid — scale-rise stagger per card
+    ScrollTrigger.create({
+      trigger: '#collection-grid',
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        gsap.from('.book-card', {
+          scale: 0.94,
+          y: 30,
+          duration: BASE * 1.4,
+          stagger: 0.16,
+          ease: EASE
+        });
+        gsap.from('#collection-header', {
+          y: 24,
+          duration: BASE,
+          ease: EASE
+        });
+      }
+    });
+
+    // Studio quote — cross-segment reveal, slow
+    gsap.set('#studio-quote', { clipPath: 'inset(0 100% 0 0)', opacity: 1 });
+    ScrollTrigger.create({
+      trigger: '#studio',
+      start: 'top 70%',
+      once: true,
+      onEnter: () => {
+        gsap.to('#studio-quote', {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 1.2,
+          ease: 'power3.inOut'
+        });
+      }
+    });
+
+    // Commission teaser — divergent: text sweeps left, image sweeps right
+    ScrollTrigger.create({
+      trigger: '#commission-teaser',
+      start: 'top 78%',
+      once: true,
+      onEnter: () => {
+        gsap.from('#commission-text', { x: -60, duration: BASE * 1.3, ease: EASE });
+        gsap.from('#commission-image', { x: 60, duration: BASE * 1.3, ease: EASE, delay: 0.1 });
+      }
+    });
+
+    // Footer copyright — clip wipe
+    gsap.set('#footer-copyright', { clipPath: 'inset(0 100% 0 0)', opacity: 1 });
+    ScrollTrigger.create({
+      trigger: '#footer-copyright',
+      start: 'top 95%',
+      once: true,
+      onEnter: () => {
+        gsap.to('#footer-copyright', {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 1.08,
+          ease: 'power3.inOut'
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

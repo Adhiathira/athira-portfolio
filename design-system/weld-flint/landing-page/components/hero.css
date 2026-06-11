@@ -1,0 +1,180 @@
+/* hero.css — Weld Flint hero section */
+
+/* ── Hero (index only — full viewport) ── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--color-surface-2, #3d3a34);
+  padding-top: 65px; /* nav height compensation */
+}
+
+#hero-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#hero-bg-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--color-surface-2, #3d3a34);
+  color: rgba(255,255,255,0.35);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+}
+
+/* Light-friendly hero overlay — hero_treatment=light */
+/* Hero is the one dark contrast beat on this light-dominant site */
+#hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.30) 0%,
+    rgba(0, 0, 0, 0.18) 40%,
+    rgba(0, 0, 0, 0.55) 80%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+#hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 var(--grid-gutter, 77px) 10vh;
+  max-width: var(--grid-max-width, 1220px);
+  margin: 0 auto;
+  width: 100%;
+}
+
+#hero-eyebrow {
+  font-family: var(--font-body, 'Nunito', sans-serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-subheading, 0.1em);
+  text-transform: uppercase;
+  color: var(--color-muted-text, #b1ada7);
+  margin: 0 0 20px;
+}
+
+#hero-title {
+  font-family: var(--font-heading, 'Figtree', sans-serif);
+  font-size: var(--type-hero, clamp(3.5rem, 9vw, 7.5rem));
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-heading, 0.06em);
+  line-height: 1.05;
+  color: var(--color-heading, #f2f2f2);
+  margin: 0 0 24px;
+  max-width: 760px;
+}
+
+#hero-tagline {
+  font-family: var(--font-body, 'Nunito', sans-serif);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  line-height: var(--line-height-body, 1.6);
+  color: rgba(255,255,255,0.82);
+  margin: 0 0 40px;
+  max-width: 520px;
+}
+
+#hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* ── Sub-page hero (compact, light background) ── */
+#page-header {
+  background: var(--color-page-bg, #1a1a18);
+  padding: 120px var(--grid-gutter, 77px) 64px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+#page-header-inner {
+  max-width: var(--grid-max-width, 1220px);
+  margin: 0 auto;
+}
+
+#page-header-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-subheading, 0.1em);
+  text-transform: uppercase;
+  color: var(--color-muted-text, #b1ada7);
+  margin: 0 0 16px;
+}
+
+#page-header-title {
+  font-family: var(--font-heading, 'Figtree', sans-serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-heading, 0.06em);
+  line-height: 1.1;
+  color: var(--color-heading, #f2f2f2);
+  margin: 0 0 20px;
+}
+
+#page-header-desc {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: var(--line-height-body, 1.6);
+  color: var(--color-muted-text, #b1ada7);
+  margin: 0;
+  max-width: 500px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #hero-content {
+    padding: 0 40px 8vh;
+  }
+
+  #hero-title {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+  }
+
+  #page-header {
+    padding: 100px 40px 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero-content {
+    padding: 0 24px 6vh;
+  }
+
+  #hero-title {
+    font-size: clamp(2rem, 10vw, 3rem);
+    max-width: 100%;
+  }
+
+  #hero-tagline {
+    font-size: 1rem;
+  }
+
+  #hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #page-header {
+    padding: 80px 24px 40px;
+  }
+}

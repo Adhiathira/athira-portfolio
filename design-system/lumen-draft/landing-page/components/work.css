@@ -1,0 +1,293 @@
+/* work.css — Foramen Studio work/collection page */
+
+/* ─── Work Grid (full masonry-style layout) ─────────────────── */
+#work-filters {
+  padding: 40px 80px 0;
+  background: var(--color-surface-1);
+}
+
+#work-filter-list {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 24px;
+}
+
+.work-filter-btn {
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.25s ease;
+  position: relative;
+}
+
+.work-filter-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -26px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-filter-btn:hover {
+  color: var(--color-heading-text);
+}
+
+.work-filter-btn.active {
+  color: var(--color-heading-text);
+}
+
+.work-filter-btn.active::after {
+  transform: scaleX(1);
+}
+
+/* ─── Asymmetric Work Grid ──────────────────────────────────── */
+#work-grid-section {
+  background: var(--color-surface-1);
+  padding: 60px 80px 120px;
+}
+
+#work-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2px;
+}
+
+/* First item: spans 7 of 12 columns, tall */
+.work-item:nth-child(1) {
+  grid-column: 1 / 8;
+  grid-row: 1 / 3;
+  min-height: 600px;
+}
+
+/* Second: right column top */
+.work-item:nth-child(2) {
+  grid-column: 8 / 13;
+  grid-row: 1 / 2;
+  min-height: 295px;
+}
+
+/* Third: right column bottom */
+.work-item:nth-child(3) {
+  grid-column: 8 / 13;
+  grid-row: 2 / 3;
+  min-height: 295px;
+}
+
+/* Fourth: spans 5 of 12 */
+.work-item:nth-child(4) {
+  grid-column: 1 / 6;
+  grid-row: 3 / 4;
+  min-height: 380px;
+}
+
+/* Fifth: spans 4 */
+.work-item:nth-child(5) {
+  grid-column: 6 / 10;
+  grid-row: 3 / 4;
+  min-height: 380px;
+}
+
+/* Sixth: spans 4 */
+.work-item:nth-child(6) {
+  grid-column: 10 / 13;
+  grid-row: 3 / 4;
+  min-height: 380px;
+}
+
+/* Seventh: full-width */
+.work-item:nth-child(7) {
+  grid-column: 1 / 13;
+  grid-row: 4 / 5;
+  min-height: 300px;
+}
+
+.work-item {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-heading-text);
+  cursor: pointer;
+}
+
+.work-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-item:hover img {
+  transform: scale(1.05);
+}
+
+.work-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,13,16,0.8) 0%, rgba(0,13,16,0.05) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+.work-item-info {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  z-index: 2;
+  transform: translateY(8px);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-item:hover .work-item-info {
+  transform: translateY(0);
+}
+
+.work-item-type {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 5px 0;
+}
+
+.work-item-title {
+  font-family: var(--font-heading);
+  font-size: clamp(0.9rem, 1.5vw, 1.4rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.work-item-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  background: #0f1e22;
+  color: rgba(255,255,255,0.18);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+}
+
+/* ─── Commission CTA ──────────────────────────────────────────── */
+#work-commission {
+  background: var(--color-page-bg);
+  padding: 100px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+#work-commission::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(188, 113, 85, 0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+#work-commission-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+#work-commission-text .section-heading--light {
+  margin-bottom: 20px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  #work-filters,
+  #work-grid-section {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  #work-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .work-item:nth-child(1),
+  .work-item:nth-child(2),
+  .work-item:nth-child(3),
+  .work-item:nth-child(4),
+  .work-item:nth-child(5),
+  .work-item:nth-child(6),
+  .work-item:nth-child(7) {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 260px;
+  }
+
+  .work-item:nth-child(1) {
+    grid-column: 1 / 3;
+    min-height: 380px;
+  }
+
+  .work-item:nth-child(7) {
+    grid-column: 1 / 3;
+    min-height: 220px;
+  }
+
+  #work-commission {
+    padding: 80px 48px;
+  }
+
+  #work-commission-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  #work-filters,
+  #work-grid-section {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  #work-filter-list {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  #work-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .work-item:nth-child(1),
+  .work-item:nth-child(7) {
+    grid-column: 1;
+  }
+
+  .work-item {
+    min-height: 240px !important;
+  }
+
+  #work-commission {
+    padding: 60px 24px;
+  }
+}

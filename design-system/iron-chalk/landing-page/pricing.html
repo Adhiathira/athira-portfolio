@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Torq Material Resistance Testing</title>
+  <meta name="description" content="Torq is currently in closed access. Engineering teams apply for a seat — pricing is structured around simulation volume and team size.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <style>
+    .page-body {
+      padding-top: var(--nav-height);
+      background: var(--color-page-bg);
+    }
+
+    /* ── Page header ── */
+    #pricing-header {
+      background: var(--color-surface-dark);
+      padding: var(--space-hero) var(--grid-padding) var(--space-4xl);
+    }
+
+    #pricing-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+    }
+
+    #pricing-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-lg);
+    }
+
+    #pricing-headline {
+      font-family: var(--font-display);
+      font-size: var(--type-display);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading);
+      text-transform: uppercase;
+      color: var(--color-heading-on-dark);
+      margin: 0 0 var(--space-xl);
+    }
+
+    #pricing-lead {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-light);
+      line-height: var(--line-height-body);
+      color: var(--color-muted-text);
+      max-width: 500px;
+      margin: 0;
+    }
+
+    /* ── Pricing tiers ── */
+    #pricing-tiers {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: var(--space-section) var(--grid-padding);
+    }
+
+    #pricing-tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-neutral-400);
+      border: 1px solid var(--color-neutral-400);
+    }
+
+    /* ── Tier card ── */
+    .tier-card {
+      background: var(--color-page-bg);
+      padding: var(--space-2xl) var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .tier-card--featured {
+      background: var(--color-surface-dark);
+    }
+
+    .tier-name {
+      font-family: var(--font-display);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase;
+      color: var(--color-neutral-500);
+    }
+
+    .tier-card--featured .tier-name {
+      color: var(--color-accent);
+    }
+
+    .tier-price {
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: 1;
+      color: var(--color-heading);
+    }
+
+    .tier-card--featured .tier-price {
+      color: var(--color-heading-on-dark);
+    }
+
+    .tier-price-unit {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      color: var(--color-neutral-500);
+      margin-top: var(--space-xs);
+    }
+
+    .tier-card--featured .tier-price-unit {
+      color: var(--color-muted-text);
+    }
+
+    .tier-description {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-light);
+      line-height: var(--line-height-body);
+      color: var(--color-neutral-525);
+    }
+
+    .tier-card--featured .tier-description {
+      color: var(--color-muted-text);
+    }
+
+    .tier-features {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      border-top: 1px solid var(--color-neutral-400);
+      padding-top: var(--space-lg);
+      flex: 1;
+    }
+
+    .tier-card--featured .tier-features {
+      border-color: var(--color-border);
+    }
+
+    .tier-features li {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      color: var(--color-neutral-525);
+      padding-left: var(--space-md);
+      position: relative;
+      line-height: 1.45;
+    }
+
+    .tier-card--featured .tier-features li {
+      color: var(--color-muted-text);
+    }
+
+    .tier-features li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--color-neutral-475);
+    }
+
+    .tier-card--featured .tier-features li::before {
+      color: var(--color-accent);
+    }
+
+    .tier-cta {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: var(--font-weight-body);
+      letter-spacing: var(--font-letter-spacing-nav);
+      color: var(--color-surface-dark);
+      background: var(--color-neutral-800);
+      text-decoration: none;
+      display: inline-block;
+      padding: var(--space-btn-v) var(--space-btn-h);
+      text-align: center;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    .tier-card--featured .tier-cta {
+      background: var(--color-accent);
+    }
+
+    .tier-cta:hover {
+      opacity: 0.8;
+    }
+
+    .tier-cta:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+    }
+
+    /* ── FAQ section ── */
+    #pricing-faq {
+      background: var(--color-surface-dark);
+      border-top: 1px solid var(--color-border);
+    }
+
+    #pricing-faq-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: var(--space-section) var(--grid-padding);
+    }
+
+    #faq-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: var(--font-weight-light);
+      letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-2xl);
+    }
+
+    #faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl) var(--space-3xl);
+    }
+
+    .faq-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .faq-q {
+      font-family: var(--font-display);
+      font-size: var(--type-h3);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading-on-dark);
+    }
+
+    .faq-a {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-light);
+      line-height: var(--line-height-body);
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    /* ── CTA strip ── */
+    #pricing-cta-strip {
+      background: var(--color-neutral-900);
+      border-top: 1px solid var(--color-border);
+    }
+
+    #pricing-cta-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: var(--space-3xl) var(--grid-padding);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2xl);
+    }
+
+    #pricing-cta-text {
+      font-family: var(--font-display);
+      font-size: var(--type-h3);
+      font-weight: var(--font-weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading-on-dark);
+    }
+
+    #pricing-cta-link {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: var(--font-weight-body);
+      letter-spacing: var(--font-letter-spacing-nav);
+      color: var(--color-surface-dark);
+      background: var(--color-accent);
+      text-decoration: none;
+      display: inline-block;
+      padding: var(--space-btn-v) var(--space-btn-h);
+      white-space: nowrap;
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    #pricing-cta-link:hover { opacity: 0.85; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      #pricing-tiers-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #faq-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #pricing-cta-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="page-body">
+
+<!-- NAV TEMPLATE -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo">TORQ</a>
+  <ul class="nav-links">
+    <li><a href="index.html#product">Product</a></li>
+    <li><a href="method.html">Method</a></li>
+    <li><a href="pricing.html" class="nav-link--active">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="index.html#access" class="nav-cta">Request Access</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu">
+  <a href="index.html#product">Product</a>
+  <a href="method.html">Method</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="about.html">About</a>
+  <a href="index.html#access" class="nav-mobile-cta">Request Access</a>
+</div>
+<script>
+(function(){
+  var nav = document.getElementById('site-nav');
+  var mobileMenu = document.querySelector('.nav-mobile-menu');
+  var toggle = document.querySelector('.nav-mobile-toggle');
+  toggle.addEventListener('click', function(){
+    nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open');
+  });
+})();
+</script>
+
+<!-- PRICING HEADER -->
+<section id="pricing-header">
+  <div id="pricing-header-inner">
+    <div id="pricing-eyebrow">Access &amp; Pricing</div>
+    <h1 id="pricing-headline">Structured for<br>Engineering Teams</h1>
+    <p id="pricing-lead">Torq is in closed access. Pricing is based on simulation volume and team seats — structured to fit the scale of structural, aerospace, and advanced materials teams.</p>
+  </div>
+</section>
+
+<!-- PRICING TIERS -->
+<section id="pricing-tiers">
+  <div id="pricing-tiers-grid">
+    <!-- Tier 1: Research -->
+    <div class="tier-card" id="tier-research">
+      <div class="tier-name">Research</div>
+      <div>
+        <div class="tier-price">$490<span style="font-size:0.4em;font-weight:300;">/mo</span></div>
+        <div class="tier-price-unit">Per seat — billed annually</div>
+      </div>
+      <p class="tier-description">For individual engineers and small research groups running exploratory simulations.</p>
+      <ul class="tier-features">
+        <li>Up to 500 simulation runs/month</li>
+        <li>1 user seat</li>
+        <li>Standard material library access</li>
+        <li>ISO 6892 &amp; ASTM E8 outputs</li>
+        <li>30-day simulation history</li>
+        <li>Email support</li>
+      </ul>
+      <a href="index.html#access" class="tier-cta">Request Access</a>
+    </div>
+
+    <!-- Tier 2: Team (featured) -->
+    <div class="tier-card tier-card--featured" id="tier-team">
+      <div class="tier-name">Team</div>
+      <div>
+        <div class="tier-price">$1,850<span style="font-size:0.4em;font-weight:300;">/mo</span></div>
+        <div class="tier-price-unit">Up to 5 seats — billed annually</div>
+      </div>
+      <p class="tier-description">For engineering teams running production simulations and generating compliance documentation.</p>
+      <ul class="tier-features">
+        <li>Unlimited simulation runs</li>
+        <li>Up to 5 user seats</li>
+        <li>Full material library (4,200+ profiles)</li>
+        <li>All standards — ISO, ASTM, EN</li>
+        <li>Unlimited simulation history</li>
+        <li>Version control &amp; audit trail</li>
+        <li>Priority support + onboarding</li>
+      </ul>
+      <a href="index.html#access" class="tier-cta">Request Access</a>
+    </div>
+
+    <!-- Tier 3: Enterprise -->
+    <div class="tier-card" id="tier-enterprise">
+      <div class="tier-name">Enterprise</div>
+      <div>
+        <div class="tier-price">Custom</div>
+        <div class="tier-price-unit">Volume &amp; seat pricing — annual contract</div>
+      </div>
+      <p class="tier-description">For large organisations with compliance, audit, and accreditation requirements.</p>
+      <ul class="tier-features">
+        <li>Unlimited seats</li>
+        <li>Dedicated simulation infrastructure</li>
+        <li>Custom material library ingestion</li>
+        <li>SOC 2 Type II compliance</li>
+        <li>SSO / enterprise identity</li>
+        <li>Custom compliance output formats</li>
+        <li>Dedicated account management</li>
+      </ul>
+      <a href="index.html#access" class="tier-cta">Contact Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="pricing-faq">
+  <div id="pricing-faq-inner">
+    <div id="faq-eyebrow">Common Questions</div>
+    <div id="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q">What counts as a simulation run?</div>
+        <p class="faq-a">A simulation run is one complete FEA pass on a single material specimen under a defined load condition. Multi-axis runs (combined tensile + shear) count as a single run. Fatigue curve generation counts as one run regardless of cycle count.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How does the access review work?</div>
+        <p class="faq-a">After submitting your request, our team reviews your engineering context within 48 hours. Access is prioritised for structural, aerospace, advanced composites, and materials science teams. We'll ask about your primary use case before issuing a seat.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I bring my own material data?</div>
+        <p class="faq-a">Yes. On Team and Enterprise plans, you can ingest proprietary material specs directly into your workspace. Custom material profiles are stored in your private library and are not shared with the Torq material database.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Are compliance outputs accepted by accreditation bodies?</div>
+        <p class="faq-a">Torq's ISO 6892, ASTM E8, and EN 10002 reports are structured to meet the documentation requirements of standard accreditation bodies. We recommend verifying acceptance with your specific body before submission in a regulated context.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is there an annual contract requirement?</div>
+        <p class="faq-a">All current pricing is billed annually. Monthly billing will be available after general access opens. Enterprise contracts are structured on a 12-month or 24-month basis with custom volume pricing.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What security certifications does Torq hold?</div>
+        <p class="faq-a">Enterprise accounts are provisioned on SOC 2 Type II compliant infrastructure. All simulation data is encrypted at rest and in transit. Data residency options (US, EU) are available on Enterprise plans.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section id="pricing-cta-strip">
+  <div id="pricing-cta-inner">
+    <div id="pricing-cta-text">Apply for an engineering seat.</div>
+    <a href="index.html#access" id="pricing-cta-link">Request Access</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div class="section-inner">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <div id="footer-logo">TORQ</div>
+        <div id="footer-tagline">Precision simulation for material engineers.</div>
+        <div id="footer-copyright">&copy; 2026 Torq Technologies, Inc.</div>
+      </div>
+      <div class="footer-col" id="fcol-platform">
+        <div class="footer-col-heading">Platform</div>
+        <ul class="footer-links">
+          <li><a href="index.html#product">Product</a></li>
+          <li><a href="method.html">Method</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="fcol-company">
+        <div class="footer-col-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="fcol-legal">
+        <div class="footer-col-heading">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+var BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.6;
+var EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+// Header entrance
+gsap.from('#pricing-eyebrow', { y: 30, duration: BASE_DURATION, ease: EASE, delay: 0.2 });
+gsap.from('#pricing-headline', { y: 60, duration: BASE_DURATION, ease: EASE, delay: 0.35 });
+gsap.from('#pricing-lead', { y: 30, duration: BASE_DURATION, ease: EASE, delay: 0.5 });
+
+// Tier cards
+gsap.from('.tier-card', {
+  scrollTrigger: { trigger: '#pricing-tiers-grid', start: 'top 80%' },
+  y: 50,
+  duration: BASE_DURATION,
+  stagger: 0.14,
+  ease: EASE
+});
+
+// FAQ items
+gsap.from('.faq-item', {
+  scrollTrigger: { trigger: '#faq-grid', start: 'top 80%' },
+  y: 30,
+  duration: BASE_DURATION,
+  stagger: 0.1,
+  ease: EASE
+});
+</script>
+
+</body>
+</html>

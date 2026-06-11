@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal — Maison Cendre</title>
+
+  <!-- Google Fonts fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ─────────────────────────────────────────────
+       GOOGLE FONTS FALLBACK IMPORT
+    ───────────────────────────────────────────── */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+    /* ─────────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--line-height-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    /* ─────────────────────────────────────────────
+       NAVIGATION
+    ───────────────────────────────────────────── */
+    #site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--container-inline);
+      background: transparent;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.5s ease;
+    }
+
+    #site-nav.nav-scrolled {
+      border-bottom: 1px solid currentcolor;
+    }
+
+    #site-nav.nav-hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    #nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 71.5px;
+    }
+
+    .nav-link {
+      font-size: 0.9375rem;
+      letter-spacing: 0.5px;
+      color: var(--color-nav-text);
+      text-transform: uppercase;
+      line-height: 1rem;
+      transition: color var(--transition-base), opacity var(--transition-base);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      opacity: 0.6;
+    }
+
+    .nav-link--active {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    #nav-logo {
+      text-align: center;
+      font-family: var(--font-heading);
+      font-size: 0.8125rem;
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-heading);
+      white-space: nowrap;
+    }
+
+    #nav-logo span {
+      color: var(--color-accent);
+    }
+
+    /* ─────────────────────────────────────────────
+       PAGE HEADER
+    ───────────────────────────────────────────── */
+    #section-page-header {
+      padding-top: calc(72px + var(--space-4xl));
+      padding-bottom: var(--space-3xl);
+      padding-left: var(--container-inline);
+      padding-right: var(--container-inline);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #page-header-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(253,53,110,0.06) 0%, transparent 65%),
+        linear-gradient(to bottom, rgba(44,44,48,0.35) 0%, transparent 100%);
+      z-index: 0;
+    }
+
+    #page-header-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+
+    #page-header-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: var(--space-lg);
+      opacity: 0;
+    }
+
+    #page-header-label-line {
+      width: 28px;
+      height: 1px;
+      background: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    #page-header-label-text {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-medium);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    #page-header-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading);
+      color: var(--color-heading);
+      text-transform: uppercase;
+      clip-path: inset(0 100% 0 0);
+    }
+
+    #page-header-sub {
+      margin-top: var(--space-lg);
+      font-family: var(--font-body);
+      font-size: var(--type-body-lg);
+      font-weight: var(--weight-light);
+      color: var(--color-body-text);
+      letter-spacing: 0.01em;
+      line-height: 1.7;
+      max-width: 440px;
+      opacity: 0;
+    }
+
+    #page-header-rule {
+      margin-top: var(--space-3xl);
+      height: 1px;
+      background: linear-gradient(to right, var(--color-border-strong) 0%, transparent 100%);
+      opacity: 0;
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION: FEATURED ARTICLE
+    ───────────────────────────────────────────── */
+    #section-featured {
+      padding: var(--space-3xl) var(--container-inline);
+      position: relative;
+    }
+
+    #featured-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-surface-2);
+    }
+
+    #featured-image-wrap {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      min-height: 480px;
+      overflow: hidden;
+    }
+
+    #featured-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      transform: scale(1.08);
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    #featured-image-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #1a1a1e 0%, #2c2c30 50%, #24242a 100%);
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .fallback-path {
+      font-family: var(--font-mono, monospace);
+      font-size: var(--type-micro);
+      color: var(--color-surface-4);
+      letter-spacing: 0.12em;
+    }
+
+    .fallback-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-surface-3);
+    }
+
+    #featured-image-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(25,25,28,0.96) 0%, rgba(25,25,28,0.5) 35%, rgba(25,25,28,0.1) 70%),
+        linear-gradient(to right, rgba(25,25,28,0.3) 0%, transparent 60%);
+      z-index: 1;
+    }
+
+    #featured-content {
+      position: relative;
+      padding: var(--space-2xl) var(--space-2xl) var(--space-3xl);
+      background: linear-gradient(to bottom, #23232700, #232327 22px);
+    }
+
+    #featured-category {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-md);
+    }
+
+    #featured-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: 1.18;
+      color: var(--color-heading);
+      text-transform: uppercase;
+      margin-bottom: var(--space-lg);
+      max-width: 620px;
+    }
+
+    #featured-date {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-surface-4);
+      margin-bottom: var(--space-lg);
+    }
+
+    #featured-excerpt {
+      font-family: var(--font-body);
+      font-size: var(--type-body-lg);
+      font-weight: var(--weight-light);
+      line-height: 1.85;
+      color: var(--color-body-text);
+      max-width: 680px;
+      margin-bottom: var(--space-xl);
+    }
+
+    .read-more-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-heading);
+      transition: color var(--transition-base);
+      position: relative;
+    }
+
+    .read-more-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--color-accent);
+      transition: width 0.35s var(--ease-smooth);
+    }
+
+    .read-more-link:hover {
+      color: var(--color-accent);
+    }
+
+    .read-more-link:hover::after {
+      width: 100%;
+    }
+
+    .read-more-arrow {
+      display: inline-block;
+      transition: transform 0.3s var(--ease-primary);
+    }
+
+    .read-more-link:hover .read-more-arrow {
+      transform: translateX(4px);
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION: ARTICLE GRID
+    ───────────────────────────────────────────── */
+    #section-article-grid {
+      padding: var(--space-3xl) var(--container-inline);
+      position: relative;
+    }
+
+    #article-grid-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: var(--space-2xl);
+    }
+
+    #article-grid-header-line {
+      width: 28px;
+      height: 1px;
+      background: var(--color-border-strong);
+    }
+
+    #article-grid-header-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-surface-4);
+    }
+
+    #article-grid-columns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-2xl);
+    }
+
+    .article-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      overflow: hidden;
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: border-color 0.3s var(--ease-smooth);
+    }
+
+    .article-card:hover {
+      border-color: var(--color-border-strong);
+    }
+
+    .article-card-image-wrap {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .article-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.65s var(--ease-smooth);
+    }
+
+    .article-card:hover .article-card-img {
+      transform: scale(1.04);
+    }
+
+    .article-card-image-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #1e1e22 0%, #2c2c30 100%);
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .article-card-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(44,44,48,0.65) 0%, transparent 55%);
+    }
+
+    .article-card-body {
+      padding: var(--space-xl) var(--space-xl) var(--space-2xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      flex: 1;
+      background: linear-gradient(to bottom, #2c2c30, #28282d);
+    }
+
+    .article-card-category {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .article-card-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: 1.25;
+      color: var(--color-heading);
+      text-transform: uppercase;
+    }
+
+    .article-card-excerpt {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--weight-light);
+      line-height: 1.82;
+      color: var(--color-body-text);
+      flex: 1;
+    }
+
+    .article-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--color-border);
+      margin-top: auto;
+    }
+
+    .article-card-date {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-surface-4);
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION: PULL QUOTE
+    ───────────────────────────────────────────── */
+    #section-pull-quote {
+      position: relative;
+      padding: var(--space-4xl) var(--container-inline);
+      overflow: hidden;
+    }
+
+    #pull-quote-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 80% at 50% 50%, rgba(253,53,110,0.04) 0%, transparent 70%),
+        linear-gradient(to bottom, rgba(44,44,48,0.22) 0%, rgba(25,25,28,0) 100%);
+      z-index: 0;
+    }
+
+    #pull-quote-rule-top {
+      position: absolute;
+      top: 0;
+      left: var(--container-inline);
+      right: var(--container-inline);
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--color-border-strong) 30%, var(--color-border-strong) 70%, transparent);
+    }
+
+    #pull-quote-rule-bottom {
+      position: absolute;
+      bottom: 0;
+      left: var(--container-inline);
+      right: var(--container-inline);
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--color-border-strong) 30%, var(--color-border-strong) 70%, transparent);
+    }
+
+    #pull-quote-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    #pull-quote-mark {
+      font-family: var(--font-body);
+      font-size: 4rem;
+      line-height: 0.6;
+      color: var(--color-accent);
+      opacity: 0.4;
+      margin-bottom: var(--space-xl);
+      display: block;
+      font-style: italic;
+    }
+
+    #pull-quote-text {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: var(--type-h2);
+      font-weight: var(--weight-light);
+      line-height: 1.52;
+      color: var(--color-heading);
+      letter-spacing: 0.01em;
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION: OLDER ARTICLES LIST
+    ───────────────────────────────────────────── */
+    #section-older-articles {
+      padding: var(--space-3xl) var(--container-inline) var(--space-4xl);
+      position: relative;
+    }
+
+    #older-articles-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: var(--space-2xl);
+    }
+
+    #older-articles-header-line {
+      width: 28px;
+      height: 1px;
+      background: var(--color-border-strong);
+    }
+
+    #older-articles-header-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-surface-4);
+    }
+
+    #older-articles-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .older-article-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-xl);
+      padding: var(--space-xl) 0;
+      border-bottom: 1px solid var(--color-border);
+      opacity: 0;
+      transform: translateX(-20px);
+      cursor: pointer;
+      transition: border-color 0.3s var(--ease-smooth);
+    }
+
+    .older-article-item:first-child {
+      border-top: 1px solid var(--color-border);
+    }
+
+    .older-article-item:hover {
+      border-bottom-color: var(--color-border-strong);
+    }
+
+    .older-article-item:hover .older-article-title {
+      color: var(--color-heading);
+    }
+
+    .older-article-item:hover .older-article-arrow {
+      transform: translateX(5px);
+      color: var(--color-accent);
+    }
+
+    .older-article-index {
+      font-family: var(--font-mono, monospace);
+      font-size: var(--type-micro);
+      color: var(--color-surface-4);
+      letter-spacing: 0.1em;
+      min-width: 32px;
+      padding-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .older-article-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .older-article-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: 1.22;
+      color: var(--color-body-text);
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+      transition: color 0.3s var(--ease-smooth);
+    }
+
+    .older-article-sub {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-light);
+      color: var(--color-surface-4);
+      letter-spacing: 0.04em;
+      font-style: italic;
+    }
+
+    .older-article-arrow {
+      font-size: var(--type-body-lg);
+      color: var(--color-surface-4);
+      flex-shrink: 0;
+      align-self: center;
+      transition: transform 0.35s var(--ease-primary), color 0.3s var(--ease-smooth);
+    }
+
+    /* ─────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────── */
+    #site-footer {
+      position: relative;
+      padding: var(--space-3xl) var(--container-inline) var(--space-2xl);
+      border-top: 1px solid var(--color-border);
+      background: linear-gradient(to bottom, rgba(44,44,48,0.18) 0%, transparent 100%);
+    }
+
+    #footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #footer-logo {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-heading);
+    }
+
+    #footer-logo span {
+      color: var(--color-accent);
+    }
+
+    #footer-tagline {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: var(--type-micro);
+      color: var(--color-surface-4);
+      letter-spacing: 0.04em;
+    }
+
+    #footer-copy {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      letter-spacing: 0.1em;
+      color: var(--color-surface-4);
+    }
+
+    /* ─────────────────────────────────────────────
+       GRAIN TEXTURE OVERLAY (global)
+    ───────────────────────────────────────────── */
+    #grain-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      #article-grid-columns {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-xl);
+      }
+    }
+
+    @media (max-width: 768px) {
+      #site-nav {
+        padding: 0 var(--space-lg);
+      }
+
+      #section-page-header,
+      #section-featured,
+      #section-article-grid,
+      #section-pull-quote,
+      #section-older-articles,
+      #site-footer {
+        padding-left: var(--space-lg);
+        padding-right: var(--space-lg);
+      }
+
+      #article-grid-columns {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+      }
+
+      #featured-content {
+        padding: var(--space-xl) var(--space-lg) var(--space-2xl);
+      }
+
+      #footer-inner {
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+      }
+
+      #older-articles-header-label,
+      #article-grid-header-label {
+        font-size: 0.7rem;
+      }
+    }
+
+    @media (max-width: 375px) {
+      #site-nav {
+        padding: 0 var(--space-md);
+      }
+
+      .nav-link {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Grain texture overlay -->
+  <div id="grain-overlay" aria-hidden="true"></div>
+
+  <!-- ─────────────────────────────────────────
+       NAVIGATION
+  ───────────────────────────────────────── -->
+  <nav id="site-nav" role="navigation" aria-label="Main navigation">
+    <div id="nav-inner">
+      <a href="journal.html" class="nav-link nav-link--active" aria-current="page">Journal</a>
+      <a href="collection.html" class="nav-link">Collection</a>
+
+      <a href="index.html" id="nav-logo" aria-label="Maison Cendre — Home">
+        MAISON <span>CENDRE</span>
+      </a>
+      <a href="atelier.html" class="nav-link">Atelier</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+
+    </div>
+  </nav>
+
+  <!-- ─────────────────────────────────────────
+       PAGE HEADER
+  ───────────────────────────────────────── -->
+  <header id="section-page-header">
+    <div id="page-header-bg" aria-hidden="true"></div>
+
+    <div id="page-header-inner">
+      <div id="page-header-label">
+        <span id="page-header-label-line" aria-hidden="true"></span>
+        <span id="page-header-label-text">Maison Cendre</span>
+      </div>
+
+      <h1 id="page-header-title">Journal</h1>
+
+      <p id="page-header-sub">Notes on preservation, season, and craft.</p>
+
+      <div id="page-header-rule" aria-hidden="true"></div>
+    </div>
+  </header>
+
+  <!-- ─────────────────────────────────────────
+       FEATURED ARTICLE
+  ───────────────────────────────────────── -->
+  <section id="section-featured" aria-labelledby="featured-title">
+    <article id="featured-card">
+
+      <div id="featured-image-wrap">
+        <img
+          id="featured-img"
+          src="assets/journal-hero.jpeg"
+          alt="Wormwood harvest in Alsace, late October — botanicals laid across damp stone"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div id="featured-image-fallback" style="display:none;align-items:center;justify-content:center;background:linear-gradient(160deg,#18181b 0%,#2c2c30 55%,#20201f 100%);width:100%;height:100%;flex-direction:column;gap:10px;">
+          <span class="fallback-label">Image unavailable</span>
+          <span class="fallback-path">→ assets/journal-hero.jpeg</span>
+        </div>
+        <div id="featured-image-overlay" aria-hidden="true"></div>
+      </div>
+
+      <div id="featured-content">
+        <p id="featured-category">Field Notes</p>
+        <h2 id="featured-title">The October Harvest — A Botanist's Account from Alsace</h2>
+        <p id="featured-date">October 2025</p>
+        <p id="featured-excerpt">The wormwood came in late. A wet September had pushed the season by nearly three weeks, and the wild cedar on the upper slope was still heavy with morning damp when we finally cut. Timing, as always, is everything.</p>
+        <a href="#" class="read-more-link" aria-label="Read full article: The October Harvest">
+          Read More <span class="read-more-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </article>
+  </section>
+
+  <!-- ─────────────────────────────────────────
+       ARTICLE GRID
+  ───────────────────────────────────────── -->
+  <section id="section-article-grid" aria-labelledby="article-grid-header-label">
+
+    <div id="article-grid-header">
+      <span id="article-grid-header-line" aria-hidden="true"></span>
+      <span id="article-grid-header-label">Recent Writing</span>
+    </div>
+
+    <div id="article-grid-columns">
+
+      <!-- Article 1 -->
+      <article class="article-card" id="article-card-1">
+        <div class="article-card-image-wrap">
+          <img
+            class="article-card-img"
+            src="assets/journal-article-1.jpeg"
+            alt="Cold press extraction — copper vessels at low temperature in a stone-floored cellar"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="article-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:linear-gradient(145deg,#1e1e22 0%,#2c2c30 100%);width:100%;height:100%;flex-direction:column;gap:10px;">
+            <span class="fallback-label">Image unavailable</span>
+            <span class="fallback-path">→ assets/journal-article-1.jpeg</span>
+          </div>
+          <div class="article-card-image-overlay" aria-hidden="true"></div>
+        </div>
+
+        <div class="article-card-body">
+          <p class="article-card-category">On Technique</p>
+          <h3 class="article-card-title">Cold Press: The Physics of Extraction</h3>
+          <p class="article-card-excerpt">Temperature changes everything. Below twelve degrees, cells rupture differently — more slowly, more completely.</p>
+          <div class="article-card-footer">
+            <span class="article-card-date">September 2025</span>
+            <a href="#" class="read-more-link" aria-label="Read: Cold Press — The Physics of Extraction">
+              Read <span class="read-more-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Article 2 -->
+      <article class="article-card" id="article-card-2">
+        <div class="article-card-image-wrap">
+          <img
+            class="article-card-img"
+            src="assets/journal-article-2.jpeg"
+            alt="Rodrigo's conserva facility in Arousa — rows of hand-packed tins on a wooden bench"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="article-card-image-fallback" style="display:none;align-items:center;justify-content:center;background:linear-gradient(145deg,#1e1e22 0%,#2c2c30 100%);width:100%;height:100%;flex-direction:column;gap:10px;">
+            <span class="fallback-label">Image unavailable</span>
+            <span class="fallback-path">→ assets/journal-article-2.jpeg</span>
+          </div>
+          <div class="article-card-image-overlay" aria-hidden="true"></div>
+        </div>
+
+        <div class="article-card-body">
+          <p class="article-card-category">The Producers</p>
+          <h3 class="article-card-title">Rodrigo: The Last Conserva Maker in Arousa</h3>
+          <p class="article-card-excerpt">His family has been packing sardines since 1948. He is the fourth generation, and possibly the last. We visited his facility in March.</p>
+          <div class="article-card-footer">
+            <span class="article-card-date">August 2025</span>
+            <a href="#" class="read-more-link" aria-label="Read: Rodrigo — The Last Conserva Maker in Arousa">
+              Read <span class="read-more-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────
+       PULL QUOTE
+  ───────────────────────────────────────── -->
+  <section id="section-pull-quote" aria-label="Editorial pull quote">
+    <div id="pull-quote-bg" aria-hidden="true"></div>
+    <div id="pull-quote-rule-top" aria-hidden="true"></div>
+    <div id="pull-quote-rule-bottom" aria-hidden="true"></div>
+
+    <div id="pull-quote-inner">
+      <span id="pull-quote-mark" aria-hidden="true">"</span>
+      <blockquote id="pull-quote-text">
+        Preservation is the art of making the ephemeral permanent — not through arresting time, but by agreeing with it.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────
+       OLDER ARTICLES
+  ───────────────────────────────────────── -->
+  <section id="section-older-articles" aria-labelledby="older-articles-header-label">
+
+    <div id="older-articles-header">
+      <span id="older-articles-header-line" aria-hidden="true"></span>
+      <span id="older-articles-header-label">From the Archive</span>
+    </div>
+
+    <ul id="older-articles-list">
+
+      <li class="older-article-item" id="older-article-1">
+        <span class="older-article-index">01</span>
+        <div class="older-article-body">
+          <h3 class="older-article-title">The Caspian Migration</h3>
+          <p class="older-article-sub">On sturgeon ecology and the ethics of farming</p>
+        </div>
+        <span class="older-article-arrow" aria-hidden="true">→</span>
+      </li>
+
+      <li class="older-article-item" id="older-article-2">
+        <span class="older-article-index">02</span>
+        <div class="older-article-body">
+          <h3 class="older-article-title">Nineteen Preparations for Winter</h3>
+          <p class="older-article-sub">A seasonal larder guide</p>
+        </div>
+        <span class="older-article-arrow" aria-hidden="true">→</span>
+      </li>
+
+      <li class="older-article-item" id="older-article-3">
+        <span class="older-article-index">03</span>
+        <div class="older-article-body">
+          <h3 class="older-article-title">Beurre Blanc, Deconstructed</h3>
+          <p class="older-article-sub">The chemistry of emulsification</p>
+        </div>
+        <span class="older-article-arrow" aria-hidden="true">→</span>
+      </li>
+
+    </ul>
+  </section>
+
+  <!-- ─────────────────────────────────────────
+       FOOTER
+  ───────────────────────────────────────── -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-logo">MAISON <span>CENDRE</span></div>
+      <p id="footer-tagline">Preserved by hand. Aged to presence.</p>
+      <p id="footer-copy">&copy; 2025 Maison Cendre</p>
+    </div>
+  </footer>
+
+  <!-- ─────────────────────────────────────────
+       JAVASCRIPT
+  ───────────────────────────────────────── -->
+  <script>
+    /* ── Navigation: hide-on-scroll + transparent → dark ── */
+    (function () {
+      const nav = document.getElementById('site-nav');
+      let lastScrollY = 0;
+      let ticking = false;
+
+      function updateNav() {
+        const scrollY = window.scrollY;
+
+        // Transparent → dark
+        if (scrollY > 40) {
+          nav.classList.add('nav-scrolled');
+        } else {
+          nav.classList.remove('nav-scrolled');
+        }
+
+        // Hide on scroll down, show on scroll up
+        if (scrollY > lastScrollY && scrollY > 120) {
+          nav.classList.add('nav-hidden');
+        } else {
+          nav.classList.remove('nav-hidden');
+        }
+
+        lastScrollY = scrollY;
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          requestAnimationFrame(updateNav);
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
+
+    /* ── GSAP Animations ── */
+    (function () {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* -- 1. Page Header: label fade + headline clip-path reveal -- */
+      const tl = gsap.timeline({ delay: 0.15 });
+
+      tl.to('#page-header-label', {
+        opacity: 1,
+        duration: 0.55,
+        ease: 'power2.out',
+      });
+
+      tl.to('#page-header-title', {
+        clipPath: 'inset(0 0% 0 0)',
+        duration: 0.85,
+        ease: 'power3.inOut',
+      }, '-=0.2');
+
+      tl.to('#page-header-sub', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+      }, '-=0.35');
+
+      tl.to('#page-header-rule', {
+        opacity: 1,
+        duration: 0.5,
+        ease: 'power1.out',
+      }, '-=0.2');
+
+      /* -- 2. Featured card: image parallax scrub -- */
+      gsap.to('#featured-img', {
+        yPercent: -12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#featured-image-wrap',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.4,
+        },
+      });
+
+      /* -- 3. Article grid: staggered fade-in -- */
+      gsap.to('.article-card', {
+        opacity: 1,
+        y: 0,
+        duration: 0.72,
+        stagger: 0.18,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#article-grid-columns',
+          start: 'top 82%',
+          toggleActions: 'play none none none',
+        },
+      });
+
+      /* -- 4. Pull quote: scale from 0.95 → 1 with opacity -- */
+      gsap.to('#pull-quote-inner', {
+        opacity: 1,
+        scale: 1,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#section-pull-quote',
+          start: 'top 72%',
+          toggleActions: 'play none none none',
+        },
+      });
+
+      /* -- 5. Older articles list: stagger reveal from left -- */
+      gsap.to('.older-article-item', {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        stagger: 0.12,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#older-articles-list',
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+        },
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

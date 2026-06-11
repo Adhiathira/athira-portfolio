@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>caspers-vid — Sign up</title>
+  <!-- Google Fonts: Barlow Condensed (display), Barlow (body) -->
+  <!-- Font substitution note: Barlow and Barlow Condensed are loaded via Google Fonts.
+       If this font fails to load, the browser substitutes a system sans-serif font,
+       which will not match the design specification. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+  <!-- Design system CSS -->
+  <link rel="stylesheet" href="./css/tokens.css">
+  <link rel="stylesheet" href="./css/typography.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/motion.css">
+  <link rel="stylesheet" href="./css/components/nav.css">
+  <style>
+    /* -------------------------------------------------------------------------
+       Page base
+       ------------------------------------------------------------------------- */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #1a1a1a; /* --color-page-bg */
+      min-height: 100vh;
+    }
+
+    /* -------------------------------------------------------------------------
+       Main — newPage entrance animation from motion.css
+       duration: --duration-cinematic (1s), easing: --ease-sweep
+       ------------------------------------------------------------------------- */
+    .signup-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: var(--spacing-section) var(--spacing-double);
+      box-sizing: border-box;
+      animation: newPage 1s cubic-bezier(0.625, 0.05, 0, 1) both;
+    }
+
+    /* -------------------------------------------------------------------------
+       Inner form column — max-width ~400px, centered
+       ------------------------------------------------------------------------- */
+    .signup-inner {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* -------------------------------------------------------------------------
+       Plan context banner — hidden by default; JS reveals if getSelectedPlan() returns a value
+       Pure text label — no background, no border
+       font: Barlow (not substituting; loaded via Google Fonts — see head comment)
+       ------------------------------------------------------------------------- */
+    .signup-plan-context {
+      /* font: Barlow — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow', sans-serif;
+      font-size: 10.56px;
+      font-weight: 300;
+      color: #d4c9b4; /* --color-accent */
+      margin: 0 0 var(--spacing-double) 0;
+      line-height: 1.4;
+    }
+
+    /* -------------------------------------------------------------------------
+       Headline — JOIN THE COMMUNITY
+       font: Barlow Condensed — install via Google Fonts if not rendering correctly
+       ------------------------------------------------------------------------- */
+    .signup-heading {
+      /* font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+      color: #f5f0e8; /* --color-heading */
+      margin: 0 0 var(--spacing-base) 0;
+    }
+
+    /* -------------------------------------------------------------------------
+       Subtext
+       font: Barlow — install via Google Fonts if not rendering correctly
+       ------------------------------------------------------------------------- */
+    .signup-subtext {
+      /* font: Barlow — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow', sans-serif;
+      font-size: 14.08px;
+      font-weight: 400;
+      color: #e8e2d8; /* --color-body */
+      margin: 0 0 var(--spacing-double) 0;
+      line-height: 1.5;
+    }
+
+    /* -------------------------------------------------------------------------
+       Form layout — gap between field groups: 28.16px
+       ------------------------------------------------------------------------- */
+    .signup-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-double); /* 28.16px */
+    }
+
+    /* -------------------------------------------------------------------------
+       Field group — label above, input below
+       ------------------------------------------------------------------------- */
+    .signup-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* -------------------------------------------------------------------------
+       Label
+       font: Barlow — install via Google Fonts if not rendering correctly
+       ------------------------------------------------------------------------- */
+    .signup-label {
+      /* font: Barlow — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow', sans-serif;
+      font-size: 10.56px;
+      font-weight: 300;
+      color: #9e9588; /* --color-muted */
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    /* -------------------------------------------------------------------------
+       Input — bottom border only; no box border; no focus state
+       font: Barlow — install via Google Fonts if not rendering correctly
+       ------------------------------------------------------------------------- */
+    .signup-input {
+      /* font: Barlow — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow', sans-serif;
+      font-size: 14.08px;
+      font-weight: 400;
+      color: #f2f2f2; /* --color-link-default */
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #4a4540; /* --color-border — bottom only */
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      padding: 14.08px 0; /* top/bottom only; no side padding since no box border */
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+    }
+
+    /* No visible focus state — spec explicitly requires no border-color change, no glow, no outline */
+    .signup-input:focus {
+      outline: none;
+      border-bottom-color: #4a4540; /* unchanged — spec: no focus state */
+    }
+
+    /* -------------------------------------------------------------------------
+       "Create account" primary button
+       font: Barlow Condensed — install via Google Fonts if not rendering correctly
+       ------------------------------------------------------------------------- */
+    .signup-submit {
+      /* font: Barlow Condensed — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14.08px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #f5f0e8; /* --color-heading */
+      background: #111111; /* --color-primary-action */
+      border: none;
+      width: 100%;
+      padding: 28.16px 14.08px; /* 28.16px top/bottom, 14.08px left/right */
+      cursor: pointer;
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+                  background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: var(--spacing-base);
+    }
+
+    /* -------------------------------------------------------------------------
+       "Continue with Google" OAuth placeholder button
+       font: Barlow — install via Google Fonts if not rendering correctly
+       ------------------------------------------------------------------------- */
+    .signup-oauth {
+      /* font: Barlow — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow', sans-serif;
+      font-size: 14.08px;
+      font-weight: 400;
+      color: #f2f2f2; /* --color-link-default */
+      background: #3a3530; /* --color-surface-bg */
+      border: none;
+      width: 100%;
+      padding: 14.08px;
+      cursor: pointer;
+      margin-top: 14.08px;
+      box-sizing: border-box;
+    }
+
+    /* -------------------------------------------------------------------------
+       "Already have an account? Log in →" link
+       font: Barlow — install via Google Fonts if not rendering correctly
+       ------------------------------------------------------------------------- */
+    .signup-login-link {
+      /* font: Barlow — install via Google Fonts if not rendering correctly */
+      font-family: 'Barlow', sans-serif;
+      font-size: 14.08px;
+      font-weight: 400;
+      color: #f2f2f2; /* --color-link-default */
+      text-decoration: none;
+      display: block;
+      margin-top: var(--spacing-double); /* 28.16px */
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .signup-login-link:hover {
+      color: #202020; /* --color-link-hover */
+    }
+
+    /* -------------------------------------------------------------------------
+       Font diagnostic banner — prepended to body by JS if fonts fail to load
+       ------------------------------------------------------------------------- */
+    .font-diagnostic-banner {
+      background: #3d1a1a;
+      border-bottom: 1px solid #7a3a3a;
+      color: #f5f0e8;
+      font-family: monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      padding: 10px 14.08px;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+    .font-diagnostic-banner strong { color: #d4c9b4; }
+    .font-diagnostic-banner .font-name { font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV — same structure as about.html, pricing.html, explore.html -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-left">
+      <a href="./explore.html" class="nav-link regular">Explore</a>
+      <a href="./pricing.html" class="nav-link regular">Pricing</a>
+      <a href="./about.html" class="nav-link regular">About</a>
+    </div>
+    <div class="nav-center">
+      <a href="./index.html" class="nav-wordmark" id="nav-wordmark">CASPERS-VID</a>
+    </div>
+    <div class="nav-right">
+      <a href="./login.html" class="nav-link regular">Log in</a>
+      <a href="./signup.html" class="nav-link regular">Sign up</a>
+    </div>
+  </nav>
+
+  <main class="signup-page">
+
+    <div class="signup-inner">
+
+      <!-- Plan context — hidden by default; JS reveals if getSelectedPlan() returns a value.
+           Pure text in accent color — no card, no box border. -->
+      <p class="signup-plan-context" id="selectedPlanContext" hidden>
+        You're signing up for <span id="selectedPlanName"></span>
+      </p>
+
+      <!-- Headline -->
+      <!-- font: Barlow Condensed — install via Google Fonts if not rendering correctly -->
+      <h1 class="signup-heading">JOIN THE COMMUNITY</h1>
+
+      <!-- Subtext -->
+      <!-- font: Barlow — install via Google Fonts if not rendering correctly -->
+      <p class="signup-subtext">Last step before you're inside.</p>
+
+      <!-- Form — fields in spec order: email → password → username -->
+      <form class="signup-form" novalidate>
+
+        <!-- Email -->
+        <div class="signup-field">
+          <!-- font: Barlow — install via Google Fonts if not rendering correctly -->
+          <label class="signup-label" for="email">Email</label>
+          <input
+            class="signup-input"
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+          >
+        </div>
+
+        <!-- Password -->
+        <div class="signup-field">
+          <!-- font: Barlow — install via Google Fonts if not rendering correctly -->
+          <label class="signup-label" for="password">Password</label>
+          <input
+            class="signup-input"
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="new-password"
+          >
+        </div>
+
+        <!-- Username -->
+        <div class="signup-field">
+          <!-- font: Barlow — install via Google Fonts if not rendering correctly -->
+          <label class="signup-label" for="username">Username</label>
+          <input
+            class="signup-input"
+            type="text"
+            id="username"
+            name="username"
+            autocomplete="username"
+          >
+        </div>
+
+        <!-- Primary button: Create account -->
+        <!-- font: Barlow Condensed — install via Google Fonts if not rendering correctly -->
+        <button class="signup-submit" type="submit">Create account</button>
+
+        <!-- OAuth placeholder: Continue with Google (visual only — not functional) -->
+        <!-- font: Barlow — install via Google Fonts if not rendering correctly -->
+        <button class="signup-oauth" type="button">Continue with Google</button>
+
+        <!-- Login link -->
+        <!-- font: Barlow — install via Google Fonts if not rendering correctly -->
+        <a class="signup-login-link" href="./login.html">Already have an account? Log in &rarr;</a>
+
+      </form>
+
+    </div><!-- /.signup-inner -->
+
+  </main>
+
+  <script type="module">
+    import { initNav } from './js/components/nav.js';
+    import { getSelectedPlan, login, setFirstSession, clearIntendedAction } from './js/auth.js';
+
+    initNav();
+
+    // Font diagnostic — detect if Barlow / Barlow Condensed failed to load from Google Fonts.
+    // Shows a sticky banner at top of body naming the missing fonts and how to fix it.
+    (async () => {
+      await document.fonts.ready;
+      const missing = [];
+      if (!document.fonts.check('400 16px "Barlow Condensed"')) missing.push('Barlow Condensed');
+      if (!document.fonts.check('400 16px "Barlow"')) missing.push('Barlow');
+      if (missing.length === 0) return;
+
+      const banner = document.createElement('div');
+      banner.className = 'font-diagnostic-banner';
+
+      const label = document.createElement('strong');
+      label.textContent = 'Font load failure';
+      banner.appendChild(label);
+
+      missing.forEach((fontName, i) => {
+        banner.appendChild(document.createTextNode(i === 0 ? ' \u2014 ' : ' and '));
+        const nameEl = document.createElement('span');
+        nameEl.className = 'font-name';
+        nameEl.textContent = fontName;
+        banner.appendChild(nameEl);
+      });
+
+      banner.appendChild(document.createTextNode(
+        ' could not be loaded from Google Fonts. Typography on this page is not faithful to the design.'
+        + ' Fix: check network connectivity, disable ad blockers that block fonts.googleapis.com,'
+        + ' or install the font locally and restart the browser.'
+      ));
+
+      document.body.prepend(banner);
+    })();
+
+    // Plan context — show accent text line if a plan was selected on the pricing page
+    const plan = getSelectedPlan();
+    if (plan) {
+      const el = document.getElementById('selectedPlanContext');
+      const name = document.getElementById('selectedPlanName');
+      name.textContent = plan;
+      el.hidden = false;
+    }
+
+    // Form submit — simulate auth, then redirect to intended destination or studio
+    document.querySelector('.signup-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value.trim();
+      if (!email || !password || !username) return;
+
+      login({ username, email });
+      setFirstSession();
+
+      // Signup always lands in studio — spec: "product promise delivered before second-guessing."
+      // Clear any pending intended action (explore return flows are login-only for returning users).
+      clearIntendedAction();
+      window.location.href = './app/studio.html';
+    });
+  </script>
+
+</body>
+</html>

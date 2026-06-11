@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Recto</title>
+  <meta name="description" content="About Recto: a precision document intelligence platform built by editors and engineers who believe language deserves the same rigour as code.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    .nav-spacer.active { display: block; }
+
+    /* About header — compact, max 20vh */
+    #about-header {
+      background: var(--color-page-bg);
+      padding: 50px 0 70px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    #about-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-container-h);
+      max-height: 20vh;
+      overflow: visible;
+    }
+
+    #about-kicker {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin-bottom: 1.5rem;
+    }
+
+    #about-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 5rem);
+      font-weight: var(--weight-heading);
+      line-height: 1.05;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-heading);
+      margin: 0;
+    }
+
+    /* About body content */
+    #about-body {
+      background: var(--color-page-bg);
+      padding: var(--space-section) 0;
+    }
+
+    #about-body-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-container-h);
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 8rem;
+      align-items: start;
+    }
+
+    #about-left-col {
+      position: sticky;
+      top: 60px;
+    }
+
+    #about-left-col h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 2.5vw, 3rem);
+      font-weight: var(--weight-heading);
+      line-height: 1.1;
+      letter-spacing: 0.06em;
+      color: var(--color-heading);
+      margin: 0 0 2rem;
+    }
+
+    #about-left-col p {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    #about-right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+
+    .about-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .about-section:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .about-section-label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-subtle-text);
+    }
+
+    .about-section h3 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.2rem, 1.8vw, 1.75rem);
+      font-weight: var(--weight-heading);
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+      margin: 0;
+    }
+
+    .about-section p {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+
+    /* Image */
+    #about-image-section {
+      background: var(--color-surface-1);
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--color-border-default);
+    }
+
+    #about-image-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-container-h);
+    }
+
+    #about-image-container {
+      width: 100%;
+      height: 480px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #about-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      #about-header-inner { padding: 0 40px; }
+      #about-body-inner {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        padding: 0 40px;
+      }
+      #about-left-col { position: static; }
+      #about-image-inner { padding: 0 40px; }
+    }
+
+    @media (max-width: 600px) {
+      #about-header-inner { padding: 0 24px; }
+      #about-body-inner { padding: 0 24px; }
+      #about-image-inner { padding: 0 24px; }
+      #about-body { padding: 80px 0; }
+      #about-image-container { height: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Recto</a>
+      <ul class="nav-links">
+        <li><a href="work.html">Work</a></li>
+        <li><a href="about.html" class="nav-link--active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="work.html">Work</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-spacer active"></div>
+  <script>
+    const nav = document.getElementById('site-nav');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    const toggle = nav.querySelector('.nav-mobile-toggle');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    });
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+    });
+  </script>
+
+  <!-- COMPACT HEADER -->
+  <header id="about-header">
+    <div id="about-header-inner">
+      <div id="about-kicker">About</div>
+      <h1 id="about-title">Language deserves the same rigour as code.</h1>
+    </div>
+  </header>
+
+  <!-- BODY CONTENT -->
+  <section id="about-body">
+    <div id="about-body-inner">
+      <div id="about-left-col">
+        <h2>Built by editors and engineers</h2>
+        <p>Recto began as an internal tool for a team of editors working on long-form academic and literary publishing. The problem was always the same: the structural problems that compound over a long document were invisible until they were expensive to fix.</p>
+      </div>
+      <div id="about-right-col">
+        <div class="about-section" id="about-origin">
+          <div class="about-section-label">Origin</div>
+          <h3>Started in a proof room</h3>
+          <p>The first version of Recto was a set of scripts that an editorial team ran on InDesign exports to catch terminology drift and cross-reference errors before a manuscript went to typesetting. It worked well enough that other teams asked to use it. That question — "can we have that?" — became the product.</p>
+        </div>
+        <div class="about-section" id="about-philosophy">
+          <div class="about-section-label">Philosophy</div>
+          <h3>Deterministic, not generative</h3>
+          <p>Recto does not use large language models to suggest edits, rewrite copy, or fill in missing structure. That is a different kind of tool. Recto's intelligence is rule-based: the rules come from the editorial standards your team already holds, made explicit and applied consistently. We believe the editor's judgment should be preserved and amplified, not replaced.</p>
+        </div>
+        <div class="about-section" id="about-approach">
+          <div class="about-section-label">Approach</div>
+          <h3>The document as a system</h3>
+          <p>Every document has internal logic — a set of structural and terminological commitments it makes to the reader. Recto treats the document as a system with rules: when those rules are broken, the system surfaces a discrepancy. When they're consistently maintained, the system confirms coherence. Editorial judgment still governs which rules apply and when to make an exception. Recto handles the audit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGE -->
+  <section id="about-image-section">
+    <div id="about-image-inner">
+      <div id="about-image-container">
+        <img
+          id="about-studio-img"
+          src="assets/about-proof-room.jpeg"
+          alt="Editorial proof room with printed manuscript pages pinned across a wide cork board, natural window light"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div
+          style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                 background:var(--color-surface-2);color:rgba(0,0,0,0.4);font-family:var(--font-body);
+                 font-size:0.85rem;"
+        >
+          → assets/about-proof-room.jpeg
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <div id="footer-logo">Recto</div>
+        <p id="footer-tagline">Document intelligence for teams who care about how language is made.</p>
+      </div>
+      <div id="footer-nav-col-1">
+        <div class="footer-col-heading">Product</div>
+        <ul class="footer-links">
+          <li><a href="work.html">How it works</a></li>
+          <li><a href="work.html">Features</a></li>
+          <li><a href="contact.html">Request access</a></li>
+        </ul>
+      </div>
+      <div id="footer-nav-col-2">
+        <div class="footer-col-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <div id="footer-copyright">© 2026 Recto. All rights reserved.</div>
+      <div id="footer-legal">Built for editorial precision.</div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.39;
+    const EASE = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+    // Header title — clip path
+    gsap.from('#about-title', {
+      clipPath: 'inset(0 100% 0 0)',
+      duration: BASE_DURATION * 2,
+      ease: 'power2.out',
+      delay: 0.15
+    });
+
+    // Left col — horizontal sweep
+    gsap.from('#about-left-col', {
+      scrollTrigger: { trigger: '#about-body', start: 'top 75%' },
+      x: -50,
+      duration: BASE_DURATION * 1.5,
+      ease: EASE
+    });
+
+    // Right sections — stagger vertical
+    gsap.from('.about-section', {
+      scrollTrigger: { trigger: '#about-right-col', start: 'top 80%' },
+      y: 40,
+      stagger: 0.15,
+      duration: BASE_DURATION * 1.3,
+      ease: EASE
+    });
+
+    // Image — parallax
+    gsap.to('#about-studio-img', {
+      scrollTrigger: {
+        trigger: '#about-image-section',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.5
+      },
+      y: '10%',
+      ease: 'none'
+    });
+  </script>
+</body>
+</html>

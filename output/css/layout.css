@@ -1,0 +1,303 @@
+/*
+ * layout.css
+ * Grid, spacing, and section layout utilities.
+ *
+ * Implements the layout specification from layout.md exactly:
+ *   - Dual-band header (nav-bar structure)
+ *   - Full-bleed sections (hero, dark background sections)
+ *   - Contained content sections (implied inner container)
+ *   - Asymmetric two-column and three-column equal grids
+ *   - Section spacing rhythm: light→dark alternation
+ *
+ * Grid system values from grid.json:
+ *   container.maxWidth = 1320px
+ *   container.paddingLeft/Right = 12px
+ *   container.columnGap = 80px (spacing.json > elements.container.columnGap)
+ *
+ * ALL spacing uses var(--space-*) and var(--grid-*) tokens.
+ * NO hardcoded px values for margins or padding.
+ */
+
+/* ================================================================
+ * Base container
+ * max-width: 1320px (grid.json > container.maxWidth)
+ * padding-inline: 12px (grid.json > container.paddingLeft/Right)
+ * ================================================================ */
+
+.container {
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  padding-inline: var(--grid-padding-x);
+  box-sizing: border-box;
+}
+
+/* Wide container — up to the 1280px editorial breakpoint */
+.container--wide {
+  width: 100%;
+  max-width: var(--grid-bp-xl);
+  margin-inline: auto;
+  padding-inline: var(--grid-padding-x);
+  box-sizing: border-box;
+}
+
+/* Full-bleed — no max-width, no padding (hero, dark sections) */
+.container--full-bleed {
+  width: 100%;
+  max-width: none;
+  padding-inline: 0;
+}
+
+/* ================================================================
+ * Section spacing utilities
+ * Values from spacing.json > elements.section
+ * ================================================================ */
+
+.section {
+  padding-top: var(--space-section-pt);      /* 40px */
+  padding-bottom: var(--space-section-pb);   /* 22px */
+}
+
+.section--flush {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.section--generous {
+  padding-top: calc(var(--space-section-pt) * 2);    /* 80px */
+  padding-bottom: calc(var(--space-section-pb) * 2); /* 44px */
+}
+
+/* Footer section (spacing.json > elements.footer) */
+.section--footer {
+  padding-top: var(--space-footer-pt);    /* 40px */
+  padding-bottom: 0;
+}
+
+/* Hero section — zero top padding, nav floats above (layout.md §3) */
+.section--hero {
+  padding-top: 0;
+  padding-bottom: 0;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Dark background section variant */
+.section--dark {
+  background-color: var(--color-hero-background);
+  color: var(--color-nav-text);
+}
+
+/* Light/cream section variant */
+.section--light {
+  background-color: var(--color-page-bg);
+  color: var(--color-body-text);
+}
+
+/* Surface/white section variant */
+.section--surface {
+  background-color: var(--color-surface);
+  color: var(--color-body-text);
+}
+
+/* ================================================================
+ * Column grid system
+ * Gap from spacing.json > elements.container.columnGap = 80px
+ * Three-column equal grid (layout.md §4 sections A, D)
+ * ================================================================ */
+
+/* Base grid — uses column gap token */
+.grid {
+  display: grid;
+  gap: var(--space-container-gap);    /* 80px column gap */
+}
+
+/* Three-column equal (product grid, seasonal grid) */
+.grid--3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-container-gap);
+}
+
+/* Four-column equal (footer links — layout.md §5) */
+.grid--4col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-container-gap);
+}
+
+/* Two-column equal (newsletter split — layout.md §4 section E) */
+.grid--2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-container-gap);
+}
+
+/* Two-column asymmetric ~40/60 (layout.md §4 section B, C first panel) */
+.grid--2col-asymmetric {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--space-container-gap);
+}
+
+/* Two-column text-left image-right split (layout.md §4 section C, E) */
+.grid--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+/* Gazette layout from grid.json > grids.the-goyard-gazette */
+.grid--gazette {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: normal var(--space-container-gap);
+  justify-content: center;
+}
+
+/* ================================================================
+ * Nav layout (layout.md §2 — dual-band header)
+ * Two-tier: top bar ~40px utility, bottom bar ~40px nav links
+ * Nav height from nav.json > geometry.height = 49.9765625px
+ * ================================================================ */
+
+.nav-band {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.nav-band__top {
+  background-color: transparent;
+  height: calc(var(--nav-height-approx));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--space-wrapper-px);
+  border-bottom: var(--nav-border-bottom);
+  transition: background-color var(--motion-nav-duration) var(--motion-nav-easing);
+}
+
+.nav-band__bottom {
+  background-color: transparent;
+  height: calc(var(--nav-height-approx));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-container-gap);
+  border-bottom: var(--nav-border-bottom);
+  transition: background-color var(--motion-nav-duration) var(--motion-nav-easing);
+}
+
+/* Scroll state — class applied by nav.js */
+.nav-band.is-scrolled .nav-band__top {
+  background-color: var(--color-nav-background);
+}
+
+.nav-band.is-scrolled .nav-band__bottom {
+  background-color: var(--color-nav-background-scrolled);
+}
+
+/* ================================================================
+ * Wrapper utility (spacing.json > elements.wrapper)
+ * paddingTop: 49px, paddingRight/Left: 100px
+ * ================================================================ */
+
+.wrapper {
+  padding-top: var(--space-wrapper-pt);
+  padding-right: var(--space-wrapper-px);
+  padding-left: var(--space-wrapper-px);
+  box-sizing: border-box;
+}
+
+/* ================================================================
+ * Row utility (spacing.json > elements.row)
+ * paddingRight/Left: 5px
+ * ================================================================ */
+
+.row {
+  padding-right: var(--space-row-px);
+  padding-left: var(--space-row-px);
+}
+
+/* ================================================================
+ * Content area (spacing.json > elements.content)
+ * ================================================================ */
+
+.content {
+  padding-top: var(--space-content-pt);
+  padding-right: var(--space-content-pr);
+  padding-bottom: var(--space-content-pb);
+  padding-left: var(--space-content-pl);
+}
+
+/* ================================================================
+ * Panel (spacing.json > elements.panel)
+ * ================================================================ */
+
+.panel {
+  padding-right: var(--space-panel-px);
+  padding-left: var(--space-panel-px);
+}
+
+/* ================================================================
+ * Responsive breakpoints (grid.json > responsive)
+ * ================================================================ */
+
+/* bp-481px: hide at max-width 481px */
+@media (max-width: 481px) {
+  .hide-xs {
+    display: none;
+  }
+}
+
+/* bp-576px: min-width 576px */
+@media (min-width: 576px) {
+  .container {
+    max-width: var(--grid-sm-max);  /* 540px */
+  }
+
+  .row--sm {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+}
+
+/* bp-767px: max-width 767px — stacking behavior */
+@media (max-width: 767px) {
+  .grid--3col,
+  .grid--4col,
+  .grid--2col,
+  .grid--2col-asymmetric,
+  .grid--split {
+    grid-template-columns: 1fr;
+    gap: var(--space-section-pt);
+  }
+
+  .grid--gazette {
+    flex-direction: column;
+  }
+}
+
+/* bp-768px: min-width 768px */
+@media (min-width: 768px) {
+  .container {
+    max-width: var(--grid-md-max);  /* 720px */
+  }
+
+  .row--md {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+}
+
+/* bp-769px+: full desktop layout */
+@media (min-width: 769px) {
+  .container {
+    max-width: var(--grid-max-width);  /* 1320px */
+  }
+}

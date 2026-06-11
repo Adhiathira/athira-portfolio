@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Griting</title>
+  <meta name="description" content="Ideas, insights, and announcements from the Griting team on AI talent, mentorship, and the future of work.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--color-page-bg);
+      color: var(--color-text-heading);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV (on-light) ── */
+    #site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: #ffffff;
+      border-bottom: 1px solid var(--color-nav-border);
+    }
+    #site-nav { height: 100%; }
+    #nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      padding-inline: var(--nav-padding-inline);
+    }
+    #nav-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-family: var(--font-logo);
+      font-size: var(--type-logo);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-logo);
+      color: var(--color-logo-on-light);
+    }
+    #nav-logo-g {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      border-radius: 6px;
+      font-size: 20px; font-weight: 700;
+      margin-right: 4px; flex-shrink: 0;
+    }
+    #nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--nav-gap);
+    }
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: var(--weight-regular);
+      color: var(--color-text-body);
+      text-decoration: none;
+      transition: var(--transition-button);
+    }
+    .nav-link:hover { color: var(--color-text-heading); }
+    .nav-link.nav-link--active { opacity: 0.45; pointer-events: none; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px var(--btn-padding-inline);
+      background: var(--button-primary-bg);
+      color: var(--button-primary-text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--tracking-btn);
+      text-decoration: none;
+      border-radius: var(--btn-border-radius);
+      box-shadow: var(--button-primary-shadow);
+      transition: var(--transition-button);
+    }
+    .nav-cta:hover {
+      background: var(--button-primary-bg-hover);
+      box-shadow: var(--button-primary-shadow-hover);
+    }
+
+    /* ── FEATURED POST ── */
+    #featured-post {
+      padding-top: 60px;
+      padding-bottom: 56px;
+      padding-inline: var(--container-padding-wide);
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+    }
+    #featured-card {
+      display: grid;
+      grid-template-columns: 60fr 40fr;
+      gap: 40px;
+      background: var(--color-surface-inverted);
+      border-radius: 16px;
+      overflow: hidden;
+      padding: 48px;
+      align-items: center;
+    }
+    #featured-left {}
+    #featured-eyebrow {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
+      background: rgba(0, 105, 62, 0.15);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 20px;
+    }
+    #featured-headline {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 40px);
+      font-weight: 400;
+      letter-spacing: -0.8px;
+      line-height: 1.2;
+      color: #ffffff;
+      margin-bottom: 28px;
+    }
+    #featured-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #featured-author-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-avatar-gradient-start), var(--color-avatar-gradient-end));
+      display: flex; align-items: center; justify-content: center;
+      color: #ffffff; font-weight: var(--weight-semibold); font-size: 13px;
+    }
+    #featured-author-name {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: var(--weight-medium);
+      color: #ffffff;
+    }
+    #featured-right {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+    #featured-read-link {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: var(--weight-medium);
+      color: var(--color-brand-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s ease;
+    }
+    #featured-read-link:hover { gap: 10px; }
+    #featured-read-link::after { content: '→'; }
+
+    /* ── FILTER BAR ── */
+    #category-filter {
+      padding-inline: var(--container-padding-wide);
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding-bottom: 32px;
+      position: sticky;
+      top: 72px;
+      background: var(--color-page-bg);
+      z-index: 90;
+      padding-top: 16px;
+      border-bottom: 1px solid var(--color-border-tertiary);
+    }
+    #filter-bar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #filter-pills {
+      display: flex;
+      gap: var(--filter-pill-gap);
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      height: var(--filter-pill-height);
+      padding-inline: var(--filter-pill-padding-x);
+      border-radius: var(--radius-pill);
+      font-family: var(--font-body);
+      font-size: var(--type-filter-pill);
+      font-weight: var(--weight-medium);
+      cursor: pointer;
+      transition: var(--transition-button);
+      border: none;
+    }
+    .filter-pill.active {
+      background: var(--filter-pill-active-bg);
+      color: var(--filter-pill-active-text);
+    }
+    .filter-pill.active:hover { background: #004d2e; }
+    .filter-pill.inactive {
+      background: var(--filter-pill-inactive-bg);
+      color: var(--filter-pill-inactive-text);
+      border: 1px solid var(--color-filter-pill-border);
+    }
+    .filter-pill.inactive:hover {
+      background: #e8e8e8;
+      color: var(--color-text-heading);
+    }
+    #search-input-wrap {
+      position: relative;
+    }
+    #search-input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-meta);
+      font-size: 14px;
+      pointer-events: none;
+    }
+    #search-input {
+      height: var(--search-height);
+      padding-left: var(--search-padding-left);
+      padding-right: 16px;
+      background: #f3f4f3;
+      border: 1px solid var(--color-border-tertiary);
+      border-radius: var(--radius-search);
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-text-heading);
+      outline: none;
+      transition: border-color 0.2s ease;
+      width: 200px;
+    }
+    #search-input::placeholder { color: var(--color-search-placeholder); }
+    #search-input:focus { border-color: var(--color-brand-primary); }
+
+    /* ── BLOG LIST ── */
+    #blog-list {
+      padding-inline: var(--container-padding-wide);
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding-top: 12px;
+      padding-bottom: 60px;
+    }
+    .blog-list-item {
+      display: flex;
+      align-items: center;
+      gap: var(--filter-pill-gap);
+      padding-block: 24px;
+      border-bottom: 1px solid var(--color-border-tertiary);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s ease;
+      padding-inline: 12px;
+      border-radius: var(--radius-xs);
+      margin-inline: -12px;
+    }
+    .blog-list-item:hover {
+      background: var(--color-surface-light);
+    }
+    .blog-list-item:hover .article-title {
+      color: var(--color-brand-primary);
+      text-decoration-color: var(--color-brand-primary);
+    }
+    .article-category-pill {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--color-surface-dim);
+      font-family: var(--font-body);
+      font-size: var(--type-category-tag);
+      font-weight: var(--weight-regular);
+      color: var(--color-text-body);
+      min-width: 80px;
+      justify-content: center;
+    }
+    .article-title {
+      flex: 1;
+      font-family: var(--font-body);
+      font-size: var(--type-article-title);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-heading);
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      letter-spacing: var(--tracking-article-title);
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+    .article-date {
+      flex-shrink: 0;
+      font-family: var(--font-body);
+      font-size: var(--type-date-meta);
+      color: var(--color-text-date);
+    }
+    .article-arrow {
+      flex-shrink: 0;
+      font-size: 16px;
+      color: var(--color-text-meta);
+      transition: transform 0.2s ease;
+    }
+    .blog-list-item:hover .article-arrow { transform: translateX(4px); }
+
+    /* ── CTA BANNER ── */
+    #cta-banner {
+      padding-block: 100px;
+      background: var(--color-brand-primary);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #cta-banner-inner { position: relative; z-index: 1; padding-inline: var(--container-padding-wide); }
+    #cta-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 56px);
+      font-weight: 500;
+      letter-spacing: -1.5px;
+      color: #ffffff;
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+    #cta-btn-group { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-white {
+      display: inline-flex; align-items: center;
+      padding: var(--btn-padding-block) 32px;
+      background: #ffffff; color: var(--color-brand-primary);
+      font-family: var(--font-body); font-size: var(--type-btn-primary);
+      font-weight: var(--weight-semibold); letter-spacing: var(--tracking-btn);
+      text-decoration: none; border-radius: var(--btn-border-radius);
+      transition: var(--transition-button);
+    }
+    .btn-white:hover { background: var(--color-surface-light); }
+    .btn-white-outline {
+      display: inline-flex; align-items: center;
+      padding: var(--btn-padding-block) 32px;
+      background: transparent; color: #ffffff;
+      font-family: var(--font-body); font-size: var(--type-btn-primary);
+      font-weight: var(--weight-medium); letter-spacing: var(--tracking-btn);
+      text-decoration: none; border-radius: var(--btn-border-radius);
+      border: 1px solid rgba(255,255,255,0.4);
+      transition: var(--transition-button);
+    }
+    .btn-white-outline:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* ── FOOTER ── */
+    #site-footer {
+      background: var(--color-bg-hero);
+      padding-top: 72px; padding-bottom: 40px;
+    }
+    #footer-inner {
+      max-width: var(--grid-max-width); margin: 0 auto;
+      padding-inline: var(--container-padding-wide);
+    }
+    #footer-top {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 56px;
+    }
+    #footer-logo {
+      display: flex; align-items: center;
+      font-family: var(--font-logo); font-size: 28px;
+      font-weight: var(--weight-semibold); letter-spacing: var(--tracking-logo);
+      color: #ffffff; text-decoration: none; margin-bottom: 20px;
+    }
+    #footer-logo-g {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; background: var(--color-brand-primary);
+      color: #ffffff; border-radius: 5px; font-size: 16px;
+      font-weight: 700; margin-right: 3px; flex-shrink: 0;
+    }
+    #footer-waitlist-cta {
+      display: inline-flex; padding: 12px 20px;
+      background: var(--color-brand-primary); color: #ffffff;
+      font-family: var(--font-body); font-size: 14px;
+      font-weight: var(--weight-medium); text-decoration: none;
+      border-radius: var(--btn-border-radius);
+      transition: var(--transition-button);
+    }
+    #footer-waitlist-cta:hover { background: var(--button-primary-bg-hover); }
+    .footer-col-heading {
+      font-family: var(--font-body); font-size: 12px;
+      font-weight: var(--weight-semibold); letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--color-text-meta); margin-bottom: 16px;
+    }
+    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col-links a {
+      font-family: var(--font-body); font-size: 14px;
+      color: rgba(255,255,255,0.55); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-col-links a:hover { color: rgba(255,255,255,0.9); }
+    #footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    #footer-copyright { font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.35); }
+    #footer-legal { display: flex; gap: 20px; }
+    .footer-legal-link { font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.35); text-decoration: none; }
+    .footer-legal-link:hover { color: rgba(255,255,255,0.6); }
+    #footer-social { display: flex; gap: 14px; }
+    .social-link {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 700;
+      text-decoration: none; transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .social-link:hover { border-color: rgba(255,255,255,0.4); color: #ffffff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #featured-post, #category-filter, #blog-list, #cta-banner-inner, #footer-inner { padding-inline: 32px; }
+      #featured-card { grid-template-columns: 1fr; }
+      #footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      #featured-post, #category-filter, #blog-list, #cta-banner-inner, #footer-inner { padding-inline: 20px; }
+      #featured-card { padding: 28px; }
+      #footer-top { grid-template-columns: 1fr; }
+      #footer-bottom { flex-direction: column; gap: 16px; }
+      #nav-links .nav-link { display: none; }
+      #blog-list-item { flex-wrap: wrap; }
+      .article-title { min-width: 100%; }
+      #cta-btn-group { flex-direction: column; align-items: center; }
+      .btn-white, .btn-white-outline { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV (on-light, blog active) ── -->
+  <header id="site-header">
+    <nav id="site-nav" aria-label="Main navigation">
+      <div id="nav-inner">
+        <a id="nav-logo" href="index.html" aria-label="Griting home">
+          <span id="nav-logo-g" aria-hidden="true">G</span><span id="nav-logo-wordmark">riting</span>
+        </a>
+        <div id="nav-links">
+          <a href="index.html" class="nav-link" id="nav-link-product">Product</a>
+          <a href="about-us.html" class="nav-link" id="nav-link-about">About</a>
+          <a href="index.html#cta-banner" class="nav-link" id="nav-link-contact">Contact</a>
+          <a href="blog-index.html" class="nav-link nav-link--active" id="nav-link-blog">Blog</a>
+          <a href="index.html#cta-banner" class="nav-cta" id="nav-cta-btn">Get in Touch</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ── FEATURED POST ── -->
+  <section id="featured-post" aria-labelledby="featured-headline">
+    <div id="featured-card">
+      <div id="featured-left">
+        <div id="featured-eyebrow">Blog</div>
+        <h1 id="featured-headline">The First Agentic Career Mentorship System from Silicon Valley.</h1>
+        <div id="featured-meta">
+          <div id="featured-author-avatar" aria-hidden="true">JZ</div>
+          <span id="featured-author-name">Jie Zhang</span>
+        </div>
+      </div>
+      <div id="featured-right">
+        <a id="featured-read-link" href="blog-post.html">Read Article</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CATEGORY FILTER ── -->
+  <div id="category-filter" aria-label="Filter articles">
+    <div id="filter-bar-inner">
+      <div id="filter-pills" role="group" aria-label="Filter by category">
+        <button class="filter-pill active" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-pill inactive" data-filter="product" aria-pressed="false">Product</button>
+        <button class="filter-pill inactive" data-filter="company" aria-pressed="false">Company</button>
+        <button class="filter-pill inactive" data-filter="developers" aria-pressed="false">Developers</button>
+      </div>
+      <div id="search-input-wrap">
+        <span id="search-input-icon" aria-hidden="true">⌕</span>
+        <input type="search" id="search-input" placeholder="Search..." aria-label="Search articles">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BLOG LIST ── -->
+  <section id="blog-list" aria-label="Article list">
+    <a class="blog-list-item" href="blog-post.html" data-category="company">
+      <span class="article-category-pill">Company</span>
+      <span class="article-title">The First Agentic Mentorship</span>
+      <span class="article-date">16 Oct</span>
+      <span class="article-arrow" aria-hidden="true">→</span>
+    </a>
+    <a class="blog-list-item" href="blog-post.html" data-category="company">
+      <span class="article-category-pill">Company</span>
+      <span class="article-title">Interview with Tencent</span>
+      <span class="article-date">18 Oct</span>
+      <span class="article-arrow" aria-hidden="true">→</span>
+    </a>
+    <a class="blog-list-item" href="blog-post.html" data-category="developers">
+      <span class="article-category-pill">Developers</span>
+      <span class="article-title">Agentic System</span>
+      <span class="article-date">28 Oct</span>
+      <span class="article-arrow" aria-hidden="true">→</span>
+    </a>
+  </section>
+
+  <!-- ── CTA BANNER ── -->
+  <section id="cta-banner" aria-labelledby="cta-heading">
+    <div id="cta-banner-inner">
+      <h2 id="cta-heading">Ready to build connections that shape your future?</h2>
+      <div id="cta-btn-group">
+        <a href="index.html#gritme-talent-evaluation" class="btn-white">Explore GritMe</a>
+        <a href="mailto:hello@griting.ai" class="btn-white-outline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-top">
+        <div id="footer-brand-col">
+          <a id="footer-logo" href="index.html">
+            <span id="footer-logo-g">G</span><span>riting</span>
+          </a>
+          <a id="footer-waitlist-cta" href="#">Join The waitlist</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Product</div>
+          <ul class="footer-col-links">
+            <li><a href="#">GritMe</a></li>
+            <li><a href="#">GritHub</a></li>
+            <li><a href="#">GritLab</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Company</div>
+          <ul class="footer-col-links">
+            <li><a href="about-us.html">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="blog-index.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Contact</div>
+          <ul class="footer-col-links">
+            <li><a href="mailto:hello@griting.ai">Email</a></li>
+            <li><a href="#">Phone</a></li>
+            <li><a href="#">Address</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Support</div>
+          <ul class="footer-col-links">
+            <li><a href="#">Talk to an expert</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="footer-bottom">
+        <div id="footer-copyright">© 2026 Griting. All rights reserved.</div>
+        <div id="footer-legal">
+          <a href="#" class="footer-legal-link">Terms &amp; Conditions</a>
+          <a href="#" class="footer-legal-link">Privacy Policy</a>
+        </div>
+        <div id="footer-social">
+          <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+          <a href="#" class="social-link" aria-label="Dribbble">⊙</a>
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const EASE = 'cubic-bezier(0.19, 1, 0.22, 1)';
+
+    // Featured card entrance
+    gsap.from('#featured-card', {
+      y: 36,
+      opacity: 0,
+      duration: 0.8,
+      ease: EASE,
+      delay: 0.15
+    });
+
+    // Blog list items: stagger reveal
+    gsap.from('.blog-list-item', {
+      scrollTrigger: { trigger: '#blog-list', start: 'top 85%' },
+      y: 20,
+      opacity: 0,
+      duration: 0.5,
+      stagger: 0.1,
+      ease: EASE
+    });
+
+    // CTA
+    gsap.from('#cta-heading', {
+      scrollTrigger: { trigger: '#cta-banner', start: 'top 80%' },
+      scale: 0.94,
+      opacity: 0,
+      duration: 0.8,
+      ease: EASE
+    });
+
+    // Filter pill interaction
+    const pills = document.querySelectorAll('.filter-pill');
+    const articles = document.querySelectorAll('.blog-list-item');
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pills.forEach(p => { p.classList.remove('active'); p.classList.add('inactive'); p.setAttribute('aria-pressed','false'); });
+        pill.classList.add('active'); pill.classList.remove('inactive');
+        pill.setAttribute('aria-pressed','true');
+        const filter = pill.getAttribute('data-filter');
+        articles.forEach(article => {
+          if (filter === 'all' || article.getAttribute('data-category') === filter) {
+            article.style.display = 'flex';
+          } else {
+            article.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Search filter
+    document.getElementById('search-input').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      articles.forEach(article => {
+        const title = article.querySelector('.article-title').textContent.toLowerCase();
+        article.style.display = title.includes(q) ? 'flex' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

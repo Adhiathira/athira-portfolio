@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor</title>
+  <link rel="stylesheet" href="/editor-assets/editor.css">
+</head>
+<body>
+  <!-- Header bar -->
+  <header class="editor-header">
+    <a href="/" class="editor-back">← Back</a>
+    <span class="editor-site-name" id="editor-site-name"></span>
+    <nav class="editor-page-tabs" id="editor-page-tabs">
+      <!-- page tab buttons rendered by editor.js -->
+    </nav>
+    <button class="editor-save-btn" id="editor-save-btn">Save Variant</button>
+    <button id="editor-ws-save-btn" class="editor-ws-save-btn" hidden>Save</button>
+  </header>
+
+  <!-- Main content area -->
+  <main class="editor-main">
+    <!-- Landing page preview iframe -->
+    <div class="editor-preview">
+      <iframe
+        id="editor-iframe"
+        class="editor-iframe"
+        title="Landing page preview"
+        sandbox="allow-scripts allow-same-origin"
+      ></iframe>
+    </div>
+
+    <!-- Right sidebar with tab bar -->
+    <aside class="editor-sidebar-wrap">
+
+      <!-- Tab bar: Tokens / Agent -->
+      <div class="editor-sidebar-tabs">
+        <button class="editor-sidebar-tab active" id="tab-tokens" data-tab="tokens">Tokens</button>
+        <button class="editor-sidebar-tab" id="tab-agent" data-tab="agent">Agent</button>
+      </div>
+
+      <!-- Tokens panel (existing content) -->
+      <div class="editor-sidebar" id="editor-sidebar" data-panel="tokens">
+        <div class="editor-sidebar-loading">Loading tokens…</div>
+      </div>
+
+      <!-- Agent panel (new) -->
+      <div class="editor-agent-panel" id="editor-agent-panel" data-panel="agent" hidden>
+
+        <!-- Agent start status -->
+        <div class="editor-agent-status" id="editor-agent-status">
+          <span class="editor-agent-status-dot" id="editor-agent-status-dot"></span>
+          <span class="editor-agent-status-text" id="editor-agent-status-text">Click Agent tab to start</span>
+        </div>
+
+        <!-- Chat message history -->
+        <div class="editor-agent-messages" id="editor-agent-messages"></div>
+
+        <!-- Input bar -->
+        <div class="editor-agent-input-bar">
+          <textarea
+            id="editor-agent-input"
+            class="editor-agent-input"
+            placeholder="Ask the agent to change something…"
+            rows="2"
+            disabled
+          ></textarea>
+          <button id="editor-agent-send" class="editor-agent-send" disabled>Send</button>
+        </div>
+
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- Save modal -->
+  <div class="editor-modal-overlay" id="editor-modal" hidden>
+    <div class="editor-modal">
+      <h2 class="editor-modal-title">Save Variant</h2>
+      <label class="editor-modal-label" for="variant-name-input">Variant name</label>
+      <input
+        type="text"
+        id="variant-name-input"
+        class="editor-modal-input"
+        placeholder="e.g. dark-mode-draft"
+        autocomplete="off"
+      >
+      <p class="editor-modal-hint">Only lowercase letters, numbers, hyphens, and underscores</p>
+      <p class="editor-modal-error" id="modal-error" hidden></p>
+      <div class="editor-modal-actions">
+        <button class="editor-modal-cancel" id="modal-cancel">Cancel</button>
+        <button class="editor-modal-confirm" id="modal-confirm">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*__EDITOR_SITE__*/
+    /*__EDITOR_MODE__*/
+  </script>
+  <script src="/editor-assets/editor.js" type="module"></script>
+</body>
+</html>

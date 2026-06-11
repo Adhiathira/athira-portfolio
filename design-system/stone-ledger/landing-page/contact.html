@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Aravindan &amp; Co., Kerala High Court</title>
+  <meta name="description" content="Brief Aravindan &amp; Co. — senior advocates at the Kerala High Court. Send your matter for consideration via email, telephone, or the brief form.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <link rel="stylesheet" href="components/contact.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <a href="index.html">Aravindan &amp; Co.</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="practice.html" class="nav-link">Practice Areas</a></li>
+      <li><a href="about.html" class="nav-link">Chambers</a></li>
+      <li><a href="attorneys.html" class="nav-link">Attorneys</a></li>
+      <li><a href="contact.html" class="nav-link nav-link--active">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="contact.html">Brief Us</a>
+    </div>
+    <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-spacer active" id="nav-spacer"></div>
+<nav class="nav-mobile-menu" aria-hidden="true">
+  <a href="index.html">Home</a>
+  <a href="practice.html">Practice Areas</a>
+  <a href="about.html">Chambers</a>
+  <a href="attorneys.html">Attorneys</a>
+  <a href="contact.html">Contact</a>
+  <div class="nav-mobile-cta"><a href="contact.html">Brief Us</a></div>
+</nav>
+<script>
+(function() {
+  var nav = document.getElementById('site-nav');
+  var spacer = document.getElementById('nav-spacer');
+  var mobileToggle = nav.querySelector('.nav-mobile-toggle');
+  var mobileMenu = document.querySelector('.nav-mobile-menu');
+  var scrolled = false;
+  window.addEventListener('scroll', function() {
+    var shouldFix = window.scrollY > 10;
+    if (shouldFix !== scrolled) {
+      scrolled = shouldFix;
+      if (scrolled) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }
+  });
+  mobileToggle.addEventListener('click', function() {
+    var isOpen = nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open', isOpen);
+    mobileToggle.setAttribute('aria-expanded', isOpen);
+    mobileMenu.setAttribute('aria-hidden', !isOpen);
+  });
+})();
+</script>
+<!-- END NAV -->
+
+<!-- ============================================================
+     CONTACT HERO — courtroom-dawn.mp4, minimal (action archetype)
+     ============================================================ -->
+<section id="contact-hero" class="contact-hero">
+  <div id="contact-hero-video-wrap" class="contact-hero-video-wrap">
+    <video
+      id="contact-hero-video"
+      src="assets/courtroom-dawn.mp4"
+      autoplay muted loop playsinline
+      aria-hidden="true"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div
+      id="contact-hero-placeholder"
+      style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+             background:var(--color-hero-bg);color:rgba(255,255,255,0.4);font-family:var(--font-body);
+             font-size:0.85rem;letter-spacing:0.06em;"
+    >
+      → assets/courtroom-dawn.mp4 (Kerala High Court courtroom — generating)
+    </div>
+    <div id="contact-hero-overlay" class="contact-hero-overlay" aria-hidden="true"></div>
+  </div>
+
+  <div id="contact-hero-content" class="section-inner contact-hero-content">
+    <p id="contact-hero-label" class="section-label section-label--light">Brief us</p>
+    <h1 id="contact-hero-title" class="contact-hero-title">Send a matter<br>for consideration.</h1>
+    <p id="contact-hero-sub" class="contact-hero-sub">
+      Before the Kerala High Court and the Supreme Court of India.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT FORM + INFO
+     ============================================================ -->
+<section id="contact-main" class="contact-main">
+  <div id="contact-main-inner" class="section-inner contact-grid">
+
+    <!-- LEFT: Brief form -->
+    <div id="contact-form-col" class="contact-form-col">
+      <h2 id="contact-form-title" class="contact-section-title">Submit a brief</h2>
+      <p id="contact-form-note" class="contact-form-note">
+        Provide sufficient particulars for us to assess whether the matter falls within our practice areas. We respond within three working days.
+      </p>
+
+      <form id="contact-brief-form" class="contact-brief-form" action="#" method="post">
+        <div id="form-row-name" class="form-row">
+          <label for="brief-name" class="form-label">Your name or firm</label>
+          <input
+            type="text"
+            id="brief-name"
+            name="name"
+            class="form-input"
+            placeholder="T.K. Menon or Menon &amp; Associates"
+            autocomplete="name"
+          >
+        </div>
+
+        <div id="form-row-email" class="form-row">
+          <label for="brief-email" class="form-label">Email address</label>
+          <input
+            type="email"
+            id="brief-email"
+            name="email"
+            class="form-input"
+            placeholder="advocate@firm.co.in"
+            autocomplete="email"
+          >
+        </div>
+
+        <div id="form-row-court" class="form-row">
+          <label for="brief-court" class="form-label">Forum</label>
+          <select id="brief-court" name="court" class="form-input form-select">
+            <option value="">Select forum</option>
+            <option value="khc-single">Kerala High Court — Single Judge</option>
+            <option value="khc-division">Kerala High Court — Division Bench</option>
+            <option value="sc">Supreme Court of India</option>
+            <option value="cat">Central Administrative Tribunal</option>
+            <option value="other">Other / to be determined</option>
+          </select>
+        </div>
+
+        <div id="form-row-subject" class="form-row">
+          <label for="brief-subject" class="form-label">Practice area</label>
+          <select id="brief-subject" name="subject" class="form-input form-select">
+            <option value="">Select area</option>
+            <option value="constitutional">Constitutional Law / Fundamental Rights</option>
+            <option value="civil">Civil Appeals / Property / Succession</option>
+            <option value="writ">Writ Petition / Service Matters</option>
+            <option value="commercial">Commercial Disputes / Injunctions</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div id="form-row-brief" class="form-row">
+          <label for="brief-text" class="form-label">Brief summary of the matter</label>
+          <textarea
+            id="brief-text"
+            name="brief"
+            class="form-input form-textarea"
+            rows="6"
+            placeholder="Set out the nature of the dispute, the reliefs sought, and any relevant procedural history. Include case numbers if the matter is already listed."
+          ></textarea>
+        </div>
+
+        <div id="form-row-submit" class="form-row form-row--submit">
+          <button type="submit" id="contact-submit-btn" class="btn btn-primary btn-lg">Submit Brief</button>
+          <p id="form-privacy" class="form-privacy">All communications are treated as privileged and confidential.</p>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIGHT: Direct contact info -->
+    <div id="contact-info-col" class="contact-info-col">
+      <h2 id="contact-info-title" class="contact-section-title">Direct contact</h2>
+
+      <div id="contact-info-block" class="contact-info-block">
+        <p id="contact-chambers-label" class="contact-info-label">Chambers</p>
+        <address id="contact-chambers-address" class="contact-info-address">
+          Aravindan &amp; Co.<br>
+          Advocates' Chambers<br>
+          High Court of Kerala<br>
+          Ernakulam — 682 031<br>
+          Kerala, India
+        </address>
+      </div>
+
+      <div id="contact-tel-block" class="contact-info-block">
+        <p id="contact-tel-label" class="contact-info-label">Telephone</p>
+        <a href="tel:+914842361234" id="contact-tel-link" class="contact-info-link">+91 484 236 1234</a>
+        <p id="contact-hours" class="contact-info-hours">Available on working days, 9:30 am — 5:00 pm IST</p>
+      </div>
+
+      <div id="contact-email-block" class="contact-info-block">
+        <p id="contact-email-label" class="contact-info-label">Email</p>
+        <a href="mailto:chambers@aravindan.co.in" id="contact-email-link" class="contact-info-link">chambers@aravindan.co.in</a>
+      </div>
+
+      <div id="contact-bar-block" class="contact-info-block">
+        <p id="contact-bar-label" class="contact-info-label">Bar registration</p>
+        <p id="contact-bar-reg" class="contact-info-text">Bar Council of Kerala — No. 1987/K/SR</p>
+        <p id="contact-bar-reg-2" class="contact-info-text">All India Bar — Certificate of Practice in force</p>
+      </div>
+
+      <div id="contact-note-block" class="contact-note-block">
+        <p id="contact-note" class="contact-note">
+          We do not accept instructions in matters where the legal question is unclear, where the potential client seeks a guarantee of outcome, or where the brief cannot be accepted without conflict with an existing retainer. If in doubt, write with a short summary of the matter and we will confirm whether we are in a position to advise.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer" class="site-footer">
+  <div id="footer-inner" class="section-inner footer-inner">
+    <div id="footer-grid" class="footer-grid">
+      <div id="footer-brand" class="footer-col footer-col--brand">
+        <p id="footer-logo-text" class="footer-logo-text">Aravindan &amp; Co.</p>
+        <address id="footer-address" class="footer-address">
+          Advocates' Chambers<br>
+          High Court of Kerala<br>
+          Ernakulam — 682 031
+        </address>
+        <p id="footer-reg" class="footer-reg">Bar Council of Kerala — No. 1987/K/SR</p>
+      </div>
+      <div id="footer-practice" class="footer-col">
+        <h4 id="footer-practice-heading" class="footer-col-heading">Practice</h4>
+        <ul id="footer-practice-list" class="footer-links">
+          <li><a href="practice.html#constitutional">Constitutional Law</a></li>
+          <li><a href="practice.html#civil">Civil Appeals</a></li>
+          <li><a href="practice.html#writ">Writ Petitions</a></li>
+          <li><a href="practice.html#commercial">Commercial Disputes</a></li>
+        </ul>
+      </div>
+      <div id="footer-chambers" class="footer-col">
+        <h4 id="footer-chambers-heading" class="footer-col-heading">Chambers</h4>
+        <ul id="footer-chambers-list" class="footer-links">
+          <li><a href="about.html">About the Firm</a></li>
+          <li><a href="attorneys.html">Senior Counsel</a></li>
+          <li><a href="about.html#history">Our History</a></li>
+        </ul>
+      </div>
+      <div id="footer-contact" class="footer-col">
+        <h4 id="footer-contact-heading" class="footer-col-heading">Contact</h4>
+        <ul id="footer-contact-list" class="footer-links">
+          <li><a href="contact.html">Send a Brief</a></li>
+          <li><a href="mailto:chambers@aravindan.co.in">chambers@aravindan.co.in</a></li>
+          <li><a href="tel:+914842361234">+91 484 236 1234</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom" class="footer-bottom">
+      <p id="footer-copyright" class="footer-copyright">© 2024 Aravindan &amp; Co. All rights reserved.</p>
+      <p id="footer-statement" class="footer-statement">A practice in constitutional and civil appellate law at the Kerala High Court.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Contact hero entrance (page load, not scroll-triggered) — single screen form page
+var contactHeroTL = gsap.timeline({ delay: 0.15 });
+contactHeroTL
+  .from('#contact-hero-label', { y: 6, opacity: 0, duration: 0.9, ease: 'power1.out' })
+  .from('#contact-hero-title', { y: 6, opacity: 0, duration: 0.9, ease: 'power1.out' }, '-=0.7')
+  .from('#contact-hero-sub', { y: 6, opacity: 0, duration: 0.9, ease: 'power1.out' }, '-=0.7');
+
+// Form columns — divergent on scroll
+var BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-reveal')) || 0.6;
+var EASE = 'power2.out';
+
+gsap.from('#contact-form-col', {
+  scrollTrigger: { trigger: '#contact-main', start: 'top 75%' },
+  x: -50,
+  duration: BASE_DURATION,
+  ease: EASE
+});
+
+gsap.from('#contact-info-col', {
+  scrollTrigger: { trigger: '#contact-main', start: 'top 75%' },
+  x: 50,
+  duration: BASE_DURATION,
+  ease: EASE
+});
+
+// Form rows — subtle stagger up
+gsap.from('.form-row', {
+  scrollTrigger: { trigger: '#contact-brief-form', start: 'top 80%' },
+  y: 20,
+  duration: BASE_DURATION,
+  stagger: 0.07,
+  ease: EASE
+});
+</script>
+
+</body>
+</html>

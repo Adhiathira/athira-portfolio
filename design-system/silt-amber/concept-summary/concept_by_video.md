@@ -1,0 +1,36 @@
+# Motion Brief: Silt Amber
+
+## Scroll Opening
+
+The page loads into silence. No preloader, no flash — the near-black background resolves first, then the hero headline emerges not with a fade but with a vertical lift: each word of the display type rises from just below its resting position over 600–800ms, staggered left to right. The lift distance is short — 18–24px — keeping the motion intimate rather than theatrical. The grain texture beneath materializes at the same moment, cross-fading from zero opacity with a 400ms ease-out, arriving slightly before the text to establish depth. Navigation links ghost in last, at 200ms delay, as if they were always there but not needed yet. The overall impression is that the page was already present and has simply become visible.
+
+## Hero Experience
+
+The hero carries a video background. The caviar grain texture — the physical surface of the product — is a natural motion candidate: a close-focus macro loop of dark roe slowly shifting in a shallow vessel, the light catching individual spheres as they settle and separate. This is not a dramatic movement. It operates at the threshold of perception — the viewer will not consciously register it as video until they look directly. The suggested asset is `hero-bg.mp4`. The headline type holds static above it, pinned and unmoved; the contrast between the kinetic background and the locked display type creates a sense of weight, of the text having pressed itself into stillness against the living surface beneath.
+
+## Section Transitions
+
+Transitions between sections are deliberately understated. As the user scrolls from the hero into the first product feature split, the background texture dissolves into the grid — no scroll-snap, no parallax shunt. The transition mechanism is opacity shift on the entering section over approximately 300ms, timed to the natural scroll velocity rather than triggered at a hard threshold. Between the product splits and the manifesto section, there is a brief moment of pure darkness — a black frame that the manifesto headline then emerges into from the bottom edge, as if surfacing. This negative-space beat between sections reinforces the slow, punctuated editorial rhythm of the static layout.
+
+## Content Rhythm
+
+Individual elements enter the viewport with measured restraint. Product photography columns reveal with a vertical mask wipe — the image slides up from beneath a clipping boundary rather than fading, which preserves the photographic subject's integrity and avoids the soft-edged ambiguity of opacity transitions. Text elements in product sections (product name, price, origin label) stagger with 80ms intervals between each line, entering from a 12px downward offset at opacity zero. The stagger is slow enough to feel intentional, fast enough not to read as a loading delay. In the manifesto sections, the oversized headline does not animate at all — it is already there when the section enters. The reader's scroll pulls the headline into the viewport rather than an animation pushing it forward.
+
+## Footer Approach
+
+The footer enters without declaration. As the conversion section's CTA scrolls past mid-viewport, the footer columns are already fading into place — a slow opacity rise at 500ms ease-in-out, column by column from left to right at 100ms stagger. There is no concluding animation, no logo reveal flourish. The circular brand stamp watermark in the footer background fades in at 70% opacity on a slightly delayed timeline — 200ms after the columns — making it feel like something discovered rather than presented. The page ends quietly, consistent with the luxury convention of a non-performing close.
+
+## Motion Principles
+
+The timing philosophy is **languid but precise**. Nothing snaps. Easing curves favor ease-out and ease-in-out over linear or elastic — the system does not bounce or spring. Duration ranges sit between 300ms and 800ms; anything shorter reads as aggressive, anything longer as broken. The motion vocabulary draws from material behavior: textile draping, liquid surface shift, photographic paper emerging in developer. These are organic processes with no mechanical urgency. The one exception is the modal — when the email signup overlay appears, it enters at a slightly shorter duration (250ms) with a subtle scale-from (0.97 to 1.0), giving the interruption a crisp authority distinct from the page's ambient pace. Hover states on navigation links should use a 150ms color transition — fast enough to feel responsive without breaking the dominant slow register.
+
+## Video Placements
+
+**1. Hero Background — `hero-bg.mp4`**
+Section role: Hero atmospheric backdrop. The video shows an extreme close-up macro of caviar grain in a shallow dark vessel, the surface of the roe catching ambient light — spheres shifting with micro-movements as the vessel tilts imperceptibly. Motion quality: ultra-slow drift, nearly imperceptible, filmed at high frame rate and played back at 60–70% speed to emphasize material weight. Mood: opulent stillness, the luxury of resolution. Duration: 5s loop, seamlessly joined. Video serves this section because the grain texture is the brand's primary sensory asset — making it breathe transforms the brand's most important surface from a photograph into an experience. A still image here would leave the hero inert; the barely-perceptible motion signals attention, care, and aliveness without competing with the headline.
+
+**2. Product Showcase — `product-feature.mp4`**
+Section role: Product feature split, center panel or right column. The video shows a caviar tin being placed onto a dark slate surface — a single deliberate gesture filmed from above, the lid glinting as it lands and settles. Motion quality: slow-motion, 120fps shot played at half speed, emphasizing the material weight of the tin and the precision of the placement. Mood: ceremony, restraint, the gravity of the product. Duration: 8–10s with a held end frame before loop. Video serves this section because the static photography already establishes product close-ups; a single motion asset within the grid creates asymmetry that reinforces the editorial character. The gesture — placing the tin — is the act of service and presentation that the brand's positioning implies, shown rather than described.
+
+**3. Brand Manifesto — `manifesto-ambient.mp4`**
+Section role: Background layer behind the oversized manifesto headline. The video shows a tidal body of water filmed at dusk — dark surface, low light, slow movement, no horizon line visible, the frame filled edge to edge with moving water whose color reads nearly as dark as the page background. Motion quality: slow lateral drift, handheld with minimal but present shake, suggesting organic presence rather than mechanical capture. Mood: origin, depth, the cold northern waters the caviar comes from. Duration: 10s narrative build, the motion subtle enough that the headline remains legible throughout. Video serves this section because the manifesto is the brand's singular philosophical statement — connecting product to place requires a living image of that place, not a styled product shot. The water's motion makes the brand claim spatial and real.

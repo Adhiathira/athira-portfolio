@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features — SONOR</title>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+
+  <style>
+    /* ================================================================
+       BASE RESET & GLOBAL
+    ================================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--lh-normal);
+      overflow-x: hidden;
+    }
+
+    /* ================================================================
+       NAV
+    ================================================================ */
+    #site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: #fbfbfd;
+      border-bottom: 1px solid #e0e0e6;
+      /* NO backdrop-filter ever — null in tokens */
+      z-index: 100;
+      display: flex;
+      align-items: center;
+    }
+
+    #nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1328px;
+      margin: 0 auto;
+      padding: 0 86.3984px;
+    }
+
+    #nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #1d1d1f;
+      text-decoration: none;
+    }
+
+    #nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: #1d1d1f;
+      text-decoration: none;
+      transition: color 0.32s cubic-bezier(0.4, 0, 0.6, 1);
+    }
+
+    .nav-link:hover { color: #2997ff; }
+
+    .nav-link--active {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .nav-cta-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: #fbfbfd;
+      background: #1d1d1f;
+      padding: 8px 20px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.32s, color 0.32s;
+    }
+
+    .nav-cta-link:hover {
+      background: #2997ff;
+      color: #ffffff;
+    }
+
+    /* ================================================================
+       SECTION CONTAINER UTILITY
+    ================================================================ */
+    .section-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+    }
+
+    /* ================================================================
+       SECTION 1: FEATURES HERO
+    ================================================================ */
+    #features-hero {
+      padding-top: 144px;
+      padding-bottom: 80px;
+      background: linear-gradient(180deg, #fbfbfd 0%, #f0f5fa 100%);
+      text-align: center;
+    }
+
+    #features-hero .section-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    #hero-eyebrow {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.833rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      /* Spectral gradient text: pink → indigo */
+      background: linear-gradient(90deg, #ea3a8c 0%, #5e5ce6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    #features-hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 7rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: 0.9;
+      color: var(--color-heading-text);
+      max-width: 900px;
+    }
+
+    #features-hero p {
+      font-family: var(--font-body);
+      font-size: var(--type-p);
+      color: var(--color-muted-text);
+      max-width: 560px;
+      line-height: var(--lh-relaxed);
+    }
+
+    /* ================================================================
+       SECTION 2: FEATURE MEASUREMENT (left content, right image)
+    ================================================================ */
+    #feature-measurement {
+      background: #fbfbfd;
+      padding: var(--spacing-section-v) 0;
+    }
+
+    .feature-split {
+      display: grid;
+      align-items: center;
+      gap: var(--spacing-section-gap);
+    }
+
+    .feature-split--left-content {
+      grid-template-columns: 55% 45%;
+    }
+
+    .feature-split--right-content {
+      grid-template-columns: 45% 55%;
+    }
+
+    .feature-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .feature-content::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 2px;
+    }
+
+    /* Measurement section: pink → indigo accent line */
+    #feature-measurement .feature-content::before {
+      background: linear-gradient(180deg, #ea3a8c 0%, #5e5ce6 100%);
+    }
+
+    /* Correction section: indigo → cyan accent line */
+    #feature-correction .feature-content::before {
+      background: linear-gradient(180deg, #5e5ce6 0%, #32ade6 100%);
+    }
+
+    .feature-number {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+    }
+
+    .feature-content h3 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.4rem, 2.5vw, 3.110rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--lh-tight);
+      color: var(--color-heading-text);
+    }
+
+    .feature-body {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      color: var(--color-muted-text);
+      line-height: var(--lh-relaxed);
+    }
+
+    .feature-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .feature-bullets li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-body-text);
+    }
+
+    .feature-bullets li::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    #feature-measurement .feature-bullets li::before {
+      background: linear-gradient(135deg, #ea3a8c, #5e5ce6);
+    }
+
+    #feature-correction .feature-bullets li::before {
+      background: linear-gradient(135deg, #5e5ce6, #32ade6);
+    }
+
+    .feature-image-wrap {
+      position: relative;
+    }
+
+    .feature-image-wrap img {
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.1);
+      display: block;
+    }
+
+    .feature-image-placeholder {
+      width: 100%;
+      min-height: 380px;
+      border-radius: 12px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.1);
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-surface-3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .feature-image-placeholder .placeholder-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gradient-spectral);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #fff;
+    }
+
+    .feature-image-placeholder .placeholder-title {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--color-body-text);
+    }
+
+    .feature-image-placeholder .placeholder-desc {
+      font-size: 0.8rem;
+      color: var(--color-muted-text);
+      line-height: 1.5;
+    }
+
+    .feature-image-placeholder .placeholder-action {
+      font-size: 0.75rem;
+      color: var(--color-link);
+      font-weight: 500;
+    }
+
+    /* ================================================================
+       SECTION 3: FEATURE CORRECTION (right content, left image)
+    ================================================================ */
+    #feature-correction {
+      background: var(--color-surface-1);
+      padding: var(--spacing-section-v) 0;
+    }
+
+    /* ================================================================
+       SECTION 4: FEATURE MAPPING (full-width dark section)
+    ================================================================ */
+    #feature-mapping {
+      background: linear-gradient(180deg, #1c1c6e 0%, #0a3480 100%);
+      padding: var(--spacing-section-v) 0;
+    }
+
+    #feature-mapping .section-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    #mapping-heading-block {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 720px;
+    }
+
+    #mapping-heading-block h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 3.5vw, 5.184rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: 0.95;
+      color: #ffffff;
+    }
+
+    #mapping-heading-block p {
+      font-family: var(--font-body);
+      font-size: var(--type-p);
+      color: rgba(255, 255, 255, 0.75);
+      line-height: var(--lh-relaxed);
+    }
+
+    #mapping-image-wrap {
+      width: 100%;
+      max-width: 860px;
+      position: relative;
+    }
+
+    #mapping-image-wrap img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 80px rgba(94, 92, 230, 0.3);
+      display: block;
+      object-fit: cover;
+      min-height: 440px;
+    }
+
+    #mapping-image-placeholder {
+      width: 100%;
+      min-height: 440px;
+      border-radius: 12px;
+      box-shadow: 0 0 80px rgba(94, 92, 230, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 48px;
+      text-align: center;
+    }
+
+    #mapping-image-placeholder .placeholder-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #5e5ce6, #32ade6);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    #mapping-image-placeholder .placeholder-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    #mapping-image-placeholder .placeholder-desc {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.5;
+      max-width: 380px;
+    }
+
+    #mapping-image-placeholder .placeholder-action {
+      font-size: 0.75rem;
+      color: #32ade6;
+      font-weight: 500;
+    }
+
+    /* 3-column cards below mapping image */
+    #mapping-feature-bullets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-grid-gap);
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .mapping-bullet-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mapping-bullet-card .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #5e5ce6 0%, #32ade6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mapping-bullet-card .card-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: #fff;
+      fill: none;
+    }
+
+    .mapping-bullet-card h4 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #ffffff;
+    }
+
+    .mapping-bullet-card p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: var(--lh-relaxed);
+    }
+
+    /* ================================================================
+       SECTION 5: TECHNICAL SPECIFICATIONS
+    ================================================================ */
+    #tech-specs {
+      background: #fbfbfd;
+      padding: var(--spacing-section-v) 0;
+    }
+
+    #tech-specs .section-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    #tech-specs-heading {
+      text-align: center;
+    }
+
+    #tech-specs-heading h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 3.5vw, 5.184rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--lh-tight);
+      color: var(--color-heading-text);
+    }
+
+    #specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 24px rgba(0, 0, 0, 0.04);
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--color-surface-3);
+    }
+
+    .spec-row:last-child {
+      border-bottom: none;
+    }
+
+    .spec-row:nth-child(odd) {
+      background: #ffffff;
+    }
+
+    .spec-row:nth-child(even) {
+      background: var(--color-surface-1);
+    }
+
+    .spec-label,
+    .spec-value {
+      padding: 20px 28px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      line-height: var(--lh-normal);
+    }
+
+    .spec-label {
+      font-weight: 500;
+      color: var(--color-body-text);
+      border-right: 1px solid var(--color-surface-3);
+    }
+
+    .spec-value {
+      color: var(--color-muted-text);
+      font-feature-settings: "tnum";
+    }
+
+    /* ================================================================
+       SECTION 6: FEATURES CTA
+    ================================================================ */
+    #features-cta {
+      background: var(--color-surface-1);
+      padding: var(--spacing-section-v) 0;
+    }
+
+    #features-cta .section-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      text-align: center;
+    }
+
+    #features-cta h3 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.4rem, 2.5vw, 3.110rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--lh-tight);
+      color: var(--color-heading-text);
+      max-width: 560px;
+    }
+
+    #cta-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .btn-primary {
+      font-family: var(--font-heading);
+      font-size: 0.833rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      background: var(--color-body-text);
+      padding: var(--spacing-button-v) var(--spacing-button-h);
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      transition: background var(--duration-base) var(--ease-primary), transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-link);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:focus-visible {
+      outline: var(--focus-outline-width) solid var(--color-focus);
+      outline-offset: var(--focus-outline-offset);
+    }
+
+    .link-secondary {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-link);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .link-secondary:hover {
+      color: var(--color-action);
+    }
+
+    /* ================================================================
+       SECTION 7: FOOTER
+    ================================================================ */
+    #footer {
+      background: #0a3480;
+      padding: 80px 0 48px;
+    }
+
+    #footer-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 64px;
+    }
+
+    #footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #footer-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    #footer-tagline {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: var(--lh-relaxed);
+      max-width: 260px;
+    }
+
+    #footer-copyright {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: auto;
+    }
+
+    .footer-col h5 {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col a {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: #ffffff;
+    }
+
+    /* ================================================================
+       RESPONSIVE — ≤ 900px
+    ================================================================ */
+    @media (max-width: 900px) {
+      #nav-inner {
+        padding: 0 32px;
+      }
+
+      #features-hero h1 {
+        font-size: clamp(2rem, 6vw, 4rem);
+      }
+
+      .feature-split--left-content,
+      .feature-split--right-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      /* On small screens, always put content first */
+      .feature-split--right-content .feature-image-wrap {
+        order: -1;
+      }
+
+      .feature-content {
+        order: 0;
+      }
+
+      #mapping-feature-bullets {
+        grid-template-columns: 1fr;
+        max-width: 460px;
+      }
+
+      #footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        padding: 0 32px;
+      }
+
+      #footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      #tech-specs .section-inner {
+        padding: 0 32px;
+      }
+    }
+
+    /* ================================================================
+       RESPONSIVE — ≤ 600px
+    ================================================================ */
+    @media (max-width: 600px) {
+      #nav-inner {
+        padding: 0 20px;
+      }
+
+      #nav-links li:nth-child(1),
+      #nav-links li:nth-child(2),
+      #nav-links li:nth-child(3) {
+        display: none;
+      }
+
+      .section-inner {
+        padding: 0 20px;
+      }
+
+      #features-hero {
+        padding-top: 120px;
+        padding-bottom: 56px;
+      }
+
+      #features-hero h1 {
+        font-size: 2.25rem;
+        letter-spacing: -0.03em;
+      }
+
+      #feature-mapping,
+      #feature-measurement,
+      #feature-correction,
+      #tech-specs,
+      #features-cta {
+        padding: 64px 0;
+      }
+
+      #mapping-feature-bullets {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+      }
+
+      .spec-label,
+      .spec-value {
+        padding: 14px 16px;
+        font-size: 0.875rem;
+      }
+
+      #footer-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 0 20px;
+      }
+
+      #cta-actions {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      #tech-specs .section-inner {
+        padding: 0 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       NAV
+  ================================================================ -->
+  <nav id="site-nav">
+    <div id="nav-inner">
+      <a id="nav-logo" href="index.html">SONOR</a>
+      <ul id="nav-links">
+        <li><a href="features.html" class="nav-link nav-link--active">Features</a></li>
+        <li><a href="studio.html" class="nav-link">Studio</a></li>
+        <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li><a href="index.html#contact" class="nav-cta-link">Try Free</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ================================================================
+       SECTION 1: FEATURES HERO
+  ================================================================ -->
+  <section id="features-hero">
+    <div class="section-inner">
+      <span id="hero-eyebrow">Capabilities</span>
+      <h1 id="features-hero-heading">Acoustic intelligence, built into every workflow.</h1>
+      <p id="features-hero-sub">From single-room studios to concert halls — SONOR's measurement and correction engine handles them all.</p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 2: FEATURE MEASUREMENT
+  ================================================================ -->
+  <section id="feature-measurement">
+    <div class="section-inner">
+      <div class="feature-split feature-split--left-content">
+
+        <div id="measurement-content" class="feature-content">
+          <span class="feature-number">01</span>
+          <h3>Real-Time Spectrum Analysis</h3>
+          <p class="feature-body">SONOR captures the complete frequency response of your environment across the full audible spectrum — 20&thinsp;Hz to 20&thinsp;kHz — with sub-millisecond temporal precision that reveals anomalies invisible to less capable analyzers. Whether you're tracing comb-filtering artifacts from parallel walls or identifying modal buildups in a small mix room, the engine identifies every irregularity in a single automated pass. Simultaneous multi-channel measurement means you see the complete acoustic picture of a room in one continuous session, with no patch-and-stitch limitations.</p>
+          <ul class="feature-bullets">
+            <li>Impulse Response Capture</li>
+            <li>Phase Coherence Detection</li>
+            <li>Third-Octave Band Display</li>
+          </ul>
+        </div>
+
+        <div id="measurement-image-wrap" class="feature-image-wrap">
+          <img
+            src="assets/feature-measurement.jpeg"
+            alt="Spectrum analyzer UI showing full-range frequency response measurement"
+            onerror="this.style.display='none'; document.getElementById('measurement-placeholder').style.display='flex';"
+          />
+          <div id="measurement-placeholder" class="feature-image-placeholder" style="display:none;">
+            <div class="placeholder-icon">&#9640;</div>
+            <div class="placeholder-title">feature-measurement.jpeg — Not Found</div>
+            <div class="placeholder-desc">This image should show the SONOR spectrum analyzer UI with a full 20&thinsp;Hz–20&thinsp;kHz frequency response plot. The file <code>assets/feature-measurement.jpeg</code> does not exist at this path.</div>
+            <div class="placeholder-action">Generate this asset using the Kling image prompt in project-documentation/unavailable-content-prompts.md</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 3: FEATURE CORRECTION
+  ================================================================ -->
+  <section id="feature-correction">
+    <div class="section-inner">
+      <div class="feature-split feature-split--right-content">
+
+        <div id="correction-image-wrap" class="feature-image-wrap">
+          <img
+            src="assets/feature-correction.jpeg"
+            alt="EQ correction curve visualization showing adaptive room correction filters"
+            onerror="this.style.display='none'; document.getElementById('correction-placeholder').style.display='flex';"
+          />
+          <div id="correction-placeholder" class="feature-image-placeholder" style="display:none;">
+            <div class="placeholder-icon">&#9638;</div>
+            <div class="placeholder-title">feature-correction.jpeg — Not Found</div>
+            <div class="placeholder-desc">This image should show SONOR's EQ correction curve with adaptive filter plots across the frequency spectrum. The file <code>assets/feature-correction.jpeg</code> does not exist at this path.</div>
+            <div class="placeholder-action">Generate this asset using the Kling image prompt in project-documentation/unavailable-content-prompts.md</div>
+          </div>
+        </div>
+
+        <div id="correction-content" class="feature-content">
+          <span class="feature-number">02</span>
+          <h3>Adaptive Room Correction</h3>
+          <p class="feature-body">SONOR's correction engine applies dynamic EQ filters derived directly from your room's measured impulse response — not from a generalized correction curve, but from precise acoustic data captured in your specific space. Standing wave suppression targets resonant modes at their exact frequencies, deploying minimum-phase filters that correct the problem without smearing transients or introducing pre-ringing artifacts. Every correction can be adjusted in real time and toggled with a low-latency A/B bypass, so the impact of each filter decision is immediately audible in your monitoring chain.</p>
+          <ul class="feature-bullets">
+            <li>Mode Targeting</li>
+            <li>Filter Visualization</li>
+            <li>A/B Bypass</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 4: FEATURE MAPPING
+  ================================================================ -->
+  <section id="feature-mapping">
+    <div class="section-inner">
+
+      <div id="mapping-heading-block">
+        <h2>3D Spatial Mapping.</h2>
+        <p>Build a complete acoustic model of any room in under 60 seconds.</p>
+      </div>
+
+      <div id="mapping-image-wrap">
+        <img
+          src="assets/feature-mapping.jpeg"
+          alt="3D acoustic spatial map of a room showing decay visualization and microphone grid points"
+          onerror="this.style.display='none'; document.getElementById('mapping-image-placeholder').style.display='flex';"
+        />
+        <div id="mapping-image-placeholder" style="display:none;">
+          <div class="placeholder-icon">&#9633;</div>
+          <div class="placeholder-title">feature-mapping.jpeg — Not Found</div>
+          <div class="placeholder-desc">This image should show SONOR's 3D spatial mapping interface with a decay visualization rendered as a room wireframe overlaid with a color-coded acoustic energy heatmap. The file <code>assets/feature-mapping.jpeg</code> does not exist at this path.</div>
+          <div class="placeholder-action">Generate this asset using the Kling image prompt in project-documentation/unavailable-content-prompts.md</div>
+        </div>
+      </div>
+
+      <div id="mapping-feature-bullets">
+
+        <div id="mapping-card-sweep" class="mapping-bullet-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"/>
+              <circle cx="6" cy="18" r="3"/>
+              <circle cx="18" cy="16" r="3"/>
+            </svg>
+          </div>
+          <h4>Automated Sweep Playback</h4>
+          <p>SONOR generates and plays a precisely calibrated sine sweep across all frequencies, requiring no external signal source or manual configuration.</p>
+        </div>
+
+        <div id="mapping-card-grid" class="mapping-bullet-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <h4>Microphone Grid Recognition</h4>
+          <p>The engine automatically identifies microphone positions across your measurement grid and assembles them into a spatially coherent acoustic model without manual tagging.</p>
+        </div>
+
+        <div id="mapping-card-decay" class="mapping-bullet-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <h4>3D Decay Visualization</h4>
+          <p>Reverb decay patterns are rendered as a navigable 3D model, revealing how acoustic energy distributes and fades across every surface of the room.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 5: TECHNICAL SPECIFICATIONS
+  ================================================================ -->
+  <section id="tech-specs">
+    <div class="section-inner">
+
+      <div id="tech-specs-heading">
+        <h2>Technical specifications.</h2>
+      </div>
+
+      <div id="specs-table" role="table" aria-label="SONOR technical specifications">
+
+        <div class="spec-row" role="row" id="spec-freq-range">
+          <div class="spec-label" role="cell">Frequency range</div>
+          <div class="spec-value" role="cell">20 Hz – 22 kHz</div>
+        </div>
+
+        <div class="spec-row" role="row" id="spec-measurement-res">
+          <div class="spec-label" role="cell">Measurement resolution</div>
+          <div class="spec-value" role="cell">1/48-octave (48,000 points)</div>
+        </div>
+
+        <div class="spec-row" role="row" id="spec-ir-length">
+          <div class="spec-label" role="cell">Impulse response length</div>
+          <div class="spec-value" role="cell">Up to 262,144 samples</div>
+        </div>
+
+        <div class="spec-row" role="row" id="spec-latency">
+          <div class="spec-label" role="cell">Latency compensation</div>
+          <div class="spec-value" role="cell">Sub-millisecond (0.02ms RMS)</div>
+        </div>
+
+        <div class="spec-row" role="row" id="spec-channels">
+          <div class="spec-label" role="cell">Simultaneous channels</div>
+          <div class="spec-value" role="cell">Up to 128 channels</div>
+        </div>
+
+        <div class="spec-row" role="row" id="spec-plugin-formats">
+          <div class="spec-label" role="cell">Plugin formats</div>
+          <div class="spec-value" role="cell">VST3, AAX, AU, CLAP</div>
+        </div>
+
+        <div class="spec-row" role="row" id="spec-os">
+          <div class="spec-label" role="cell">Supported OS</div>
+          <div class="spec-value" role="cell">macOS 12+, Windows 10+</div>
+        </div>
+
+        <div class="spec-row" role="row" id="spec-mic-support">
+          <div class="spec-label" role="cell">Microphone support</div>
+          <div class="spec-value" role="cell">47 models natively recognized</div>
+        </div>
+
+        <div class="spec-row" role="row" id="spec-sample-rates">
+          <div class="spec-label" role="cell">Sample rates</div>
+          <div class="spec-value" role="cell">44.1, 48, 88.2, 96, 176.4, 192 kHz</div>
+        </div>
+
+        <div class="spec-row" role="row" id="spec-bit-depth">
+          <div class="spec-label" role="cell">Bit depth</div>
+          <div class="spec-value" role="cell">24-bit and 32-bit float</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 6: FEATURES CTA
+  ================================================================ -->
+  <section id="features-cta">
+    <div class="section-inner">
+      <h3 id="cta-heading">Ready to see your room clearly?</h3>
+      <div id="cta-actions">
+        <a href="index.html#contact" class="btn-primary">Start Free Trial</a>
+        <a href="pricing.html" class="link-secondary">View Pricing &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 7: FOOTER
+  ================================================================ -->
+  <footer id="footer">
+    <div id="footer-inner">
+
+      <div id="footer-brand">
+        <a id="footer-logo" href="index.html">SONOR</a>
+        <p id="footer-tagline">Professional acoustic measurement and room correction. Built for studios that refuse to compromise.</p>
+        <p id="footer-copyright">&copy; 2026 SONOR. All rights reserved.</p>
+      </div>
+
+      <div id="footer-col-product" class="footer-col">
+        <h5>Product</h5>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="studio.html">Studio</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="index.html#contact">Try Free</a></li>
+        </ul>
+      </div>
+
+      <div id="footer-col-company" class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       GSAP + SCROLLTRIGGER ANIMATIONS
+  ================================================================ -->
+  <script>
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Read motion tokens from CSS variables
+    const root = document.documentElement;
+    const cs = getComputedStyle(root);
+    const durEntrance   = parseFloat(cs.getPropertyValue('--duration-entrance').trim())   || 0.7;
+    const durBase       = parseFloat(cs.getPropertyValue('--duration-base').trim())       || 0.32;
+    const durStagger    = parseFloat(cs.getPropertyValue('--duration-stagger').trim())    || 0.1;
+    const easePrimary   = 'cubic-bezier(0.45,0,0.55,1)';
+
+    // ----------------------------------------------------------------
+    // HERO — fade in on load
+    // ----------------------------------------------------------------
+    gsap.from('#hero-eyebrow', {
+      opacity: 0, y: 20,
+      duration: durEntrance,
+      ease: easePrimary,
+      delay: 0.1
+    });
+
+    gsap.from('#features-hero-heading', {
+      opacity: 0, y: 30,
+      duration: durEntrance,
+      ease: easePrimary,
+      delay: 0.2
+    });
+
+    gsap.from('#features-hero-sub', {
+      opacity: 0, y: 20,
+      duration: durEntrance,
+      ease: easePrimary,
+      delay: 0.35
+    });
+
+    // ----------------------------------------------------------------
+    // SECTION 2: MEASUREMENT — left content x:-30, right image x:30
+    // ----------------------------------------------------------------
+    gsap.from('#measurement-content', {
+      scrollTrigger: {
+        trigger: '#feature-measurement',
+        start: 'top 75%',
+        toggleActions: 'play none none none'
+      },
+      x: -30, opacity: 0,
+      duration: durEntrance,
+      ease: easePrimary
+    });
+
+    gsap.from('#measurement-image-wrap', {
+      scrollTrigger: {
+        trigger: '#feature-measurement',
+        start: 'top 75%',
+        toggleActions: 'play none none none'
+      },
+      x: 30, opacity: 0,
+      duration: durEntrance,
+      ease: easePrimary,
+      delay: durStagger
+    });
+
+    // ----------------------------------------------------------------
+    // SECTION 3: CORRECTION — reversed directions
+    // ----------------------------------------------------------------
+    gsap.from('#correction-image-wrap', {
+      scrollTrigger: {
+        trigger: '#feature-correction',
+        start: 'top 75%',
+        toggleActions: 'play none none none'
+      },
+      x: -30, opacity: 0,
+      duration: durEntrance,
+      ease: easePrimary
+    });
+
+    gsap.from('#correction-content', {
+      scrollTrigger: {
+        trigger: '#feature-correction',
+        start: 'top 75%',
+        toggleActions: 'play none none none'
+      },
+      x: 30, opacity: 0,
+      duration: durEntrance,
+      ease: easePrimary,
+      delay: durStagger
+    });
+
+    // ----------------------------------------------------------------
+    // SECTION 4: MAPPING — fade up heading/text, image fade up + parallax
+    // ----------------------------------------------------------------
+    gsap.from('#mapping-heading-block', {
+      scrollTrigger: {
+        trigger: '#feature-mapping',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      y: 40, opacity: 0,
+      duration: durEntrance,
+      ease: easePrimary
+    });
+
+    gsap.from('#mapping-image-wrap', {
+      scrollTrigger: {
+        trigger: '#mapping-image-wrap',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      y: 50, opacity: 0,
+      duration: durEntrance,
+      ease: easePrimary,
+      delay: 0.15
+    });
+
+    // Mild parallax scrub on mapping image
+    gsap.to('#mapping-image-wrap img, #mapping-image-placeholder', {
+      scrollTrigger: {
+        trigger: '#feature-mapping',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.2
+      },
+      y: -30,
+      ease: 'none'
+    });
+
+    // 3-column cards stagger
+    gsap.from('.mapping-bullet-card', {
+      scrollTrigger: {
+        trigger: '#mapping-feature-bullets',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      y: 30, opacity: 0,
+      duration: durEntrance,
+      ease: easePrimary,
+      stagger: durStagger
+    });
+
+    // ----------------------------------------------------------------
+    // SECTION 5: SPECS — row stagger
+    // ----------------------------------------------------------------
+    gsap.from('#tech-specs-heading h2', {
+      scrollTrigger: {
+        trigger: '#tech-specs-heading',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      y: 30, opacity: 0,
+      duration: durEntrance,
+      ease: easePrimary
+    });
+
+    gsap.from('.spec-row', {
+      scrollTrigger: {
+        trigger: '#specs-table',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      x: -20, opacity: 0,
+      duration: durBase,
+      ease: easePrimary,
+      stagger: durStagger * 0.6
+    });
+
+    // ----------------------------------------------------------------
+    // SECTION 6: CTA — fade up
+    // ----------------------------------------------------------------
+    gsap.from('#cta-heading, #cta-actions', {
+      scrollTrigger: {
+        trigger: '#features-cta',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      y: 24, opacity: 0,
+      duration: durEntrance,
+      ease: easePrimary,
+      stagger: 0.15
+    });
+
+    // ----------------------------------------------------------------
+    // FOOTER — fade in
+    // ----------------------------------------------------------------
+    gsap.from('#footer-brand, #footer-col-product, #footer-col-company', {
+      scrollTrigger: {
+        trigger: '#footer',
+        start: 'top 90%',
+        toggleActions: 'play none none none'
+      },
+      y: 20, opacity: 0,
+      duration: durEntrance,
+      ease: easePrimary,
+      stagger: durStagger
+    });
+  </script>
+
+</body>
+</html>

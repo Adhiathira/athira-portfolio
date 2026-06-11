@@ -1,0 +1,337 @@
+/* =============================================================================
+   creator-profile.css — Creator Profile Page Styles
+   Task 259: [goyard-vid][12/12] Public Creator Profile Page
+
+   Token source: tokens.css (all --var references defined there)
+   Scope:        Creator profile page additions only.
+                 DO NOT redefine anything already in gallery.css.
+                 gallery.css owns: .gallery-grid, .creator-card, .card-media,
+                 .card-media-placeholder, .placeholder-filename, .placeholder-note
+   ============================================================================= */
+
+
+/* -----------------------------------------------------------------------------
+   Section 1: Creator Identity
+   Horizontal flex row (avatar left, text right) on warm cream background
+   ----------------------------------------------------------------------------- */
+
+.creator-identity {
+  background-color: var(--color-page-bg);
+  padding: var(--space-section-top) var(--space-wrapper-x) var(--space-section-bottom);
+}
+
+.creator-identity__inner {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-cta-x); /* 15px — horizontal CTA padding token repurposed as identity gap */
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+/* Avatar placeholder: 120×120 dark square with centered label text.
+   PLACEHOLDER: Replace this div with <img> once real avatar asset exists.
+   See project-documentation/design-system/creator-profile-avatar.md */
+.creator-identity__avatar {
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  background-color: var(--color-heading); /* deep forest green fill */
+  color: var(--color-page-bg);            /* warm cream text on dark background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: var(--type-small-size);      /* 12px — readable label for placeholder text */
+  font-weight: var(--type-button-fw);     /* 700 — bold for legibility on dark */
+  letter-spacing: var(--type-h2-ls);      /* 2.4px — spaced per label convention */
+  text-transform: uppercase;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  /* PLACEHOLDER: Replace this div with:
+     <img src="../assets/username-avatar.jpg" alt="Studio Username" class="creator-identity__avatar">
+     See project-documentation/design-system/creator-profile-avatar.md for generation prompts */
+}
+
+.creator-identity__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-cta-y); /* 7px — vertical CTA padding token as stack gap */
+}
+
+/* H1 heading style — Plus Jakarta Sans, weight 300, 41.6px, letter-spacing 1px */
+.creator-identity__name {
+  font-family: var(--font-heading);
+  font-size: var(--type-h1-size);   /* 41.6px */
+  font-weight: var(--type-h1-fw);   /* 300 — light */
+  line-height: var(--type-h1-lh);   /* 41.6px */
+  letter-spacing: var(--type-h1-ls); /* 1px */
+  color: var(--color-heading);
+  margin: 0;
+}
+
+/* Handle label — uppercase, letter-spaced, small size */
+.creator-identity__handle {
+  font-family: var(--font-heading);
+  font-size: var(--type-small-size); /* 12px */
+  font-weight: var(--type-button-fw); /* 700 */
+  letter-spacing: var(--type-h2-ls);  /* 2.4px */
+  text-transform: uppercase;
+  color: var(--color-body);
+  margin: 0;
+}
+
+/* Community standing — body text in serif (Newsreader via --font-body).
+   tokens.css does not define --font-serif; --font-body is 'Newsreader', serif */
+.creator-identity__standing {
+  font-family: var(--font-body); /* 'Newsreader', serif — tokens.css does not expose --font-serif */
+  font-size: var(--type-body-size); /* 14px */
+  line-height: var(--type-body-lh); /* 20px */
+  color: var(--color-body);
+  margin: 0;
+}
+
+
+/* -----------------------------------------------------------------------------
+   Section 2: Portfolio Grid
+   Uses .gallery-grid from gallery.css — no grid redefined here.
+   .portfolio-thumb adds the CSS-only play icon overlay via ::after.
+   ----------------------------------------------------------------------------- */
+
+.creator-portfolio {
+  background-color: var(--color-page-bg);
+  padding: var(--space-section-top) var(--space-wrapper-x) var(--space-section-bottom);
+}
+
+.creator-portfolio__inner {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+/* Portfolio section heading — h3 scale: 20px weight 300 letter-spacing 3.2px uppercase */
+.creator-portfolio__heading {
+  font-family: var(--font-heading);
+  font-size: var(--type-h3-size);   /* 20px — typography.json h3 */
+  font-weight: var(--type-h3-fw);   /* 300 — light */
+  line-height: var(--type-h3-lh);   /* 22px */
+  letter-spacing: var(--type-h3-ls); /* 3.2px */
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-cta-y) 0; /* 7px bottom margin before grid */
+}
+
+
+/* -----------------------------------------------------------------------------
+   Portfolio thumbnail play icon overlay
+   CSS-only: ::after pseudo-element on .portfolio-thumb (not .card-media globally)
+   Scoped to .portfolio-card to avoid touching explore gallery cards.
+   gallery.css owns aspect-ratio: 16/9 on .card-media-placeholder.
+   ----------------------------------------------------------------------------- */
+
+.portfolio-thumb {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Play icon overlay: opacity 0 by default, 1 on hover.
+   Background: color-mix produces a semi-transparent dark overlay without
+   hardcoding a hex value — uses --color-heading at 65% opacity.
+   tokens.css does not define --color-overlay or --color-scrim. */
+.portfolio-thumb::after {
+  content: '\25B6'; /* ▶ Unicode play triangle */
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem; /* decorative sizing — not body text, relative rem is appropriate */
+  color: var(--color-page-bg); /* warm cream — legible on dark overlay */
+  background-color: color-mix(in srgb, var(--color-heading) 65%, transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease; /* interactions.json pattern: 'transition: all', 0.25s ease */
+}
+
+.portfolio-thumb:hover::after {
+  opacity: 1;
+}
+
+
+/* -----------------------------------------------------------------------------
+   Section 3: Platform Surfaced
+   White surface background (--color-surface), centered single-column layout.
+   This is the only section not on cream.
+   ----------------------------------------------------------------------------- */
+
+.creator-platform {
+  background-color: var(--color-surface);
+  padding: var(--space-section-top) var(--space-wrapper-x) var(--space-section-bottom);
+  text-align: center;
+}
+
+.creator-platform__inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Platform heading — h2 scale: 16px weight 400 letter-spacing 2.4px uppercase */
+.creator-platform__heading {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2-size);    /* 16px */
+  font-weight: var(--type-h2-fw);    /* 400 */
+  line-height: var(--type-h2-lh);    /* 25px */
+  letter-spacing: var(--type-h2-ls); /* 2.4px */
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-cta-y) 0;
+}
+
+.creator-platform__body {
+  font-family: var(--font-body); /* 'Newsreader', serif */
+  font-size: var(--type-body-size); /* 14px */
+  line-height: var(--type-body-lh); /* 20px */
+  color: var(--color-body);
+  margin: 0;
+}
+
+
+/* -----------------------------------------------------------------------------
+   Section 4: Persistent CTA
+   Copied verbatim from explore.css — fixed bottom bar with entrance transition.
+   Additions: .persistent-cta-actions wrapper for two-button layout,
+   and .persistent-cta-btn--outline for the logged-in Follow button variant.
+   ----------------------------------------------------------------------------- */
+
+.persistent-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background-color: var(--color-page-bg);
+  border-top: 2px solid var(--color-accent); /* amber separator */
+  padding: var(--space-cta-y) var(--space-wrapper-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Entrance animation: JS adds .is-visible to trigger these */
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Shown state — JS adds this class after removing [hidden] */
+.persistent-cta.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Override [hidden] which sets display:none — must be explicit */
+.persistent-cta[hidden] {
+  display: none;
+}
+
+.persistent-cta-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+.persistent-cta-label {
+  font-family: var(--font-heading);
+  font-size: var(--type-body-size);  /* 14px */
+  font-weight: var(--type-h2-fw);    /* 400 */
+  color: var(--color-body);
+  letter-spacing: var(--type-h2-ls); /* 2.4px */
+  text-transform: uppercase;
+}
+
+/* Actions wrapper: holds signup CTA and follow button side by side */
+.persistent-cta-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-cta-x); /* 15px gap between buttons */
+}
+
+/* Ensure [hidden] attribute wins over display: inline-block on buttons */
+.persistent-cta-btn[hidden] {
+  display: none;
+}
+
+/* Primary CTA button — amber border, forest-green text, amber fill on hover */
+.persistent-cta-btn {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: var(--type-nav-size);   /* 12px */
+  font-weight: var(--type-button-fw); /* 700 */
+  letter-spacing: var(--type-h2-ls); /* 2.4px */
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cta-secondary-text);
+  border: 1px solid var(--cta-secondary-border);
+  background: transparent;
+  padding: var(--space-cta-y) var(--space-cta-x); /* 7px 15px */
+  border-radius: var(--radius-button); /* 3px */
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.persistent-cta-btn:hover {
+  background-color: var(--color-accent);
+  color: var(--color-nav-text);
+  border-color: var(--color-accent);
+}
+
+/* Outline variant — logged-in Follow button: transparent bg, amber border */
+.persistent-cta-btn--outline {
+  background: transparent;
+  color: var(--cta-secondary-text);
+  border-color: var(--cta-secondary-border);
+}
+
+.persistent-cta-btn--outline:hover {
+  background-color: var(--color-accent);
+  color: var(--color-nav-text);
+  border-color: var(--color-accent);
+}
+
+
+/* -----------------------------------------------------------------------------
+   Responsive breakpoints
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  /* Creator identity: collapse to centered column on tablet */
+  .creator-identity__inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Gallery grid collapse is already handled in gallery.css (2-col at 768px) */
+
+  /* Persistent CTA: full-width padding collapses to container-padding at tablet */
+  .persistent-cta {
+    padding-left: var(--space-wrapper-x);
+    padding-right: var(--space-wrapper-x);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Persistent CTA: tighter horizontal padding on small screens */
+  .persistent-cta {
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+  }
+
+  .persistent-cta-inner {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}

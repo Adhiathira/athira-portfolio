@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ardenne Supply Co. — Gear for the Long Way</title>
+  <meta name="description" content="Ardenne Supply Co. outfits slow wilderness journeys. Curated expedition gear for alpine and backcountry travel, where quality of kit matches the pace of the land.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/collection-preview.css">
+  <link rel="stylesheet" href="components/philosophy.css">
+  <link rel="stylesheet" href="components/journal-teaser.css">
+  <link rel="stylesheet" href="components/contact-footer.css">
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+
+  <!-- NAV TEMPLATE — canonical -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Ardenne Supply Co.</a>
+      <ul class="nav-links">
+        <li><a href="collection.html">Collection</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="collection.html">Collection</a>
+    <a href="journal.html">Journal</a>
+    <a href="about.html">About</a>
+  </div>
+  <script>
+    (function() {
+      var nav = document.getElementById('site-nav');
+      var mobileMenu = document.querySelector('.nav-mobile-menu');
+      var toggle = document.querySelector('.nav-mobile-toggle');
+      var scrolled = false;
+      function onScroll() {
+        if (window.scrollY > 20 && !scrolled) {
+          scrolled = true;
+          nav.classList.add('scrolled');
+        } else if (window.scrollY <= 20 && scrolled) {
+          scrolled = false;
+          nav.classList.remove('scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      if (toggle && mobileMenu) {
+        toggle.addEventListener('click', function() {
+          nav.classList.toggle('nav-mobile-open');
+          mobileMenu.classList.toggle('is-open');
+        });
+      }
+    })();
+  </script>
+
+  <!-- ── HERO ── -->
+  <section class="hero" aria-label="Hero — Ardenne Supply Co.">
+    <!-- Ambient video background layer -->
+    <div class="hero__video-bg">
+      <video
+        src="assets/hero-bg.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        aria-hidden="true"
+        onerror="this.style.display='none'"
+      ></video>
+    </div>
+
+    <!-- Perspective terrain grid (SVG decorative layer) -->
+    <div class="hero__terrain" aria-hidden="true">
+      <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="terrain-grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+            <line x1="60" y1="0" x2="0" y2="60" stroke="#25446B" stroke-width="0.5"/>
+            <line x1="0" y1="0" x2="60" y2="60" stroke="#25446B" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#terrain-grid)"/>
+        <!-- Horizontal lines for perspective grid -->
+        <g stroke="#25446B" stroke-width="0.4" opacity="0.6">
+          <line x1="0" y1="200" x2="1200" y2="300"/>
+          <line x1="0" y1="280" x2="1200" y2="400"/>
+          <line x1="0" y1="360" x2="1200" y2="500"/>
+          <line x1="0" y1="440" x2="1200" y2="600"/>
+          <line x1="0" y1="520" x2="1200" y2="700"/>
+        </g>
+        <!-- Vertical convergence lines -->
+        <g stroke="#25446B" stroke-width="0.4" opacity="0.4">
+          <line x1="600" y1="0" x2="0" y2="800"/>
+          <line x1="600" y1="0" x2="300" y2="800"/>
+          <line x1="600" y1="0" x2="600" y2="800"/>
+          <line x1="600" y1="0" x2="900" y2="800"/>
+          <line x1="600" y1="0" x2="1200" y2="800"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Ghost letterform background -->
+    <div class="hero__ghost-text" aria-hidden="true">WILD</div>
+
+    <!-- Foreground content -->
+    <div class="hero__content">
+      <p class="hero__eyebrow">Est. 2019 — Montréal & beyond</p>
+      <h1 class="hero__headline">Gear for the<br><em>Long Way</em></h1>
+      <p class="hero__body">We outfit slow wilderness journeys. Each piece in our collection is chosen for multi-day alpine and backcountry travel — tested at altitude, carried without complaint, trusted in silence.</p>
+      <div class="hero__ctas">
+        <a href="collection.html" class="hero__cta--primary">Explore Collection</a>
+        <a href="about.html" class="hero__cta--ghost">Our Approach</a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="hero__scroll-indicator" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── COLLECTION PREVIEW ── -->
+  <section class="collection-preview" aria-label="Collection Preview">
+    <div class="collection-preview__header">
+      <div>
+        <p class="collection-preview__label">2025 Season</p>
+        <h2 class="collection-preview__heading">Built for the backcountry. Chosen for a life outdoors.</h2>
+      </div>
+      <div>
+        <p class="collection-preview__intro">From three-season shelter systems to technical layering, every item earns its weight. No fast-fashion cycles — pieces that endure the route and the years.</p>
+        <a href="collection.html" class="collection-preview__view-all">View All Gear</a>
+      </div>
+    </div>
+
+    <div class="collection-preview__grid">
+      <!-- Card 1 — Feature (spans 2 rows) -->
+      <article class="collection-card" style="cursor:pointer" onclick="window.location.href='collection.html'">
+        <img
+          src="assets/collection-shelter.jpg"
+          alt="Ardenne modular shelter system pitched on an alpine ridge at dusk"
+          class="collection-card__image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="collection-card__image-placeholder" style="display:none">
+          <span>⛺</span>
+        </div>
+        <div class="collection-card__overlay"></div>
+        <div class="collection-card__label">
+          <p class="collection-card__category">Shelter</p>
+          <p class="collection-card__name">Ridge Series Tent System</p>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="collection-card" onclick="window.location.href='collection.html'">
+        <img
+          src="assets/collection-pack.jpg"
+          alt="55L expedition pack loaded and leaning against a granite boulder"
+          class="collection-card__image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="collection-card__image-placeholder" style="display:none">
+          <span>🎒</span>
+        </div>
+        <div class="collection-card__overlay"></div>
+        <div class="collection-card__label">
+          <p class="collection-card__category">Carry</p>
+          <p class="collection-card__name">Parcours 55 Pack</p>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="collection-card" onclick="window.location.href='collection.html'">
+        <img
+          src="assets/collection-layer.jpg"
+          alt="Technical mid-layer jacket in forest green, flat lay on stone surface"
+          class="collection-card__image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="collection-card__image-placeholder" style="display:none">
+          <span>🧥</span>
+        </div>
+        <div class="collection-card__overlay"></div>
+        <div class="collection-card__label">
+          <p class="collection-card__category">Layering</p>
+          <p class="collection-card__name">Brume Insulated Mid-Layer</p>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="collection-card" onclick="window.location.href='collection.html'">
+        <img
+          src="assets/collection-navigation.jpg"
+          alt="Compass and map spread on a rock with morning light"
+          class="collection-card__image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="collection-card__image-placeholder" style="display:none">
+          <span>🧭</span>
+        </div>
+        <div class="collection-card__overlay"></div>
+        <div class="collection-card__label">
+          <p class="collection-card__category">Navigation</p>
+          <p class="collection-card__name">Terrain Instruments Kit</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── PHILOSOPHY / FEATURE SPLIT (ambient video section) ── -->
+  <section class="philosophy" aria-label="Our Philosophy">
+    <div class="philosophy__ambient">
+      <video
+        src="assets/services-ambient.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        aria-hidden="true"
+        onerror="this.style.display='none'"
+      ></video>
+    </div>
+    <div class="philosophy__inner">
+      <div class="philosophy__left">
+        <p class="philosophy__label">The Ardenne Way</p>
+        <h2 class="philosophy__heading">Slow travel.<br><em>Real gear.</em></h2>
+        <div class="philosophy__quote-line"></div>
+        <blockquote class="philosophy__quote">"The best route is the one where the kit disappears and the land is all that remains."</blockquote>
+      </div>
+
+      <div class="philosophy__right">
+        <div class="philosophy-pillar">
+          <p class="philosophy-pillar__number">01</p>
+          <h3 class="philosophy-pillar__heading">Weight is a decision</h3>
+          <p class="philosophy-pillar__body">Every gram we ask you to carry must earn its place. We review each piece for its calorie-to-utility ratio — nothing ships that fails this test over three successive seasons.</p>
+        </div>
+        <div class="philosophy-pillar">
+          <p class="philosophy-pillar__number">02</p>
+          <h3 class="philosophy-pillar__heading">Terrain-first curation</h3>
+          <p class="philosophy-pillar__body">Our buyers test in alpine, boreal, and coastal conditions before any item joins the collection. Lab certifications follow field knowledge, not the other way around.</p>
+        </div>
+        <div class="philosophy-pillar">
+          <p class="philosophy-pillar__number">03</p>
+          <h3 class="philosophy-pillar__heading">Repair over replace</h3>
+          <p class="philosophy-pillar__body">Ardenne-stocked gear comes with a lifetime repair commitment. We maintain a workshop in Montréal where your pack is as welcome after five years as on day one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── JOURNAL TEASER ── -->
+  <section class="journal-teaser" aria-label="From the Journal">
+    <div class="journal-teaser__header">
+      <div>
+        <p class="journal-teaser__label">Field Notes</p>
+        <h2 class="journal-teaser__heading">From the Journal</h2>
+      </div>
+      <a href="journal.html" class="journal-teaser__see-all">All Entries</a>
+    </div>
+
+    <div class="journal-teaser__grid">
+      <!-- Feature article -->
+      <a href="journal.html" class="journal-article journal-article--feature">
+        <div class="journal-article__image-wrap">
+          <img
+            src="assets/journal-feature.jpg"
+            alt="Campsite at treeline with fog moving through spruce in early morning"
+            class="journal-article__image"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="journal-article__image-placeholder" style="display:none">
+            <span>🏕️</span>
+          </div>
+        </div>
+        <div class="journal-article__content">
+          <p class="journal-article__tag">Route Report</p>
+          <h3 class="journal-article__title">Seven days in the Torngat: a slow traverse of Labrador's northern range</h3>
+          <p class="journal-article__excerpt">No trails, no resupply points, no cellphone signal north of Nain. Our team spent a week navigating by compass through terrain that hasn't seen a boot print in months — here's what the Parcours 55 taught us when it was fully loaded.</p>
+          <p class="journal-article__meta">March 2025 — 12 min read</p>
+        </div>
+      </a>
+
+      <!-- Secondary article 1 -->
+      <a href="journal.html" class="journal-article">
+        <div class="journal-article__image-wrap">
+          <img
+            src="assets/journal-gear-review.jpg"
+            alt="Brume mid-layer jacket hanging to dry on a pine branch"
+            class="journal-article__image"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="journal-article__image-placeholder" style="display:none">
+            <span>🌲</span>
+          </div>
+        </div>
+        <div class="journal-article__content">
+          <p class="journal-article__tag">Gear Review</p>
+          <h3 class="journal-article__title">Three seasons with the Brume: a field review</h3>
+          <p class="journal-article__meta">January 2025 — 8 min read</p>
+        </div>
+      </a>
+
+      <!-- Secondary article 2 -->
+      <a href="journal.html" class="journal-article">
+        <div class="journal-article__image-wrap">
+          <img
+            src="assets/journal-navigation.jpg"
+            alt="Topo map spread across knees with compass and pencil marks"
+            class="journal-article__image"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="journal-article__image-placeholder" style="display:none">
+            <span>🗺️</span>
+          </div>
+        </div>
+        <div class="journal-article__content">
+          <p class="journal-article__tag">Technique</p>
+          <h3 class="journal-article__title">Map and compass in mixed terrain: staying found when trails end</h3>
+          <p class="journal-article__meta">December 2024 — 10 min read</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── CONTACT CTA ── -->
+  <section class="contact-cta" aria-label="Connect with Ardenne">
+    <p class="contact-cta__label">Get in Touch</p>
+    <h2 class="contact-cta__heading">Let's talk about your next journey</h2>
+    <p class="contact-cta__body">Questions about fit, kit recommendations for a specific route, or just want to talk through a trip you're planning — our crew is here for it.</p>
+    <div class="contact-cta__actions">
+      <a href="mailto:hello@ardennesupply.co" class="btn--primary">Write to Us</a>
+      <a href="about.html" class="btn--ghost">Meet the Team</a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer__grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-brand__logo">Ardenne Supply Co.</a>
+        <p class="footer-brand__desc">Outfitters for slow wilderness travel. Based in Montréal, operating wherever the trail ends and the terrain begins.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Strava">ST</a>
+          <a href="#" aria-label="Newsletter">NL</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__heading">Collection</h4>
+        <ul>
+          <li><a href="collection.html">Shelter</a></li>
+          <li><a href="collection.html">Carry</a></li>
+          <li><a href="collection.html">Layering</a></li>
+          <li><a href="collection.html">Navigation</a></li>
+          <li><a href="collection.html">All Gear</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__heading">Journal</h4>
+        <ul>
+          <li><a href="journal.html">Route Reports</a></li>
+          <li><a href="journal.html">Gear Reviews</a></li>
+          <li><a href="journal.html">Technique</a></li>
+          <li><a href="journal.html">All Entries</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__heading">Support</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="mailto:hello@ardennesupply.co">Contact</a></li>
+          <li><a href="#">Repairs</a></li>
+          <li><a href="#">Sizing Guide</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <p class="footer-copyright">&copy; 2025 Ardenne Supply Co. All rights reserved.</p>
+      <div class="footer-legal-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── GSAP Animations ── -->
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      if (typeof gsap === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero reveal — staggered cascade
+      var heroContent = document.querySelector('.hero__content');
+      if (heroContent) {
+        var heroEyebrow = heroContent.querySelector('.hero__eyebrow');
+        var heroHeadline = heroContent.querySelector('.hero__headline');
+        var heroBody = heroContent.querySelector('.hero__body');
+        var heroCtas = heroContent.querySelector('.hero__ctas');
+
+        gsap.set(heroContent, { opacity: 1, y: 0 });
+
+        var tl = gsap.timeline({ delay: 0.2 });
+        if (heroEyebrow) tl.fromTo(heroEyebrow, { opacity: 0, y: 4 }, { opacity: 0.7, y: 0, duration: 0.9, ease: 'cubic-bezier(0.45, 0, 0.55, 1)' });
+        if (heroHeadline) tl.fromTo(heroHeadline, { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.9, ease: 'cubic-bezier(0.45, 0, 0.55, 1)' }, '-=0.7');
+        if (heroBody) tl.fromTo(heroBody, { opacity: 0, y: 4 }, { opacity: 0.85, y: 0, duration: 0.9, ease: 'cubic-bezier(0.45, 0, 0.55, 1)' }, '-=0.7');
+        if (heroCtas) tl.fromTo(heroCtas, { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.9, ease: 'cubic-bezier(0.45, 0, 0.55, 1)' }, '-=0.7');
+      }
+
+      // Scroll indicator
+      var scrollIndicator = document.querySelector('.hero__scroll-indicator');
+      if (scrollIndicator) {
+        gsap.to(scrollIndicator, { opacity: 1, duration: 0.6, delay: 1.8 });
+      }
+
+      // Collection cards — horizontal sweep left, varied per card
+      var collectionCards = document.querySelectorAll('.collection-card');
+      collectionCards.forEach(function(card, i) {
+        gsap.fromTo(card,
+          { opacity: 0, x: -50 },
+          {
+            opacity: 1, x: 0,
+            duration: 0.8,
+            delay: i * 0.1,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 88%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+
+      // Collection header — divergent reveal
+      var collectionHeading = document.querySelector('.collection-preview__heading');
+      var collectionIntro = document.querySelector('.collection-preview__intro');
+      if (collectionHeading) {
+        gsap.fromTo(collectionHeading,
+          { opacity: 0, x: -70 },
+          {
+            opacity: 1, x: 0, duration: 0.9,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: { trigger: collectionHeading, start: 'top 85%' }
+          }
+        );
+      }
+      if (collectionIntro) {
+        gsap.fromTo(collectionIntro,
+          { opacity: 0, x: 70 },
+          {
+            opacity: 0.8, x: 0, duration: 0.9,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: { trigger: collectionIntro, start: 'top 85%' }
+          }
+        );
+      }
+
+      // Philosophy pillars — rotate + rise stagger
+      var pillars = document.querySelectorAll('.philosophy-pillar');
+      pillars.forEach(function(pillar, i) {
+        gsap.fromTo(pillar,
+          { opacity: 0, y: 40, rotation: 2 },
+          {
+            opacity: 1, y: 0, rotation: 0,
+            duration: 0.85,
+            delay: i * 0.12,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: {
+              trigger: pillar,
+              start: 'top 88%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+
+      // Philosophy left content — clip reveal
+      var philLeft = document.querySelector('.philosophy__left');
+      if (philLeft) {
+        gsap.fromTo(philLeft,
+          { opacity: 0, clipPath: 'inset(0 100% 0 0)' },
+          {
+            opacity: 1, clipPath: 'inset(0 0% 0 0)',
+            duration: 1.1,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: { trigger: philLeft, start: 'top 80%' }
+          }
+        );
+      }
+
+      // Journal articles — scale + rise stagger (different from collection)
+      var articles = document.querySelectorAll('.journal-article');
+      articles.forEach(function(article, i) {
+        gsap.fromTo(article,
+          { opacity: 0, scale: 0.94, y: 20 },
+          {
+            opacity: 1, scale: 1, y: 0,
+            duration: 0.85,
+            delay: i * 0.14,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: {
+              trigger: article,
+              start: 'top 88%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+
+      // Contact CTA — single unit reveal
+      var contactCta = document.querySelector('.contact-cta');
+      if (contactCta) {
+        gsap.fromTo(contactCta,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1, y: 0,
+            duration: 0.9,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: { trigger: contactCta, start: 'top 82%' }
+          }
+        );
+      }
+
+      // Footer — opacity reveal (no ceremony)
+      var footer = document.querySelector('.site-footer');
+      if (footer) {
+        gsap.fromTo(footer,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.9,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: { trigger: footer, start: 'top 92%' }
+          }
+        );
+      }
+    });
+  </script>
+
+</body>
+</html>

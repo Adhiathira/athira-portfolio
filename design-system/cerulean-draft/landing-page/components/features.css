@@ -1,0 +1,272 @@
+/* ── Features Section — Cerulean Draft / Strata ── */
+
+/* Section: light page-bg with subtle gradient */
+#features {
+  background: linear-gradient(180deg, var(--color-page-bg) 0%, var(--color-surface-1) 100%);
+  padding: var(--space-section) 0;
+  border-bottom: 1px solid rgba(27, 27, 55, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+#features-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-gutter);
+}
+
+#features-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 80px;
+  margin-bottom: 80px;
+  align-items: end;
+}
+
+#features-label {
+  grid-column: 1 / -1;
+  font-family: var(--font-heading);
+  font-size: var(--type-h4);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+  margin: 0 0 24px;
+}
+
+#features-heading {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2);
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--color-heading);
+  margin: 0;
+}
+
+#features-subheading {
+  font-family: var(--font-body);
+  font-size: var(--type-p);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-p);
+  letter-spacing: var(--letter-spacing-body);
+  color: var(--color-muted);
+  margin: 0;
+  align-self: end;
+}
+
+/* ── Asymmetric 3-column feature grid: 1.4fr 1fr 1fr ── */
+#features-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  column-gap: var(--grid-col-gap);
+  row-gap: var(--grid-col-gap);
+}
+
+/* Featured card spans 2 rows */
+.feature-card {
+  background: var(--color-page-bg);
+  border: 1px solid var(--color-border);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.feature-card:hover {
+  opacity: var(--hover-opacity);
+  transform: var(--hover-transform);
+}
+
+/* First card is the featured wide card */
+.feature-card.feature-card--featured {
+  grid-row: 1 / 3;
+  background: linear-gradient(160deg, var(--color-surface-1) 0%, var(--color-page-bg) 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 360px;
+}
+
+.feature-card-number {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: var(--weight-regular);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+  margin: 0 0 32px;
+}
+
+.feature-card-icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+/* CSS-drawn icons using pseudo-elements */
+.feature-icon-layers::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--color-accent-teal);
+  transform: rotate(0deg);
+}
+.feature-icon-layers::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1.5px solid var(--color-accent-violet);
+  transform: rotate(12deg);
+}
+
+.feature-icon-grid::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  border: 1.5px solid var(--color-accent-teal);
+  border-bottom: none;
+}
+.feature-icon-grid::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 50%;
+  border: 1.5px solid var(--color-accent-teal);
+  border-top: 1px dashed rgba(99, 202, 190, 0.4);
+}
+
+.feature-icon-analysis::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 60%;
+  height: 1.5px;
+  background: var(--color-accent-teal);
+}
+.feature-icon-analysis::after {
+  content: '';
+  position: absolute;
+  bottom: 8px; right: 0;
+  width: 40%;
+  height: 1.5px;
+  background: var(--color-accent-violet);
+}
+
+.feature-icon-report::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 1.5px solid var(--color-accent-blue);
+}
+.feature-icon-report::after {
+  content: '';
+  position: absolute;
+  top: 10px; left: 8px; right: 8px;
+  height: 1px;
+  background: rgba(71, 124, 190, 0.5);
+  box-shadow: 0 5px 0 rgba(71, 124, 190, 0.35), 0 10px 0 rgba(71, 124, 190, 0.2);
+}
+
+.feature-icon-collab::before {
+  content: '';
+  position: absolute;
+  top: 4px; left: 4px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-accent-teal);
+}
+.feature-icon-collab::after {
+  content: '';
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-accent-violet);
+}
+
+.feature-card-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--color-heading);
+  margin: 0 0 14px;
+}
+
+.feature-card--featured .feature-card-title {
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.feature-card-body {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  letter-spacing: var(--letter-spacing-body);
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.feature-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+  text-decoration: none;
+  margin-top: 28px;
+  transition: opacity var(--transition-fast);
+}
+
+.feature-card-link:hover {
+  opacity: var(--hover-opacity);
+}
+
+.feature-card-link::after {
+  content: '→';
+  font-size: 14px;
+}
+
+/* Accent border on featured card bottom */
+.feature-card--featured::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent-teal), var(--color-accent-violet));
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #features-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .feature-card.feature-card--featured {
+    grid-row: auto;
+    grid-column: 1 / -1;
+    min-height: 240px;
+  }
+  #features-header {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  #features-grid {
+    grid-template-columns: 1fr;
+  }
+  .feature-card {
+    padding: 28px 24px;
+  }
+}

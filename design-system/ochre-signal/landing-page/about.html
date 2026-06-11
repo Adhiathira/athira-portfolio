@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Pellum Natural Ink Studio</title>
+  <meta name="description" content="Pellum is a small-batch natural ink studio. We mill pigments from foraged minerals and plants, numbered by batch and honest about origin.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    /* ── About page–local styles ── */
+    .about-hero {
+      background: var(--color-heading, #3d3930);
+      padding: 100px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero__bg-text {
+      position: absolute;
+      right: -30px;
+      bottom: -50px;
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: clamp(8rem, 22vw, 18rem);
+      font-weight: 200;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(242, 239, 233, 0.05);
+      pointer-events: none;
+      user-select: none;
+      line-height: 0.85;
+    }
+    .about-hero__inner {
+      max-width: var(--grid-max-width, 1216px);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .about-hero__eyebrow {
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-surface, #a39b8b);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .about-hero__heading {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      letter-spacing: var(--ls-heading, 0.06em);
+      text-transform: uppercase;
+      color: var(--color-page-bg, #f2efe9);
+      line-height: 1.15;
+      margin: 0 0 24px;
+      max-width: 700px;
+    }
+    .about-hero__sub {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--color-muted-text, #c8c1b4);
+      max-width: 520px;
+    }
+
+    /* ── Founder split — asymmetric, portrait left ── */
+    .founder-split {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .founder-split__portrait {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      border-radius: 2px;
+      background: var(--color-surface, #a39b8b);
+    }
+    .founder-split__portrait img,
+    .founder-split__portrait video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .founder-split__portrait-caption {
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text, #c8c1b4);
+      margin-top: 14px;
+      display: block;
+    }
+    .founder-split__body {
+      padding-top: 8px;
+    }
+    .founder-split__name {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: 20px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-heading, #3d3930);
+      margin: 0 0 6px;
+    }
+    .founder-split__role {
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted-text, #c8c1b4);
+      display: block;
+      margin-bottom: 28px;
+    }
+    .founder-split__text {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--color-body-text, #575349);
+      margin: 0 0 20px;
+    }
+
+    /* ── Values — 3-col horizontal layout ── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .value-item {
+      padding: 40px 32px 40px 0;
+      border-right: 1px solid var(--color-border, #d4cfc8);
+    }
+    .value-item:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+    .value-item:first-child {
+      padding-left: 0;
+    }
+    .value-item__number {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent, #fb7339);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .value-item__title {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: 17px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-heading, #3d3930);
+      margin: 0 0 12px;
+    }
+    .value-item__desc {
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--color-body-text, #575349);
+      margin: 0;
+    }
+
+    /* ── Studio section — reversed split, text left / image right ── */
+    .studio-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .studio-split__text {}
+    .studio-split__media {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 2px;
+      background: var(--color-surface, #a39b8b);
+    }
+    .studio-split__media video,
+    .studio-split__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── Stockists — minimal table layout ── */
+    .stockists-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--color-border, #d4cfc8);
+    }
+    .stockist-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--color-border, #d4cfc8);
+      column-gap: 24px;
+    }
+    .stockist-item:nth-child(odd) {
+      padding-right: 48px;
+      border-right: 1px solid var(--color-border, #d4cfc8);
+    }
+    .stockist-item:nth-child(even) {
+      padding-left: 48px;
+    }
+    .stockist-item__name {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-heading, #3d3930);
+      margin: 0 0 4px;
+    }
+    .stockist-item__city {
+      font-family: var(--font-body);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted-text, #c8c1b4);
+      margin: 0;
+    }
+    .stockist-item__tag {
+      font-family: var(--font-body);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent, #fb7339);
+      white-space: nowrap;
+    }
+
+    /* ── Press quote ── */
+    .press-quote {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .press-quote__mark {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: 4rem;
+      font-weight: 200;
+      color: var(--color-border, #d4cfc8);
+      line-height: 0.5;
+      display: block;
+      margin-bottom: 24px;
+    }
+    .press-quote__text {
+      font-family: var(--font-heading, 'Nunito', sans-serif);
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      line-height: 1.55;
+      color: var(--color-heading, #3d3930);
+      margin: 0 0 28px;
+    }
+    .press-quote__attribution {
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted-text, #c8c1b4);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .founder-split {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .founder-split__portrait {
+        aspect-ratio: 4/3;
+      }
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+      .value-item {
+        border-right: none;
+        border-bottom: 1px solid var(--color-border, #d4cfc8);
+        padding: 32px 0;
+      }
+      .value-item:last-child {
+        border-bottom: none;
+      }
+      .studio-split {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .stockists-grid {
+        grid-template-columns: 1fr;
+      }
+      .stockist-item:nth-child(odd) {
+        padding-right: 0;
+        border-right: none;
+      }
+      .stockist-item:nth-child(even) {
+        padding-left: 0;
+      }
+    }
+    @media (max-width: 768px) {
+      .about-hero {
+        padding: 80px 24px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV TEMPLATE -->
+<nav id="site-nav" class="nav-light-page">
+  <a href="index.html" class="nav-logo">Pellum</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="pigments.html" class="nav-link">Pigments</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="about.html" class="nav-link nav-link--active">About</a></li>
+  </ul>
+  <a href="pigments.html" class="nav-cta">Order</a>
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="pigments.html" class="nav-link">Pigments</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="about.html" class="nav-link nav-link--active">About</a>
+  <a href="pigments.html" class="nav-cta">Order</a>
+</div>
+<script>
+(function() {
+  var nav = document.getElementById('site-nav');
+  var toggle = document.querySelector('.nav-mobile-toggle');
+  var mobileMenu = document.querySelector('.nav-mobile-menu');
+
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function() {
+      var isOpen = mobileMenu.classList.contains('is-open');
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      mobileMenu.classList.toggle('is-open');
+      nav.classList.toggle('nav-mobile-open');
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+  }
+})();
+</script>
+<!-- END NAV -->
+
+<!-- PAGE HERO — dark charcoal with ghost letterform -->
+<section class="about-hero" aria-label="About Pellum">
+  <div class="about-hero__bg-text" aria-hidden="true">Studio</div>
+  <div class="about-hero__inner" data-reveal="fade-up">
+    <span class="about-hero__eyebrow">The Studio</span>
+    <h1 class="about-hero__heading">A Practice Built<br>Around Material Honesty</h1>
+    <p class="about-hero__sub">Pellum began as a question: what happens when ink-making is treated as a craft, not a supply chain? Every decision since has been an answer.</p>
+  </div>
+</section>
+
+<!-- FOUNDER SECTION — asymmetric split, portrait left / text right -->
+<section class="section section--cream" aria-label="Founder">
+  <div class="container">
+    <div class="founder-split">
+      <!-- Left: portrait placeholder -->
+      <div data-reveal="fade-right">
+        <div class="founder-split__portrait">
+          <div class="asset-placeholder">
+            <span class="asset-placeholder__label">Founder Portrait</span>
+          </div>
+        </div>
+        <span class="founder-split__portrait-caption">Mira Solano — founder, Pellum Studio</span>
+      </div>
+
+      <!-- Right: bio copy -->
+      <div data-reveal="fade-left">
+        <div class="founder-split__body">
+          <span class="section__eyebrow">The Maker</span>
+          <p class="founder-split__name">Mira Solano</p>
+          <span class="founder-split__role">Founder &amp; Ink Maker</span>
+          <p class="founder-split__text">
+            Mira spent nine years as a conservation technician — working alongside paintings that had survived centuries on the strength of their original materials. She grew frustrated that the inks and pigments available to working artists bore no resemblance to the materials she was restoring.
+          </p>
+          <p class="founder-split__text">
+            In 2019 she began milling her own pigments in a converted laundry room, starting with iron ochre collected from a quarry in the Roussillon. The first twelve bottles went to calligraphers she knew personally. Word spread.
+          </p>
+          <p class="founder-split__text">
+            Pellum now operates from a small studio in the Hudson Valley. Each batch is numbered. Each source is named. Nothing anonymous leaves the studio.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES — dark taupe background, 3-col horizontal -->
+<section class="section section--taupe" aria-label="Studio values">
+  <div class="container">
+    <span class="section__eyebrow">What We Hold To</span>
+    <h2 class="section__heading">Three Commitments</h2>
+    <div class="values-grid" data-stagger-group="fade-up">
+      <div class="value-item">
+        <span class="value-item__number">01</span>
+        <h3 class="value-item__title">Named Origins</h3>
+        <p class="value-item__desc">Every raw material has a source we can point to on a map — a deposit, a farm, a grower. "Natural" without specificity is a marketing word. We don't use marketing words on bottles.</p>
+      </div>
+      <div class="value-item">
+        <span class="value-item__number">02</span>
+        <h3 class="value-item__title">Numbered Batches</h3>
+        <p class="value-item__desc">No batch is anonymous. Each carries a number and a season. When the batch is gone, it is gone. The next one may be subtly different — that is not a defect, it is a record of the material.</p>
+      </div>
+      <div class="value-item">
+        <span class="value-item__number">03</span>
+        <h3 class="value-item__title">Small Volume</h3>
+        <p class="value-item__desc">50–120 units per batch. We have turned down wholesale arrangements that would require scaling beyond what a single maker can control. Control is the product.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS QUOTE — centered pullquote, cream background -->
+<section class="section section--cream" aria-label="Press">
+  <div class="container">
+    <div class="press-quote" data-reveal="fade-up">
+      <span class="press-quote__mark" aria-hidden="true">&ldquo;</span>
+      <p class="press-quote__text">Pellum occupies a rare position — it is neither a heritage brand nor an art-supply manufacturer. It is a studio that happens to sell what it makes, because what it makes is genuinely irreplaceable.</p>
+      <span class="press-quote__attribution">Calligraphy &amp; Script Review — Spring 2025</span>
+    </div>
+  </div>
+</section>
+
+<!-- STUDIO SECTION — reversed split, text left / video right -->
+<section class="section section--taupe" aria-label="The studio space">
+  <div class="container">
+    <div class="studio-split">
+      <!-- Left: text -->
+      <div data-reveal="fade-right">
+        <span class="section__eyebrow">The Space</span>
+        <h2 class="section__heading">Hudson Valley,<br>New York</h2>
+        <p class="section__subheading" style="max-width: 420px;">The studio is a converted barn workshop — 900 square feet, north light, stone floor. Visitors by appointment only, twice a year.</p>
+        <p style="font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--color-body-text, #575349); margin: 0 0 24px;">The space was chosen for its humidity, which stabilises the milling process. The stone floor keeps temperatures even. The north-facing windows keep the pigments out of direct light during preparation.</p>
+        <p style="font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--color-body-text, #575349); margin: 0;">Open studio days happen in early spring and late autumn. Dates are announced to the mailing list only.</p>
+      </div>
+
+      <!-- Right: studio ambient video -->
+      <div data-reveal="fade-left">
+        <div class="studio-split__media">
+          <video
+            src="assets/studio-ambient.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            aria-label="Slow pan across the studio milling workspace"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+          ></video>
+          <div class="asset-placeholder" style="display:none;">
+            <span class="asset-placeholder__label">Studio Interior</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STOCKISTS — 2-col table layout -->
+<section class="section section--cream" aria-label="Stockists">
+  <div class="container">
+    <span class="section__eyebrow">Where to Find Us</span>
+    <h2 class="section__heading">Stockists</h2>
+    <p style="font-family: var(--font-body); font-size: 15px; line-height: 1.7; color: var(--color-body-text, #575349); margin: 0 0 48px; max-width: 560px;">Pellum is available through a small number of vetted retailers. Each stockist carries the full current collection and maintains cold storage where required.</p>
+
+    <div class="stockists-grid" data-stagger-group="fade-up">
+      <div class="stockist-item">
+        <div>
+          <p class="stockist-item__name">The Letterpress Shop</p>
+          <p class="stockist-item__city">New York, NY</p>
+        </div>
+        <span class="stockist-item__tag">Full Stock</span>
+      </div>
+      <div class="stockist-item">
+        <div>
+          <p class="stockist-item__name">Bower &amp; Son</p>
+          <p class="stockist-item__city">Portland, OR</p>
+        </div>
+        <span class="stockist-item__tag">Full Stock</span>
+      </div>
+      <div class="stockist-item">
+        <div>
+          <p class="stockist-item__name">Ruelle Fine Art Supply</p>
+          <p class="stockist-item__city">Paris, FR</p>
+        </div>
+        <span class="stockist-item__tag">Select Batches</span>
+      </div>
+      <div class="stockist-item">
+        <div>
+          <p class="stockist-item__name">Holt &amp; Crane</p>
+          <p class="stockist-item__city">London, UK</p>
+        </div>
+        <span class="stockist-item__tag">Select Batches</span>
+      </div>
+      <div class="stockist-item">
+        <div>
+          <p class="stockist-item__name">Paper &amp; Thread Co.</p>
+          <p class="stockist-item__city">Chicago, IL</p>
+        </div>
+        <span class="stockist-item__tag">Full Stock</span>
+      </div>
+      <div class="stockist-item">
+        <div>
+          <p class="stockist-item__name">Atelier de Papier</p>
+          <p class="stockist-item__city">Montréal, QC</p>
+        </div>
+        <span class="stockist-item__tag">Select Batches</span>
+      </div>
+    </div>
+
+    <p style="margin-top: 32px; font-family: var(--font-body); font-size: 13px; color: var(--color-muted-text, #c8c1b4);">Wholesale enquiries: <span style="color: var(--color-body-text, #575349);">studio@pellum.co</span></p>
+  </div>
+</section>
+
+<!-- CTA BAND — dark, centered editorial -->
+<section class="cta-band" aria-label="Shop invitation">
+  <div class="container" style="position:relative;z-index:2;" data-reveal="fade-up">
+    <h2 class="cta-band__heading">The Current<br>Collection</h2>
+    <p class="cta-band__body">All active batches are available to order directly. When a batch is listed as sold out, it is not returning. The next one will be something new.</p>
+    <div class="cta-band__cta-group">
+      <a href="pigments.html" class="btn-primary">Browse Pigments</a>
+      <a href="process.html" class="btn-ghost" style="color:rgba(242,239,233,0.7);border-color:rgba(242,239,233,0.3);">Our Process</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer" data-reveal="fade-up">
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <a href="index.html" class="footer__logo">Pellum</a>
+      <p class="footer__tagline">Colour drawn from the ground. Small-batch natural inks for studio practice.</p>
+    </div>
+    <div>
+      <p class="footer__col-heading">Studio</p>
+      <ul class="footer__links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="process.html">Sourcing</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__col-heading">Collection</p>
+      <ul class="footer__links">
+        <li><a href="pigments.html">All Pigments</a></li>
+        <li><a href="pigments.html">Mineral Series</a></li>
+        <li><a href="pigments.html">Botanical Series</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__col-heading">Contact</p>
+      <ul class="footer__links">
+        <li><a href="about.html">Stockists</a></li>
+        <li><a href="about.html">Press</a></li>
+        <li><a href="about.html">Wholesale</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p class="footer__copyright">© 2026 Pellum. All rights reserved.</p>
+    <p class="footer__copyright" style="opacity:0.6;">Small-batch natural ink studio.</p>
+  </div>
+</footer>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="behaviors/scroll-reveal.js"></script>
+<script>
+(function() {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  // Scroll reveals — single elements
+  document.querySelectorAll('[data-reveal]').forEach(function(el) {
+    var type = el.getAttribute('data-reveal');
+    var from = { opacity: 0 };
+    if (type === 'fade-up') { from.y = 24; }
+    else if (type === 'fade-right') { from.x = -32; }
+    else if (type === 'fade-left') { from.x = 32; }
+
+    gsap.set(el, from);
+    gsap.to(el, Object.assign({ opacity: 1, y: 0, x: 0 }, {
+      duration: 0.7,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none'
+      }
+    }));
+  });
+
+  // Stagger groups
+  document.querySelectorAll('[data-stagger-group]').forEach(function(group) {
+    var type = group.getAttribute('data-stagger-group');
+    var children = group.children;
+    var from = { opacity: 0 };
+    var to = { opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.12 };
+
+    if (type === 'fade-up') { from.y = 24; to.y = 0; }
+    else if (type === 'scale') { from.scale = 0.94; from.y = 20; to.scale = 1; to.y = 0; }
+
+    gsap.set(children, from);
+    to.scrollTrigger = {
+      trigger: group,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    };
+    gsap.to(children, to);
+  });
+})();
+</script>
+
+</body>
+</html>

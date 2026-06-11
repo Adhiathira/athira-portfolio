@@ -1,0 +1,306 @@
+/*
+ * interaction-states.css
+ * Design system: griting-ellipsus
+ *
+ * Base brand: griting (colors, typography, concepts preserved verbatim)
+ * Incorporated: ellipsus interaction patterns (cursor, transitions, hover elevation)
+ * remapped to griting's primary (#00693e) and background (#003620) colors.
+ *
+ * Transition convention (from ellipsus):
+ *   default/hover  → 0.3s ease
+ *   active/press   → 0.1s ease (snappier feedback)
+ */
+
+/* ─── CSS Custom Properties ─────────────────────────────────────────────────── */
+:root {
+  --color-brand-primary:    #00693e;
+  --color-brand-bg:         #003620;
+  --color-brand-hover:      #008050;
+  --color-brand-active:     #003d25;
+  --color-brand-dark:       #004d2e;
+  --color-text-on-dark:     #ffffff;
+  --color-text-heading:     #031f18;
+  --color-text-body:        #455451;
+  --color-surface-light:    #f5f6f5;
+  --color-surface-card:     #ffffff;
+  --color-btn-outline-bg:   rgba(0, 105, 62, 0.06);
+  --color-shadow-brand:     rgba(0, 54, 32, 0.16);
+
+  --transition-default: color 0.3s, background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  --transition-active:  color 0.1s, background-color 0.1s, box-shadow 0.1s;
+}
+
+/* ─── Buttons: Primary ───────────────────────────────────────────────────────── */
+.btn-primary {
+  background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-primary));
+  color: var(--color-text-on-dark);
+  border-radius: 8px;
+  border: 1px solid var(--color-brand-bg);
+  box-shadow: 0px 1px 2px -1px rgba(9, 6, 63, 0.4),
+              0px 0px 0px 1px var(--color-brand-bg),
+              inset 0px 1px 0px 0px rgba(255, 255, 255, 0.16);
+  font-size: 18px;
+  font-family: "Inter Variable", Inter, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.18px;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.btn-primary:hover {
+  /* Lightened brand green; elevation shadow uses griting bg tone — ellipsus pattern */
+  background: linear-gradient(90deg, var(--color-brand-hover), var(--color-brand-hover));
+  color: var(--color-text-on-dark);
+  box-shadow: var(--color-shadow-brand) 0px 3.99831px 7.99662px 0px,
+              var(--color-shadow-brand) 0px 0px 23.9899px 0px;
+}
+
+.btn-primary:active {
+  background: linear-gradient(90deg, var(--color-brand-bg), var(--color-brand-bg));
+  color: var(--color-text-on-dark);
+  transition: var(--transition-active);
+}
+
+/* ─── Buttons: Outline (dark background) ────────────────────────────────────── */
+.btn-outline {
+  background: var(--color-btn-outline-bg);
+  color: var(--color-text-on-dark);
+  border-radius: 8px;
+  border: 1px solid var(--color-brand-primary);
+  box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.02);
+  font-size: 17px;
+  font-family: "Inter Variable", Inter, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.btn-outline:hover {
+  background: rgba(0, 105, 62, 0.12);
+  border-color: var(--color-brand-primary);
+}
+
+.btn-outline:active {
+  background: rgba(0, 105, 62, 0.20);
+  transition: var(--transition-active);
+}
+
+/* ─── Buttons: Outline on Light Background ──────────────────────────────────── */
+.btn-outline-on-light {
+  background: var(--color-btn-outline-bg);
+  color: #000000;
+  border-radius: 8px;
+  border: 1px solid var(--color-brand-primary);
+  box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.02);
+  font-size: 17px;
+  font-family: "Inter Variable", Inter, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.btn-outline-on-light:hover {
+  background: rgba(0, 105, 62, 0.12);
+  color: #000000;
+}
+
+.btn-outline-on-light:active {
+  background: rgba(0, 105, 62, 0.20);
+  color: #000000;
+  transition: var(--transition-active);
+}
+
+/* ─── Buttons: Social Share Icon ────────────────────────────────────────────── */
+.btn-share-icon {
+  background: #f3f4f3;
+  border: 1px solid rgba(209, 213, 219, 0.5);
+  border-radius: 40px;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.btn-share-icon:hover {
+  background: #e5e7e5;
+}
+
+/* ─── Buttons: Filter Pills ─────────────────────────────────────────────────── */
+.filter-pill--active {
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  border-radius: 9999px;
+  height: 36px;
+  padding-inline: 16px;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.filter-pill--active:hover {
+  background: var(--color-brand-dark);
+  color: var(--color-text-on-dark);
+}
+
+.filter-pill--active:active {
+  background: var(--color-brand-active);
+  color: var(--color-text-on-dark);
+  transition: var(--transition-active);
+}
+
+.filter-pill--inactive {
+  background: #f3f4f3;
+  color: #000000;
+  border-radius: 9999px;
+  border: 1px solid #e4e4e7;
+  height: 36px;
+  padding-inline: 16px;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.filter-pill--inactive:hover {
+  background: #e8e8e8;
+  color: var(--color-text-heading);
+}
+
+.filter-pill--inactive:active {
+  background: #d4d4d4;
+  color: var(--color-text-heading);
+  transition: var(--transition-active);
+}
+
+/* ─── Links: Navigation (dark background) ───────────────────────────────────── */
+.nav-link {
+  color: var(--color-text-on-dark);
+  text-decoration: none;
+  font-size: 16px;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.nav-link:hover {
+  /* Ellipsus accent-on-hover pattern; color remapped to griting primary green */
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+}
+
+/* ─── Links: Navigation (light background) ──────────────────────────────────── */
+.nav-link--on-light {
+  color: var(--color-text-body);
+  text-decoration: none;
+  font-size: 16px;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.nav-link--on-light:hover {
+  color: var(--color-text-heading);
+  text-decoration: none;
+}
+
+/* ─── Links: Back Button ────────────────────────────────────────────────────── */
+.link-back {
+  color: #202b38;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: Inter, sans-serif;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.link-back:hover {
+  color: var(--color-text-heading);
+}
+
+/* ─── Links: Article Title ──────────────────────────────────────────────────── */
+.link-article-title {
+  color: var(--color-text-heading);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.link-article-title:hover {
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+}
+
+/* ─── Inputs: Search ────────────────────────────────────────────────────────── */
+.input-search {
+  background: #f3f4f3;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  height: 40px;
+  color: var(--color-text-heading);
+  transition: var(--transition-default);
+}
+
+.input-search::placeholder {
+  color: #71717b;
+}
+
+.input-search:focus {
+  border-color: var(--color-brand-primary);
+  outline: none;
+}
+
+/* ─── Navigation Section (ellipsus pattern, griting palette) ────────────────── */
+/*
+ * Full navigation interaction block incorporating ellipsus's explicit cursor,
+ * transition timing, and active states — all colors remapped to griting brand.
+ */
+.nav-entry {
+  color: var(--color-text-on-dark);
+  font-weight: 400;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.nav-entry:hover {
+  color: var(--color-brand-primary);
+  transition: var(--transition-default);
+}
+
+.nav-entry:active {
+  color: var(--color-brand-bg);
+  transition: var(--transition-active);
+}
+
+.nav-entry--light {
+  color: var(--color-text-body);
+  font-weight: 400;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.nav-entry--light:hover {
+  color: var(--color-text-heading);
+  transition: var(--transition-default);
+}
+
+.nav-entry--light:active {
+  color: var(--color-brand-primary);
+  transition: var(--transition-active);
+}
+
+/* ─── Cards ─────────────────────────────────────────────────────────────────── */
+/*
+ * Ellipsus multi-layer box-shadow elevation on hover;
+ * shadow color derived from griting background (#003620) for brand coherence.
+ */
+.card {
+  background: var(--color-surface-card);
+  border: 1px solid rgba(209, 213, 219, 0.5);
+  border-radius: 8px;
+  transition: var(--transition-default);
+}
+
+.card:hover {
+  box-shadow: var(--color-shadow-brand) 0px 4px 8px 0px,
+              var(--color-shadow-brand) 0px 0px 24px 0px;
+}

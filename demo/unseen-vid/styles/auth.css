@@ -1,0 +1,194 @@
+/*
+ * auth.css — unseen-vid auth pages (login.html, signup.html)
+ *
+ * Pattern: splash-screen — centered ~300px cluster, ~70% negative space,
+ * no NavBar, no Footer. The auth form is the entire page.
+ *
+ * Tokens used (from tokens.css):
+ *   Colors:     --color-bg, --color-text-body, --color-text-heading,
+ *               --color-surface, --color-action, --color-text-muted,
+ *               --color-border, --color-link
+ *   Typography: --font-primary, --font-editorial, --type-nav, --type-nav-lh,
+ *               --type-h1, --type-h1-lh, --type-body, --type-body-lh,
+ *               --type-button, --type-button-lh, --type-button-fw,
+ *               --type-ls-caps
+ *   Spacing:    --space-cta-v, --space-cta-h, --space-cta-radius,
+ *               --space-div-mb
+ *   Motion:     --ease-reveal, --ease-standard, --duration-fast
+ *   Layout:     --content-cluster-width
+ */
+
+/* ============================================================
+   1. PAGE SHELL
+   ============================================================ */
+
+.auth-page {
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   2. AUTH CLUSTER
+   ============================================================ */
+
+.auth-cluster {
+  width: var(--content-cluster-width);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-div-mb);
+  /* Optical vertical centering — shift slightly above true center */
+  margin-top: -5vh;
+}
+
+/* ============================================================
+   3. BRAND MARK
+   ============================================================ */
+
+.auth-cluster__brand {
+  font-family: var(--font-primary);
+  font-size: var(--type-nav);
+  line-height: var(--type-nav-lh);
+  font-variant: small-caps;
+  color: var(--color-text-heading);
+  text-decoration: none;
+}
+
+/* ============================================================
+   4. FRAMING TEXT
+   ============================================================ */
+
+.auth-cluster__frame {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: var(--type-h1);
+  line-height: var(--type-h1-lh);
+  color: var(--color-text-body);
+  margin: 0;
+}
+
+/* ============================================================
+   5. AUTH FORM
+   ============================================================ */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ============================================================
+   6. AUTH INPUTS
+   ============================================================ */
+
+.auth-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--color-border);
+  border-radius: var(--space-cta-radius);
+  padding: var(--space-cta-v) var(--space-cta-h);
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+  color: var(--color-text-body);
+  background: var(--color-surface);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.auth-input:focus {
+  border-color: var(--color-action);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+/* ============================================================
+   7. CTA SUBMIT BUTTON — auth-specific overrides only
+      (.cta-primary base styles come from components.css)
+   ============================================================ */
+
+.auth-form .cta-primary {
+  width: 100%;
+}
+
+/* ============================================================
+   8. OAUTH SECTION
+   ============================================================ */
+
+.auth-oauth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================================
+   9. OAUTH DIVIDER LABEL
+   ============================================================ */
+
+.auth-oauth__label {
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  line-height: var(--type-button-lh);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--type-ls-caps);
+}
+
+/* ============================================================
+   10. OAUTH BUTTONS
+   ============================================================ */
+
+.auth-oauth__btn {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--space-cta-radius);
+  padding: var(--space-cta-v) var(--space-cta-h);
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-fw);
+  color: var(--color-text-body);
+  background: var(--color-surface);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: var(--type-ls-caps);
+}
+
+.auth-oauth__btn:hover {
+  background: var(--color-bg);
+  transition: background var(--duration-fast) var(--ease-standard);
+}
+
+/* ============================================================
+   11. SWITCH LINK
+   ============================================================ */
+
+.auth-cluster__switch {
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin: 0;
+}
+
+.auth-cluster__switch a {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+/* ============================================================
+   12. VISUALLY HIDDEN LABEL UTILITY
+   ============================================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

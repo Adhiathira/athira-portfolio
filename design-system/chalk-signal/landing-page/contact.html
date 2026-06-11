@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Arca Systems</title>
+  <meta name="description" content="Get in touch with the Arca Systems team. Questions about deployment, consultations, or custom network programs.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/buttons.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    /* Page header */
+    .page-header {
+      background: var(--color-dark-charcoal);
+      padding: 100px var(--space-main-inline) 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      color: var(--color-off-white);
+      margin: 0;
+    }
+    .page-header h1 .muted { color: var(--color-muted-text); font-weight: 400; }
+    .page-header-body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      color: var(--color-muted-text);
+      margin: 0;
+    }
+    /* Dark page header — nav override */
+    #site-nav.on-contact {
+      background: rgba(26, 26, 24, 0.95);
+    }
+    #site-nav.on-contact .nav-logo-text,
+    #site-nav.on-contact .nav-links a,
+    #site-nav.on-contact .nav-mobile-toggle span { color: var(--color-off-white); }
+    #site-nav.on-contact .nav-mobile-toggle span { background: var(--color-off-white); }
+    #site-nav.on-contact .nav-links a:hover { color: var(--color-accent); }
+
+    /* Contact section */
+    .section-contact {
+      background: var(--color-surface-neutral);
+      padding: var(--space-section) var(--space-main-inline);
+    }
+    .contact-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 96px;
+      align-items: start;
+    }
+
+    /* Left info column */
+    .contact-info {}
+    .contact-type {
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .contact-type-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .contact-type-value {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--color-heading);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .contact-type-desc {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+      color: var(--color-body-text);
+      opacity: 0.55;
+    }
+
+    /* Response time bar */
+    .response-bar {
+      background: var(--color-white);
+      border-radius: var(--radius-card);
+      padding: 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .response-bar-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+    }
+    .response-bar-track {
+      height: 4px;
+      background: var(--color-surface-neutral);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .response-bar-fill {
+      height: 100%;
+      width: 60%;
+      background: var(--color-accent);
+      border-radius: 2px;
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.75s var(--ease-spring);
+    }
+    .response-time {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--color-heading);
+    }
+
+    /* Form */
+    .contact-form {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+    .form-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-heading);
+    }
+    .form-input,
+    .form-select,
+    .form-textarea {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--color-heading);
+      background: var(--color-white);
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: var(--radius-btn);
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s var(--ease-decelerate),
+                  box-shadow 0.2s var(--ease-decelerate);
+      width: 100%;
+    }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--color-heading);
+      box-shadow: 0 0 0 3px rgba(32,32,32,0.06);
+    }
+    .form-textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+    .form-select {
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23202020' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+    .form-submit {
+      width: 100%;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .form-note {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--color-body-text);
+      opacity: 0.45;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* Office/team section */
+    .section-offices {
+      background: var(--color-white);
+      padding: var(--space-section) var(--space-main-inline);
+    }
+    .offices-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+    }
+    .offices-header {
+      margin-bottom: 56px;
+    }
+    .offices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .office-card {
+      background: var(--color-surface-neutral);
+      border-radius: var(--radius-card);
+      padding: 36px 32px;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .office-region {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .office-city {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--color-heading);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .office-address {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.65;
+      color: var(--color-body-text);
+      opacity: 0.55;
+    }
+    .office-role {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    @media (max-width: 1024px) {
+      .page-header-inner { grid-template-columns: 1fr; gap: 32px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 56px; }
+      .offices-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .page-header { padding: 80px 24px 60px; }
+      .section-contact { padding: 80px 24px; }
+      .section-offices { padding: 80px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .offices-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-spacer"></div>
+<nav id="site-nav" class="on-contact">
+  <a href="index.html" class="nav-logo" aria-label="Arca Systems home">
+    <span class="nav-logo-text" style="color:var(--color-off-white);">ARCA<span class="nav-logo-dot"></span></span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="method.html" style="color:var(--color-off-white);">Method</a></li>
+    <li><a href="species.html" style="color:var(--color-off-white);">Species</a></li>
+    <li><a href="plans.html" style="color:var(--color-off-white);">Plans</a></li>
+    <li><a href="contact.html" class="nav-link--active" style="color:var(--color-off-white);">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="plans.html" class="nav-cta" style="background:var(--color-off-white);color:var(--color-dark-charcoal);border-color:var(--color-off-white);">Get Started</a>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false" style="--toggle-color: var(--color-off-white);">
+      <span style="background:var(--color-off-white);"></span>
+      <span style="background:var(--color-off-white);"></span>
+      <span style="background:var(--color-off-white);"></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="method.html">Method</a>
+  <a href="species.html">Species</a>
+  <a href="plans.html">Plans</a>
+  <a href="contact.html">Contact</a>
+  <a href="plans.html" class="nav-cta">Get Started</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var mobileToggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+    window.addEventListener('scroll', function() {
+      if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', function() {
+        var isOpen = mobileMenu.classList.toggle('is-open');
+        nav.classList.toggle('nav-mobile-open', isOpen);
+        mobileToggle.setAttribute('aria-expanded', String(isOpen));
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          mobileToggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+  })();
+</script>
+
+<!-- Dark page header — contact page gets the cinematic register from the start -->
+<header class="page-header">
+  <div class="page-header-inner" id="contact-header">
+    <div>
+      <p class="section-eyebrow" style="color:var(--color-muted-text); margin-bottom:20px;">Contact</p>
+      <h1>We read<br><span class="muted">every message</span></h1>
+    </div>
+    <div>
+      <p class="page-header-body">
+        Deployment questions, ecosystem-specific consultations, partnership
+        proposals, or custom network programs — the Arca team responds personally.
+        Not a ticket queue. A person.
+      </p>
+    </div>
+  </div>
+</header>
+
+<!-- Contact form + info -->
+<section class="section-contact" id="contact-section">
+  <div class="contact-inner">
+
+    <!-- Info column -->
+    <div class="contact-info">
+      <p class="section-eyebrow" style="margin-bottom:32px;">Get in touch</p>
+
+      <div class="contact-type" data-info="0">
+        <span class="contact-type-label">General Enquiries</span>
+        <span class="contact-type-value">hello@arcasystems.io</span>
+        <span class="contact-type-desc">Questions about the platform, plans, and capabilities.</span>
+      </div>
+
+      <div class="contact-type" data-info="1">
+        <span class="contact-type-label">Deployment Support</span>
+        <span class="contact-type-value">deploy@arcasystems.io</span>
+        <span class="contact-type-desc">Hardware setup, mounting, connectivity, and technical troubleshooting.</span>
+      </div>
+
+      <div class="contact-type" data-info="2">
+        <span class="contact-type-label">Research Partnerships</span>
+        <span class="contact-type-value">research@arcasystems.io</span>
+        <span class="contact-type-desc">Academic collaborations, data licensing, and custom model training.</span>
+      </div>
+
+      <div class="response-bar" id="response-bar">
+        <span class="response-bar-label">Typical response time</span>
+        <div class="response-bar-track">
+          <div class="response-bar-fill" id="response-fill"></div>
+        </div>
+        <span class="response-time">Under 4 business hours</span>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form class="contact-form" id="contact-form" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="contact-name">Full Name</label>
+          <input class="form-input" type="text" id="contact-name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="contact-email">Email</label>
+          <input class="form-input" type="email" id="contact-email" name="email" placeholder="you@organisation.org" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="contact-type">Enquiry Type</label>
+        <select class="form-select" id="contact-type" name="type">
+          <option value="">Select a category</option>
+          <option value="deployment">Deployment &amp; Hardware</option>
+          <option value="plans">Plans &amp; Pricing</option>
+          <option value="research">Research Partnership</option>
+          <option value="species">Species / Model Questions</option>
+          <option value="network">Large-Scale Network Program</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="contact-habitat">Habitat Type (optional)</label>
+        <input class="form-input" type="text" id="contact-habitat" name="habitat" placeholder="Woodland, wetland, upland heath...">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="contact-message">Message</label>
+        <textarea class="form-textarea" id="contact-message" name="message" placeholder="Describe your monitoring goals, site details, or questions..."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+      <p class="form-note">Your data is never shared with third parties. Arca privacy policy applies.</p>
+    </form>
+
+  </div>
+</section>
+
+<!-- Offices -->
+<section class="section-offices" id="offices">
+  <div class="offices-inner">
+    <div class="offices-header">
+      <p class="section-eyebrow">Where we work</p>
+      <h2 class="section-heading">Field teams <span class="muted">and offices</span></h2>
+    </div>
+    <div class="offices-grid" id="offices-grid">
+
+      <div class="office-card" data-office="0">
+        <span class="office-region">Headquarters</span>
+        <span class="office-city">Edinburgh</span>
+        <p class="office-address">21 Grassmarket, Edinburgh EH1 2HS<br>Scotland, United Kingdom</p>
+        <span class="office-role">Product &amp; Engineering</span>
+      </div>
+
+      <div class="office-card" data-office="1">
+        <span class="office-region">Central Europe</span>
+        <span class="office-city">Vienna</span>
+        <p class="office-address">Mariahilfer Strasse 88, 1070<br>Wien, Austria</p>
+        <span class="office-role">Field Operations</span>
+      </div>
+
+      <div class="office-card" data-office="2">
+        <span class="office-region">Americas</span>
+        <span class="office-city">Vancouver</span>
+        <p class="office-address">375 Water Street, Suite 600<br>Vancouver, BC V6B 5C6</p>
+        <span class="office-role">Research Partnerships</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="drip-boundary" aria-hidden="true" style="background:var(--color-dark-charcoal);">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L1200,0 L1200,30 Q1100,60 1000,30 Q900,0 800,40 Q700,60 600,35 Q500,10 400,50 Q300,60 200,30 Q100,0 0,40 Z" fill="var(--color-surface-neutral)"/>
+  </svg>
+</div>
+
+<div class="footer-capsule-wrapper" style="background:var(--color-white);">
+  <footer class="footer-capsule" style="background:var(--color-surface-neutral);">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo-text">ARCA<span class="nav-logo-dot"></span></span>
+        <p class="footer-tagline">Passive acoustic monitoring for ecologists, conservationists, and land managers. Every sound, identified.</p>
+      </div>
+      <div>
+        <p class="footer-col-label">Platform</p>
+        <ul class="footer-col-links">
+          <li><a href="method.html">Method</a></li>
+          <li><a href="species.html">Species Database</a></li>
+          <li><a href="plans.html">Plans &amp; Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-label">Company</p>
+        <ul class="footer-col-links">
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Field Reports</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-label">Resources</p>
+        <ul class="footer-col-links">
+          <li><a href="#">API Docs</a></li>
+          <li><a href="#">Deployment Guide</a></li>
+          <li><a href="#">Species ID Model</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2025 Arca Systems. All rights reserved.</span>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Dark header entrance
+  gsap.fromTo('#contact-header > *',
+    { opacity: 0, y: 28 },
+    { opacity: 1, y: 0, duration: 0.75, stagger: 0.2, ease: 'cubic-bezier(0.16,1,0.3,1)', delay: 0.15 }
+  );
+
+  // Contact info items — vertical stagger (different from other pages)
+  gsap.utils.toArray('.contact-type').forEach(function(item, i) {
+    gsap.to(item, {
+      opacity: 1, y: 0, duration: 0.45, delay: i * 0.12,
+      ease: 'cubic-bezier(0.4,0,0.2,1)',
+      scrollTrigger: { trigger: '.contact-info', start: 'top 80%', once: true }
+    });
+  });
+
+  // Response bar — animate fill
+  ScrollTrigger.create({
+    trigger: '#response-bar',
+    start: 'top 82%',
+    once: true,
+    onEnter: function() {
+      gsap.to('#response-bar', { opacity: 1, y: 0, duration: 0.45, ease: 'cubic-bezier(0.4,0,0.2,1)' });
+      setTimeout(function() {
+        var fill = document.getElementById('response-fill');
+        if (fill) fill.style.transform = 'scaleX(1)';
+      }, 300);
+    }
+  });
+
+  // Form — slide in from right
+  gsap.to('#contact-form', {
+    opacity: 1, x: 0, duration: 0.75, ease: 'cubic-bezier(0.16,1,0.3,1)',
+    scrollTrigger: { trigger: '#contact-section', start: 'top 78%', once: true }
+  });
+
+  // Office cards — clip reveal
+  gsap.utils.toArray('.office-card').forEach(function(card, i) {
+    gsap.to(card, {
+      opacity: 1, y: 0, duration: 0.5, delay: i * 0.14,
+      ease: 'cubic-bezier(0.4,0,0.2,1)',
+      scrollTrigger: { trigger: '#offices-grid', start: 'top 82%', once: true }
+    });
+  });
+
+  // Form submission (stub)
+  var form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = form.querySelector('.form-submit');
+      if (btn) {
+        btn.textContent = 'Message Sent';
+        btn.style.background = '#16a34a';
+        btn.style.borderColor = '#16a34a';
+        btn.disabled = true;
+      }
+    });
+  }
+
+})();
+</script>
+</body>
+</html>

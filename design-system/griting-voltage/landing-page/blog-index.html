@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Griting</title>
+  <meta name="description" content="Griting Blog — Talent trust and readiness infrastructure for the AI Capital era. Perspectives on agentic careers, mentorship systems, and future-of-work strategy." />
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <style>
+    /* ─────────────────────────────────────────────
+       BLOG INDEX — page-scoped styles
+       All design tokens sourced from styles/tokens.css
+    ───────────────────────────────────────────── */
+
+    /* ── Nav (on-light variant — blog page always starts with white bg) ── */
+    #site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 72px;
+      background: transparent;
+      border-bottom: none;
+      transition: background var(--transition-default), border-color var(--transition-default);
+    }
+    #site-nav.site-header--stuck {
+      background: #ffffff;
+      border-bottom: 1px solid var(--color-nav-border);
+    }
+    #nav-inner {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding-inline: var(--nav-padding-inline);
+    }
+    #nav-logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+      margin-right: auto;
+    }
+    #nav-logo-g,
+    #nav-logo-riting {
+      font-family: var(--font-logo);
+      font-size: var(--type-logo);
+      font-weight: 600;
+      letter-spacing: var(--tracking-logo);
+      color: #ffffff;
+      line-height: 1;
+      transition: color var(--transition-default);
+    }
+    #site-nav.site-header--stuck #nav-logo-g,
+    #site-nav.site-header--stuck #nav-logo-riting {
+      color: #000000;
+    }
+    #nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--nav-gap);
+      margin-right: var(--nav-gap);
+    }
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: 400;
+      color: #ffffff;
+      text-decoration: none;
+      transition: opacity var(--transition-snap);
+    }
+    .nav-link:hover {
+      opacity: 0.7;
+    }
+    .nav-link.nav-link--active {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    #site-nav.site-header--stuck .nav-link {
+      color: var(--color-text-body);
+    }
+    #nav-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--btn-padding-block) var(--btn-padding-inline);
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: var(--type-btn-primary);
+      font-weight: 500;
+      border-radius: var(--btn-border-radius);
+      border: 1px solid #003620;
+      box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.16);
+      transition: background-color var(--transition-out);
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    #nav-cta-btn:hover {
+      background: #008050;
+    }
+
+    /* ── Page body ── */
+    body {
+      background-color: var(--color-page-bg);
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION 2: FEATURED POST (hero)
+    ───────────────────────────────────────────── */
+    #featured-post {
+      background: linear-gradient(180deg, #f5f6f5 0%, #ffffff 100%);
+      padding-top: calc(var(--nav-height) + 64px);
+      padding-bottom: 72px;
+    }
+    #featured-post .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    #featured-post-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    #featured-post-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: 600;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
+      display: block;
+    }
+    #featured-post-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -2px;
+      color: var(--color-text-heading);
+    }
+    #featured-post-heading a {
+      color: inherit;
+      text-decoration: none;
+      transition: opacity var(--transition-default);
+    }
+    #featured-post-heading a:hover {
+      opacity: 0.75;
+    }
+    #featured-post-author-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .featured-post-author-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 9999px;
+      background: linear-gradient(
+        135deg,
+        var(--color-avatar-gradient-start),
+        var(--color-avatar-gradient-end)
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+    #featured-post-author-name {
+      font-family: var(--font-body);
+      font-size: var(--type-meta);
+      font-weight: 500;
+      color: var(--color-text-heading);
+    }
+    #featured-post-date {
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: 400;
+      color: var(--color-text-date);
+    }
+    #featured-post-author-divider {
+      width: 1px;
+      height: 14px;
+      background: var(--color-divider);
+    }
+    #featured-post-read-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-body);
+      font-size: var(--type-meta);
+      font-weight: 500;
+      color: var(--color-brand-primary);
+      text-decoration: none;
+      transition: gap var(--transition-default);
+    }
+    #featured-post-read-link:hover {
+      gap: 14px;
+    }
+    #featured-post-read-link .arrow {
+      font-size: 1rem;
+      transition: transform var(--transition-default);
+    }
+    #featured-post-read-link:hover .arrow {
+      transform: translateX(4px);
+    }
+    #featured-post-image-col {
+      position: relative;
+    }
+    #featured-post-img-wrapper {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--color-image-frame-bg);
+      border: 1px solid var(--color-image-frame-border);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+    #featured-post-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Asset unavailable diagnostic component ── */
+    .asset-unavailable {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 24px;
+      background: var(--color-image-frame-bg);
+      font-family: var(--font-body);
+      text-align: center;
+    }
+    .asset-unavailable__label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--color-text-date);
+      opacity: 0.7;
+    }
+    .asset-unavailable__name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-on-surface);
+    }
+    .asset-unavailable__reason {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      max-width: 260px;
+      line-height: 1.5;
+    }
+    .asset-unavailable__action {
+      font-size: 11px;
+      color: var(--color-brand-primary);
+      opacity: 0.85;
+      max-width: 260px;
+      line-height: 1.5;
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION 3: FILTER BAR (sticky)
+    ───────────────────────────────────────────── */
+    #filter-bar-wrapper {
+      position: sticky;
+      top: var(--nav-height);
+      z-index: 50;
+      background: #ffffff;
+      border-bottom: 1px solid var(--color-nav-border);
+      padding-block: 14px;
+    }
+    #filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    #filter-pills {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      height: 36px;
+      padding-inline: 16px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-body);
+      font-size: var(--type-meta);
+      font-weight: 500;
+      border: 1px solid var(--color-filter-pill-border);
+      background: var(--color-share-btn-bg);
+      color: #000000;
+      cursor: pointer;
+      transition:
+        background var(--duration-fast) var(--ease-primary),
+        color var(--duration-fast) var(--ease-primary),
+        border-color var(--duration-fast) var(--ease-primary);
+      white-space: nowrap;
+    }
+    .filter-pill:hover {
+      background: #e8e8e8;
+    }
+    .filter-pill.filter-pill--active {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      border-color: var(--color-brand-primary);
+    }
+    #search-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    #search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-meta);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+    #search-input {
+      height: 40px;
+      padding-left: 40px;
+      padding-right: 16px;
+      border-radius: var(--radius-search);
+      border: 1px solid var(--color-filter-pill-border);
+      background: var(--color-share-btn-bg);
+      font-family: var(--font-body);
+      font-size: var(--type-meta);
+      font-weight: 400;
+      color: var(--color-text-heading);
+      outline: none;
+      width: 220px;
+      transition:
+        border-color var(--duration-fast) var(--ease-primary),
+        box-shadow var(--duration-fast) var(--ease-primary),
+        width var(--duration-base) var(--ease-out);
+    }
+    #search-input::placeholder {
+      color: var(--color-text-search-placeholder);
+    }
+    #search-input:focus {
+      border-color: var(--color-brand-primary);
+      box-shadow: 0 0 0 3px rgba(0, 105, 62, 0.12);
+      width: 280px;
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION 4: BLOG LIST (card grid)
+    ───────────────────────────────────────────── */
+    #blog-list {
+      background: var(--color-page-bg);
+      padding-block: 64px;
+    }
+    #blog-list-heading-row {
+      margin-bottom: 40px;
+    }
+    #blog-list-label {
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: 600;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
+      display: block;
+      margin-bottom: 8px;
+    }
+    #blog-list-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.5vw, var(--type-section-heading));
+      font-weight: 500;
+      letter-spacing: var(--tracking-section-heading);
+      color: var(--color-text-heading);
+      line-height: var(--leading-section-heading);
+    }
+    #blog-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .blog-card {
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition:
+        box-shadow var(--duration-base) var(--ease-primary),
+        transform var(--duration-base) var(--ease-primary);
+    }
+    .blog-card:hover {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+    }
+    .blog-card-image-wrapper {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--color-image-frame-bg);
+      flex-shrink: 0;
+    }
+    .blog-card-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform var(--duration-slow) var(--ease-out);
+    }
+    .blog-card:hover .blog-card-image-wrapper img {
+      transform: scale(1.04);
+    }
+    .blog-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .blog-card-category {
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: 600;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
+    }
+    .blog-card-title {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.44px;
+      color: var(--color-text-heading);
+      line-height: 1.35;
+    }
+    .blog-card-title a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(3, 31, 24, 0.25);
+      transition:
+        text-decoration-color var(--transition-default),
+        opacity var(--transition-default);
+    }
+    .blog-card-title a:hover {
+      text-decoration-color: var(--color-text-heading);
+    }
+    .blog-card-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid rgba(209, 213, 219, 0.5);
+    }
+    .blog-card-date {
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: 400;
+      color: var(--color-text-date);
+    }
+    .blog-card-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 9999px;
+      background: var(--color-divider);
+    }
+    .blog-card-read-time {
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: 400;
+      color: var(--color-text-meta);
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION 5: CTA BANNER
+    ───────────────────────────────────────────── */
+    #cta-banner {
+      background: #003620;
+      background-image: radial-gradient(
+        ellipse 80% 60% at 50% 50%,
+        rgba(0, 105, 62, 0.45) 0%,
+        transparent 70%
+      );
+      padding-block: 100px;
+    }
+    #cta-banner-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 40px;
+    }
+    #cta-banner-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 400;
+      letter-spacing: -2px;
+      color: #ffffff;
+      line-height: 1.1;
+      max-width: 780px;
+    }
+    #cta-banner-buttons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cta-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      padding: 18px 28px;
+      background: #ffffff;
+      color: #003620;
+      font-family: var(--font-body);
+      font-size: var(--type-btn-primary);
+      font-weight: 600;
+      border-radius: var(--btn-border-radius);
+      text-decoration: none;
+      transition: background var(--transition-out), color var(--transition-out);
+    }
+    .cta-btn-primary:hover {
+      background: #f0faf5;
+    }
+    .cta-btn-outline {
+      display: inline-flex;
+      align-items: center;
+      padding: 18px 28px;
+      background: transparent;
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: var(--type-btn-primary);
+      font-weight: 500;
+      border-radius: var(--btn-border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      transition: border-color var(--transition-out), background var(--transition-out);
+    }
+    .cta-btn-outline:hover {
+      border-color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* ─────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────── */
+    #site-footer {
+      background: #003620;
+      box-shadow: inset 0 4px 24px rgba(0, 0, 0, 0.18);
+      padding-top: 72px;
+      padding-bottom: 40px;
+    }
+    #footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    #footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    #footer-logo {
+      font-family: var(--font-logo);
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: var(--tracking-logo);
+      color: #ffffff;
+      display: block;
+    }
+    #footer-tagline {
+      font-family: var(--font-body);
+      font-size: var(--type-meta);
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.6;
+      max-width: 260px;
+    }
+    .footer-col-heading {
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: 600;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-links a {
+      font-family: var(--font-body);
+      font-size: var(--type-meta);
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color var(--transition-default);
+    }
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+    #footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+    }
+    #footer-copyright {
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    #footer-legal-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    #footer-legal-links a {
+      font-family: var(--font-body);
+      font-size: var(--type-eyebrow);
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      transition: color var(--transition-default);
+    }
+    #footer-legal-links a:hover {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      /* Featured post: stack vertically */
+      #featured-post .container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      #featured-post-image-col {
+        order: -1;
+      }
+
+      /* Blog cards: 2 columns */
+      #blog-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* Filter pills: wrap */
+      #filter-pills {
+        flex-wrap: wrap;
+      }
+
+      /* Footer: 2-col grid */
+      #footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+      #footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      /* Blog cards: single column */
+      #blog-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Filter bar: pills scroll horizontally */
+      #filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      #filter-pills {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+      }
+      #filter-pills::-webkit-scrollbar {
+        display: none;
+      }
+      #search-wrapper {
+        width: 100%;
+      }
+      #search-input {
+        width: 100%;
+      }
+      #search-input:focus {
+        width: 100%;
+      }
+
+      /* Featured post: tighter heading */
+      #featured-post-heading {
+        font-size: clamp(1.6rem, 7vw, 2.4rem);
+        letter-spacing: -1.2px;
+      }
+
+      /* CTA banner */
+      #cta-banner {
+        padding-block: 64px;
+      }
+      #cta-banner-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+      .cta-btn-primary,
+      .cta-btn-outline {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Footer: single column */
+      #footer-inner {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      #footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      /* Nav links: hide on very small screens */
+      #nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 1 — NAVIGATION
+       Blog page: always on-light. Class applied at load via JS.
+  ══════════════════════════════════════════════════ -->
+  <header id="site-nav">
+    <div id="nav-inner">
+      <a href="index.html" id="nav-logo-link">
+        <span id="nav-logo-g">G</span><span id="nav-logo-riting">riting</span>
+      </a>
+      <nav id="nav-links" aria-label="Main navigation">
+        <a href="index.html" class="nav-link" id="nav-product">Product</a>
+        <a href="about-us.html" class="nav-link" id="nav-about">About</a>
+        <a href="index.html#cta-banner" class="nav-link" id="nav-contact">Contact</a>
+        <a href="blog-index.html" class="nav-link nav-link--active" id="nav-blog">Blog</a>
+      </nav>
+      <a href="index.html#cta-banner" id="nav-cta-btn">Get in Touch</a>
+    </div>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 2 — FEATURED POST (hero)
+  ══════════════════════════════════════════════════ -->
+  <section id="featured-post" aria-labelledby="featured-post-heading">
+    <div class="container">
+
+      <!-- Meta / text column -->
+      <div id="featured-post-meta">
+        <span id="featured-post-eyebrow">Blog</span>
+
+        <h1 id="featured-post-heading">
+          <a href="blog-post.html">
+            The First Agentic Career Mentorship System from Silicon Valley.
+          </a>
+        </h1>
+
+        <!-- Author row -->
+        <div id="featured-post-author-row">
+          <div class="featured-post-author-avatar" aria-hidden="true">JZ</div>
+          <span id="featured-post-author-name">Jie Zhang</span>
+          <div id="featured-post-author-divider" aria-hidden="true"></div>
+          <span id="featured-post-date">16 Oct 2025</span>
+        </div>
+
+        <a
+          href="blog-post.html"
+          id="featured-post-read-link"
+          aria-label="Read full article: The First Agentic Career Mentorship System from Silicon Valley"
+        >
+          Read article <span class="arrow" aria-hidden="true">&#8594;</span>
+        </a>
+      </div>
+
+      <!-- Image column -->
+      <div id="featured-post-image-col">
+        <div id="featured-post-img-wrapper">
+          <img
+            id="featured-post-img"
+            src="assets/blog-featured.jpeg"
+            alt="The First Agentic Career Mentorship System from Silicon Valley — abstract network visualization"
+          />
+          <!--
+            Unavailable-image diagnostic — shown by JS if the img fails to load.
+            Named what is missing, why, and what to do. No silent grey-box fallback.
+          -->
+          <div
+            id="featured-img-unavailable"
+            class="asset-unavailable"
+            style="display: none;"
+            role="img"
+            aria-label="Image unavailable: blog-featured.jpeg"
+          >
+            <span class="asset-unavailable__label">Image Unavailable</span>
+            <span class="asset-unavailable__name">assets/blog-featured.jpeg</span>
+            <span class="asset-unavailable__reason">
+              File not found. This hero image has not been generated yet.
+            </span>
+            <span class="asset-unavailable__action">
+              Generate using the Nano Banana prompt in
+              project-documentation/unavailable-content-prompts.md,
+              then place the output at assets/blog-featured.jpeg.
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 3 — FILTER BAR (sticky)
+  ══════════════════════════════════════════════════ -->
+  <div id="filter-bar-wrapper" role="search" aria-label="Filter blog posts">
+    <div class="container">
+      <div id="filter-bar">
+
+        <!-- Category pills -->
+        <div id="filter-pills" role="group" aria-label="Filter by category">
+          <button
+            class="filter-pill filter-pill--active"
+            data-category="all"
+            type="button"
+            aria-pressed="true"
+          >All</button>
+          <button
+            class="filter-pill"
+            data-category="product"
+            type="button"
+            aria-pressed="false"
+          >Product</button>
+          <button
+            class="filter-pill"
+            data-category="company"
+            type="button"
+            aria-pressed="false"
+          >Company</button>
+          <button
+            class="filter-pill"
+            data-category="developers"
+            type="button"
+            aria-pressed="false"
+          >Developers</button>
+        </div>
+
+        <!-- Search input -->
+        <div id="search-wrapper">
+          <span id="search-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.333 12.667A5.333 5.333 0 1 0 7.333 2a5.333 5.333 0 0 0 0 10.667ZM14 14l-2.9-2.9"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <input
+            id="search-input"
+            type="search"
+            placeholder="Search articles&#8230;"
+            aria-label="Search blog articles"
+          />
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 4 — BLOG LIST (card grid)
+  ══════════════════════════════════════════════════ -->
+  <section id="blog-list" aria-labelledby="blog-list-heading">
+    <div class="container">
+
+      <div id="blog-list-heading-row">
+        <span id="blog-list-label">Latest Articles</span>
+        <h2 id="blog-list-heading">Perspectives on AI Capital &amp; Talent</h2>
+      </div>
+
+      <div id="blog-card-grid">
+
+        <!-- Card 1 — with image -->
+        <article class="blog-card" id="blog-card-1">
+          <div class="blog-card-image-wrapper" id="blog-card-1-img-wrapper">
+            <!--
+              Image shown if file exists; fallback diagnostic shown via JS if not.
+              No onerror innerHTML injection — fallback sibling revealed instead.
+            -->
+            <img
+              id="blog-card-1-img"
+              src="assets/blog-card-1.jpeg"
+              alt="Agentic Career Mentorship article thumbnail"
+            />
+            <div
+              id="blog-card-1-img-unavailable"
+              class="asset-unavailable"
+              style="display: none;"
+              role="img"
+              aria-label="Image unavailable: blog-card-1.jpeg"
+            >
+              <span class="asset-unavailable__label">Image Unavailable</span>
+              <span class="asset-unavailable__name">assets/blog-card-1.jpeg</span>
+              <span class="asset-unavailable__reason">
+                File not found. Generate using Nano Banana prompt in
+                project-documentation/unavailable-content-prompts.md.
+              </span>
+            </div>
+          </div>
+          <div class="blog-card-body">
+            <span class="blog-card-category">Company</span>
+            <h3 class="blog-card-title">
+              <a href="blog-post.html">The First Agentic Mentorship</a>
+            </h3>
+          </div>
+          <div class="blog-card-footer">
+            <time class="blog-card-date" datetime="2025-10-16">16 Oct</time>
+            <span class="blog-card-dot" aria-hidden="true"></span>
+            <span class="blog-card-read-time">4 min read</span>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="blog-card" id="blog-card-2">
+          <div class="blog-card-body">
+            <span class="blog-card-category">Company</span>
+            <h3 class="blog-card-title">
+              <a href="blog-post.html">Interview with Tencent</a>
+            </h3>
+          </div>
+          <div class="blog-card-footer">
+            <time class="blog-card-date" datetime="2025-10-18">18 Oct</time>
+            <span class="blog-card-dot" aria-hidden="true"></span>
+            <span class="blog-card-read-time">6 min read</span>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="blog-card" id="blog-card-3">
+          <div class="blog-card-body">
+            <span class="blog-card-category">Developers</span>
+            <h3 class="blog-card-title">
+              <a href="blog-post.html">Agentic System</a>
+            </h3>
+          </div>
+          <div class="blog-card-footer">
+            <time class="blog-card-date" datetime="2025-10-28">28 Oct</time>
+            <span class="blog-card-dot" aria-hidden="true"></span>
+            <span class="blog-card-read-time">5 min read</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 5 — CTA BANNER
+  ══════════════════════════════════════════════════ -->
+  <section id="cta-banner" aria-labelledby="cta-banner-heading">
+    <div class="container">
+      <div id="cta-banner-inner">
+        <h2 id="cta-banner-heading">
+          Ready to build connections that shape your future?
+        </h2>
+        <div id="cta-banner-buttons">
+          <a href="index.html" class="cta-btn-primary" id="cta-explore-btn">Explore GritMe</a>
+          <a href="index.html#cta-banner" class="cta-btn-outline" id="cta-contact-btn">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════ -->
+  <footer id="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div id="footer-inner">
+
+        <!-- Brand column -->
+        <div id="footer-brand">
+          <span id="footer-logo">Griting</span>
+          <p id="footer-tagline">
+            Talent trust and readiness infrastructure for the AI Capital era.
+          </p>
+        </div>
+
+        <!-- Product column -->
+        <nav aria-label="Product links">
+          <p class="footer-col-heading">Product</p>
+          <ul class="footer-links">
+            <li><a href="index.html">GritMe</a></li>
+            <li><a href="index.html">GritHub</a></li>
+            <li><a href="index.html">GritLab</a></li>
+          </ul>
+        </nav>
+
+        <!-- Company column -->
+        <nav aria-label="Company links">
+          <p class="footer-col-heading">Company</p>
+          <ul class="footer-links">
+            <li><a href="about-us.html">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="blog-index.html">Blog</a></li>
+          </ul>
+        </nav>
+
+        <!-- Support column -->
+        <nav aria-label="Support links">
+          <p class="footer-col-heading">Support</p>
+          <ul class="footer-links">
+            <li><a href="index.html#cta-banner">Talk to an expert</a></li>
+          </ul>
+        </nav>
+
+        <!-- Legal column -->
+        <nav aria-label="Legal links">
+          <p class="footer-col-heading">Legal</p>
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div id="footer-bottom">
+        <span id="footer-copyright">&copy; 2026 Griting. All rights reserved.</span>
+        <nav id="footer-legal-links" aria-label="Legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </nav>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════════════════════ -->
+  <script>
+    /* ── Nav: blog page always uses on-light variant.
+       Apply stuck class immediately so there is no flash of dark nav.
+       The nav remains stuck on this page regardless of scroll position
+       because the page background is white/light from the top. ── */
+    (function () {
+      var nav = document.getElementById('site-nav');
+      nav.classList.add('site-header--stuck');
+      window.addEventListener('scroll', function () {
+        nav.classList.add('site-header--stuck');
+      }, { passive: true });
+    }());
+
+    /* ── Featured post image: reveal diagnostic if load fails ── */
+    (function () {
+      var img = document.getElementById('featured-post-img');
+      var fallback = document.getElementById('featured-img-unavailable');
+      if (!img || !fallback) return;
+      img.addEventListener('error', function () {
+        img.style.display = 'none';
+        fallback.style.display = 'flex';
+      });
+    }());
+
+    /* ── Blog card 1 image: reveal diagnostic if load fails ── */
+    (function () {
+      var img = document.getElementById('blog-card-1-img');
+      var fallback = document.getElementById('blog-card-1-img-unavailable');
+      if (!img || !fallback) return;
+      img.addEventListener('error', function () {
+        img.style.display = 'none';
+        fallback.style.display = 'flex';
+      });
+    }());
+
+    /* ── Filter pill click-to-toggle active state ── */
+    document.querySelectorAll('.filter-pill').forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        document.querySelectorAll('.filter-pill').forEach(function (p) {
+          var isActive = p === pill;
+          p.classList.toggle('filter-pill--active', isActive);
+          p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      });
+    });
+  </script>
+
+  <script>
+    /* ── GSAP animations — minimal, content-focused ── */
+    window.addEventListener('load', function () {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* Featured post: fade-up on load */
+      gsap.from('#featured-post-meta', {
+        y: 40,
+        opacity: 0,
+        duration: 0.85,
+        ease: 'power2.out',
+        delay: 0.15
+      });
+      gsap.from('#featured-post-image-col', {
+        y: 40,
+        opacity: 0,
+        duration: 0.85,
+        ease: 'power2.out',
+        delay: 0.3
+      });
+
+      /* Blog cards: stagger fade-up when scrolled into view */
+      gsap.from('.blog-card', {
+        scrollTrigger: {
+          trigger: '#blog-card-grid',
+          start: 'top 85%',
+          once: true
+        },
+        y: 32,
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power2.out',
+        stagger: 0.12
+      });
+    });
+  </script>
+
+</body>
+</html>

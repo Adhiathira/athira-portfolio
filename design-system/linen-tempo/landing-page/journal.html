@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal — Ardenne Supply Co.</title>
+  <meta name="description" content="Field notes, route reports, gear reviews, and technique guides from Ardenne Supply Co. and the people who carry our kit.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/journal-page.css">
+  <link rel="stylesheet" href="components/contact-footer.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+
+  <!-- NAV — canonical (sub-page) -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Ardenne Supply Co.</a>
+      <ul class="nav-links">
+        <li><a href="collection.html">Collection</a></li>
+        <li><a href="journal.html" class="nav-link--active">Journal</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-spacer active"></div>
+  <div class="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="collection.html">Collection</a>
+    <a href="journal.html">Journal</a>
+    <a href="about.html">About</a>
+  </div>
+  <script>
+    (function() {
+      var nav = document.getElementById('site-nav');
+      var mobileMenu = document.querySelector('.nav-mobile-menu');
+      var toggle = document.querySelector('.nav-mobile-toggle');
+      var scrolled = false;
+      function onScroll() {
+        if (window.scrollY > 20 && !scrolled) {
+          scrolled = true;
+          nav.classList.add('scrolled');
+        } else if (window.scrollY <= 20 && scrolled) {
+          scrolled = false;
+          nav.classList.remove('scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      if (toggle && mobileMenu) {
+        toggle.addEventListener('click', function() {
+          nav.classList.toggle('nav-mobile-open');
+          mobileMenu.classList.toggle('is-open');
+        });
+      }
+    })();
+  </script>
+
+  <!-- ── Journal Hero ── -->
+  <section class="journal-hero">
+    <div class="journal-hero__inner">
+      <p class="journal-hero__label">Field Notes</p>
+      <h1 class="journal-hero__heading">The Journal</h1>
+      <p class="journal-hero__body">Route reports, honest gear reviews, and techniques worth knowing. Written by the people who carry our kit — not marketing departments.</p>
+    </div>
+  </section>
+
+  <!-- ── Category Navigation ── -->
+  <nav class="journal-categories" aria-label="Journal categories">
+    <a href="#" class="active">All</a>
+    <a href="#">Route Reports</a>
+    <a href="#">Gear Reviews</a>
+    <a href="#">Technique</a>
+    <a href="#">Dispatches</a>
+  </nav>
+
+  <!-- ── Feature Article ── -->
+  <section class="journal-feature" aria-label="Featured article">
+    <a href="#" class="journal-feature__link">
+      <div class="journal-feature__image-wrap">
+        <img
+          src="assets/journal-feature-torngat.jpg"
+          alt="Wide vista of the Torngat Mountains in Labrador, fog in the valley, no trails visible"
+          class="journal-feature__image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="journal-feature__image-placeholder">🏔️</div>
+      </div>
+      <div class="journal-feature__content">
+        <p class="journal-feature__label">Route Report — Featured</p>
+        <h2 class="journal-feature__heading">Seven days in the Torngat: a slow traverse of Labrador's northern range</h2>
+        <p class="journal-feature__excerpt">No trails, no resupply points, no cellphone signal north of Nain. Our team spent a week navigating by compass through terrain that hasn't seen a boot print in months. Here's what each piece of kit taught us when it was fully loaded and the weather turned.</p>
+        <span class="journal-feature__read">Read the Report</span>
+        <p class="journal-feature__meta">By Sébastien Ruel &nbsp;—&nbsp; March 2025 &nbsp;—&nbsp; 12 min read</p>
+      </div>
+    </a>
+  </section>
+
+  <!-- ── Articles Grid ── -->
+  <section class="journal-grid-section" aria-label="All journal articles">
+    <h2 class="journal-grid-section__heading">Latest Entries</h2>
+    <div class="journal-grid">
+
+      <a href="#" class="journal-card">
+        <div class="journal-card__image-wrap">
+          <img
+            src="assets/journal-brume-review.jpg"
+            alt="Brume mid-layer jacket hanging to dry on pine branch, backlit by low autumn sun"
+            class="journal-card__image"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="journal-card__image-placeholder">🧥</div>
+        </div>
+        <div class="journal-card__body">
+          <p class="journal-card__tag">Gear Review</p>
+          <h3 class="journal-card__title">Three seasons with the Brume: a field review</h3>
+          <p class="journal-card__excerpt">Carried it from October Laurentians through a February Gaspésie traverse. Here's what held up and what we'd change.</p>
+          <p class="journal-card__meta">January 2025 — 8 min read</p>
+        </div>
+      </a>
+
+      <a href="#" class="journal-card">
+        <div class="journal-card__image-wrap">
+          <img
+            src="assets/journal-compass.jpg"
+            alt="Compass and topographic map spread across knees, pencil marks on contour lines"
+            class="journal-card__image"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="journal-card__image-placeholder">🧭</div>
+        </div>
+        <div class="journal-card__body">
+          <p class="journal-card__tag">Technique</p>
+          <h3 class="journal-card__title">Map and compass in mixed terrain: staying found when trails end</h3>
+          <p class="journal-card__excerpt">Dead-reckoning, handrails, and attack points — the three navigation concepts that matter when GPS fails or the batteries run out.</p>
+          <p class="journal-card__meta">December 2024 — 10 min read</p>
+        </div>
+      </a>
+
+      <a href="#" class="journal-card">
+        <div class="journal-card__image-wrap">
+          <img
+            src="assets/journal-packing.jpg"
+            alt="Open expedition pack with contents laid out in a flat lay, organised by category"
+            class="journal-card__image"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="journal-card__image-placeholder">🎒</div>
+        </div>
+        <div class="journal-card__body">
+          <p class="journal-card__tag">Technique</p>
+          <h3 class="journal-card__title">Pack loading for a seven-day traverse: weight distribution and access order</h3>
+          <p class="journal-card__excerpt">Where things go in a 55L pack is as important as what goes in it. A loading strategy for consecutive carry days.</p>
+          <p class="journal-card__meta">November 2024 — 7 min read</p>
+        </div>
+      </a>
+
+      <a href="#" class="journal-card">
+        <div class="journal-card__image-wrap">
+          <img
+            src="assets/journal-alpine-route.jpg"
+            alt="Alpine camp at 2400m, tent pitched below a serrated ridgeline at golden hour"
+            class="journal-card__image"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="journal-card__image-placeholder">🏕️</div>
+        </div>
+        <div class="journal-card__body">
+          <p class="journal-card__tag">Route Report</p>
+          <h3 class="journal-card__title">The Appalachian spine above Lake Mégantic: five days in the border country</h3>
+          <p class="journal-card__meta">October 2024 — 9 min read</p>
+        </div>
+      </a>
+
+      <a href="#" class="journal-card">
+        <div class="journal-card__image-wrap">
+          <img
+            src="assets/journal-layering-guide.jpg"
+            alt="Three layering system components spread out on a boulder: base, mid, shell"
+            class="journal-card__image"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="journal-card__image-placeholder">🌡️</div>
+        </div>
+        <div class="journal-card__body">
+          <p class="journal-card__tag">Technique</p>
+          <h3 class="journal-card__title">Layering for shoulder-season cold: the 10°C problem</h3>
+          <p class="journal-card__excerpt">Between summer and winter, there's a temperature range where both kit sets fail. How we solve the shoulder-season comfort question.</p>
+          <p class="journal-card__meta">September 2024 — 6 min read</p>
+        </div>
+      </a>
+
+      <a href="#" class="journal-card">
+        <div class="journal-card__image-wrap">
+          <img
+            src="assets/journal-repair-workshop.jpg"
+            alt="Repair workbench with Parcours 55 pack in repair clamp, needle and thread visible"
+            class="journal-card__image"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="journal-card__image-placeholder">🔧</div>
+        </div>
+        <div class="journal-card__body">
+          <p class="journal-card__tag">Dispatches</p>
+          <h3 class="journal-card__title">Inside the Ardenne workshop: how we repair the gear we sell</h3>
+          <p class="journal-card__meta">August 2024 — 5 min read</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer__grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-brand__logo">Ardenne Supply Co.</a>
+        <p class="footer-brand__desc">Outfitters for slow wilderness travel. Based in Montréal, operating wherever the trail ends and the terrain begins.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Strava">ST</a>
+          <a href="#" aria-label="Newsletter">NL</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__heading">Collection</h4>
+        <ul>
+          <li><a href="collection.html">Shelter</a></li>
+          <li><a href="collection.html">Carry</a></li>
+          <li><a href="collection.html">Layering</a></li>
+          <li><a href="collection.html">Navigation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__heading">Journal</h4>
+        <ul>
+          <li><a href="#">Route Reports</a></li>
+          <li><a href="#">Gear Reviews</a></li>
+          <li><a href="#">Technique</a></li>
+          <li><a href="#">Dispatches</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__heading">Support</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="mailto:hello@ardennesupply.co">Contact</a></li>
+          <li><a href="#">Repairs</a></li>
+          <li><a href="#">Sizing Guide</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <p class="footer-copyright">&copy; 2025 Ardenne Supply Co. All rights reserved.</p>
+      <div class="footer-legal-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP Animations -->
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      if (typeof gsap === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero — left-anchored reveal
+      var heroInner = document.querySelector('.journal-hero__inner');
+      if (heroInner) {
+        gsap.fromTo(heroInner,
+          { opacity: 0, x: -50 },
+          { opacity: 1, x: 0, duration: 0.9, delay: 0.2, ease: 'cubic-bezier(0.45, 0, 0.55, 1)' }
+        );
+      }
+
+      // Category links — stagger in
+      var catLinks = document.querySelectorAll('.journal-categories a');
+      catLinks.forEach(function(link, i) {
+        gsap.fromTo(link,
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1, y: 0,
+            duration: 0.5,
+            delay: 0.4 + i * 0.08,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)'
+          }
+        );
+      });
+
+      // Feature article — divergent reveal (image from left, text from right)
+      var featureImage = document.querySelector('.journal-feature__image-wrap');
+      var featureContent = document.querySelector('.journal-feature__content');
+      if (featureImage) {
+        gsap.fromTo(featureImage,
+          { opacity: 0, x: -80 },
+          {
+            opacity: 1, x: 0, duration: 1.0,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: { trigger: featureImage, start: 'top 82%' }
+          }
+        );
+      }
+      if (featureContent) {
+        gsap.fromTo(featureContent,
+          { opacity: 0, x: 80 },
+          {
+            opacity: 1, x: 0, duration: 1.0,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: { trigger: featureContent, start: 'top 82%' }
+          }
+        );
+      }
+
+      // Journal cards — scale + rise (same concept as index but different section)
+      var cards = document.querySelectorAll('.journal-card');
+      cards.forEach(function(card, i) {
+        gsap.fromTo(card,
+          { opacity: 0, scale: 0.94, y: 24 },
+          {
+            opacity: 1, scale: 1, y: 0,
+            duration: 0.8,
+            delay: (i % 3) * 0.12,
+            ease: 'cubic-bezier(0.45, 0, 0.55, 1)',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 90%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+    });
+  </script>
+
+</body>
+</html>

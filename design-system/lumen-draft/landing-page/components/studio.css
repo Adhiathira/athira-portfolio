@@ -1,0 +1,311 @@
+/* studio.css — Foramen Studio about page */
+
+/* ─── Studio Header (compact, editorial) ──────────────────── */
+#studio-header {
+  padding: 128px 80px 64px;
+  background: var(--color-surface-1);
+  border-bottom: 1px solid var(--color-border);
+  max-height: none; /* editorial: no height cap, just less padding */
+}
+
+#studio-header-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+  max-width: var(--grid-max-width, 1200px);
+  margin: 0 auto;
+}
+
+#studio-header-left .section-label {
+  margin-bottom: 24px;
+}
+
+#studio-header-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: var(--color-heading-text);
+  line-height: 1.1;
+  margin: 0;
+}
+
+#studio-header-right {
+  padding-bottom: 8px;
+}
+
+.studio-intro-para {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-body-text);
+  margin: 0 0 20px 0;
+}
+
+.studio-intro-para:last-child {
+  margin: 0;
+  color: var(--color-muted-text);
+  font-size: 0.9rem;
+}
+
+/* ─── Founders Section (scale + rise animation) ───────────── */
+/* 3-column portrait grid — distinct from bento elsewhere */
+#studio-founders {
+  background: var(--color-surface-2);
+  padding: 100px 80px;
+  position: relative;
+}
+
+#studio-founders::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-border) 20%, var(--color-border) 80%, transparent);
+}
+
+#founders-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 56px;
+}
+
+.founder-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.founder-portrait {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--color-heading-text);
+  margin-bottom: 24px;
+}
+
+.founder-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.founder-card:hover .founder-portrait img {
+  transform: scale(1.04);
+}
+
+.founder-portrait-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #162228;
+  color: rgba(255,255,255,0.18);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+}
+
+.founder-name {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 1.6vw, 1.4rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: var(--color-heading-text);
+  margin: 0 0 6px 0;
+}
+
+.founder-role {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 14px 0;
+}
+
+.founder-bio {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--color-muted-text);
+  margin: 0;
+}
+
+/* ─── Workshop / Space (full-bleed editorial split) ─────────── */
+/* Rotate+rise animation (rotation: 1deg, y: 40) */
+#studio-workshop {
+  background: var(--color-surface-1);
+  padding: 100px 80px;
+}
+
+#studio-workshop-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 60px;
+  align-items: start;
+}
+
+#studio-workshop-image {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-heading-text);
+}
+
+#studio-workshop-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+}
+
+#studio-workshop-image-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #0f1e22;
+  color: rgba(255,255,255,0.18);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+}
+
+#studio-workshop-text {
+  padding-top: 8px;
+}
+
+.workshop-stat-list {
+  list-style: none;
+  padding: 0;
+  margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 36px;
+}
+
+.workshop-stat {
+  display: flex;
+  gap: 24px;
+  align-items: baseline;
+}
+
+.workshop-stat-number {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+  font-weight: 300;
+  color: var(--color-accent);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  min-width: 80px;
+}
+
+.workshop-stat-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--color-muted-text);
+}
+
+/* ─── Commissions CTA (dark, horizontal layout) ─────────────── */
+#studio-cta {
+  background: var(--color-page-bg);
+  padding: 100px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+#studio-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(188, 113, 85, 0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+#studio-cta-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 60px;
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width, 1200px);
+  margin: 0 auto;
+}
+
+#studio-cta-text {
+  max-width: 560px;
+}
+
+#studio-cta-text .section-heading--light {
+  margin-bottom: 16px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  #studio-header,
+  #studio-founders,
+  #studio-workshop,
+  #studio-cta {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  #studio-header-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  #founders-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  #studio-workshop-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  #studio-cta-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 600px) {
+  #studio-header,
+  #studio-founders,
+  #studio-workshop,
+  #studio-cta {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  #studio-header {
+    padding-top: 100px;
+  }
+
+  #founders-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workshop-stat-list {
+    gap: 18px;
+  }
+
+  .workshop-stat-number {
+    font-size: 1.5rem;
+    min-width: 64px;
+  }
+}

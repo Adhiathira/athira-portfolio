@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artifacts — Draftform Hardware Design IDE</title>
+  <meta name="description" content="The three engineering artifact formats Draftform generates from natural language: STL solid geometry, DXF fabrication drawings, and PCB layouts ready for fab submission.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;600;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Overpass+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/artifacts.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Draftform home">
+      <span class="nav-logo-wordmark">Draftform</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="product.html" class="nav-link">Product</a></li>
+      <li><a href="artifacts.html" class="nav-link nav-link--active">Artifacts</a></li>
+      <li><a href="waitlist.html" class="nav-link">Waitlist</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="waitlist.html" class="nav-cta">Request Access</a>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <ul class="nav-links" role="list">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="product.html" class="nav-link">Product</a></li>
+    <li><a href="artifacts.html" class="nav-link nav-link--active">Artifacts</a></li>
+    <li><a href="waitlist.html" class="nav-link">Waitlist</a></li>
+  </ul>
+  <a href="waitlist.html" class="nav-cta">Request Access</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var toggle = document.querySelector('.nav-mobile-toggle');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 44) {
+        nav.classList.add('fixed');
+      } else {
+        nav.classList.remove('fixed');
+      }
+    }, { passive: true });
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+  })();
+</script>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE HEADER
+     ═══════════════════════════════════════════════ -->
+<header id="artifacts-header">
+  <div id="artifacts-header-inner">
+    <p id="artifacts-header-eyebrow">Output formats</p>
+    <h1 id="artifacts-header-title">Three artifact types.<br>Each manufacturable.</h1>
+    <p id="artifacts-header-desc">
+      Draftform does not generate previews or mockups. Every output is a real engineering file —
+      ready for a 3D printer, a laser cutter, or a PCB fabrication service. The format is
+      determined by what you ask for.
+    </p>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════
+     STL SECTION — ivory bg, image right
+     ═══════════════════════════════════════════════ -->
+<section id="stl-section" class="artifact-section-anchor" aria-label="STL format">
+  <div id="stl-section-inner">
+
+    <div id="stl-text-col">
+      <span class="artifact-format-tag">Format 01 / Solid Geometry</span>
+      <h2 class="artifact-section-title">STL — 3D solid geometry</h2>
+      <p class="artifact-section-body">
+        Describe a mechanical part in plain language. Draftform generates a watertight solid mesh
+        with the topology, constraints, and tolerances you specified. Output is a binary STL file
+        ready for FDM or SLA printing, CNC machining, or import into any downstream CAD system.
+        Complex geometry — lattice structures, organic surfaces, multi-body assemblies — is fully
+        supported through natural language description.
+      </p>
+
+      <ul class="artifact-spec-list" aria-label="STL format specifications">
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Format</span>
+          <span class="artifact-spec-value">Binary STL</span>
+        </li>
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Export</span>
+          <span class="artifact-spec-value">.stl · .obj · .step</span>
+        </li>
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Geometry</span>
+          <span class="artifact-spec-value">Watertight mesh, parametric</span>
+        </li>
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Use cases</span>
+          <span class="artifact-spec-value">FDM · SLA · CNC · CAD import</span>
+        </li>
+      </ul>
+
+      <a href="waitlist.html" class="btn btn--ghost btn--lg">Request access to generate STL</a>
+    </div>
+
+    <div id="stl-visual-col">
+      <figure class="artifact-visual" id="stl-visual" aria-label="STL mechanical bracket example">
+        <img
+          class="artifact-visual-img"
+          id="stl-visual-img"
+          src="assets/stl-bracket-detail.jpeg"
+          alt="Detailed view of a 3D STL mechanical bracket with visible mesh geometry, M3 mounting holes, and material surface shading"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="artifact-visual-placeholder" id="stl-visual-placeholder">→ assets/stl-bracket-detail.jpeg</div>
+        <figcaption class="artifact-visual-caption" aria-hidden="true">
+          <span class="artifact-type-label">Example output</span>
+          <span class="artifact-filename">fan-mount-60mm.stl</span>
+        </figcaption>
+      </figure>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     DXF SECTION — warm gray bg, image left (reversed)
+     ═══════════════════════════════════════════════ -->
+<section id="dxf-section" class="artifact-section-anchor" aria-label="DXF format">
+  <div id="dxf-section-inner">
+
+    <div id="dxf-visual-col">
+      <figure class="artifact-visual" id="dxf-visual" aria-label="DXF fabrication drawing example">
+        <img
+          class="artifact-visual-img"
+          id="dxf-visual-img"
+          src="assets/dxf-drawing-detail.jpeg"
+          alt="DXF fabrication drawing showing three orthographic views with dimension annotations, tolerance callouts, and title block"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="artifact-visual-placeholder" id="dxf-visual-placeholder">→ assets/dxf-drawing-detail.jpeg</div>
+        <figcaption class="artifact-visual-caption" aria-hidden="true">
+          <span class="artifact-type-label">Example output</span>
+          <span class="artifact-filename">enclosure-panel.dxf</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div id="dxf-text-col">
+      <span class="artifact-format-tag">Format 02 / Fabrication Drawings</span>
+      <h2 class="artifact-section-title">DXF — dimensioned fabrication drawings</h2>
+      <p class="artifact-section-body">
+        Generate dimensioned 2D drawings from a part description or an existing 3D model. Draftform
+        produces orthographic views — front, top, side — with dimension lines, tolerance annotations,
+        and a title block populated with the metadata you specify. Output is standard DXF 2010,
+        compatible with any CAD import or direct laser cutter workflow.
+      </p>
+
+      <ul class="artifact-spec-list" aria-label="DXF format specifications">
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Format</span>
+          <span class="artifact-spec-value">DXF 2010</span>
+        </li>
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Export</span>
+          <span class="artifact-spec-value">.dxf · .dwg · .pdf</span>
+        </li>
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Views</span>
+          <span class="artifact-spec-value">Front · Top · Side · Isometric</span>
+        </li>
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Use cases</span>
+          <span class="artifact-spec-value">Laser cutter · CNC plasma · CAD import</span>
+        </li>
+      </ul>
+
+      <a href="waitlist.html" class="btn btn--ghost btn--lg">Request access to generate DXF</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PCB SECTION — dark background, image right
+     ═══════════════════════════════════════════════ -->
+<section id="pcb-section" class="artifact-section-anchor" aria-label="PCB format">
+  <div id="pcb-section-inner">
+
+    <div id="pcb-text-col">
+      <span class="artifact-format-tag">Format 03 / PCB Layout</span>
+      <h2 class="artifact-section-title">PCB — layout and routing</h2>
+      <p class="artifact-section-body">
+        Describe the electronics you're designing — microcontroller, peripherals, power requirements,
+        form factor constraints. Draftform generates a complete PCB layout with component placement,
+        trace routing, copper pours, and design rule check. Two-layer and four-layer topologies are
+        supported. Output files are directly submittable to a fabrication service.
+      </p>
+
+      <ul class="artifact-spec-list" aria-label="PCB format specifications">
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Format</span>
+          <span class="artifact-spec-value">KiCad 6 · Gerber RS-274X</span>
+        </li>
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Export</span>
+          <span class="artifact-spec-value">.kicad_pcb · Gerber · drill files</span>
+        </li>
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Layers</span>
+          <span class="artifact-spec-value">2-layer · 4-layer</span>
+        </li>
+        <li class="artifact-spec-item">
+          <span class="artifact-spec-label">Validation</span>
+          <span class="artifact-spec-value">DRC · netlist check · clearance verify</span>
+        </li>
+      </ul>
+
+      <a href="waitlist.html" class="btn btn--ghost-light btn--lg">Request access to generate PCB</a>
+    </div>
+
+    <div id="pcb-visual-col">
+      <figure class="artifact-visual" id="pcb-visual" aria-label="PCB layout trace detail example">
+        <img
+          class="artifact-visual-img"
+          id="pcb-visual-img"
+          src="assets/pcb-trace-detail.jpeg"
+          alt="Close-up of a PCB layout showing differential pair routing, via stitching around the RF section, and silkscreen reference designators"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="artifact-visual-placeholder" id="pcb-visual-placeholder">→ assets/pcb-trace-detail.jpeg</div>
+        <figcaption class="artifact-visual-caption" aria-hidden="true">
+          <span class="artifact-type-label" style="color:rgba(252,247,241,0.45);">Example output</span>
+          <span class="artifact-filename" style="color:rgba(252,247,241,0.7);">keyboard-ctrl.kicad_pcb</span>
+        </figcaption>
+      </figure>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section id="cta-strip" aria-label="Call to action">
+  <div id="cta-content">
+    <p id="cta-eyebrow">Early access</p>
+    <h2 id="cta-title">Start generating artifacts</h2>
+    <p id="cta-body">
+      Request early access to Draftform and generate your first engineering artifact from natural language.
+    </p>
+    <div id="cta-actions">
+      <a href="waitlist.html" class="btn btn--ghost-light btn--lg">Request early access</a>
+      <a href="product.html" class="btn btn--ghost-light">How it works</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer" role="contentinfo">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand">
+        <a href="index.html" id="footer-wordmark">Draftform</a>
+        <p id="footer-tagline">AI hardware design IDE.<br>From description to artifact.</p>
+      </div>
+      <nav id="footer-nav" aria-label="Footer navigation">
+        <div class="footer-nav-col" id="footer-col-product">
+          <p class="footer-nav-col-heading">Product</p>
+          <ul class="footer-nav-list">
+            <li><a href="product.html" class="footer-nav-link">How it works</a></li>
+            <li><a href="artifacts.html" class="footer-nav-link">Artifacts</a></li>
+            <li><a href="waitlist.html" class="footer-nav-link">Request access</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col" id="footer-col-formats">
+          <p class="footer-nav-col-heading">Formats</p>
+          <ul class="footer-nav-list">
+            <li><a href="artifacts.html#stl" class="footer-nav-link">STL</a></li>
+            <li><a href="artifacts.html#dxf" class="footer-nav-link">DXF</a></li>
+            <li><a href="artifacts.html#pcb" class="footer-nav-link">PCB</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col" id="footer-col-company">
+          <p class="footer-nav-col-heading">Company</p>
+          <ul class="footer-nav-list">
+            <li><a href="#" class="footer-nav-link">About</a></li>
+            <li><a href="#" class="footer-nav-link">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 Draftform. All rights reserved.</p>
+      <ul id="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Header — clean vertical rise
+  var headerTl = gsap.timeline({ delay: 0.1 });
+  headerTl
+    .from('#artifacts-header-eyebrow', { y: 8, duration: 0.3, ease: 'power2.out' })
+    .from('#artifacts-header-title', { y: 20, duration: 0.5, ease: 'power2.out' }, '-=0.1')
+    .from('#artifacts-header-desc', { y: 12, duration: 0.4, ease: 'power2.out' }, '-=0.2');
+
+  // STL: text from left, image scale from center
+  gsap.from('#stl-text-col', {
+    scrollTrigger: { trigger: '#stl-section-inner', start: 'top 80%' },
+    x: -50,
+    duration: 0.6,
+    ease: 'power2.out'
+  });
+  gsap.from('#stl-visual', {
+    scrollTrigger: { trigger: '#stl-section-inner', start: 'top 78%' },
+    scale: 0.95,
+    duration: 0.65,
+    ease: 'power2.out'
+  });
+
+  // DXF: image clip from bottom, text from right — different entry direction
+  gsap.from('#dxf-visual', {
+    scrollTrigger: { trigger: '#dxf-section-inner', start: 'top 80%' },
+    clipPath: 'inset(100% 0 0 0)',
+    duration: 0.7,
+    ease: 'power3.out'
+  });
+  gsap.from('#dxf-text-col', {
+    scrollTrigger: { trigger: '#dxf-section-inner', start: 'top 78%' },
+    x: 50,
+    duration: 0.6,
+    ease: 'power2.out'
+  });
+
+  // PCB: stagger both columns upward (rotate + y)
+  gsap.from(['#pcb-text-col', '#pcb-visual-col'], {
+    scrollTrigger: { trigger: '#pcb-section-inner', start: 'top 80%' },
+    y: 40,
+    rotation: 1,
+    stagger: 0.14,
+    duration: 0.6,
+    ease: 'power3.out'
+  });
+
+  // Spec lists: horizontal reveal, staggered rows
+  ['#stl-section', '#dxf-section', '#pcb-section'].forEach(function(sectionId) {
+    gsap.from(sectionId + ' .artifact-spec-item', {
+      scrollTrigger: { trigger: sectionId + ' .artifact-spec-list', start: 'top 82%' },
+      x: -30,
+      stagger: 0.07,
+      duration: 0.4,
+      ease: 'power2.out'
+    });
+  });
+
+  // CTA
+  gsap.from('#cta-content > *', {
+    scrollTrigger: { trigger: '#cta-strip', start: 'top 80%' },
+    y: 28,
+    scale: 0.97,
+    stagger: 0.12,
+    duration: 0.55,
+    ease: 'power2.out'
+  });
+</script>
+
+</body>
+</html>

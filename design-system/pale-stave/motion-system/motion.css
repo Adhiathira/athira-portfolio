@@ -1,0 +1,167 @@
+/* Pale Stave — Motion System */
+/* Source: moral-skin. Twist A: all durations scaled ×1.5 (intensity 3). */
+
+:root {
+  --motion-system-videos-count: 0;
+  --motion-system-videos-animatedGifs: 3;
+  --motion-system-performance-totalAnimatedElements: 40;
+  --motion-system-performance-simultaneousAnimations: 8;
+  --motion-system-performance-videoLoad: none;
+  --motion-system-performance-complexAnimations: 12;
+  --motion-system-performance-summary-videos: 0;
+  --motion-system-performance-summary-animatedGifs: 3;
+  --motion-system-performance-summary-keyframes: 17;
+  --motion-system-performance-summary-scrollLibraries: 1;
+
+  /* Timing tokens (all durations ×1.5 from source) */
+  --motion-duration-fast: 0.15s;
+  --motion-duration-standard: 0.3s;
+  --motion-duration-medium: 0.45s;
+  --motion-duration-slow: 0.75s;
+  --motion-duration-slower: 0.9s;
+  --motion-duration-ticker: 38.118s;
+  --motion-easing-default: ease;
+  --motion-easing-linear: linear;
+  --motion-easing-in-out: ease-in-out;
+}
+
+/* ── Keyframes ── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes fadeInOut {
+  0%   { opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes fadeInUp {
+  0%   { transform: translateY(-20px); opacity: 0; }
+  50%  { opacity: 1; }
+  100% { transform: translateZ(0); opacity: 1; }
+}
+
+@keyframes menuFadeIn {
+  from { opacity: 0; transform: scale(0.975); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes tooltip {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes clipPathFromLeft {
+  from { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+  to   { clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%); }
+}
+
+@keyframes ticker {
+  from { transform: translateZ(0); }
+  to   { transform: translate3d(-100%, 0, 0); }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes showCompactHeader {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes hideCompactHeader {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-100%); }
+}
+
+@keyframes pulse {
+  0%   { opacity: 0.1; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.1; }
+}
+
+@keyframes pulse-loading {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.25; }
+  100% { opacity: 1; }
+}
+
+@keyframes blink {
+  0%   { opacity: 0.2; }
+  20%  { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+@keyframes move {
+  from { left: -100%; }
+  to   { left: 100%; }
+}
+
+/* ── Transition utilities (durations ×1.5) ── */
+
+.transition-announcement {
+  transition: opacity var(--motion-duration-slower) var(--motion-easing-default),
+              transform var(--motion-duration-slower) var(--motion-easing-default);
+}
+
+.transition-header {
+  transition: color var(--motion-duration-standard) var(--motion-easing-default),
+              background var(--motion-duration-standard) var(--motion-easing-default);
+}
+
+.transition-wrapper {
+  transition: opacity var(--motion-duration-slower) var(--motion-easing-default),
+              transform var(--motion-duration-slower) var(--motion-easing-default);
+}
+
+.transition-navlink {
+  transition: color var(--motion-duration-standard) var(--motion-easing-default);
+}
+
+.transition-slide-image {
+  transition: opacity var(--motion-duration-slow) var(--motion-easing-default);
+}
+
+.transition-page-title {
+  transition: opacity var(--motion-duration-slower) var(--motion-easing-default),
+              transform var(--motion-duration-slower) var(--motion-easing-default);
+}
+
+.transition-img {
+  transition: all var(--motion-duration-fast) var(--motion-easing-in-out);
+}
+
+.transition-product-price {
+  transition: opacity var(--motion-duration-medium) var(--motion-easing-default);
+}
+
+/* ── Ticker ── */
+.ticker-text {
+  animation: ticker var(--motion-duration-ticker) linear infinite;
+}
+
+/* ── AOS scroll animation stagger (delays ×1.5) ── */
+[data-aos] { transition-duration: var(--motion-duration-slower) !important; }
+[data-aos][data-aos-delay="225"]  { transition-delay: 225ms !important; }
+[data-aos][data-aos-delay="450"]  { transition-delay: 450ms !important; }
+[data-aos][data-aos-delay="675"]  { transition-delay: 675ms !important; }
+[data-aos][data-aos-delay="900"]  { transition-delay: 900ms !important; }
+[data-aos][data-aos-delay="1125"] { transition-delay: 1125ms !important; }
+
+/* ── Button / link micro-interaction (×1.5) ── */
+button, a {
+  transition: color var(--motion-duration-medium),
+              border var(--motion-duration-medium),
+              background linear;
+}

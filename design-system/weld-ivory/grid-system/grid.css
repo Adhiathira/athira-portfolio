@@ -1,0 +1,124 @@
+/*
+ * grid.css — weld-ivory
+ *
+ * Source: truly-financial
+ * Twist: A. Container max-width tightened 10% — 1276px → 1149px (intensity 2)
+ * More editorial column measure. Grid structure preserved.
+ */
+
+:root {
+  --grid-system-container-maxWidth: 1149px;
+}
+
+/* Container */
+.container,
+[data-container] {
+  max-width: var(--grid-system-container-maxWidth);
+  margin-inline: auto;
+  padding-inline: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Two-column hero grid */
+.grid-two-col-hero {
+  display: grid;
+  grid-template-columns: 555px 555px;
+  grid-template-rows: 609px;
+  gap: 80px 40px;
+}
+
+/* Three-column features */
+.grid-three-col-features {
+  display: grid;
+  grid-template-columns: 355px 355px 355px;
+  grid-template-rows: 507px;
+  gap: 80px 40px;
+}
+
+/* Three-column steps */
+.grid-three-col-steps {
+  display: grid;
+  grid-template-columns: 247px 247px 247px;
+  grid-template-rows: 235px;
+  gap: 80px 50px;
+}
+
+/* Two-column split */
+.grid-two-col-split {
+  display: grid;
+  grid-template-columns: 555px 555px;
+  grid-template-rows: 426px;
+  gap: 80px 40px;
+}
+
+/* Asymmetric layout (content-heavy) */
+.grid-asymmetric {
+  display: grid;
+  grid-template-columns: 445px 667px;
+  grid-template-rows: 447px;
+  gap: 80px 40px;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1149px) {
+  .container,
+  [data-container] {
+    padding-inline: 24px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .grid-three-col-features,
+  .grid-three-col-steps {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .grid-two-col-hero,
+  .grid-two-col-split,
+  .grid-asymmetric,
+  .grid-three-col-features,
+  .grid-three-col-steps {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .container,
+  [data-container] {
+    padding-inline: 16px;
+  }
+
+  .grid-three-col-steps {
+    display: inline-block;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 20px;
+    column-gap: 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container,
+  [data-container] {
+    max-width: 300px;
+    flex-direction: column;
+    display: inline-block;
+  }
+
+  .grid-two-col-hero,
+  .grid-two-col-split,
+  .grid-asymmetric {
+    grid-template-columns: 12fr;
+  }
+}
+
+@media (max-width: 380px) {
+  .container,
+  [data-container] {
+    display: block;
+  }
+}

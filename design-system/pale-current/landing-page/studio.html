@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio — SONOR Acoustic Measurement</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--lh-normal);
+      overflow-x: hidden;
+    }
+
+    /* ── Container ── */
+    .container {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+    }
+
+    /* ── Nav ── */
+    #site-nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 72px; background: #fbfbfd;
+      border-bottom: 1px solid #e0e0e6;
+      z-index: 100; display: flex; align-items: center;
+    }
+    #nav-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; width: 100%;
+      max-width: 1328px; margin: 0 auto; padding: 0 86.3984px;
+    }
+    #nav-logo {
+      font-family: 'Inter', sans-serif; font-size: 20px;
+      font-weight: 700; letter-spacing: -0.04em;
+      color: #1d1d1f; text-decoration: none;
+    }
+    #nav-links {
+      display: flex; align-items: center;
+      gap: 28px; list-style: none; margin: 0; padding: 0;
+    }
+    .nav-link {
+      font-family: 'Inter', sans-serif; font-size: 1rem;
+      font-weight: 400; letter-spacing: 0.08em;
+      color: #1d1d1f; text-decoration: none;
+      transition: color 0.32s cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    .nav-link:hover { color: #2997ff; }
+    .nav-link--active { opacity: 0.45; pointer-events: none; }
+    .nav-cta-link {
+      font-family: 'Inter', sans-serif; font-size: 0.875rem;
+      font-weight: 500; letter-spacing: 0.08em;
+      color: #fbfbfd; background: #1d1d1f;
+      padding: 8px 20px; border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.32s, color 0.32s;
+    }
+    .nav-cta-link:hover { background: #2997ff; color: #ffffff; }
+
+    /* ── Eyebrow ── */
+    .eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    /* ── Section Headings ── */
+    .section-h2 {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: var(--weight-heading);
+      letter-spacing: 0.06em;
+      line-height: 1.0;
+      color: var(--color-heading-text);
+    }
+    .section-h2--light {
+      color: #ffffff;
+    }
+    .section-p {
+      font-family: var(--font-body);
+      font-size: var(--type-p);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: var(--lh-relaxed);
+      color: var(--color-muted-text);
+    }
+    .section-p--light {
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* ── Spectral gradient text utility ── */
+    .spectral-text {
+      background: var(--gradient-spectral);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Spectral gradient line bullet ── */
+    .spectral-bullet {
+      width: 3px;
+      height: 100%;
+      min-height: 20px;
+      background: var(--gradient-spectral);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── Unavailable asset component ── */
+    .unavailable-asset {
+      background: #f0f0f5;
+      border: 1.5px dashed #c0c0cc;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px;
+      text-align: center;
+      gap: 8px;
+    }
+    .unavailable-asset__label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+    }
+    .unavailable-asset__name {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-body-text);
+    }
+    .unavailable-asset__reason {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: var(--color-subtle-text);
+      line-height: 1.5;
+    }
+    .unavailable-asset__action {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--color-link);
+      margin-top: 4px;
+    }
+
+    /* ================================================================
+       SECTION 1 — #studio-hero
+       ================================================================ */
+    #studio-hero {
+      padding-top: 144px;
+      padding-bottom: 80px;
+      background: linear-gradient(135deg, #0a3480 0%, #1c1c6e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #studio-hero-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    #studio-hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+    #studio-hero-eyebrow {
+      color: var(--color-accent-cyan);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 20px;
+    }
+    #studio-hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 7rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+      color: #ffffff;
+      margin-bottom: 32px;
+    }
+    #studio-hero-lead {
+      font-family: var(--font-body);
+      font-size: var(--type-p);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: var(--lh-relaxed);
+      color: rgba(255,255,255,0.72);
+      max-width: 560px;
+      margin-bottom: 44px;
+    }
+    #studio-hero-cta {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: var(--type-button);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: #1d1d1f;
+      background: #ffffff;
+      padding: var(--spacing-button-v) var(--spacing-button-h);
+      border-radius: var(--radius-sm);
+      transition: background var(--duration-base) var(--ease-primary),
+                  color var(--duration-base) var(--ease-primary),
+                  transform var(--duration-base) var(--ease-primary);
+    }
+    #studio-hero-cta:hover {
+      background: var(--color-accent-cyan);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    /* ================================================================
+       SECTION 2 — #studio-setup
+       ================================================================ */
+    #studio-setup {
+      background: var(--color-page-bg);
+      padding: var(--spacing-section-v) 0;
+    }
+    #studio-setup-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+      display: grid;
+      grid-template-columns: 55% 45%;
+      align-items: center;
+      gap: 0;
+    }
+    #studio-setup-image-col {
+      position: relative;
+    }
+    #studio-setup-img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+    #studio-setup-image-unavail {
+      width: 100%;
+      height: 600px;
+      border-radius: 12px;
+    }
+    #studio-setup-content {
+      padding-left: 64px;
+    }
+    #studio-setup-eyebrow {
+      color: var(--color-muted-text);
+    }
+    #studio-setup h2 {
+      margin-bottom: 28px;
+    }
+    #studio-setup-body {
+      margin-bottom: 36px;
+    }
+    #studio-setup-body p {
+      margin-bottom: 16px;
+      color: var(--color-muted-text);
+      font-size: 1rem;
+      line-height: var(--lh-relaxed);
+      letter-spacing: -0.01em;
+    }
+    #studio-setup-body p:last-child { margin-bottom: 0; }
+    #studio-setup-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .setup-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .setup-feature-bullet {
+      width: 3px;
+      align-self: stretch;
+      min-height: 20px;
+      background: var(--gradient-spectral);
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .setup-feature-text {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--color-body-text);
+      line-height: 1.5;
+    }
+
+    /* ================================================================
+       SECTION 3 — #studio-workflow
+       ================================================================ */
+    #studio-workflow {
+      background: var(--color-surface-1);
+      padding: var(--spacing-section-v) 0;
+    }
+    #studio-workflow-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+    }
+    #studio-workflow-heading {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+    #studio-workflow-heading h2 {
+      margin-bottom: 16px;
+    }
+    #studio-workflow-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    #studio-workflow-connector {
+      position: absolute;
+      top: 36px;
+      left: calc(12.5% + 24px);
+      right: calc(12.5% + 24px);
+      height: 2px;
+      background: linear-gradient(90deg, #ea3a8c 0%, #bf5af2 33%, #5e5ce6 66%, #32ade6 100%);
+      z-index: 0;
+    }
+    .workflow-step {
+      position: relative;
+      z-index: 1;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .workflow-step-number-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--color-page-bg);
+      border: 2px solid #e0e0e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .workflow-step-number {
+      font-family: var(--font-heading);
+      font-size: 1.375rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      background: var(--gradient-spectral);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .workflow-step-title {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--color-heading-text);
+      margin-bottom: 12px;
+    }
+    .workflow-step-desc {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: -0.005em;
+      color: var(--color-muted-text);
+      line-height: var(--lh-relaxed);
+    }
+
+    /* ================================================================
+       SECTION 4 — #studio-showcase
+       ================================================================ */
+    #studio-showcase {
+      background: linear-gradient(180deg, #fbfbfd 0%, #f0f5fa 100%);
+      padding: var(--spacing-section-v) 0;
+    }
+    #studio-showcase-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+    }
+    #studio-showcase-heading {
+      margin-bottom: 56px;
+    }
+    #studio-showcase-heading h2 {
+      margin-bottom: 16px;
+    }
+    #studio-testimonials {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .testimonial-card {
+      background: #ffffff;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .testimonial-card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .testimonial-img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .testimonial-img-console {
+      width: 56px;
+      height: 56px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .testimonial-img-unavail {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #f0f0f5;
+      border: 1px dashed #c0c0cc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .testimonial-img-unavail-console {
+      width: 56px;
+      height: 56px;
+      border-radius: 8px;
+      background: #f0f0f5;
+      border: 1px dashed #c0c0cc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .testimonial-img-unavail span,
+    .testimonial-img-unavail-console span {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-subtle-text);
+      text-align: center;
+      line-height: 1.3;
+      padding: 4px;
+    }
+    .testimonial-name-block {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .testimonial-name {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--color-heading-text);
+    }
+    .testimonial-role {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--color-muted-text);
+    }
+    .testimonial-quote {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: var(--lh-relaxed);
+      color: var(--color-body-text);
+      position: relative;
+    }
+    .testimonial-quote::before {
+      content: "\201C";
+      font-size: 3rem;
+      line-height: 0;
+      vertical-align: -0.5rem;
+      color: var(--color-accent-indigo);
+      margin-right: 4px;
+      font-family: Georgia, serif;
+    }
+
+    /* ================================================================
+       SECTION 5 — #studio-specs
+       ================================================================ */
+    #studio-specs {
+      background: var(--color-page-bg);
+      padding: var(--spacing-section-v) 0;
+    }
+    #studio-specs-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+    }
+    #studio-specs-heading {
+      margin-bottom: 56px;
+    }
+    #studio-specs-heading h2 {
+      margin-bottom: 16px;
+    }
+    #studio-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+    .spec-card {
+      background: var(--color-surface-1);
+      border: 1px solid #e0e0e6;
+      border-radius: 12px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow var(--duration-base) var(--ease-primary),
+                  transform var(--duration-base) var(--ease-primary);
+    }
+    .spec-card:hover {
+      box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+      transform: translateY(-3px);
+    }
+    .spec-card-accent {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gradient-spectral);
+    }
+    .spec-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--gradient-spectral);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+    .spec-card-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .spec-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--color-heading-text);
+      margin-bottom: 12px;
+    }
+    .spec-card-body {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: var(--lh-relaxed);
+      color: var(--color-muted-text);
+    }
+
+    /* ================================================================
+       SECTION 6 — #studio-cta
+       ================================================================ */
+    #studio-cta {
+      background: linear-gradient(135deg, #5e5ce6 0%, #32ade6 100%);
+      padding: var(--spacing-section-v) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    #studio-cta-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise2)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    #studio-cta-inner {
+      position: relative;
+      z-index: 2;
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+      text-align: center;
+    }
+    #studio-cta h2 {
+      margin-bottom: 20px;
+    }
+    #studio-cta-lead {
+      font-family: var(--font-body);
+      font-size: var(--type-p);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: var(--lh-relaxed);
+      color: rgba(255,255,255,0.8);
+      max-width: 480px;
+      margin: 0 auto 44px;
+    }
+    #studio-cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .cta-btn-primary {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: var(--type-button);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--color-accent-indigo);
+      background: #ffffff;
+      padding: var(--spacing-button-v) var(--spacing-button-h);
+      border-radius: var(--radius-sm);
+      transition: background var(--duration-base) var(--ease-primary),
+                  transform var(--duration-base) var(--ease-primary);
+    }
+    .cta-btn-primary:hover {
+      background: #f0f0ff;
+      transform: translateY(-2px);
+    }
+    .cta-btn-outline {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: var(--type-button);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: #ffffff;
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.55);
+      padding: var(--spacing-button-v) var(--spacing-button-h);
+      border-radius: var(--radius-sm);
+      transition: border-color var(--duration-base) var(--ease-primary),
+                  background var(--duration-base) var(--ease-primary),
+                  transform var(--duration-base) var(--ease-primary);
+    }
+    .cta-btn-outline:hover {
+      border-color: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* ================================================================
+       SECTION 7 — #footer
+       ================================================================ */
+    #footer {
+      background: var(--color-accent-navy);
+      padding: 72px 0 48px;
+    }
+    #footer-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--spacing-section-gap);
+    }
+    #footer-brand-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    #footer-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+      text-decoration: none;
+      display: inline-block;
+    }
+    #footer-tagline {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: -0.005em;
+      line-height: var(--lh-relaxed);
+      color: rgba(255,255,255,0.55);
+      max-width: 280px;
+    }
+    #footer-copyright {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.35);
+      margin-top: auto;
+    }
+    .footer-col-heading {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-links a {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: -0.005em;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color var(--duration-base) var(--ease-primary);
+    }
+    .footer-links a:hover { color: #ffffff; }
+
+    /* ================================================================
+       RESPONSIVE — ≤900px
+       ================================================================ */
+    @media (max-width: 900px) {
+      #nav-inner { padding: 0 40px; }
+
+      /* Hero */
+      #studio-hero { padding-top: 120px; padding-bottom: 64px; }
+      .container { padding: 0 40px; }
+
+      /* Setup — stack */
+      #studio-setup-inner {
+        grid-template-columns: 1fr;
+        padding: 0 40px;
+      }
+      #studio-setup-img,
+      #studio-setup-image-unavail { height: 420px; }
+      #studio-setup-content { padding-left: 0; padding-top: 48px; }
+
+      /* Workflow — 2x2 grid */
+      #studio-workflow-inner { padding: 0 40px; }
+      #studio-workflow-steps { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+      #studio-workflow-connector { display: none; }
+
+      /* Showcase — stacked */
+      #studio-showcase-inner { padding: 0 40px; }
+      #studio-testimonials { grid-template-columns: 1fr; }
+
+      /* Specs */
+      #studio-specs-inner { padding: 0 40px; }
+
+      /* CTA */
+      #studio-cta-inner { padding: 0 40px; }
+
+      /* Footer */
+      #footer-inner {
+        grid-template-columns: 1fr 1fr;
+        padding: 0 40px;
+      }
+      #footer-brand-col { grid-column: 1 / -1; }
+    }
+
+    /* ================================================================
+       RESPONSIVE — ≤600px
+       ================================================================ */
+    @media (max-width: 600px) {
+      #nav-inner { padding: 0 20px; }
+      #nav-links { gap: 16px; }
+      .nav-link { font-size: 0.875rem; }
+
+      /* Hero */
+      #studio-hero { padding-top: 112px; }
+      #studio-hero h1 { font-size: clamp(2rem, 9vw, 3.5rem); }
+      #studio-hero-lead { font-size: 1rem; }
+
+      /* Setup */
+      #studio-setup-inner { padding: 0 20px; }
+      #studio-setup-img,
+      #studio-setup-image-unavail { height: 280px; }
+      #studio-setup-content { padding-left: 0; }
+
+      /* Workflow — single column */
+      #studio-workflow-inner { padding: 0 20px; }
+      #studio-workflow-steps { grid-template-columns: 1fr; gap: 36px; }
+      .workflow-step { align-items: flex-start; text-align: left; flex-direction: row; gap: 20px; }
+      .workflow-step-number-wrap { flex-shrink: 0; margin-bottom: 0; }
+
+      /* Showcase */
+      #studio-showcase-inner { padding: 0 20px; }
+      .testimonial-card { padding: 28px; }
+
+      /* Specs — single column */
+      #studio-specs-inner { padding: 0 20px; }
+      #studio-specs-grid { grid-template-columns: 1fr; }
+
+      /* CTA */
+      #studio-cta-inner { padding: 0 20px; }
+      #studio-cta-actions { flex-direction: column; align-items: center; }
+
+      /* Footer */
+      #footer-inner { grid-template-columns: 1fr; padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       NAV
+       ================================================================ -->
+  <nav id="site-nav">
+    <div id="nav-inner">
+      <a id="nav-logo" href="index.html">SONOR</a>
+      <ul id="nav-links">
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="studio.html" class="nav-link nav-link--active">Studio</a></li>
+        <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li><a href="index.html#contact" class="nav-cta-link">Try Free</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ================================================================
+       SECTION 1 — #studio-hero
+       ================================================================ -->
+  <section id="studio-hero">
+    <div id="studio-hero-noise" aria-hidden="true"></div>
+    <div class="container">
+      <div id="studio-hero-inner">
+        <span id="studio-hero-eyebrow">Recording Studio</span>
+        <h1>The studio isn't just where music lives. It's where truth lives.</h1>
+        <p id="studio-hero-lead">SONOR gives mixing engineers and room designers the complete acoustic picture — from first reflection to final reverb tail.</p>
+        <a id="studio-hero-cta" href="index.html#contact">Request a Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 2 — #studio-setup
+       ================================================================ -->
+  <section id="studio-setup">
+    <div id="studio-setup-inner">
+
+      <!-- Image column -->
+      <div id="studio-setup-image-col">
+        <img
+          id="studio-setup-img"
+          src="assets/studio-interior.jpeg"
+          alt="Recording studio interior with warm lighting and professional monitoring setup"
+          onerror="
+            this.style.display='none';
+            var el = document.getElementById('studio-setup-image-unavail');
+            if(el) el.style.display='flex';
+          "
+        >
+        <div
+          id="studio-setup-image-unavail"
+          class="unavailable-asset"
+          style="display:none; height:600px; border-radius:12px;"
+          role="img"
+          aria-label="Missing asset: studio-interior.jpeg"
+        >
+          <span class="unavailable-asset__label">Missing Image</span>
+          <span class="unavailable-asset__name">assets/studio-interior.jpeg</span>
+          <span class="unavailable-asset__reason">Recording studio interior photo not found. File not present in assets/.</span>
+          <span class="unavailable-asset__action">Generate with Kling — see project-documentation/unavailable-content-prompts.md</span>
+        </div>
+      </div>
+
+      <!-- Content column -->
+      <div id="studio-setup-content">
+        <span class="eyebrow eyebrow--muted" id="studio-setup-eyebrow" style="color: var(--color-muted-text);">The Setup</span>
+        <h2 class="section-h2" id="studio-setup-h2">Establish your monitoring baseline.</h2>
+        <div id="studio-setup-body">
+          <p>SONOR begins every measurement session with a full-bandwidth sweep — a logarithmic sine wave from 20Hz to 22kHz — played through your main monitors at a calibrated SPL. Up to four calibrated reference microphones capture the response at your mix position simultaneously, giving the engine a spatial view of the room's behavior rather than a single-point snapshot.</p>
+          <p>From that raw capture, SONOR's acoustic model identifies modal resonances, early reflections, comb-filtering artifacts, and decay irregularities across the frequency spectrum. The resulting correction filter is generated in under 90 seconds and is immediately deployable — either as a phase-linear linear-phase FIR plugin or as an external hardware insert.</p>
+        </div>
+        <ul id="studio-setup-features">
+          <li class="setup-feature-item">
+            <div class="setup-feature-bullet"></div>
+            <span class="setup-feature-text">Full-range logarithmic sweep from 20Hz to 22kHz at user-defined SPL</span>
+          </li>
+          <li class="setup-feature-item">
+            <div class="setup-feature-bullet"></div>
+            <span class="setup-feature-text">Simultaneous multi-mic capture — up to 4 positions for spatial averaging</span>
+          </li>
+          <li class="setup-feature-item">
+            <div class="setup-feature-bullet"></div>
+            <span class="setup-feature-text">Phase-linear FIR correction — zero pre-ringing, zero transient smear</span>
+          </li>
+          <li class="setup-feature-item">
+            <div class="setup-feature-bullet"></div>
+            <span class="setup-feature-text">Sub-90 second generation from sweep capture to deployable correction filter</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 3 — #studio-workflow
+       ================================================================ -->
+  <section id="studio-workflow">
+    <div id="studio-workflow-inner">
+
+      <div id="studio-workflow-heading">
+        <h2 class="section-h2">From sweep to session in four steps.</h2>
+        <p class="section-p" style="max-width: 560px; margin: 16px auto 0;">A process calibrated for working engineers — not acoustic researchers. From uncorrected room to trusted reference in the time it takes to brew a coffee.</p>
+      </div>
+
+      <div id="studio-workflow-steps">
+        <div id="studio-workflow-connector" aria-hidden="true"></div>
+
+        <div class="workflow-step" id="workflow-step-1">
+          <div class="workflow-step-number-wrap">
+            <span class="workflow-step-number">01</span>
+          </div>
+          <h3 class="workflow-step-title">Place</h3>
+          <p class="workflow-step-desc">Position SONOR's reference microphone at your primary mix position — the sweet spot where critical decisions are made.</p>
+        </div>
+
+        <div class="workflow-step" id="workflow-step-2">
+          <div class="workflow-step-number-wrap">
+            <span class="workflow-step-number">02</span>
+          </div>
+          <h3 class="workflow-step-title">Sweep</h3>
+          <p class="workflow-step-desc">SONOR plays calibrated logarithmic sweep tones from 0.8Hz to 22kHz through your monitors at reference level. The full spectrum is captured.</p>
+        </div>
+
+        <div class="workflow-step" id="workflow-step-3">
+          <div class="workflow-step-number-wrap">
+            <span class="workflow-step-number">03</span>
+          </div>
+          <h3 class="workflow-step-title">Analyze</h3>
+          <p class="workflow-step-desc">The acoustic model is generated in real time. Problem frequencies, modal nodes, decay tails, and reflection patterns are identified and mapped.</p>
+        </div>
+
+        <div class="workflow-step" id="workflow-step-4">
+          <div class="workflow-step-number-wrap">
+            <span class="workflow-step-number">04</span>
+          </div>
+          <h3 class="workflow-step-title">Correct</h3>
+          <p class="workflow-step-desc">A precision correction filter is applied — as a native DAW plugin insert or external hardware processor. Your room is now a trusted reference.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 4 — #studio-showcase
+       ================================================================ -->
+  <section id="studio-showcase">
+    <div id="studio-showcase-inner">
+
+      <div id="studio-showcase-heading">
+        <h2 class="section-h2">Used by engineers who can't afford to guess.</h2>
+        <p class="section-p" style="max-width: 520px; margin-top: 16px;">Real-world results from professional mixing and mastering facilities running SONOR in daily production.</p>
+      </div>
+
+      <div id="studio-testimonials">
+
+        <!-- Card 1 — Alex Chen -->
+        <div class="testimonial-card" id="testimonial-card-1">
+          <div class="testimonial-card-header">
+            <img
+              src="assets/engineer-1.jpeg"
+              alt="Alex Chen, Mix Engineer"
+              class="testimonial-img"
+              onerror="
+                this.style.display='none';
+                var el = document.getElementById('testimonial-1-unavail');
+                if(el) el.style.display='flex';
+              "
+            >
+            <div
+              id="testimonial-1-unavail"
+              class="testimonial-img-unavail"
+              style="display:none;"
+              title="Missing: assets/engineer-1.jpeg — headshot photo not found"
+            >
+              <span>No image</span>
+            </div>
+            <div class="testimonial-name-block">
+              <span class="testimonial-name">Alex Chen</span>
+              <span class="testimonial-role">Mix Engineer — Atlantic Records</span>
+            </div>
+          </div>
+          <p class="testimonial-quote">SONOR identified a 280Hz buildup in my mix bus that I'd been fighting for six months. Fixed in four minutes.</p>
+        </div>
+
+        <!-- Card 2 — Priya Nair -->
+        <div class="testimonial-card" id="testimonial-card-2">
+          <div class="testimonial-card-header">
+            <img
+              src="assets/engineer-2.jpeg"
+              alt="Priya Nair, Producer and Engineer"
+              class="testimonial-img"
+              onerror="
+                this.style.display='none';
+                var el = document.getElementById('testimonial-2-unavail');
+                if(el) el.style.display='flex';
+              "
+            >
+            <div
+              id="testimonial-2-unavail"
+              class="testimonial-img-unavail"
+              style="display:none;"
+              title="Missing: assets/engineer-2.jpeg — headshot photo not found"
+            >
+              <span>No image</span>
+            </div>
+            <div class="testimonial-name-block">
+              <span class="testimonial-name">Priya Nair</span>
+              <span class="testimonial-role">Producer/Engineer — independent</span>
+            </div>
+          </div>
+          <p class="testimonial-quote">I use SONOR before every session in a new room. It's become non-negotiable for maintaining consistent reference.</p>
+        </div>
+
+        <!-- Card 3 — Marcus Webb -->
+        <div class="testimonial-card" id="testimonial-card-3">
+          <div class="testimonial-card-header">
+            <img
+              src="assets/studio-console.jpeg"
+              alt="Recording console at Sunset Sound"
+              class="testimonial-img-console"
+              onerror="
+                this.style.display='none';
+                var el = document.getElementById('testimonial-3-unavail');
+                if(el) el.style.display='flex';
+              "
+            >
+            <div
+              id="testimonial-3-unavail"
+              class="testimonial-img-unavail-console"
+              style="display:none;"
+              title="Missing: assets/studio-console.jpeg — studio console photo not found"
+            >
+              <span>No image</span>
+            </div>
+            <div class="testimonial-name-block">
+              <span class="testimonial-name">Marcus Webb</span>
+              <span class="testimonial-role">Chief Engineer — Sunset Sound</span>
+            </div>
+          </div>
+          <p class="testimonial-quote">The correction curve SONOR generated for our B-room is the cleanest we've ever achieved without acoustic treatment.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 5 — #studio-specs
+       ================================================================ -->
+  <section id="studio-specs">
+    <div id="studio-specs-inner">
+
+      <div id="studio-specs-heading">
+        <span class="eyebrow" style="color: var(--color-muted-text);">Studio Capabilities</span>
+        <h2 class="section-h2">Built for the professional studio environment.</h2>
+      </div>
+
+      <div id="studio-specs-grid">
+
+        <!-- DAW Integration -->
+        <div class="spec-card" id="spec-card-daw">
+          <div class="spec-card-accent" aria-hidden="true"></div>
+          <div class="spec-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+              <path d="M14 17.5h7M17.5 14v7"/>
+            </svg>
+          </div>
+          <h3 class="spec-card-title">DAW Integration</h3>
+          <p class="spec-card-body">Native plugin formats for Pro Tools, Logic, Ableton, Nuendo, and Studio One. Load SONOR's correction filter as a standard insert — no external routing required.</p>
+        </div>
+
+        <!-- Multi-Room Profiles -->
+        <div class="spec-card" id="spec-card-rooms">
+          <div class="spec-card-accent" aria-hidden="true"></div>
+          <div class="spec-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 9l9-6 9 6v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h3 class="spec-card-title">Multi-Room Profiles</h3>
+          <p class="spec-card-body">Store unlimited room profiles. Switch between control rooms, overdub booths, and tracking spaces mid-session with a single click — no re-measurement required.</p>
+        </div>
+
+        <!-- Reference Track Import -->
+        <div class="spec-card" id="spec-card-reference">
+          <div class="spec-card-accent" aria-hidden="true"></div>
+          <div class="spec-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <h3 class="spec-card-title">Reference Track Import</h3>
+          <p class="spec-card-body">Load reference mixes to directly compare your room's frequency response against a commercially mastered target. Close the gap between your room and the outside world.</p>
+        </div>
+
+        <!-- Remote Consultation -->
+        <div class="spec-card" id="spec-card-consult">
+          <div class="spec-card-accent" aria-hidden="true"></div>
+          <div class="spec-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <h3 class="spec-card-title">Remote Consultation</h3>
+          <p class="spec-card-body">Share your acoustic model with SONOR's engineers for real-time analysis support. Export a shareable profile link — no file transfers, no session interruption.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 6 — #studio-cta
+       ================================================================ -->
+  <section id="studio-cta">
+    <div id="studio-cta-noise" aria-hidden="true"></div>
+    <div id="studio-cta-inner">
+      <h2 class="section-h2 section-h2--light">Your room has a story to tell.</h2>
+      <p id="studio-cta-lead">Book a 30-minute live demo with one of our acoustic engineers.</p>
+      <div id="studio-cta-actions">
+        <a href="index.html#contact" class="cta-btn-primary">Book Demo</a>
+        <a href="index.html#contact" class="cta-btn-outline">Download Free Trial</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SECTION 7 — #footer
+       ================================================================ -->
+  <footer id="footer">
+    <div id="footer-inner">
+
+      <!-- Brand column -->
+      <div id="footer-brand-col">
+        <a id="footer-logo" href="index.html">SONOR</a>
+        <p id="footer-tagline">Professional acoustic measurement and room correction for recording studios and critical listening environments.</p>
+        <p id="footer-copyright">&copy; 2026 SONOR. All rights reserved.</p>
+      </div>
+
+      <!-- Product links -->
+      <div id="footer-product-col">
+        <p class="footer-col-heading">Product</p>
+        <ul class="footer-links">
+          <li><a href="features.html">Features</a></li>
+          <li><a href="studio.html">Studio</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="index.html#contact">Try Free</a></li>
+        </ul>
+      </div>
+
+      <!-- Company links -->
+      <div id="footer-company-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       GSAP + ScrollTrigger animations
+       ================================================================ -->
+  <script>
+    (function () {
+      'use strict';
+
+      // Register plugin
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Motion tokens from CSS
+      const DUR_BASE    = 0.32;
+      const DUR_ENT     = 0.7;
+      const EASE_PRI    = 'cubic-bezier(0.45, 0, 0.55, 1)';
+      const EASE_ENT    = 'power3.out';
+
+      // ── Hero entrance ──────────────────────────────────────────────
+      gsap.from('#studio-hero-eyebrow', {
+        opacity: 0, y: 16, duration: DUR_ENT, ease: EASE_ENT, delay: 0.1
+      });
+      gsap.from('#studio-hero h1', {
+        opacity: 0, y: 24, duration: DUR_ENT, ease: EASE_ENT, delay: 0.22
+      });
+      gsap.from('#studio-hero-lead', {
+        opacity: 0, y: 20, duration: DUR_ENT, ease: EASE_ENT, delay: 0.36
+      });
+      gsap.from('#studio-hero-cta', {
+        opacity: 0, y: 16, duration: DUR_ENT, ease: EASE_ENT, delay: 0.48
+      });
+
+      // ── Setup split ────────────────────────────────────────────────
+      gsap.from('#studio-setup-image-col', {
+        scrollTrigger: {
+          trigger: '#studio-setup',
+          start: 'top 78%',
+          once: true
+        },
+        opacity: 0, x: -30, duration: DUR_ENT, ease: EASE_ENT
+      });
+      gsap.from('#studio-setup-content', {
+        scrollTrigger: {
+          trigger: '#studio-setup',
+          start: 'top 78%',
+          once: true
+        },
+        opacity: 0, x: 30, duration: DUR_ENT, ease: EASE_ENT, delay: 0.12
+      });
+
+      // ── Workflow steps stagger ─────────────────────────────────────
+      gsap.from('.workflow-step', {
+        scrollTrigger: {
+          trigger: '#studio-workflow-steps',
+          start: 'top 80%',
+          once: true
+        },
+        opacity: 0, y: 20, duration: DUR_ENT, ease: EASE_ENT,
+        stagger: 0.15
+      });
+
+      // ── Testimonial cards stagger ──────────────────────────────────
+      gsap.from('.testimonial-card', {
+        scrollTrigger: {
+          trigger: '#studio-testimonials',
+          start: 'top 80%',
+          once: true
+        },
+        opacity: 0, y: 30, duration: DUR_ENT, ease: EASE_ENT,
+        stagger: 0.14
+      });
+
+      // ── Spec cards stagger ─────────────────────────────────────────
+      gsap.from('.spec-card', {
+        scrollTrigger: {
+          trigger: '#studio-specs-grid',
+          start: 'top 82%',
+          once: true
+        },
+        opacity: 0, y: 24, duration: DUR_ENT, ease: EASE_ENT,
+        stagger: 0.12
+      });
+
+      // ── CTA section ────────────────────────────────────────────────
+      gsap.from('#studio-cta-inner > *', {
+        scrollTrigger: {
+          trigger: '#studio-cta',
+          start: 'top 80%',
+          once: true
+        },
+        opacity: 0, y: 20, duration: DUR_ENT, ease: EASE_ENT,
+        stagger: 0.12
+      });
+
+    }());
+  </script>
+
+</body>
+</html>

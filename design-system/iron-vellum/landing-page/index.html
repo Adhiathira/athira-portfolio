@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solum — Ground Truth for Land Science</title>
+  <meta name="description" content="Solum is a precision soil analysis platform for agronomists, environmental consultants, and research institutions. Digitize field measurements into structured analysis reports.">
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component stylesheets -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+  <nav id="site-nav" class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Solum</a>
+      <ul class="nav-links">
+        <li><a href="platform.html">Platform</a></li>
+        <li><a href="method.html">Method</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="contact.html" class="nav-cta-btn">Request Access</a>
+      </div>
+      <button class="nav-mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu">
+    <a href="platform.html">Platform</a>
+    <a href="method.html">Method</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta-btn">Request Access</a>
+  </div>
+
+  <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+  <!-- Split: 45% text / 55% video. HERO_TREATMENT=light — text on warm off-white ground -->
+  <section id="hero" aria-label="Hero">
+    <div id="hero-text-col">
+      <p id="hero-eyebrow">Soil Intelligence Platform</p>
+      <h1 id="hero-headline">Ground truth<br>for land science.</h1>
+      <p id="hero-tagline">Solum transforms field measurements into structured soil analysis reports — built for agronomists, environmental consultants, and research institutions who need data they can stand behind.</p>
+      <div id="hero-cta-group">
+        <a href="contact.html" class="btn-primary">Request Access</a>
+        <a href="platform.html" class="btn-ghost-dark">See the Platform</a>
+      </div>
+      <div id="hero-scroll-hint">Scroll to explore</div>
+    </div>
+
+    <div id="hero-video-col">
+      <video
+        id="hero-bg-video"
+        src="assets/hero-ambient.mp4"
+        autoplay muted loop playsinline
+        aria-hidden="true"
+        style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      ></video>
+      <div
+        id="hero-bg-video-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:100%;position:absolute;inset:0;background:var(--color-hero-bg);color:rgba(1,1,1,0.3);font-family:var(--font-body);font-size:0.85rem;"
+      >→ assets/hero-ambient.mp4</div>
+      <div id="hero-video-overlay"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ FEATURES ═══════════════════════════════ -->
+  <!-- Light section, numbered step rows. Distinct from all other light sections. -->
+  <section id="features" aria-label="Features">
+    <div class="section-inner">
+      <div id="features-header">
+        <div id="features-header-left">
+          <span class="eyebrow">What Solum Does</span>
+          <h2 class="section-heading">Precision at every layer.</h2>
+        </div>
+        <div id="features-header-right">
+          <p class="section-body">From sampling protocol to final report, Solum builds an unbroken chain of custody for your soil data — every measurement traceable, every result defensible.</p>
+        </div>
+      </div>
+
+      <ul class="feature-rows" id="feature-rows-list">
+        <li class="feature-row" id="feature-row-1">
+          <div class="feature-row-number"></div>
+          <h3 class="feature-row-title">Field Data Capture</h3>
+          <p class="feature-row-body">Structured sampling forms calibrated to soil taxonomy standards. GPS-tagged profiles, horizon descriptions, and texture classifications captured offline and synced on return.</p>
+        </li>
+        <li class="feature-row" id="feature-row-2">
+          <div class="feature-row-number"></div>
+          <h3 class="feature-row-title">Laboratory Integration</h3>
+          <p class="feature-row-body">Direct connections to NATA-accredited laboratories. Results import automatically, matched to the correct sampling site, depth interval, and project reference.</p>
+        </li>
+        <li class="feature-row" id="feature-row-3">
+          <div class="feature-row-number"></div>
+          <h3 class="feature-row-title">Structured Report Generation</h3>
+          <p class="feature-row-body">Reports generated to AS 4419, ASNZS 2430, and EPA method standards. Profile tables, interpretation text, and recommendation summaries in a single exportable document.</p>
+        </li>
+        <li class="feature-row" id="feature-row-4">
+          <div class="feature-row-number"></div>
+          <h3 class="feature-row-title">Audit-Ready Data Chain</h3>
+          <p class="feature-row-body">Every field observation, laboratory result, and interpretive decision is timestamped, versioned, and attributed. Nothing changes without a record.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ HOW IT WORKS ═══════════════════════════════ -->
+  <!-- Dark contrast section. Video left, steps right. Distinct from hero. -->
+  <section id="how-it-works" aria-label="How it works">
+    <div id="how-it-works-inner">
+      <div id="how-it-works-video-col">
+        <video
+          id="process-video"
+          src="assets/process-ambient.mp4"
+          autoplay muted loop playsinline
+          aria-hidden="true"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        ></video>
+        <div
+          id="process-video-placeholder"
+          style="display:none;"
+        >→ assets/process-ambient.mp4</div>
+        <div id="process-video-overlay"></div>
+      </div>
+
+      <div id="how-it-works-text-col">
+        <span class="eyebrow eyebrow--light">The Workflow</span>
+        <h2 class="section-heading section-heading--light">From site to report in four steps.</h2>
+        <ul class="steps-list" id="steps-list">
+          <li class="step-item" id="step-1">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <h3 class="step-title">Plan your investigation</h3>
+              <p class="step-body">Define project scope, site extents, and sampling density. Solum generates a field schedule aligned to your soil classification objectives.</p>
+            </div>
+          </li>
+          <li class="step-item" id="step-2">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <h3 class="step-title">Record observations in the field</h3>
+              <p class="step-body">Complete structured profile descriptions on mobile, with guided horizon and texture notation. No internet required.</p>
+            </div>
+          </li>
+          <li class="step-item" id="step-3">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <h3 class="step-title">Integrate laboratory results</h3>
+              <p class="step-body">Upload or connect directly to your preferred laboratory. Results merge with field data automatically, mapped to site and depth.</p>
+            </div>
+          </li>
+          <li class="step-item" id="step-4">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <h3 class="step-title">Generate the report</h3>
+              <p class="step-body">Select your output standard and export. Profile tables, interpretive text, site plans, and recommendations — complete and compliant.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ METRICS ═══════════════════════════════ -->
+  <!-- Light section. Bento grid layout — distinct from numbered rows above. -->
+  <section id="metrics" aria-label="Platform metrics">
+    <div id="metrics-inner">
+      <span class="eyebrow">By the Numbers</span>
+      <h2 class="section-heading">Built for serious field work.</h2>
+
+      <div class="metrics-bento" id="metrics-grid">
+        <div class="metric-card" id="metric-card-1">
+          <p class="metric-number">2,400+</p>
+          <p class="metric-label">Soil profiles recorded across active projects this year, spanning agricultural, remediation, and research applications.</p>
+        </div>
+
+        <div class="metric-card metric-card--dark" id="metric-card-2">
+          <p class="metric-number metric-number--light">98.4%</p>
+          <p class="metric-label metric-label--light">Report compliance rate against AS 4419 and EPA method standards on first submission — no rework cycles.</p>
+        </div>
+
+        <div class="metric-card card-wide" id="metric-card-showcase" style="padding:0;overflow:hidden;">
+          <div class="metric-card-image-container" style="min-height:320px;border-radius:var(--space-card-radius);">
+            <img
+              id="metrics-field-img"
+              src="assets/field-showcase.jpeg"
+              alt="Agronomist conducting a soil profile in a paddock, early morning light"
+              style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="metric-card-image-placeholder">→ assets/field-showcase.jpeg</div>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(1,1,1,0.5) 0%, transparent 50%);z-index:1;pointer-events:none;"></div>
+            <div style="position:absolute;bottom:32px;left:36px;z-index:2;">
+              <p style="font-family:var(--font-body);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(249,248,243,0.6);margin:0 0 6px;">Designed for</p>
+              <p style="font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;letter-spacing:-1px;color:var(--color-page-bg);margin:0;line-height:1.1;">Environmental<br>consultants.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="metric-card metric-card--accent" id="metric-card-accent">
+          <p class="metric-number" style="color:#010101;">14<span style="font-size:0.5em;vertical-align:middle;">day</span></p>
+          <p class="metric-label" style="color:rgba(1,1,1,0.75);">Average time from first site visit to submitted final report. Industry standard is 6–8 weeks.</p>
+        </div>
+
+        <div class="metric-card" id="metric-card-3">
+          <p class="metric-number">43</p>
+          <p class="metric-label">Countries where soil classification standards are pre-loaded. No manual template setup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ TESTIMONIALS ═══════════════════════════════ -->
+  <!-- Dark contrast section — different from how-it-works dark. Text-only, no video. -->
+  <section id="testimonials" aria-label="Client testimonials">
+    <div id="testimonials-inner">
+      <span class="eyebrow eyebrow--light">In Practice</span>
+      <h2 class="section-heading section-heading--light" style="text-align:center;max-width:640px;margin:0 auto 0;">What practitioners say.</h2>
+      <div class="testimonials-grid" id="testimonials-grid">
+        <div class="testimonial-card" id="testimonial-1">
+          <p class="testimonial-quote">"The data chain is what sold our EIA reviewer. Every lab result traced to a profile, every profile to a GPS point. No gaps in the record."</p>
+          <p class="testimonial-attribution"><span class="testimonial-name">Dr. Karina Osei</span> — Principal Consultant, Enviro Associates</p>
+        </div>
+        <div class="testimonial-card" id="testimonial-2">
+          <p class="testimonial-quote">"We reduced report generation time from three weeks to four days. Same quality, a fraction of the manual assembly."</p>
+          <p class="testimonial-attribution"><span class="testimonial-name">Marcus Held</span> — Senior Agronomist, Grainfield Advisory</p>
+        </div>
+        <div class="testimonial-card" id="testimonial-3">
+          <p class="testimonial-quote">"Our research team needed something that could handle international classification systems without endless customisation. Solum handles 43 out of the box."</p>
+          <p class="testimonial-attribution"><span class="testimonial-name">Prof. Yuki Tanaka</span> — Soil Science, University of Wageningen</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ CTA BAND ═══════════════════════════════ -->
+  <section id="cta-band" aria-label="Call to action">
+    <div id="cta-band-inner">
+      <div id="cta-band-text">
+        <h2 id="cta-band-heading">Your next investigation,<br>precisely documented.</h2>
+        <p id="cta-band-body">Request access to the Solum platform. We onboard new teams in cohorts — your data is never rushed.</p>
+      </div>
+      <div id="cta-band-actions">
+        <a href="contact.html" class="btn-ghost-light">Request Access</a>
+        <a href="method.html" class="btn-ghost-light" style="opacity:0.55;">Read our methodology →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div class="footer-grid" id="footer-grid">
+        <div class="footer-brand" id="footer-brand">
+          <a href="index.html" class="footer-logo">Solum</a>
+          <p class="footer-tagline">Precision soil analysis for the land scientists who need results they can stand behind.</p>
+        </div>
+        <div class="footer-col" id="footer-col-platform">
+          <p class="footer-col-heading">Platform</p>
+          <ul class="footer-links">
+            <li><a href="platform.html">Overview</a></li>
+            <li><a href="platform.html#capture">Field Capture</a></li>
+            <li><a href="platform.html#lab">Lab Integration</a></li>
+            <li><a href="platform.html#reports">Reports</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" id="footer-col-method">
+          <p class="footer-col-heading">Method</p>
+          <ul class="footer-links">
+            <li><a href="method.html">Approach</a></li>
+            <li><a href="method.html#standards">Standards</a></li>
+            <li><a href="method.html#validation">Validation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" id="footer-col-company">
+          <p class="footer-col-heading">Company</p>
+          <ul class="footer-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="about.html#team">Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" id="footer-col-legal">
+          <p class="footer-col-heading">Legal</p>
+          <ul class="footer-links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Security</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" id="footer-bottom">
+        <p class="footer-copy">© 2026 Solum. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════ SCRIPTS ═══════════════════════════════ -->
+  <script>
+  (function() {
+    // Nav scroll + mobile toggle
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var mobileToggle = document.querySelector('.nav-mobile-toggle');
+
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', function() {
+        nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open');
+      });
+    }
+
+    mobileMenu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        nav.classList.remove('nav-mobile-open');
+        mobileMenu.classList.remove('is-open');
+      });
+    });
+  })();
+  </script>
+
+  <script>
+  // GSAP ScrollTrigger animations
+  gsap.registerPlugin(ScrollTrigger);
+
+  var BASE_DURATION = 0.7;
+  var EASE_STD = 'cubic-bezier(0.4, 0, 0.2, 1)';
+  var EASE_DEFAULT = 'power2.inOut';
+
+  // Hero entrance — text elements stagger in on load
+  var heroTl = gsap.timeline({ delay: 0.2 });
+  heroTl
+    .from('#hero-eyebrow', { y: 20, duration: 0.6, ease: EASE_DEFAULT, clearProps: 'all' })
+    .from('#hero-headline', { y: 30, duration: 0.8, ease: EASE_DEFAULT, clearProps: 'all' }, '-=0.3')
+    .from('#hero-tagline', { y: 20, duration: 0.6, ease: EASE_DEFAULT, clearProps: 'all' }, '-=0.4')
+    .from('#hero-cta-group', { y: 16, duration: 0.5, ease: EASE_DEFAULT, clearProps: 'all' }, '-=0.3');
+
+  // Hero scroll hint fade in
+  gsap.from('#hero-scroll-hint', { duration: 1, delay: 1.4, y: 8, ease: EASE_DEFAULT, clearProps: 'all' });
+
+  // Features — rows sweep in from left, staggered
+  // (Numbered step rows — x sweep, distinct from other sections)
+  gsap.from('#feature-rows-list .feature-row', {
+    scrollTrigger: { trigger: '#feature-rows-list', start: 'top 75%' },
+    x: -60,
+    stagger: 0.13,
+    duration: BASE_DURATION,
+    ease: EASE_DEFAULT,
+    clearProps: 'all'
+  });
+
+  // Features header — clip reveal (distinct from rows)
+  gsap.from('#features-header', {
+    scrollTrigger: { trigger: '#features-header', start: 'top 80%' },
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 0.9,
+    ease: 'power2.inOut',
+    clearProps: 'all'
+  });
+
+  // How it works steps — vertical stagger from below
+  gsap.from('#steps-list .step-item', {
+    scrollTrigger: { trigger: '#steps-list', start: 'top 70%' },
+    y: 30,
+    stagger: 0.15,
+    duration: BASE_DURATION,
+    ease: EASE_DEFAULT,
+    clearProps: 'all'
+  });
+
+  // How it works heading — from right
+  gsap.from('#how-it-works-text-col .section-heading', {
+    scrollTrigger: { trigger: '#how-it-works-text-col', start: 'top 75%' },
+    x: 40,
+    duration: 0.8,
+    ease: EASE_DEFAULT,
+    clearProps: 'all'
+  });
+
+  // Metrics bento — scale-rise, stagger
+  // (Bento grid — scale animation, different from features rows)
+  gsap.from('#metrics-grid .metric-card', {
+    scrollTrigger: { trigger: '#metrics-grid', start: 'top 75%' },
+    scale: 0.94,
+    y: 20,
+    stagger: 0.1,
+    duration: BASE_DURATION,
+    ease: EASE_DEFAULT,
+    clearProps: 'all'
+  });
+
+  // Testimonials — rotate + rise, subtle
+  gsap.from('#testimonials-grid .testimonial-card', {
+    scrollTrigger: { trigger: '#testimonials-grid', start: 'top 80%' },
+    rotation: 2,
+    y: 40,
+    stagger: 0.12,
+    duration: BASE_DURATION,
+    ease: EASE_DEFAULT,
+    clearProps: 'all'
+  });
+
+  // CTA band heading — dramatic scale from center
+  gsap.from('#cta-band-heading', {
+    scrollTrigger: { trigger: '#cta-band', start: 'top 80%' },
+    scale: 0.92,
+    duration: 1,
+    ease: 'power3.out',
+    clearProps: 'all'
+  });
+
+  // Cross-segment travel — hero tagline drifts slightly as user leaves hero
+  // (languid easing system supports cross-segment)
+  gsap.to('#hero-text-col', {
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.2,
+    },
+    y: '8%',
+    ease: 'none'
+  });
+
+  // Footer — clip-path horizontal reveal
+  gsap.from('#footer-inner', {
+    scrollTrigger: { trigger: '#site-footer', start: 'top 90%' },
+    clipPath: 'inset(0 0 100% 0)',
+    duration: 0.9,
+    ease: 'power2.inOut',
+    clearProps: 'all'
+  });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+/*
+ * motion.css — griting-voltage
+ *
+ * Brand: griting (primary #00693e, background #003620)
+ * Motion vocabulary: still-voltage
+ *
+ * griting had no extractable motion tokens (static Figma export).
+ * still-voltage contributed all timing and transition patterns.
+ * This file expresses still-voltage's motion system within griting's
+ * deep forest green brand identity.
+ *
+ * Any video or animated assets produced for this system should use
+ * griting's color scheme: dark forest green backgrounds (#003620),
+ * vivid green accents (#00693e), white text (#ffffff).
+ */
+
+:root {
+  /* Brand colors (griting) */
+  --color-brand-primary: #00693e;
+  --color-brand-bg: #003620;
+
+  /* Motion performance counters (still-voltage) */
+  --motion-system-videos-count: 0;
+  --motion-system-videos-animatedGifs: 0;
+  --motion-system-performance-totalAnimatedElements: 17;
+  --motion-system-performance-simultaneousAnimations: 0;
+  --motion-system-performance-videoLoad: none;
+  --motion-system-performance-complexAnimations: 0;
+  --motion-system-performance-summary-videos: 0;
+  --motion-system-performance-summary-animatedGifs: 0;
+  --motion-system-performance-summary-keyframes: 0;
+  --motion-system-performance-summary-scrollLibraries: 0;
+
+  /* Stagger system — from still-voltage, intensity 3 */
+  --motion-stagger-step: 0.1s;
+  --motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-duration-fast: 0.2s;
+  --motion-duration-base: 0.3s;
+  --motion-duration-slow: 0.5s;
+}
+
+/* Base layout transitions — no stagger, immediate response */
+.fixed {
+  transition: all var(--motion-duration-base) var(--motion-easing-standard) 0s;
+}
+
+.mx-auto {
+  transition: all var(--motion-duration-base) var(--motion-easing-standard) 0s;
+}
+
+/* Interactive opacity group — staggered sequence, 0.1s steps */
+.interactive-opacity:nth-child(1) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-base) var(--motion-easing-standard) 0s;
+}
+
+.interactive-opacity:nth-child(2) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-base) var(--motion-easing-standard) 0.1s;
+}
+
+.interactive-opacity:nth-child(3) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-base) var(--motion-easing-standard) 0.2s;
+}
+
+.interactive-opacity:nth-child(4) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-base) var(--motion-easing-standard) 0.3s;
+}
+
+.interactive-opacity:nth-child(5) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-base) var(--motion-easing-standard) 0.4s;
+}
+
+.interactive-opacity:nth-child(6) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-base) var(--motion-easing-standard) 0.5s;
+}
+
+.interactive-opacity:nth-child(7) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-base) var(--motion-easing-standard) 0.6s;
+}
+
+/* Text element group — staggered, text-button leads, text-base follows */
+.text-button:nth-of-type(1) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-base) var(--motion-easing-standard) 0s;
+}
+
+.text-base:nth-of-type(1) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-fast) var(--motion-easing-standard) 0.1s;
+}
+
+.text-button:nth-of-type(2) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-base) var(--motion-easing-standard) 0.1s;
+}
+
+.text-base:nth-of-type(2) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-fast) var(--motion-easing-standard) 0.2s;
+}
+
+/* Full-screen element group (.s-full) — staggered cascade, 0.1s steps */
+.s-full:nth-child(1) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-slow) var(--motion-easing-standard) 0s;
+}
+
+.s-full:nth-child(2) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-slow) var(--motion-easing-standard) 0.1s;
+}
+
+.s-full:nth-child(3) {
+  transition: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter var(--motion-duration-slow) var(--motion-easing-standard) 0.2s;
+}
+
+/* Reduced motion override */
+@media (prefers-reduced-motion: reduce) {
+  .fixed,
+  .mx-auto,
+  .interactive-opacity,
+  .text-button,
+  .text-base,
+  .s-full {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}

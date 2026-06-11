@@ -1,0 +1,29 @@
+# Canva — Concept by Image
+
+## Brand Premise
+
+A browser-based design platform operating at mass-market consumer scale. The site makes an immediate case for creative access — anyone can produce professional-grade visual output — and the design system reflects this intent through a vocabulary of softness and abundance. The dominant structural move is the card: cards arranged in carousels, in two-column splits, in masonry grids, in compound asymmetric layouts. Each card variant is a new proof point, but the shape language is identical across all of them — heavily rounded corners, pill-shaped buttons, generous internal padding — creating the coherence of a single system despite the visual richness of its content. The page opens and closes on a full-bleed multi-hued gradient (purple, blue, teal) that frames everything in between as an information zone between two emotional moments.
+
+## Color Architecture
+
+The color system is built on an extreme contrast between two states. White (#ffffff) or near-white is the surface for all informational content. A vibrant, multi-hued gradient — blending cool purples, blues, and teals — is reserved exclusively for the hero section and the final conversion section, functioning as a visual frame rather than a continuous palette. Within the white sections, card backgrounds introduce the full palette range: bright purples, oranges, reds, and teals. Black (#000000) is the body and heading text color throughout. Navigation links carry a distinct accent purple (#9e9eff) over the hero, shifting to a darker link blue (#0000ee) once the hero passes. Primary CTAs are solid-filled purple or white. The color strategy is not decorative but structural: gradient for opening and closing moments, white for evidence and argument, bright card fills for feature emphasis.
+
+## Typography System
+
+Canva Sans (proprietary, not web-accessible) is the primary typeface — semi-bold 600 weight for headlines and buttons, 400 weight for body and paragraph text. The font is geometric sans-serif, consistent with the brand's approachability positioning. The headline scale descends cleanly from a large, dominant hero heading to card-level subheadings, maintaining the same family throughout. Times appears in the extracted type scale for smaller utilitarian elements (nav, body fallback), but this reflects browser rendering artifacts — the visible type hierarchy is entirely sans-serif in practice. Noto Sans Variable and Noto Sans serve as the internationalization fallback chain. The system has no serif/sans-serif editorial split; all visible typographic decisions express a single unified geometric voice.
+
+## Spatial System
+
+The page operates in five distinct section types. The hero is a full-bleed gradient composition: centered headline cluster, primary CTA, and a large landscape-oriented product demonstration video in a windowed container with rounded corners. Feature sections are white-background, container-bound: a tabbed navigation component above a horizontal card carousel that bleeds off-screen to signal scrollability. Split-screen sections present two equal-weight feature cards side by side with rich illustrative media inside each. The template showcase is a masonry-style grid with cards of varying widths and aspect ratios arranged in horizontal rows, horizontally scrollable. The ecosystem section uses a compound asymmetric grid — two larger cards above, smaller cards below — to vary the rhythm without abandoning grid discipline. All section boundaries are straight horizontal edges with no divider geometry.
+
+## Photography and Editorial Voice
+
+Photography is largely absent in favor of art-directed product media: UI mockups, illustrative compositions, layered graphic scenes combining interface elements, icons, and human figures in a flat-perspective arrangement. Cards function as mini-posters, each one a self-contained proof of what the tool produces. Template card media is the densest gallery moment — images, typographic compositions, and poster designs — communicating breadth and variety rather than aspiration. The visual tone is democratic and optimistic, not editorial or restrained. The media is evidence, not atmosphere.
+
+## Navigation and Wayfinding
+
+The navigation bar is sticky and transparent throughout the scroll — it does not transition to a solid background even as the hero passes. This is an unusual choice for a sticky nav; the transparency is maintained by design, with the nav text and link colors adjusting to maintain legibility against white content sections. The nav structure: wordmark left, five short navigation links centered, two buttons right (outlined secondary, solid primary). Both buttons are pill-shaped, consistent with the site-wide button language. The horizontal carousel in the template showcase section introduces the page's only alternative scroll axis — user-driven, non-hijacking, indicated by partial card bleed and an arrow button.
+
+## Overall Design Character
+
+Canva is the most systematically card-driven site in this collection. The design achieves its richness not by introducing many different component types but by arranging a single component — the rounded-corner card — in every possible layout configuration: carousel, two-column, masonry, compound. The shape grammar is absolutely consistent: the same corner radius on every card, the same pill on every button, the same generous internal padding. The gradient framing device — opening and closing the page on vibrant color while keeping all informational content on white — is a deliberate narrative structure, functioning as chapter breaks. What gives the site its energy is not individual section drama but the accumulated effect of this consistency: a design system so confident in its own language that it can vary layout structure freely without ever feeling incoherent.

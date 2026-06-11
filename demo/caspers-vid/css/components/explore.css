@@ -1,0 +1,234 @@
+/* =============================================================================
+   EXPLORE PAGE — caspers-vid
+   Scoped to: .explore-page, .explore-gallery, .explore-filter-bar,
+              .explore-card, .explore-persistent-cta
+   No bare element selectors.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Page wrapper — clear fixed nav
+   --------------------------------------------------------------------------- */
+.explore-page {
+  padding-top: var(--spacing-section);
+}
+
+/* ---------------------------------------------------------------------------
+   Filter bar — "The Full Field Revealed"
+   --------------------------------------------------------------------------- */
+.explore-filter-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-base);
+  padding-bottom: var(--spacing-base);
+  border-bottom: 1px solid var(--color-border);
+  padding-left: var(--spacing-base);
+  padding-right: var(--spacing-base);
+}
+
+.filter-tab {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: var(--color-body);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding-bottom: var(--spacing-base);
+  border-bottom: 2px solid transparent;
+  transition:
+    border-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard);
+}
+
+.filter-tab.active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Gallery — overrides section-grid-3col gap: 0
+   --------------------------------------------------------------------------- */
+.explore-gallery {
+  gap: 14.08px;
+  padding-bottom: var(--spacing-section);
+}
+
+/* card-group fills the full grid column span so cards tile correctly */
+.explore-gallery .card-group {
+  display: contents;
+}
+
+/* Restore hidden behavior — display:contents has higher specificity than the
+   user-agent [hidden]{display:none}, so we must explicitly re-assert it */
+.explore-gallery .card-group[hidden] {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Creator card
+   --------------------------------------------------------------------------- */
+.explore-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card-video-placeholder {
+  aspect-ratio: 9 / 16;
+  background: #2d2b28;
+  width: 100%;
+  display: block;
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--spacing-base);
+  pointer-events: none;
+}
+
+.explore-card:hover .card-overlay {
+  pointer-events: auto;
+}
+
+.card-creator-name {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-heading);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+.card-points {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-body);
+  opacity: 0.6;
+  transition: opacity var(--duration-base) var(--ease-standard);
+  position: absolute;
+  top: var(--spacing-base);
+  right: var(--spacing-base);
+}
+
+.card-view-link {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-link-default);
+  text-decoration: none;
+  opacity: 0;
+  transition:
+    opacity var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard);
+}
+
+.card-view-link:hover {
+  color: var(--color-link-hover); /* #202020 — DARKENS, correct per interactions.json */
+}
+
+/* Hover reveals */
+.explore-card:hover .card-creator-name {
+  opacity: 1;
+}
+
+.explore-card:hover .card-points {
+  opacity: 1;
+}
+
+.explore-card:hover .card-view-link {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   Card action buttons (Follow / Save)
+   --------------------------------------------------------------------------- */
+.card-actions {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-base);
+  margin-top: var(--spacing-base);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+.explore-card:hover .card-actions {
+  opacity: 1;
+}
+
+.card-btn {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-body);
+  background: none;
+  border: 1px solid var(--color-border);
+  padding: 4px 8px;
+  cursor: pointer;
+  transition:
+    color var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard);
+}
+
+.card-btn:hover {
+  color: var(--color-heading);
+  border-color: var(--color-heading);
+}
+
+/* ---------------------------------------------------------------------------
+   Persistent CTA — "The 'I Want That' Moment"
+   Hidden on load; revealed by explore.js after 50% gallery scroll depth.
+   --------------------------------------------------------------------------- */
+.explore-persistent-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  background: rgba(26, 26, 26, 0.92);
+  border-top: 1px solid var(--color-accent);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 90;
+}
+
+.explore-persistent-cta.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cta-label {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  color: var(--color-body);
+}
+
+.cta-make-your-own {
+  /* Barlow — install via Google Fonts if not rendering correctly */
+  font-family: 'Barlow', sans-serif;
+  font-size: 10.56px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+}

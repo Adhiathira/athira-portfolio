@@ -1,0 +1,431 @@
+/* sections.css — Plinth Press / weld-ivory */
+/* Shared section patterns, labels, craft, collection, studio, commission, footer */
+
+/* ── Shared layout ───────────────────────────────────── */
+.section-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-gutter);
+}
+
+/* ── Section labels ───────────────────────────────────── */
+.section-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: var(--fw-400);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+  margin-bottom: 20px;
+}
+
+.section-label--light {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: var(--fw-400);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 20px;
+}
+
+/* ── Craft section — dark contrast ────────────────────── */
+#craft {
+  background: linear-gradient(180deg, #1a1a1c 0%, #111113 100%);
+  padding: var(--space-section) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+#craft-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-grid-gap);
+  align-items: center;
+}
+
+#craft-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+#craft-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.5vw, var(--type-h2));
+  font-weight: var(--fw-500);
+  font-style: italic;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: #ffffff;
+  margin: 0 0 28px;
+  line-height: 1.18;
+}
+
+#craft-body-1,
+#craft-body-2 {
+  font-family: var(--font-body);
+  font-size: var(--type-body-l);
+  font-weight: var(--fw-300);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0 0 18px;
+}
+
+.btn-ghost-dark-inv {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: var(--type-button);
+  font-weight: var(--fw-400);
+  letter-spacing: var(--font-letter-spacing-nav);
+  color: rgba(255, 255, 255, 0.85);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--space-cta-radius);
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: border-color var(--duration-fast) var(--ease-primary);
+}
+
+#craft-cta {
+  margin-top: 28px;
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+#craft-cta:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+}
+
+#craft-image-col {
+  position: relative;
+}
+
+#craft-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  aspect-ratio: 4 / 5;
+  background: #2a2a2c;
+}
+
+#craft-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Collection section — light, bento grid ───────────── */
+#collection {
+  background: var(--color-page-bg);
+  padding: var(--space-section) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+#collection-header {
+  margin-bottom: var(--space-lg);
+}
+
+#collection-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.5vw, var(--type-h2));
+  font-weight: var(--fw-500);
+  font-style: italic;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: var(--color-heading);
+  margin: 0 0 12px;
+}
+
+#collection-subhead {
+  font-family: var(--font-body);
+  font-size: var(--type-body-l);
+  color: var(--color-muted-text);
+  margin: 0;
+}
+
+/* Bento grid: featured card spans left, two small stack right */
+#collection-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--space-md);
+}
+
+.book-card {
+  background: var(--color-surface-1);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow var(--duration-fast) var(--ease-primary);
+}
+
+.book-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+#book-card-featured {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-card--featured .book-card-image {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-border-default);
+}
+
+.book-card--small {
+  display: flex;
+  flex-direction: column;
+}
+
+.book-card--small .book-card-image {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-border-default);
+}
+
+.book-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-slow) var(--ease-primary);
+}
+
+.book-card:hover .book-card-image img {
+  transform: scale(1.04);
+}
+
+.book-card-meta {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.book-card-edition {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--fw-400);
+  letter-spacing: 0.08em;
+  color: var(--color-muted-text);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.book-card-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2-s);
+  font-weight: var(--fw-500);
+  font-style: italic;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: var(--color-heading);
+  margin: 0 0 10px;
+}
+
+.book-card-desc {
+  font-family: var(--font-body);
+  font-size: var(--type-body-m);
+  color: var(--color-muted-text);
+  line-height: 1.55;
+  margin: 0 0 16px;
+}
+
+.book-card-link {
+  font-family: var(--font-body);
+  font-size: var(--type-button);
+  font-weight: var(--fw-400);
+  letter-spacing: var(--font-letter-spacing-nav);
+  color: var(--color-body-text);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+  align-self: flex-start;
+}
+
+.book-card-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-body-text);
+  transition: width var(--duration-base) var(--ease-primary);
+}
+
+.book-card-link:hover::after { width: 100%; }
+
+#collection-footer {
+  margin-top: var(--space-lg);
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* ── Studio section — dark contrast, video ───────────── */
+#studio {
+  position: relative;
+  overflow: hidden;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#studio-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+#studio-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.55) 50%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+#studio-content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: var(--space-section) var(--grid-gutter);
+  display: flex;
+  justify-content: center;
+}
+
+#studio-quote {
+  max-width: 640px;
+  text-align: center;
+  margin: 0;
+}
+
+#studio-quote-text {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: var(--fw-400);
+  font-style: italic;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.4;
+  margin: 0 0 20px;
+}
+
+#studio-quote-cite {
+  font-family: var(--font-body);
+  font-size: var(--type-nav);
+  font-weight: var(--fw-400);
+  letter-spacing: var(--font-letter-spacing-nav);
+  color: rgba(255, 255, 255, 0.5);
+  font-style: normal;
+}
+
+/* ── Commission teaser — light, horizontal split ─────── */
+#commission-teaser {
+  background: linear-gradient(180deg, #f5f5f7 0%, #ffffff 100%);
+  padding: var(--space-section) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+#commission-inner {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--space-grid-gap);
+  align-items: center;
+}
+
+#commission-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+#commission-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, var(--type-h2));
+  font-weight: var(--fw-500);
+  font-style: italic;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: var(--color-heading);
+  margin: 0 0 20px;
+  line-height: 1.2;
+}
+
+#commission-body {
+  font-family: var(--font-body);
+  font-size: var(--type-body-l);
+  color: var(--color-muted-text);
+  line-height: 1.65;
+  margin: 0 0 28px;
+}
+
+#commission-image {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--color-surface-1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
+}
+
+#commission-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 900px) {
+  #craft-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  #collection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #book-card-featured {
+    grid-row: span 1;
+  }
+
+  #commission-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-inner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #craft,
+  #collection,
+  #studio,
+  #commission-teaser {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+}

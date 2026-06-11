@@ -1,0 +1,199 @@
+/* griting-formless / motion-system
+ *
+ * Primary brand: griting (deep green #003620 / brand green #00693e)
+ * Motion tokens: from formless (single universal easing, three durations)
+ * Static effects: from griting (glass morphism, conic glow — partners-page)
+ * Adapted patterns: sticky-scroll services, cinematic reveal, ghost-to-fill,
+ *                   opacity link hover, ambient radial glow — formless concepts
+ *                   recolored to griting's palette.
+ *
+ * Scroll-driven tab switching patterns documented in motion.json.
+ * GSAP rules documented in motion.json under "gsapRules".
+ */
+
+/* ─── Timing tokens ─────────────────────────────────────────────────────────── */
+/* Single universal easing (formless). Only durations vary by context.          */
+:root {
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --duration-fast:     0.2s;
+  --duration-standard: 0.3s;
+  --duration-slow:     0.5s;
+
+  --transition-standard: all var(--duration-standard) var(--easing-standard);
+  --transition-fast:     all var(--duration-fast)     var(--easing-standard);
+  --transition-slow:     all var(--duration-slow)     var(--easing-standard);
+}
+
+/* ─── Static surface effects (griting partners-page, verbatim) ──────────────── */
+/* Glass morphism — CTA buttons on partners-page. Static, not animated.         */
+:root {
+  --glass-backdrop-blur:    10px;
+  --glass-bg:               rgba(255, 255, 255, 0.02);
+  --glass-border:           #ffffff;
+  --glass-box-shadow:       0px 1px 22px 0px rgba(255, 255, 255, 0.1),
+                            0px 4px 4px 0px rgba(0, 0, 0, 0.05),
+                            0px 10px 10px 0px rgba(0, 0, 0, 0.1);
+  --glass-inner-shadow:     inset 0px 1px 3px 0px rgba(199, 220, 255, 0.35),
+                            inset 0px 0px 20px 0px rgba(198, 204, 255, 0.2);
+}
+
+.glass-btn {
+  backdrop-filter: blur(var(--glass-backdrop-blur));
+  background-color: var(--glass-bg);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-box-shadow), var(--glass-inner-shadow);
+}
+
+/* Conic gradient glow — decorative behind hero primary CTA (partners-page).   */
+/* Static, blendMode: screen, opacity: 0.2.                                    */
+.conic-glow {
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  opacity: 0.2;
+  /* gradient applied inline per instance — conic-gradient(from purple to blue to cyan to pink) */
+}
+
+/* ─── Ghost-to-fill button hover (formless → griting palette) ───────────────── */
+/* Ghost: rgba(0,105,62,0.06) bg + #00693e border + #031f18 text               */
+/* Hover: #00693e bg + #00693e border + #ffffff text                            */
+.btn-ghost {
+  background-color: rgba(0, 105, 62, 0.06);
+  border: 1px solid #00693e;
+  color: #031f18;
+  transition:
+    background-color var(--duration-standard) var(--easing-standard),
+    color            var(--duration-standard) var(--easing-standard),
+    border-color     var(--duration-standard) var(--easing-standard);
+}
+.btn-ghost:hover {
+  background-color: #00693e;
+  border-color: #00693e;
+  color: #ffffff;
+}
+
+/* ─── Opacity-step link hover (formless → griting) ──────────────────────────── */
+/* Nav links and icon links: opacity 1 → 0.6. No color change.                 */
+/* Keeps griting's green-on-dark palette unbroken.                              */
+.nav-link,
+.icon-link {
+  opacity: 1;
+  transition: opacity var(--duration-standard) var(--easing-standard);
+}
+.nav-link:hover,
+.icon-link:hover {
+  opacity: 0.6;
+}
+
+/* ─── Standard interactive element transitions (formless) ───────────────────── */
+.fixed,
+.mx-auto {
+  transition: var(--transition-standard);
+}
+
+.interactive-opacity,
+.text-button {
+  transition:
+    color            var(--duration-standard) var(--easing-standard),
+    background-color var(--duration-standard) var(--easing-standard),
+    border-color     var(--duration-standard) var(--easing-standard),
+    text-decoration-color var(--duration-standard) var(--easing-standard),
+    fill             var(--duration-standard) var(--easing-standard),
+    stroke           var(--duration-standard) var(--easing-standard),
+    opacity          var(--duration-standard) var(--easing-standard),
+    box-shadow       var(--duration-standard) var(--easing-standard),
+    transform        var(--duration-standard) var(--easing-standard),
+    filter           var(--duration-standard) var(--easing-standard),
+    backdrop-filter  var(--duration-standard) var(--easing-standard);
+}
+
+.text-base {
+  transition:
+    color            var(--duration-fast) var(--easing-standard),
+    background-color var(--duration-fast) var(--easing-standard),
+    border-color     var(--duration-fast) var(--easing-standard),
+    text-decoration-color var(--duration-fast) var(--easing-standard),
+    fill             var(--duration-fast) var(--easing-standard),
+    stroke           var(--duration-fast) var(--easing-standard),
+    opacity          var(--duration-fast) var(--easing-standard),
+    box-shadow       var(--duration-fast) var(--easing-standard),
+    transform        var(--duration-fast) var(--easing-standard),
+    filter           var(--duration-fast) var(--easing-standard),
+    backdrop-filter  var(--duration-fast) var(--easing-standard);
+}
+
+.s-full {
+  transition:
+    color            var(--duration-slow) var(--easing-standard),
+    background-color var(--duration-slow) var(--easing-standard),
+    border-color     var(--duration-slow) var(--easing-standard),
+    text-decoration-color var(--duration-slow) var(--easing-standard),
+    fill             var(--duration-slow) var(--easing-standard),
+    stroke           var(--duration-slow) var(--easing-standard),
+    opacity          var(--duration-slow) var(--easing-standard),
+    box-shadow       var(--duration-slow) var(--easing-standard),
+    transform        var(--duration-slow) var(--easing-standard),
+    filter           var(--duration-slow) var(--easing-standard),
+    backdrop-filter  var(--duration-slow) var(--easing-standard);
+}
+
+/* ─── Ambient radial glow (formless concept → griting colors) ───────────────── */
+/* Static atmospheric depth element. Hero: deep green → brand green.            */
+/* Footer: dark green → brand-green-dark. Mirrors formless's chromatic arc.     */
+.ambient-glow-hero {
+  background: radial-gradient(
+    ellipse at center bottom,
+    #00693e 0%,
+    #003620 60%,
+    transparent 100%
+  );
+  opacity: 0.7;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.ambient-glow-footer {
+  background: radial-gradient(
+    ellipse at center bottom,
+    #00995e 0%,
+    #1e2623 60%,
+    transparent 100%
+  );
+  opacity: 0.6;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ─── Sticky scroll services layout (formless → griting) ────────────────────── */
+/* Left panel sticky with griting dark green. Thin vertical rule divides cols.  */
+.sticky-services-panel {
+  position: sticky;
+  top: 0;
+  background-color: #003620;
+  color: #ffffff;
+}
+
+.sticky-services-rule {
+  border-left: 1px solid #1e2623;
+}
+
+.sticky-services-text {
+  background-color: #f5f6f5;
+  color: #031f18;
+}
+
+/* ─── GSAP safety rules (enforced in JS, documented here for reference) ──────── */
+/*                                                                                */
+/*  SAFE:   gsap.from(el, { y: 40, duration: 0.6, ease: "power2.out",            */
+/*                   scrollTrigger: { trigger: el, start: "top 85%" } })          */
+/*                                                                                */
+/*  UNSAFE: gsap.from(el, { opacity: 0, y: 40 })  ← NEVER use opacity:0          */
+/*          opacity:0 in from() hides content before ScrollTrigger fires,         */
+/*          causing blank sections on load and during screenshots.                 */
+/*                                                                                */
+/*  Screenshot mode:                                                               */
+/*    gsap.set("*", { clearProps: "all" }); ScrollTrigger.killAll();              */

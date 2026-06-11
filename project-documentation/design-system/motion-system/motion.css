@@ -1,0 +1,353 @@
+/* ==========================================================================
+   griting-opux / motion-system / motion.css
+   Sources: griting (lead) + opux (scroll-video patterns, keyframes, transitions)
+   Color remapping: all opux brand colors → griting green-world palette
+   (#00693e primary, #003620 deep, #00a85e light, #ffffff on-dark)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   GRITING BASE — verbatim from griting/motion-system/motion.css
+   No animation timing tokens were extracted from griting's static Figma files.
+   Scroll-driven tab switching and glass/glow patterns documented in motion.json.
+   -------------------------------------------------------------------------- */
+
+/* No animation timing tokens extracted — static Figma files across all 8 screens. */
+/* Scroll-driven tab switching patterns documented in motion.json. */
+/* Glass morphism + conic glow documented in motion.json (partners-page static styles). */
+
+:root {
+  /* --transition-duration: ; */
+  /* --easing-standard: ; */
+
+  /* Partners page glass effect (static, not animated): */
+  /* backdrop-filter: blur(10px); */
+  /* box-shadow: 0px 1px 22px 0px rgba(255,255,255,0.1), 0px 4px 4px 0px rgba(0,0,0,0.05), 0px 10px 10px 0px rgba(0,0,0,0.1); */
+
+  /* --------------------------------------------------------------------------
+     OPUX TIMING TOKENS — incorporated, no color values, retained as-is
+     -------------------------------------------------------------------------- */
+  --motion-duration-fast:   0.2s;
+  --motion-duration-base:   0.3s;
+  --motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-simple:   ease;
+
+  /* --------------------------------------------------------------------------
+     GRITING-OPUX MERGED TOKENS — green-world palette applied
+     -------------------------------------------------------------------------- */
+
+  /* Progress bar fill (scroll-driven tab switching) — griting green */
+  --motion-progress-fill:        #00693e;
+  --motion-progress-track:       rgba(0, 105, 62, 0.2);
+
+  /* Shimmer overlay color — griting green tint (replaces opux default) */
+  --motion-shimmer-color:        rgba(0, 105, 62, 0.15);
+
+  /* Glow behind primary CTA — griting green family (replaces opux purple/pink) */
+  --motion-glow-color-start:     #00693e;
+  --motion-glow-color-mid:       #003620;
+  --motion-glow-color-light:     #00a85e;
+  --motion-glow-blur:            10px;
+  --motion-glow-opacity:         0.2;
+  --motion-glow-blend:           screen;
+
+  /* Video chrome — borders, overlays, captions use griting green */
+  --motion-video-border-color:   #00693e;
+  --motion-video-overlay-color:  rgba(0, 54, 32, 0.6);
+
+  /* Parallax background overlay (deep green, not opux orange) */
+  --motion-parallax-overlay:     rgba(0, 54, 32, 0.6);
+
+  /* Performance metadata (from opux) */
+  --motion-system-performance-totalAnimatedElements: 34;
+  --motion-system-performance-simultaneousAnimations: 0;
+  --motion-system-performance-videoLoad: light;
+  --motion-system-performance-complexAnimations: 15;
+  --motion-system-performance-summary-videos: 1;
+  --motion-system-performance-summary-animatedGifs: 1;
+  --motion-system-performance-summary-keyframes: 19;
+  --motion-system-performance-summary-scrollLibraries: 0;
+}
+
+/* --------------------------------------------------------------------------
+   OPUX KEYFRAMES — incorporated verbatim (no color values in keyframe bodies)
+   -------------------------------------------------------------------------- */
+
+/* Mobile parallax — hero section */
+@keyframes mobile-parallax-hero {
+  0%   { background-position-y: 0px; }
+  100% { background-position-y: -150px; }
+}
+
+/* Mobile parallax — FAQ section */
+@keyframes mobile-parallax-faq {
+  0%   { background-position-y: 0px; }
+  100% { background-position-y: -150px; }
+}
+
+/* Chat message entrance */
+@keyframes chatMessageFadeIn {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+
+/* Generic fade-in from top */
+@keyframes fadeIn {
+  0%   { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+
+/* Generic fade-in from below */
+@keyframes fade-in {
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+
+/* Scale entrance */
+@keyframes scale-in {
+  0%   { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+/* Error shake */
+@keyframes shake {
+  0%, 100% { transform: translate(0px); }
+  25%       { transform: translate(-5px); }
+  75%       { transform: translate(5px); }
+}
+
+/* Shimmer sweep — overlay color controlled by --motion-shimmer-color */
+@keyframes shimmer {
+  100% { transform: translate(100%); }
+}
+
+/* Opacity pulse */
+@keyframes pulse {
+  50% { opacity: 0.5; }
+}
+
+/* Full rotation */
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* Tailwind-style generic enter */
+@keyframes enter {
+  0% {
+    opacity: var(--tw-enter-opacity, 1);
+    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0)
+               scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1))
+               rotate(var(--tw-enter-rotate, 0));
+  }
+}
+
+/* Tailwind-style generic exit */
+@keyframes exit {
+  100% {
+    opacity: var(--tw-exit-opacity, 1);
+    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0)
+               scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1))
+               rotate(var(--tw-exit-rotate, 0));
+  }
+}
+
+/* Swipe-to-dismiss: left */
+@keyframes swipe-out-left {
+  0%   { transform: var(--y) translate(var(--swipe-amount-x)); opacity: 1; }
+  100% { transform: var(--y) translate(calc(var(--swipe-amount-x) - 100%)); opacity: 0; }
+}
+
+/* Swipe-to-dismiss: right */
+@keyframes swipe-out-right {
+  0%   { transform: var(--y) translate(var(--swipe-amount-x)); opacity: 1; }
+  100% { transform: var(--y) translate(calc(var(--swipe-amount-x) + 100%)); opacity: 0; }
+}
+
+/* Swipe-to-dismiss: up */
+@keyframes swipe-out-up {
+  0%   { transform: var(--y) translateY(var(--swipe-amount-y)); opacity: 1; }
+  100% { transform: var(--y) translateY(calc(var(--swipe-amount-y) - 100%)); opacity: 0; }
+}
+
+/* Swipe-to-dismiss: down */
+@keyframes swipe-out-down {
+  0%   { transform: var(--y) translateY(var(--swipe-amount-y)); opacity: 1; }
+  100% { transform: var(--y) translateY(calc(var(--swipe-amount-y) + 100%)); opacity: 0; }
+}
+
+/* Sonner toast entrance */
+@keyframes sonner-fade-in {
+  0%   { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Sonner toast exit */
+@keyframes sonner-fade-out {
+  0%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+
+/* Sonner spinner opacity pulse */
+@keyframes sonner-spin {
+  0%   { opacity: 1; }
+  100% { opacity: 0.15; }
+}
+
+/* --------------------------------------------------------------------------
+   OPUX TRANSITION RULES — selector names rebranded to griting namespace,
+   opux brand colors replaced with griting green tokens
+   -------------------------------------------------------------------------- */
+
+/* Banner close button */
+.griting-banner-close {
+  transition: all var(--motion-duration-fast) var(--motion-easing-simple);
+}
+
+/* Ghost / secondary button */
+.griting-button-ghost {
+  transition: all var(--motion-duration-base) var(--motion-easing-simple);
+}
+
+/* Primary button (was opux-button-terracotta — rebranded to griting green) */
+.griting-button-primary {
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+/* Primary outline button */
+.griting-button-primary-outline {
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+/* Generic card container */
+.griting-card {
+  transition: all var(--motion-duration-base) var(--motion-easing-standard);
+}
+
+/* Pricing card — lift + shadow */
+.griting-pricing-card {
+  transition: transform var(--motion-duration-base) var(--motion-easing-simple),
+              box-shadow var(--motion-duration-base) var(--motion-easing-simple);
+}
+
+/* Pricing card CTA button */
+.griting-pricing-card-button {
+  transition: all var(--motion-duration-base) var(--motion-easing-simple);
+}
+
+/* FAQ accordion item */
+.griting-faq-item {
+  transition: all var(--motion-duration-base) var(--motion-easing-simple);
+}
+
+/* FAQ question label color shift */
+.griting-faq-question {
+  transition: color var(--motion-duration-base) var(--motion-easing-simple);
+}
+
+/* --------------------------------------------------------------------------
+   GRITING-OPUX SCROLL PATTERNS — implemented with green-world tokens
+   -------------------------------------------------------------------------- */
+
+/* Scroll-driven progress bar (tab switching sections) */
+.griting-scroll-progress {
+  background-color: var(--motion-progress-fill);
+  transition: width var(--motion-duration-base) var(--motion-easing-standard);
+}
+
+.griting-scroll-progress-track {
+  background-color: var(--motion-progress-track);
+}
+
+/* Parallax hero background (mobile) */
+.griting-parallax-hero {
+  animation: mobile-parallax-hero linear;
+  animation-timeline: scroll();
+  background-color: var(--motion-parallax-overlay);
+}
+
+/* Parallax FAQ background (mobile) */
+.griting-parallax-faq {
+  animation: mobile-parallax-faq linear;
+  animation-timeline: scroll();
+}
+
+/* Inline scroll video wrapper — green-world chrome */
+.griting-scroll-video {
+  border: 1px solid var(--motion-video-border-color);
+  position: relative;
+}
+
+.griting-scroll-video::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--motion-video-overlay-color);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-easing-simple);
+}
+
+/* Shimmer effect — uses green tint overlay */
+.griting-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.griting-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--motion-shimmer-color) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+/* Green-world conic glow behind primary CTA (replaces opux purple/pink glow) */
+.griting-cta-glow {
+  position: relative;
+}
+
+.griting-cta-glow::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    var(--motion-glow-color-start),
+    var(--motion-glow-color-mid),
+    var(--motion-glow-color-light),
+    var(--motion-glow-color-start)
+  );
+  filter: blur(var(--motion-glow-blur));
+  opacity: var(--motion-glow-opacity);
+  mix-blend-mode: var(--motion-glow-blend);
+  z-index: -1;
+}
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION — honour prefers-reduced-motion for all patterns above
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .griting-parallax-hero,
+  .griting-parallax-faq {
+    animation: none;
+  }
+
+  .griting-shimmer::before {
+    animation: none;
+    background: none;
+  }
+}

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Foramen Studio</title>
+  <meta name="description" content="Commission a bespoke ceramic work from Foramen Studio in Lisbon. Contact us to begin a conversation about your architectural or residential project.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/contact.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV START -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo">Foramen</a>
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-spacer active"></div>
+<div class="nav-menu-scrim"></div>
+<nav class="nav-mobile-menu" id="nav-panel" aria-hidden="true">
+  <ul class="nav-panel-links">
+    <li><a href="index.html" class="nav-panel-link">Home</a></li>
+    <li><a href="work.html" class="nav-panel-link">Work</a></li>
+    <li><a href="process.html" class="nav-panel-link">Process</a></li>
+    <li><a href="studio.html" class="nav-panel-link">Studio</a></li>
+    <li><a href="contact.html" class="nav-panel-link nav-link--active">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-panel-cta">Commission a piece</a>
+</nav>
+<script>
+(function(){
+  var nav=document.getElementById('site-nav');
+  var panel=document.getElementById('nav-panel');
+  var scrim=document.querySelector('.nav-menu-scrim');
+  var toggle=document.querySelector('.nav-mobile-toggle');
+  var lastY=window.scrollY;
+  var menuOpen=false;
+  function toggleMenu(open){
+    menuOpen=open;
+    nav.classList.toggle('nav-mobile-open',open);
+    panel.classList.toggle('is-open',open);
+    scrim.classList.toggle('is-open',open);
+    document.body.classList.toggle('nav-open',open);
+    toggle.setAttribute('aria-expanded',open?'true':'false');
+    panel.setAttribute('aria-hidden',open?'false':'true');
+  }
+  toggle.addEventListener('click',function(){toggleMenu(!menuOpen);});
+  scrim.addEventListener('click',function(){toggleMenu(false);});
+  window.addEventListener('scroll',function(){
+    var currentY=window.scrollY;
+    if(currentY>lastY&&currentY>80){nav.classList.add('nav--hidden');}
+    else{nav.classList.remove('nav--hidden');}
+    lastY=currentY;
+  },{passive:true});
+})();
+</script>
+<!-- NAV END -->
+
+<!-- ─── CONTACT HEADER (minimal) ───────────────────────────────────── -->
+<header id="contact-header">
+  <div id="contact-header-inner">
+    <span class="page-header-label">Get in touch</span>
+    <h1 class="page-header-title" id="contact-title">Begin a commission</h1>
+    <p class="page-header-subtitle" id="contact-subtitle">Use this form to introduce your project — the space, the material brief, the scale, and your timeline. We respond to all enquiries within two working days.</p>
+  </div>
+</header>
+
+<!-- ─── CONTACT BODY ────────────────────────────────────────────────── -->
+<section id="contact-body">
+  <div id="contact-body-grid">
+
+    <!-- Commission Form -->
+    <div id="commission-form-wrapper">
+      <form id="commission-form" action="#" method="post" novalidate>
+
+        <div class="form-row" id="form-row-name">
+          <div class="form-field" id="field-first-name">
+            <label class="form-label" for="first-name">First name</label>
+            <input class="form-input" type="text" id="first-name" name="first_name" placeholder="Catarina" required>
+          </div>
+          <div class="form-field" id="field-last-name">
+            <label class="form-label" for="last-name">Last name</label>
+            <input class="form-input" type="text" id="last-name" name="last_name" placeholder="Esteves" required>
+          </div>
+        </div>
+
+        <div class="form-row" id="form-row-contact">
+          <div class="form-field" id="field-email">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="studio@example.com" required>
+          </div>
+          <div class="form-field" id="field-phone">
+            <label class="form-label" for="phone">Phone (optional)</label>
+            <input class="form-input" type="tel" id="phone" name="phone" placeholder="+351 21 000 0000">
+          </div>
+        </div>
+
+        <div class="form-row" id="form-row-project-type">
+          <div class="form-field" id="field-project-type">
+            <label class="form-label" for="project-type">Project type</label>
+            <select class="form-select" id="project-type" name="project_type" required>
+              <option value="" disabled selected>Select a category</option>
+              <option value="floor-tile">Floor tile — residential</option>
+              <option value="floor-tile-commercial">Floor tile — commercial / hospitality</option>
+              <option value="wall-cladding">Wall cladding</option>
+              <option value="tableware-bespoke">Bespoke tableware — restaurant</option>
+              <option value="tableware-domestic">Bespoke tableware — private</option>
+              <option value="installation">Site-specific installation</option>
+              <option value="other">Other — describe below</option>
+            </select>
+          </div>
+          <div class="form-field" id="field-timeline">
+            <label class="form-label" for="timeline">Required by</label>
+            <select class="form-select" id="timeline" name="timeline">
+              <option value="" disabled selected>Approximate timeline</option>
+              <option value="3-months">Within 3 months</option>
+              <option value="6-months">3–6 months</option>
+              <option value="12-months">6–12 months</option>
+              <option value="flexible">Timeline flexible</option>
+              <option value="planning">Early planning stage</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row" id="form-row-location">
+          <div class="form-field full-width" id="field-location">
+            <label class="form-label" for="location">Project location</label>
+            <input class="form-input" type="text" id="location" name="location" placeholder="City, country">
+          </div>
+        </div>
+
+        <div class="form-row" id="form-row-message">
+          <div class="form-field full-width" id="field-message">
+            <label class="form-label" for="message">Brief description</label>
+            <textarea class="form-textarea" id="message" name="message" placeholder="Tell us about the space, the materials you're working with, the scale of the project, and any particular aesthetic or technical requirements. The more context you can give, the better we can assess whether and how we might help."></textarea>
+          </div>
+        </div>
+
+        <div class="form-row" id="form-row-architect">
+          <div class="form-field full-width" id="field-architect">
+            <label class="form-label" for="architect">Architect or designer (if applicable)</label>
+            <input class="form-input" type="text" id="architect" name="architect" placeholder="Name and studio">
+          </div>
+        </div>
+
+        <div class="form-submit-row" id="form-submit-row">
+          <button type="submit" class="btn-primary" id="submit-btn">Send enquiry</button>
+          <p class="form-note">We respond to all enquiries within two working days. For urgent matters, call us directly at +351 21 000 0000.</p>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Contact Details Column -->
+    <div id="contact-details">
+
+      <div class="contact-detail-section" id="detail-address">
+        <p class="contact-detail-title">Studio address</p>
+        <p class="contact-detail-value">
+          Rua do Vigário, 42<br>
+          1100-589 Lisboa<br>
+          Portugal
+        </p>
+        <a href="https://maps.google.com" target="_blank" rel="noopener" class="contact-directions-link" style="margin-top:12px;">Get directions</a>
+      </div>
+
+      <div class="contact-detail-section" id="detail-contact">
+        <p class="contact-detail-title">Direct contact</p>
+        <p class="contact-detail-value">
+          <a href="mailto:studio@foramen.pt">studio@foramen.pt</a>
+        </p>
+        <p class="contact-detail-value" style="margin-top:6px;">
+          <a href="tel:+351210000000">+351 21 000 0000</a>
+        </p>
+      </div>
+
+      <div class="contact-detail-section" id="detail-hours">
+        <p class="contact-detail-title">Studio hours</p>
+        <div class="contact-hours">
+          <div class="contact-hours-row">
+            <span>Monday – Friday</span>
+            <span>9h00 – 18h00</span>
+          </div>
+          <div class="contact-hours-row">
+            <span>Saturday</span>
+            <span>10h00 – 14h00</span>
+          </div>
+          <div class="contact-hours-row">
+            <span>Sunday</span>
+            <span>Closed</span>
+          </div>
+        </div>
+        <p style="font-family:var(--font-body);font-size:0.78rem;color:var(--color-muted-text);margin:14px 0 0;">Studio visits by appointment only — active commission clients.</p>
+      </div>
+
+      <div class="contact-detail-section" id="detail-social">
+        <p class="contact-detail-title">Follow the work</p>
+        <p class="contact-detail-value">
+          <a href="#">@foramen.studio on Instagram</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── LOCATION STRIP ──────────────────────────────────────────────── -->
+<section id="contact-location">
+  <div id="contact-location-grid">
+    <div id="contact-map-image">
+      <img
+        src="assets/contact-lisbon-alfama-aerial.jpeg"
+        alt="Aerial view of Alfama quarter, Lisbon — terracotta rooftops, river in distance"
+        style="width:100%;height:100%;object-fit:cover;filter:grayscale(30%) contrast(1.1);"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div id="contact-map-placeholder">→ assets/contact-lisbon-alfama-aerial.jpeg</div>
+    </div>
+    <div id="contact-address-text">
+      <p class="contact-address-line">
+        Alfama quarter<br>
+        <span>Lisbon, Portugal</span>
+      </p>
+      <p style="font-family:var(--font-body);font-size:0.85rem;line-height:1.7;color:rgba(255,255,255,0.45);margin:0 0 28px;max-width:320px;">Foramen Studio is located in the Alfama — the oldest residential district in Lisbon. The studio occupies a converted warehouse three streets above the Fado district, accessible by tram or on foot from the Sé cathedral.</p>
+      <a href="https://maps.google.com" target="_blank" rel="noopener" class="contact-directions-link">Open in Google Maps</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+<footer id="site-footer">
+  <div id="footer-top">
+    <div id="footer-brand">
+      <p class="footer-logo">Foramen</p>
+      <p class="footer-tagline">Ceramics as architecture. Clay as material memory.</p>
+    </div>
+    <div id="footer-col-work">
+      <p class="footer-col-title">Work</p>
+      <ul class="footer-links">
+        <li><a href="work.html">Collection</a></li>
+        <li><a href="work.html">Architectural tile</a></li>
+        <li><a href="work.html">Wall cladding</a></li>
+        <li><a href="work.html">Tableware</a></li>
+      </ul>
+    </div>
+    <div id="footer-col-studio">
+      <p class="footer-col-title">Studio</p>
+      <ul class="footer-links">
+        <li><a href="studio.html">About</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="studio.html">The workshop</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div id="footer-col-contact">
+      <p class="footer-col-title">Contact</p>
+      <ul class="footer-links">
+        <li><a href="mailto:studio@foramen.pt">studio@foramen.pt</a></li>
+        <li><a href="tel:+351210000000">+351 21 000 0000</a></li>
+        <li><a href="contact.html">Commission enquiry</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="footer-bottom">
+    <p class="footer-legal">© 2025 Foramen Studio, Lda. Alfama, Lisbon.</p>
+    <div class="footer-accent-line"></div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+
+// ─── Page entrance (load, no scroll) ──────────────────────────────
+const headerTl = gsap.timeline({ delay: 0.1 });
+headerTl
+  .from('#contact-header-inner .page-header-label', { y: 14, duration: 0.55, ease: EASE })
+  .from('#contact-title', { y: 24, duration: 0.7, ease: EASE }, '-=0.3')
+  .from('#contact-subtitle', { y: 18, duration: 0.6, ease: EASE }, '-=0.35');
+
+// ─── Form: slide in from left ─────────────────────────────────────
+gsap.from('#commission-form-wrapper', {
+  scrollTrigger: { trigger: '#contact-body', start: 'top 78%', once: true },
+  x: -50,
+  duration: 0.8,
+  ease: EASE
+});
+
+// ─── Details: slide in from right ─────────────────────────────────
+gsap.from('#contact-details', {
+  scrollTrigger: { trigger: '#contact-body', start: 'top 78%', once: true },
+  x: 50,
+  duration: 0.8,
+  ease: EASE
+});
+
+// ─── Location section ─────────────────────────────────────────────
+gsap.from('#contact-map-image', {
+  scrollTrigger: { trigger: '#contact-location', start: 'top 78%', once: true },
+  scale: 0.96,
+  duration: 0.8,
+  ease: EASE
+});
+
+gsap.from('#contact-address-text', {
+  scrollTrigger: { trigger: '#contact-location', start: 'top 78%', once: true },
+  y: 30,
+  duration: 0.7,
+  ease: EASE
+});
+
+// ─── Form submission (prevent default, show confirmation) ──────────
+document.getElementById('commission-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var btn = document.getElementById('submit-btn');
+  btn.textContent = 'Enquiry sent';
+  btn.style.background = 'var(--color-accent)';
+  btn.disabled = true;
+});
+</script>
+
+</body>
+</html>

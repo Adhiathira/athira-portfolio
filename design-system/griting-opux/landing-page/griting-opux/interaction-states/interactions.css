@@ -1,0 +1,563 @@
+/* ============================================================
+   griting-formless — Interaction States
+   Dominant system: griting (all tokens kept verbatim)
+   Supplemental patterns from: formless
+     - buttons.formless-ghost-fill (green-adapted ghost→fill CTA)
+     - links.formless-opacity-link (opacity:0.6 hover, no color change)
+     - cards.formless-card-hover (scale(1.025), 0.5s cubic-bezier)
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   Transition system tokens
+   ---------------------------------------------------------- */
+
+:root {
+  --transition-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-duration-fast: 0.3s;
+  --transition-duration-medium: 0.5s;
+
+  /* Full transition shorthand for UI controls */
+  --transition-interactive:
+    color var(--transition-duration-fast) var(--transition-easing-standard),
+    background-color var(--transition-duration-fast) var(--transition-easing-standard),
+    border-color var(--transition-duration-fast) var(--transition-easing-standard),
+    text-decoration-color var(--transition-duration-fast) var(--transition-easing-standard),
+    fill var(--transition-duration-fast) var(--transition-easing-standard),
+    stroke var(--transition-duration-fast) var(--transition-easing-standard),
+    opacity var(--transition-duration-fast) var(--transition-easing-standard),
+    box-shadow var(--transition-duration-fast) var(--transition-easing-standard),
+    transform var(--transition-duration-fast) var(--transition-easing-standard),
+    filter var(--transition-duration-fast) var(--transition-easing-standard),
+    backdrop-filter var(--transition-duration-fast) var(--transition-easing-standard);
+
+  /* Cinematic transition for media/card elements */
+  --transition-cinematic:
+    color var(--transition-duration-medium) var(--transition-easing-standard),
+    background-color var(--transition-duration-medium) var(--transition-easing-standard),
+    border-color var(--transition-duration-medium) var(--transition-easing-standard),
+    opacity var(--transition-duration-medium) var(--transition-easing-standard),
+    box-shadow var(--transition-duration-medium) var(--transition-easing-standard),
+    transform var(--transition-duration-medium) var(--transition-easing-standard),
+    filter var(--transition-duration-medium) var(--transition-easing-standard),
+    backdrop-filter var(--transition-duration-medium) var(--transition-easing-standard);
+}
+
+/* ----------------------------------------------------------
+   Buttons — Primary (griting)
+   ---------------------------------------------------------- */
+
+.btn-primary {
+  background: linear-gradient(90deg, #00693e, #00693e);
+  color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #003620;
+  box-shadow:
+    0px 1px 2px -1px rgba(9, 6, 63, 0.4),
+    0px 0px 0px 1px #003620,
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.16);
+  font-size: 18px;
+  font-family: "Inter Variable", "Inter", sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.18px;
+  cursor: pointer;
+  transition: var(--transition-interactive);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #008050, #008050);
+  color: #ffffff;
+}
+
+.btn-primary:active {
+  background: linear-gradient(90deg, #003620, #003620);
+  color: #ffffff;
+}
+
+/* ----------------------------------------------------------
+   Buttons — Outline (griting)
+   ---------------------------------------------------------- */
+
+.btn-outline {
+  background: rgba(0, 105, 62, 0.06);
+  color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #00693e;
+  box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.02);
+  font-size: 17px;
+  font-family: "Inter Variable", "Inter", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-interactive);
+}
+
+.btn-outline:hover {
+  background: rgba(0, 105, 62, 0.12);
+  border-color: #00693e;
+}
+
+.btn-outline:active {
+  background: rgba(0, 105, 62, 0.20);
+}
+
+/* ----------------------------------------------------------
+   Buttons — Outline on light background (griting)
+   ---------------------------------------------------------- */
+
+.btn-outline-on-light {
+  background: rgba(0, 105, 62, 0.06);
+  color: #000000;
+  border-radius: 8px;
+  border: 1px solid #00693e;
+  box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.02);
+  font-size: 17px;
+  font-family: "Inter Variable", "Inter", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-interactive);
+}
+
+.btn-outline-on-light:hover {
+  background: rgba(0, 105, 62, 0.12);
+  color: #000000;
+}
+
+.btn-outline-on-light:active {
+  background: rgba(0, 105, 62, 0.20);
+}
+
+/* ----------------------------------------------------------
+   Buttons — Share icon (griting)
+   ---------------------------------------------------------- */
+
+.btn-share-icon {
+  background: #f3f4f3;
+  border: 1px solid rgba(209, 213, 219, 0.5);
+  border-radius: 40px;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.btn-share-icon:hover {
+  background: #e5e7e5;
+}
+
+/* ----------------------------------------------------------
+   Buttons — Filter pills (griting)
+   ---------------------------------------------------------- */
+
+.pill-active {
+  background: #00693e;
+  color: #ffffff;
+  border-radius: 9999px;
+  height: 36px;
+  padding-inline: 16px;
+  cursor: pointer;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard),
+              color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.pill-active:hover {
+  background: #004d2e;
+  color: #ffffff;
+}
+
+.pill-active:active {
+  background: #003d25;
+  color: #ffffff;
+}
+
+.pill-inactive {
+  background: #f3f4f3;
+  color: #000000;
+  border-radius: 9999px;
+  border: 1px solid #e4e4e7;
+  height: 36px;
+  padding-inline: 16px;
+  cursor: pointer;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard),
+              color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.pill-inactive:hover {
+  background: #e8e8e8;
+  color: #031f18;
+}
+
+.pill-inactive:active {
+  background: #d4d4d4;
+  color: #031f18;
+}
+
+/* ----------------------------------------------------------
+   Buttons — Primary CTA (landing-page-auditable-section, griting)
+   ---------------------------------------------------------- */
+
+.btn-primary-cta {
+  background: #00693e;
+  color: #ffffff;
+  border-radius: 8px;
+  box-shadow:
+    0px 1px 2px -1px rgba(9, 6, 63, 0.4),
+    0px 0px 0px 1px #3960f9,
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.16);
+  height: 52px;
+  width: 154px;
+  font-size: 18px;
+  font-family: "Inter Variable", "Inter", sans-serif;
+  letter-spacing: -0.18px;
+  cursor: pointer;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard),
+              box-shadow var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.btn-primary-cta:hover {
+  background: #005c35;
+}
+
+.btn-primary-cta:active {
+  background: #004d2c;
+}
+
+/* ----------------------------------------------------------
+   Buttons — Secondary outline (landing-page-auditable-section, griting)
+   ---------------------------------------------------------- */
+
+.btn-secondary-outline {
+  background: rgba(0, 105, 62, 0.06);
+  color: #000000;
+  border-radius: 8px;
+  border: 1px solid #00693e;
+  height: 52px;
+  font-size: 17px;
+  font-family: "Inter Variable", "Inter", sans-serif;
+  cursor: pointer;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard),
+              border-color var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.btn-secondary-outline:hover {
+  background: rgba(0, 105, 62, 0.12);
+}
+
+.btn-secondary-outline:active {
+  background: rgba(0, 105, 62, 0.18);
+}
+
+/* ----------------------------------------------------------
+   Buttons — Hero primary frosted glass (partners-page, griting)
+   ---------------------------------------------------------- */
+
+.btn-hero-primary {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.56));
+  color: #000000;
+  border-radius: 8px;
+  border: 1px solid #ffffff;
+  padding-block: 15px;
+  padding-inline: 21px;
+  font-size: 24px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  gap: 12px;
+  box-shadow:
+    0px 1px 0px 0px rgba(0, 0, 0, 0.05),
+    0px 4px 4px 0px rgba(0, 0, 0, 0.05),
+    0px 10px 10px 0px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard),
+              box-shadow var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.btn-hero-primary:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* ----------------------------------------------------------
+   Buttons — Ghost glass (partners-page, griting)
+   ---------------------------------------------------------- */
+
+.btn-ghost-glass {
+  background: rgba(255, 255, 255, 0.02);
+  color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ffffff;
+  padding-block: 6px;
+  padding-inline: 16px;
+  font-size: 18px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  height: 50px;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0px 1px 22px 0px rgba(255, 255, 255, 0.1),
+    0px 4px 4px 0px rgba(0, 0, 0, 0.05),
+    0px 10px 10px 0px rgba(0, 0, 0, 0.1),
+    inset 0px 1px 3px 0px rgba(199, 220, 255, 0.35),
+    inset 0px 0px 20px 0px rgba(198, 204, 255, 0.2);
+  cursor: pointer;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard),
+              box-shadow var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard),
+              backdrop-filter var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.btn-ghost-glass:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ----------------------------------------------------------
+   Buttons — Ghost→fill (from formless, adapted to griting green)
+   Transparent background with #00693e border. Fills solid on hover,
+   inverting text to white. Use on light or neutral backgrounds.
+   ---------------------------------------------------------- */
+
+.btn-formless-ghost-fill {
+  background: transparent;
+  color: #00693e;
+  border-radius: 8px;
+  border: 1px solid #00693e;
+  cursor: pointer;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard),
+              color var(--transition-duration-fast) var(--transition-easing-standard),
+              border-color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.btn-formless-ghost-fill:hover {
+  background: #00693e;
+  color: #ffffff;
+  border-color: #00693e;
+}
+
+.btn-formless-ghost-fill:active {
+  background: #003620;
+  color: #ffffff;
+  border-color: #003620;
+}
+
+/* ----------------------------------------------------------
+   Links — Navigation (griting)
+   ---------------------------------------------------------- */
+
+.link-nav {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  transition: color var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.link-nav:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.link-nav-on-light {
+  color: #455451;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  transition: color var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.link-nav-on-light:hover {
+  color: #031f18;
+  text-decoration: none;
+}
+
+/* ----------------------------------------------------------
+   Links — Back button (griting)
+   ---------------------------------------------------------- */
+
+.link-back {
+  color: #202b38;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.link-back:hover {
+  color: #031f18;
+}
+
+/* ----------------------------------------------------------
+   Links — Article title (griting)
+   ---------------------------------------------------------- */
+
+.link-article-title {
+  color: #031f18;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.link-article-title:hover {
+  color: #00693e;
+  text-decoration: underline;
+}
+
+/* ----------------------------------------------------------
+   Links — Opacity link (from formless)
+   Nav and icon links use opacity:0.6 on hover — no color change.
+   Use on dark backgrounds where a subtle de-emphasis is preferred
+   over a full color shift.
+   ---------------------------------------------------------- */
+
+.link-formless-opacity {
+  color: #ffffff;
+  opacity: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.link-formless-opacity:hover,
+.link-formless-opacity:active {
+  color: #ffffff;
+  opacity: 0.6;
+}
+
+/* ----------------------------------------------------------
+   Inputs — Search (griting)
+   ---------------------------------------------------------- */
+
+.input-search {
+  background: #f3f4f3;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  height: 40px;
+  color: #031f18;
+  transition: border-color var(--transition-duration-fast) var(--transition-easing-standard),
+              box-shadow var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.input-search::placeholder {
+  color: #71717b;
+}
+
+.input-search:focus {
+  border-color: #00693e;
+  outline: none;
+}
+
+/* ----------------------------------------------------------
+   Tabs — Scroll tab (landing-page-auditable-section, griting)
+   ---------------------------------------------------------- */
+
+.scroll-tab-active {
+  color: #00693e;
+  font-weight: 600;
+  background: white;
+  cursor: pointer;
+  transition: color var(--transition-duration-fast) var(--transition-easing-standard),
+              background-color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.scroll-tab-inactive {
+  color: #031f18;
+  font-weight: 600;
+  background: transparent;
+  cursor: pointer;
+  transition: color var(--transition-duration-fast) var(--transition-easing-standard),
+              background-color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.scroll-tab-inactive-secondary {
+  color: #000000;
+  font-weight: 600;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ----------------------------------------------------------
+   Tabs — Partner tab (partners-page-view-1, griting)
+   ---------------------------------------------------------- */
+
+.partner-tab-active {
+  font-weight: 600;
+  color: #f4f2f0;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.partner-tab-inactive {
+  font-weight: 500;
+  color: #f4f2f0;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color var(--transition-duration-fast) var(--transition-easing-standard),
+              opacity var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+/* ----------------------------------------------------------
+   Progress bar (partners-page-view-1, griting)
+   ---------------------------------------------------------- */
+
+.progress-track {
+  background: #c6c6c6;
+  height: 3px;
+}
+
+.progress-fill {
+  background: #00995e;
+  height: 3px;
+  transition: width var(--transition-duration-medium) var(--transition-easing-standard);
+}
+
+/* ----------------------------------------------------------
+   Numbered list states (landing-page-auditable-section, griting)
+   ---------------------------------------------------------- */
+
+.numbered-list-item-active {
+  color: #031f18;
+  opacity: 1;
+  transition: opacity var(--transition-duration-fast) var(--transition-easing-standard),
+              color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.numbered-list-item-active .bullet {
+  background: #00693e;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.numbered-list-item-inactive {
+  color: rgba(3, 31, 24, 0.6);
+  opacity: 0.6;
+  transition: opacity var(--transition-duration-fast) var(--transition-easing-standard),
+              color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+/* ----------------------------------------------------------
+   Cards — Scale-on-hover (from formless)
+   transform:scale(1.025) on hover with 0.5s cubic-bezier(0.4,0,0.2,1).
+   Parent must have overflow:hidden. Apply class to the card container;
+   the transform is applied to immediate children.
+   ---------------------------------------------------------- */
+
+.card-formless-hover {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card-formless-hover > * {
+  transition: transform var(--transition-duration-medium) var(--transition-easing-standard);
+}
+
+.card-formless-hover:hover > * {
+  transform: scale(1.025);
+}

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Kesslar &amp; Vane Instruments</title>
+  <meta name="description" content="Begin a commission with Kesslar &amp; Vane. Write to us or complete the brief form to start a conversation about your instrument.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/contact.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" id="nav-logo-link">
+      <span class="nav-logo-wordmark">Kesslar &amp; Vane</span>
+    </a>
+    <ul class="nav-links" id="nav-links-list">
+      <li><a href="work.html" class="nav-link" id="nav-link-work">Work</a></li>
+      <li><a href="process.html" class="nav-link" id="nav-link-process">Process</a></li>
+      <li><a href="studio.html" class="nav-link" id="nav-link-studio">Studio</a></li>
+      <li><a href="contact.html" class="nav-link nav-link--active" id="nav-link-contact">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="work.html" class="nav-link" id="nav-mobile-work">Work</a>
+  <a href="process.html" class="nav-link" id="nav-mobile-process">Process</a>
+  <a href="studio.html" class="nav-link" id="nav-mobile-studio">Studio</a>
+  <a href="contact.html" class="nav-link nav-link--active" id="nav-mobile-contact">Contact</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = document.getElementById('nav-mobile-toggle');
+    var mobileMenu = document.getElementById('nav-mobile-menu');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 10) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    }, { passive: true });
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open');
+        var isOpen = mobileMenu.classList.contains('is-open');
+        toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      });
+    }
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('.nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.classList.remove('is-open');
+        });
+      });
+    }
+  })();
+</script>
+
+<div class="nav-spacer active" id="nav-spacer"></div>
+
+<!-- ============================================================
+     CONTACT HERO — minimal 15vh (action/contact archetype)
+     ============================================================ -->
+<section id="contact-hero" class="contact-hero-section">
+  <div id="contact-hero-inner" class="contact-hero-inner">
+    <h3 id="contact-label" class="section-label">Get in Touch</h3>
+    <h1 id="contact-hero-title" class="contact-hero-title">Begin a Commission</h1>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT MAIN — two-column split
+     Left: commission form | Right: contact details + note
+     Animation: y rise on form, x right on details
+     ============================================================ -->
+<section id="contact-main" class="contact-main-section">
+  <div id="contact-main-inner" class="contact-main-inner">
+
+    <!-- Commission form -->
+    <div id="contact-form-col" class="contact-form-col">
+      <h2 id="contact-form-heading" class="contact-form-heading">Tell us about your instrument</h2>
+      <p id="contact-form-intro" class="contact-form-intro">The more detail you can give us at this stage, the more precisely we can assess whether we are the right workshop for your commission.</p>
+
+      <form id="commission-form" class="commission-form" novalidate>
+        <div id="form-group-name" class="form-group">
+          <label for="field-name" class="form-label">Your name</label>
+          <input type="text" id="field-name" name="name" class="form-input" placeholder="Dr. Jane Smith" autocomplete="name" required>
+        </div>
+        <div id="form-group-org" class="form-group">
+          <label for="field-org" class="form-label">Organisation <span class="form-optional">(if applicable)</span></label>
+          <input type="text" id="field-org" name="organisation" class="form-input" placeholder="University of Edinburgh" autocomplete="organization">
+        </div>
+        <div id="form-group-email" class="form-group">
+          <label for="field-email" class="form-label">Email address</label>
+          <input type="email" id="field-email" name="email" class="form-input" placeholder="j.smith@ed.ac.uk" autocomplete="email" required>
+        </div>
+        <div id="form-group-type" class="form-group">
+          <label for="field-type" class="form-label">Instrument type</label>
+          <select id="field-type" name="instrument-type" class="form-input form-select" required>
+            <option value="" disabled selected>Select a category</option>
+            <option value="theodolite">Theodolite</option>
+            <option value="level">Level</option>
+            <option value="micrometer">Micrometer gauge</option>
+            <option value="spectrometer">Spectrometer</option>
+            <option value="other">Other / unsure</option>
+          </select>
+        </div>
+        <div id="form-group-use" class="form-group">
+          <label for="field-use" class="form-label">Intended use</label>
+          <textarea id="field-use" name="intended-use" class="form-input form-textarea" placeholder="Describe what you need to measure, under what conditions, and to what accuracy." rows="5" required></textarea>
+        </div>
+        <div id="form-group-timeline" class="form-group">
+          <label for="field-timeline" class="form-label">Timeline <span class="form-optional">(if you have one)</span></label>
+          <input type="text" id="field-timeline" name="timeline" class="form-input" placeholder="e.g. required by March 2027">
+        </div>
+        <div id="form-submit-row" class="form-submit-row">
+          <button type="submit" id="form-submit" class="btn-primary form-submit-btn">Send brief</button>
+          <p id="form-note" class="form-note">We respond to all commission enquiries within five working days.</p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Contact details -->
+    <div id="contact-details-col" class="contact-details-col">
+      <div id="contact-details-group" class="contact-details-group">
+        <h3 id="contact-details-heading" class="contact-details-heading">Alternatively, write to us directly.</h3>
+        <p id="contact-details-body" class="contact-details-body">We prefer letters for initial contact whenever possible. A commission that begins with a letter rather than an email is one that begins at the right pace.</p>
+
+        <div id="contact-address-block" class="contact-detail-block">
+          <span class="contact-detail-label">Post</span>
+          <address id="contact-address" class="contact-address">
+            Kesslar &amp; Vane<br>
+            14 Grassmarket<br>
+            Edinburgh EH1 2JU<br>
+            Scotland
+          </address>
+        </div>
+
+        <div id="contact-email-block" class="contact-detail-block">
+          <span class="contact-detail-label">Email</span>
+          <a href="mailto:commissions@kesslarandvane.co.uk" id="contact-email-link" class="contact-detail-link">commissions@kesslarandvane.co.uk</a>
+        </div>
+
+        <div id="contact-phone-block" class="contact-detail-block">
+          <span class="contact-detail-label">Telephone</span>
+          <a href="tel:+441316231887" id="contact-phone-link" class="contact-detail-link">+44 (0)131 623 1887</a>
+          <span class="contact-detail-note">Mon–Fri, 08:30–17:00 GMT</span>
+        </div>
+      </div>
+
+      <div id="contact-visits-note" class="contact-visits-note">
+        <h4 id="visits-heading" class="visits-heading">Visiting the workshop</h4>
+        <p id="visits-body" class="visits-body">The workshop is not open to general visitors. Clients with a commission in progress may arrange to observe their instrument at an agreed stage. Please contact us by letter or telephone to discuss.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT IMAGE BAND — editorial pause with anchored card
+     Light surface, full-width image
+     ============================================================ -->
+<section id="contact-image-band" class="contact-image-band-section">
+  <div id="contact-image-band-wrap" class="contact-image-band-wrap">
+    <img
+      id="contact-img"
+      src="assets/contact-workshop.jpeg"
+      alt="The workshop floor at 14 Grassmarket, Edinburgh — morning light through tall windows"
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    >
+    <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-3);color:var(--color-muted-text);font-size:0.8rem;letter-spacing:0.06em;">→ assets/contact-workshop.jpeg</div>
+    <div id="contact-img-overlay" class="contact-img-overlay"></div>
+    <div id="contact-img-card" class="contact-img-card">
+      <span class="contact-img-card-label">No. 1,847 instruments<br>since 1887</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="site-footer" class="site-footer">
+  <div id="footer-inner" class="footer-inner">
+    <div id="footer-top" class="footer-top">
+      <div id="footer-brand" class="footer-brand">
+        <span class="footer-wordmark">Kesslar &amp; Vane</span>
+        <p class="footer-tagline-text">Precision scientific instruments.<br>Edinburgh, Scotland.</p>
+      </div>
+      <div id="footer-nav" class="footer-nav">
+        <div id="footer-nav-col-1" class="footer-nav-col">
+          <p class="footer-nav-heading">Studio</p>
+          <ul class="footer-nav-list">
+            <li><a href="work.html" class="footer-link">Work</a></li>
+            <li><a href="process.html" class="footer-link">Process</a></li>
+            <li><a href="studio.html" class="footer-link">Studio</a></li>
+          </ul>
+        </div>
+        <div id="footer-nav-col-2" class="footer-nav-col">
+          <p class="footer-nav-heading">Contact</p>
+          <ul class="footer-nav-list">
+            <li><a href="contact.html" class="footer-link">Commission an instrument</a></li>
+            <li><a href="contact.html" class="footer-link">General enquiries</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="footer-address" class="footer-address">
+        <p class="footer-nav-heading">Location</p>
+        <p class="footer-address-text">14 Grassmarket<br>Edinburgh EH1 2JU<br>Scotland</p>
+      </div>
+    </div>
+    <div id="footer-bottom" class="footer-bottom">
+      <span class="footer-legal">© 2026 Kesslar &amp; Vane. All rights reserved.</span>
+      <span class="footer-legal">Est. Edinburgh, 1887</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  const BASE = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.78;
+  const SLOW = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-slow')) || 1.3;
+  const CARD = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-card')) || 0.52;
+  const EASE_E = getComputedStyle(document.documentElement).getPropertyValue('--ease-enter').trim() || 'power3.out';
+  const EASE_P = getComputedStyle(document.documentElement).getPropertyValue('--ease-primary').trim() || 'power2.inOut';
+
+  // Hero
+  gsap.from('#contact-hero-title', { y: 20, duration: SLOW, ease: EASE_E });
+
+  // Form col — rise from below
+  gsap.from('#contact-form-col', {
+    scrollTrigger: { trigger: '#contact-main', start: 'top 78%' },
+    y: 40, duration: BASE, ease: EASE_E
+  });
+
+  // Details col — enter from right
+  gsap.from('#contact-details-col', {
+    scrollTrigger: { trigger: '#contact-main', start: 'top 75%' },
+    x: 60, duration: BASE, ease: EASE_P
+  });
+
+  // Image band — slowZoom effect
+  var contactImg = document.getElementById('contact-img');
+  if (contactImg) {
+    contactImg.style.transition = 'transform 20s ease-in-out';
+    contactImg.style.transform = 'scale(1)';
+    var imgObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          contactImg.style.transform = 'scale(1.06)';
+          imgObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    imgObserver.observe(contactImg);
+  }
+
+  // Card entrance
+  gsap.from('#contact-img-card', {
+    scrollTrigger: { trigger: '#contact-image-band', start: 'top 70%' },
+    y: 20, duration: CARD, ease: EASE_E
+  });
+
+  // Form submit handler (demo)
+  var form = document.getElementById('commission-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = document.getElementById('form-submit');
+      btn.textContent = 'Brief sent';
+      btn.style.opacity = '0.6';
+      btn.disabled = true;
+    });
+  }
+</script>
+
+</body>
+</html>

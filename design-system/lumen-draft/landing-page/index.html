@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foramen Studio — Architectural Ceramics, Lisbon</title>
+  <meta name="description" content="Foramen Studio creates bespoke architectural stoneware — floor tiles, wall cladding, and handthrown tableware — for private residences and design hotels. Crafted in Lisbon.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV START -->
+<nav id="site-nav" class="on-dark">
+  <a href="index.html" class="nav-logo">Foramen</a>
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-menu-scrim"></div>
+<nav class="nav-mobile-menu" id="nav-panel" aria-hidden="true">
+  <ul class="nav-panel-links">
+    <li><a href="index.html" class="nav-panel-link">Home</a></li>
+    <li><a href="work.html" class="nav-panel-link">Work</a></li>
+    <li><a href="process.html" class="nav-panel-link">Process</a></li>
+    <li><a href="studio.html" class="nav-panel-link">Studio</a></li>
+    <li><a href="contact.html" class="nav-panel-link">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-panel-cta">Commission a piece</a>
+</nav>
+<script>
+(function(){
+  var nav=document.getElementById('site-nav');
+  var panel=document.getElementById('nav-panel');
+  var scrim=document.querySelector('.nav-menu-scrim');
+  var toggle=document.querySelector('.nav-mobile-toggle');
+  var lastY=window.scrollY;
+  var menuOpen=false;
+  function toggleMenu(open){
+    menuOpen=open;
+    nav.classList.toggle('nav-mobile-open',open);
+    panel.classList.toggle('is-open',open);
+    scrim.classList.toggle('is-open',open);
+    document.body.classList.toggle('nav-open',open);
+    toggle.setAttribute('aria-expanded',open?'true':'false');
+    panel.setAttribute('aria-hidden',open?'false':'true');
+  }
+  toggle.addEventListener('click',function(){toggleMenu(!menuOpen);});
+  scrim.addEventListener('click',function(){toggleMenu(false);});
+  window.addEventListener('scroll',function(){
+    var currentY=window.scrollY;
+    if(currentY>lastY&&currentY>80){nav.classList.add('nav--hidden');}
+    else{nav.classList.remove('nav--hidden');}
+    lastY=currentY;
+    // Remove on-dark when past hero
+    if(currentY>window.innerHeight*0.7){
+      nav.classList.remove('on-dark');
+    } else {
+      nav.classList.add('on-dark');
+    }
+  },{passive:true});
+})();
+</script>
+<!-- NAV END -->
+
+<!-- ─── 1. HERO ─────────────────────────────────────────────────────── -->
+<section id="hero" role="banner">
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-kiln-ambient.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="hero-video-placeholder">→ assets/hero-kiln-ambient.mp4</div>
+    <div id="hero-video-overlay"></div>
+  </div>
+
+  <div id="hero-content">
+    <p id="hero-label">Lisbon, Portugal — Est. 2018</p>
+    <h1 id="hero-title">Clay as<br><em>material memory</em></h1>
+    <p id="hero-desc">
+      Foramen Studio creates bespoke architectural stoneware — handthrown vessels,
+      modular floor tiles, and fired wall cladding for private residences and design hotels.
+    </p>
+    <div id="hero-cta-group">
+      <a href="work.html" class="btn-primary">View the collection</a>
+      <a href="process.html" class="btn-ghost-light">Our process</a>
+    </div>
+  </div>
+
+  <div id="hero-scroll-indicator">
+    <span>Scroll</span>
+    <div id="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ─── 2. PROCESS PREVIEW ─────────────────────────────────────────── -->
+<section id="process-preview">
+  <div class="section-inner">
+    <div id="process-preview-header">
+      <span class="section-label">How we make</span>
+      <h2 class="section-heading" id="process-preview-heading">Four stages,<br>one intention</h2>
+    </div>
+    <ul id="process-steps-list">
+      <li class="process-step" id="step-1">
+        <div class="process-step-number"></div>
+        <div class="process-step-content">
+          <h3 class="process-step-title">Earth & Form</h3>
+          <p class="process-step-desc">We begin with stoneware clay sourced from the Alentejo plateau — a body with high iron content that responds to heat with a depth of warm umber and slate. Each form is thrown or hand-built to specification, never moulded.</p>
+        </div>
+      </li>
+      <li class="process-step" id="step-2">
+        <div class="process-step-number"></div>
+        <div class="process-step-content">
+          <h3 class="process-step-title">Glaze Development</h3>
+          <p class="process-step-desc">Our glazes are compounded in-studio from raw minerals — feldspar, silica, iron oxides, wood ash. Each commission receives a bespoke palette developed from the architecture's material language: stone, textile, light quality.</p>
+        </div>
+      </li>
+      <li class="process-step" id="step-3">
+        <div class="process-step-number"></div>
+        <div class="process-step-content">
+          <h3 class="process-step-title">The Firing</h3>
+          <p class="process-step-desc">Work is fired in an electric kiln to 1280°C. Reduction-influenced iron glazes bloom during the cooling cycle — this phase of the process is collaborative between the maker's intention and the material's will. No two firings are identical.</p>
+        </div>
+      </li>
+      <li class="process-step" id="step-4">
+        <div class="process-step-number"></div>
+        <div class="process-step-content">
+          <h3 class="process-step-title">Installation & Curation</h3>
+          <p class="process-step-desc">For architectural commissions, we work directly with the project architect through installation, providing technical specifications, grout recommendations, and on-site consultation to ensure the work integrates as designed.</p>
+        </div>
+      </li>
+    </ul>
+    <div id="process-preview-cta" style="margin-top:56px;">
+      <a href="process.html" class="btn-ghost-dark">Full process documentation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 3. COLLECTION PREVIEW ──────────────────────────────────────── -->
+<section id="collection-preview">
+  <div class="section-inner">
+    <div class="collection-header">
+      <div class="collection-header-left">
+        <span class="section-label">Current collection</span>
+        <h2 class="section-heading" id="collection-heading">Terra forms</h2>
+        <p class="section-body section-body--muted" id="collection-subtext">A body of work exploring the boundary between vessel and architecture — objects that function as both container and surface.</p>
+      </div>
+      <a href="work.html" class="collection-link">All work →</a>
+    </div>
+
+    <div id="collection-grid">
+      <!-- Featured item: spans full left col, 2 rows -->
+      <div class="collection-item collection-item--featured" id="collection-featured">
+        <img
+          src="assets/collection-featured-floor-tiles.jpeg"
+          alt="Foramen terra tiles installation, warm iron-oxide glaze on stoneware floor, natural light"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="collection-item-placeholder">→ assets/collection-featured-floor-tiles.jpeg</div>
+        <div class="collection-item-overlay"></div>
+        <div class="collection-item-info">
+          <p class="collection-item-category">Architectural tile</p>
+          <h3 class="collection-item-name">Alentejo Floor Series</h3>
+        </div>
+      </div>
+
+      <!-- Right col top -->
+      <div class="collection-item collection-item--tall" id="collection-vessel">
+        <img
+          src="assets/collection-vessel-set.jpeg"
+          alt="Handthrown stoneware vessel set, matte ash glaze, studio light"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="collection-item-placeholder">→ assets/collection-vessel-set.jpeg</div>
+        <div class="collection-item-overlay"></div>
+        <div class="collection-item-info">
+          <p class="collection-item-category">Tableware</p>
+          <h3 class="collection-item-name">Vessel Forms, 2024</h3>
+        </div>
+      </div>
+
+      <!-- Right col bottom -->
+      <div class="collection-item collection-item--tall" id="collection-wall">
+        <img
+          src="assets/collection-wall-cladding.jpeg"
+          alt="Architectural wall cladding in terracotta glazed stoneware, Portuguese residence"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="collection-item-placeholder">→ assets/collection-wall-cladding.jpeg</div>
+        <div class="collection-item-overlay"></div>
+        <div class="collection-item-info">
+          <p class="collection-item-category">Wall cladding</p>
+          <h3 class="collection-item-name">Interior Wall, Comporta</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 4. MANIFESTO ───────────────────────────────────────────────── -->
+<section id="manifesto">
+  <div id="manifesto-content">
+    <p id="manifesto-quote">
+      "The kiln is the first architect — it decides what the form<br>
+      <span>becomes</span>, not what it was meant to be."
+    </p>
+    <p id="manifesto-body">
+      We work at the intersection of craft and construction. Every piece made in our Alfama studio carries the record of its making — the pull of the hand, the chemistry of the glaze, the temperature of the firing. This is memory in material form.
+    </p>
+    <a href="studio.html" class="btn-ghost-light">About the studio</a>
+  </div>
+</section>
+
+<!-- ─── 5. STUDIO INTRO ────────────────────────────────────────────── -->
+<section id="studio-intro">
+  <div id="studio-intro-grid">
+    <div id="studio-intro-image">
+      <img
+        src="assets/studio-interior-alfama.jpeg"
+        alt="Foramen Studio interior, Alfama district, Lisbon — kilns, shelving, raw stoneware"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div id="studio-intro-image-placeholder">→ assets/studio-interior-alfama.jpeg</div>
+    </div>
+    <div id="studio-intro-text">
+      <span class="section-label">The workshop</span>
+      <h2 class="section-heading" id="studio-intro-heading">600 square metres<br>of intention</h2>
+      <p class="section-body" id="studio-intro-body">Our studio occupies a converted warehouse in the Alfama quarter of Lisbon. We keep a small team of four makers, one glaze chemist, and one installation coordinator — large enough to take on complex architectural briefs, small enough for every decision to pass through a single pair of hands.</p>
+      <ul class="studio-detail-list" id="studio-detail-list">
+        <li class="studio-detail-item">
+          <span class="studio-detail-label">Founded</span>
+          <span class="studio-detail-value">2018, Lisbon</span>
+        </li>
+        <li class="studio-detail-item">
+          <span class="studio-detail-label">Speciality</span>
+          <span class="studio-detail-value">Architectural stoneware — floor tile, wall cladding, bespoke tableware</span>
+        </li>
+        <li class="studio-detail-item">
+          <span class="studio-detail-label">Commissions</span>
+          <span class="studio-detail-value">Private residences, design hotels, restaurant interiors</span>
+        </li>
+        <li class="studio-detail-item">
+          <span class="studio-detail-label">Lead time</span>
+          <span class="studio-detail-value">8–16 weeks depending on scale and complexity</span>
+        </li>
+      </ul>
+      <a href="contact.html" class="btn-primary">Begin a commission</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+<footer id="site-footer">
+  <div id="footer-top">
+    <div id="footer-brand">
+      <p class="footer-logo">Foramen</p>
+      <p class="footer-tagline">Ceramics as architecture. Clay as material memory.</p>
+    </div>
+    <div id="footer-col-work">
+      <p class="footer-col-title">Work</p>
+      <ul class="footer-links">
+        <li><a href="work.html">Collection</a></li>
+        <li><a href="work.html">Architectural tile</a></li>
+        <li><a href="work.html">Wall cladding</a></li>
+        <li><a href="work.html">Tableware</a></li>
+      </ul>
+    </div>
+    <div id="footer-col-studio">
+      <p class="footer-col-title">Studio</p>
+      <ul class="footer-links">
+        <li><a href="studio.html">About</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="studio.html">The workshop</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div id="footer-col-contact">
+      <p class="footer-col-title">Contact</p>
+      <ul class="footer-links">
+        <li><a href="mailto:studio@foramen.pt">studio@foramen.pt</a></li>
+        <li><a href="tel:+351210000000">+351 21 000 0000</a></li>
+        <li><a href="contact.html">Commission enquiry</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="footer-bottom">
+    <p class="footer-legal">© 2025 Foramen Studio, Lda. Alfama, Lisbon.</p>
+    <div class="footer-accent-line"></div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const BASE_DURATION = parseFloat(getComputedStyle(document.documentElement)
+  .getPropertyValue('--duration-slow')) || 0.65;
+const EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+
+// ─── Hero entrance (page load, no scroll trigger, opacity allowed) ───
+const heroTl = gsap.timeline({ delay: 0.2 });
+heroTl
+  .from('#hero-label', { y: 20, duration: 0.7, ease: EASE })
+  .from('#hero-title', { y: 40, duration: 0.9, ease: EASE }, '-=0.4')
+  .from('#hero-desc', { y: 25, duration: 0.7, ease: EASE }, '-=0.5')
+  .from('#hero-cta-group', { y: 20, duration: 0.6, ease: EASE }, '-=0.4')
+  .from('#hero-scroll-indicator', { y: 12, duration: 0.5, ease: EASE }, '-=0.3');
+
+// ─── Process steps: clip-path wipe reveal, left to right ────────────
+ScrollTrigger.batch('.process-step', {
+  onEnter: batch => gsap.from(batch, {
+    clipPath: 'inset(0 100% 0 0)',
+    duration: BASE_DURATION,
+    stagger: 0.1,
+    ease: EASE
+  }),
+  start: 'top 85%',
+  once: true
+});
+
+gsap.from('#process-preview-heading', {
+  scrollTrigger: { trigger: '#process-preview', start: 'top 75%', once: true },
+  y: 30,
+  duration: BASE_DURATION,
+  ease: EASE
+});
+
+// ─── Collection: scale + rise ────────────────────────────────────────
+gsap.from('#collection-featured', {
+  scrollTrigger: { trigger: '#collection-preview', start: 'top 78%', once: true },
+  scale: 0.95,
+  duration: 0.9,
+  ease: EASE
+});
+
+gsap.from(['#collection-vessel', '#collection-wall'], {
+  scrollTrigger: { trigger: '#collection-grid', start: 'top 78%', once: true },
+  scale: 0.95,
+  stagger: 0.15,
+  duration: 0.85,
+  ease: EASE
+});
+
+// ─── Manifesto: horizontal sweep from right ──────────────────────────
+gsap.from('#manifesto-quote', {
+  scrollTrigger: { trigger: '#manifesto', start: 'top 72%', once: true },
+  x: 60,
+  duration: 0.9,
+  ease: EASE
+});
+
+gsap.from(['#manifesto-body', '#manifesto a'], {
+  scrollTrigger: { trigger: '#manifesto', start: 'top 65%', once: true },
+  x: 40,
+  stagger: 0.15,
+  duration: 0.7,
+  ease: EASE
+});
+
+// ─── Studio intro: divergent (image from left, text from right) ──────
+gsap.from('#studio-intro-image', {
+  scrollTrigger: { trigger: '#studio-intro', start: 'top 75%', once: true },
+  x: -80,
+  duration: 0.9,
+  ease: EASE
+});
+
+gsap.from('#studio-intro-text', {
+  scrollTrigger: { trigger: '#studio-intro', start: 'top 75%', once: true },
+  x: 80,
+  duration: 0.9,
+  ease: EASE
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+/* nav.css — Ivory Ledge navigation
+   Source tokens: nav.json (sprig-ledger, Twist C: fontSize 0.875rem)
+   Height: 80px | Alignment: center | Logo: center
+   Scroll transition: background-color, box-shadow, color (0.45s ease-out)
+   No backdrop-filter (nav.json backdropFilter: null)
+*/
+
+/* ─── Base nav ─────────────────────────────────────────────────────────── */
+#site-nav {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  z-index: 1000;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 0.0625rem 0px 0px;
+  transition: background-color 0.45s ease-out, color 0.45s ease-out, box-shadow 0.45s ease-out;
+  font-family: inherit; /* resolves to Figtree via body */
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: inherit;
+}
+
+/* ─── Inner layout — centered single row ──────────────────────────────── */
+.nav-inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Left: nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 33.6px; /* grid gap scaled ×1.4 from 24px */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: flex-end;
+}
+
+/* Center: logo */
+.nav-logo {
+  text-align: center;
+}
+
+.nav-logo a {
+  display: inline-block;
+  font-family: 'Prata', serif;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #111111;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.nav-logo a:hover {
+  opacity: 0.75;
+  transition: opacity 0.45s ease-out;
+}
+
+/* Right: CTA + right-side links */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 33.6px;
+  justify-content: flex-start;
+}
+
+/* Nav link styles */
+.nav-links a,
+.nav-actions a:not(.nav-cta) {
+  color: #111111;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  opacity: 1;
+  cursor: pointer;
+  position: relative;
+  transition: opacity 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.nav-links a::after,
+.nav-actions a:not(.nav-cta)::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: 0;
+  width: 0;
+  height: 0.125rem;
+  background-color: #111111;
+  transition: width 0.4s ease-in;
+}
+
+.nav-links a:hover,
+.nav-actions a:not(.nav-cta):hover {
+  opacity: 0.6;
+}
+
+.nav-links a:hover::after,
+.nav-actions a:not(.nav-cta):hover::after {
+  width: calc(100% - 1.45rem);
+  left: 0;
+  right: auto;
+}
+
+/* Active nav link — opacity dim + no pointer events */
+.nav-link--active {
+  opacity: 0.45 !important;
+  pointer-events: none;
+}
+
+/* Nav CTA button */
+.nav-cta {
+  display: inline-block;
+  color: #111111;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  border: 1.5px solid #111111;
+  padding: 8px 20.25px;
+  border-radius: 0; /* rectangular outline CTA per concept_by_image */
+  cursor: pointer;
+  transition: background-color 0.45s cubic-bezier(0.165, 0.84, 0.44, 1),
+              color 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.nav-cta:hover {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+/* ─── Scroll state ────────────────────────────────────────────────────── */
+/* Only background-color, box-shadow, color change on scroll per nav.json */
+#site-nav.scrolled {
+  background-color: rgba(255, 255, 255, 0.98);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 0.125rem 0.75rem 0px;
+  color: #111111;
+}
+
+/* ─── Dropdown ────────────────────────────────────────────────────────── */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 0.0625rem 0px 0px inset;
+  border-top: 1px solid #e5e5e5;
+  padding: 1.675rem 0 1.875rem;
+  min-width: 200px;
+  list-style: none;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 0.45s ease-in,
+              opacity 0.45s ease-in 0.2s,
+              visibility 0.45s ease-in 0.2s;
+  z-index: 100;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+  max-height: 400px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-dropdown-menu li a {
+  display: block;
+  padding: 0.75em 1.25em;
+  color: #111111;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+/* ─── Mobile hamburger ────────────────────────────────────────────────── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: auto;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background-color: #111111;
+  transform-origin: center;
+  transition: transform 0.35s ease, opacity 0.35s ease, width 0.35s ease;
+}
+
+/* Hamburger → X when open */
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ─── Mobile menu overlay ─────────────────────────────────────────────── */
+#nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.98);
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+#nav-mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+#nav-mobile-menu a {
+  color: #111111;
+  text-decoration: none;
+  font-family: 'Prata', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+#nav-mobile-menu a:hover {
+  opacity: 1;
+}
+
+#nav-mobile-menu .nav-mobile-cta {
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  border: 1.5px solid #111111;
+  padding: 13.5px 28px;
+  border-radius: 0;
+  margin-top: 16px;
+  transition: background-color 0.45s ease, color 0.45s ease;
+}
+
+#nav-mobile-menu .nav-mobile-cta:hover {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nav-links,
+  .nav-actions {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+
+  #nav-mobile-menu {
+    display: flex;
+  }
+
+  .nav-inner {
+    grid-template-columns: 1fr auto 1fr;
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-inner {
+    padding: 0 16px;
+  }
+
+  #site-nav {
+    height: 64px;
+  }
+
+  #nav-mobile-menu a {
+    font-size: 1.5rem;
+  }
+}

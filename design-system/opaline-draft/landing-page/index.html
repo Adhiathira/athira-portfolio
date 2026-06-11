@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forme — Precision Design Specification</title>
+  <meta name="description" content="Forme is a structured specification and measurement tool for hardware engineers. Document tolerances, surface finishes, and material call-outs with precision.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- ── Announcement Banner ── -->
+<div id="precision-banner">
+  <p>Forme 2.0 now in early access — dimensional tolerance import from STEP files. <a href="system.html">Learn more →</a></p>
+</div>
+
+<!-- NAV TEMPLATE — paste verbatim into <body> -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Forme home">Forme</a>
+    <ul class="nav-links">
+      <li><a href="method.html">Method</a></li>
+      <li><a href="system.html">System</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="pricing.html" class="nav-cta">Start free →</a>
+    <button class="nav-mobile-toggle" aria-label="Open navigation menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="method.html">Method</a>
+  <a href="system.html">System</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="pricing.html" class="nav-mobile-cta">Start free →</a>
+</div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = nav.querySelector('.nav-mobile-toggle');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var bannerEl = document.getElementById('precision-banner');
+
+    function getBannerHeight() {
+      return bannerEl ? bannerEl.getBoundingClientRect().height : 0;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 8) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+  })();
+</script>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-bg.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="hero-bg-video-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.85rem;">
+      → assets/hero-bg.mp4
+    </div>
+    <div id="hero-video-gradient"></div>
+  </div>
+
+  <div id="hero-content">
+    <p id="hero-label">Precision specification</p>
+    <div id="hero-headline-group">
+      <h1 id="hero-title">The measurement layer for physical design.</h1>
+      <p id="hero-tagline">Document dimensional tolerances, surface specifications, and material call-outs in a single structured record — built for hardware engineers who cannot afford imprecision.</p>
+    </div>
+    <div id="hero-cta-group">
+      <a href="pricing.html" class="btn-primary">Start for free</a>
+      <a href="method.html" class="btn-ghost-dark">See the method →</a>
+    </div>
+  </div>
+
+  <div id="hero-scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <div id="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── Capabilities Grid ── -->
+<section id="capabilities">
+  <div class="section-inner">
+    <div id="capabilities-header">
+      <div id="capabilities-header-left">
+        <p id="capabilities-eyebrow">Capabilities</p>
+        <h2 id="capabilities-heading">Everything a specification record needs. Nothing it doesn't.</h2>
+      </div>
+      <p id="capabilities-body">Forme replaces the spreadsheet-and-PDF cycle with a structured record system that travels with the part from concept to production.</p>
+    </div>
+    <div id="capabilities-grid">
+      <div class="capability-card capability-card--featured">
+        <p class="capability-number">01</p>
+        <h3 class="capability-title">Dimensional tolerance documentation at every revision stage</h3>
+        <p class="capability-desc">Each revision carries its own complete tolerance set. Compare across revisions without exporting. The record knows its own history.</p>
+      </div>
+      <div class="capability-card">
+        <p class="capability-number">02</p>
+        <h3 class="capability-title">Surface finish call-outs</h3>
+        <p class="capability-desc">Ra, Rz, ISO 1302, and custom standards. Linked directly to the geometry they govern.</p>
+      </div>
+      <div class="capability-card">
+        <p class="capability-number">03</p>
+        <h3 class="capability-title">Material specification chains</h3>
+        <p class="capability-desc">Alloy, temper, treatment, finish — tracked as a structured chain, not a free-text field.</p>
+      </div>
+      <div class="capability-card">
+        <p class="capability-number">04</p>
+        <h3 class="capability-title">STEP file dimensional import</h3>
+        <p class="capability-desc">Import nominal values directly from STEP geometry. Forme populates the base record; your engineers assign tolerances.</p>
+      </div>
+      <div class="capability-card">
+        <p class="capability-number">05</p>
+        <h3 class="capability-title">Supplier review handoff</h3>
+        <p class="capability-desc">Generate a read-only supplier view — exactly what the manufacturer needs, nothing that exposes your full IP.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Precision Showcase (video) ── -->
+<section id="showcase">
+  <div id="showcase-inner">
+    <div id="showcase-text-col">
+      <p id="showcase-eyebrow">In practice</p>
+      <h2 id="showcase-heading">Specification as a living document, not a static export.</h2>
+      <p id="showcase-body">Every field in a Forme record is version-controlled, linked to a geometry reference, and traceable to the engineer who set it. When a supplier pushes back on a tolerance, you have the revision log in the same view — no attachment archaeology.</p>
+      <a href="system.html" id="showcase-link" class="btn-ghost-dark">Explore the system →</a>
+    </div>
+    <div id="showcase-media-col">
+      <video
+        id="showcase-video"
+        src="assets/product-ambient.mp4"
+        autoplay muted loop playsinline
+        style="width:100%;height:100%;object-fit:cover;border-radius:4px;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      ></video>
+      <div id="showcase-video-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-2);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.85rem;border-radius:4px;">
+        → assets/product-ambient.mp4
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Method Strip (dark contrast) ── -->
+<section id="method-strip">
+  <div id="method-strip-inner" class="section-inner">
+    <div id="method-strip-text">
+      <p id="method-strip-eyebrow">The Forme method</p>
+      <h2 id="method-strip-heading">Structured from the first line. Not from the last.</h2>
+      <p id="method-strip-body">Most specification tools are built around export — structured enough to print, too loose to query. Forme is structured at entry. Every value has a type, a unit, a tolerance model, and a revision ancestry before it leaves your screen.</p>
+    </div>
+    <a href="method.html" id="method-strip-cta">Read the method</a>
+  </div>
+</section>
+
+<!-- ── Process Steps ── -->
+<section id="process">
+  <div class="section-inner">
+    <div id="process-header">
+      <p id="process-eyebrow">How it works</p>
+      <h2 id="process-heading">From nominal to signed-off in four steps.</h2>
+      <p id="process-subhead">Forme structures the specification workflow so every decision is recorded at the moment it's made — not reconstructed later from memory or file metadata.</p>
+    </div>
+    <ol id="process-steps">
+      <li class="process-step">
+        <span class="process-step-num">Step 01</span>
+        <div id="step-1-content">
+          <h3 class="process-step-title">Create the base record</h3>
+          <p class="process-step-body">Name the part, attach the geometry reference (STEP, DXF, or a hand entry), and set the design authority. Forme generates the record skeleton from the geometry's dimensional features.</p>
+        </div>
+      </li>
+      <li class="process-step">
+        <span class="process-step-num">Step 02</span>
+        <div id="step-2-content">
+          <h3 class="process-step-title">Assign tolerances and surface requirements</h3>
+          <p class="process-step-body">Each nominal dimension gets a tolerance assignment: bilateral, unilateral, ISO fit, or custom. Surface finish call-outs are linked to the face reference, not a separate drawing layer.</p>
+        </div>
+      </li>
+      <li class="process-step">
+        <span class="process-step-num">Step 03</span>
+        <div id="step-3-content">
+          <h3 class="process-step-title">Review and resolve</h3>
+          <p class="process-step-body">Engineering review happens inside Forme. Comments are attached to the specific field they address. Revisions branch from the current state — nothing is overwritten, everything is auditable.</p>
+        </div>
+      </li>
+      <li class="process-step">
+        <span class="process-step-num">Step 04</span>
+        <div id="step-4-content">
+          <h3 class="process-step-title">Issue and track the handoff</h3>
+          <p class="process-step-body">Issue a supplier view, a drawing package, or a machine-readable JSON handoff. Track when the supplier accessed the record, what they acknowledged, and what questions they raised.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ── Material / Texture (video, light overlay) ── -->
+<section id="material">
+  <div id="material-video-container">
+    <video
+      id="material-bg-video"
+      src="assets/surface-texture.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="material-video-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.85rem;">
+      → assets/surface-texture.mp4
+    </div>
+    <div id="material-overlay"></div>
+  </div>
+  <div id="material-content">
+    <p id="material-eyebrow">The material record</p>
+    <h2 id="material-heading">Surface is specification. Forme documents both.</h2>
+    <p id="material-body">The opaline near-white ground of a machined ceramic part is not an afterthought — it is a precision call-out. Forme records the Ra value, the process that achieves it, and the inspection method that verifies it. All three, linked to the face.</p>
+  </div>
+</section>
+
+<!-- ── Social Proof ── -->
+<section id="social-proof">
+  <div class="section-inner">
+    <div id="social-proof-header">
+      <p id="social-proof-eyebrow">From the field</p>
+      <h2 id="social-proof-heading">Engineers who build with tolerance.</h2>
+    </div>
+    <div id="quotes-grid">
+      <article class="quote-card">
+        <p class="quote-text">"Our previous process was a PDF with comments in the margins. Forme gave us a record that actually knows what it contains. The revision comparison alone saved us two re-spins on the last enclosure project."</p>
+        <div class="quote-attribution">
+          <p class="quote-name">Kirsten Möller</p>
+          <p class="quote-role">Mechanical Lead, Alvar Instruments</p>
+        </div>
+      </article>
+      <article class="quote-card">
+        <p class="quote-text">"The supplier view is the feature I didn't know I needed. Our CNC house now has exactly the call-outs relevant to their process — nothing more. Fewer questions, faster turnaround."</p>
+        <div class="quote-attribution">
+          <p class="quote-name">Daniel Sørensen</p>
+          <p class="quote-role">Product Engineer, Celsius Fabrication</p>
+        </div>
+      </article>
+      <article class="quote-card">
+        <p class="quote-text">"Forme structured the way we think about specifications, not just the way we store them. The material chain view in particular — alloy, temper, treatment, finish as a connected record — that's the one that changed our QA process."</p>
+        <div class="quote-attribution">
+          <p class="quote-name">Petra Kálmán</p>
+          <p class="quote-role">Quality Systems, Nordmark Components</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA Band ── -->
+<section id="cta-band">
+  <div class="section-inner" id="cta-band-inner">
+    <h2 id="cta-band-heading">Precision starts at the record, not the drawing.</h2>
+    <p id="cta-band-sub">Forme is free to try for the first three parts. No card required, no export limits during trial.</p>
+    <div id="cta-band-actions">
+      <a href="pricing.html" class="btn-primary">Start with three parts</a>
+      <a href="contact.html" class="btn-ghost-dark">Talk to the team →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand-col">
+        <a href="index.html" id="footer-logo">Forme</a>
+        <p id="footer-tagline">Structured specification for hardware that cannot afford imprecision.</p>
+        <ul id="footer-social">
+          <li><a href="#" aria-label="Forme on GitHub">GitHub</a></li>
+          <li><a href="#" aria-label="Forme on LinkedIn">LinkedIn</a></li>
+          <li><a href="#" aria-label="Forme changelog">Changelog</a></li>
+        </ul>
+      </div>
+      <div id="footer-product-col">
+        <p class="footer-col-heading">Product</p>
+        <ul class="footer-links">
+          <li><a href="method.html">Method</a></li>
+          <li><a href="system.html">System</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="system.html#step-import">STEP Import</a></li>
+          <li><a href="system.html#supplier-view">Supplier View</a></li>
+        </ul>
+      </div>
+      <div id="footer-company-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="method.html#about">About Forme</a></li>
+          <li><a href="method.html#principles">Design principles</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html#press">Press</a></li>
+        </ul>
+      </div>
+      <div id="footer-resources-col">
+        <p class="footer-col-heading">Resources</p>
+        <ul class="footer-links">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Tolerance standards</a></li>
+          <li><a href="#">ISO fit reference</a></li>
+          <li><a href="#">Surface finish guide</a></li>
+          <li><a href="#">API reference</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p id="footer-copyright">© 2026 Forme. Precision measurement tools for hardware engineers.</p>
+      <ul id="footer-legal">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Security</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- ── GSAP Animations ── -->
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const BASE_DURATION = 0.3;
+  const EASE = 'power2.out';
+
+  // Hero entrance — heading and tagline rise on load (not scroll-triggered, no opacity:0 risk)
+  gsap.fromTo('#hero-title', { y: 18 }, {
+    y: 0,
+    duration: 0.7,
+    ease: 'power2.out',
+    delay: 0.1
+  });
+  gsap.fromTo('#hero-tagline', { y: 14 }, {
+    y: 0,
+    duration: 0.6,
+    ease: 'power2.out',
+    delay: 0.2
+  });
+  gsap.fromTo('#hero-cta-group', { y: 10 }, {
+    y: 0,
+    duration: 0.5,
+    ease: 'power2.out',
+    delay: 0.32
+  });
+
+  // Capabilities header — sweep from left on scroll (transform only)
+  gsap.from('#capabilities-heading', {
+    scrollTrigger: { trigger: '#capabilities', start: 'top 78%' },
+    x: -50,
+    duration: 0.65,
+    ease: 'power2.out'
+  });
+
+  // Capabilities cards — asymmetric stagger, featured card rises slower
+  gsap.from('.capability-card--featured', {
+    scrollTrigger: { trigger: '#capabilities-grid', start: 'top 80%' },
+    y: 32,
+    duration: 0.7,
+    ease: 'power2.out'
+  });
+  gsap.from('.capability-card:not(.capability-card--featured)', {
+    scrollTrigger: { trigger: '#capabilities-grid', start: 'top 80%' },
+    y: 24,
+    stagger: 0.1,
+    duration: 0.55,
+    ease: 'power2.out'
+  });
+
+  // Showcase — text column sweeps right; media col scale from center
+  gsap.from('#showcase-text-col', {
+    scrollTrigger: { trigger: '#showcase', start: 'top 75%' },
+    x: -40,
+    duration: 0.65,
+    ease: 'power2.out'
+  });
+  gsap.from('#showcase-media-col', {
+    scrollTrigger: { trigger: '#showcase', start: 'top 75%' },
+    scale: 0.97,
+    duration: 0.7,
+    ease: 'power2.out'
+  });
+
+  // Method strip — heading clip-path reveal
+  gsap.from('#method-strip-heading', {
+    scrollTrigger: { trigger: '#method-strip', start: 'top 80%' },
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 0.7,
+    ease: 'power2.inOut'
+  });
+
+  // Process steps — divergent entry from left/right alternating rows
+  var stepEls = document.querySelectorAll('.process-step');
+  stepEls.forEach(function(step, i) {
+    gsap.from(step, {
+      scrollTrigger: { trigger: step, start: 'top 82%' },
+      x: i % 2 === 0 ? -30 : 30,
+      duration: 0.6,
+      ease: 'power2.out'
+    });
+  });
+
+  // Material section — text rises as user scrolls in
+  gsap.from('#material-content', {
+    scrollTrigger: { trigger: '#material', start: 'top 70%' },
+    y: 28,
+    duration: 0.7,
+    ease: 'power2.out'
+  });
+
+  // Quote cards — rotate + rise stagger
+  gsap.from('.quote-card', {
+    scrollTrigger: { trigger: '#quotes-grid', start: 'top 82%' },
+    rotation: 1.5,
+    y: 36,
+    stagger: 0.13,
+    duration: 0.6,
+    ease: 'power2.out'
+  });
+
+  // CTA band heading — scale from center
+  gsap.from('#cta-band-heading', {
+    scrollTrigger: { trigger: '#cta-band', start: 'top 78%' },
+    scale: 0.95,
+    duration: 0.6,
+    ease: 'power2.out'
+  });
+
+  // Footer — clip-path horizontal reveal
+  gsap.from('#footer-copyright', {
+    scrollTrigger: { trigger: '#site-footer', start: 'top 90%' },
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 0.8,
+    ease: 'power2.inOut'
+  });
+</script>
+
+</body>
+</html>

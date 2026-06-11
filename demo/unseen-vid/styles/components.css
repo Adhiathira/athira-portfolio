@@ -1,0 +1,354 @@
+/* ──────────────────────────────────────────────────────────────────────────────
+   components.css — NavBar, Footer, gallery card shell, and skeleton
+   for unseen-vid.
+   All values reference custom properties from tokens.css.
+   No raw hex, font names, or numeric values are used here.
+   ────────────────────────────────────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   NAVBAR
+   ══════════════════════════════════════════════════════════════════════════════
+
+   Structure:
+   <nav class="navbar" role="navigation">
+     <div class="navbar__brand">…</div>
+     <ul class="navbar__links" role="list">…</ul>
+     <div class="navbar__auth navbar__auth--public">…</div>    ← logged-out
+     <div class="navbar__auth navbar__auth--authed" hidden>…</div>  ← logged-in
+   </nav>
+
+   Auth toggle: add class "navbar--authed" to .navbar to switch states.
+   initNav() in shared.js handles this on DOMContentLoaded.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-header-v) var(--space-header-h);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-bg);
+  height: var(--nav-height);
+}
+
+.navbar__brand {
+  font-family: var(--font-primary);
+  font-size: var(--type-nav);
+  line-height: var(--type-nav-lh);
+  font-variant: small-caps;
+  color: var(--color-text-heading);
+  text-decoration: none;
+}
+
+.navbar__links {
+  display: flex;
+  gap: var(--space-header-h);
+  list-style: none;
+}
+
+.nav-item {
+  font-family: var(--font-primary);
+  font-size: var(--type-nav);
+  line-height: var(--type-nav-lh);
+  color: var(--color-text-body);
+  text-decoration: none;
+  transition: color var(--duration-mid) var(--ease-standard);
+}
+
+.nav-item:hover {
+  color: var(--color-text-heading);
+}
+
+/* Auth slot — wraps both public and authed panels */
+.navbar__auth {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── Logged-out state (default) ──────────────────────────────────────────── */
+/* .navbar__auth--public is visible by default                               */
+/* .navbar__auth--authed is hidden by default (via HTML hidden attribute)    */
+.navbar__auth--authed {
+  display: none;
+}
+
+/* ── Logged-in state ─────────────────────────────────────────────────────── */
+/* When initNav() adds .navbar--authed to .navbar:                           */
+/*   - .navbar__auth--public → hidden                                        */
+/*   - .navbar__auth--authed → flex                                          */
+.navbar--authed .navbar__auth--public {
+  display: none;
+}
+
+.navbar--authed .navbar__auth--authed {
+  display: flex;
+}
+
+/* Avatar button — circular, maps to spacing.elements.button { borderRadius: 50% } */
+.navbar__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--space-button-radius);
+  border: none;
+  padding: 0;
+  background: var(--color-action);
+  color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-fw);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════════════════════════
+
+   Structure:
+   <footer class="site-footer">
+     <div class="footer__col">
+       <h3 class="footer__heading">…</h3>
+       <ul>
+         <li><a href="#" class="footer__link">…</a></li>
+       </ul>
+     </div>
+     …
+   </footer>
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.site-footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-header-h);
+  padding: 48px var(--space-header-h);
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.footer__heading {
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-fw);
+  line-height: var(--type-button-lh);
+  text-transform: uppercase;
+  letter-spacing: var(--type-ls-caps);
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-div-mb);
+}
+
+.footer__link {
+  font-family: var(--font-primary);
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+  color: var(--color-text-body);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 8px;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.footer__link:hover {
+  color: var(--color-text-heading);
+}
+
+footer ul {
+  list-style: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   GALLERY CARD SHELL
+   ══════════════════════════════════════════════════════════════════════════════
+
+   Structure:
+   <div class="gallery-card">
+     <div class="gallery-card__media"></div>       ← replaced with <video>/<img> at runtime
+     <div class="gallery-card__overlay">
+       <span class="gallery-card__creator">Creator Name</span>
+       <span class="gallery-card__points">1.2k pts</span>
+     </div>
+   </div>
+
+   Skeleton state: add class "gallery-card--skeleton" to suppress overlay
+   and animate the card background.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.gallery-card {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-surface);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gallery-card__media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+  background: linear-gradient(to top, var(--color-overlay), transparent);
+}
+
+.gallery-card:hover .gallery-card__overlay {
+  opacity: 1;
+}
+
+.gallery-card__creator,
+.gallery-card__points {
+  font-family: var(--font-primary);
+  font-size: var(--type-button);
+  line-height: var(--type-button-lh);
+  color: var(--color-surface);
+}
+
+/* ── Skeleton State ──────────────────────────────────────────────────────── */
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.gallery-card--skeleton {
+  background-color: var(--color-bg);
+  animation: skeleton-pulse 1.5s var(--ease-standard) infinite;
+  cursor: default;
+}
+
+.gallery-card--skeleton .gallery-card__overlay {
+  display: none;
+}
+
+/* ─── CTA Bar ─────────────────────────────────────────────────────────────────
+   Fixed to viewport bottom. Slides up via .cta-bar--visible.
+   Used on: creators/miatanaka.html (and future creator profile pages).
+
+   Token mapping for spacing (tokens.css has named tokens, not a numeric scale):
+     gap:        --space-header-h  (28px) — generous horizontal rhythm
+     padding-v:  --space-cta-v    (9.2px) — matches pill button vertical padding
+     padding-h:  --space-header-h (28px)  — matches header / page margins
+   Motion tokens from motion.json:
+     duration:   --duration-fast  (0.2s) — snap-up feel, matches fast interactions
+     easing:     --ease-standard  (ease-out) — natural deceleration
+   ─────────────────────────────────────────────────────────────────────────── */
+.cta-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-action);       /* near-black: #1a1010 */
+  color: var(--color-surface);           /* white: #ffffff */
+  /* 4-column grid: [1fr balance] [label] [btn] [1fr → dismiss].
+     Equal outer 1fr columns ensure label+btn are visually centred while
+     the dismiss lives in the right 1fr cell with no overlap risk. */
+  display: grid;
+  grid-template-columns: 1fr max-content max-content 1fr;
+  column-gap: var(--space-header-h);     /* 28px — horizontal rhythm */
+  align-items: center;
+  padding: var(--space-cta-v) var(--space-header-h); /* 9.2px 28px */
+  transform: translateY(100%);
+  transition: transform var(--duration-fast) var(--ease-standard); /* 0.2s ease-out */
+  z-index: 200; /* above sticky navbar (z-index: 100) */
+}
+
+.cta-bar--visible {
+  transform: translateY(0);
+}
+
+.cta-bar__label {
+  grid-column: 2;
+  font-family: var(--font-primary);
+  font-size: var(--type-body);           /* 14px */
+  line-height: var(--type-body-lh);      /* 21px */
+  margin: 0;
+  opacity: 0.85;
+}
+
+.cta-bar__btn {
+  grid-column: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);      /* white fill */
+  color: var(--color-action);            /* near-black text */
+  font-family: var(--font-primary);
+  font-size: var(--type-button);         /* 9.8px */
+  font-weight: var(--type-button-fw);    /* 500 */
+  line-height: var(--type-button-lh);    /* 14.7px */
+  text-transform: uppercase;
+  letter-spacing: var(--type-ls-caps);   /* 0.04em */
+  padding: var(--space-cta-v) var(--space-cta-h); /* 9.2px 21px */
+  border-radius: var(--space-cta-radius); /* 21px pill */
+  border: 1px solid var(--color-surface);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+}
+
+.cta-bar__btn:hover {
+  background: transparent;
+  color: var(--color-surface);
+}
+
+/* Outline variant — used when visitor is logged in (Follow state) */
+.cta-bar__btn--outline {
+  background: transparent;
+  color: var(--color-surface);
+  border-color: var(--color-surface);
+}
+
+.cta-bar__btn--outline:hover {
+  background: var(--color-surface);
+  color: var(--color-action);
+}
+
+.cta-bar__dismiss {
+  grid-column: 4;
+  justify-self: end;                     /* dock to right within the 1fr cell */
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.25rem;
+  line-height: 1;
+  opacity: 0.7;
+  padding: var(--space-cta-v);           /* 9.2px touch target padding */
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+.cta-bar__dismiss:hover {
+  opacity: 1;
+}
+
+/* Narrow viewport: drop to 3-column grid [balance | btn | dismiss].
+   The label is hidden so the single max-content column (btn) can fit
+   at 375px without overflowing the grid container. */
+@media (max-width: 767px) {
+  .cta-bar {
+    grid-template-columns: 1fr max-content 1fr;
+  }
+  .cta-bar__label   { display: none; }
+  .cta-bar__btn     { grid-column: 2; }
+  .cta-bar__dismiss { grid-column: 3; }
+}

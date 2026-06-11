@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mia Tanaka (@miatanaka) — unseen-vid</title>
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/components.css">
+
+  <style>
+    /* ── Creator Profile — page-scoped styles ──────────────────────────────────
+       All values reference tokens from tokens.css.
+       No raw hex, no raw numeric spacing.
+    ────────────────────────────────────────────────────────────────────────── */
+
+    /* ── Creator Identity Header ─────────────────────────────────────────── */
+    .creator-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 48px var(--space-header-h) var(--space-p-mb);
+      gap: var(--space-div-mb);
+    }
+
+    .creator-header__avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: var(--space-button-radius); /* 50% — from spacing.json */
+      background-color: var(--color-action);     /* near-black placeholder fill */
+      border: 1px solid var(--color-border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-primary);
+      font-size: var(--type-h1);
+      font-weight: var(--type-h1-fw);
+      color: var(--color-surface);
+      /* PLACEHOLDER: replace with <img> once real avatar asset exists */
+    }
+
+    .creator-header__name {
+      font-family: var(--font-primary);
+      font-size: var(--type-h1);
+      font-weight: var(--type-h1-fw);
+      line-height: var(--type-h1-lh);
+      color: var(--color-text-heading);
+      margin: 0;
+    }
+
+    .creator-header__handle {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      line-height: var(--type-body-lh);
+      font-weight: var(--type-body-fw);
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+
+    .creator-header__points {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      line-height: var(--type-button-lh);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-surface);
+      background: var(--color-action);
+      border-radius: var(--space-cta-radius);
+      padding: var(--space-cta-v) var(--space-cta-h);
+    }
+
+    .creator-header__bio {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      line-height: var(--type-body-lh);
+      color: var(--color-text-body);
+      max-width: 400px;
+      margin: 0;
+    }
+
+    /* ── Portfolio Section ───────────────────────────────────────────────── */
+    .portfolio {
+      padding: 0 var(--space-header-h) var(--space-p-mb);
+    }
+
+    .portfolio__heading {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      line-height: var(--type-button-lh);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-text-heading);
+      margin-bottom: var(--space-div-mb);
+    }
+
+    .portfolio__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-header-h);
+    }
+
+    /* ── Gallery card meta strip (portfolio-specific) ────────────────────── */
+    /* Layered below the card — outside the gallery-card overlay pattern      */
+    .gallery-card__meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+    }
+
+    .gallery-card__title {
+      font-family: var(--font-primary);
+      font-size: var(--type-body);
+      line-height: var(--type-body-lh);
+      color: var(--color-text-body);
+    }
+
+    .gallery-card__type {
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      line-height: var(--type-button-lh);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-text-muted);
+    }
+
+    /* ── Unavailable asset label inside gallery-card__media ─────────────── */
+    .asset-unavailable {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      text-align: center;
+      padding: var(--space-cta-h);
+    }
+
+    /* ── Platform Attribution Strip ──────────────────────────────────────── */
+    .creator-attribution {
+      padding: var(--space-cta-v) var(--space-header-h);
+      text-align: center;
+      border-top: 1px solid var(--color-border);
+      font-family: var(--font-primary);
+      font-size: var(--type-button);
+      font-weight: var(--type-button-fw);
+      line-height: var(--type-button-lh);
+      text-transform: uppercase;
+      letter-spacing: var(--type-ls-caps);
+      color: var(--color-text-muted);
+    }
+
+    .creator-attribution a {
+      color: var(--color-text-heading);
+      text-decoration: underline;
+      transition: color var(--duration-fast) var(--ease-standard);
+    }
+
+    .creator-attribution a:hover {
+      color: var(--color-text-body);
+    }
+
+    /* ── Responsive: collapse to 1 column on narrow viewports ───────────── */
+    @media (max-width: 768px) {
+      .portfolio__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .portfolio__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NavBar — public state (Log in / Join)
+       initNav() in shared.js will upgrade to authed state if localStorage
+       contains a valid user object.
+  -->
+  <nav class="navbar" role="navigation">
+    <a href="/" class="navbar__brand">unseen-vid</a>
+    <ul class="navbar__links" role="list">
+      <li><a href="/explore.html" class="nav-item">Explore</a></li>
+      <li><a href="/pricing.html" class="nav-item">Pricing</a></li>
+    </ul>
+    <!-- Logged-out panel (visible by default) -->
+    <div class="navbar__auth navbar__auth--public">
+      <a href="/login.html" class="nav-item">Log in</a>
+      <button class="cta-primary navbar__join" onclick="requireAuth()">Join</button>
+    </div>
+    <!-- Logged-in panel (hidden by default; initNav() reveals when __auth exists) -->
+    <div class="navbar__auth navbar__auth--authed" hidden>
+      <a href="/app/community.html" class="nav-item">Community</a>
+      <button type="button" class="navbar__avatar" aria-label="User menu">A</button>
+    </div>
+  </nav>
+
+  <!-- Creator Identity Header -->
+  <header class="creator-header">
+    <!--
+      Avatar circle — 120px diameter, border-radius: 50% (--space-button-radius).
+      Background: --color-action (near-black placeholder until real avatar).
+      PLACEHOLDER: Replace this div with <img src="/assets/miatanaka-avatar.jpg"
+      alt="Mia Tanaka" class="creator-header__avatar"> once the asset exists.
+    -->
+    <div class="creator-header__avatar" aria-label="Mia Tanaka avatar placeholder">M</div>
+
+    <h1 class="creator-header__name">Mia Tanaka</h1>
+    <p class="creator-header__handle">@miatanaka</p>
+    <span class="creator-header__points">3,200 pts</span>
+    <p class="creator-header__bio">Cinematic storyteller. Making videos about cities, light, and movement.</p>
+  </header>
+
+  <!-- Portfolio Section -->
+  <main class="portfolio">
+    <h2 class="portfolio__heading">Portfolio</h2>
+
+    <div class="portfolio__grid">
+
+      <!-- Card 1: Neon City Timelapse -->
+      <article class="gallery-card">
+        <!--
+          PLACEHOLDER: Replace .gallery-card__media contents with
+          <img src="/assets/neon-city-timelapse-thumb.jpg" alt="Neon City Timelapse"
+               class="gallery-card__media"> once the asset exists.
+        -->
+        <div class="gallery-card__media">
+          <div class="asset-unavailable">neon-city-timelapse-thumb.jpg</div>
+        </div>
+        <div class="gallery-card__overlay">
+          <span class="gallery-card__creator">Mia Tanaka</span>
+          <span class="gallery-card__points">video</span>
+        </div>
+        <div class="gallery-card__meta">
+          <span class="gallery-card__title">Neon City Timelapse</span>
+          <span class="gallery-card__type">video</span>
+        </div>
+      </article>
+
+      <!-- Card 2: Tokyo Rain Study -->
+      <article class="gallery-card">
+        <!--
+          PLACEHOLDER: Replace .gallery-card__media contents with
+          <img src="/assets/tokyo-rain-study-thumb.jpg" alt="Tokyo Rain Study"
+               class="gallery-card__media"> once the asset exists.
+        -->
+        <div class="gallery-card__media">
+          <div class="asset-unavailable">tokyo-rain-study-thumb.jpg</div>
+        </div>
+        <div class="gallery-card__overlay">
+          <span class="gallery-card__creator">Mia Tanaka</span>
+          <span class="gallery-card__points">video</span>
+        </div>
+        <div class="gallery-card__meta">
+          <span class="gallery-card__title">Tokyo Rain Study</span>
+          <span class="gallery-card__type">video</span>
+        </div>
+      </article>
+
+      <!-- Card 3: Urban Light Reel -->
+      <article class="gallery-card">
+        <!--
+          PLACEHOLDER: Replace .gallery-card__media contents with
+          <img src="/assets/urban-light-reel-thumb.jpg" alt="Urban Light Reel"
+               class="gallery-card__media"> once the asset exists.
+        -->
+        <div class="gallery-card__media">
+          <div class="asset-unavailable">urban-light-reel-thumb.jpg</div>
+        </div>
+        <div class="gallery-card__overlay">
+          <span class="gallery-card__creator">Mia Tanaka</span>
+          <span class="gallery-card__points">video</span>
+        </div>
+        <div class="gallery-card__meta">
+          <span class="gallery-card__title">Urban Light Reel</span>
+          <span class="gallery-card__type">video</span>
+        </div>
+      </article>
+
+      <!-- Card 4: Shibuya Crossing -->
+      <article class="gallery-card">
+        <!--
+          PLACEHOLDER: Replace .gallery-card__media contents with
+          <img src="/assets/shibuya-crossing-thumb.jpg" alt="Shibuya Crossing"
+               class="gallery-card__media"> once the asset exists.
+        -->
+        <div class="gallery-card__media">
+          <div class="asset-unavailable">shibuya-crossing-thumb.jpg</div>
+        </div>
+        <div class="gallery-card__overlay">
+          <span class="gallery-card__creator">Mia Tanaka</span>
+          <span class="gallery-card__points">video</span>
+        </div>
+        <div class="gallery-card__meta">
+          <span class="gallery-card__title">Shibuya Crossing</span>
+          <span class="gallery-card__type">video</span>
+        </div>
+      </article>
+
+      <!-- Card 5: Night Market Series -->
+      <article class="gallery-card">
+        <!--
+          PLACEHOLDER: Replace .gallery-card__media contents with
+          <img src="/assets/night-market-series-thumb.jpg" alt="Night Market Series"
+               class="gallery-card__media"> once the asset exists.
+        -->
+        <div class="gallery-card__media">
+          <div class="asset-unavailable">night-market-series-thumb.jpg</div>
+        </div>
+        <div class="gallery-card__overlay">
+          <span class="gallery-card__creator">Mia Tanaka</span>
+          <span class="gallery-card__points">video</span>
+        </div>
+        <div class="gallery-card__meta">
+          <span class="gallery-card__title">Night Market Series</span>
+          <span class="gallery-card__type">video</span>
+        </div>
+      </article>
+
+      <!-- Card 6: Harbour Bridge Dawn -->
+      <article class="gallery-card">
+        <!--
+          PLACEHOLDER: Replace .gallery-card__media contents with
+          <img src="/assets/harbour-bridge-dawn-thumb.jpg" alt="Harbour Bridge Dawn"
+               class="gallery-card__media"> once the asset exists.
+        -->
+        <div class="gallery-card__media">
+          <div class="asset-unavailable">harbour-bridge-dawn-thumb.jpg</div>
+        </div>
+        <div class="gallery-card__overlay">
+          <span class="gallery-card__creator">Mia Tanaka</span>
+          <span class="gallery-card__points">video</span>
+        </div>
+        <div class="gallery-card__meta">
+          <span class="gallery-card__title">Harbour Bridge Dawn</span>
+          <span class="gallery-card__type">video</span>
+        </div>
+      </article>
+
+    </div><!-- /.portfolio__grid -->
+  </main>
+
+  <!-- Platform Attribution Strip -->
+  <div class="creator-attribution">
+    <span>Made with <a href="/">Unseen</a></span>
+  </div>
+
+  <!-- Sticky CTA bar — hidden on load; shown by scroll/dwell logic below -->
+  <div class="cta-bar" role="complementary" aria-live="polite">
+    <p class="cta-bar__label">Like what you see?</p>
+    <button class="cta-bar__btn">Make your own →</button>
+    <button class="cta-bar__dismiss" aria-label="Dismiss">×</button>
+  </div>
+
+  <!-- shared.js must load before the inline script so window.__auth is set
+       and initNav() has already run. -->
+  <script src="../js/shared.js"></script>
+
+  <script>
+    const creator = {
+      name: 'Mia Tanaka',
+      username: 'miatanaka',
+      points: 3200,
+      bio: 'Cinematic storyteller. Making videos about cities, light, and movement.',
+      published: [
+        { id: 1, title: 'Neon City Timelapse', type: 'video', thumbnail: null },
+        { id: 2, title: 'Tokyo Rain Study', type: 'video', thumbnail: null },
+        { id: 3, title: 'Urban Light Reel', type: 'video', thumbnail: null },
+        { id: 4, title: 'Shibuya Crossing', type: 'video', thumbnail: null },
+        { id: 5, title: 'Night Market Series', type: 'video', thumbnail: null },
+        { id: 6, title: 'Harbour Bridge Dawn', type: 'video', thumbnail: null },
+      ]
+    };
+
+    // window.__auth is already set by shared.js (loaded synchronously above).
+    // Do not re-parse here — shared.js wraps the parse in try/catch.
+
+    const ctaBar = document.querySelector('.cta-bar');
+    const ctaBtn = document.querySelector('.cta-bar__btn');
+    const ctaDismiss = document.querySelector('.cta-bar__dismiss');
+
+    if (window.__auth) {
+      // Logged-in visitor: show Follow button immediately.
+      // Initialize label from persisted follow state so returning followers
+      // see the correct state on load.
+      const followKey = 'following_' + creator.username;
+      const alreadyFollowing = localStorage.getItem(followKey) === 'true';
+
+      ctaBar.style.display = 'grid';
+      ctaBar.classList.add('cta-bar--visible');
+      ctaBtn.textContent = alreadyFollowing ? 'Following' : 'Follow ' + creator.name;
+      ctaBtn.classList.add('cta-bar__btn--outline');
+      ctaBtn.addEventListener('click', () => {
+        const isFollowing = localStorage.getItem(followKey) === 'true';
+        localStorage.setItem(followKey, String(!isFollowing));
+        ctaBtn.textContent = isFollowing ? 'Follow ' + creator.name : 'Following';
+      });
+    } else {
+      // Logged-out visitor: show timed "Make your own" CTA
+      ctaBar.style.display = 'none'; // hidden initially
+
+      let ctaShown = false;
+      function showCta() {
+        if (ctaShown) return;
+        ctaShown = true;
+        ctaBar.style.display = 'grid';
+        requestAnimationFrame(() => ctaBar.classList.add('cta-bar--visible'));
+      }
+
+      // Trigger 1: scroll depth (40% of page height)
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+        if (scrolled >= 0.4) showCta();
+      });
+
+      // Trigger 2: dwell time (8 seconds)
+      setTimeout(showCta, 8000);
+
+      ctaBtn.addEventListener('click', () => {
+        sessionStorage.setItem('redirectAfterAuth', '/app/studio.html');
+        window.location.href = '/signup.html';
+      });
+    }
+
+    // Dismiss button — works for both logged-in and logged-out
+    if (ctaDismiss) {
+      ctaDismiss.addEventListener('click', () => {
+        ctaBar.classList.remove('cta-bar--visible');
+        setTimeout(() => { ctaBar.style.display = 'none'; }, 300);
+      });
+    }
+  </script>
+
+</body>
+</html>

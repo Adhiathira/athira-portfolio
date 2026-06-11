@@ -1,0 +1,29 @@
+# Studio Twofold — Concept by Image
+
+## Brand Premise
+
+Studio Twofold is an Australian creative studio whose design system performs the same argument as its work: that creative and functional intelligence are not separate disciplines but two halves of the same practice. The site is structured as a long-form demonstration of capability — a scroll journey that alternates between cinematic visual moments and dense, organized information, between immersive media showcases and precise typographic grids. A persistent animated background element — a very faint, large-scale outlined wordmark drifting slowly through all light-background sections — acts as the studio's signature: always present, never demanding attention, a quiet assertion of identity that reveals itself gradually rather than announcing itself upfront.
+
+## Color Architecture
+
+The palette is a strict monochromatic foundation — pure black, bright white, and utility gray — with a single accent that functions as the site's one chromatic indulgence: a magenta-to-orange gradient applied exclusively to the primary CTA button. The gradient's selectivity is the design's most disciplined color decision. By reserving it for exactly one interactive surface, the system ensures it reads as a semantic signal rather than a decorative element — the gradient means "this is the most important thing you can click." All other interactive elements (text links, secondary CTAs, navigation items) operate in the black-and-white register, their hierarchy communicated through typography and hover animation rather than color. Gray appears at a third, subordinate level — for attribution text, de-emphasized logos, and the ghost-light background wordmark.
+
+## Typography System
+
+A single geometric sans-serif handles everything from hero-scale display headlines to navigation labels to body paragraphs. The typeface is deployed across a clear five-step hierarchy: primary headlines at extreme viewport-relative scale, section headlines substantially smaller but still bold, content subheadings within sections, a single comfortable body size with generous line height, and small uppercase labels for categories and tertiary navigation. Uppercase application is strategic: it appears on CTAs, navigation links, and small-scale category labels to differentiate them from sentence-case content without requiring a second typeface. The system is monotype in principle — one family, complete range — and the range is sufficient for every visual register the site moves through.
+
+## Spatial System
+
+The spatial logic uses a consistent maximum-width container for all content sections but allows two classes of escape: full-bleed media sections (where the video or image extends to the full viewport width) and scroll-hijacked horizontal carousels (where the horizontal extent of the content is effectively infinite, navigated by scroll redirection). Within these constraints, section spacing follows a generous modular rhythm that creates clear pauses between chapters. The sinusoidal animated wave divider — appearing after the full-width video section — is the spatial system's most distinctive structural element: a complex multi-arc boundary that creates the impression of one section emerging from beneath another, with a parallax motion at the section edge. All other section transitions use straight horizontal edges, making the wave a moment of deliberate spatial exception.
+
+## Photography and Editorial Voice
+
+The photography and video in the site serve two distinct registers. In media-dominant sections, high-quality cinematic video and project imagery appear at full bleed or near-full bleed, with text overlays placed in visually safe zones. In gallery and grid sections, the same imagery is reorganized as a functional inventory — a horizontal scroll-hijacked carousel for featured work, a two-column grid for the broader archive. The two modes serve different cognitive goals: the first asks you to feel the work, the second asks you to survey it. Dark overlays on media in the two-column grid allow text to be layered directly onto the images, consolidating card and caption into a single surface without introducing a separate text zone.
+
+## Navigation and Wayfinding
+
+The navigation bar is sticky, solid white, and completely static throughout the scroll experience — no transparency, no color shift, no size change. A thin keyline at its bottom edge provides clean separation from the content below without adding visual weight. Navigation links and the wordmark share the same typographic scale, keeping the bar visually flat and giving no single element prominence over others. There is no primary CTA button in the navigation — the gradient button appears only in the body of the page, in its designated conversion moment, keeping the nav register consistently informational. The absence of a nav-level CTA is a positioning statement: the studio is not urgently selling, it is demonstrating.
+
+## Overall Design Character
+
+Studio Twofold is a creative studio site organized around a small number of bold design decisions executed with exceptional discipline. The faint animated background wordmark creates a persistent branding layer that the grid architecture can't replicate. The single magenta-to-orange gradient reserves maximum chromatic attention for the one action that matters. The scroll-hijacked horizontal carousel on the projects page creates a cinematic showcase mode that frames selected work differently from the surrounding vertical archive. And the sinusoidal wave divider creates a chapter break that reads as both structural and expressive — a seam in the page that behaves differently from all the others. The system is restrained not because it lacks opinion but because it has learned which moments deserve to be extraordinary.

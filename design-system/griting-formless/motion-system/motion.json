@@ -1,0 +1,208 @@
+{
+  "cssAnimations": {
+    "keyframes": [],
+    "transitionElements": [
+      {
+        "selector": ".fixed",
+        "transition": {
+          "property": "all",
+          "duration": "0.3s",
+          "timingFunction": "cubic-bezier(0.4, 0, 0.2, 1)"
+        },
+        "_source": "formless"
+      },
+      {
+        "selector": ".interactive-opacity",
+        "transition": {
+          "property": "color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter",
+          "duration": "0.3s",
+          "timingFunction": "cubic-bezier(0.4, 0, 0.2, 1)"
+        },
+        "_source": "formless"
+      },
+      {
+        "selector": ".text-button",
+        "transition": {
+          "property": "color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter",
+          "duration": "0.3s",
+          "timingFunction": "cubic-bezier(0.4, 0, 0.2, 1)"
+        },
+        "_source": "formless"
+      },
+      {
+        "selector": ".text-base",
+        "transition": {
+          "property": "color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter",
+          "duration": "0.2s",
+          "timingFunction": "cubic-bezier(0.4, 0, 0.2, 1)"
+        },
+        "_source": "formless"
+      },
+      {
+        "selector": ".s-full",
+        "transition": {
+          "property": "color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter",
+          "duration": "0.5s",
+          "timingFunction": "cubic-bezier(0.4, 0, 0.2, 1)"
+        },
+        "_source": "formless"
+      }
+    ],
+    "timingTokens": {
+      "durations": ["0.2s", "0.3s", "0.5s"],
+      "easings": ["cubic-bezier(0.4, 0, 0.2, 1)"]
+    }
+  },
+  "scrollAnimations": {
+    "patterns": [
+      {
+        "type": "scroll-driven-tab-switching",
+        "description": "As user scrolls within the product section, the active tab switches between For Businesses / For Individuals / For Community, updating the content panel. No explicit timing values present in Figma export.",
+        "trigger": "scroll position within section",
+        "targets": ["tab-bar active state", "numbered list active item", "content panel"],
+        "_screen": "landing-page-auditable-section",
+        "_source": "griting"
+      },
+      {
+        "type": "partner-tab-switching",
+        "description": "Tab bar switches between Rapid-Growth Startups / AI-Transforming Companies / Multi-Disciplinary Talent Organizations. Progress bar fills to reflect active tab position. No timing values in Figma export.",
+        "trigger": "tab click or scroll",
+        "targets": ["tab label active state", "progress bar fill width", "partner content panel"],
+        "_screen": "partners-page-view-1",
+        "_source": "griting"
+      },
+      {
+        "type": "sticky-scroll-services",
+        "description": "Sequential two-column sticky sections where the left panel stays fixed while the right text panel scrolls through service entries. Adapted from formless's sticky scroll pattern to griting's brand world: left panel uses griting's dark green backgrounds (#003620, #1e2623) with brand green accents (#00693e); right text panel uses griting's light surface (#f5f6f5) or dark text (#031f18). Thin vertical rule (#1e2623) divides columns.",
+        "trigger": "scroll position within services section",
+        "targets": ["sticky left panel", "scrolling right text column", "vertical rule divider"],
+        "colorScheme": {
+          "stickyPanelBackground": "#003620",
+          "stickyPanelAccent": "#00693e",
+          "textPanelBackground": "#f5f6f5",
+          "dividerColor": "#1e2623",
+          "textPrimary": "#031f18",
+          "textSecondary": "#455451"
+        },
+        "_source": "formless-adapted-to-griting"
+      },
+      {
+        "type": "scroll-reveal-cinematic",
+        "description": "Scroll-triggered reveals for major content blocks. Motion sequences narrative: headlines enter first, then media surfaces, then CTAs, then supporting copy. Adapted from formless's cinematic product narrative approach. Uses GSAP transform-only reveals (no opacity:0 in from()) to keep content visible in screenshots.",
+        "trigger": "element enters viewport",
+        "targets": ["section headlines", "media panels", "CTA buttons", "supporting copy"],
+        "motionOrder": [
+          "large headline or section statement",
+          "major media surface or product demo",
+          "primary CTA",
+          "secondary supporting elements"
+        ],
+        "gsapPattern": "gsap.from(el, { y: 40, duration: 0.6, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' } })",
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "duration": "0.5s",
+        "_source": "formless-adapted-to-griting"
+      }
+    ]
+  },
+  "microInteractions": {
+    "buttonTransitions": [
+      {
+        "type": "ghost-to-fill-inversion",
+        "description": "Outline/ghost CTA transitions to solid fill on hover. In griting's palette: ghost state uses rgba(0,105,62,0.06) background with #00693e border and #031f18 text; hover state fills to #00693e with #ffffff text.",
+        "trigger": "hover",
+        "from": {
+          "backgroundColor": "rgba(0,105,62,0.06)",
+          "borderColor": "#00693e",
+          "color": "#031f18"
+        },
+        "to": {
+          "backgroundColor": "#00693e",
+          "borderColor": "#00693e",
+          "color": "#ffffff"
+        },
+        "transition": "background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        "_source": "formless-adapted-to-griting",
+        "_colorSource": "griting"
+      }
+    ],
+    "opacityLinkInteraction": {
+      "type": "opacity-based-hover",
+      "description": "Nav links and icon links use opacity: 0.6 on hover rather than color change. Preserves griting's green-on-dark palette unbroken. Adapted from formless's opacity-only interaction vocabulary.",
+      "defaultOpacity": 1,
+      "hoverOpacity": 0.6,
+      "transition": "opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      "_source": "formless-adapted-to-griting"
+    },
+    "customCursor": false,
+    "glassEffect": {
+      "type": "glass-morphism",
+      "backdropBlur": "10px",
+      "backgroundColor": "rgba(255,255,255,0.02)",
+      "borderColor": "#ffffff",
+      "boxShadow": "0px 1px 22px 0px rgba(255,255,255,0.1), 0px 4px 4px 0px rgba(0,0,0,0.05), 0px 10px 10px 0px rgba(0,0,0,0.1)",
+      "innerShadow": "inset 0px 1px 3px 0px rgba(199,220,255,0.35), inset 0px 0px 20px 0px rgba(198,204,255,0.2)",
+      "_note": "All CTA buttons on partners-page use glass morphism — static style, not animated effect",
+      "_screen": "partners-page-view-1",
+      "_source": "griting"
+    },
+    "glowEffect": {
+      "type": "conic-gradient-glow",
+      "blur": "10px",
+      "blendMode": "screen",
+      "opacity": 0.2,
+      "colors": "conic gradient from purple to blue to cyan to pink",
+      "_note": "Hero primary CTA button has decorative conic gradient glow behind it",
+      "_screen": "partners-page-view-1",
+      "_source": "griting"
+    },
+    "ambientGlow": {
+      "type": "radial-ambient-glow",
+      "description": "Atmospheric radial glow adapted from formless's teal/blue hero-to-footer chromatic arc, recolored to griting's brand palette. Hero section glow: deep green (#003620) to brand green (#00693e). Closing/footer section glow: dark green (#1e2623) to brand-green-dark (#00995e). Functions as atmospheric depth, not imagery — no animation, pure static CSS.",
+      "hero": {
+        "gradient": "radial-gradient(ellipse at center bottom, #00693e 0%, #003620 60%, transparent 100%)",
+        "opacity": 0.7,
+        "position": "lower-center"
+      },
+      "footer": {
+        "gradient": "radial-gradient(ellipse at center bottom, #00995e 0%, #1e2623 60%, transparent 100%)",
+        "opacity": 0.6,
+        "position": "lower-center"
+      },
+      "_note": "Static atmospheric element. All colors sourced from griting color palette. Concept adapted from formless.",
+      "_source": "formless-adapted-to-griting",
+      "_colorSource": "griting"
+    },
+    "hasSkeletonScreens": false,
+    "loadingStates": [],
+    "inputFocusAnimations": [],
+    "iconAnimations": []
+  },
+  "gsapRules": {
+    "safeInitialState": "transform-only — use y/x/scale only. NEVER opacity:0 in from(). Opacity:0 hides content before ScrollTrigger fires, causing blank sections on load and during screenshots.",
+    "safeExample": "gsap.from(el, { y: 40, duration: 0.6, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' } })",
+    "unsafeExample": "gsap.from(el, { opacity: 0, y: 40 }) — DO NOT USE",
+    "screenshotMode": "gsap.set('*', { clearProps: 'all' }); ScrollTrigger.killAll();"
+  },
+  "performance": {
+    "totalAnimatedElements": 17,
+    "simultaneousAnimations": 0,
+    "videoLoad": "none",
+    "complexAnimations": 0,
+    "reducedMotionSupport": null,
+    "usesHardwareAcceleration": false,
+    "recommendations": [
+      "Use transform and opacity for scroll-reveal animations to enable hardware acceleration",
+      "Apply will-change: transform on sticky scroll panels during scroll phase only, remove after"
+    ],
+    "summary": {
+      "videos": 0,
+      "animatedGifs": 0,
+      "keyframes": 0,
+      "scrollLibraries": 0,
+      "hasLoadingStates": false,
+      "hasSkeletonScreens": false
+    }
+  },
+  "_note": "griting is the primary brand. All color tokens, typography references, and static effect styles (glass morphism, conic glow) are preserved verbatim from griting. Formless contributes: concrete easing/duration tokens (cubic-bezier(0.4, 0, 0.2, 1) at 0.2s/0.3s/0.5s), scroll-reveal cinematic philosophy, sticky-scroll services pattern, ghost-to-fill button transition, opacity-based link interactions, and ambient radial glow concept — all recolored to griting's #00693e / #003620 / #1e2623 brand palette.",
+  "_sources": ["griting", "formless"]
+}

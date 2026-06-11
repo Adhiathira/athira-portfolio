@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — Folia Papers</title>
+  <meta name="description" content="Photography printed on Folia archival fiber-based papers. Selected prints from artists and studios working in silver gelatin.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* Work page — additional styles */
+    #work-grid-section {
+      padding: 80px 0;
+      background: var(--color-page-background);
+    }
+
+    /* Portfolio grid: full-width feature row layout */
+    #work-items {
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+
+    .work-item {
+      display: grid;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .work-item--odd {
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    .work-item--even {
+      grid-template-columns: 1fr 1.1fr;
+      direction: rtl;
+    }
+
+    .work-item--even > * {
+      direction: ltr;
+    }
+
+    .work-image-wrap {
+      position: relative;
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+    }
+
+    .work-image-wrap img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+    }
+
+    .work-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        transparent 55%,
+        rgba(10, 10, 10, 0.35) 100%);
+      pointer-events: none;
+    }
+
+    .work-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-top: 12px;
+    }
+
+    .work-paper-tag {
+      font-family: var(--font-edito);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-surface-accent);
+      margin-bottom: 16px;
+    }
+
+    .work-artist {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-h3);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-text-primary);
+      margin-bottom: 10px;
+    }
+
+    .work-title {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-h4);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-text-secondary);
+      margin-bottom: 18px;
+    }
+
+    .work-desc {
+      font-size: var(--font-size-body-sm);
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+      max-width: 380px;
+    }
+
+    .work-divider {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: 0;
+    }
+
+    /* Services ambient video section */
+    #services-section {
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      background: var(--color-surface-dark);
+      min-height: 56vh;
+      display: flex;
+      align-items: center;
+    }
+
+    #services-video-wrap {
+      position: absolute;
+      inset: 0;
+    }
+
+    #services-ambient-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #services-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(10, 10, 10, 0.88) 0%,
+        rgba(10, 10, 10, 0.6) 50%,
+        rgba(10, 10, 10, 0.3) 100%
+      );
+      pointer-events: none;
+    }
+
+    #services-content {
+      position: relative;
+      z-index: 2;
+      max-width: var(--grid-container-max-width);
+      margin: 0 auto;
+      padding: 80px var(--grid-container-padding);
+      width: 100%;
+    }
+
+    #services-eyebrow {
+      font-family: var(--font-edito);
+      font-size: var(--font-size-label);
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(252, 247, 241, 0.5);
+      margin-bottom: 18px;
+    }
+
+    #services-heading {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-h2);
+      font-weight: 600;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-text-on-dark);
+      max-width: 460px;
+      margin-bottom: 24px;
+    }
+
+    #services-body {
+      font-size: var(--font-size-body);
+      line-height: var(--font-line-height-body);
+      color: rgba(252, 247, 241, 0.65);
+      max-width: 400px;
+    }
+
+    @media (max-width: 900px) {
+      .work-item--odd,
+      .work-item--even {
+        grid-template-columns: 1fr;
+        direction: ltr;
+      }
+
+      .work-item--even > * {
+        direction: ltr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #work-grid-section {
+        padding: 60px 0;
+      }
+
+      #work-items {
+        gap: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="site-nav" class="scrolled">
+  <a href="index.html" class="nav-logo" aria-label="Folia Papers home">Folia Papers</a>
+
+  <ul class="nav-links" role="list">
+    <li><a href="work.html" class="nav-link nav-link--active" aria-current="page">Work</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="papers.html" class="nav-link">Papers</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+
+  <a href="contact.html" class="nav-cta">Inquire</a>
+
+  <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="work.html" class="nav-link nav-link--active">Work</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="papers.html" class="nav-link">Papers</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+  <a href="contact.html" class="nav-cta">Inquire</a>
+</div>
+
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var toggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        var isOpen = mobileMenu.classList.toggle('is-open');
+        nav.classList.toggle('nav-mobile-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen.toString());
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      mobileMenu.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+  })();
+</script>
+
+<!-- Nav spacer: always active on sub-pages -->
+<div class="nav-spacer active" aria-hidden="true"></div>
+
+
+<!-- ─── Page header: compact ─── -->
+<header class="subpage-header" id="work-header">
+  <div class="container">
+    <p class="subpage-header-eyebrow">Selected Work</p>
+    <h1 class="subpage-header-heading">Silver gelatin<br>in the world</h1>
+  </div>
+</header>
+
+
+<!-- ─── Portfolio rows ─── -->
+<section id="work-grid-section" aria-label="Portfolio work">
+  <div class="container">
+    <div id="work-items">
+
+      <article class="work-item work-item--odd" id="work-1">
+        <div class="work-image-wrap">
+          <img
+            src="assets/work-mira-ortiz.jpeg"
+            alt="Mira Ortiz — 'Interior Light No. 12', silver gelatin print on Folia Velvet Matte"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                      background:var(--color-surface-secondary);color:var(--color-text-muted);font-size:0.8rem;font-family:monospace;aspect-ratio:4/3;">
+            → assets/work-mira-ortiz.jpeg
+          </div>
+          <div class="work-image-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="work-meta">
+          <p class="work-paper-tag">FV-140 Velvet Matte</p>
+          <h2 class="work-artist">Mira Ortiz</h2>
+          <p class="work-title">Interior Light No. 12, 2023</p>
+          <p class="work-desc">Shot in a converted textile factory in Lodz during winter, the series uses available window light to explore reflective surfaces. Printed at 50 × 60 cm on FV-140 to retain the diffuse quality of the original light.</p>
+        </div>
+      </article>
+
+      <hr class="work-divider" aria-hidden="true">
+
+      <article class="work-item work-item--even" id="work-2">
+        <div class="work-image-wrap">
+          <img
+            src="assets/work-jan-kowalski.jpeg"
+            alt="Jan Kowalski — 'Saltflat, Noon', baryta gloss silver gelatin print"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                      background:var(--color-surface-secondary);color:var(--color-text-muted);font-size:0.8rem;font-family:monospace;aspect-ratio:4/3;">
+            → assets/work-jan-kowalski.jpeg
+          </div>
+          <div class="work-image-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="work-meta">
+          <p class="work-paper-tag">FG-220 Baryta Gloss</p>
+          <h2 class="work-artist">Jan Kowalski</h2>
+          <p class="work-title">Saltflat, Noon, 2022</p>
+          <p class="work-desc">Large-format landscape work from the Salar de Atacama. The Baryta Gloss was chosen for maximum Dmax — the shadow regions in the tire tracks needed to hold absolute black across a 70 × 90 cm print.</p>
+        </div>
+      </article>
+
+      <hr class="work-divider" aria-hidden="true">
+
+      <article class="work-item work-item--odd" id="work-3">
+        <div class="work-image-wrap">
+          <img
+            src="assets/work-studio-halogen.jpeg"
+            alt="Studio Halogen — archival photographic documentation printed on Folia Cotton Rag"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+                      background:var(--color-surface-secondary);color:var(--color-text-muted);font-size:0.8rem;font-family:monospace;aspect-ratio:4/3;">
+            → assets/work-studio-halogen.jpeg
+          </div>
+          <div class="work-image-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="work-meta">
+          <p class="work-paper-tag">FR-300 Cotton Rag</p>
+          <h2 class="work-artist">Studio Halogen</h2>
+          <p class="work-title">Documentation Series, 2024</p>
+          <p class="work-desc">Museum-quality archival documentation of a private sculpture collection. The Cotton Rag substrate met the museum's conservation requirements for acid-free materials. Edition of 3, with storage specifications.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── Services section (video ambient) ─── -->
+<section id="services-section" aria-labelledby="services-heading">
+  <div id="services-video-wrap" aria-hidden="true">
+    <video
+      id="services-ambient-video"
+      src="assets/services-ambient.mp4"
+      autoplay muted loop playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div
+      id="services-video-placeholder"
+      style="display:none;align-items:center;justify-content:center;width:100%;height:100%;
+             background:#0a0a0a;color:rgba(255,255,255,0.3);font-size:0.85rem;font-family:monospace;"
+    >→ assets/services-ambient.mp4</div>
+    <div id="services-video-overlay" aria-hidden="true"></div>
+  </div>
+
+  <div id="services-content">
+    <p id="services-eyebrow">For Studios &amp; Institutions</p>
+    <h2 id="services-heading">We support working photographers, not print shops</h2>
+    <p id="services-body">Folia supplies photographers, darkroom studios, and museum conservation departments directly. No minimum order for samples. Bulk pricing for edition work. Technical consultation available for printing specifications and conservation requirements.</p>
+  </div>
+</section>
+
+
+<!-- ─── Footer ─── -->
+<footer id="site-footer" aria-label="Site footer">
+  <div class="container">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <p class="footer-brand-name">Folia Papers</p>
+        <p class="footer-brand-desc">Archival photographic printing papers for silver gelatin darkrooms. Made in Basel since 1938.</p>
+      </div>
+      <div id="footer-nav-papers">
+        <p class="footer-col-heading">Papers</p>
+        <ul class="footer-links" role="list">
+          <li><a href="papers.html">Velvet Matte FV-140</a></li>
+          <li><a href="papers.html">Baryta Gloss FG-220</a></li>
+          <li><a href="papers.html">Warm Satin FW-160</a></li>
+          <li><a href="papers.html">Cotton Rag FR-300</a></li>
+        </ul>
+      </div>
+      <div id="footer-nav-company">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links" role="list">
+          <li><a href="work.html">Work</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div id="footer-contact-col">
+        <p class="footer-col-heading">Get in Touch</p>
+        <p class="footer-contact-line">
+          <a href="mailto:papers@folia.ch">papers@folia.ch</a><br>
+          +41 61 270 4400<br>
+          Dornacherstrasse 192<br>
+          4053 Basel, Switzerland
+        </p>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p class="footer-legal">&copy; 2024 Folia Photographic Papers AG.</p>
+      <p class="footer-legal">
+        <a href="#">Privacy</a>&ensp;&middot;&ensp;<a href="#">Terms</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  var rootStyle = getComputedStyle(document.documentElement);
+  var DUR_SLOW = parseFloat(rootStyle.getPropertyValue('--motion-duration-slow')) || 0.65;
+  var DUR_BASE = parseFloat(rootStyle.getPropertyValue('--motion-duration-base')) || 0.52;
+  var EASE = 'power2.out';
+
+  // Header: fade up
+  gsap.from('.subpage-header-heading', {
+    y: 24, opacity: 0, duration: DUR_SLOW, ease: EASE, delay: 0.1
+  });
+
+  // Work items: staggered slide-up (animate container, not each card — prevents alignment issues)
+  document.querySelectorAll('.work-item').forEach(function(item, i) {
+    gsap.from(item, {
+      scrollTrigger: { trigger: item, start: 'top 80%' },
+      y: 40,
+      duration: DUR_SLOW,
+      ease: EASE,
+      delay: 0.05 * i
+    });
+  });
+
+  // Services section: fade-in only (text heavy, video already moves)
+  gsap.from('#services-content', {
+    scrollTrigger: { trigger: '#services-section', start: 'top 72%' },
+    x: -40,
+    duration: DUR_SLOW,
+    ease: EASE
+  });
+</script>
+
+</body>
+</html>

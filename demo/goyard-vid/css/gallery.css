@@ -1,0 +1,281 @@
+/* =============================================================================
+   gallery.css — Creator Gallery Section
+   Task 252: [goyard-vid][5/12] Home — Creator Gallery Section
+
+   Token source: tokens.css (all --var references defined there)
+   Grid spec:    grid.json  → product-grid-3col → repeat(3, 1fr), gap: --grid-gap
+   Interaction:  interactions.json → opacity-based reveal, no card scale/translate
+   ============================================================================= */
+
+
+/* -----------------------------------------------------------------------------
+   Section wrapper
+   Background matches warm cream page bg; generous bottom pad for CTA breathing
+   ----------------------------------------------------------------------------- */
+
+.creator-gallery {
+  background-color: var(--color-page-bg);
+  padding-top: var(--space-section-top);
+  padding-bottom: calc(var(--space-section-top) * 2);
+}
+
+
+/* -----------------------------------------------------------------------------
+   Filter bar
+   Tablist pattern: amber underline indicator on active tab
+   Structural gap/padding values (not brand tokens — purely layout)
+   ----------------------------------------------------------------------------- */
+
+.gallery-filter-bar {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 12px;
+}
+
+.filter-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-heading);
+  font-size: var(--type-nav-size);
+  font-weight: var(--type-nav-fw);
+  color: var(--color-body);
+  letter-spacing: var(--type-h2-ls);
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0 0 8px 0;
+  position: relative;
+  transition: color 0.2s;
+}
+
+/* Amber underline indicator — sits flush on the bar's bottom border */
+.filter-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-accent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.filter-btn.active {
+  color: var(--color-heading);
+}
+
+.filter-btn.active::after {
+  opacity: 1;
+}
+
+/* "Soon" pill badge on coming-soon filter buttons */
+.coming-soon-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--color-nav-text);
+  background-color: var(--color-accent);
+  padding: 1px 5px;
+  border-radius: var(--radius-button);
+  margin-left: 5px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+
+/* -----------------------------------------------------------------------------
+   Gallery grid
+   product-grid-3col from grid.json: 3-column equal, gap: --grid-gap (80px)
+   ----------------------------------------------------------------------------- */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap);
+  margin-bottom: 48px;
+}
+
+
+/* -----------------------------------------------------------------------------
+   Creator card
+   Restrained Goyard aesthetic: no scale or translate on hover — only overlay
+   ----------------------------------------------------------------------------- */
+
+.creator-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card-media {
+  position: relative;
+}
+
+
+/* -----------------------------------------------------------------------------
+   Card placeholder
+   CLAUDE.md no-silent-fallbacks rule: name the missing asset, explain, instruct
+   Forest green bg (--color-hero-bg) mirrors the brand's dark surface tone
+   ----------------------------------------------------------------------------- */
+
+.card-media-placeholder {
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-hero-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+  text-align: center;
+}
+
+.placeholder-filename {
+  font-family: var(--font-heading);
+  font-size: var(--type-nav-size);
+  font-weight: 600;
+  color: var(--color-accent);
+  letter-spacing: 0.5px;
+}
+
+.placeholder-note {
+  font-family: var(--font-body);
+  font-size: var(--type-small-size);
+  color: rgba(255, 255, 255, 0.5);
+  line-height: var(--type-small-lh);
+}
+
+
+/* -----------------------------------------------------------------------------
+   Card hover overlay
+   interactions.json pattern: opacity 0→1 on hover; no translate or scale
+   Background: --color-hero-bg (#183f26) at 82% — rgba workaround required
+   because CSS custom properties cannot be used directly inside rgba()
+   ----------------------------------------------------------------------------- */
+
+.card-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(24, 63, 38, 0.82); /* hex: #183f26 = var(--color-hero-bg) at 82% */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease; /* matches interactions.json 'transition: all' pattern */
+}
+
+.creator-card:hover .card-hover-overlay,
+.creator-card:focus-within .card-hover-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.creator-name {
+  font-family: var(--font-heading);
+  font-size: var(--type-nav-size);
+  font-weight: var(--type-nav-fw);
+  color: var(--color-nav-text);
+  letter-spacing: var(--type-h2-ls);
+  text-transform: lowercase;
+  margin-bottom: 2px;
+}
+
+.creator-points {
+  font-family: var(--font-heading);
+  font-size: var(--type-small-size);
+  font-weight: var(--type-small-fw);
+  color: var(--color-accent);
+  line-height: var(--type-small-lh);
+}
+
+
+/* -----------------------------------------------------------------------------
+   Coming Soon state
+   Shown when Animation or Film filter is active (JS toggles hidden attr)
+   ----------------------------------------------------------------------------- */
+
+.gallery-coming-soon {
+  text-align: center;
+  padding: 80px 0;
+  margin-bottom: 48px;
+}
+
+/* Enforce native hidden behavior (some CSS resets override display:none) */
+.gallery-coming-soon[hidden] {
+  display: none;
+}
+
+.coming-soon-text {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2-size);
+  font-weight: var(--type-h2-fw);
+  letter-spacing: var(--type-h2-ls);
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+
+/* -----------------------------------------------------------------------------
+   Gallery CTA
+   Secondary CTA style on cream background:
+   forest green text + amber border → amber fill on hover
+   ----------------------------------------------------------------------------- */
+
+.gallery-cta {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.btn-gallery-cta {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: var(--type-nav-size);
+  font-weight: var(--type-button-fw);
+  letter-spacing: var(--type-h2-ls);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cta-secondary-text);
+  border: 1px solid var(--cta-secondary-border);
+  background: transparent;
+  padding: var(--space-cta-y) var(--space-cta-x);
+  border-radius: var(--radius-button);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn-gallery-cta:hover {
+  background-color: var(--color-accent);
+  color: var(--color-nav-text);
+  border-color: var(--color-accent);
+}
+
+
+/* -----------------------------------------------------------------------------
+   Responsive breakpoints
+   768px → 2-column grid
+   480px → single-column stack
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .gallery-filter-bar {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

@@ -1,0 +1,221 @@
+/* ── Nav Component — Ochre Signal ── */
+/* 50px height, left logo, center-aligned links, transparent → white on scroll */
+/* Uppercase micro-type, 0.08em letter-spacing, hairline underline hover */
+
+#site-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--nav-height, 50px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  background: transparent;
+  transition: background var(--duration-base, 0.26s) ease,
+              box-shadow var(--duration-base, 0.26s) ease;
+}
+
+/* Scrolled state */
+#site-nav.scrolled {
+  position: fixed;
+  background: rgba(242, 239, 233, 0.96);
+  box-shadow: 0 1px 0 var(--color-border, #d4cfc8);
+}
+
+/* On light pages (sub-pages with no dark hero) — always use fixed positioning */
+#site-nav.nav-light-page {
+  position: relative;
+  background: var(--color-page-bg, #f2efe9);
+  border-bottom: 1px solid var(--color-border, #d4cfc8);
+}
+
+/* Logo */
+.nav-logo {
+  font-family: var(--font-heading, 'Nunito', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-heading, #3d3930);
+  text-decoration: none;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+#site-nav.scrolled .nav-logo {
+  color: var(--color-heading, #3d3930);
+}
+
+/* Nav links container */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--nav-item-spacing, 24px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Individual nav links */
+.nav-link {
+  font-family: var(--font-body, 'Nunito Sans', sans-serif);
+  font-size: var(--type-nav, 15px);
+  font-weight: 300;
+  letter-spacing: var(--ls-nav, 0.08em);
+  text-transform: uppercase;
+  line-height: var(--lh-nav, 14px);
+  color: var(--color-heading, #3d3930);
+  text-decoration: none;
+  position: relative;
+  transition: opacity var(--duration-base, 0.26s) ease-in-out;
+}
+
+/* Hairline underline — wipes right-to-left on hover */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width var(--duration-base, 0.26s) ease-in-out;
+  transform-origin: right;
+}
+
+.nav-link:hover::after,
+.nav-link--active::after {
+  width: 100%;
+}
+
+.nav-link:hover {
+  opacity: 0.7;
+}
+
+/* Active state */
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* CTA button in nav */
+.nav-cta {
+  font-family: var(--font-body, 'Nunito Sans', sans-serif);
+  font-size: var(--type-nav, 15px);
+  font-weight: 400;
+  letter-spacing: var(--ls-nav, 0.08em);
+  text-transform: uppercase;
+  color: var(--color-cta-text, #f2efe9);
+  background: var(--color-accent, #fb7339);
+  border: none;
+  padding: 8px 18px;
+  border-radius: var(--spacing-cta-border-radius, 4px);
+  text-decoration: none;
+  transition: var(--transition-base);
+  cursor: pointer;
+}
+
+.nav-cta:hover {
+  opacity: 0.88;
+}
+
+.nav-cta:focus {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/* ── Mobile hamburger ── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 200;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--color-heading, #3d3930);
+  transition: transform var(--duration-base, 0.26s) ease,
+              opacity var(--duration-base, 0.26s) ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X animation */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Mobile menu overlay */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--color-page-bg, #f2efe9);
+  z-index: 150;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+}
+
+.nav-mobile-menu .nav-link {
+  font-size: 20px;
+  letter-spacing: 0.1em;
+}
+
+.nav-mobile-menu .nav-cta {
+  margin-top: 8px;
+  padding: 12px 32px;
+}
+
+/* Nav spacer for sub-pages */
+.nav-spacer {
+  height: 0;
+  display: none;
+}
+
+.nav-spacer.active {
+  display: block;
+  height: var(--nav-height, 50px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #site-nav {
+    padding: 0 24px;
+  }
+  .nav-links,
+  .nav-cta {
+    display: none;
+  }
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  #site-nav {
+    padding: 0 16px;
+  }
+}

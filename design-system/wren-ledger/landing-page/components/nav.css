@@ -1,0 +1,223 @@
+/* nav.css — Wren Ledger navigation */
+/* Height: 54px | Left-anchored logo | Links right | Parchment background */
+
+/* ── Base nav ── */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 54px;
+  background-color: #f5f2ee;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.351s linear, box-shadow 0.351s linear;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.site-nav .nav-inner {
+  width: 100%;
+  max-width: 1103px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Logo ── */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #22211f;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.nav-logo:hover {
+  opacity: 0.75;
+  transition: opacity 0.527s ease;
+}
+
+.nav-logo-mark {
+  width: 22px;
+  height: 22px;
+  margin-right: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logo-mark svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ── Nav links ── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.18px;
+  color: #22211f;
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity 0.527s ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* Active nav link */
+.nav-link--active {
+  opacity: 0.45 !important;
+  pointer-events: none;
+  text-decoration: none !important;
+}
+
+/* ── Nav CTA ── */
+.nav-cta {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.18px;
+  color: #f5f2ee;
+  background-color: #333333;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.351s linear, opacity 0.351s linear;
+}
+
+.nav-cta:hover {
+  opacity: 0.85;
+  background-color: #22211f;
+}
+
+/* ── Scrolled state ── */
+.site-nav.scrolled {
+  border-bottom-color: rgba(51, 51, 51, 0.12);
+  box-shadow: 0 1px 12px rgba(34, 33, 31, 0.06);
+}
+
+/* ── Spacer — prevents content hiding under fixed nav ── */
+.nav-spacer {
+  height: 54px;
+  display: block;
+}
+
+/* ── Mobile hamburger toggle ── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background-color: #22211f;
+  transition: transform 0.351s ease, opacity 0.351s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X animation */
+.site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ── Mobile menu overlay ── */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f5f2ee;
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.351s ease;
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.nav-mobile-menu a {
+  font-family: 'Archivo', sans-serif;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: #22211f;
+  text-decoration: none;
+  transition: opacity 0.527s ease;
+}
+
+.nav-mobile-menu a:hover {
+  opacity: 0.6;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .nav-links,
+  .nav-cta {
+    display: none;
+  }
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-nav {
+    padding: 0 16px;
+  }
+  .nav-mobile-menu a {
+    font-size: 28px;
+  }
+}

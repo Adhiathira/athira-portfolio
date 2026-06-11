@@ -1,0 +1,82 @@
+:root {
+  /* Timing tokens — all durations scaled ×1.3 from webflow source (twist A, intensity 2) */
+  --motion-duration-micro: 0.39s;
+  --motion-duration-short: 0.585s;
+  --motion-duration-medium: 0.975s;
+  --motion-duration-long: 1.56s;
+  --motion-duration-marquee: 182s;
+  --motion-duration-ambient: 6.5s;
+
+  --motion-easing-standard: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --motion-easing-decelerate: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --motion-easing-sharp: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --motion-easing-linear: linear;
+
+  --motion-system-performance-totalAnimatedElements: 57;
+  --motion-system-performance-simultaneousAnimations: 11;
+  --motion-system-performance-videoLoad: heavy;
+  --motion-system-performance-complexAnimations: 5;
+  --motion-system-performance-summary-videos: 7;
+  --motion-system-performance-summary-keyframes: 5;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale {
+  from {
+    opacity: 0;
+    transform: scale(1.015) translateZ(0px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateZ(0px);
+  }
+}
+
+@keyframes marquee_1_timeline {
+  from { transform: translateX(0%); }
+  to { transform: translateX(-50%); }
+}
+
+/* Transition helpers */
+.motion-nav {
+  transition: box-shadow var(--motion-duration-micro) var(--motion-easing-decelerate);
+}
+
+.motion-link {
+  transition: border var(--motion-duration-micro) var(--motion-easing-standard),
+              color var(--motion-duration-micro) var(--motion-easing-standard);
+}
+
+.motion-btn {
+  transition: background-color var(--motion-duration-micro) var(--motion-easing-standard),
+              color var(--motion-duration-micro) var(--motion-easing-standard),
+              box-shadow var(--motion-duration-micro) var(--motion-easing-standard),
+              border var(--motion-duration-micro) var(--motion-easing-standard);
+}
+
+/* Entry animations */
+.motion-enter-long {
+  animation: scale var(--motion-duration-long) var(--motion-easing-standard) 1;
+}
+
+.motion-enter-medium {
+  animation: scale var(--motion-duration-medium) var(--motion-easing-standard) 1;
+}
+
+.motion-marquee {
+  animation: marquee_1_timeline var(--motion-duration-marquee) linear infinite;
+}

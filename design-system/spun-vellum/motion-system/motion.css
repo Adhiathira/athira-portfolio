@@ -1,0 +1,115 @@
+/* Motion System — Spun Vellum */
+/* Source: flayks | Agent 3 | Twist A: Duration scaling ×1.3 (slower) | Intensity 2 */
+
+:root {
+  /* Primary timing tokens — all scaled 1.3× from flayks source */
+  --motion-duration-xs: 0.065s;
+  --motion-duration-sm: 0.39s;
+  --motion-duration-md: 0.52s;
+  --motion-duration-md-lg: 0.65s;
+  --motion-duration-lg: 0.78s;
+  --motion-duration-xl: 1.04s;
+  --motion-duration-logo: 1.3s;
+  --motion-duration-icon: 2.6s;
+  --motion-duration-shadow-opacity: 0.78s;
+  --motion-duration-shadow-transform: 1.56s;
+  --motion-duration-long: 1.95s;
+  --motion-duration-ambient: 78s;
+  --motion-duration-pulse: 5.2s;
+
+  /* Easing tokens */
+  --motion-ease-primary: cubic-bezier(0.76, 0, 0.24, 1);
+  --motion-ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --motion-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --motion-ease-in-out: ease-in-out;
+  --motion-ease-linear: linear;
+}
+
+/* === Keyframe Animations === */
+
+@keyframes pulse {
+  0%, 66%, 100% {
+    box-shadow: inset 0 0 0 var(--pulse-to) currentcolor;
+    transform: scale(1) translateZ(0px);
+  }
+  33% {
+    box-shadow: inset 0 0 0 var(--pulse-from) currentcolor;
+    transform: scale(0.75) translateZ(0px);
+  }
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(1turn); }
+}
+
+@keyframes turnaround {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-1turn); }
+}
+
+@keyframes flip-360 {
+  0% {
+    transform: perspective(800px) rotateX(var(--rotate-y)) rotateY(var(--rotate-x)) translateZ(0);
+  }
+  100% {
+    transform: perspective(800px) rotateX(var(--rotate-y)) rotateY(calc(var(--rotate-x) + 1turn)) translateZ(0);
+  }
+}
+
+/* === Transition Utilities === */
+
+.logo,
+.nav-item {
+  transition: transform var(--motion-duration-logo) var(--motion-ease-primary);
+}
+
+.card {
+  transition: transform var(--motion-duration-md) var(--motion-ease-out-quart);
+}
+
+.shadow-card {
+  transition:
+    opacity var(--motion-duration-shadow-opacity) var(--motion-ease-out-quart),
+    transform var(--motion-duration-shadow-transform) var(--motion-ease-out-quart);
+}
+
+.icon {
+  transition: transform var(--motion-duration-icon) var(--motion-ease-primary);
+}
+
+.sections-tracker {
+  transition: opacity var(--motion-duration-md-lg) var(--motion-ease-out-quart);
+}
+
+.dot {
+  transition:
+    background-color var(--motion-duration-sm) var(--motion-ease-out-quart),
+    border-color var(--motion-duration-sm) var(--motion-ease-out-quart),
+    opacity var(--motion-duration-sm) var(--motion-ease-out-quart);
+}
+
+/* === Ambient Rotation === */
+
+.rotating-ambient {
+  animation: turnaround var(--motion-duration-ambient) linear infinite;
+}
+
+/* === Pulse Animation === */
+
+.pulse-element {
+  animation: pulse var(--motion-duration-pulse) var(--motion-ease-primary) infinite;
+}
+
+/* === Reduced Motion === */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

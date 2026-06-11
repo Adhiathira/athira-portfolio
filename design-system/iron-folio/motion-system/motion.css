@@ -1,0 +1,77 @@
+/* Iron Folio — Motion System */
+/* Source: off-white | Twist A: Duration scaling ×1.5 (intensity 3) */
+/* All durations multiplied: 0.5s→0.75s, 0.2s→0.3s, 0.3s→0.45s, etc. */
+
+:root {
+  --motion-duration-fast: 0.135s;
+  --motion-duration-base: 0.3s;
+  --motion-duration-mid: 0.45s;
+  --motion-duration-standard: 0.75s;
+  --motion-duration-slow: 1.275s;
+  --motion-easing-standard: ease-in-out;
+  --motion-easing-decelerate: cubic-bezier(0.68, 0, 0.23, 1);
+  --motion-easing-expressive: cubic-bezier(0.19, 1, 0.22, 1);
+
+  --motion-system-performance-totalAnimatedElements: 18;
+  --motion-system-performance-simultaneousAnimations: 0;
+  --motion-system-performance-videoLoad: none;
+  --motion-system-performance-complexAnimations: 5;
+  --motion-system-performance-summary-keyframes: 5;
+  --motion-system-performance-summary-scrollLibraries: 0;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0px); }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0px);  opacity: 1; }
+}
+
+@keyframes rotate-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes scroll-marquee {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-100%); }
+}
+
+.header {
+  transition: transform var(--motion-duration-standard) var(--motion-easing-standard),
+              background-color var(--motion-duration-standard) var(--motion-easing-standard),
+              height var(--motion-duration-standard) var(--motion-easing-standard);
+}
+
+.btn, button {
+  transition: all var(--motion-duration-standard) var(--motion-easing-standard);
+}
+
+.nav-link {
+  transition: color var(--motion-duration-base) var(--motion-easing-standard);
+}
+
+.section-fade {
+  transition: opacity var(--motion-duration-standard) var(--motion-easing-standard),
+              transform var(--motion-duration-standard) var(--motion-easing-standard);
+}
+
+.overlay {
+  transition: opacity var(--motion-duration-mid) var(--motion-easing-standard);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

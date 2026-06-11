@@ -1,0 +1,106 @@
+{
+  "designSystemPath": "/Users/delusionalmakubex/Documents/projects/design-system/design-system/weld-ivory",
+  "slug": "weld-ivory",
+  "productConcept": {
+    "name": "Plinth Press",
+    "tagline": "Every page, pressed.",
+    "description": "Small-edition letterpress and fine printing studio in Edinburgh, founded 2009. Handset metal type, dampened cotton paper, one sheet at a time.",
+    "rationale": "The weld-ivory design system pairs Apple-derived structural precision (achromatic palette, tight grid) with EB Garamond's warm editorial serif and Manrope's geometric sans-serif — a combination that signals deliberate, material production rather than digital-first commerce. Plinth Press avoids all forbidden concepts and the gravitational pull toward fashion/beauty brands; instead it grounds the same aesthetic in the physical craft of letterpress printing, where the design system's 'pressed paper' and 'weight of impression' metaphors become literal."
+  },
+  "animationMode": "animated",
+  "animationDecision": "motion-tokens — base duration 0.45s > 0.3s threshold; concept_by_video.md references 'languid timing', 'slow cascade', 'continuous travel'",
+  "heroTreatment": "light",
+  "contentMode": "invented",
+  "assetMode": "generated",
+  "pages": [
+    "index.html",
+    "books.html",
+    "commission.html",
+    "about.html"
+  ],
+  "sectionCount": {
+    "index.html": 5,
+    "books.html": 4,
+    "commission.html": 3,
+    "about.html": 5
+  },
+  "sectionLayouts": {
+    "index.html": [
+      "hero — full viewport video (hero-bg.mp4), bottom-anchored content",
+      "craft — dark contrast, 1fr/1fr grid with clip-path image reveal",
+      "collection — light, 1.4fr/1fr bento grid (featured span-2 + two small)",
+      "studio — dark contrast, video (studio-light.mp4) with quote overlay",
+      "commission-teaser — light, 3fr/2fr horizontal split"
+    ],
+    "books.html": [
+      "books-hero — medium 50vh, 1fr/1fr split, product archetype",
+      "editions — light, 52px/1fr numbered step-row list",
+      "product-ambient — dark contrast, video (product-ambient.mp4)",
+      "archive — light, 1fr/200px full-width horizontal rows"
+    ],
+    "commission.html": [
+      "commission-header — action archetype compact header ≤15vh",
+      "enquiry — light, 1fr/1fr grid (form + info col with process steps + side cards)",
+      "commission-cta-band — dark contrast, clip-path wipe"
+    ],
+    "about.html": [
+      "about-header — information archetype compact header ≤20vh",
+      "story — light, 2fr/3fr asymmetric grid with clip-path image reveal",
+      "equipment — dark contrast, 1fr/1fr horizontal rows with dividers",
+      "papers — light, repeat(3, 1fr) card grid",
+      "about-contact — dark contrast, 1fr/1fr split"
+    ]
+  },
+  "gsapAnimations": {
+    "index.html": [
+      "hero entrance — timeline (opacity + y, fires on load)",
+      "craft image — clipPath wipe left-to-right (1.08s power3.inOut)",
+      "craft text — x sweep-left stagger",
+      "collection cards — scale-rise stagger (scale 0.94 + y 30)",
+      "studio quote — clipPath wipe",
+      "commission-teaser — divergent x sweep (text ←, image →)",
+      "footer copyright — clipPath wipe"
+    ],
+    "books.html": [
+      "books hero — text y sweep + image x sweep right (entrance timeline)",
+      "editions list — x sweep-left stagger per item",
+      "product ambient text — clipPath wipe",
+      "archive items — rotation 1.5 + y 40 stagger",
+      "footer copyright — clipPath wipe"
+    ],
+    "commission.html": [
+      "header — compact y stagger (label + title)",
+      "enquiry layout — divergent x sweep (form ←, info →)",
+      "process steps — y vertical stagger",
+      "info side cards — scale-rise stagger",
+      "cta-band — clipPath wipe"
+    ],
+    "about.html": [
+      "about header — compact y stagger (label + title + tagline)",
+      "story image — clipPath wipe + text col x sweep right",
+      "equipment items — y vertical stagger",
+      "papers cards — scale 0.94 + y 22 stagger",
+      "contact columns — divergent x sweep"
+    ]
+  },
+  "videoPlacements": [
+    "hero-bg.mp4 → index.html hero",
+    "studio-light.mp4 → index.html studio section",
+    "product-ambient.mp4 → books.html product-ambient section"
+  ],
+  "assetGenerationStatus": "⛔ skipped — caller explicitly passed 'skip asset generation — do not run Steps 7-8' in recommendations. All asset slots use onerror placeholder pattern; assets drop in automatically once generated.",
+  "behaviorsUsed": [
+    "nav.js — scroll .scrolled class toggle + mobile hamburger + active link detection",
+    "scroll-reveal.js — NOT used inline (GSAP written directly per page); available in behaviors/"
+  ],
+  "qaVerification": {
+    "pagesChecked": ["index.html", "books.html", "commission.html", "about.html"],
+    "consoleErrors": "404 only (expected missing .jpeg/.mp4 assets — onerror placeholders working correctly)",
+    "navLinksVerified": "all pages link correctly; active state set per page",
+    "gsapLoaded": "confirmed via CDN (cdnjs 3.12.5)",
+    "responsiveBreakpoints": "900px and 600px media queries present in all CSS files",
+    "iteration": 1,
+    "issuesFixed": ["process-step grid column tightened 52px→36px (narrow column caused text wrapping in info panel)"]
+  },
+  "generatedAt": "2026-04-04"
+}

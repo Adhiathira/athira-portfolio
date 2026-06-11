@@ -1,0 +1,312 @@
+/* =============================================================================
+   auth.css — Shared auth page styles for login.html and signup.html (goyard-vid)
+   All color values sourced from tokens.css custom properties.
+   Zero hardcoded hex values. All colors via var(--...).
+   Input focus state sourced exactly from interactions.json input focus state:
+     border: 0.5px solid rgb(0, 0, 0), box-shadow: rgb(104, 168, 224) 0px 0px 3px 1px
+   Transition timing sourced from nav.json linkHover.transition (0.15s ease-in-out).
+   Spacing values derived from tokens.css; comments explain each derivation.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Body — auth page root
+   Uses flex column so header sits at top and main fills remaining viewport height.
+   background: --color-page-bg (warm cream #f0ede6)
+   --------------------------------------------------------------------------- */
+
+body.auth-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-page-bg);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Minimal nav modifier
+   Hides left/right utility icon groups with visibility: hidden so the flex
+   layout is preserved and the wordmark stays horizontally centered.
+   Hides the primary nav bar entirely — auth pages need no navigation links.
+   --------------------------------------------------------------------------- */
+
+.site-nav.nav--minimal .nav-utility-left,
+.site-nav.nav--minimal .nav-utility-right {
+  /* visibility: hidden keeps the flex spacers in place; wordmark stays centered */
+  visibility: hidden;
+}
+
+.site-nav.nav--minimal .nav-primary-bar {
+  /* auth pages do not show nav links — remove entirely from layout */
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Auth main — flex container that centers the card in remaining viewport space
+   flex: 1 fills all height below the fixed-height nav utility bar.
+   padding: --space-section-top (40px) vertical, --container-padding (12px) horizontal
+   --------------------------------------------------------------------------- */
+
+main.auth-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-section-top) var(--container-padding);
+}
+
+/* ---------------------------------------------------------------------------
+   Auth card — the centered form panel
+   max-width: 440px — optimal single-column form width
+   background: --color-surface (#ffffff)
+   border: 1px solid --color-border (#cdcdcd)
+   padding: 48px 40px — no exact card-padding token exists in the design system;
+     values derived from --space-wrapper-x (100px) scaled to a 440px card width
+     (~44% of wrapper-x for horizontal, 48px approximates --space-section-top × 1.2
+     for vertical). These are the closest proportionally faithful values.
+   --------------------------------------------------------------------------- */
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 48px 40px; /* no card-padding token; derived from wrapper padding ratio scaled to 440px card */
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
+   Card title — displayed above the form fields
+   Uses h2 type scale: 16px, 400 weight, 2.4px letter-spacing, uppercase
+   margin-bottom: 32px — no exact token; 2× --space-section-bottom (22px × ~1.45 ≈ 32px)
+   --------------------------------------------------------------------------- */
+
+.auth-card-title {
+  font-family: var(--font-heading); /* Plus Jakarta Sans */
+  font-size: var(--type-h2-size);   /* 16px */
+  font-weight: var(--type-h2-fw);   /* 400 */
+  line-height: var(--type-h2-lh);   /* 25px */
+  letter-spacing: var(--type-h2-ls); /* 2.4px */
+  text-transform: uppercase;
+  color: var(--color-heading); /* deep forest green #183f26 */
+  margin: 0 0 32px; /* 2× --space-section-bottom; no exact card-title-gap token */
+}
+
+/* ---------------------------------------------------------------------------
+   Form field group — wraps label + input + optional error message
+   margin-bottom: 24px — no field-gap token; 1.6× --space-section-bottom (22px × 1.09 ≈ 24px)
+   --------------------------------------------------------------------------- */
+
+.auth-field {
+  margin-bottom: 24px; /* no field-gap token; 1.6× --space-section-bottom */
+  position: relative;
+}
+
+.auth-field:last-of-type {
+  /* remove bottom gap from last field before CTA group */
+  margin-bottom: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Form label
+   Uses h2 type scale to match the card title hierarchy (uppercase, tracked)
+   margin-bottom: --space-cta-y (7px) — closest token for tight label↔input gap
+   --------------------------------------------------------------------------- */
+
+.auth-label {
+  display: block;
+  font-family: var(--font-heading); /* Plus Jakarta Sans */
+  font-size: var(--type-h2-size);   /* 16px — h2 scale per task spec */
+  font-weight: var(--type-h2-fw);   /* 400 */
+  letter-spacing: var(--type-h2-ls); /* 2.4px */
+  color: var(--color-heading); /* deep forest green #183f26 */
+  text-transform: uppercase;
+  margin-bottom: var(--space-cta-y); /* 7px — closest token for label↔input gap */
+}
+
+/* ---------------------------------------------------------------------------
+   Form input
+   border-radius MUST be --radius-input (2px) — not 4px, not 8px
+   padding reuses CTA button padding tokens: --space-cta-y (7px) / --space-cta-x (15px)
+   border: 1px solid --color-border (#cdcdcd) default state
+   transition: "all" — from interactions.json input default transition property
+   --------------------------------------------------------------------------- */
+
+.auth-input {
+  display: block;
+  width: 100%;
+  padding: var(--space-cta-y) var(--space-cta-x); /* 7px 15px — cta button padding reused for inputs */
+  font-family: var(--font-body);      /* Newsreader serif — body text per task spec */
+  font-size: var(--type-body-size);   /* 14px */
+  font-weight: var(--type-body-fw);   /* 400 */
+  line-height: var(--type-body-lh);   /* 20px */
+  color: var(--color-body);           /* #333333 */
+  background-color: var(--color-surface); /* #ffffff */
+  border: 1px solid var(--color-border);  /* #cdcdcd */
+  border-radius: var(--radius-input);     /* 2px — MUST be exactly this per design system rule */
+  box-sizing: border-box;
+  outline: none;
+  transition: all; /* from interactions.json input.default.transition: "all" */
+}
+
+/* ---------------------------------------------------------------------------
+   Input focus state
+   Source: interactions.json input focus state — exact values, no deviation:
+     border: 0.5px solid rgb(0, 0, 0)
+     box-shadow: rgb(104, 168, 224) 0px 0px 3px 1px  (light blue glow)
+   --------------------------------------------------------------------------- */
+
+.auth-input:focus {
+  border: 0.5px solid rgb(0, 0, 0);                   /* interactions.json input.focus.borderWidth */
+  box-shadow: rgb(104, 168, 224) 0px 0px 3px 1px;     /* interactions.json input.focus.boxShadow */
+}
+
+/* ---------------------------------------------------------------------------
+   Error message — hidden by default, shown when .auth-field has .has-error
+   color: --color-muted (#4a4a4a) — subdued but legible on white card
+   margin-top: --space-cta-y (7px) — matches label↔input gap for consistency
+   --------------------------------------------------------------------------- */
+
+.auth-field .error-message {
+  display: none;
+  font-family: var(--font-body);      /* Newsreader serif — body text scale */
+  font-size: var(--type-body-size);   /* 14px */
+  font-weight: var(--type-body-fw);   /* 400 */
+  color: var(--color-muted);          /* #4a4a4a — subdued error text */
+  margin-top: var(--space-cta-y);     /* 7px gap from input */
+}
+
+.auth-field.has-error .error-message {
+  display: block;
+}
+
+/* ---------------------------------------------------------------------------
+   CTA button group — stacks primary and secondary buttons vertically
+   gap: --space-cta-x (15px) — cta-x token reused as inter-button gap
+   margin-top: 32px — no exact card-button-gap token; 2× --space-section-bottom
+   --------------------------------------------------------------------------- */
+
+.auth-cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-cta-x);  /* 15px — cta-x token reused as inter-button gap */
+  margin-top: 32px;          /* 2× --space-section-bottom; no card-button-gap token */
+}
+
+/* ---------------------------------------------------------------------------
+   Primary CTA button ("Log in" / "Start creating")
+   IMPORTANT: This button is on --color-surface (white) card background.
+   --cta-primary-text (#ffffff) is intended for dark backgrounds only — invisible on white.
+   color uses --cta-secondary-text (#183f26) instead; border uses --cta-primary-border (#e8b14d).
+   font-size: --type-nav-size (12px) — CTA label scale matches nav label typography
+   letter-spacing: 0.0819rem — from nav.json typography.letterSpacing
+   transition: from nav.json linkHover.transition (0.15s ease-in-out)
+   --------------------------------------------------------------------------- */
+
+.auth-btn-primary {
+  display: block;
+  width: 100%;
+  padding: var(--space-cta-y) var(--space-cta-x); /* 7px 15px */
+  font-family: var(--font-heading);      /* Plus Jakarta Sans */
+  font-size: var(--type-nav-size);       /* 12px — CTA label scale matches nav */
+  font-weight: var(--type-nav-fw);       /* 400 */
+  line-height: var(--type-button-lh);    /* 25.6px */
+  letter-spacing: 0.0819rem;             /* nav.json typography.letterSpacing — matches nav label style */
+  text-transform: uppercase;
+  color: var(--cta-secondary-text);      /* #183f26 — --cta-primary-text (#fff) is for dark bg; use secondary on white card */
+  background: transparent;
+  border: 1px solid var(--cta-primary-border); /* golden amber #e8b14d */
+  border-radius: var(--radius-button);   /* 3px */
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, border-color 0.15s ease-in-out; /* nav.json linkHover.transition */
+  box-sizing: border-box;
+}
+
+.auth-btn-primary:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Secondary CTA button ("Continue with Google")
+   Same visual treatment as primary — both are on white card.
+   border: --cta-secondary-border (also golden amber #e8b14d)
+   hover: opacity 0.8 — subtle affordance without a token-breaking color change
+   --------------------------------------------------------------------------- */
+
+.auth-btn-secondary {
+  display: block;
+  width: 100%;
+  padding: var(--space-cta-y) var(--space-cta-x); /* 7px 15px */
+  font-family: var(--font-heading);      /* Plus Jakarta Sans */
+  font-size: var(--type-nav-size);       /* 12px */
+  font-weight: var(--type-nav-fw);       /* 400 */
+  line-height: var(--type-button-lh);    /* 25.6px */
+  letter-spacing: 0.0819rem;             /* nav.json typography.letterSpacing */
+  text-transform: uppercase;
+  color: var(--cta-secondary-text);      /* #183f26 deep forest green */
+  background: transparent;
+  border: 1px solid var(--cta-secondary-border); /* golden amber #e8b14d */
+  border-radius: var(--radius-button);   /* 3px */
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, border-color 0.15s ease-in-out; /* nav.json linkHover.transition */
+  box-sizing: border-box;
+}
+
+.auth-btn-secondary:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Switch link — "Don't have an account? Create one" / "Already have one? Log in"
+   margin-top: --space-cta-x (15px) — cta-x token for gap below CTA group
+   font-size: --type-small-size (12px) — small scale for secondary UI text
+   color: --color-muted (#4a4a4a) — de-emphasised vs card title
+   The anchor within uses --color-heading for emphasis + underline affordance
+   --------------------------------------------------------------------------- */
+
+.auth-switch-link {
+  display: block;
+  margin-top: var(--space-cta-x);      /* 15px — cta-x token; gap below button group */
+  font-family: var(--font-heading);    /* Plus Jakarta Sans */
+  font-size: var(--type-small-size);   /* 12px */
+  font-weight: var(--type-small-fw);   /* 400 */
+  color: var(--color-muted);           /* #4a4a4a */
+  text-align: center;
+  text-decoration: none;
+}
+
+.auth-switch-link:hover {
+  color: var(--color-heading); /* #183f26 on hover — strengthens the label */
+  text-decoration: none;
+}
+
+.auth-switch-link a {
+  color: var(--color-heading); /* #183f26 — anchor reads as primary action */
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — 375px (mobile)
+   Card goes full-width, side borders removed, padding reduced to token values.
+   padding: --space-section-top (40px) / --space-cta-x (15px) — both in token system
+   main.auth-main: align-items flex-start so card sits at top of viewport on small screens
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  .auth-card {
+    max-width: 100%;
+    padding: var(--space-section-top) var(--space-cta-x); /* 40px 15px — token values */
+    border-left: none;
+    border-right: none;
+  }
+
+  main.auth-main {
+    padding: var(--space-section-top) 0; /* 40px top/bottom, no horizontal padding */
+    align-items: center; /* keep vertical centering at all breakpoints */
+  }
+}

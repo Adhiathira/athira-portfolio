@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Parable — why we built a structured annotation workspace for people who think in arguments.">
+  <title>About — Parable</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/about.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <a href="index.html">Parable</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="features.html">Features</a></li>
+      <li><a href="about.html" class="nav-link--active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="features.html">Features</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+<script>
+(function() {
+  var nav = document.getElementById('site-nav');
+  var mobileMenu = document.getElementById('nav-mobile-menu');
+  var toggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+  function onScroll() {
+    if (window.scrollY > 10) {
+      nav && nav.classList.add('scrolled');
+    } else {
+      nav && nav.classList.remove('scrolled');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  if (toggle) {
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu && mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow = mobileMenu && mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+  }
+})();
+</script>
+
+<!-- ── PAGE HEADER (compact) ── -->
+<header id="about-header">
+  <div id="about-header-inner">
+    <p id="about-eyebrow">The story</p>
+    <h1 id="about-title">Why we built it.</h1>
+  </div>
+</header>
+
+<!-- ── ORIGIN STORY ── -->
+<section id="about-origin">
+  <div id="about-origin-inner">
+    <div id="about-origin-text">
+      <p>Parable began in a law library. A litigation associate was building a brief from forty-seven sources — cases, statutes, secondary commentary, internal memos. She had four PDFs open, two Word documents, six browser tabs, and a legal pad. The argument was in her head. Getting it out of her head and into a form the partner could review was its own project.</p>
+      <p>The tools she had were built for writing, not for thinking. Notes apps record. Word processors format. Neither understands that an annotation is a relational object — that it points at a source, responds to another note, supports a claim, or places an objection.</p>
+      <p>Parable was built to hold that structure. Not to replace the thinking — to hold it while the thinking happens.</p>
+    </div>
+    <div id="about-origin-image">
+      <img
+        id="about-origin-img"
+        src="assets/about-origin.jpeg"
+        alt="A legal library reading table — documents spread across a surface in warm morning light"
+        style="width:100%;height:100%;object-fit:cover;border-radius:4px;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div
+        id="about-origin-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:400px;
+               background:var(--color-surface-2);color:rgba(0,0,0,0.3);font-family:var(--font-body);
+               font-size:0.75rem;letter-spacing:0.04em;border-radius:4px;"
+      >
+        → assets/about-origin.jpeg
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VALUES ── -->
+<section id="about-values">
+  <div id="about-values-inner">
+    <p id="about-values-eyebrow">What we believe</p>
+    <h2 id="about-values-headline">Three principles.</h2>
+    <div id="about-values-grid">
+      <div class="value-item" id="value-1">
+        <h3 class="value-title">Arguments have structure.</h3>
+        <p class="value-body">A claim is not the same as a note. Evidence is not the same as context. The tools we use should distinguish between them — not flatten everything into text.</p>
+      </div>
+      <div class="value-item" id="value-2">
+        <h3 class="value-title">Reading is collaborative.</h3>
+        <p class="value-body">A case never has just one reader. A document reviewed by three people accumulates three layers of insight. Parable makes those layers visible without collapsing them together.</p>
+      </div>
+      <div class="value-item" id="value-3">
+        <h3 class="value-title">The document is not the workspace.</h3>
+        <p class="value-body">The annotation should live beside the source, not inside it. The original text is the record. The margin is where thinking happens. These are different things and they should be treated differently.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM ── -->
+<section id="about-team">
+  <div id="about-team-inner">
+    <p id="about-team-eyebrow">The people</p>
+    <h2 id="about-team-headline">Built by people<br>who read for work.</h2>
+    <p id="about-team-body">Parable is a small team. Former litigators, a computational linguist, two engineers who spent years in document management infrastructure, and one editor who has been annotating manuscripts since before she had email. We are not a startup that discovered legal research. We are practitioners who ran out of patience with the tools.</p>
+    <div id="about-team-img-container">
+      <img
+        id="about-team-img"
+        src="assets/about-team.jpeg"
+        alt="Parable team — working at a large research table"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div
+        id="about-team-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:340px;
+               background:var(--color-surface-2);color:rgba(0,0,0,0.3);font-family:var(--font-body);
+               font-size:0.75rem;letter-spacing:0.04em;"
+      >
+        → assets/about-team.jpeg
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="about-cta">
+  <div id="about-cta-inner">
+    <h2 id="about-cta-headline">Join the access list.</h2>
+    <p id="about-cta-sub">We are onboarding teams now. Application takes three minutes.</p>
+    <a href="contact.html" id="about-cta-btn" class="about-btn-primary">Request access</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="about-footer">
+  <div id="about-footer-inner">
+    <div>
+      <span class="about-footer-brand">Parable</span>
+      <p class="about-footer-tagline">Research, annotated.</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <ul id="about-footer-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <p class="about-footer-copy">&copy; 2026 Parable.</p>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+var DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.468;
+var EAS = (getComputedStyle(document.documentElement).getPropertyValue('--ease-primary') || 'ease-in-out').trim();
+
+// Header entrance
+gsap.from('#about-header-inner > *', {
+  y: 18,
+  duration: DUR,
+  stagger: 0.1,
+  ease: EAS,
+  delay: 0.1
+});
+
+// Origin — text left, image scale-in
+gsap.from('#about-origin-text', {
+  scrollTrigger: { trigger: '#about-origin', start: 'top 80%' },
+  x: -40,
+  duration: DUR * 1.2,
+  ease: EAS
+});
+gsap.from('#about-origin-image', {
+  scrollTrigger: { trigger: '#about-origin', start: 'top 80%' },
+  scale: 0.95,
+  duration: DUR * 1.3,
+  ease: 'power2.out'
+});
+
+// Values — stagger with rotation
+gsap.from('.value-item', {
+  scrollTrigger: { trigger: '#about-values', start: 'top 80%' },
+  rotation: 1.5,
+  y: 30,
+  duration: DUR * 1.1,
+  stagger: 0.14,
+  ease: EAS
+});
+
+// Team image — slow horizontal clip reveal
+gsap.from('#about-team-img-container', {
+  scrollTrigger: { trigger: '#about-team', start: 'top 80%' },
+  clipPath: 'inset(0 0 0 100%)',
+  duration: DUR * 1.6,
+  ease: EAS
+});
+</script>
+
+</body>
+</html>

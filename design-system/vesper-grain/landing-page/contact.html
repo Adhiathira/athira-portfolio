@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Maison Cendre</title>
+
+  <!-- Google Fonts (preconnect) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ─────────────────────────────────────────────
+       GOOGLE FONTS IMPORT
+    ───────────────────────────────────────────── */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap');
+
+    /* ─────────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--line-height-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ─────────────────────────────────────────────
+       NAVIGATION
+    ───────────────────────────────────────────── */
+    #site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--container-inline);
+      background: transparent;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.5s ease;
+    }
+
+    #site-nav.nav-scrolled {
+      border-bottom: 1px solid currentcolor;
+    }
+
+    #site-nav.nav-hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    #nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 71.5px;
+    }
+
+    .nav-link {
+      font-size: 0.9375rem;
+      letter-spacing: 0.5px;
+      color: var(--color-nav-text);
+      text-transform: uppercase;
+      line-height: 1rem;
+      transition: color var(--transition-base), opacity var(--transition-base);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      opacity: 0.6;
+    }
+
+    .nav-link--active {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    #nav-logo {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: var(--weight-medium);
+      letter-spacing: 0.22em;
+      color: var(--color-heading);
+      text-align: center;
+      text-transform: uppercase;
+      transition: opacity var(--transition-base);
+    }
+
+    #nav-logo:hover {
+      opacity: var(--hover-opacity);
+    }
+
+    /* ─────────────────────────────────────────────
+       PAGE LAYOUT
+    ───────────────────────────────────────────── */
+    #page-wrapper {
+      min-height: 100vh;
+      padding-top: 24px;
+    }
+
+    /* ─────────────────────────────────────────────
+       HERO HEADER
+    ───────────────────────────────────────────── */
+    #contact-hero {
+      padding: var(--space-4xl) var(--container-inline) var(--space-3xl);
+      background: linear-gradient(
+        180deg,
+        rgba(25, 25, 28, 0) 0%,
+        rgba(44, 44, 48, 0.18) 60%,
+        rgba(25, 25, 28, 0) 100%
+      );
+      text-align: center;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    #hero-eyebrow {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-label);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-lg);
+    }
+
+    #hero-headline {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-heading);
+      text-transform: uppercase;
+      line-height: var(--line-height-heading);
+      overflow: hidden;
+    }
+
+    #hero-headline-inner {
+      display: block;
+      will-change: transform, clip-path;
+    }
+
+    #hero-subtext {
+      margin-top: var(--space-xl);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--weight-light);
+      color: var(--color-body-text);
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.9;
+    }
+
+    /* ─────────────────────────────────────────────
+       FORM SECTION
+    ───────────────────────────────────────────── */
+    #contact-form-section {
+      padding: var(--space-4xl) var(--container-inline);
+      background: linear-gradient(
+        160deg,
+        rgba(44, 44, 48, 0.22) 0%,
+        rgba(25, 25, 28, 0.0) 40%,
+        rgba(58, 58, 63, 0.14) 100%
+      );
+    }
+
+    #contact-form-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    #contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .form-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-label);
+      text-transform: uppercase;
+      color: var(--color-heading);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      color: var(--color-heading);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--weight-regular);
+      padding: 14px 18px;
+      border-radius: 0;
+      outline: none;
+      transition: border-color var(--duration-base) var(--ease-smooth), background var(--duration-base) var(--ease-smooth), box-shadow var(--duration-base) var(--ease-smooth);
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: rgba(172, 172, 175, 0.35);
+      font-weight: var(--weight-light);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--color-accent);
+      background: rgba(44, 44, 48, 0.95);
+      box-shadow: 0 0 0 1px rgba(253, 53, 110, 0.18);
+    }
+
+    .form-input:hover:not(:focus),
+    .form-select:hover:not(:focus),
+    .form-textarea:hover:not(:focus) {
+      border-color: var(--color-border-strong);
+    }
+
+    .form-select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7' fill='none'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23acacaf' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 18px center;
+      padding-right: 44px;
+    }
+
+    .form-select option {
+      background: var(--color-surface-2);
+      color: var(--color-heading);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 140px;
+      line-height: 1.7;
+    }
+
+    #form-submit-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: var(--space-sm);
+    }
+
+    #btn-submit {
+      font-family: var(--font-heading);
+      font-size: var(--type-label);
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--color-accent);
+      border: none;
+      padding: var(--btn-padding);
+      border-radius: 0;
+      cursor: pointer;
+      transition: background var(--duration-base) var(--ease-smooth), transform var(--duration-fast) var(--ease-primary), box-shadow var(--duration-base) var(--ease-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.08);
+      opacity: 0;
+      transition: opacity var(--duration-fast) var(--ease-smooth);
+    }
+
+    #btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(253, 53, 110, 0.38);
+    }
+
+    #btn-submit:hover::before {
+      opacity: 1;
+    }
+
+    #btn-submit:active {
+      transform: translateY(0px) scale(0.98);
+    }
+
+    /* ─────────────────────────────────────────────
+       DIRECT CONTACT BLOCK
+    ───────────────────────────────────────────── */
+    #direct-contact-section {
+      padding: var(--space-3xl) var(--container-inline);
+      background: linear-gradient(
+        180deg,
+        rgba(25, 25, 28, 0) 0%,
+        rgba(44, 44, 48, 0.28) 50%,
+        rgba(25, 25, 28, 0) 100%
+      );
+      border-top: 1px solid var(--color-border);
+    }
+
+    #direct-contact-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    #direct-contact-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-label);
+      text-transform: uppercase;
+      color: var(--color-body-text);
+      margin-bottom: var(--space-2xl);
+      display: block;
+    }
+
+    #direct-contact-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .contact-method {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      padding: var(--space-xl) var(--space-lg);
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--duration-base) var(--ease-smooth), background var(--duration-base) var(--ease-smooth);
+    }
+
+    .contact-method::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 0;
+      background: var(--color-accent);
+      transition: height var(--duration-slow) var(--ease-smooth);
+    }
+
+    .contact-method:hover {
+      border-color: var(--color-border-strong);
+      background: rgba(44, 44, 48, 0.85);
+    }
+
+    .contact-method:hover::before {
+      height: 100%;
+    }
+
+    .contact-method-type {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--font-letter-spacing-label);
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .contact-method-value {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--weight-regular);
+      color: var(--color-heading);
+      line-height: 1.55;
+    }
+
+    .contact-method-value a {
+      color: var(--color-heading);
+      transition: color var(--transition-base);
+    }
+
+    .contact-method-value a:hover {
+      color: var(--color-accent);
+    }
+
+    /* ─────────────────────────────────────────────
+       CLOSING NOTE
+    ───────────────────────────────────────────── */
+    #closing-note-section {
+      padding: var(--space-4xl) var(--container-inline);
+      background: linear-gradient(
+        180deg,
+        rgba(25, 25, 28, 0) 0%,
+        rgba(58, 58, 63, 0.12) 50%,
+        rgba(25, 25, 28, 0) 100%
+      );
+    }
+
+    #closing-note-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #closing-note-text {
+      font-family: var(--font-display);
+      font-size: var(--type-body-lg);
+      font-style: italic;
+      font-weight: var(--weight-regular);
+      color: var(--color-body-text);
+      line-height: 1.9;
+      will-change: opacity, transform;
+    }
+
+    /* ─────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────── */
+    #site-footer {
+      padding: var(--space-2xl) var(--container-inline);
+      border-top: 1px solid var(--color-border);
+      background: linear-gradient(
+        180deg,
+        rgba(25, 25, 28, 0) 0%,
+        rgba(25, 25, 28, 0.6) 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #footer-logo {
+      font-family: var(--font-heading);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-medium);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-body-text);
+    }
+
+    #footer-tagline {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      font-weight: var(--weight-light);
+      color: rgba(172, 172, 175, 0.5);
+      font-style: italic;
+    }
+
+    #footer-copy {
+      font-family: var(--font-body);
+      font-size: var(--type-micro);
+      color: rgba(172, 172, 175, 0.4);
+    }
+
+    /* ─────────────────────────────────────────────
+       DIVIDER MARK
+    ───────────────────────────────────────────── */
+    .section-divider {
+      width: 28px;
+      height: 1px;
+      background: var(--color-accent);
+      margin: 0 auto var(--space-2xl);
+      opacity: 0.6;
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      #site-nav {
+        padding: 0 40px;
+      }
+
+      #contact-hero,
+      #contact-form-section,
+      #direct-contact-section,
+      #closing-note-section {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      #site-footer {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #site-nav {
+        padding: 0 24px;
+        height: 60px;
+      }
+
+      .nav-link {
+        font-size: 0.8rem;
+      }
+
+      #contact-hero {
+        padding: 80px 24px 64px;
+      }
+
+      #contact-form-section,
+      #direct-contact-section,
+      #closing-note-section {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+      }
+
+      #direct-contact-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      #site-footer {
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+
+    @media (max-width: 375px) {
+      #nav-links-left .nav-link:first-child,
+      #nav-links-right .nav-link:last-child {
+        display: none;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ─────────────────────────────────────────────
+       NAVIGATION
+  ───────────────────────────────────────────── -->
+  <nav id="site-nav" role="navigation" aria-label="Main navigation">
+    <div id="nav-inner">
+      <a href="journal.html" class="nav-link">Journal</a>
+      <a href="collection.html" class="nav-link">Collection</a>
+      <a href="index.html" id="nav-logo" aria-label="Maison Cendre — Home">Maison Cendre</a>
+      <a href="atelier.html" class="nav-link">Atelier</a>
+      <a href="contact.html" class="nav-link nav-link--active" aria-current="page">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ─────────────────────────────────────────────
+       PAGE WRAPPER
+  ───────────────────────────────────────────── -->
+  <div id="page-wrapper">
+
+    <!-- HERO HEADER -->
+    <section id="contact-hero" aria-labelledby="hero-headline">
+      <p id="hero-eyebrow">Correspondence</p>
+      <h1 id="hero-headline">
+        <span id="hero-headline-inner">Make an Enquiry</span>
+      </h1>
+      <p id="hero-subtext">We reply within two working days. We do not use auto-responders.</p>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section id="contact-form-section" aria-labelledby="form-section-heading">
+      <div id="contact-form-inner">
+
+        <h2 id="form-section-heading" class="visually-hidden">Contact Form</h2>
+
+        <form id="contact-form" novalidate>
+
+          <div id="form-row-name-email" class="form-row">
+            <div id="form-field-name" class="form-field">
+              <label for="input-name" class="form-label">Name</label>
+              <input
+                type="text"
+                id="input-name"
+                name="name"
+                class="form-input"
+                placeholder="Your name"
+                autocomplete="name"
+                required
+              >
+            </div>
+            <div id="form-field-email" class="form-field">
+              <label for="input-email" class="form-label">Email</label>
+              <input
+                type="email"
+                id="input-email"
+                name="email"
+                class="form-input"
+                placeholder="your@address.com"
+                autocomplete="email"
+                required
+              >
+            </div>
+          </div>
+
+          <div id="form-field-subject" class="form-field">
+            <label for="input-subject" class="form-label">Subject</label>
+            <select id="input-subject" name="subject" class="form-select" required>
+              <option value="" disabled selected>Select a subject</option>
+              <option value="product-enquiry">Product Enquiry</option>
+              <option value="wholesale-trade">Wholesale / Trade</option>
+              <option value="press-media">Press &amp; Media</option>
+              <option value="private-events">Private Events</option>
+              <option value="something-else">Something Else</option>
+            </select>
+          </div>
+
+          <div id="form-field-message" class="form-field">
+            <label for="input-message" class="form-label">Message</label>
+            <textarea
+              id="input-message"
+              name="message"
+              class="form-textarea"
+              rows="5"
+              placeholder="Write your message here"
+              required
+            ></textarea>
+          </div>
+
+          <div id="form-submit-wrap">
+            <button type="submit" id="btn-submit">Send Enquiry</button>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- DIRECT CONTACT -->
+    <section id="direct-contact-section" aria-labelledby="direct-contact-heading">
+      <div id="direct-contact-inner">
+        <h2 id="direct-contact-heading" class="visually-hidden">Direct Contact</h2>
+        <span id="direct-contact-label">Alternatively</span>
+        <div id="direct-contact-row">
+
+          <div id="contact-method-email" class="contact-method">
+            <span class="contact-method-type">Email</span>
+            <p class="contact-method-value">
+              <a href="mailto:atelier@maisoncendre.com">atelier@maisoncendre.com</a>
+            </p>
+          </div>
+
+          <div id="contact-method-phone" class="contact-method">
+            <span class="contact-method-type">Phone</span>
+            <p class="contact-method-value">
+              <a href="tel:+33142960000">+33 1 42 96 00 00</a>
+            </p>
+          </div>
+
+          <div id="contact-method-address" class="contact-method">
+            <span class="contact-method-type">Address</span>
+            <p class="contact-method-value">
+              12 Rue des Archives<br>75004 Paris
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING NOTE -->
+    <section id="closing-note-section" aria-labelledby="closing-note-heading">
+      <div id="closing-note-inner">
+        <h2 id="closing-note-heading" class="visually-hidden">A Note</h2>
+        <div class="section-divider" aria-hidden="true"></div>
+        <p id="closing-note-text">
+          We are a small operation. Every enquiry is read by a person who knows the products. If your question requires time to answer properly, we will take that time.
+        </p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="site-footer" role="contentinfo">
+      <span id="footer-logo">Maison Cendre</span>
+      <span id="footer-tagline">Preserved by hand. Aged to presence.</span>
+      <span id="footer-copy">&copy; 2024</span>
+    </footer>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- ─────────────────────────────────────────────
+       JAVASCRIPT
+  ───────────────────────────────────────────── -->
+  <script>
+    // ─── Visually hidden utility (accessible labels) ───
+    (function injectA11yStyles() {
+      const style = document.createElement('style');
+      style.textContent = '.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}';
+      document.head.appendChild(style);
+    })();
+
+    // ─── GSAP + ScrollTrigger registration ───
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ─── Nav: transparent → dark, hide on scroll down ───
+    (function initNav() {
+      const nav = document.getElementById('site-nav');
+      let lastY = 0;
+      let ticking = false;
+
+      function updateNav() {
+        const y = window.scrollY;
+        const scrollingDown = y > lastY;
+
+        if (y > 60) {
+          nav.classList.add('nav-scrolled');
+        } else {
+          nav.classList.remove('nav-scrolled');
+        }
+
+        if (scrollingDown && y > 140) {
+          nav.classList.add('nav-hidden');
+        } else {
+          nav.classList.remove('nav-hidden');
+        }
+
+        lastY = y;
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          window.requestAnimationFrame(updateNav);
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
+
+    // ─── Hero headline: clip-path reveal on load ───
+    (function animateHero() {
+      const eyebrow = document.getElementById('hero-eyebrow');
+      const headlineInner = document.getElementById('hero-headline-inner');
+      const subtext = document.getElementById('hero-subtext');
+
+      // Set initial state
+      gsap.set(eyebrow, { opacity: 0, y: 12 });
+      gsap.set(headlineInner, {
+        clipPath: 'inset(0% 100% 0% 0%)',
+        opacity: 1
+      });
+      gsap.set(subtext, { opacity: 0, y: 16 });
+
+      const tl = gsap.timeline({ delay: 0.15 });
+
+      tl.to(eyebrow, {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        ease: 'power2.out'
+      })
+      .to(headlineInner, {
+        clipPath: 'inset(0% 0% 0% 0%)',
+        duration: 0.85,
+        ease: 'power3.inOut'
+      }, '-=0.2')
+      .to(subtext, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out'
+      }, '-=0.3');
+    })();
+
+    // ─── Form fields: staggered fade-in from below ───
+    (function animateFormFields() {
+      const formFields = document.querySelectorAll('.form-field, .form-row, #form-submit-wrap');
+
+      gsap.set(formFields, { opacity: 0, y: 24 });
+
+      ScrollTrigger.create({
+        trigger: '#contact-form-section',
+        start: 'top 80%',
+        once: true,
+        onEnter: function () {
+          gsap.to(formFields, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: 'power2.out'
+          });
+        }
+      });
+    })();
+
+    // ─── Direct contact row: staggered horizontal reveal ───
+    (function animateContactRow() {
+      const methods = document.querySelectorAll('.contact-method');
+      const label = document.getElementById('direct-contact-label');
+
+      gsap.set(label, { opacity: 0, x: -16 });
+      gsap.set(methods, { opacity: 0, x: -28 });
+
+      ScrollTrigger.create({
+        trigger: '#direct-contact-section',
+        start: 'top 78%',
+        once: true,
+        onEnter: function () {
+          gsap.to(label, {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            ease: 'power2.out'
+          });
+          gsap.to(methods, {
+            opacity: 1,
+            x: 0,
+            duration: 0.65,
+            stagger: 0.1,
+            ease: 'power2.out',
+            delay: 0.15
+          });
+        }
+      });
+    })();
+
+    // ─── Closing note: scale from 0.97 → 1 with opacity fade ───
+    (function animateClosingNote() {
+      const divider = document.querySelector('#closing-note-section .section-divider');
+      const note = document.getElementById('closing-note-text');
+
+      gsap.set(divider, { opacity: 0, scaleX: 0, transformOrigin: 'center' });
+      gsap.set(note, { opacity: 0, scale: 0.97, transformOrigin: 'center' });
+
+      ScrollTrigger.create({
+        trigger: '#closing-note-section',
+        start: 'top 82%',
+        once: true,
+        onEnter: function () {
+          const tl = gsap.timeline();
+          tl.to(divider, {
+            opacity: 0.6,
+            scaleX: 1,
+            duration: 0.55,
+            ease: 'power2.inOut'
+          })
+          .to(note, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.75,
+            ease: 'power2.out'
+          }, '-=0.2');
+        }
+      });
+    })();
+
+    // ─── Form: springy submit button micro-interaction ───
+    (function initFormInteractions() {
+      const btn = document.getElementById('btn-submit');
+
+      btn.addEventListener('mouseenter', function () {
+        gsap.to(btn, {
+          scale: 1.025,
+          duration: 0.35,
+          ease: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+        });
+      });
+
+      btn.addEventListener('mouseleave', function () {
+        gsap.to(btn, {
+          scale: 1,
+          duration: 0.35,
+          ease: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+        });
+      });
+
+      // Form submission placeholder
+      const form = document.getElementById('contact-form');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        gsap.to(btn, {
+          scale: 0.95,
+          duration: 0.12,
+          ease: 'power2.in',
+          yoyo: true,
+          repeat: 1,
+          onComplete: function () {
+            gsap.to(btn, {
+              scale: 1,
+              duration: 0.3,
+              ease: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+            });
+          }
+        });
+      });
+    })();
+
+    // ─── Contact method cards: subtle hover depth on scroll entry ───
+    (function initCardHoverDepth() {
+      const cards = document.querySelectorAll('.contact-method');
+      cards.forEach(function (card) {
+        card.addEventListener('mouseenter', function () {
+          gsap.to(card, {
+            y: -3,
+            duration: 0.4,
+            ease: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+          });
+        });
+        card.addEventListener('mouseleave', function () {
+          gsap.to(card, {
+            y: 0,
+            duration: 0.4,
+            ease: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+          });
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

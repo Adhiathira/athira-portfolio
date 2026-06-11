@@ -1,0 +1,163 @@
+/* ==========================================================================
+   nav-system — griting-voltage
+   Source: griting (canonical) + still-voltage (scroll interaction pattern)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Custom Properties
+   -------------------------------------------------------------------------- */
+:root {
+  /* Geometry */
+  --nav-height: 72px;
+  --nav-padding-inline: 22px;
+
+  /* Colors — on-dark variant (default, overlaid on hero #003620) */
+  --nav-bg: transparent;
+  --nav-link-color: #ffffff;
+  --nav-logo-color: #ffffff;
+  --nav-border-bottom: none;
+
+  /* Colors — on-light variant (white-bg pages and sticky/scrolled state) */
+  --nav-bg-light: #ffffff;
+  --nav-link-color-light: #455451;
+  --nav-logo-color-light: #000000;
+  --nav-border-bottom-light: 1px solid #f3f4f6;
+
+  /* Typography */
+  --nav-font-family: Inter, sans-serif;
+  --nav-font-size: 16px;
+  --nav-font-weight: 400;
+  --nav-letter-spacing: normal;
+  --nav-text-transform: none;
+
+  /* Logo */
+  --nav-logo-font-family: Inter, sans-serif;
+  --nav-logo-font-weight: 600;
+  --nav-logo-font-size: 36px;
+  --nav-logo-letter-spacing: -1.61px;
+  --nav-logo-line-height: 76.8px;
+}
+
+/* --------------------------------------------------------------------------
+   Nav Shell
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: static;
+  height: var(--nav-height);
+  padding-inline: var(--nav-padding-inline);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--nav-bg);
+  border-bottom: var(--nav-border-bottom);
+}
+
+/* --------------------------------------------------------------------------
+   Sticky / Scroll Transition (still-voltage class-toggle pattern)
+   Applied by JS when the header crosses the scroll threshold.
+   Griting's on-light palette governs the scrolled state.
+   -------------------------------------------------------------------------- */
+.site-header--stuck {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--nav-bg-light);
+  border-bottom: var(--nav-border-bottom-light);
+}
+
+.site-header--stuck .nav-logo {
+  color: var(--nav-logo-color-light);
+}
+
+.site-header--stuck .nav-link {
+  color: var(--nav-link-color-light);
+}
+
+.site-header--stuck .nav-link:hover {
+  color: #031f18;
+}
+
+/* --------------------------------------------------------------------------
+   Logo (left-positioned wordmark)
+   -------------------------------------------------------------------------- */
+.nav-logo {
+  font-family: var(--nav-logo-font-family);
+  font-weight: var(--nav-logo-font-weight);
+  font-size: var(--nav-logo-font-size);
+  letter-spacing: var(--nav-logo-letter-spacing);
+  line-height: var(--nav-logo-line-height);
+  color: var(--nav-logo-color);
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   Navigation Links (right-aligned)
+   -------------------------------------------------------------------------- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: auto;
+}
+
+.nav-link {
+  font-family: var(--nav-font-family);
+  font-size: var(--nav-font-size);
+  font-weight: var(--nav-font-weight);
+  letter-spacing: var(--nav-letter-spacing);
+  text-transform: var(--nav-text-transform);
+  color: var(--nav-link-color);
+  text-decoration: none;
+  padding: 8px 12px;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   On-light variant (white-background pages: blog, articles)
+   -------------------------------------------------------------------------- */
+.site-header--on-light {
+  background: var(--nav-bg-light);
+  border-bottom: var(--nav-border-bottom-light);
+}
+
+.site-header--on-light .nav-logo {
+  color: var(--nav-logo-color-light);
+}
+
+.site-header--on-light .nav-link {
+  color: var(--nav-link-color-light);
+}
+
+.site-header--on-light .nav-link:hover {
+  color: #031f18;
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown (hover-triggered — present but unpopulated in griting source)
+   -------------------------------------------------------------------------- */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  background: #ffffff;
+  z-index: 200;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+  display: block;
+}

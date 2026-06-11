@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — SONOR</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* ================================================================
+       SONOR — pricing.html
+       Design System: pale-current
+    ================================================================ */
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--lh-normal);
+      overflow-x: hidden;
+    }
+
+    /* ── Container ── */
+    .container {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+    }
+
+    /* ── Spectral gradient text ── */
+    .spectral-text {
+      background: var(--gradient-spectral);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ──────────────────────────────────────────────
+       NAV
+    ────────────────────────────────────────────── */
+    #site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: var(--color-page-bg);
+      border-bottom: 1px solid var(--color-surface-3);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+    }
+
+    #nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+    }
+
+    #nav-logo {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-tight);
+      color: var(--color-body-text);
+      text-decoration: none;
+    }
+
+    #nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-nav-gap);
+      list-style: none;
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--color-body-text);
+      text-decoration: none;
+      transition: color var(--duration-base) var(--ease-nav);
+    }
+
+    .nav-link:hover { color: var(--color-link); }
+
+    .nav-link--active {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .nav-cta-link {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--color-page-bg);
+      background: var(--color-body-text);
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      transition: background var(--duration-base), color var(--duration-base);
+    }
+
+    .nav-cta-link:hover {
+      background: var(--color-link);
+      color: #ffffff;
+    }
+
+    /* ──────────────────────────────────────────────
+       SECTION 1 — PRICING HERO
+    ────────────────────────────────────────────── */
+    #pricing-hero {
+      padding-top: 144px;
+      padding-bottom: 64px;
+      background: linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
+      text-align: center;
+    }
+
+    #pricing-hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    #pricing-hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ea3a8c 0%, #5e5ce6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    #pricing-hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 7rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: 0.9;
+      color: var(--color-body-text);
+      max-width: 820px;
+    }
+
+    #pricing-hero-lead {
+      font-family: var(--font-body);
+      font-size: var(--type-p);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--color-muted-text);
+      max-width: 480px;
+    }
+
+    /* Billing toggle */
+    #billing-toggle {
+      display: flex;
+      align-items: center;
+      background: var(--color-surface-3);
+      border-radius: var(--radius-pill);
+      padding: 4px;
+      gap: 0;
+      margin-top: 12px;
+    }
+
+    .billing-btn {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 8px 20px;
+      border: none;
+      background: transparent;
+      color: var(--color-muted-text);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: background var(--duration-base) var(--ease-nav),
+                  color var(--duration-base) var(--ease-nav),
+                  box-shadow var(--duration-base) var(--ease-nav);
+      white-space: nowrap;
+    }
+
+    .billing-btn.is-active {
+      background: #ffffff;
+      color: var(--color-body-text);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    .billing-save-badge {
+      display: inline-block;
+      margin-left: 5px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      background: var(--color-accent-indigo);
+      padding: 2px 7px;
+      border-radius: var(--radius-pill);
+      vertical-align: middle;
+    }
+
+    /* ──────────────────────────────────────────────
+       SECTION 2 — PRICING TIERS
+    ────────────────────────────────────────────── */
+    #pricing-tiers {
+      background: var(--color-page-bg);
+      padding: var(--spacing-section-v) 0;
+    }
+
+    #pricing-tiers-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 var(--grid-padding-h);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    /* ── Common card base ── */
+    .pricing-card {
+      border-radius: 12px;
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    /* Essential card */
+    #card-essential {
+      background: #ffffff;
+      border: 1px solid var(--color-surface-3);
+    }
+
+    /* Studio card (dark) */
+    #card-studio {
+      background: linear-gradient(135deg, #0a3480 0%, #1c1c6e 100%);
+      border: none;
+      box-shadow: 0 24px 64px rgba(10, 52, 128, 0.35);
+      color: #ffffff;
+    }
+
+    /* Enterprise card */
+    #card-enterprise {
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-surface-3);
+    }
+
+    /* Badge */
+    .card-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 20px;
+      background: var(--gradient-spectral);
+      color: #ffffff;
+    }
+
+    .card-badge-spacer {
+      height: 34px; /* Equivalent height of badge + margin */
+      margin-bottom: 20px;
+    }
+
+    /* Card heading */
+    .card-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.2rem, 2vw, 2.333rem);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--color-body-text);
+      margin-bottom: 16px;
+    }
+
+    #card-studio .card-heading {
+      color: #ffffff;
+    }
+
+    /* Price display */
+    .card-price-block {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .card-price {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--color-body-text);
+    }
+
+    #card-studio .card-price {
+      color: #ffffff;
+    }
+
+    #card-enterprise .card-price {
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      color: var(--color-body-text);
+    }
+
+    .card-price-period {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 400;
+      color: var(--color-muted-text);
+      margin-left: 2px;
+    }
+
+    #card-studio .card-price-period {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .card-price-note {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--color-subtle-text);
+      margin-bottom: 16px;
+    }
+
+    #card-studio .card-price-note {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    /* Tagline */
+    .card-tagline {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 400;
+      color: var(--color-muted-text);
+      margin-bottom: 28px;
+      line-height: var(--lh-normal);
+    }
+
+    #card-studio .card-tagline {
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    /* Feature list */
+    .card-feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex: 1;
+    }
+
+    .card-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 400;
+      color: var(--color-body-text);
+      line-height: var(--lh-normal);
+    }
+
+    #card-studio .card-feature-item {
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .card-check {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(94, 92, 230, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      font-size: 10px;
+      color: var(--color-accent-indigo);
+      font-weight: 700;
+    }
+
+    #card-studio .card-check {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+
+    /* Divider */
+    .card-divider {
+      height: 1px;
+      background: var(--color-surface-3);
+      margin: 8px 0 28px 0;
+    }
+
+    #card-studio .card-divider {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* CTA buttons */
+    .card-cta {
+      display: block;
+      width: 100%;
+      padding: var(--spacing-button-v) var(--spacing-button-h);
+      border-radius: var(--radius-pill);
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background var(--duration-base) var(--ease-nav),
+                  color var(--duration-base) var(--ease-nav),
+                  box-shadow var(--duration-base) var(--ease-nav),
+                  transform var(--duration-fast) var(--ease-nav);
+    }
+
+    .card-cta:hover {
+      transform: translateY(-1px);
+    }
+
+    .card-cta:active {
+      transform: translateY(0);
+    }
+
+    /* Essential CTA — outline */
+    .card-cta--outline {
+      background: transparent;
+      color: var(--color-body-text);
+      border: 1.5px solid var(--color-body-text);
+    }
+
+    .card-cta--outline:hover {
+      background: var(--color-body-text);
+      color: #ffffff;
+    }
+
+    /* Studio CTA — white */
+    .card-cta--white {
+      background: #ffffff;
+      color: #0a3480;
+      border: none;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-cta--white:hover {
+      background: #f0f5fa;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Enterprise CTA — filled dark */
+    .card-cta--dark {
+      background: var(--color-body-text);
+      color: #ffffff;
+      border: none;
+    }
+
+    .card-cta--dark:hover {
+      background: var(--color-accent-navy);
+      box-shadow: 0 6px 20px rgba(10, 52, 128, 0.25);
+    }
+
+    /* ──────────────────────────────────────────────
+       SECTION 3 — COMPARISON TABLE
+    ────────────────────────────────────────────── */
+    #pricing-compare {
+      background: var(--color-surface-1);
+      padding: var(--spacing-section-v) 0;
+    }
+
+    #pricing-compare-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3.5vw, 5.184rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-body-text);
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    #compare-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 12px;
+      border: 1px solid var(--color-surface-3);
+    }
+
+    #compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      background: #ffffff;
+    }
+
+    #compare-table th {
+      padding: 20px 24px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--color-body-text);
+      border-bottom: 2px solid var(--color-surface-3);
+      white-space: nowrap;
+    }
+
+    #compare-table th:not(:first-child) {
+      text-align: center;
+    }
+
+    #compare-table th.col-studio {
+      color: var(--color-accent-navy);
+      font-size: 0.95rem;
+    }
+
+    .table-category-row {
+      background: var(--color-surface-1) !important;
+    }
+
+    .table-category-label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      padding: 14px 24px 10px;
+    }
+
+    #compare-table td {
+      padding: 14px 24px;
+      color: var(--color-body-text);
+      vertical-align: middle;
+      border-bottom: 1px solid var(--color-surface-1);
+    }
+
+    #compare-table tr:nth-child(even):not(.table-category-row) td {
+      background: var(--color-surface-1);
+    }
+
+    #compare-table tr:nth-child(odd):not(.table-category-row) td {
+      background: #ffffff;
+    }
+
+    #compare-table td:not(:first-child) {
+      text-align: center;
+    }
+
+    .td-feature-name {
+      color: var(--color-body-text);
+      font-weight: 400;
+    }
+
+    .td-check {
+      color: var(--color-accent-indigo);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .td-dash {
+      color: var(--color-subtle-text);
+      font-size: 1rem;
+    }
+
+    .td-value {
+      font-weight: 500;
+      color: var(--color-body-text);
+    }
+
+    /* ──────────────────────────────────────────────
+       SECTION 4 — FAQ
+    ────────────────────────────────────────────── */
+    #pricing-faq {
+      background: var(--color-page-bg);
+      padding: var(--spacing-section-v) 0;
+    }
+
+    #pricing-faq-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3.5vw, 5.184rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-body-text);
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    #faq-list {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--color-surface-3);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--color-surface-3);
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 28px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-body-text);
+      letter-spacing: -0.01em;
+      line-height: var(--lh-normal);
+      transition: background var(--duration-base) var(--ease-nav);
+    }
+
+    .faq-question:hover {
+      background: var(--color-surface-1);
+    }
+
+    .faq-question.is-open {
+      background: var(--color-surface-1);
+      color: var(--color-body-text);
+    }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-surface-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--duration-base) var(--ease-nav),
+                  transform var(--duration-base) var(--ease-nav);
+    }
+
+    .faq-question.is-open .faq-icon {
+      background: var(--color-accent-indigo);
+      border-color: var(--color-accent-indigo);
+      transform: rotate(45deg);
+    }
+
+    .faq-icon-line {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-muted-text);
+      line-height: 1;
+    }
+
+    .faq-question.is-open .faq-icon-line {
+      color: #ffffff;
+    }
+
+    .faq-answer-wrap {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.36s var(--ease-smooth);
+    }
+
+    .faq-answer-wrap.is-open {
+      max-height: 300px;
+    }
+
+    .faq-answer {
+      padding: 0 28px 22px 28px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 400;
+      color: var(--color-muted-text);
+      line-height: var(--lh-relaxed);
+      background: var(--color-surface-1);
+    }
+
+    /* ──────────────────────────────────────────────
+       SECTION 5 — BOTTOM CTA
+    ────────────────────────────────────────────── */
+    #pricing-cta {
+      background: linear-gradient(135deg, #ea3a8c 0%, #bf5af2 40%, #5e5ce6 70%, #32ade6 100%);
+      padding: 96px 0;
+      text-align: center;
+    }
+
+    #pricing-cta-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    #pricing-cta h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3.5vw, 5.184rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: #ffffff;
+      line-height: var(--lh-tight);
+    }
+
+    #pricing-cta-lead {
+      font-family: var(--font-body);
+      font-size: var(--type-p);
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: -0.01em;
+    }
+
+    #pricing-cta-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 16px 36px;
+      background: #ffffff;
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: var(--radius-pill);
+      transition: background var(--duration-base), color var(--duration-base),
+                  box-shadow var(--duration-base), transform var(--duration-fast);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    }
+
+    #pricing-cta-btn:hover {
+      background: var(--color-page-bg);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      transform: translateY(-2px);
+    }
+
+    /* ──────────────────────────────────────────────
+       SECTION 6 — FOOTER
+    ────────────────────────────────────────────── */
+    #footer {
+      background: var(--color-accent-navy);
+      padding: 64px 0 40px 0;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    #footer-inner {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 48px;
+    }
+
+    #footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #footer-logo {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-tight);
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    #footer-tagline {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: var(--lh-relaxed);
+      max-width: 240px;
+    }
+
+    #footer-copyright {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.3);
+      margin-top: 16px;
+    }
+
+    .footer-col-heading {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      transition: color var(--duration-base) var(--ease-nav);
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
+    /* ──────────────────────────────────────────────
+       BILLING TOGGLE — price variant visibility
+    ────────────────────────────────────────────── */
+    [data-billing="monthly"] { display: none; }
+    [data-billing="annual"]  { display: inline; }
+
+    body.billing-monthly [data-billing="annual"]  { display: none; }
+    body.billing-monthly [data-billing="monthly"] { display: inline; }
+    body.billing-annual  [data-billing="annual"]  { display: inline; }
+    body.billing-annual  [data-billing="monthly"] { display: none; }
+
+    /* ──────────────────────────────────────────────
+       RESPONSIVE — ≤900px: stack cards
+    ────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      #pricing-tiers-inner {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+      }
+
+      #footer-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      #footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .container {
+        padding: 0 32px;
+      }
+
+      #nav-inner {
+        padding: 0 32px;
+      }
+
+      #pricing-tiers-inner {
+        padding: 0 32px;
+      }
+    }
+
+    /* ──────────────────────────────────────────────
+       RESPONSIVE — ≤600px: full mobile
+    ────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .container {
+        padding: 0 20px;
+      }
+
+      #nav-inner {
+        padding: 0 20px;
+      }
+
+      #pricing-tiers-inner {
+        padding: 0 20px;
+        max-width: 100%;
+      }
+
+      #pricing-hero {
+        padding-top: 112px;
+        padding-bottom: 48px;
+      }
+
+      #pricing-hero h1 {
+        font-size: clamp(2rem, 9vw, 3rem);
+        letter-spacing: -0.02em;
+      }
+
+      #pricing-hero-lead {
+        font-size: 1rem;
+      }
+
+      .pricing-card {
+        padding: 36px 28px;
+      }
+
+      #footer-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      #billing-toggle {
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+      }
+
+      #nav-links {
+        gap: 16px;
+      }
+
+      .nav-link {
+        font-size: 0.875rem;
+        letter-spacing: 0.04em;
+      }
+
+      #pricing-compare-heading,
+      #pricing-faq-heading {
+        font-size: clamp(1.6rem, 7vw, 2.5rem);
+      }
+
+      #pricing-cta h2 {
+        font-size: clamp(1.6rem, 7vw, 2.5rem);
+      }
+    }
+
+    /* ──────────────────────────────────────────────
+       GSAP INITIAL STATES
+    ────────────────────────────────────────────── */
+    .gsap-card {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .gsap-row {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .gsap-faq {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .gsap-hero-el {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  </style>
+</head>
+<body class="billing-annual">
+
+  <!-- ══════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════ -->
+  <nav id="site-nav">
+    <div id="nav-inner">
+      <a id="nav-logo" href="index.html">SONOR</a>
+      <ul id="nav-links">
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="studio.html" class="nav-link">Studio</a></li>
+        <li><a href="pricing.html" class="nav-link nav-link--active">Pricing</a></li>
+        <li><a href="index.html#contact" class="nav-cta-link">Try Free</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 1 — PRICING HERO
+  ══════════════════════════════════════════ -->
+  <section id="pricing-hero">
+    <div class="container">
+      <div id="pricing-hero-inner">
+        <span id="pricing-hero-eyebrow" class="gsap-hero-el">PRICING</span>
+        <h1 class="gsap-hero-el">Simple pricing.<br>Serious acoustics.</h1>
+        <p id="pricing-hero-lead" class="gsap-hero-el">Start measuring for free. Scale as your workflow grows.</p>
+
+        <div id="billing-toggle" class="gsap-hero-el" role="group" aria-label="Billing period">
+          <button class="billing-btn" id="btn-monthly" aria-pressed="false">Monthly</button>
+          <button class="billing-btn is-active" id="btn-annual" aria-pressed="true">
+            Annual <span class="billing-save-badge">Save 20%</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 2 — PRICING TIERS
+  ══════════════════════════════════════════ -->
+  <section id="pricing-tiers">
+    <div id="pricing-tiers-inner">
+
+      <!-- Card 1: Essential -->
+      <article id="card-essential" class="pricing-card gsap-card" aria-label="Essential plan">
+        <div class="card-badge-spacer"></div>
+        <h3 class="card-heading">Essential</h3>
+        <div class="card-price-block">
+          <span class="card-price">
+            <span data-billing="annual">$29</span><span data-billing="monthly">$35</span>
+          </span>
+          <span class="card-price-period">/mo</span>
+        </div>
+        <p class="card-price-note">
+          <span data-billing="annual">Billed annually</span>
+          <span data-billing="monthly">Billed monthly</span>
+        </p>
+        <p class="card-tagline">For solo engineers and home studios.</p>
+        <div class="card-divider"></div>
+        <ul class="card-feature-list" aria-label="Essential features">
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Up to 2 simultaneous channels</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Third-octave spectrum analysis</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Basic correction filters (8 bands)</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>5 room profiles stored</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>VST3 and AU plugin export</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Email support</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>SONOR community access</span></li>
+        </ul>
+        <a href="index.html#contact" class="card-cta card-cta--outline">Start Free Trial</a>
+      </article>
+
+      <!-- Card 2: Studio (recommended) -->
+      <article id="card-studio" class="pricing-card gsap-card" aria-label="Studio plan (recommended)">
+        <span class="card-badge">Most Popular</span>
+        <h3 class="card-heading">Studio</h3>
+        <div class="card-price-block">
+          <span class="card-price">
+            <span data-billing="annual">$79</span><span data-billing="monthly">$99</span>
+          </span>
+          <span class="card-price-period">/mo</span>
+        </div>
+        <p class="card-price-note">
+          <span data-billing="annual">Billed annually</span>
+          <span data-billing="monthly">Billed monthly</span>
+        </p>
+        <p class="card-tagline">For professional studios and full-time engineers.</p>
+        <div class="card-divider"></div>
+        <ul class="card-feature-list" aria-label="Studio features">
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Up to 32 simultaneous channels</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>1/48-octave high-resolution analysis</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Unlimited correction filters</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Unlimited room profiles</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>VST3, AAX, AU, CLAP</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>3D spatial mapping module</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Priority support (4hr response)</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>White-label report export</span></li>
+        </ul>
+        <a href="index.html#contact" class="card-cta card-cta--white">Start Free Trial</a>
+      </article>
+
+      <!-- Card 3: Enterprise -->
+      <article id="card-enterprise" class="pricing-card gsap-card" aria-label="Enterprise plan">
+        <div class="card-badge-spacer"></div>
+        <h3 class="card-heading">Enterprise</h3>
+        <div class="card-price-block">
+          <span class="card-price" id="card-enterprise-price">Custom</span>
+        </div>
+        <p class="card-price-note">Volume &amp; custom licensing</p>
+        <p class="card-tagline">For venues, broadcast facilities, and consulting firms.</p>
+        <div class="card-divider"></div>
+        <ul class="card-feature-list" aria-label="Enterprise features">
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Unlimited simultaneous channels</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Multi-room networked measurement</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>API access for workflow integration</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Custom hardware calibration profiles</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Dedicated account engineer</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>SLA guaranteed uptime</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>On-site installation assistance</span></li>
+          <li class="card-feature-item"><span class="card-check">✓</span><span>Volume licensing available</span></li>
+        </ul>
+        <a href="index.html#contact" class="card-cta card-cta--dark">Contact Sales</a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 3 — COMPARISON TABLE
+  ══════════════════════════════════════════ -->
+  <section id="pricing-compare">
+    <div class="container">
+      <h2 id="pricing-compare-heading">Compare plans in detail.</h2>
+      <div id="compare-table-wrap">
+        <table id="compare-table" role="table" aria-label="Plan comparison">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 36%;">Feature</th>
+              <th scope="col">Essential</th>
+              <th scope="col" class="col-studio">Studio</th>
+              <th scope="col">Enterprise</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- MEASUREMENT -->
+            <tr class="table-category-row gsap-row">
+              <td class="table-category-label" colspan="4">Measurement</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">Simultaneous channels</td>
+              <td class="td-value">2</td>
+              <td class="td-value">32</td>
+              <td class="td-value">Unlimited</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">Spectrum resolution</td>
+              <td class="td-value">1/3 octave</td>
+              <td class="td-value">1/48 octave</td>
+              <td class="td-value">1/48 octave</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">3D spatial mapping</td>
+              <td class="td-dash">—</td>
+              <td class="td-check">✓</td>
+              <td class="td-check">✓</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">Multi-room networked measurement</td>
+              <td class="td-dash">—</td>
+              <td class="td-dash">—</td>
+              <td class="td-check">✓</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">Custom hardware calibration</td>
+              <td class="td-dash">—</td>
+              <td class="td-dash">—</td>
+              <td class="td-check">✓</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">Supported microphone models</td>
+              <td class="td-value">12</td>
+              <td class="td-value">47</td>
+              <td class="td-value">Unlimited</td>
+            </tr>
+
+            <!-- CORRECTION -->
+            <tr class="table-category-row gsap-row">
+              <td class="table-category-label" colspan="4">Correction</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">Correction bands</td>
+              <td class="td-value">8 bands</td>
+              <td class="td-value">Unlimited</td>
+              <td class="td-value">Unlimited</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">Room profiles stored</td>
+              <td class="td-value">5</td>
+              <td class="td-value">Unlimited</td>
+              <td class="td-value">Unlimited</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">White-label report export</td>
+              <td class="td-dash">—</td>
+              <td class="td-check">✓</td>
+              <td class="td-check">✓</td>
+            </tr>
+
+            <!-- INTEGRATION -->
+            <tr class="table-category-row gsap-row">
+              <td class="table-category-label" colspan="4">Integration</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">VST3 plugin export</td>
+              <td class="td-check">✓</td>
+              <td class="td-check">✓</td>
+              <td class="td-check">✓</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">AU plugin export</td>
+              <td class="td-check">✓</td>
+              <td class="td-check">✓</td>
+              <td class="td-check">✓</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">AAX (Pro Tools) support</td>
+              <td class="td-dash">—</td>
+              <td class="td-check">✓</td>
+              <td class="td-check">✓</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">CLAP support</td>
+              <td class="td-dash">—</td>
+              <td class="td-check">✓</td>
+              <td class="td-check">✓</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">API access</td>
+              <td class="td-dash">—</td>
+              <td class="td-dash">—</td>
+              <td class="td-check">✓</td>
+            </tr>
+
+            <!-- SUPPORT -->
+            <tr class="table-category-row gsap-row">
+              <td class="table-category-label" colspan="4">Support</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">Support channel</td>
+              <td class="td-value">Email</td>
+              <td class="td-value">Priority (4hr)</td>
+              <td class="td-value">Dedicated engineer</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">Community access</td>
+              <td class="td-check">✓</td>
+              <td class="td-check">✓</td>
+              <td class="td-check">✓</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">SLA guaranteed uptime</td>
+              <td class="td-dash">—</td>
+              <td class="td-dash">—</td>
+              <td class="td-check">✓</td>
+            </tr>
+            <tr class="gsap-row">
+              <td class="td-feature-name">On-site installation assistance</td>
+              <td class="td-dash">—</td>
+              <td class="td-dash">—</td>
+              <td class="td-check">✓</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 4 — FAQ
+  ══════════════════════════════════════════ -->
+  <section id="pricing-faq">
+    <div class="container">
+      <h2 id="pricing-faq-heading">Frequently asked questions.</h2>
+      <div id="faq-list" role="list">
+
+        <div class="faq-item gsap-faq" role="listitem">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
+            Can I try SONOR before purchasing?
+            <span class="faq-icon" aria-hidden="true"><span class="faq-icon-line">+</span></span>
+          </button>
+          <div id="faq-answer-1" class="faq-answer-wrap" role="region">
+            <div class="faq-answer">Yes — the free trial includes full Studio tier access for 14 days. No credit card required.</div>
+          </div>
+        </div>
+
+        <div class="faq-item gsap-faq" role="listitem">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
+            What hardware do I need?
+            <span class="faq-icon" aria-hidden="true"><span class="faq-icon-line">+</span></span>
+          </button>
+          <div id="faq-answer-2" class="faq-answer-wrap" role="region">
+            <div class="faq-answer">Any measurement microphone works (we support 47 models natively). A standard audio interface is sufficient for most use cases.</div>
+          </div>
+        </div>
+
+        <div class="faq-item gsap-faq" role="listitem">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
+            Does SONOR work with my DAW?
+            <span class="faq-icon" aria-hidden="true"><span class="faq-icon-line">+</span></span>
+          </button>
+          <div id="faq-answer-3" class="faq-answer-wrap" role="region">
+            <div class="faq-answer">SONOR integrates natively with Pro Tools (AAX), Logic Pro (AU), Ableton Live, Nuendo, and Studio One via VST3. CLAP support is available in beta.</div>
+          </div>
+        </div>
+
+        <div class="faq-item gsap-faq" role="listitem">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
+            Can I switch plans later?
+            <span class="faq-icon" aria-hidden="true"><span class="faq-icon-line">+</span></span>
+          </button>
+          <div id="faq-answer-4" class="faq-answer-wrap" role="region">
+            <div class="faq-answer">Yes — upgrade or downgrade at any time. Billing is prorated automatically.</div>
+          </div>
+        </div>
+
+        <div class="faq-item gsap-faq" role="listitem">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-5">
+            Is my measurement data stored in the cloud?
+            <span class="faq-icon" aria-hidden="true"><span class="faq-icon-line">+</span></span>
+          </button>
+          <div id="faq-answer-5" class="faq-answer-wrap" role="region">
+            <div class="faq-answer">Room profiles are stored locally by default. Cloud sync is optional and end-to-end encrypted when enabled.</div>
+          </div>
+        </div>
+
+        <div class="faq-item gsap-faq" role="listitem">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-6">
+            Do you offer educational pricing?
+            <span class="faq-icon" aria-hidden="true"><span class="faq-icon-line">+</span></span>
+          </button>
+          <div id="faq-answer-6" class="faq-answer-wrap" role="region">
+            <div class="faq-answer">Yes — 50% discount for accredited educational institutions. Contact our sales team for verification.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 5 — BOTTOM CTA
+  ══════════════════════════════════════════ -->
+  <section id="pricing-cta">
+    <div class="container">
+      <div id="pricing-cta-inner">
+        <h2>The right sound starts here.</h2>
+        <p id="pricing-cta-lead">14-day free trial. Cancel anytime.</p>
+        <a href="index.html#contact" id="pricing-cta-btn">Start Free Trial</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 6 — FOOTER
+  ══════════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="container">
+      <div id="footer-inner">
+        <!-- Brand -->
+        <div id="footer-brand">
+          <a id="footer-logo" href="index.html">SONOR</a>
+          <p id="footer-tagline">Professional acoustic measurement and room correction software for engineers who refuse to compromise.</p>
+          <p id="footer-copyright">&copy; 2024 SONOR. All rights reserved.</p>
+        </div>
+        <!-- Product links -->
+        <div id="footer-product">
+          <p class="footer-col-heading">Product</p>
+          <ul class="footer-links">
+            <li><a href="features.html">Features</a></li>
+            <li><a href="studio.html">Studio</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="index.html#contact">Free Trial</a></li>
+          </ul>
+        </div>
+        <!-- Company links -->
+        <div id="footer-company">
+          <p class="footer-col-heading">Company</p>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════
+       JS — BILLING TOGGLE + FAQ + GSAP
+  ══════════════════════════════════════════ -->
+  <script>
+    /* ── Billing toggle ── */
+    (function () {
+      var body = document.body;
+      var btnMonthly = document.getElementById('btn-monthly');
+      var btnAnnual = document.getElementById('btn-annual');
+
+      function setAnnual() {
+        body.classList.remove('billing-monthly');
+        body.classList.add('billing-annual');
+        btnAnnual.classList.add('is-active');
+        btnMonthly.classList.remove('is-active');
+        btnAnnual.setAttribute('aria-pressed', 'true');
+        btnMonthly.setAttribute('aria-pressed', 'false');
+      }
+
+      function setMonthly() {
+        body.classList.remove('billing-annual');
+        body.classList.add('billing-monthly');
+        btnMonthly.classList.add('is-active');
+        btnAnnual.classList.remove('is-active');
+        btnMonthly.setAttribute('aria-pressed', 'true');
+        btnAnnual.setAttribute('aria-pressed', 'false');
+      }
+
+      btnAnnual.addEventListener('click', setAnnual);
+      btnMonthly.addEventListener('click', setMonthly);
+    })();
+
+    /* ── FAQ accordion ── */
+    (function () {
+      var questions = document.querySelectorAll('.faq-question');
+
+      questions.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var answerId = btn.getAttribute('aria-controls');
+          var answerWrap = document.getElementById(answerId);
+          var isOpen = answerWrap.classList.contains('is-open');
+
+          // Close all
+          questions.forEach(function (q) {
+            var aId = q.getAttribute('aria-controls');
+            var aWrap = document.getElementById(aId);
+            aWrap.classList.remove('is-open');
+            q.classList.remove('is-open');
+            q.setAttribute('aria-expanded', 'false');
+          });
+
+          // Open this one if it was closed
+          if (!isOpen) {
+            answerWrap.classList.add('is-open');
+            btn.classList.add('is-open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    })();
+
+    /* ── GSAP animations ── */
+    (function () {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* Hero elements — stagger in on load */
+      gsap.to('.gsap-hero-el', {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.12,
+        delay: 0.15
+      });
+
+      /* Pricing cards — stagger from y:30 on scroll */
+      gsap.to('.gsap-card', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: '#pricing-tiers',
+          start: 'top 80%',
+          once: true
+        }
+      });
+
+      /* Table rows — stagger per row on scroll */
+      gsap.to('.gsap-row', {
+        opacity: 1,
+        y: 0,
+        duration: 0.45,
+        ease: 'power2.out',
+        stagger: 0.03,
+        scrollTrigger: {
+          trigger: '#pricing-compare',
+          start: 'top 85%',
+          once: true
+        }
+      });
+
+      /* FAQ items */
+      gsap.to('.gsap-faq', {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        ease: 'power2.out',
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger: '#pricing-faq',
+          start: 'top 80%',
+          once: true
+        }
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
