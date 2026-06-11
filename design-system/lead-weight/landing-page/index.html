@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verdure — Type Is the Argument</title>
+  <meta name="description" content="Verdure is a slow editorial typographic studio publishing rare-type specimen books and monographs on typeface history.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+  <!-- Design tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component styles -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/editorial.css">
+  <link rel="stylesheet" href="components/specimen.css">
+  <link rel="stylesheet" href="components/process-steps.css">
+  <link rel="stylesheet" href="components/pull-quote.css">
+  <link rel="stylesheet" href="components/letterpress.css">
+  <link rel="stylesheet" href="components/footer.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════
+       NAV — masthead fixed
+  ══════════════════════════════════════════════════════════ -->
+  <nav id="site-nav" class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo nav-link--active" aria-current="page">Verdure</a>
+      <ul class="nav-links">
+        <li><a href="work.html" class="nav-link">Work</a></li>
+        <li><a href="process.html" class="nav-link">Process</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta">Contact</a>
+      <button class="nav-mobile-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div id="mobile-menu" class="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
+    <a href="work.html" class="nav-mobile-link">Work</a>
+    <a href="process.html" class="nav-mobile-link">Process</a>
+    <a href="about.html" class="nav-mobile-link">About</a>
+    <a href="contact.html" class="nav-mobile-link">Contact</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 1 — HERO
+       Full-viewport. Massive display headline.
+       Below fold: 40vh video panel of letterforms in motion.
+  ══════════════════════════════════════════════════════════ -->
+  <section id="hero" aria-labelledby="hero-headline">
+
+    <div id="hero-above-fold">
+      <span id="hero-eyebrow">Verdure Studio — Est. mmxvi</span>
+      <h1 id="hero-headline">Type<br>is the<br>Argument.</h1>
+      <p id="hero-tagline">A slow editorial studio publishing rare-type specimen books and monographs on the history of letters.</p>
+    </div>
+
+    <!-- Video panel — full-width, 40vh -->
+    <div id="hero-video-panel">
+      <video
+        id="hero-type-motion-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+        <source src="assets/hero-type-motion.mp4" type="video/mp4">
+      </video>
+      <div id="hero-video-placeholder">
+        → assets/hero-type-motion.mp4
+      </div>
+      <div id="hero-video-scrim" aria-hidden="true"></div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 2 — EDITORIAL INTRO
+       Two-column 2fr/3fr. Left: eyebrow + hairline.
+       Right: h2 + 2 body paragraphs.
+       Animation: word-slide h2, stagger body.
+  ══════════════════════════════════════════════════════════ -->
+  <section id="editorial-intro" aria-labelledby="editorial-heading">
+
+    <div id="editorial-intro-inner">
+
+      <div id="editorial-intro-left">
+        <div id="editorial-eyebrow-group">
+          <span id="editorial-eyebrow">On the discipline</span>
+          <hr id="editorial-hairline" aria-hidden="true">
+          <span id="editorial-category-label">Editorial Philosophy</span>
+        </div>
+      </div>
+
+      <div id="editorial-intro-right">
+        <h2 id="editorial-heading">Typography is not ornament.<br>It is argument made visible.</h2>
+        <div id="editorial-body-group">
+          <p class="editorial-body-para">Every typeface carries a position. The weight of a serif, the aperture of a counter, the rhythm between lines — these are not aesthetic accidents. They are the decisions of human intelligence crystallised into form. At Verdure, we publish the record of those decisions.</p>
+          <p class="editorial-body-para">Our specimen books are instruments of study, not catalogues of taste. Each volume is commissioned from a single type designer and produced in a run of four hundred. When a run closes, it closes. What remains is the argument itself — permanent, irreducible, exact.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 3 — SPECIMEN LIBRARY FEATURE
+       Full-bleed dark #1A1714. Reversed text #F2EDE3.
+       h2 + body + CTA link. Video panel 60% width right col.
+       Animation: clip-path print reveal on h2.
+  ══════════════════════════════════════════════════════════ -->
+  <section id="specimen-library" aria-labelledby="specimen-heading">
+
+    <div id="specimen-library-inner">
+
+      <div id="specimen-left">
+        <span id="specimen-caption-eyebrow">The Collection</span>
+        <h2 id="specimen-heading">Specimen Library</h2>
+        <p id="specimen-body">An annual subscription to Verdure's living archive. Forty-eight monographs released across twelve months. Each specimen is printed on cotton-rag stock at 600 lines per inch and dispatched in a cloth-backed slipcase. Once issued, issues are not reprinted.</p>
+        <a href="work.html" id="specimen-cta">Explore the library</a>
+      </div>
+
+      <div id="specimen-right">
+        <div id="specimen-video-frame">
+          <video
+            id="specimen-library-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+            <source src="assets/editorial-pages.mp4" type="video/mp4">
+          </video>
+          <div id="specimen-video-placeholder">
+            → assets/editorial-pages.mp4
+          </div>
+        </div>
+        <span id="specimen-video-caption">From the 2025 Specimen Library — Typefaces in Context, Vol. IV</span>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 4 — PROCESS
+       Light surface. 3 numbered editorial steps.
+       1fr/2fr layout per row. Large navy numbers.
+       Hairline rules between each row.
+       Animation: x:-60 sweep in from left, 0.15s stagger.
+  ══════════════════════════════════════════════════════════ -->
+  <section id="process" aria-labelledby="process-eyebrow">
+
+    <div id="process-inner">
+
+      <div id="process-header">
+        <span id="process-eyebrow">Method</span>
+      </div>
+
+      <ol id="process-steps-list" role="list">
+
+        <li id="process-step-1" class="process-step">
+          <div class="process-step-number-col">
+            <span class="process-step-number" aria-hidden="true">01</span>
+          </div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Commission</h3>
+            <p class="process-step-body">We work exclusively with type designers who have spent a decade or more in the practice. Every commission begins with a sustained conversation about the typeface's conceptual problem — not its features. The designer writes the argument. We publish it.</p>
+          </div>
+        </li>
+
+        <li id="process-step-2" class="process-step">
+          <div class="process-step-number-col">
+            <span class="process-step-number" aria-hidden="true">02</span>
+          </div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Compose</h3>
+            <p class="process-step-body">Every specimen is typeset by hand in the studio using the typeface under study. Body text is set at reading size. Display matter is set at sizes that reveal the letterform's architecture — not merely its character. The layout itself is argument; it must hold under scrutiny.</p>
+          </div>
+        </li>
+
+        <li id="process-step-3" class="process-step">
+          <div class="process-step-number-col">
+            <span class="process-step-number" aria-hidden="true">03</span>
+          </div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Press</h3>
+            <p class="process-step-body">Production is managed in-house on a Heidelberg KORD 62 offset press. Ink is mixed to Pantone reference. Paper is selected per typeface — a roman of Venetian origin requires a different substrate than a grotesque of industrial descent. The press does not forgive imprecision.</p>
+          </div>
+        </li>
+
+      </ol>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 5 — PULL QUOTE + CLIENT LIST
+       Warm cream. Full-width centered pull quote at 42–48px.
+       0.5px hairlines above and below.
+       3-column client list below.
+       Animation: scale-rise from scale(0.97) y:20.
+  ══════════════════════════════════════════════════════════ -->
+  <section id="pull-quote-section" aria-label="Studio position and selected clients">
+
+    <div id="pull-quote-inner">
+
+      <blockquote id="pull-quote-block">
+        <p id="pull-quote-text">"The typeface that cannot bear scrutiny at twelve inches was never worthy of the page."</p>
+        <footer id="pull-quote-attribution">
+          <cite>Verdure Editorial Position, 2016</cite>
+        </footer>
+      </blockquote>
+
+      <div id="client-list-wrapper">
+
+        <div id="client-list-header">
+          <span id="client-list-eyebrow">Selected clients</span>
+          <hr id="client-list-rule" aria-hidden="true">
+        </div>
+
+        <ul id="client-list-grid" role="list">
+
+          <li class="client-item">
+            <p class="client-item-name">Optimo Type Foundry</p>
+            <p class="client-item-descriptor">Specimen commission, 2024</p>
+          </li>
+
+          <li class="client-item">
+            <p class="client-item-name">Museum für Gestaltung</p>
+            <p class="client-item-descriptor">Exhibition catalogue typography</p>
+          </li>
+
+          <li class="client-item">
+            <p class="client-item-name">Colophon Foundry</p>
+            <p class="client-item-descriptor">Monograph — The Aperçu Papers</p>
+          </li>
+
+          <li class="client-item">
+            <p class="client-item-name">Hoefler &amp; Co.</p>
+            <p class="client-item-descriptor">Archival specimen consultation</p>
+          </li>
+
+          <li class="client-item">
+            <p class="client-item-name">Princeton University Press</p>
+            <p class="client-item-descriptor">Series typographic system</p>
+          </li>
+
+          <li class="client-item">
+            <p class="client-item-name">Granta Publications</p>
+            <p class="client-item-descriptor">Running text system audit</p>
+          </li>
+
+          <li class="client-item">
+            <p class="client-item-name">Lineto Fonts</p>
+            <p class="client-item-descriptor">Specimen Library Vol. 9, 2023</p>
+          </li>
+
+          <li class="client-item">
+            <p class="client-item-name">Strelka Press</p>
+            <p class="client-item-descriptor">Typographic editorial system</p>
+          </li>
+
+          <li class="client-item">
+            <p class="client-item-name">The Letterform Archive</p>
+            <p class="client-item-descriptor">Collection monograph, 2022</p>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 6 — LETTERPRESS CRAFT
+       Two-column 2fr/3fr. Left: video (50vh frame).
+       Right: h3 + body about craft.
+       Animation: divergent — video from right, text from left.
+  ══════════════════════════════════════════════════════════ -->
+  <section id="letterpress" aria-labelledby="letterpress-heading">
+
+    <div id="letterpress-inner">
+
+      <div id="letterpress-video-col">
+        <div id="letterpress-video-frame">
+          <video
+            id="letterpress-craft-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+            <source src="assets/letterpress-craft.mp4" type="video/mp4">
+          </video>
+          <div id="letterpress-video-placeholder">
+            → assets/letterpress-craft.mp4
+          </div>
+        </div>
+        <span id="letterpress-video-label">Verdure press room — Heidelberg KORD 62</span>
+      </div>
+
+      <div id="letterpress-text-col">
+        <span id="letterpress-eyebrow">On craft</span>
+        <h3 id="letterpress-heading">The press demands precision that the screen cannot enforce.</h3>
+        <p class="letterpress-body-para">Offset lithography is an unforgiving medium. A hairline trap misset by three microns is invisible on screen and catastrophic on paper. The ink train, the dampening system, the bearer pressure — each variable compounds the others. To print a typeface faithfully is to understand it in a register that no digital tool can substitute.</p>
+        <p class="letterpress-body-para">We print all Verdure titles in-house, on a press maintained and calibrated by the studio. There are no intermediaries between the designer's intent and the printed mark. The press is not a service. It is the argument's final proof.</p>
+        <a href="process.html" id="letterpress-link">Our press method</a>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 7 — FOOTER
+       Near-black #1A1714. Reversed text #F2EDE3.
+       No entrance animation. 0.5px hairline at top.
+  ══════════════════════════════════════════════════════════ -->
+  <footer id="site-footer" role="contentinfo">
+
+    <div id="footer-inner">
+
+      <div id="footer-brand-col">
+        <a href="index.html" id="footer-logo">Verdure</a>
+        <p id="footer-brand-descriptor">A slow editorial typographic studio. Publishing rare-type specimen books and monographs since 2016. London.</p>
+      </div>
+
+      <nav id="footer-nav-studio" class="footer-nav-col" aria-label="Studio pages">
+        <h4 class="footer-nav-heading">Studio</h4>
+        <ul class="footer-nav-links">
+          <li><a href="about.html" class="footer-nav-link">About</a></li>
+          <li><a href="process.html" class="footer-nav-link">Method</a></li>
+          <li><a href="contact.html" class="footer-nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav id="footer-nav-work" class="footer-nav-col" aria-label="Work and archive">
+        <h4 class="footer-nav-heading">Archive</h4>
+        <ul class="footer-nav-links">
+          <li><a href="work.html" class="footer-nav-link">Selected work</a></li>
+          <li><a href="work.html" class="footer-nav-link">Specimen Library</a></li>
+          <li><a href="work.html" class="footer-nav-link">Monographs</a></li>
+        </ul>
+      </nav>
+
+      <nav id="footer-nav-services" class="footer-nav-col" aria-label="Services">
+        <h4 class="footer-nav-heading">Services</h4>
+        <ul class="footer-nav-links">
+          <li><a href="contact.html" class="footer-nav-link">Commission</a></li>
+          <li><a href="contact.html" class="footer-nav-link">Consultation</a></li>
+          <li><a href="contact.html" class="footer-nav-link">Institutional</a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <div id="footer-bottom-bar">
+      <p id="footer-copyright">&copy; 2026 Verdure Studio Ltd. All rights reserved.</p>
+      <ul id="footer-legal-links" role="list">
+        <li><a href="#" class="footer-legal-link">Privacy</a></li>
+        <li><a href="#" class="footer-legal-link">Terms</a></li>
+      </ul>
+    </div>
+
+  </footer>
+
+  <!-- ── Scroll reveal behaviours ─────────────────────────── -->
+  <script src="behaviors/scroll-reveal.js"></script>
+
+  <!-- ── Video fallback: show placeholder when src 404s ───── -->
+  <script>
+    (function () {
+      var videos = document.querySelectorAll('video');
+      videos.forEach(function (v) {
+        var placeholder = v.nextElementSibling;
+        if (!placeholder) return;
+        // Show placeholder immediately if video fails to load
+        v.addEventListener('error', function () {
+          v.style.display = 'none';
+          placeholder.style.display = 'flex';
+        });
+        // Fallback: if not playing after 1.5s, assume 404
+        setTimeout(function () {
+          if (v.readyState === 0) {
+            v.style.display = 'none';
+            placeholder.style.display = 'flex';
+          }
+        }, 1500);
+      });
+    })();
+  </script>
+
+</body>
+</html>

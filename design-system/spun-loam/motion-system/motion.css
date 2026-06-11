@@ -1,0 +1,28 @@
+/* Motion System — source: teenage-engineering */
+/* Twist: easing-curve-swap, intensity 3 — ease-in → ease-in-out */
+
+:root {
+  --motion-duration-fast: 0.2s;
+  --motion-duration-medium: 0.4s;
+  --motion-easing-primary: ease-in-out;
+  --motion-easing-material: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes bulge {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.overlay {
+  transition: transform var(--motion-duration-fast) var(--motion-easing-primary);
+}
+
+* {
+  transition-timing-function: var(--motion-easing-primary);
+}

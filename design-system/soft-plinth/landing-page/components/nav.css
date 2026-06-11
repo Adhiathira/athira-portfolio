@@ -1,0 +1,259 @@
+/* =============================================================================
+   NAV — Soft Plinth / Roundwork Studio
+   Claymorphism nav: spring easing, transparent base, white-on-scroll
+   ============================================================================= */
+
+/* --- Base nav ---------------------------------------------------------------- */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 64px;
+  padding: 0 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  box-shadow: none;
+  transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- Logo -------------------------------------------------------------------- */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #2b2b29;
+  font-family: 'Figtree', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-logo:hover {
+  transform: scale(1.04);
+}
+
+/* --- Desktop links ----------------------------------------------------------- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #2b2b29;
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  text-transform: none;
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-link:hover {
+  transform: scale(0.96);
+  opacity: 0.72;
+}
+
+/* Active link: dimmed + non-interactive */
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* --- Scrolled state ---------------------------------------------------------- */
+.site-nav.scrolled {
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(43, 43, 41, 0.1);
+  height: 56px;
+}
+
+/* =============================================================================
+   MOBILE HAMBURGER BUTTON
+   ============================================================================= */
+
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 200;
+  position: relative;
+}
+
+.nav-mobile-toggle:hover {
+  background: rgba(43, 43, 41, 0.06);
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #2b2b29;
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.2s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X animation when menu is open */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* =============================================================================
+   MOBILE MENU OVERLAY
+   ============================================================================= */
+
+.nav-mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  border-radius: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96) translateY(-8px);
+  transition: opacity 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* margin for the rounded clay feel — not fullscreen edge-to-edge */
+  margin: 8px;
+  inset: 8px;
+}
+
+.nav-mobile-menu.is-open {
+  opacity: 1;
+  pointer-events: all;
+  transform: scale(1) translateY(0);
+}
+
+.nav-mobile-menu .nav-link {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #2b2b29;
+  opacity: 1;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.25s ease;
+}
+
+.nav-mobile-menu .nav-link:hover {
+  transform: scale(0.96);
+  opacity: 0.6;
+}
+
+.nav-mobile-menu .nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Close button inside mobile menu */
+.nav-mobile-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.nav-mobile-close:hover {
+  background: rgba(43, 43, 41, 0.06);
+}
+
+.nav-mobile-close span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #2b2b29;
+  border-radius: 2px;
+  position: absolute;
+}
+
+.nav-mobile-close span:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.nav-mobile-close span:nth-child(2) {
+  transform: rotate(-45deg);
+}
+
+/* =============================================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================================= */
+
+/* Tablet: 900px and below — show hamburger, hide desktop links */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+/* Small mobile: 600px and below */
+@media (max-width: 600px) {
+  .site-nav {
+    padding: 0 20px;
+  }
+
+  .nav-logo {
+    font-size: 16px;
+  }
+
+  .nav-mobile-menu {
+    margin: 4px;
+    inset: 4px;
+    border-radius: 20px;
+    gap: 24px;
+  }
+
+  .nav-mobile-menu .nav-link {
+    font-size: 20px;
+  }
+}

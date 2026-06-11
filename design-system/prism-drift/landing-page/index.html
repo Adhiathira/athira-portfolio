@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRID — Structural Color. No Pigments.</title>
+  <meta name="description" content="IRID creates structural color systems through biomimetic thin-film nanocoatings. Iridescence engineered from geometry, not pigment.">
+
+  <!-- Design tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAV — canonical template (verbatim)
+       ============================================================ -->
+  <nav id="site-nav" class="on-dark" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">IRID</a>
+    <ul class="nav-links" role="list">
+      <li><a href="technology.html" class="nav-link">Technology</a></li>
+      <li><a href="applications.html" class="nav-link">Applications</a></li>
+      <li><a href="studio.html" class="nav-link">Studio</a></li>
+      <li><a href="contact.html" class="nav-link nav-cta">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-menu" id="mobile-menu" role="dialog" aria-modal="true">
+    <a href="technology.html" class="nav-link">Technology</a>
+    <a href="applications.html" class="nav-link">Applications</a>
+    <a href="studio.html" class="nav-link">Studio</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </div>
+
+  <!-- ============================================================
+       SECTION 1: HERO
+       Full viewport · dark teal bg (#1e3a35)
+       ============================================================ -->
+  <section id="hero" aria-labelledby="hero-headline">
+
+    <!-- Video background -->
+    <div id="hero-video-wrap">
+      <video autoplay loop muted playsinline class="hero-video" id="hero-video">
+        <source src="assets/holo-surface.mp4" type="video/mp4">
+      </video>
+      <div id="hero-video-placeholder" aria-hidden="true"></div>
+      <div id="hero-video-overlay" aria-hidden="true"></div>
+    </div>
+
+    <!-- Conic-gradient spectral layer -->
+    <div id="hero-conic-layer" aria-hidden="true"></div>
+
+    <!-- Floating blob shapes -->
+    <div id="hero-blob-1" class="hero-blob" aria-hidden="true"></div>
+    <div id="hero-blob-2" class="hero-blob" aria-hidden="true"></div>
+    <div id="hero-blob-3" class="hero-blob" aria-hidden="true"></div>
+
+    <!-- Hero content -->
+    <div id="hero-content">
+      <p id="hero-eyebrow">Biomimetic Color Systems</p>
+      <h1 id="hero-headline">Structural<br>Color</h1>
+      <p id="hero-subhead">No pigments. Only light.</p>
+      <p id="hero-body">
+        IRID creates structural color systems for industries that demand color without compromise.
+        Our nanostructured films replicate the iridescence of morpho butterfly wings — producing
+        angle-dependent chromatic effects from pure geometry.
+      </p>
+      <div id="hero-cta-group">
+        <a href="technology.html" class="hero-cta-primary">Explore Technology</a>
+        <a href="applications.html" class="hero-cta-secondary">Our Applications</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============================================================
+       SVG DIVIDER 1 — Hero → Intro
+       Organic wave, spectral animated stroke
+       ============================================================ -->
+  <div id="divider-hero-intro" class="svg-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="72">
+      <path
+        class="divider-wave"
+        d="M0,36 C180,72 360,0 540,36 C720,72 900,0 1080,36 C1260,72 1380,20 1440,36 L1440,72 L0,72 Z"
+        fill="#ffffff"
+      />
+    </svg>
+  </div>
+
+  <!-- ============================================================
+       SECTION 2: INTRO — "The Physics of Color"
+       Background: #ffffff · Layout: asymmetric 3fr:2fr
+       ============================================================ -->
+  <section id="section-intro" aria-labelledby="intro-heading">
+    <div class="section-inner">
+      <div id="intro-grid">
+
+        <!-- Left: stat + copy -->
+        <div id="intro-left">
+          <div id="intro-stat-block">
+            <h2 id="intro-stat-number">1/1000<br>mm</h2>
+            <p id="intro-stat-label">Film thickness — thinner than human hair</p>
+          </div>
+          <h3 id="intro-heading">
+            <span class="section-eyebrow">The Physics of Color</span>
+            Light as architecture
+          </h3>
+          <p id="intro-body-1">
+            Conventional color requires chemical pigments that absorb light selectively — dyes that
+            bleach, fade, and pollute. IRID takes the opposite approach. Our coatings produce color
+            through constructive interference: nanoscale layers spaced at precise intervals cause
+            specific wavelengths to amplify rather than absorb. The result is a color that cannot
+            fade, because it is not a dye. It is geometry.
+          </p>
+          <p id="intro-body-2">
+            This is the same principle that gives butterfly wings and opal gemstones their
+            luminosity. We engineer it at industrial scale — for surfaces that must hold color
+            through decades of UV, temperature cycling, and mechanical stress.
+          </p>
+        </div>
+
+        <!-- Right: CSS 3D prism depth piece -->
+        <div id="intro-right">
+          <div id="intro-prism-visual">
+            <div id="intro-prism-outer" aria-hidden="true"></div>
+            <div id="intro-prism-core" aria-hidden="true"></div>
+            <div id="intro-prism-refraction" aria-hidden="true"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SVG DIVIDER 2 — Intro → Applications
+       Blob organic path
+       ============================================================ -->
+  <div id="divider-intro-applications" class="svg-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="80">
+      <path
+        class="divider-blob"
+        d="M0,40 C200,80 280,8 500,40 C700,68 820,12 1020,40 C1180,60 1340,10 1440,40 L1440,80 L0,80 Z"
+        fill="#f0ede8"
+      />
+    </svg>
+  </div>
+
+  <!-- ============================================================
+       SECTION 3: APPLICATIONS GRID
+       Background: #f0ede8 · Bento 1.6fr 1fr 1fr
+       ============================================================ -->
+  <section id="section-applications" aria-labelledby="applications-heading">
+    <div class="section-inner">
+
+      <div id="applications-header">
+        <span class="section-eyebrow">Where IRID Performs</span>
+        <h2 id="applications-heading">Four industries.<br>One physics.</h2>
+        <p id="applications-subtext">
+          Structural color performs where pigment fails — extreme conditions, long service life,
+          and optical precision that no dye chemistry can match.
+        </p>
+      </div>
+
+      <div id="applications-bento">
+
+        <!-- Card 1: Automotive — spans 2 rows -->
+        <article id="app-card-automotive" class="app-card" aria-labelledby="app-heading-automotive">
+          <p class="app-card-domain">Automotive</p>
+          <h3 id="app-heading-automotive" class="app-card-heading">
+            Automotive<br>Coatings
+          </h3>
+          <p class="app-card-body">
+            IRID thin-film systems deliver spectral depth to automotive finishes that conventional
+            metallic paints cannot replicate. Angle-dependent color shift from 15° to 90°.
+            UV-stable over 200,000 km equivalent weathering cycles. Applied at standard electrocoat
+            line speeds — no retooling required.
+          </p>
+          <span class="app-card-tag">Exterior &amp; Trim</span>
+        </article>
+
+        <!-- Card 2: Architecture -->
+        <article id="app-card-architecture" class="app-card" aria-labelledby="app-heading-architecture">
+          <p class="app-card-domain">Architecture</p>
+          <h3 id="app-heading-architecture" class="app-card-heading">
+            Architectural<br>Glass
+          </h3>
+          <p class="app-card-body">
+            Façade glass with spectral iridescence that responds to the angle of the sun —
+            turning a building's surface into a dynamic color instrument across the day.
+          </p>
+          <span class="app-card-tag">Façade Systems</span>
+        </article>
+
+        <!-- Card 3: Fashion -->
+        <article id="app-card-fashion" class="app-card" aria-labelledby="app-heading-fashion">
+          <p class="app-card-domain">Fashion</p>
+          <h3 id="app-heading-fashion" class="app-card-heading">
+            Textile<br>Systems
+          </h3>
+          <p class="app-card-body">
+            Iridescent fiber coatings for luxury textile applications. Wash-stable, weight-neutral,
+            and recyclable. The effect that used to require hand-applied foil — now achieved
+            in continuous fabric production.
+          </p>
+          <span class="app-card-tag">Woven &amp; Knit</span>
+        </article>
+
+        <!-- Card 4: Instruments -->
+        <article id="app-card-instruments" class="app-card" aria-labelledby="app-heading-instruments">
+          <p class="app-card-domain">Scientific</p>
+          <h3 id="app-heading-instruments" class="app-card-heading">
+            Optical<br>Instruments
+          </h3>
+          <p class="app-card-body">
+            Precision interference coatings for spectrometers, telescopes, and imaging systems.
+            Wavelength selectivity to ±2nm, deposited on substrates from 12mm to 1200mm.
+          </p>
+          <span class="app-card-tag">Precision Optics</span>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SVG DIVIDER 3 — Applications → Process
+       Crest arc path
+       ============================================================ -->
+  <div id="divider-applications-process" class="svg-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="80">
+      <path
+        class="divider-arc"
+        d="M0,0 C120,60 300,80 540,50 C700,30 900,80 1100,50 C1280,24 1380,60 1440,40 L1440,80 L0,80 Z"
+        fill="#1e3a35"
+      />
+    </svg>
+  </div>
+
+  <!-- ============================================================
+       SECTION 4: PROCESS — "How Thin-Film Coating Works"
+       Background: #1e3a35 · numbered step rows
+       ============================================================ -->
+  <section id="section-process" aria-labelledby="process-heading">
+    <div class="section-inner">
+
+      <div id="process-header">
+        <span class="section-eyebrow">The Process</span>
+        <h2 id="process-heading">How thin-film<br>coating works</h2>
+        <p id="process-subtext">
+          Every IRID application follows a four-stage deposition process calibrated to the
+          substrate and target spectral outcome.
+        </p>
+      </div>
+
+      <div id="process-steps">
+
+        <!-- Step 1 -->
+        <div id="process-step-1" class="process-step">
+          <div class="process-step-number-col">
+            <div class="process-step-hairline" aria-hidden="true"></div>
+            <p class="process-step-num">01</p>
+          </div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Substrate Preparation</h3>
+            <p class="process-step-body">
+              Surface uniformity determines optical consistency. Substrates are plasma-cleaned
+              at 10⁻⁴ mbar to remove molecular contamination. Surface roughness is characterized
+              by AFM across 5 sample sites — tolerance Ra &lt;0.8nm for optical-grade work.
+            </p>
+            <span class="process-step-tag">Plasma &amp; AFM</span>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="process-step-2" class="process-step">
+          <div class="process-step-number-col">
+            <div class="process-step-hairline" aria-hidden="true"></div>
+            <p class="process-step-num">02</p>
+          </div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Film Deposition</h3>
+            <p class="process-step-body">
+              Alternating high- and low-index layers (TiO₂ / SiO₂) are deposited by reactive
+              magnetron sputtering. Each layer is grown to the target optical thickness in a
+              single chamber pass — deposition rate monitored by in-situ reflectometry.
+            </p>
+            <span class="process-step-tag">Magnetron Sputtering</span>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="process-step-3" class="process-step">
+          <div class="process-step-number-col">
+            <div class="process-step-hairline" aria-hidden="true"></div>
+            <p class="process-step-num">03</p>
+          </div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Interference Tuning</h3>
+            <p class="process-step-body">
+              The spectral peak wavelength is set by controlling cumulative optical path length.
+              Our proprietary interference model calculates the exact layer stack for any target
+              color — from a single-peak narrow-band to a full-spectrum shifting sequence.
+            </p>
+            <span class="process-step-tag">Spectral Engineering</span>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div id="process-step-4" class="process-step">
+          <div class="process-step-number-col">
+            <div class="process-step-hairline" aria-hidden="true"></div>
+            <p class="process-step-num">04</p>
+          </div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">QA Spectroscopy</h3>
+            <p class="process-step-body">
+              Every coated substrate is measured at 15° / 45° / 75° incidence angles using a
+              calibrated spectrophotometer. Pass criteria: peak wavelength ±3nm, reflectance
+              uniformity ≥98% across the coated area. Certificate issued with every shipment.
+            </p>
+            <span class="process-step-tag">Angle-Resolved QA</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SVG DIVIDER 4 — Process → CTA
+       Crest organic path
+       ============================================================ -->
+  <div id="divider-process-cta" class="svg-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="72">
+      <path
+        class="divider-crest"
+        d="M0,36 C160,72 400,0 640,36 C820,60 1000,0 1200,36 C1320,54 1400,18 1440,36 L1440,72 L0,72 Z"
+        fill="#2b2918"
+      />
+    </svg>
+  </div>
+
+  <!-- ============================================================
+       SECTION 5: CTA STRIP
+       Background: #2b2918 · center-aligned
+       ============================================================ -->
+  <section id="section-cta" aria-labelledby="cta-heading">
+    <div id="cta-foil-hairline" aria-hidden="true"></div>
+    <div id="cta-shimmer-layer" aria-hidden="true"></div>
+    <div class="section-inner">
+      <div id="cta-inner">
+        <h2 id="cta-heading">Every surface<br>is a light event.</h2>
+        <p id="cta-subtext">
+          Tell us the substrate, the application, and the spectral target.
+          IRID will engineer the color system to match.
+        </p>
+        <div id="cta-button-group">
+          <a href="contact.html" class="cta-btn-primary">Begin a Project</a>
+          <a href="studio.html" class="cta-btn-secondary">View Our Studio</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+  <script src="behaviors/scroll-nav.js"></script>
+
+  <script>
+    // Hero video error handler — hide video if asset not present
+    (function() {
+      var vid = document.getElementById('hero-video');
+      if (vid) {
+        vid.addEventListener('error', function() {
+          this.style.display = 'none';
+        });
+      }
+    })();
+  </script>
+
+  <script>
+    // GSAP animations — runs after GSAP CDN scripts load
+    window.addEventListener('load', function() {
+      if (typeof gsap === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Read motion tokens
+      var styles = getComputedStyle(document.documentElement);
+      var EASE_PRIMARY   = styles.getPropertyValue('--ease-primary').trim()   || 'power2.out';
+      var EASE_SHIMMER   = styles.getPropertyValue('--shimmer-ease').trim()   || 'power2.out';
+      var EASE_FOIL      = styles.getPropertyValue('--foil-ease').trim()      || 'power2.inOut';
+      var DURATION_REVEAL = 0.6;
+      var DURATION_BASE   = 0.5;
+
+      // -------------------------------------------------------
+      // HERO entrance — timeline (fires on load, not scroll)
+      // prismaticReveal: clip-path inset right→left, then subhead fades up, then CTAs
+      // -------------------------------------------------------
+      var heroTl = gsap.timeline({ defaults: { ease: EASE_SHIMMER } });
+
+      // Set initial states via gsap.set so they are JS-owned (safe)
+      gsap.set('#hero-headline', {
+        clipPath: 'inset(0 100% 0 0)',
+        opacity: 1
+      });
+      gsap.set('#hero-subhead', { y: 20, opacity: 0 });
+      gsap.set('#hero-body',    { y: 16, opacity: 0 });
+      gsap.set('#hero-cta-group', { y: 16, opacity: 0 });
+      gsap.set('#hero-eyebrow',   { y: 12, opacity: 0 });
+
+      heroTl
+        .to('#hero-eyebrow', {
+          y: 0, opacity: 1,
+          duration: 0.4, ease: EASE_PRIMARY
+        }, 0.1)
+        .to('#hero-headline', {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: DURATION_REVEAL, ease: EASE_SHIMMER
+        }, 0.3)
+        .to('#hero-subhead', {
+          y: 0, opacity: 1,
+          duration: DURATION_BASE, ease: EASE_PRIMARY
+        }, 0.8)
+        .to('#hero-body', {
+          y: 0, opacity: 1,
+          duration: DURATION_BASE, ease: EASE_PRIMARY
+        }, 1.0)
+        .to('#hero-cta-group', {
+          y: 0, opacity: 1,
+          duration: DURATION_BASE, ease: EASE_PRIMARY
+        }, 1.15);
+
+      // -------------------------------------------------------
+      // SECTION 2: INTRO — prismaticReveal on stat number + fade on body
+      // clip-path inset right→left
+      // -------------------------------------------------------
+      gsap.set('#intro-stat-number', {
+        clipPath: 'inset(0 100% 0 0)'
+      });
+
+      gsap.to('#intro-stat-number', {
+        scrollTrigger: {
+          trigger: '#section-intro',
+          start: 'top 75%',
+          once: true
+        },
+        clipPath: 'inset(0 0% 0 0)',
+        duration: DURATION_REVEAL,
+        ease: EASE_SHIMMER
+      });
+
+      gsap.from('#intro-heading', {
+        scrollTrigger: { trigger: '#intro-heading', start: 'top 80%', once: true },
+        y: 30,
+        duration: DURATION_BASE,
+        ease: EASE_PRIMARY
+      });
+
+      gsap.from(['#intro-body-1', '#intro-body-2'], {
+        scrollTrigger: { trigger: '#intro-body-1', start: 'top 82%', once: true },
+        y: 24,
+        duration: DURATION_BASE,
+        stagger: 0.15,
+        ease: EASE_PRIMARY
+      });
+
+      gsap.from('#intro-prism-visual', {
+        scrollTrigger: { trigger: '#intro-right', start: 'top 75%', once: true },
+        scale: 0.88,
+        duration: 0.7,
+        ease: EASE_PRIMARY
+      });
+
+      // -------------------------------------------------------
+      // SECTION 3: APPLICATIONS — rotate+rise stagger
+      // rotation: 2, y: 40, stagger: 0.12
+      // -------------------------------------------------------
+      gsap.from('#applications-bento .app-card', {
+        scrollTrigger: {
+          trigger: '#applications-bento',
+          start: 'top 78%',
+          once: true
+        },
+        y: 40,
+        rotation: 2,
+        transformOrigin: 'bottom center',
+        duration: 0.65,
+        stagger: 0.12,
+        ease: EASE_PRIMARY
+      });
+
+      gsap.from('#applications-header', {
+        scrollTrigger: { trigger: '#applications-header', start: 'top 80%', once: true },
+        y: 28,
+        duration: DURATION_BASE,
+        ease: EASE_PRIMARY
+      });
+
+      // -------------------------------------------------------
+      // SECTION 4: PROCESS — clip-path reveals from left, per step
+      // Each row: clipPath inset(0 0 0 100%) → inset(0 0 0 0%)
+      // -------------------------------------------------------
+      gsap.set('.process-step', {
+        clipPath: 'inset(0 0 0 100%)'
+      });
+
+      document.querySelectorAll('.process-step').forEach(function(step, i) {
+        gsap.to(step, {
+          scrollTrigger: {
+            trigger: step,
+            start: 'top 82%',
+            once: true
+          },
+          clipPath: 'inset(0 0 0 0%)',
+          duration: DURATION_REVEAL,
+          delay: i * 0.08,
+          ease: EASE_SHIMMER
+        });
+      });
+
+      gsap.from('#process-header', {
+        scrollTrigger: { trigger: '#process-header', start: 'top 78%', once: true },
+        y: 30,
+        duration: DURATION_BASE,
+        ease: EASE_PRIMARY
+      });
+
+      // -------------------------------------------------------
+      // SECTION 5: CTA — shimmerSweep driven by CSS animation
+      // GSAP: scale-from-center on heading, gentle fade on subtext
+      // -------------------------------------------------------
+      gsap.from('#cta-heading', {
+        scrollTrigger: { trigger: '#section-cta', start: 'top 78%', once: true },
+        scale: 0.94,
+        transformOrigin: 'center center',
+        duration: 0.7,
+        ease: EASE_PRIMARY
+      });
+
+      gsap.from('#cta-subtext', {
+        scrollTrigger: { trigger: '#cta-subtext', start: 'top 82%', once: true },
+        y: 20,
+        duration: DURATION_BASE,
+        ease: EASE_PRIMARY
+      });
+
+      gsap.from('#cta-button-group', {
+        scrollTrigger: { trigger: '#cta-button-group', start: 'top 88%', once: true },
+        y: 16,
+        duration: DURATION_BASE,
+        ease: EASE_PRIMARY
+      });
+
+    }); // end window.load
+  </script>
+
+</body>
+</html>

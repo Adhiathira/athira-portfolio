@@ -1,0 +1,112 @@
+{
+  "cssVars": {
+    "container-max": "1440px",
+    "container-padding": "60px",
+    "container-padding-tablet": "32px",
+    "container-padding-mobile": "20px"
+  },
+  "container": {
+    "maxWidth": "1440px",
+    "padding": "60px",
+    "description": "Wide container with generous horizontal padding to give parallax elements room to breathe off-screen."
+  },
+  "grids": {
+    "depth-stage": {
+      "display": "relative positioned",
+      "description": "Full-viewport stage with z-index layering system. Overflow visible for parallax elements.",
+      "position": "relative",
+      "minHeight": "100vh",
+      "overflow": "visible",
+      "zLayers": {
+        "layer-bg": 1,
+        "layer-mid": 2,
+        "layer-near": 3,
+        "layer-content": 10
+      }
+    },
+    "feature-3col": {
+      "display": "grid",
+      "templateColumns": "repeat(3, 1fr)",
+      "gap": "24px",
+      "description": "3-col feature grid. First card can span 2 rows for alternating height depth effect.",
+      "childPattern": "alternating-heights"
+    },
+    "two-col-deep": {
+      "display": "grid",
+      "templateColumns": "1.2fr 1fr",
+      "gap": "60px",
+      "description": "Asymmetric split 1.2:1 — slight tension creates implied depth between columns."
+    },
+    "stats-4col": {
+      "display": "grid",
+      "templateColumns": "repeat(4, 1fr)",
+      "gap": "40px",
+      "description": "4-column stats grid. Each stat reads as a separate depth plane."
+    },
+    "floating-cards": {
+      "display": "grid",
+      "templateColumns": "repeat(3, 1fr)",
+      "gap": "28px",
+      "description": "Cards positioned within relative stage container. Hover lifts individual cards toward viewer.",
+      "position": "relative"
+    }
+  },
+  "responsive": {
+    "bp-375px": {
+      "query": "only screen and (max-width: 375px)",
+      "container-padding": "20px",
+      "feature-3col": "1 column",
+      "stats-4col": "2 columns",
+      "two-col-deep": "1 column"
+    },
+    "bp-768px": {
+      "query": "only screen and (max-width: 768px)",
+      "container-padding": "32px",
+      "feature-3col": "1 column",
+      "stats-4col": "2 columns",
+      "two-col-deep": "1 column"
+    },
+    "bp-1024px": {
+      "query": "only screen and (max-width: 1024px)",
+      "container-padding": "40px",
+      "feature-3col": "2 columns",
+      "stats-4col": "2 columns",
+      "two-col-deep": "1 column"
+    },
+    "bp-1440px": {
+      "query": "only screen and (min-width: 1440px)",
+      "container-padding": "60px",
+      "feature-3col": "3 columns",
+      "stats-4col": "4 columns"
+    }
+  },
+  "visual": [
+    {
+      "section": "nav",
+      "layout": "full-width-transparent-fixed",
+      "description": "72px fixed nav floating above depth layers. Background transparent initially, glassmorphic on scroll."
+    },
+    {
+      "section": "hero",
+      "layout": "full-viewport-depth-stage",
+      "description": "100vh+ stage with 3 absolute-positioned parallax layers beneath centered hero content."
+    },
+    {
+      "section": "features",
+      "layout": "3-col-card-grid-alternating",
+      "description": "3-col grid within container. Cards at different apparent depths via box-shadow."
+    },
+    {
+      "section": "stats",
+      "layout": "4-col-stat-band",
+      "description": "Full-width dark band. 4 equally spaced stat columns."
+    },
+    {
+      "section": "how-it-works",
+      "layout": "3-step-depth-sequence",
+      "description": "3 steps with offset decorative shapes. Each step has implied z-depth via visual offset."
+    }
+  ],
+  "_source": "custom grid for strata-drift parallax depth system",
+  "_twist": "Depth-aware grid design — container 1440px/60px padding, depth stage full-viewport with explicit z-layers, asymmetric two-col for depth tension"
+}

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quill Meridian — Private instrument calibration registry and certified provenance records for precision writing and drafting instruments.">
+  <title>Quill Meridian — Precision Registered. Provenance Certified.</title>
+
+  <!-- Tokens & Components -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/dividers.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <!-- SVG filter for hero warp -->
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+    <defs>
+      <filter id="qm-warp-filter" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence id="qm-turbulence" type="fractalNoise" baseFrequency="0.065" numOctaves="3" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="24" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { /* scroll-behavior managed by Lenis */ }
+    body {
+      background: var(--color-page-bg);
+      color: var(--color-body-text);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px; height: 1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+    }
+    /* Initial hidden state for scroll-reveal elements */
+    .reveal-up { opacity: 0; transform: translateY(28px); }
+    .reveal-clip { clip-path: inset(0 100% 0 0); }
+    .reveal-exploded { opacity: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ NAV -->
+<header id="site-nav" role="banner">
+  <div id="nav-inner">
+    <a href="#" id="nav-logo" aria-label="Quill Meridian home">Quill Meridian</a>
+
+    <nav aria-label="Primary navigation">
+      <ul id="nav-links">
+        <li><a href="#method-section">Method</a></li>
+        <li><a href="#services-section">Services</a></li>
+        <li><a href="#process-section">Registry</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+
+    <a href="#cta-section" id="nav-cta" aria-label="Request certification">Request Certification</a>
+
+    <button id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu -->
+<div id="nav-mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <ul>
+    <li><a href="#method-section">Method</a></li>
+    <li><a href="#services-section">Services</a></li>
+    <li><a href="#process-section">Registry</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#cta-section">Request Certification</a></li>
+  </ul>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ HERO -->
+<main id="main-content">
+<section id="hero-section" aria-labelledby="hero-title">
+
+  <!-- Ghost word parallax layer -->
+  <div id="hero-ghost-word" aria-hidden="true">MERIDIAN</div>
+
+  <div id="hero-inner">
+    <div id="hero-content">
+      <div id="hero-eyebrow">Instrument Calibration Registry — Est. 2011</div>
+
+      <div id="hero-title-wrap">
+        <h1 id="hero-title">
+          Precision<br>
+          Registered.<br>
+          Provenance<br>
+          Certified.
+        </h1>
+      </div>
+
+      <p id="hero-sub" class="reveal-up">
+        The private ledger for collectors and institutions requiring certified traceability records for precision writing and drafting instruments. Linewidth tolerances measured. Calibration certificates issued. Ownership registered in a cryptographically sealed record.
+      </p>
+
+      <div id="hero-actions" class="reveal-up">
+        <a href="#cta-section" class="btn-primary">Submit an Instrument</a>
+        <a href="#process-section" class="btn-secondary">View the Registry</a>
+      </div>
+    </div>
+
+    <!-- Specimen annotation column -->
+    <aside id="hero-annotation-col" aria-label="Registry statistics">
+      <div class="hero-specimen-item">
+        <span class="hero-specimen-label">Instruments Registered</span>
+        <span class="hero-specimen-value">4,847</span>
+        <span class="hero-specimen-sub">Across 12 countries since 2011</span>
+      </div>
+      <div class="hero-specimen-item">
+        <span class="hero-specimen-label">Tolerance Standard</span>
+        <span class="hero-specimen-value">±0.005 mm</span>
+        <span class="hero-specimen-sub">Nib linewidth measurement precision</span>
+      </div>
+      <div class="hero-specimen-item">
+        <span class="hero-specimen-label">Certificate Validity</span>
+        <span class="hero-specimen-value">5 years</span>
+        <span class="hero-specimen-sub">Renewable on re-calibration submission</span>
+      </div>
+      <div class="hero-specimen-item">
+        <span class="hero-specimen-label">Accepted Instruments</span>
+        <span class="hero-specimen-value">63 types</span>
+        <span class="hero-specimen-sub">From ruling pens to drawing machines</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- DIVIDER 1: Sinusoidal wave (hero → method) -->
+<div class="divider-wrap divider-sine" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="divider-sine-path" d="M0,40 C180,0 360,80 540,40 C720,0 900,80 1080,40 C1260,0 1350,60 1440,40 L1440,80 L0,80 Z" fill="#ede9e2"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ METHOD (skew) -->
+<section id="method-section" aria-labelledby="method-heading">
+  <div id="method-inner">
+    <div class="section-label">Our Method</div>
+
+    <div id="method-header">
+      <h2 id="method-heading" class="reveal-up">
+        A Science of<br>
+        Measured Lines
+      </h2>
+      <p id="method-desc" class="reveal-up">
+        Calibration is not an opinion. Every instrument enters the Quill Meridian registry through a documented measurement protocol — optical linewidth analysis, cross-sectional geometry, and material condition assessment — producing a certificate that is unambiguous and reproducible.
+      </p>
+    </div>
+
+    <div id="method-grid">
+      <article class="method-card reveal-exploded">
+        <div class="method-number">01</div>
+        <h3 class="method-title">Optical Measurement</h3>
+        <p class="method-body">Every nib and ruling edge is measured under collimated light at 40× magnification. Linewidth is recorded in five positions along the stroke path. Variance is documented alongside the mean.</p>
+      </article>
+      <article class="method-card reveal-exploded">
+        <div class="method-number">02</div>
+        <h3 class="method-title">Condition Assessment</h3>
+        <p class="method-body">Material condition — tip wear, slit geometry, tine symmetry — is recorded against a standardized five-point scale. Photographs accompany every condition record in the certificate package.</p>
+      </article>
+      <article class="method-card reveal-exploded">
+        <div class="method-number">03</div>
+        <h3 class="method-title">Sealed Registration</h3>
+        <p class="method-body">Calibration results are entered into the ledger with a cryptographic signature. The record is permanent, non-editable, and accessible to designated parties with the instrument's registration identifier.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER 2: Scalloped arch (method → bento) -->
+<div class="divider-wrap divider-scallop" aria-hidden="true">
+  <svg viewBox="0 0 1440 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,64 L0,32 C60,64 120,0 180,32 C240,64 300,0 360,32 C420,64 480,0 540,32 C600,64 660,0 720,32 C780,64 840,0 900,32 C960,64 1020,0 1080,32 C1140,64 1200,0 1260,32 C1320,64 1380,0 1440,32 L1440,64 Z" fill="#f5f4f0"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ BENTO -->
+<section id="bento-section" aria-labelledby="bento-heading">
+  <div id="bento-inner">
+    <div id="bento-label-row">
+      <div class="section-label" id="bento-heading">The Registry</div>
+    </div>
+
+    <div id="bento-grid">
+      <!-- Primary cell: counter + statement -->
+      <div class="bento-primary">
+        <div class="bento-primary-bg" aria-hidden="true">4847</div>
+
+        <div class="bento-primary-content">
+          <span class="bento-primary-label">Instruments Registered</span>
+          <div id="bento-counter-value" aria-label="4,847 instruments registered">4,847</div>
+          <span class="bento-primary-sub">Certificates issued since founding</span>
+        </div>
+
+        <div class="bento-primary-footer">
+          <p class="bento-primary-desc">
+            A tool not documented is a tool whose history ends when its owner forgets it.
+          </p>
+        </div>
+      </div>
+
+      <!-- Side A -->
+      <div class="bento-side" style="grid-area: side-a;">
+        <span class="bento-side-label">Coverage</span>
+        <div>
+          <h3 class="bento-side-title">63 Instrument Types</h3>
+          <p class="bento-side-body">Ruling pens, technical nibs, parallel plates, pantographs, drawing machines, proportional dividers, and precision ruling instruments from 1840 to present.</p>
+        </div>
+        <a href="#services-section" class="service-link" style="text-align:left;display:inline-flex;">View all types →</a>
+      </div>
+
+      <!-- Side B -->
+      <div class="bento-side" style="grid-area: side-b;">
+        <span class="bento-side-label">Access</span>
+        <div>
+          <h3 class="bento-side-title">By Referral Only</h3>
+          <p class="bento-side-body">Quill Meridian accepts submissions from established collectors, archival institutions, and auction houses with prior certification history. New registrants are introduced by existing members.</p>
+        </div>
+        <a href="#cta-section" class="service-link" style="text-align:left;display:inline-flex;">Request introduction →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- DIVIDER 3: Zigzag teeth (bento → services) -->
+<div class="divider-wrap divider-zigzag" aria-hidden="true">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,24 L60,0 L120,24 L180,0 L240,24 L300,0 L360,24 L420,0 L480,24 L540,0 L600,24 L660,0 L720,24 L780,0 L840,24 L900,0 L960,24 L1020,0 L1080,24 L1140,0 L1200,24 L1260,0 L1320,24 L1380,0 L1440,24 L1440,48 L0,48 Z" fill="#ede9e2"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ SERVICES (cards lap over edge) -->
+<section id="services-section" aria-labelledby="services-heading">
+  <div id="services-section-header" style="padding-top: var(--section-margin);">
+    <div class="section-label">Services</div>
+    <h2 id="services-heading" class="reveal-up">
+      What the Registry<br>
+      Provides
+    </h2>
+    <p class="reveal-up">
+      Quill Meridian's calibration services are organized into four disciplines. Each produces a distinct certificate type and a corresponding entry in the sealed ledger.
+    </p>
+  </div>
+
+  <!-- Ghost word behind services -->
+  <div style="position:relative;overflow:hidden;">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-heading);font-size:clamp(8rem,18vw,15rem);font-weight:300;letter-spacing:0.12em;color:var(--color-near-black);opacity:0.04;white-space:nowrap;pointer-events:none;user-select:none;" aria-hidden="true">CALIBRATE</div>
+
+    <div id="services-grid-wrap">
+      <div id="services-grid">
+        <article class="service-card">
+          <div class="service-number">01</div>
+          <h3 class="service-title">Nib Calibration</h3>
+          <p class="service-body">Optical linewidth measurement and tipping geometry analysis for steel, gold, and iridium nibs. Certificate includes mean linewidth, tolerance band, and condition grade.</p>
+          <a href="#cta-section" class="service-link">Submit a nib →</a>
+        </article>
+        <article class="service-card">
+          <div class="service-number">02</div>
+          <h3 class="service-title">Ruling Pen Assessment</h3>
+          <p class="service-body">Slit geometry, jaw alignment, and linewidth characterization across the adjustment range. Vintage ruling pens from Witzenhausen, Riefler, and Kern are primary candidates.</p>
+          <a href="#cta-section" class="service-link">Submit a ruling pen →</a>
+        </article>
+        <article class="service-card">
+          <div class="service-number">03</div>
+          <h3 class="service-title">Drawing Machine Audit</h3>
+          <p class="service-body">Full mechanical characterization of pantographs, ruling machines, and parallel plate sets — parallelism, squareness, and edge sharpness measured and recorded against ISO 8124.</p>
+          <a href="#cta-section" class="service-link">Submit a machine →</a>
+        </article>
+        <article class="service-card">
+          <div class="service-number">04</div>
+          <h3 class="service-title">Provenance Transfer</h3>
+          <p class="service-body">Transfer of existing registry entry to a new owner upon acquisition — preserving calibration history, condition record, and prior certificate chain for auction and institutional use.</p>
+          <a href="#cta-section" class="service-link">Begin transfer →</a>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- DIVIDER 4: Asymmetric blob (services → process) -->
+<div class="divider-wrap divider-blob" aria-hidden="true">
+  <svg viewBox="0 0 1440 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,48 C80,96 200,20 380,60 C520,88 640,16 820,52 C960,78 1080,24 1220,56 C1340,80 1400,32 1440,48 L1440,96 L0,96 Z" fill="#f5f4f0"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ PROCESS (right-aligned) -->
+<section id="process-section" aria-labelledby="process-heading">
+  <div id="process-inner">
+    <div id="process-header">
+      <div class="section-label" style="justify-content:flex-end;">How It Works</div>
+      <h2 id="process-heading" class="reveal-up">
+        From Submission<br>
+        to Certificate
+      </h2>
+      <p class="reveal-up">
+        The calibration process follows a defined protocol. No instrument leaves the registry without a complete measurement record, a sealed certificate, and a registered provenance chain.
+      </p>
+    </div>
+
+    <!-- SVG Path draw animation target -->
+    <svg id="process-svg-path" viewBox="0 0 640 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path id="process-path-line" d="M0,60 C80,20 160,100 260,60 C360,20 440,100 540,55 C580,40 610,50 640,48" stroke="#b1ada7" stroke-width="1" fill="none" stroke-dasharray="1000" stroke-dashoffset="1000"/>
+    </svg>
+
+    <div id="process-steps">
+      <div class="process-step reveal-up">
+        <span class="process-step-num">01</span>
+        <div class="process-step-content">
+          <h3 class="process-step-title">Submit Your Instrument</h3>
+          <p class="process-step-body">Complete the submission form with instrument description, known provenance, and current condition assessment. A registry coordinator confirms eligibility within five business days.</p>
+        </div>
+      </div>
+      <div class="process-step reveal-up">
+        <span class="process-step-num">02</span>
+        <div class="process-step-content">
+          <h3 class="process-step-title">Secure Shipping Protocol</h3>
+          <p class="process-step-body">Instruments are shipped using the registry's insured carrier arrangement — custom packing materials provided, chain-of-custody documentation generated for every transit segment.</p>
+        </div>
+      </div>
+      <div class="process-step reveal-up">
+        <span class="process-step-num">03</span>
+        <div class="process-step-content">
+          <h3 class="process-step-title">Measurement and Documentation</h3>
+          <p class="process-step-body">The calibration lab conducts optical measurement, condition assessment, and cross-reference against prior records if the instrument has been registered before. Typical turnaround: 14–21 days.</p>
+        </div>
+      </div>
+      <div class="process-step reveal-up">
+        <span class="process-step-num">04</span>
+        <div class="process-step-content">
+          <h3 class="process-step-title">Certificate Issued</h3>
+          <p class="process-step-body">A signed certificate and sealed ledger entry are delivered with the returned instrument. The certificate includes the measurement data, condition grade, calibrator signature, and registry identifier.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- DIVIDER 5: Diagonal slice (process → cta) -->
+<div class="divider-wrap divider-diagonal" aria-hidden="true">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L1440,60 L1440,60 L0,60 Z" fill="#1a1a18"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ CTA (full-bleed dark) -->
+<section id="cta-section" aria-labelledby="cta-heading">
+  <div id="cta-bg-word" aria-hidden="true">REGISTER</div>
+
+  <div id="cta-inner">
+    <div id="cta-label">Request Certification</div>
+    <h2 id="cta-heading" class="reveal-up">
+      A Tool That Has Been<br>
+      Measured Can Be<br>
+      Trusted
+    </h2>
+    <p id="cta-sub" class="reveal-up">
+      Quill Meridian accepts submissions from collectors, conservators, auction specialists, and archival institutions. New registrants are introduced by existing members of the registry.
+    </p>
+    <a href="mailto:registry@quillmeridian.com" class="btn-inverse reveal-up">Request an Introduction</a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════ FOOTER -->
+<footer id="site-footer" aria-labelledby="footer-logo">
+  <div id="footer-inner">
+    <div id="footer-top">
+      <div id="footer-brand">
+        <div id="footer-logo">Quill Meridian</div>
+        <p id="footer-tagline">The private calibration registry for precision writing and drafting instruments.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Services navigation">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services-section">Nib Calibration</a></li>
+          <li><a href="#services-section">Ruling Pen Assessment</a></li>
+          <li><a href="#services-section">Drawing Machine Audit</a></li>
+          <li><a href="#services-section">Provenance Transfer</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Registry navigation">
+        <h4>Registry</h4>
+        <ul>
+          <li><a href="#process-section">How It Works</a></li>
+          <li><a href="#method-section">Measurement Method</a></li>
+          <li><a href="#bento-section">Coverage</a></li>
+          <li><a href="#cta-section">Submit an Instrument</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="About navigation">
+        <h4>About</h4>
+        <ul>
+          <li><a href="#about">Our History</a></li>
+          <li><a href="#about">The Calibration Lab</a></li>
+          <li><a href="#about">Accepted Institutions</a></li>
+          <li><a href="mailto:registry@quillmeridian.com">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div id="footer-bottom">
+      <span id="footer-copy">© 2025 Quill Meridian Registry. All rights reserved.</span>
+      <div id="footer-legal-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Certificate Terms</a>
+        <a href="#">Submission Guidelines</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</main>
+
+
+<!-- ═══════════════════════════════════════════ SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+<script src="behaviors/scroll-nav.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── LENIS smooth scroll ──────────────────────────────────────────
+  const lenis = new Lenis({
+    duration: 1.4,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // ── Register ScrollTrigger ────────────────────────────────────────
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── A. SVG Filter Warp on Hero Title ─────────────────────────────
+  // Hero title resolves from noise → precision on load
+  const turbulence = document.getElementById('qm-turbulence');
+  const heroTitleWrap = document.getElementById('hero-title-wrap');
+  if (turbulence && heroTitleWrap) {
+    heroTitleWrap.style.filter = 'url(#qm-warp-filter)';
+    gsap.to(turbulence, {
+      attr: { baseFrequency: 0 },
+      duration: 1.1,
+      ease: 'power2.out',
+      delay: 0.2,
+      onComplete: () => { heroTitleWrap.style.filter = 'none'; }
+    });
+    // Fade in title
+    gsap.from(heroTitleWrap, { opacity: 0, duration: 0.4, delay: 0.15 });
+  }
+
+  // ── B. Text Scramble via Splitting.js on hero sub ─────────────────
+  Splitting({ target: '#hero-sub', by: 'chars' });
+  const heroSubChars = document.querySelectorAll('#hero-sub .char');
+  if (heroSubChars.length) {
+    gsap.from(heroSubChars, {
+      x: () => gsap.utils.random(-220, 220),
+      y: () => gsap.utils.random(-110, 110),
+      rotation: () => gsap.utils.random(-50, 50),
+      opacity: 0,
+      scale: () => gsap.utils.random(0.2, 1.4),
+      stagger: { each: 0.022, from: 'random' },
+      ease: 'back.out(2.2)',
+      duration: 0.72,
+      delay: 0.6
+    });
+  }
+
+  // Hero actions reveal
+  gsap.from('#hero-actions', {
+    opacity: 0,
+    y: 16,
+    duration: 0.65,
+    ease: 'power2.out',
+    delay: 1.1
+  });
+
+  // ── C. Multi-Layer Parallax on Hero ──────────────────────────────
+  const heroSection = document.getElementById('hero-section');
+  if (heroSection) {
+    // Ghost word — mid-depth
+    gsap.to('#hero-ghost-word', {
+      yPercent: -12,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#hero-section',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1.5
+      }
+    });
+
+    // Annotation col — closest plane
+    gsap.to('#hero-annotation-col', {
+      yPercent: -6,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#hero-section',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.8
+      }
+    });
+
+    // Hero eyebrow — fastest
+    gsap.to('#hero-eyebrow', {
+      yPercent: -18,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#hero-section',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 2.5
+      }
+    });
+  }
+
+  // ── D. SVG Path Draw on Process Path ─────────────────────────────
+  const processPath = document.getElementById('process-path-line');
+  if (processPath) {
+    const totalLen = processPath.getTotalLength();
+    processPath.style.strokeDasharray = totalLen;
+    processPath.style.strokeDashoffset = totalLen;
+    gsap.to(processPath, {
+      strokeDashoffset: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#process-section',
+        scrub: 2,
+        start: 'top 80%',
+        end: 'top 20%'
+      }
+    });
+  }
+
+  // ── E. SVG Path Draw on Sine Divider ─────────────────────────────
+  const sinePath = document.getElementById('divider-sine-path');
+  if (sinePath) {
+    // Just a decorative fill divider — animate its transform on scroll for parallax
+    gsap.to(sinePath.closest('.divider-wrap'), {
+      yPercent: -4,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: sinePath.closest('.divider-wrap'),
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1
+      }
+    });
+  }
+
+  // ── F. Counter Animation in Bento ────────────────────────────────
+  const counterEl = document.getElementById('bento-counter-value');
+  if (counterEl) {
+    const counterObj = { val: 0 };
+    ScrollTrigger.create({
+      trigger: '#bento-section',
+      start: 'top 70%',
+      once: true,
+      onEnter: () => {
+        gsap.to(counterObj, {
+          val: 4847,
+          duration: 2.4,
+          ease: 'power2.out',
+          onUpdate: function () {
+            counterEl.textContent = Math.round(counterObj.val).toLocaleString();
+          }
+        });
+      }
+    });
+  }
+
+  // ── G. Exploded Assembly on Method Cards ─────────────────────────
+  const methodCards = gsap.utils.toArray('.method-card');
+  if (methodCards.length) {
+    // Set initial exploded positions
+    methodCards.forEach(card => {
+      const xRand = gsap.utils.random(-40, 40, 1) + 'vw';
+      const yRand = gsap.utils.random(-30, 30, 1) + 'vh';
+      const rotRand = gsap.utils.random(-30, 30);
+      gsap.set(card, { x: xRand, y: yRand, rotation: rotRand, opacity: 0 });
+    });
+
+    ScrollTrigger.create({
+      trigger: '#method-grid',
+      start: 'top 75%',
+      once: true,
+      onEnter: () => {
+        gsap.to(methodCards, {
+          x: 0, y: 0, rotation: 0, opacity: 1,
+          stagger: { each: 0.085, from: 'center' },
+          ease: 'power3.out',
+          duration: 1.1
+        });
+      }
+    });
+
+    // Animate method-card::before rules (horizontal rules)
+    const methodRules = document.querySelectorAll('.method-card::before');
+    // Since pseudo-elements can't be targeted by JS, we use the card entrance to trigger
+    methodCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, {
+          y: -4,
+          duration: 0.65,
+          ease: 'power2.out'
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          y: 0,
+          duration: 1.2,
+          ease: 'elastic.out(1, 0.28)'
+        });
+      });
+    });
+  }
+
+  // ── H. Clip-Path Reveal on Bento Cells ───────────────────────────
+  const bentoCells = gsap.utils.toArray('.bento-side');
+  if (bentoCells.length) {
+    gsap.set(bentoCells, { clipPath: 'inset(0 100% 0 0)' });
+    ScrollTrigger.create({
+      trigger: '#bento-grid',
+      start: 'top 72%',
+      once: true,
+      onEnter: () => {
+        gsap.to(bentoCells, {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 0.85,
+          ease: 'expo.inOut',
+          stagger: 0.12
+        });
+      }
+    });
+    // Bento primary: iris circle reveal
+    const bentoPrimary = document.querySelector('.bento-primary');
+    if (bentoPrimary) {
+      gsap.set(bentoPrimary, { clipPath: 'circle(0% at 50% 50%)' });
+      ScrollTrigger.create({
+        trigger: '#bento-grid',
+        start: 'top 80%',
+        once: true,
+        onEnter: () => {
+          gsap.to(bentoPrimary, {
+            clipPath: 'circle(150% at 50% 50%)',
+            duration: 1.0,
+            ease: 'expo.out'
+          });
+        }
+      });
+    }
+  }
+
+  // ── General reveal-up for scroll sections ─────────────────────────
+  // Use fromTo (not from) so the destination opacity:1 is explicit —
+  // gsap.from() would capture the CSS opacity:0 as its "to" state and animate to nothing.
+  gsap.utils.toArray('.reveal-up').forEach(el => {
+    // Skip hero sub and actions (handled separately)
+    if (el.id === 'hero-sub' || el.closest('#hero-actions')) return;
+    gsap.fromTo(el,
+      { opacity: 0, y: 28 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.65,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 82%',
+          once: true
+        }
+      }
+    );
+  });
+
+  // ── Method card rule draw via data ────────────────────────────────
+  // Animate each method-card border rule with scaleX on scroll
+  document.querySelectorAll('.method-card').forEach((card, i) => {
+    const rule = document.createElement('div');
+    rule.className = 'method-rule-line';
+    rule.style.cssText = 'position:absolute;top:-1px;left:0;width:0;height:1px;background:#b1ada7;transition:none;';
+    card.style.position = 'relative';
+    card.prepend(rule);
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(rule, {
+          width: '100%',
+          duration: 0.7,
+          delay: i * 0.12,
+          ease: 'power2.out'
+        });
+      }
+    });
+  });
+
+  // ── Elastic Hover on Service Cards ────────────────────────────────
+  document.querySelectorAll('.service-card').forEach(card => {
+    let bounds = null;
+
+    card.addEventListener('mouseenter', () => {
+      bounds = card.getBoundingClientRect();
+    });
+
+    card.addEventListener('mousemove', e => {
+      if (!bounds) return;
+      const cx = bounds.left + bounds.width / 2;
+      const cy = bounds.top + bounds.height / 2;
+      const dx = (e.clientX - cx) * 0.25;
+      const dy = (e.clientY - cy) * 0.25;
+      gsap.to(card, { x: dx, y: dy, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      bounds = null;
+      gsap.to(card, {
+        x: 0, y: 0,
+        duration: 1.2,
+        ease: 'elastic.out(1, 0.28)'
+      });
+    });
+  });
+
+  // ── Process steps reveal ──────────────────────────────────────────
+  gsap.utils.toArray('.process-step').forEach((step, i) => {
+    gsap.from(step, {
+      opacity: 0,
+      x: 32,
+      duration: 0.65,
+      ease: 'power2.out',
+      delay: i * 0.1,
+      scrollTrigger: {
+        trigger: step,
+        start: 'top 85%',
+        once: true
+      }
+    });
+  });
+
+  // ── CTA section: footer iris reveal ──────────────────────────────
+  const footer = document.getElementById('site-footer');
+  if (footer) {
+    gsap.set(footer, { clipPath: 'circle(0% at 50% 50%)' });
+    ScrollTrigger.create({
+      trigger: '#cta-section',
+      start: 'bottom 90%',
+      once: true,
+      onEnter: () => {
+        gsap.to(footer, {
+          clipPath: 'circle(150% at 50% 50%)',
+          duration: 1.0,
+          ease: 'expo.out'
+        });
+      }
+    });
+  }
+
+  // ── Bento side hover elastic ──────────────────────────────────────
+  document.querySelectorAll('.bento-side').forEach(cell => {
+    cell.addEventListener('mousemove', e => {
+      const r = cell.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width/2)) * 0.1;
+      const dy = (e.clientY - (r.top + r.height/2)) * 0.1;
+      gsap.to(cell, { x: dx, y: dy, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+    });
+    cell.addEventListener('mouseleave', () => {
+      gsap.to(cell, { x: 0, y: 0, duration: 1.2, ease: 'elastic.out(1, 0.28)' });
+    });
+  });
+
+  // ── CTA section reveal ────────────────────────────────────────────
+  gsap.utils.toArray('#cta-inner .reveal-up').forEach((el, i) => {
+    gsap.from(el, {
+      opacity: 0,
+      y: 28,
+      duration: 0.65,
+      delay: i * 0.12,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '#cta-section',
+        start: 'top 75%',
+        once: true
+      }
+    });
+  });
+
+  // ── Reduced motion override ────────────────────────────────────────
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) {
+    // Kill all scroll triggers and set everything visible
+    ScrollTrigger.getAll().forEach(t => t.kill());
+    document.querySelectorAll('.reveal-up, .reveal-clip, .reveal-exploded').forEach(el => {
+      gsap.set(el, { clearProps: 'all' });
+    });
+    if (turbulence && heroTitleWrap) {
+      heroTitleWrap.style.filter = 'none';
+    }
+  }
+
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+{
+  "_source": "caitlin-christinee",
+  "_agent": "grid-system",
+  "_twist": "caitlin-christinee grid was nearly empty (section-max-width: 9999px, no columns defined). Twist: establish a complete editorial 12-column grid with named template areas — full-bleed, content (cols 2-11), narrow (cols 4-9), and editorial split (cols 1-6 / 7-12). Adds a generous gutter that scales with viewport, and explicit breakpoints for the 4 standard widths.",
+  "cssVars": {
+    "--grid-columns": "12",
+    "--grid-gutter": "clamp(1rem, 2.5vw, 2rem)",
+    "--grid-margin": "clamp(1.5rem, 5vw, 6rem)",
+    "--grid-content-max": "1320px",
+    "--grid-narrow-max": "800px",
+    "--grid-full-bleed": "100%"
+  },
+  "container": {
+    "maxWidth": "1320px",
+    "marginInline": "auto",
+    "paddingInline": "clamp(1.5rem, 5vw, 6rem)"
+  },
+  "grids": {
+    "full-bleed": {
+      "display": "grid",
+      "templateColumns": "1fr",
+      "description": "Full-width grid — bleeds to viewport edges. Used for hero sections, dividers, and background layers."
+    },
+    "editorial-12": {
+      "display": "grid",
+      "templateColumns": "repeat(12, 1fr)",
+      "gap": "clamp(1rem, 2.5vw, 2rem)",
+      "description": "12-column editorial base grid. Content occupies columns 2-11, narrow content columns 4-9."
+    },
+    "content-span": {
+      "gridColumn": "2 / 12",
+      "description": "Standard content area — columns 2 through 11. Leaves 1 column breathing room on each edge."
+    },
+    "narrow-span": {
+      "gridColumn": "4 / 10",
+      "description": "Narrow reading column — columns 4 through 9. Used for long-form text, pull quotes, and captions."
+    },
+    "editorial-split": {
+      "display": "grid",
+      "templateColumns": "1fr 1fr",
+      "gap": "clamp(1rem, 2.5vw, 2rem)",
+      "description": "Equal 50/50 split. Left panel carries the editorial caption/label, right panel the primary content or image."
+    },
+    "bento-asymmetric": {
+      "display": "grid",
+      "templateColumns": "2fr 1fr",
+      "templateRows": "auto auto",
+      "gap": "clamp(0.75rem, 1.5vw, 1.5rem)",
+      "description": "TWIST: Asymmetric bento — large cell (2fr) spans grid-row 1/3, two smaller cells in the right column stack vertically."
+    },
+    "three-column": {
+      "display": "grid",
+      "templateColumns": "repeat(3, 1fr)",
+      "gap": "clamp(1rem, 2.5vw, 2rem)",
+      "description": "Three equal columns. Used for instrument catalog tiles and feature triptych sections."
+    },
+    "footer": {
+      "display": "grid",
+      "templateColumns": "2fr 1fr 1fr 1fr",
+      "gap": "0 clamp(1rem, 2.5vw, 2rem)",
+      "description": "Footer grid — wide brand column plus three link-list columns."
+    }
+  },
+  "responsive": {
+    "bp-375px": {
+      "query": "(max-width: 375px)",
+      "overrides": {
+        "editorial-12": "repeat(4, 1fr)",
+        "editorial-split": "1fr",
+        "three-column": "1fr",
+        "bento-asymmetric": "1fr",
+        "footer": "1fr 1fr"
+      }
+    },
+    "bp-768px": {
+      "query": "(max-width: 768px)",
+      "overrides": {
+        "three-column": "repeat(2, 1fr)",
+        "footer": "1fr 1fr",
+        "bento-asymmetric": "1fr 1fr"
+      }
+    },
+    "bp-1024px": {
+      "query": "(max-width: 1024px)",
+      "overrides": {
+        "narrow-span": "3 / 11"
+      }
+    },
+    "bp-1440px": {
+      "query": "(min-width: 1440px)",
+      "overrides": {
+        "--grid-margin": "8rem"
+      }
+    }
+  },
+  "visual": [
+    {
+      "section": "hero-full-bleed",
+      "layout": "full-bleed",
+      "description": "Viewport-filling hero with oversized Cormorant Garamond heading — letterforms at clamp(8rem, 18vw, 14rem) function as background texture at opacity 0.04."
+    },
+    {
+      "section": "instrument-bento",
+      "layout": "bento-asymmetric",
+      "description": "Asymmetric bento: left large cell (2fr, grid-row 1/3) shows a primary instrument detail. Right column stacks two smaller tiles — one a stat/number cell, one a caption block."
+    },
+    {
+      "section": "catalog-grid",
+      "layout": "three-column",
+      "description": "Three equal instrument catalog tiles with warm linen surface backgrounds and thin greige borders."
+    },
+    {
+      "section": "editorial-reading",
+      "layout": "narrow-span",
+      "description": "Long-form editorial text confined to columns 4-9 for comfortable measure (~65 characters per line)."
+    }
+  ]
+}

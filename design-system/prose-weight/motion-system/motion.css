@@ -1,0 +1,65 @@
+/* prose-weight — Motion System
+   Storytelling / Long-Form Narrative
+   Reading-paced, unhurried transitions
+*/
+
+:root {
+  /* Duration tokens */
+  --duration-fast: 400ms;
+  --duration-base: 500ms;
+  --duration-slow: 600ms;
+  --duration-reading: 800ms;
+
+  /* Easing tokens */
+  --ease-reading: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
+  --ease-gentle: ease-out;
+}
+
+/* Link hover transitions */
+a {
+  transition: color var(--duration-fast) var(--ease-gentle),
+              text-decoration-color var(--duration-fast) var(--ease-gentle);
+}
+
+/* Reading progress bar */
+.reading-progress-bar {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background-color: var(--color-accent, #8b1f2e);
+  z-index: 1001;
+  pointer-events: none;
+}
+
+/* Nav transition */
+.site-nav {
+  transition: background-color var(--duration-fast) var(--ease-gentle),
+              box-shadow var(--duration-fast) var(--ease-gentle);
+}
+
+/* Pull quote entrance — GSAP sets initial state via gsap.set() */
+.pull-quote-block {
+  transition: none;
+}
+
+/* Annotation slide */
+.annotation-block {
+  transition: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reading-progress-bar {
+    transition: none;
+  }
+}

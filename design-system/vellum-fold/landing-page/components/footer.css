@@ -1,0 +1,160 @@
+/* ============================================================
+   Footer — Deckle & Thread
+   Book endpaper style with colophon information
+   ============================================================ */
+
+.site-footer {
+  position: relative;
+  background-color: var(--color-heading-dark);
+  padding: 72px 0 40px;
+  overflow: hidden;
+}
+
+/* Endpaper pattern — decorative background */
+.footer-endpaper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background:
+    radial-gradient(circle at 15% 30%, var(--color-hero-accent) 0%, transparent 25%),
+    radial-gradient(circle at 85% 70%, var(--color-section-divider) 0%, transparent 20%),
+    radial-gradient(circle at 50% 10%, var(--color-accent) 0%, transparent 30%),
+    radial-gradient(circle at 70% 40%, var(--color-hero-accent) 0%, transparent 18%),
+    radial-gradient(circle at 30% 80%, var(--color-section-divider) 0%, transparent 22%),
+    radial-gradient(circle at 60% 60%, var(--color-accent) 0%, transparent 15%);
+}
+
+.footer-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  padding-inline: var(--grid-padding);
+}
+
+/* Top: brand + nav */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-brand {
+  max-width: 280px;
+}
+
+.footer-brand-name {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: var(--color-page-bg);
+  margin-bottom: 16px;
+}
+
+.footer-brand-desc {
+  font-family: var(--font-paragraph);
+  font-size: 14px;
+  line-height: 24px;
+  color: rgba(253, 253, 253, 0.5);
+}
+
+.footer-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-nav-title {
+  font-family: var(--font-subheading);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(253, 253, 253, 0.4);
+  margin-bottom: 4px;
+}
+
+.footer-nav-link {
+  font-family: var(--font-paragraph);
+  font-size: 14px;
+  color: rgba(253, 253, 253, 0.65);
+  text-decoration: none;
+  transition: color var(--hover-transition);
+}
+
+.footer-nav-link:hover {
+  color: var(--color-page-bg);
+}
+
+/* Bottom: colophon */
+.footer-colophon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-copyright {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: rgba(253, 253, 253, 0.35);
+  font-style: italic;
+}
+
+.footer-colophon-mark {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: rgba(253, 253, 253, 0.25);
+  font-style: italic;
+}
+
+/* ── Footer as book page ──
+   When the footer is inside .book-page, it fills the viewport */
+.book-page .site-footer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.book-page .footer-inner {
+  width: 100%;
+  max-width: var(--grid-max-width);
+  padding-inline: var(--grid-padding);
+}
+
+/* Footer fills full book page — no margins
+   Dark footer background needs to go edge-to-edge */
+.book-page:last-child > .book-page-content {
+  padding: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-inner {
+    padding-inline: 24px;
+  }
+
+  .footer-colophon {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

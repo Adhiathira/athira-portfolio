@@ -1,0 +1,127 @@
+{
+  "timing": {
+    "base": "0.15s",
+    "fast": "0.05s",
+    "medium": "0.15s",
+    "slow": "0.3s",
+    "glitch": "0.15s",
+    "reveal": "0.15s",
+    "matrixRain": "1.5s"
+  },
+  "easing": {
+    "mechanical": "step-start",
+    "snap": "steps(4, start)",
+    "stepReveal": "steps(8, start)",
+    "instant": "step-start",
+    "ease": "ease-out"
+  },
+  "keyframes": {
+    "matrix-rain-char": {
+      "description": "Single matrix rain character — cascades top to bottom with opacity fade",
+      "steps": {
+        "0%": { "transform": "translateY(-100%)", "opacity": "1", "color": "#00ff41" },
+        "50%": { "opacity": "0.7", "color": "#008f11" },
+        "80%": { "opacity": "0.3" },
+        "100%": { "transform": "translateY(100vh)", "opacity": "0", "color": "#004d08" }
+      },
+      "duration": "1.5s",
+      "iteration": "infinite",
+      "timingFunction": "linear"
+    },
+    "glitch-shift": {
+      "description": "Horizontal translate glitch — matrix decode failure",
+      "steps": {
+        "0%": { "transform": "translateX(0)" },
+        "15%": { "transform": "translateX(-3px)" },
+        "30%": { "transform": "translateX(3px)" },
+        "45%": { "transform": "translateX(-3px)" },
+        "60%": { "transform": "translateX(2px)" },
+        "75%": { "transform": "translateX(-1px)" },
+        "100%": { "transform": "translateX(0)" }
+      },
+      "duration": "0.15s",
+      "iteration": "1",
+      "fillMode": "both"
+    },
+    "rgb-split": {
+      "description": "Chromatic aberration — green/cyan channel separation (hacker theme)",
+      "steps": {
+        "0%": { "textShadow": "none" },
+        "20%": { "textShadow": "-2px 0 #00e5ff, 2px 0 #00ff41" },
+        "40%": { "textShadow": "2px 0 #00e5ff, -2px 0 #008f11" },
+        "60%": { "textShadow": "-3px 0 #00e5ff, 3px 0 #00ff41" },
+        "80%": { "textShadow": "1px 0 #00e5ff, -1px 0 #008f11" },
+        "100%": { "textShadow": "none" }
+      },
+      "duration": "0.15s",
+      "iteration": "1",
+      "fillMode": "both"
+    },
+    "flicker": {
+      "description": "Phosphor power fluctuation — CRT monitor instability",
+      "steps": {
+        "0%": { "opacity": "1" },
+        "10%": { "opacity": "0.6" },
+        "20%": { "opacity": "1" },
+        "35%": { "opacity": "0.8" },
+        "50%": { "opacity": "1" },
+        "65%": { "opacity": "0.7" },
+        "80%": { "opacity": "1" },
+        "90%": { "opacity": "0.9" },
+        "100%": { "opacity": "1" }
+      },
+      "duration": "0.15s",
+      "iteration": "1",
+      "fillMode": "both"
+    },
+    "data-reveal": {
+      "description": "Step clip-path reveal — data loading into terminal buffer",
+      "steps": {
+        "0%": { "clipPath": "inset(0 100% 0 0)" },
+        "25%": { "clipPath": "inset(0 75% 0 0)" },
+        "50%": { "clipPath": "inset(0 50% 0 0)" },
+        "75%": { "clipPath": "inset(0 25% 0 0)" },
+        "100%": { "clipPath": "inset(0 0% 0 0)" }
+      },
+      "duration": "0.15s",
+      "easing": "steps(4, start)",
+      "iteration": "1",
+      "fillMode": "both"
+    },
+    "green-pulse": {
+      "description": "Matrix green glow oscillation — active system indicator",
+      "steps": {
+        "0%": { "textShadow": "0 0 4px rgba(0,255,65,0.4)" },
+        "50%": { "textShadow": "0 0 12px rgba(0,255,65,0.9), 0 0 24px rgba(0,255,65,0.4)" },
+        "100%": { "textShadow": "0 0 4px rgba(0,255,65,0.4)" }
+      },
+      "duration": "1.5s",
+      "iteration": "infinite",
+      "timingFunction": "step-start"
+    },
+    "scanline": {
+      "description": "CRT scanline sweep — phosphor raster signal",
+      "steps": {
+        "0%": { "backgroundPosition": "0 -100%" },
+        "100%": { "backgroundPosition": "0 100%" }
+      },
+      "duration": "3s",
+      "iteration": "infinite",
+      "timingFunction": "linear"
+    }
+  },
+  "utilities": {
+    "animate-glitch": "animation: glitch-shift 0.15s step-start both",
+    "animate-rgb-split": "animation: rgb-split 0.15s step-start both",
+    "animate-data-reveal": "animation: data-reveal 0.15s steps(4, start) both",
+    "animate-flicker": "animation: flicker 0.15s step-start both",
+    "animate-green-pulse": "animation: green-pulse 1.5s step-start infinite",
+    "animate-scanline": "animation: scanline 3s linear infinite",
+    "animate-matrix-rain": "animation: matrix-rain-char 1.5s linear infinite"
+  },
+  "_twist": {
+    "sourceSystem": "null-signal",
+    "intensity": 5,
+    "twistDescription": "Full matrix/hacker motion system. Replaced magenta neon palette with matrix green #00ff41 / cyan #00e5ff channel split. Base timing 0.05s–0.15s — machine speed. Primary easing: step-start (digital binary switching, no smooth curves). Keyframes: matrix-rain-char (continuous cascade top→bottom with color fade green→dark), glitch-shift (±3px horizontal jitter), rgb-split (green/cyan channel separation instead of red/cyan), flicker (phosphor power wobble), data-reveal (4-step clip-path), green-pulse (glow oscillation step-start), scanline (CRT raster). Everything digital, nothing organic."
+  }
+}

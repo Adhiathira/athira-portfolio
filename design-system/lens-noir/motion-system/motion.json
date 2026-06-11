@@ -1,0 +1,96 @@
+{
+  "library": "GSAP 3.12.5 + ScrollTrigger",
+  "philosophy": "Cinema is slow and deliberate. Motion serves narrative, never decoration. Every animation has a cinematic precedent: title cards, letterbox reveals, iris wipes, slow tracking shots.",
+  "durations": {
+    "fast": "400ms",
+    "base": "800ms",
+    "slow": "1200ms",
+    "titleCard": "800ms",
+    "letterbox": "1000ms",
+    "iris": "900ms",
+    "drift": "1200ms"
+  },
+  "easings": {
+    "default": "power2.out",
+    "titleCard": "power3.out",
+    "letterbox": "power2.inOut",
+    "iris": "power2.out",
+    "drift": "power1.out",
+    "cssDefault": "cubic-bezier(0.16, 1, 0.3, 1)"
+  },
+  "patterns": {
+    "titleCard": {
+      "description": "Full-black screen; text fades in after delay — classic cinema title sequence",
+      "gsap": "gsap.from(el, { autoAlpha: 0, delay: 0.4, duration: 0.8, ease: 'power3.out' })",
+      "notes": "Use autoAlpha (opacity + visibility) not opacity alone. 400ms delay simulates the held-black moment before text appears."
+    },
+    "letterboxReveal": {
+      "description": "Section content reveals via clip-path height expanding top-to-bottom",
+      "gsap": "gsap.from(el, { clipPath: 'inset(0 0 100% 0)', duration: 1.0, ease: 'power2.inOut', scrollTrigger: { once: true } })",
+      "notes": "Mimics a widescreen letterbox opening. once:true — plays once on scroll entry."
+    },
+    "irisWipe": {
+      "description": "Circular clip-path expanding from center — classic iris transition",
+      "gsap": "gsap.from(el, { clipPath: 'circle(0% at 50% 50%)', duration: 0.9, ease: 'power2.out' })",
+      "css": "@keyframes iris-in { from { clip-path: circle(0% at 50% 50%); } to { clip-path: circle(75% at 50% 50%); } }"
+    },
+    "cinematicDrift": {
+      "description": "Slow horizontal drift from right — tracking shot feel",
+      "gsap": "gsap.from(el, { x: 20, autoAlpha: 0, duration: 1.2, ease: 'power1.out', scrollTrigger: { once: true } })",
+      "notes": "Subtle 20px x-translate. Never use large values — cinema is restrained."
+    },
+    "filmGrain": {
+      "description": "CSS pseudo-element noise overlay animated at irregular frame rate",
+      "css": "@keyframes film-grain { 0%, 100% { background-position: 0 0; } 10% { background-position: -5% -10%; } 20% { background-position: -15% 5%; } 30% { background-position: 7% -25%; } 40% { background-position: 20% 25%; } 50% { background-position: -25% 10%; } 60% { background-position: 15% 5%; } 70% { background-position: 0% 15%; } 80% { background-position: 25% 35%; } 90% { background-position: -10% 10%; } }",
+      "implementation": "::after pseudo on .grain-overlay { content:''; position:fixed; inset:0; opacity:0.04; background-image: url(\"data:image/svg+xml,...\"); animation: film-grain 0.4s steps(1) infinite; pointer-events:none; z-index:9999; }"
+    },
+    "staggeredCredits": {
+      "description": "Credit lines rolling in from below, staggered 0.1s each",
+      "gsap": "gsap.from(els, { y: 30, autoAlpha: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out', scrollTrigger: { once: true } })"
+    }
+  },
+  "scrollTrigger": {
+    "defaultStart": "top 80%",
+    "defaultEnd": "top 20%",
+    "once": true,
+    "markers": false
+  },
+  "cssAnimations": {
+    "keyframes": [
+      {
+        "name": "film-grain",
+        "description": "Noise texture position randomization for film grain overlay",
+        "steps": [
+          { "offset": "0%", "properties": { "backgroundPosition": "0 0" } },
+          { "offset": "10%", "properties": { "backgroundPosition": "-5% -10%" } },
+          { "offset": "20%", "properties": { "backgroundPosition": "-15% 5%" } },
+          { "offset": "30%", "properties": { "backgroundPosition": "7% -25%" } },
+          { "offset": "40%", "properties": { "backgroundPosition": "20% 25%" } },
+          { "offset": "50%", "properties": { "backgroundPosition": "-25% 10%" } },
+          { "offset": "60%", "properties": { "backgroundPosition": "15% 5%" } },
+          { "offset": "70%", "properties": { "backgroundPosition": "0% 15%" } },
+          { "offset": "80%", "properties": { "backgroundPosition": "25% 35%" } },
+          { "offset": "90%", "properties": { "backgroundPosition": "-10% 10%" } },
+          { "offset": "100%", "properties": { "backgroundPosition": "0 0" } }
+        ]
+      },
+      {
+        "name": "iris-in",
+        "description": "Iris wipe reveal from center",
+        "steps": [
+          { "offset": "0%", "properties": { "clipPath": "circle(0% at 50% 50%)" } },
+          { "offset": "100%", "properties": { "clipPath": "circle(75% at 50% 50%)" } }
+        ]
+      },
+      {
+        "name": "title-card-fade",
+        "description": "Title card text fade-in after black hold",
+        "steps": [
+          { "offset": "0%", "properties": { "opacity": "0" } },
+          { "offset": "30%", "properties": { "opacity": "0" } },
+          { "offset": "100%", "properties": { "opacity": "1" } }
+        ]
+      }
+    ]
+  }
+}

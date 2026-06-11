@@ -1,0 +1,155 @@
+/* ink-burst — Testimonials (Speech Bubble Styled)
+   Comic thought bubbles and speech panels.
+*/
+
+.section-testimonials {
+  background-color: var(--color-page-bg);
+  border-bottom: var(--border-ink);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--panel-gap-loose);
+}
+
+/* Speech bubble card */
+.testimonial-bubble {
+  background-color: var(--color-white);
+  border: var(--border-ink);
+  box-shadow: var(--shadow-md);
+  padding: var(--panel-padding);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: transform var(--dur-fast) var(--ease-spring),
+              box-shadow var(--dur-fast) var(--ease-spring);
+}
+
+.testimonial-bubble:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--color-ink);
+}
+
+/* Speech bubble tail (pointing down-left) */
+.testimonial-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 32px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 0 solid transparent;
+  border-top: 16px solid var(--color-ink);
+}
+
+.testimonial-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  left: 34px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 0 solid transparent;
+  border-top: 13px solid var(--color-white);
+  z-index: 1;
+}
+
+.testimonial-bubble--yellow {
+  background-color: var(--color-panel-yellow);
+}
+
+.testimonial-bubble--yellow::before {
+  border-top-color: var(--color-panel-yellow);
+}
+
+.testimonial-bubble--cyan {
+  background-color: var(--color-panel-blue);
+}
+
+.testimonial-bubble--cyan::before {
+  border-top-color: var(--color-panel-blue);
+}
+
+/* Quote marks */
+.testimonial-quote-mark {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  letter-spacing: 0;
+  line-height: 0.5;
+  color: var(--color-comic-red);
+}
+
+.testimonial-text {
+  font-family: var(--font-body);
+  font-size: var(--text-p);
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--color-ink);
+}
+
+/* Author — shown below bubble with margin for tail */
+.testimonial-author {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border: var(--border-ink);
+  box-shadow: 2px 2px 0 var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.author-avatar--red  { background-color: var(--color-comic-red); color: var(--color-white); }
+.author-avatar--yellow { background-color: var(--color-comic-yellow); color: var(--color-ink); }
+.author-avatar--cyan { background-color: var(--color-comic-cyan); color: var(--color-ink); }
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.author-name {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  letter-spacing: 0.03em;
+  font-weight: 400;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.author-role {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1023px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}

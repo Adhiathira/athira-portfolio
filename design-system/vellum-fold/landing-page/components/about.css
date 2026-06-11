@@ -1,0 +1,630 @@
+/* ============================================================
+   About (Studio) — Deckle & Thread
+   Book-themed page: chapters, page-flips, deckle-edge dividers
+   ============================================================ */
+
+/* ---- Hero — compact header for about page ---- */
+#about-hero {
+  position: relative;
+  max-height: 20vh;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    var(--color-cream) 0%,
+    #f0e6d4 100%
+  );
+  padding: var(--space-3xl) var(--grid-padding);
+  overflow: hidden;
+}
+
+#about-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(232, 168, 124, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 30%, rgba(43, 92, 201, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+#about-hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: var(--grid-max-width);
+  width: 100%;
+}
+
+#about-hero-chapter {
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: var(--type-h3-weight);
+  letter-spacing: var(--type-h3-spacing);
+  text-transform: var(--type-h3-transform);
+  color: var(--color-muted);
+  margin: 0 0 var(--space-md) 0;
+}
+
+#about-hero-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h1);
+  line-height: var(--type-h1-line);
+  font-weight: var(--type-h1-weight);
+  letter-spacing: var(--type-h1-spacing);
+  color: var(--color-heading);
+  margin: 0;
+}
+
+/* ---- Bookmark ribbon decoration ---- */
+.bookmark-ribbon {
+  position: absolute;
+  top: 0;
+  right: 12%;
+  width: 28px;
+  height: 72px;
+  background: var(--color-hero-accent);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  z-index: 2;
+}
+
+/* ---- Page number margin markers ---- */
+.page-number {
+  position: absolute;
+  font-family: var(--font-subheading);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.page-number--left {
+  left: var(--space-lg);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.page-number--right {
+  right: var(--space-lg);
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* ---- Section dividers — deckle / torn paper edges ---- */
+.section-divider {
+  display: block;
+  width: 100%;
+  line-height: 0;
+  overflow: hidden;
+  margin-top: -2px;
+  position: relative;
+  z-index: 5;
+}
+
+.section-divider svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---- Chapter headings ---- */
+.chapter-label {
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: var(--type-h3-weight);
+  letter-spacing: 2px;
+  text-transform: var(--type-h3-transform);
+  color: var(--color-hero-accent);
+  margin: 0 0 var(--space-lg) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.chapter-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-divider);
+  max-width: 120px;
+}
+
+.chapter-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2);
+  line-height: var(--type-h2-line);
+  font-weight: var(--type-h2-weight);
+  letter-spacing: var(--type-h2-spacing);
+  color: var(--color-heading);
+  margin: 0 0 var(--space-xl) 0;
+}
+
+/* ---- Section 2: Origin Story ---- */
+#origin-section {
+  position: relative;
+  background: var(--color-page-bg);
+  padding: var(--space-section) var(--grid-padding);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+#origin-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    var(--color-page-bg) 0%,
+    rgba(245, 237, 224, 0.3) 100%
+  );
+  pointer-events: none;
+}
+
+#origin-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--space-4xl);
+  align-items: start;
+}
+
+#origin-text {
+  padding-right: var(--space-xl);
+}
+
+#origin-text p {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  line-height: var(--type-p-line);
+  font-weight: var(--type-p-weight);
+  color: var(--color-body);
+  margin: 0 0 var(--space-p-margin) 0;
+}
+
+#origin-visual {
+  position: relative;
+  border-radius: var(--radius-card-sm);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: var(--color-cream);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+#origin-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Decorative page fold on origin visual */
+#origin-visual::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(
+    135deg,
+    transparent 50%,
+    rgba(245, 237, 224, 0.9) 50%
+  );
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* ---- Section 3: Philosophy ---- */
+#philosophy-section {
+  position: relative;
+  background: var(--color-cream);
+  padding: var(--space-section) var(--grid-padding);
+}
+
+#philosophy-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(232, 217, 200, 0.2) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(232, 217, 200, 0.15) 100%
+  );
+  pointer-events: none;
+}
+
+#philosophy-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#philosophy-inner .chapter-label {
+  justify-content: center;
+}
+
+#philosophy-inner .chapter-label::after {
+  display: none;
+}
+
+#philosophy-body p {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  line-height: var(--type-p-line);
+  font-weight: var(--type-p-weight);
+  color: var(--color-body);
+  margin: 0 0 var(--space-p-margin) 0;
+}
+
+/* Pull quotes */
+.pull-quote {
+  position: relative;
+  margin: var(--space-4xl) 0;
+  padding: var(--space-xl) 0;
+  border-top: 1px solid var(--color-divider);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.pull-quote blockquote {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.5;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-heading);
+  margin: 0;
+  padding: 0;
+}
+
+.pull-quote cite {
+  display: block;
+  margin-top: var(--space-md);
+  font-family: var(--font-subheading);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: var(--color-muted);
+}
+
+/* ---- Section 4: The Workshop ---- */
+#workshop-section {
+  position: relative;
+  background: var(--color-page-bg);
+  padding: var(--space-section) var(--grid-padding);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+#workshop-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    200deg,
+    var(--color-page-bg) 0%,
+    rgba(245, 237, 224, 0.25) 100%
+  );
+  pointer-events: none;
+}
+
+#workshop-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--space-4xl);
+  align-items: center;
+}
+
+#workshop-video-container {
+  position: relative;
+  border-radius: var(--radius-card-sm);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--color-cream);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+#workshop-video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#workshop-text p {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  line-height: var(--type-p-line);
+  font-weight: var(--type-p-weight);
+  color: var(--color-body);
+  margin: 0 0 var(--space-p-margin) 0;
+}
+
+/* Detail list for workshop features */
+.workshop-details {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-xl) 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.workshop-details li {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-body-weight);
+  color: var(--color-body);
+  padding-left: var(--space-lg);
+  position: relative;
+}
+
+.workshop-details li::before {
+  content: '\2014';
+  position: absolute;
+  left: 0;
+  color: var(--color-hero-accent);
+}
+
+/* ---- Section 5: The Artisans ---- */
+#artisans-section {
+  position: relative;
+  background: var(--color-dark-bg);
+  color: rgba(255, 255, 255, 0.88);
+  padding: var(--space-section) var(--grid-padding);
+}
+
+#artisans-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(40, 42, 48, 1) 0%,
+    rgba(35, 37, 42, 1) 50%,
+    rgba(40, 42, 48, 1) 100%
+  );
+  pointer-events: none;
+}
+
+#artisans-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+}
+
+#artisans-section .chapter-label {
+  color: var(--color-hero-accent);
+}
+
+#artisans-section .chapter-label::after {
+  background: rgba(232, 168, 124, 0.3);
+}
+
+#artisans-section .chapter-title {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+#artisans-grid {
+  display: grid;
+  grid-template-columns: var(--grid-columns-2);
+  gap: var(--space-3xl);
+  margin-top: var(--space-3xl);
+}
+
+.artisan-card {
+  position: relative;
+  padding: var(--space-3xl);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-card-sm);
+  transition: border-color var(--hover-transition), background var(--hover-transition);
+}
+
+.artisan-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(232, 168, 124, 0.25);
+}
+
+/* Decorative chapter character icon */
+.artisan-card::before {
+  content: attr(data-character);
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 300;
+  color: rgba(232, 168, 124, 0.15);
+  line-height: 1;
+}
+
+.artisan-portrait {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.artisan-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artisan-name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.artisan-role {
+  font-family: var(--font-subheading);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-hero-accent);
+  margin: 0 0 var(--space-lg) 0;
+}
+
+.artisan-bio {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  line-height: var(--type-p-line);
+  font-weight: var(--type-p-weight);
+  color: rgba(255, 255, 255, 0.68);
+  margin: 0;
+}
+
+/* ---- Footer ---- */
+#about-footer {
+  background: var(--color-cream);
+  padding: var(--space-3xl) var(--grid-padding);
+  text-align: center;
+  border-top: 1px solid var(--color-divider);
+}
+
+#about-footer-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+}
+
+#about-footer p {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--color-muted);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* ============================================================
+   Responsive — Tablet (max-width: 900px)
+   ============================================================ */
+@media (max-width: 900px) {
+  #origin-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-3xl);
+  }
+
+  #origin-text {
+    padding-right: 0;
+  }
+
+  #origin-visual {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  #workshop-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-3xl);
+  }
+
+  #workshop-video-container {
+    order: -1;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  #artisans-grid {
+    gap: var(--space-lg);
+  }
+
+  .artisan-card {
+    padding: var(--space-xl);
+  }
+
+  .bookmark-ribbon {
+    right: 8%;
+    width: 22px;
+    height: 56px;
+  }
+
+  .page-number {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Responsive — Mobile (max-width: 600px)
+   ============================================================ */
+@media (max-width: 600px) {
+  #about-hero {
+    min-height: 140px;
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  #about-hero-title {
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
+  }
+
+  #origin-inner,
+  #workshop-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  #philosophy-inner {
+    text-align: left;
+  }
+
+  #philosophy-inner .chapter-label {
+    justify-content: flex-start;
+  }
+
+  .pull-quote blockquote {
+    font-size: 1.25rem;
+  }
+
+  #artisans-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .artisan-card {
+    padding: var(--space-lg);
+  }
+
+  .artisan-card::before {
+    font-size: 36px;
+  }
+
+  .bookmark-ribbon {
+    width: 18px;
+    height: 44px;
+    right: 6%;
+  }
+
+  .chapter-label::after {
+    max-width: 60px;
+  }
+
+  #about-footer {
+    padding: var(--space-xl) var(--space-lg);
+  }
+}

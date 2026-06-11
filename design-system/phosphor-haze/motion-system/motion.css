@@ -1,0 +1,82 @@
+:root {
+  --ds-motion-duration-fast: 0.4s;
+  --ds-motion-duration-base: 0.8s;
+  --ds-motion-duration-slow: 1.2s;
+  --ds-motion-duration-enter: 1.5s;
+  --ds-motion-easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ds-motion-easing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ds-motion-stagger-delay: 0.15s;
+  --vaporwave-duration-base: 0.8s;
+  --vaporwave-duration-long: 1.5s;
+  --vaporwave-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --vaporwave-easing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes vaporwave-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes vaporwave-slow-slide-up {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes vaporwave-ethereal-entrance {
+  0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+  50% { opacity: 0.8; }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes vaporwave-neon-glow {
+  0% { opacity: 0.6; text-shadow: 0 0 10px rgba(179, 156, 255, 0.4); }
+  50% { opacity: 1; text-shadow: 0 0 20px rgba(179, 156, 255, 0.8), 0 0 40px rgba(99, 202, 190, 0.4); }
+  100% { opacity: 0.6; text-shadow: 0 0 10px rgba(179, 156, 255, 0.4); }
+}
+
+@keyframes vaporwave-scanline-sweep {
+  0% { background-position: 0 0; opacity: 1; }
+  50% { background-position: 0 100%; opacity: 0.7; }
+  100% { background-position: 0 0; opacity: 1; }
+}
+
+@keyframes vaporwave-scale-dissolve {
+  0% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Utility classes */
+.vaporwave-fade {
+  animation: vaporwave-fade-in var(--ds-motion-duration-base) var(--vaporwave-easing);
+}
+
+.vaporwave-rise {
+  animation: vaporwave-slow-slide-up 1s var(--vaporwave-easing-smooth);
+}
+
+.vaporwave-entrance {
+  animation: vaporwave-ethereal-entrance var(--ds-motion-duration-enter) var(--vaporwave-easing-smooth);
+}
+
+.vaporwave-neon {
+  animation: vaporwave-neon-glow 2s ease-in-out infinite;
+}
+
+.scanline {
+  animation: vaporwave-scanline-sweep 1.5s linear infinite;
+}
+
+/* Default transition timing for interactive elements */
+a, button, .btn {
+  transition: color var(--ds-motion-duration-fast) var(--vaporwave-easing),
+              background-color var(--ds-motion-duration-fast) var(--vaporwave-easing),
+              box-shadow var(--ds-motion-duration-fast) var(--vaporwave-easing);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

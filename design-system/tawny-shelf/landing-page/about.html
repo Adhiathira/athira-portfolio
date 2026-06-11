@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Foliant</title>
+  <meta name="description" content="Foliant Archive Ltd was founded in 1981. A materials archive for heritage building restoration, built on forty years of field documentation and provenance research.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    /* ── Compact page header (max-height 20vh) ── */
+    #about-header {
+      background: var(--color-surface-dark);
+      padding: calc(64px + 3rem) var(--grid-container-padding) 3rem;
+      max-width: 100%;
+    }
+    #about-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .page-hero-eyebrow {
+      font-family: var(--font-body); font-size: var(--type-nav);
+      font-weight: var(--weight-nav); letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase; color: var(--color-accent); margin: 0;
+    }
+    .page-hero-title {
+      font-family: var(--font-heading); font-size: var(--type-h1);
+      font-weight: var(--weight-heading); letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading); color: var(--color-white); margin: 0;
+    }
+    .page-hero-subtitle {
+      font-family: var(--font-body); font-size: var(--type-body);
+      color: rgba(255,255,255,0.7); margin: 0; max-width: 52ch;
+      letter-spacing: var(--font-letter-spacing-body);
+    }
+
+    /* ── Story section — asymmetric editorial ── */
+    #about-story {
+      background: var(--color-page-bg);
+      padding: var(--space-section-y) 0;
+    }
+    #story-inner {
+      display: grid;
+      grid-template-columns: 45% 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    #story-left {
+      position: relative;
+    }
+    /* Ghost background word — large empty heading text */
+    #story-left::before {
+      content: '1981';
+      position: absolute;
+      top: -0.25em;
+      left: -0.1em;
+      font-family: var(--font-heading);
+      font-size: clamp(7rem, 16vw, 16rem);
+      font-weight: var(--weight-heading-bold);
+      letter-spacing: 0.02em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(24, 63, 38, 0.08);
+      pointer-events: none;
+      line-height: 1;
+      z-index: 0;
+      white-space: nowrap;
+    }
+    #story-heading {
+      position: relative; z-index: 1;
+      font-family: var(--font-heading); font-size: var(--type-h1);
+      font-weight: var(--weight-heading); letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading); color: var(--color-heading); margin: 0;
+    }
+    #story-right {
+      display: flex; flex-direction: column; gap: 1.75rem; padding-top: 0.5rem;
+    }
+    .story-p {
+      font-family: var(--font-body); font-size: var(--type-p);
+      font-weight: var(--weight-body); line-height: var(--line-height-relaxed);
+      color: var(--color-body-text); margin: 0;
+      letter-spacing: var(--font-letter-spacing-body);
+    }
+
+    /* ── Team section — 4-col grid ── */
+    #about-team {
+      background: var(--color-page-bg);
+      padding: 0 0 var(--space-section-y) 0;
+      border-top: 1px solid var(--color-border);
+    }
+    #team-header {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: var(--space-section-y-sm) var(--grid-container-padding) 3rem;
+    }
+    #team-eyebrow {
+      font-family: var(--font-body); font-size: var(--type-nav);
+      font-weight: var(--weight-nav); letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase; color: var(--color-accent); margin: 0 0 0.75rem 0;
+    }
+    #team-heading {
+      font-family: var(--font-heading); font-size: var(--type-h2);
+      font-weight: var(--weight-heading); letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading); color: var(--color-heading); margin: 0;
+    }
+    #team-grid {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-container-padding);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--grid-gap, 16.8px);
+    }
+    .team-card {
+      display: flex; flex-direction: column; gap: 1rem;
+      will-change: transform, opacity;
+    }
+    .team-portrait {
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      background: var(--color-surface);
+      position: relative;
+    }
+    .team-portrait img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
+      transition: transform var(--duration-slow) var(--ease-in-out);
+      filter: grayscale(20%);
+    }
+    .team-card:hover .team-portrait img {
+      transform: scale(1.04);
+      filter: grayscale(0%);
+    }
+    .team-portrait-placeholder {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-body); font-size: var(--type-caption); color: var(--color-muted);
+    }
+    .team-name {
+      font-family: var(--font-heading); font-size: var(--type-h3);
+      font-weight: var(--weight-heading); letter-spacing: var(--font-letter-spacing-heading);
+      line-height: 1.1; color: var(--color-heading); margin: 0;
+    }
+    .team-role {
+      font-family: var(--font-body); font-size: var(--type-caption);
+      font-weight: var(--weight-nav); letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase; color: var(--color-muted); margin: 0;
+    }
+
+    /* ── Contact section — dark ── */
+    #about-contact {
+      background: var(--color-surface-dark);
+      padding: var(--space-section-y) 0;
+    }
+    #contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    #contact-heading {
+      font-family: var(--font-heading); font-size: var(--type-h2);
+      font-weight: var(--weight-heading); letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading); color: var(--color-white); margin: 0 0 1.5rem 0;
+    }
+    #contact-body {
+      font-family: var(--font-body); font-size: var(--type-body);
+      line-height: var(--line-height-relaxed); color: rgba(255,255,255,0.65);
+      margin: 0; letter-spacing: var(--font-letter-spacing-body);
+    }
+    #contact-details { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.25rem;
+    }
+    .contact-item-label {
+      font-family: var(--font-body); font-size: var(--type-caption);
+      font-weight: var(--weight-nav); letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin: 0 0 0.35rem 0;
+    }
+    .contact-item-value {
+      font-family: var(--font-body); font-size: var(--type-body);
+      font-weight: var(--weight-body); color: var(--color-white);
+      margin: 0; letter-spacing: var(--font-letter-spacing-body);
+    }
+    .contact-item-value a {
+      color: var(--color-accent); text-decoration: none;
+      transition: opacity var(--duration-base) var(--ease-in-out);
+    }
+    .contact-item-value a:hover { opacity: 0.75; }
+
+    @media (max-width: 1024px) {
+      #story-inner { grid-template-columns: 1fr; gap: 3rem; }
+      #team-grid { grid-template-columns: repeat(2, 1fr); }
+      #contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    @media (max-width: 600px) {
+      #team-grid { grid-template-columns: 1fr 1fr; gap: var(--grid-gap, 16.8px); }
+    }
+    @media (max-width: 480px) {
+      #team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-text">Foliant</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="materials.html">Materials</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="methods.html">Methods</a></li>
+      <li><a href="about.html" class="nav-link--active">About</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="materials.html">Materials</a>
+  <a href="projects.html">Projects</a>
+  <a href="methods.html">Methods</a>
+  <a href="about.html" class="nav-link--active">About</a>
+</div>
+
+<!-- COMPACT HEADER — max 20vh tall -->
+<header id="about-header">
+  <div id="about-header-inner">
+    <p class="page-hero-eyebrow">Since 1981</p>
+    <h1 class="page-hero-title">About Foliant</h1>
+    <p class="page-hero-subtitle">Forty years documenting the built world's rarest materials.</p>
+  </div>
+</header>
+
+<!-- STORY SECTION -->
+<section id="about-story">
+  <div class="section-inner">
+    <div id="story-inner">
+      <div id="story-left">
+        <h2 id="story-heading">The archive that builds.</h2>
+      </div>
+      <div id="story-right">
+        <p class="story-p">Foliant was founded in 1981 by a conservation architect who could not reliably source like-for-like materials for a Grade I listed manor house in Wiltshire. The problem was not availability — the problem was documentation. Reclaimed materials existed in quantity. What was missing was the provenance chain that made them acceptable to conservation bodies.</p>
+        <p class="story-p">The answer was a systematic archive: materials catalogued at point of demolition, with petrographic testing and written provenance before storage, not after. Forty years later that founding logic has not changed. Every entry in the Foliant archive is documented to the standard of evidence required by a listed building consent application.</p>
+        <p class="story-p">We work with conservation architects, heritage contractors, planning authorities, and building owners. Our archive does not replace site visits or specialist surveys — it provides the material evidence that makes those decisions faster and more defensible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM SECTION -->
+<section id="about-team">
+  <div id="team-header">
+    <p id="team-eyebrow">The Team</p>
+    <h2 id="team-heading">Archive, survey, and specification</h2>
+  </div>
+  <div id="team-grid">
+    <div class="team-card">
+      <div class="team-portrait">
+        <img src="assets/team-1.jpeg" alt="Portrait of Eleanor Voss"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="team-portrait-placeholder">Eleanor Voss</div>
+      </div>
+      <h3 class="team-name">Eleanor Voss</h3>
+      <p class="team-role">Archive Director</p>
+    </div>
+    <div class="team-card">
+      <div class="team-portrait">
+        <img src="assets/team-2.jpeg" alt="Portrait of James Hartley"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="team-portrait-placeholder">James Hartley</div>
+      </div>
+      <h3 class="team-name">James Hartley</h3>
+      <p class="team-role">Head Surveyor</p>
+    </div>
+    <div class="team-card">
+      <div class="team-portrait">
+        <img src="assets/team-3.jpeg" alt="Portrait of Adaeze Nwosu"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="team-portrait-placeholder">Adaeze Nwosu</div>
+      </div>
+      <h3 class="team-name">Adaeze Nwosu</h3>
+      <p class="team-role">Petrographic Specialist</p>
+    </div>
+    <div class="team-card">
+      <div class="team-portrait">
+        <img src="assets/team-4.jpeg" alt="Portrait of Samuel Breck"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="team-portrait-placeholder">Samuel Breck</div>
+      </div>
+      <h3 class="team-name">Samuel Breck</h3>
+      <p class="team-role">Specification Writer</p>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE DIVIDER -->
+<div class="section-divider" style="margin-top:0;">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,10 C240,70 480,0 720,40 C960,70 1200,10 1440,40 L1440,70 L0,70 Z" fill="var(--color-surface-dark)"/>
+  </svg>
+</div>
+
+<!-- CONTACT SECTION -->
+<section id="about-contact">
+  <div class="section-inner">
+    <div id="contact-inner">
+      <div>
+        <h2 id="contact-heading">Start a conversation about your project</h2>
+        <p id="contact-body">We work with a small number of projects each year. If you are undertaking heritage restoration and need provenance-grade materials, get in touch. We can usually indicate within 48 hours whether the archive holds relevant stock.</p>
+      </div>
+      <div id="contact-details">
+        <div class="contact-item">
+          <p class="contact-item-label">Email</p>
+          <p class="contact-item-value"><a href="mailto:archive@foliant.co.uk">archive@foliant.co.uk</a></p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">Telephone</p>
+          <p class="contact-item-value">+44 (0)20 7253 0180</p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">Address</p>
+          <p class="contact-item-value">Foliant Archive Ltd<br>12 Clerkenwell Road<br>London EC1M 5PQ</p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">Archive access</p>
+          <p class="contact-item-value">By appointment. Monday–Friday 09:00–17:00.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER WAVE -->
+<div class="section-divider" style="margin-top:-2px;">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,15 1440,20 L1440,60 L0,60 Z" fill="#2a5c3a"/>
+  </svg>
+</div>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div id="footer-inner">
+    <div id="footer-brand">
+      <div id="footer-logo">Foliant</div>
+      <p id="footer-tagline">The archive that builds.</p>
+      <p id="footer-address">Foliant Archive Ltd<br>12 Clerkenwell Road, London EC1M 5PQ</p>
+    </div>
+    <nav id="footer-nav">
+      <div class="footer-col">
+        <p class="footer-col-heading">Archive</p>
+        <ul class="footer-links">
+          <li><a href="materials.html">Materials</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="methods.html">Methods</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html#team">Team</a></li>
+          <li><a href="about.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Standards</p>
+        <ul class="footer-links">
+          <li><a href="#">ICOMOS</a></li>
+          <li><a href="#">Historic England</a></li>
+          <li><a href="#">NBS Format</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div id="footer-bottom" class="footer-copyright">
+    <p id="footer-legal">&copy; 2024 Foliant Archive Ltd. All rights reserved.</p>
+    <p id="footer-legal-links"><a href="#">Privacy</a> · <a href="#">Terms</a></p>
+  </div>
+</footer>
+
+<script src="behaviors/nav.js"></script>
+<script>
+(function() {
+  'use strict';
+  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(time => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  gsap.registerPlugin(ScrollTrigger);
+
+  // About header entrance — vertical stagger
+  gsap.from('#about-header-inner > *', {
+    y: 25, autoAlpha: 0, duration: 0.65, stagger: 0.1, ease: 'expo.out', delay: 0.2
+  });
+
+  // Story section — divergent (heading left, text right)
+  gsap.from('#story-heading', {
+    scrollTrigger: { trigger: '#about-story', start: 'top 75%', once: true },
+    x: -50, autoAlpha: 0, duration: 0.65, ease: 'expo.out'
+  });
+  gsap.from('#story-right .story-p', {
+    scrollTrigger: { trigger: '#story-right', start: 'top 80%', once: true },
+    x: 50, autoAlpha: 0, duration: 0.65, stagger: 0.1, ease: 'expo.out'
+  });
+
+  // Team cards — scale + rise with stagger
+  gsap.from('.team-card', {
+    scrollTrigger: { trigger: '#team-grid', start: 'top 80%', once: true },
+    scale: 0.9, y: 30, autoAlpha: 0, duration: 0.65, stagger: 0.08, ease: 'back.out(1.5)'
+  });
+
+  // Contact details — stagger from right
+  gsap.from('.contact-item', {
+    scrollTrigger: { trigger: '#contact-details', start: 'top 80%', once: true },
+    x: 40, autoAlpha: 0, duration: 0.65, stagger: 0.08, ease: 'expo.out'
+  });
+
+  // Footer iris bloom
+  ScrollTrigger.create({
+    trigger: '#footer', start: 'top 90%', once: true,
+    onEnter: () => {
+      gsap.fromTo('#footer',
+        { clipPath: 'ellipse(0% 0% at 50% 100%)' },
+        { clipPath: 'ellipse(150% 150% at 50% 100%)', duration: 0.91, ease: 'power3.inOut' }
+      );
+    }
+  });
+})();
+</script>
+</body>
+</html>

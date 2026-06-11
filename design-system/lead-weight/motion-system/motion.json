@@ -1,0 +1,64 @@
+{
+  "_source": "spun-vellum",
+  "_twist": "Word-slide + weight-pulse keyframes added; reveal duration extended to 0.7s for editorial weight — intensity 3",
+  "cssVars": {
+    "--motion-duration-instant": "100ms",
+    "--motion-duration-fast": "200ms",
+    "--motion-duration-base": "300ms",
+    "--motion-duration-slow": "500ms",
+    "--motion-duration-reveal": "700ms",
+    "--motion-easing-default": "cubic-bezier(0.25, 0.1, 0.25, 1.0)",
+    "--motion-easing-out": "cubic-bezier(0.0, 0.0, 0.2, 1.0)",
+    "--motion-easing-in-out": "cubic-bezier(0.4, 0.0, 0.2, 1.0)",
+    "--motion-stagger-1": "0s",
+    "--motion-stagger-2": "0.12s",
+    "--motion-stagger-3": "0.24s",
+    "--motion-stagger-4": "0.36s",
+    "--motion-stagger-5": "0.48s"
+  },
+  "keyframes": {
+    "word-slide": {
+      "description": "Editorial word/line reveal — translates up from 30px while opacity rises at 60% of duration",
+      "steps": {
+        "0%": { "transform": "translateY(30px)", "opacity": "0" },
+        "60%": { "transform": "translateY(0)", "opacity": "1" },
+        "100%": { "transform": "translateY(0)", "opacity": "1" }
+      },
+      "duration": "0.7s",
+      "easing": "cubic-bezier(0.25, 0.1, 0.25, 1.0)",
+      "_note": "Opacity resolves early (60%) so text is legible before translate completes — reading rhythm is not held hostage to motion"
+    },
+    "weight-pulse": {
+      "description": "Clip-path wipe reveal — content appears left-to-right as if being printed",
+      "steps": {
+        "0%": { "clip-path": "inset(0 100% 0 0)" },
+        "100%": { "clip-path": "inset(0 0% 0 0)" }
+      },
+      "duration": "0.7s",
+      "easing": "cubic-bezier(0.25, 0.1, 0.25, 1.0)"
+    },
+    "fade-up": {
+      "description": "Simple opacity + translate for secondary elements",
+      "steps": {
+        "0%": { "transform": "translateY(16px)", "opacity": "0" },
+        "100%": { "transform": "translateY(0)", "opacity": "1" }
+      },
+      "duration": "0.5s",
+      "easing": "cubic-bezier(0.0, 0.0, 0.2, 1.0)"
+    }
+  },
+  "hover": {
+    "duration": "200ms",
+    "easing": "ease-out",
+    "properties": ["letter-spacing", "text-decoration-color", "opacity"]
+  },
+  "scrollReveal": {
+    "threshold": "0.15",
+    "once": true,
+    "_note": "Scroll triggers fire once — reading pace must not be held hostage to motion"
+  },
+  "reducedMotion": {
+    "strategy": "disable-all-transforms",
+    "_note": "Under prefers-reduced-motion: skip all translate/opacity animations; preserve layout"
+  }
+}

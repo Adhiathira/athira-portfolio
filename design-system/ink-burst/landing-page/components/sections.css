@@ -1,0 +1,287 @@
+/* ink-burst — Sections (Features, Stats, How It Works, shared section styles)
+   Comic panel aesthetic throughout.
+*/
+
+/* === SECTION BASE === */
+.section {
+  padding-block: var(--section-pad-y);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  letter-spacing: var(--ls-h2);
+  font-weight: 400;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.section-sub {
+  font-family: var(--font-body);
+  font-size: var(--text-p);
+  color: var(--color-ink);
+  max-width: 560px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* Section heading underline — black ink stroke */
+.section-title-underline {
+  display: inline-block;
+  position: relative;
+}
+
+.section-title-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--color-comic-red);
+}
+
+/* === FEATURE CARDS === */
+.section-features {
+  background-color: var(--color-page-bg);
+  border-bottom: var(--border-ink);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--panel-gap-loose);
+}
+
+.feature-card {
+  border: var(--border-ink);
+  box-shadow: var(--shadow-md);
+  padding: var(--panel-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: transform var(--dur-fast) var(--ease-spring),
+              box-shadow var(--dur-fast) var(--ease-spring);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--dot-pattern);
+  background-size: var(--dot-size);
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+.feature-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--color-ink);
+}
+
+.feature-card:active {
+  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+
+/* Card color variants — alternating per brief */
+.feature-card--red    { background-color: var(--color-panel-red); }
+.feature-card--yellow { background-color: var(--color-panel-yellow); }
+.feature-card--cyan   { background-color: var(--color-panel-blue); }
+.feature-card--white  { background-color: var(--color-white); }
+.feature-card--red-bold { background-color: var(--color-comic-red); color: var(--color-white); }
+.feature-card--cyan-bold { background-color: var(--color-comic-cyan); color: var(--color-ink); }
+
+.feature-icon {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  color: inherit;
+  position: relative;
+  z-index: 1;
+}
+
+.feature-title {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  letter-spacing: var(--ls-h3);
+  font-weight: 400;
+  color: inherit;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.feature-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-p);
+  line-height: 1.5;
+  color: inherit;
+  position: relative;
+  z-index: 1;
+}
+
+/* === STATS SECTION === */
+.section-stats {
+  background-color: var(--color-ink);
+  border-bottom: 4px solid var(--color-ink);
+  padding-block: 60px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--panel-gap);
+}
+
+.stat-panel {
+  border: var(--border-ink);
+  padding: var(--panel-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  text-align: center;
+  transition: transform var(--dur-fast) var(--ease-spring),
+              box-shadow var(--dur-fast) var(--ease-spring);
+}
+
+.stat-panel:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-panel--red    { background-color: var(--color-comic-red); }
+.stat-panel--yellow { background-color: var(--color-comic-yellow); }
+.stat-panel--cyan   { background-color: var(--color-comic-cyan); }
+.stat-panel--white  { background-color: var(--color-white); }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: var(--text-stat);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+}
+
+.stat-panel--red .stat-number  { color: var(--color-white); }
+
+.stat-label {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.stat-panel--red .stat-label { color: rgba(255,255,255,0.85); }
+
+/* === HOW IT WORKS (Comic Strip) === */
+.section-how {
+  background-color: var(--color-panel-yellow);
+  border-bottom: var(--border-ink);
+  border-top: var(--border-ink);
+}
+
+.how-strip {
+  display: grid;
+  grid-template-columns: 1fr 48px 1fr 48px 1fr;
+  gap: 0;
+  align-items: center;
+}
+
+.how-panel {
+  border: var(--border-ink);
+  box-shadow: var(--shadow-md);
+  padding: var(--panel-padding);
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: relative;
+  min-height: 280px;
+}
+
+.how-panel--yellow { background-color: var(--color-comic-yellow); }
+.how-panel--cyan   { background-color: var(--color-comic-cyan); }
+
+.how-step-num {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  letter-spacing: 0.03em;
+  font-weight: 400;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.how-panel--cyan .how-step-num { color: var(--color-ink); }
+
+.how-title {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  letter-spacing: var(--ls-h3);
+  font-weight: 400;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.how-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+/* Arrow connector between panels */
+.how-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0;
+  color: var(--color-ink);
+  font-weight: 400;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1023px) {
+  .features-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .how-strip {
+    grid-template-columns: 1fr;
+    gap: var(--panel-gap-loose);
+  }
+  .how-arrow {
+    transform: rotate(90deg);
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

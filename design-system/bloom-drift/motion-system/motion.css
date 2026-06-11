@@ -1,0 +1,111 @@
+:root {
+  --motion-duration-xfast:  0.316s;
+  --motion-duration-fast:   0.474s;
+  --motion-duration-medium: 0.632s;
+  --motion-duration-slow:   1.580s;
+  --motion-duration-xslow:  1.895s;
+  --motion-duration-pulse:  4.423s;
+  --motion-duration-wave:         8.1s;
+  --motion-duration-morph:        10.8s;
+  --motion-duration-ripple:       0.810s;
+  --motion-duration-fluid-enter:  1.080s;
+  --motion-easing-linear:     linear;
+  --motion-easing-standard:   ease-in-out;
+  --motion-easing-decelerate: cubic-bezier(0.68, 0, 0.23, 1);
+  --motion-easing-default:    ease;
+  --motion-easing-out:        ease-out;
+  --motion-easing-fluid:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --motion-easing-wave:       cubic-bezier(0.37, 0, 0.63, 1);
+}
+
+@keyframes fade-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fade-out {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes slide-up {
+  0%   { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-left {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+@keyframes slide-out-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+@keyframes scale-in {
+  0%   { opacity: 0; transform: scale(0.75); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes pulse {
+  0%   { opacity: 1; }
+  25%  { opacity: 0.4; }
+  50%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes rotate-full {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes waveFloat {
+  0%   { transform: translateY(0px); }
+  15%  { transform: translateY(-6px); }
+  30%  { transform: translateY(-10px); }
+  45%  { transform: translateY(-6px); }
+  50%  { transform: translateY(0px); }
+  65%  { transform: translateY(6px); }
+  80%  { transform: translateY(10px); }
+  90%  { transform: translateY(6px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes liquidMorph {
+  0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  20%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  40%  { border-radius: 55% 45% 65% 35% / 35% 65% 45% 55%; }
+  60%  { border-radius: 40% 60% 30% 70% / 70% 30% 60% 40%; }
+  80%  { border-radius: 65% 35% 50% 50% / 40% 55% 45% 60%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+@keyframes ripple {
+  0%   { opacity: 0.7; transform: scale(0); }
+  60%  { opacity: 0.3; transform: scale(0.7); }
+  100% { opacity: 0;   transform: scale(1); }
+}
+@keyframes fluidEntrance {
+  0%   { opacity: 0;   transform: scale(0.9); }
+  60%  { opacity: 0.8; transform: scale(1.02); }
+  100% { opacity: 1;   transform: scale(1); }
+}
+@keyframes waterSurface {
+  0%   { filter: hue-rotate(0deg); }
+  25%  { filter: hue-rotate(10deg); }
+  50%  { filter: hue-rotate(20deg); }
+  75%  { filter: hue-rotate(10deg); }
+  100% { filter: hue-rotate(0deg); }
+}
+
+.animated-pulse { animation: pulse var(--motion-duration-pulse) var(--motion-easing-default) infinite; }
+.wave-float { animation: waveFloat var(--motion-duration-wave) var(--motion-easing-wave) infinite; will-change: transform; }
+.liquid-morph { animation: liquidMorph var(--motion-duration-morph) var(--motion-easing-fluid) infinite; will-change: border-radius; }
+.ripple-element { animation: ripple var(--motion-duration-ripple) var(--motion-easing-fluid) 1; }
+.fluid-entrance { animation: fluidEntrance var(--motion-duration-fluid-enter) var(--motion-easing-fluid) 1 both; }
+.water-surface { animation: waterSurface var(--motion-duration-morph) ease-in-out infinite; }
+
+.btn, button { transition: background-color var(--motion-duration-xfast) var(--motion-easing-fluid), border-color var(--motion-duration-xfast) var(--motion-easing-fluid), color var(--motion-duration-xfast) var(--motion-easing-fluid); }
+.fade-element { transition: opacity var(--motion-duration-fast) var(--motion-easing-standard); }
+.transform-element { transition: transform var(--motion-duration-medium) var(--motion-easing-fluid); }
+.accordion, .drawer { transition: grid-template-rows var(--motion-duration-slow) var(--motion-easing-wave); }
+.overlay { transition: opacity var(--motion-duration-slow) var(--motion-easing-fluid); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

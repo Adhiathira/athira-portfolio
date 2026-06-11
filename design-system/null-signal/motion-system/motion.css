@@ -1,0 +1,123 @@
+:root {
+  --motion-duration-fast: 0.1s;
+  --motion-duration-base: 0.2s;
+  --motion-duration-medium: 0.3s;
+  --motion-duration-slow: 0.5s;
+  --motion-duration-glitch: 0.15s;
+  --motion-duration-reveal: 0.2s;
+
+  --motion-easing-mechanical: cubic-bezier(0.55, 0, 1, 0.45);
+  --motion-easing-snap: cubic-bezier(0.4, 0, 0.6, 1);
+  --motion-easing-step-reveal: steps(4, start);
+  --motion-easing-instant: step-start;
+  --motion-easing-ease: ease-out;
+}
+
+/* ─── Keyframes ──────────────────────────────────────────── */
+
+@keyframes glitch-shift {
+  0%   { transform: translateX(0); }
+  15%  { transform: translateX(-4px); }
+  30%  { transform: translateX(2px); }
+  45%  { transform: translateX(-2px); }
+  60%  { transform: translateX(4px); }
+  75%  { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes rgb-split {
+  0%   { text-shadow: none; }
+  20%  { text-shadow: -2px 0 #ff0055, 2px 0 #00e5ff; }
+  40%  { text-shadow: 2px 0 #ff0055, -2px 0 #00e5ff; }
+  60%  { text-shadow: -3px 0 #ff0055, 3px 0 #00e5ff; }
+  80%  { text-shadow: 1px 0 #ff0055, -1px 0 #00e5ff; }
+  100% { text-shadow: none; }
+}
+
+@keyframes scanline {
+  0%   { background-position: 0 -100%; }
+  100% { background-position: 0 100%; }
+}
+
+@keyframes data-reveal {
+  0%   { clip-path: inset(0 100% 0 0); }
+  25%  { clip-path: inset(0 75% 0 0); }
+  50%  { clip-path: inset(0 50% 0 0); }
+  75%  { clip-path: inset(0 25% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
+}
+
+@keyframes flicker {
+  0%   { opacity: 1; }
+  10%  { opacity: 0.85; }
+  20%  { opacity: 1; }
+  55%  { opacity: 0.9; }
+  60%  { opacity: 1; }
+  75%  { opacity: 0.95; }
+  80%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes neon-pulse {
+  0%   { box-shadow: 0 0 4px rgba(253, 53, 110, 0.4); }
+  50%  { box-shadow: 0 0 12px rgba(253, 53, 110, 0.8), 0 0 24px rgba(253, 53, 110, 0.4); }
+  100% { box-shadow: 0 0 4px rgba(253, 53, 110, 0.4); }
+}
+
+/* ─── Utility Classes ────────────────────────────────────── */
+
+.animate-glitch {
+  animation: glitch-shift var(--motion-duration-glitch) var(--motion-easing-mechanical) both;
+}
+
+.animate-rgb-split {
+  animation: rgb-split var(--motion-duration-glitch) var(--motion-easing-mechanical) both;
+}
+
+.animate-data-reveal {
+  animation: data-reveal var(--motion-duration-reveal) steps(4, start) both;
+}
+
+.animate-flicker {
+  animation: flicker var(--motion-duration-glitch) step-start both;
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 1.5s ease-in-out infinite;
+}
+
+.animate-scanline {
+  animation: scanline 2s linear infinite;
+}
+
+/* Scanline overlay pattern */
+.scanline-overlay {
+  position: relative;
+}
+.scanline-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 2px,
+    rgba(255, 255, 255, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01s !important;
+  }
+  .animate-neon-pulse {
+    animation: none;
+    box-shadow: 0 0 8px rgba(253, 53, 110, 0.5);
+  }
+}

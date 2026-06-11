@@ -1,0 +1,171 @@
+/* ============================================================
+   CAPABILITIES — vivid-block / Pivot product page
+   White background, asymmetric bento grid, flat card hover
+   ============================================================ */
+
+.capabilities {
+  background-color: #ffffff;
+  padding: var(--space-section-top) clamp(32px, 5vw, 96px) var(--space-section-bottom);
+}
+
+.capabilities__inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+}
+
+.capabilities__heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--type-h2);
+  letter-spacing: var(--tracking-h2);
+  color: #1b1b37;
+  margin: 0 0 var(--space-4) 0;
+}
+
+/* ── Bento grid ──────────────────────────────────────────── */
+/* Row 1: featured card (2/3) + card (1/3) */
+/* Row 2: three equal 1fr cards */
+.capabilities__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-card-gap);
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+.cap-card {
+  background-color: #ffffff;
+  border: 1px solid #cccce1;
+  border-radius: 2px;
+  padding: var(--space-card-padding);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 100ms linear;
+}
+
+.cap-card:hover {
+  border-color: #63cabe;
+}
+
+/* Featured card: spans 2 columns, teal bg */
+.cap-card--featured {
+  grid-column: span 2;
+  background-color: #63cabe;
+  border-color: #63cabe;
+}
+
+.cap-card--featured:hover {
+  border-color: #63cabe;
+}
+
+/* Geometric circle decorator on featured card */
+.cap-card--featured::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-color: #f0f0f4;
+  border-radius: 50%;
+  top: -60px;
+  right: -60px;
+  opacity: 0.18;
+}
+
+/* Second decorator circle — smaller */
+.cap-card--featured::after {
+  content: '';
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background-color: #1b1b37;
+  border-radius: 50%;
+  bottom: -40px;
+  right: 80px;
+  opacity: 0.1;
+}
+
+/* ── Card content ────────────────────────────────────────── */
+.cap-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cap-card--featured .cap-card__icon {
+  background-color: rgba(27, 27, 55, 0.15);
+}
+
+.cap-card:not(.cap-card--featured) .cap-card__icon {
+  background-color: #f0f0f4;
+}
+
+/* Icon shape inside — a small CSS square for visual interest */
+.cap-card__icon::after {
+  content: '';
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-color: #1b1b37;
+  border-radius: 2px;
+}
+
+.cap-card--featured .cap-card__icon::after {
+  background-color: #ffffff;
+}
+
+.cap-card__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+  color: #1b1b37;
+  margin: 0 0 var(--space-2) 0;
+  line-height: 1.2;
+}
+
+.cap-card--featured .cap-card__title {
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+.cap-card__body {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #1b1b37;
+  margin: 0;
+  opacity: 0.72;
+}
+
+.cap-card--featured .cap-card__body {
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .capabilities__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cap-card--featured {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .capabilities {
+    padding-inline: 20px;
+  }
+
+  .capabilities__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cap-card--featured {
+    grid-column: span 1;
+  }
+}

@@ -1,0 +1,85 @@
+/* ==========================================================================
+   tawny-shelf / grid-system / grid.css
+   Source: ivory-ledge (originally endlesstools)
+   Twist B: Gap scaling ×1.4 (intensity 3)
+   ========================================================================== */
+
+:root {
+  --grid-container-max-width: 1280px;
+  --grid-container-padding: 72px;
+
+  --grid-gap-base: 16.8px;
+  --grid-gap-wide: 33.6px;
+  --grid-gap-tight: 7px;
+  --grid-gap-medium: 14px;
+}
+
+.ts-container {
+  max-width: var(--grid-container-max-width);
+  padding-left: var(--grid-container-padding);
+  padding-right: var(--grid-container-padding);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 5-column base grid */
+.ts-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--grid-gap-base);
+}
+
+/* 3-column grid */
+.ts-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap-base);
+}
+
+/* 2-column asymmetric 60/40 */
+.ts-grid-2 {
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  gap: var(--grid-gap-wide);
+}
+
+/* Flex row centered */
+.ts-flex-row {
+  display: flex;
+  flex-direction: row;
+  gap: var(--grid-gap-medium);
+  align-items: center;
+}
+
+/* Space-between flex */
+.ts-flex-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: var(--grid-gap-wide);
+}
+
+/* Tight flex (inline items) */
+.ts-flex-tight {
+  display: flex;
+  flex-direction: row;
+  gap: var(--grid-gap-tight);
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .ts-grid-5 { grid-template-columns: repeat(3, 1fr); }
+  .ts-grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .ts-grid-2 { grid-template-columns: 1fr; }
+  .ts-container { padding-left: 40px; padding-right: 40px; }
+}
+
+@media (max-width: 768px) {
+  .ts-grid-5, .ts-grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .ts-container { padding-left: 24px; padding-right: 24px; }
+}
+
+@media (max-width: 375px) {
+  .ts-grid-5, .ts-grid-3, .ts-grid-2 { grid-template-columns: 1fr; }
+  .ts-container { padding-left: 16px; padding-right: 16px; }
+}

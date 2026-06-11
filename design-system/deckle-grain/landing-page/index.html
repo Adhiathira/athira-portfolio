@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deckle & Thread — Private Letterpress Studio, Edinburgh</title>
+  <meta name="description" content="Hand-printed limited editions, broadside poems, and bespoke typography commissions from a private letterpress studio in Edinburgh.">
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/book.css">
+  <link rel="stylesheet" href="components/cover.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/bookshelf.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════
+       BOOK COVER — Opening animation
+       ════════════════════════════════════════════════ -->
+  <div id="book-cover" class="book-cover">
+    <div id="book-cover-inner" class="book-cover-inner">
+      <h1 id="book-cover-title" class="book-cover-title">Deckle & Thread</h1>
+      <div id="book-cover-line" class="book-cover-line"></div>
+      <p id="book-cover-subtitle" class="book-cover-subtitle">Private Letterpress Studio &middot; Edinburgh</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       BOOKSHELF
+       ════════════════════════════════════════════════ -->
+  <div id="bookshelf" class="bookshelf-container">
+    <div class="bookshelf-shelf">
+      <div class="bookshelf-spine" data-book="home" data-href="index.html">
+        <span class="bookshelf-spine-headband"></span>
+        <span class="bookshelf-spine-title">Deckle &amp; Thread</span>
+      </div>
+      <div class="bookshelf-spine" data-book="editions" data-href="editions.html">
+        <span class="bookshelf-spine-headband"></span>
+        <span class="bookshelf-spine-title">Editions</span>
+      </div>
+      <div class="bookshelf-spine" data-book="process" data-href="process.html">
+        <span class="bookshelf-spine-headband"></span>
+        <span class="bookshelf-spine-title">Process</span>
+      </div>
+      <div class="bookshelf-spine" data-book="commissions" data-href="commissions.html">
+        <span class="bookshelf-spine-headband"></span>
+        <span class="bookshelf-spine-title">Commissions</span>
+      </div>
+      <div class="bookshelf-spine" data-book="about" data-href="about.html">
+        <span class="bookshelf-spine-headband"></span>
+        <span class="bookshelf-spine-title">About</span>
+      </div>
+    </div>
+    <p class="bookshelf-subtitle">Edinburgh · Est. 2009</p>
+  </div>
+
+  <!-- Mobile navigation -->
+  <nav class="bookshelf-mobile-nav">
+    <a href="index.html" class="bookshelf-mobile-nav-title">Deckle &amp; Thread</a>
+    <button id="bookshelf-mobile-toggle" class="bookshelf-mobile-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div id="bookshelf-mobile-menu" class="bookshelf-mobile-menu">
+    <a href="index.html">Deckle &amp; Thread</a>
+    <a href="editions.html">Editions</a>
+    <a href="process.html">Process</a>
+    <a href="commissions.html">Commissions</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       BOOK STRUCTURE
+       ════════════════════════════════════════════════ -->
+  <div id="home-open-book" class="open-book-layout" data-active-book="home" style="display:none">
+    <div class="open-book-left-spines"></div>
+    <div class="open-book">
+      <div class="open-book-cover">
+        <h2 class="open-book-cover-title">Deckle &amp; Thread</h2>
+        <p class="open-book-cover-subtitle">Private Letterpress Studio</p>
+        <div class="open-book-cover-ornament">&fllig;</div>
+      </div>
+      <div class="open-book-gutter"></div>
+      <div class="open-book-content">
+  <div id="book-desk" class="book-desk book-desk--embedded">
+
+    <!-- Spine -->
+    <div id="book-spine" class="book-spine" aria-hidden="true"></div>
+
+    <!-- Brand watermark -->
+    <div id="book-watermark" class="book-watermark" aria-hidden="true">Deckle & Thread &middot; Edinburgh</div>
+
+    <!-- Book container -->
+    <div id="book" class="book">
+      <div id="book-pages" class="book-pages">
+
+        <!-- ─── PAGE 1: FRONTISPIECE / TITLE PAGE ─── -->
+        <div id="page-frontispiece" class="book-page" data-page-bg="#f5f0e8" data-fold-color="#ede7db">
+          <div id="page-frontispiece-video" class="title-page-video-bg">
+            <video id="hero-video" autoplay muted loop playsinline
+              src="assets/hero-bg.mp4"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            </video>
+            <div class="video-placeholder" style="display:none; width:100%; height:100%;">
+              hero-bg.mp4
+            </div>
+          </div>
+          <div id="page-frontispiece-fold" class="book-fold"><div class="book-fold-inner"></div></div>
+          <div id="page-frontispiece-content" class="book-page-content">
+            <div id="frontispiece-running-header" class="book-running-header">Deckle & Thread</div>
+            <div id="frontispiece-layout" class="title-page title-page-content">
+              <div id="frontispiece-device" class="title-page-device" aria-hidden="true"></div>
+              <h1 id="frontispiece-title" class="title-page-name">Deckle & Thread</h1>
+              <p id="frontispiece-subtitle" class="title-page-subtitle">
+                Hand-printed limited editions, broadside poems, and bespoke typography from a private letterpress studio
+              </p>
+              <div id="frontispiece-ornament" class="book-ornament" aria-hidden="true">&bull; &bull; &bull;</div>
+              <p id="frontispiece-location" class="title-page-location">Edinburgh, Scotland</p>
+              <p id="frontispiece-year" class="title-page-year">Est. 2009</p>
+            </div>
+            <div id="frontispiece-folio" class="book-folio book-folio--right">i</div>
+          </div>
+        </div>
+
+        <!-- ─── PAGE 2: CHAPTER I — THE STUDIO ─── -->
+        <div id="page-chapter-1" class="book-page" data-page-bg="#f2ede4" data-fold-color="#e8e2d9">
+          <div id="page-chapter-1-fold" class="book-fold"><div class="book-fold-inner"></div></div>
+          <div id="page-chapter-1-content" class="book-page-content" style="background: var(--color-surface-cream);">
+            <div id="chapter-1-running-header" class="book-running-header">The Studio</div>
+            <div id="chapter-1-label" class="book-chapter-label">Chapter I</div>
+            <div id="chapter-1-body" class="chapter-opening">
+              <h2 id="chapter-1-heading" class="chapter-heading">The weight of a letter pressed into dampened cotton</h2>
+              <div id="chapter-1-text" class="chapter-body book-drop-cap">
+                <p>In a converted print house on Canongate, three Vandercook presses stand in a line. Each weighs more than a small car. Each has been printing since the 1960s. The oldest — a Universal III from 1958 — still pulls the cleanest impression in the shop.</p>
+                <p>Deckle & Thread was founded on the belief that the act of printing is not a production step but a design decision. The depth of an impression, the texture of the substrate, the way ink pools in the counter of a lowercase 'e' — these are not incidental qualities. They are the work.</p>
+                <p>We print limited editions for poets, artists, and institutions who understand that a book is an object before it is a text. Our editions are small — rarely more than 150 copies. Our paper is dampened the morning of the press run. Our type is hand-set or photopolymer from original drawings.</p>
+              </div>
+            </div>
+            <aside id="chapter-1-marginalia" class="book-marginalia" style="top: 280px;">
+              "The impression is the argument. Everything else is annotation."
+            </aside>
+            <div id="chapter-1-folio" class="book-folio book-folio--left">2</div>
+          </div>
+        </div>
+
+        <!-- ─── PAGE 3: PLATE SECTION — SELECTED WORKS ─── -->
+        <div id="page-plates" class="book-page" data-page-bg="#f5f0e8" data-fold-color="#ede7db">
+          <div id="page-plates-fold" class="book-fold"><div class="book-fold-inner"></div></div>
+          <div id="page-plates-content" class="book-page-content">
+            <div id="plates-running-header" class="book-running-header">Selected Works</div>
+            <div id="plates-label" class="book-chapter-label">Plates</div>
+            <h2 id="plates-heading" class="chapter-heading" style="text-align:center; margin-bottom: var(--space-3xl);">Recent Editions</h2>
+            <div id="plates-gallery" class="plate-section">
+
+              <div id="plate-1" class="plate-item">
+                <div id="plate-1-frame" class="plate-frame">
+                  <div class="plate-placeholder">Plate I</div>
+                </div>
+                <h3 id="plate-1-title" class="plate-title">Almanac of Tides</h3>
+                <p id="plate-1-caption" class="plate-caption">Twelve broadside poems on the North Sea, hand-set in 14pt Caslon, printed on Zerkall mould-made. Edition of 80.</p>
+                <span id="plate-1-number" class="plate-number">I</span>
+              </div>
+
+              <div id="plate-2" class="plate-item">
+                <div id="plate-2-frame" class="plate-frame">
+                  <div class="plate-placeholder">Plate II</div>
+                </div>
+                <h3 id="plate-2-title" class="plate-title">Thread & Bone</h3>
+                <p id="plate-2-caption" class="plate-caption">Artist collaboration with Isla Kincaid. Photopolymer relief from original ink drawings, Coptic-bound. Edition of 45.</p>
+                <span id="plate-2-number" class="plate-number">II</span>
+              </div>
+
+              <div id="plate-3" class="plate-item">
+                <div id="plate-3-frame" class="plate-frame">
+                  <div class="plate-placeholder">Plate III</div>
+                </div>
+                <h3 id="plate-3-title" class="plate-title">Correspondences</h3>
+                <p id="plate-3-caption" class="plate-caption">Letterpress rendition of selected correspondence between Hugh MacDiarmid and Sorley MacLean, 1934–1971. Hand-set in Bembo. Edition of 120.</p>
+                <span id="plate-3-number" class="plate-number">III</span>
+              </div>
+
+            </div>
+            <div id="plates-folio" class="book-folio book-folio--right">3</div>
+          </div>
+        </div>
+
+        <!-- ─── PAGE 4: ENDORSEMENTS ─── -->
+        <div id="page-endorsements" class="book-page" data-page-bg="#f2ede4" data-fold-color="#e8e2d9">
+          <div id="page-endorsements-fold" class="book-fold"><div class="book-fold-inner"></div></div>
+          <div id="page-endorsements-content" class="book-page-content" style="background: var(--color-surface-cream);">
+            <div id="endorsements-running-header" class="book-running-header">Praise</div>
+            <div id="endorsements-label" class="book-chapter-label">Endorsements</div>
+            <div id="endorsements-list" class="endorsements">
+
+              <div id="endorsement-1" class="endorsement-item">
+                <blockquote id="endorsement-1-quote" class="endorsement-quote">
+                  The impression they achieve is unlike anything coming out of a contemporary press. You feel the type before you read it.
+                </blockquote>
+                <cite id="endorsement-1-cite" class="endorsement-attribution">Robin Kinross, typographic historian</cite>
+              </div>
+
+              <div id="endorsement-divider-1" class="book-ornament" aria-hidden="true">&bull;</div>
+
+              <div id="endorsement-2" class="endorsement-item">
+                <blockquote id="endorsement-2-quote" class="endorsement-quote">
+                  Working with Deckle & Thread taught me that the page is a surface with its own gravity. Their printing pulls the poem into the paper.
+                </blockquote>
+                <cite id="endorsement-2-cite" class="endorsement-attribution">Kathleen Jamie, poet</cite>
+              </div>
+
+              <div id="endorsement-divider-2" class="book-ornament" aria-hidden="true">&bull;</div>
+
+              <div id="endorsement-3" class="endorsement-item">
+                <blockquote id="endorsement-3-quote" class="endorsement-quote">
+                  I have collected fine press books for thirty years. These are among the most considered objects on my shelves.
+                </blockquote>
+                <cite id="endorsement-3-cite" class="endorsement-attribution">Margaret Atwood, collector</cite>
+              </div>
+
+            </div>
+            <div id="endorsements-folio" class="book-folio book-folio--left">4</div>
+          </div>
+        </div>
+
+        <!-- ─── PAGE 5: COLOPHON ─── -->
+        <div id="page-colophon" class="book-page" data-page-bg="#f5f0e8" data-fold-color="#ede7db">
+          <div id="page-colophon-fold" class="book-fold"><div class="book-fold-inner"></div></div>
+          <div id="page-colophon-content" class="book-page-content">
+            <div id="colophon-running-header" class="book-running-header">Colophon</div>
+            <div id="colophon-layout" class="colophon">
+              <div id="colophon-label" class="colophon-heading">Publisher's Note</div>
+              <div id="colophon-rule" class="book-rule book-rule--center" aria-hidden="true"></div>
+              <div id="colophon-text" class="colophon-body">
+                <p>This catalogue was composed in EB Garamond and Manrope, set digitally and rendered to screen. The physical editions it describes were printed by hand on Vandercook cylinder presses, using dampened cotton rag papers from Zerkall, Somerset, and Hahnem&uuml;hle.</p>
+                <p>Enquiries regarding commissions, collaborations, and edition purchases are welcome.</p>
+              </div>
+              <div id="colophon-contact-line" class="colophon-contact">
+                To commission a piece, write to <a href="mailto:studio@deckleandthread.com">studio@deckleandthread.com</a>
+              </div>
+              <div id="colophon-ornament" class="book-ornament" aria-hidden="true">&fllig;</div>
+            </div>
+            <div id="colophon-folio" class="book-folio book-folio--right">5</div>
+          </div>
+        </div>
+
+        <!-- ─── PAGE 6: ENDPAPERS ─── -->
+        <div id="page-endpapers" class="book-page book-endpapers" data-page-bg="#f2ede4" data-fold-color="#e8e2d9">
+          <div id="page-endpapers-fold" class="book-fold"><div class="book-fold-inner"></div></div>
+          <div id="page-endpapers-content" class="book-page-content" style="justify-content: center; align-items: center; text-align: center;">
+            <div id="endpapers-printers-mark" class="book-printers-mark">
+              <div id="endpapers-device" class="book-printers-mark-device" aria-label="Printer's mark">d</div>
+              <div id="endpapers-mark-text" class="book-printers-mark-text">Deckle & Thread</div>
+              <div id="endpapers-mark-location" class="book-printers-mark-text">Edinburgh &middot; MMIX</div>
+            </div>
+            <div id="endpapers-footer-links" style="margin-top: var(--space-3xl); display: flex; gap: var(--space-xl); flex-wrap: wrap; justify-content: center;">
+              <a href="editions.html" class="nav-link" style="font-size: var(--font-size-body-xs);">Editions</a>
+              <a href="process.html" class="nav-link" style="font-size: var(--font-size-body-xs);">Process</a>
+              <a href="commissions.html" class="nav-link" style="font-size: var(--font-size-body-xs);">Commissions</a>
+              <a href="about.html" class="nav-link" style="font-size: var(--font-size-body-xs);">About</a>
+            </div>
+            <p id="endpapers-copyright" style="margin-top: var(--space-2xl); font-family: var(--font-mono); font-size: var(--font-size-micro); color: var(--color-text-muted); opacity: 0.4;">
+              &copy; 2024 Deckle & Thread. All rights reserved.
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /book-pages -->
+    </div><!-- /book -->
+
+    <!-- Page edge (right side) -->
+    <div id="book-edge" class="book-edge" aria-hidden="true"></div>
+
+    <!-- Bookmark Tabs (inside book-desk for embedded positioning) -->
+    <div id="book-bookmarks" class="book-bookmarks" aria-label="Page navigation">
+      <div class="book-bookmark is-active" data-page="0">Title</div>
+      <div class="book-bookmark" data-page="1">Story</div>
+      <div class="book-bookmark" data-page="2">Works</div>
+      <div class="book-bookmark" data-page="3">Praise</div>
+      <div class="book-bookmark" data-page="4">Note</div>
+      <div class="book-bookmark" data-page="5">End</div>
+    </div>
+
+    <!-- Progress Dots (inside book-desk for embedded positioning) -->
+    <div id="book-progress" class="book-progress" aria-label="Page progress">
+      <div class="book-progress-dot is-active" data-page="0"></div>
+      <div class="book-progress-dot" data-page="1"></div>
+      <div class="book-progress-dot" data-page="2"></div>
+      <div class="book-progress-dot" data-page="3"></div>
+      <div class="book-progress-dot" data-page="4"></div>
+      <div class="book-progress-dot" data-page="5"></div>
+    </div>
+
+  </div><!-- /book-desk -->
+      </div><!-- /open-book-content -->
+    </div><!-- /open-book -->
+
+    <!-- Right spines (all books after D&T) -->
+    <div class="open-book-right-spines">
+      <div class="bookshelf-spine" data-book="editions" data-href="editions.html">
+        <span class="bookshelf-spine-headband"></span>
+        <span class="bookshelf-spine-title">Editions</span>
+      </div>
+      <div class="bookshelf-spine" data-book="process" data-href="process.html">
+        <span class="bookshelf-spine-headband"></span>
+        <span class="bookshelf-spine-title">Process</span>
+      </div>
+      <div class="bookshelf-spine" data-book="commissions" data-href="commissions.html">
+        <span class="bookshelf-spine-headband"></span>
+        <span class="bookshelf-spine-title">Commissions</span>
+      </div>
+      <div class="bookshelf-spine" data-book="about" data-href="about.html">
+        <span class="bookshelf-spine-headband"></span>
+        <span class="bookshelf-spine-title">About</span>
+      </div>
+    </div>
+    <div class="open-book-shelf-ledge"></div>
+  </div><!-- /open-book-layout -->
+
+  <!-- ════════════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════════════ -->
+  <script>
+    /* ── Book cover opening animation ── */
+    (function() {
+      const cover = document.getElementById('book-cover');
+      const title = document.getElementById('book-cover-title');
+      const line = document.getElementById('book-cover-line');
+      const subtitle = document.getElementById('book-cover-subtitle');
+
+      if (!cover || typeof gsap === 'undefined') {
+        if (cover) cover.style.display = 'none';
+        return;
+      }
+
+      /* Skip cover if already shown this session */
+      var alreadyShown = false;
+      try { alreadyShown = !!sessionStorage.getItem('cover-shown'); } catch(e) {}
+      if (alreadyShown) {
+        cover.style.display = 'none';
+        return;
+      }
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          try { sessionStorage.setItem('cover-shown', '1'); } catch(e) {}
+          cover.classList.add('is-open');
+          gsap.to(cover, {
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.inOut',
+            onComplete: () => { cover.style.display = 'none'; }
+          });
+        }
+      });
+
+      tl.to(title, { opacity: 1, duration: 0.8, ease: 'power2.out' }, 0.3)
+        .to(line, { width: '60px', duration: 0.6, ease: 'power2.inOut' }, 0.8)
+        .to(subtitle, { opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.1)
+        .to({}, { duration: 0.8 }); // hold
+    })();
+  </script>
+
+  <script src="behaviors/book-flip.js"></script>
+  <script src="behaviors/bookshelf.js"></script>
+
+  <script>
+    /* ── Page-specific GSAP animations ── */
+    (function() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      const EASE = 'power2.out';
+      const DURATION = 0.75;
+
+      // Frontispiece title entrance (after cover animation)
+      gsap.fromTo('#frontispiece-title',
+        { y: 30, letterSpacing: '-0.02em' },
+        { y: 0, letterSpacing: '-0.01em', duration: 1.2, ease: 'power2.out', delay: 3.2 }
+      );
+
+      gsap.fromTo('#frontispiece-subtitle',
+        { y: 20 },
+        { y: 0, duration: 0.9, ease: EASE, delay: 3.5 }
+      );
+
+      // Chapter I — text reveal
+      gsap.from('#chapter-1-heading', {
+        scrollTrigger: { trigger: '#page-chapter-1', start: 'top 60%', once: true },
+        y: 40, duration: DURATION * 1.3, ease: EASE
+      });
+
+      gsap.from('#chapter-1-text p', {
+        scrollTrigger: { trigger: '#chapter-1-text', start: 'top 75%', once: true },
+        y: 25, stagger: 0.15, duration: DURATION, ease: EASE
+      });
+
+      // Marginalia slide
+      gsap.from('#chapter-1-marginalia', {
+        scrollTrigger: { trigger: '#chapter-1-marginalia', start: 'top 80%', once: true },
+        x: 30, duration: DURATION * 1.2, ease: 'power3.out'
+      });
+
+      // Plates — staggered rise with scale
+      gsap.from('.plate-item', {
+        scrollTrigger: { trigger: '#plates-gallery', start: 'top 70%', once: true },
+        y: 60, scale: 0.96, stagger: 0.2, duration: DURATION * 1.4, ease: 'power3.out'
+      });
+
+      // Endorsements — vertical stagger
+      gsap.from('.endorsement-item', {
+        scrollTrigger: { trigger: '#endorsements-list', start: 'top 70%', once: true },
+        y: 35, stagger: 0.25, duration: DURATION, ease: EASE
+      });
+
+      // Colophon — clip-path reveal from center
+      gsap.fromTo('#colophon-layout',
+        { clipPath: 'inset(20% 30%)' },
+        {
+          clipPath: 'inset(0% 0%)',
+          scrollTrigger: { trigger: '#page-colophon', start: 'top 60%', once: true },
+          duration: 1.2, ease: 'power2.inOut'
+        }
+      );
+
+      // Printer's mark scale
+      gsap.from('#endpapers-printers-mark', {
+        scrollTrigger: { trigger: '#page-endpapers', start: 'top 60%', once: true },
+        scale: 0.8, duration: DURATION * 1.5, ease: 'power3.out'
+      });
+
+      // Book rules — width draw animation
+      gsap.utils.toArray('.book-rule').forEach(rule => {
+        gsap.fromTo(rule,
+          { width: '0px' },
+          {
+            width: '60px',
+            scrollTrigger: { trigger: rule, start: 'top 85%', once: true },
+            duration: 0.8, ease: 'power2.inOut'
+          }
+        );
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

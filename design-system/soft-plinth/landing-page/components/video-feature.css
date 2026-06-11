@@ -1,0 +1,169 @@
+/* =============================================================================
+   VIDEO FEATURE — Soft Plinth / Roundwork Studio
+   Dark teal section (#1e3a35), full-width video with overlaid text
+   ============================================================================= */
+
+/* --- Section wrapper --------------------------------------------------------- */
+#video-feature {
+  background: #1e3a35;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+}
+
+/* --- Video element ----------------------------------------------------------- */
+#craft-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.30;
+}
+
+/* --- Gradient overlay: deep on edges, lighter center for text readability --- */
+#video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(30, 58, 53, 0.85) 0%,
+    rgba(30, 58, 53, 0.35) 50%,
+    rgba(30, 58, 53, 0.75) 100%
+  );
+}
+
+/* Additional bottom vignette */
+#video-overlay::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 160px;
+  background: linear-gradient(to bottom, transparent, rgba(30, 58, 53, 0.6));
+}
+
+/* --- Content ----------------------------------------------------------------- */
+#video-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 128px 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  max-width: 680px;
+  padding-left: min(34px, 6vw);
+  margin-left: calc((100vw - 1280px) / 2);
+  margin-left: max(34px, calc((100vw - 1280px) / 2));
+}
+
+#video-eyebrow {
+  display: inline-block;
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c9b84c;
+}
+
+#video-headline {
+  font-family: 'Figtree', sans-serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  margin: 0;
+}
+
+#video-body {
+  font-family: 'Figtree', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  max-width: 420px;
+}
+
+/* --- Ghost CTA --------------------------------------------------------------- */
+#video-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: transparent;
+  color: #ffffff;
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: 24px;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-top: 8px;
+}
+
+#video-cta:hover {
+  transform: scale(0.97);
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.10);
+}
+
+#video-cta:active {
+  transform: scale(0.93);
+}
+
+/* --- Decorative clay circle beside content ----------------------------------- */
+#video-clay-accent {
+  position: absolute;
+  z-index: 2;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle at 35% 35%, rgba(201, 184, 76, 0.18), rgba(30, 58, 53, 0.05));
+  border-radius: 60% 40% 55% 45% / 50% 60% 40% 55%;
+  border: 1px solid rgba(201, 184, 76, 0.15);
+  animation: blobMorph 10s ease-in-out infinite, floatY 6s ease-in-out infinite;
+}
+
+/* --- Responsive --------------------------------------------------------------- */
+@media (max-width: 900px) {
+  #video-feature {
+    min-height: 480px;
+  }
+
+  #video-content {
+    padding: 80px 34px;
+    margin-left: 0;
+    max-width: 100%;
+  }
+
+  #video-clay-accent {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  #video-feature {
+    min-height: 400px;
+  }
+
+  #video-content {
+    padding: 64px 20px;
+  }
+}

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab — AXIOM QUANTUM</title>
+  <meta name="description" content="AXIOM QUANTUM Research Lab — published research, algorithm development, and open benchmarking for quantum error correction at scale.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/subpage.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<div class="scan-sweep" aria-hidden="true"></div>
+
+<!-- ─── NAV ──────────────────────────────────────────────────────────────── -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="AXIOM QUANTUM home">
+      <div class="nav-status-dot" aria-hidden="true"></div>
+      <span class="nav-logo-wordmark">AXIOM<span class="accent">·Q</span></span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="platform.html" class="nav-link">Platform</a></li>
+      <li><a href="architecture.html" class="nav-link">Architecture</a></li>
+      <li><a href="lab.html" class="nav-link nav-link--active">Lab</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="contact.html" class="nav-cta-btn">Request Access</a>
+    </div>
+    <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <ul class="nav-links" role="list">
+    <li><a href="platform.html" class="nav-link">Platform</a></li>
+    <li><a href="architecture.html" class="nav-link">Architecture</a></li>
+    <li><a href="lab.html" class="nav-link">Lab</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta-btn">Request Access</a>
+</div>
+<div class="nav-spacer active"></div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var toggle = document.querySelector('.nav-mobile-toggle');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 10) nav.classList.add('nav--scrolled');
+      else nav.classList.remove('nav--scrolled');
+    }, { passive: true });
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen.toString());
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+    }
+  })();
+</script>
+
+<!-- ─── PAGE HEADER ─────────────────────────────────────────────────────── -->
+<header class="page-header">
+  <div class="page-header-ghost" aria-hidden="true">LAB</div>
+  <p class="page-header-eyebrow">RESEARCH DIVISION</p>
+  <h1 class="page-header-title">AXIOM Lab</h1>
+  <p class="page-header-sub">Algorithm Research · Benchmarking · Open Publication</p>
+</header>
+
+<!-- ─── LAB METRICS ──────────────────────────────────────────────────────── -->
+<section class="section content-block--dark" id="lab-metrics" style="padding-block: var(--space-section-pad); padding-inline: var(--grid-padding-left);" aria-label="Lab metrics">
+  <div class="section-scan-trigger" aria-hidden="true"></div>
+  <div class="spec-metrics-grid" id="lab-stats-grid" style="margin-top: 40px;">
+    <div class="spec-metric-cell">
+      <div class="metric-value"><span class="metric-count" data-target="47">0</span></div>
+      <div class="metric-label">Published Papers</div>
+    </div>
+    <div class="spec-metric-cell">
+      <div class="metric-value"><span class="metric-count" data-target="12">0</span></div>
+      <div class="metric-label">Open Benchmarks</div>
+    </div>
+    <div class="spec-metric-cell">
+      <div class="metric-value"><span class="metric-count" data-target="8">0</span></div>
+      <div class="metric-label">Active Algorithms</div>
+    </div>
+    <div class="spec-metric-cell">
+      <div class="metric-value"><span class="metric-count" data-target="3">0</span></div>
+      <div class="metric-label">Quantum Advantage Demonstrations</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESEARCH FOCUS AREAS ────────────────────────────────────────────── -->
+<section class="content-block content-block--surface section" id="research-areas" aria-label="Research focus areas">
+  <p class="section-eyebrow">RESEARCH FOCUS</p>
+  <h2 class="section-heading" style="margin-bottom: 48px;">Active Research Programs</h2>
+
+  <div class="features-grid">
+    <div class="data-grid-rail" id="research-rail" aria-hidden="true"></div>
+    <div class="features-grid-content">
+
+      <article class="feature-card" id="research-vqe">
+        <div class="feature-icon">
+          <svg class="feature-icon-svg" viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M6 34 C10 20 15 10 20 8 C25 6 30 18 34 6"/>
+            <circle cx="20" cy="8" r="2" fill="#fd356e" stroke="none"/>
+            <line x1="6" y1="34" x2="34" y2="34" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Fault-Tolerant VQE</h3>
+        <p class="feature-body">Variational quantum eigensolver algorithms adapted for error-corrected logical qubits. Active research on resource-efficient ansatz design for molecular simulation at pharmaceutical-relevant scale (100+ electron systems).</p>
+      </article>
+
+      <article class="feature-card" id="research-qft">
+        <div class="feature-icon">
+          <svg class="feature-icon-svg" viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="20" r="12"/>
+            <circle cx="20" cy="20" r="6"/>
+            <circle cx="20" cy="20" r="2" fill="#fd356e" stroke="none"/>
+            <line x1="20" y1="8" x2="20" y2="4"/>
+            <line x1="32" y1="20" x2="36" y2="20"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Quantum Fourier Transform</h3>
+        <p class="feature-body">Optimized QFT circuit decompositions for fault-tolerant execution. Current benchmark: 512-qubit QFT in under 10,000 logical gate operations, enabling practical Shor's algorithm variants for cryptanalysis research.</p>
+      </article>
+
+      <article class="feature-card" id="research-simulation">
+        <div class="feature-icon">
+          <svg class="feature-icon-svg" viewBox="0 0 40 40" aria-hidden="true">
+            <rect x="8" y="8" width="10" height="10"/>
+            <rect x="22" y="8" width="10" height="10"/>
+            <rect x="8" y="22" width="10" height="10"/>
+            <rect x="22" y="22" width="10" height="10"/>
+            <line x1="18" y1="13" x2="22" y2="13"/>
+            <line x1="18" y1="27" x2="22" y2="27"/>
+            <line x1="13" y1="18" x2="13" y2="22"/>
+            <line x1="27" y1="18" x2="27" y2="22"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Quantum Simulation</h3>
+        <p class="feature-body">Digital simulation of strongly correlated electron systems using logical qubit arrays. Demonstrated Hubbard model simulation at 64-site resolution, exceeding classical tensor network methods in circuit depth and accuracy.</p>
+      </article>
+
+      <article class="feature-card" id="research-ml">
+        <div class="feature-icon">
+          <svg class="feature-icon-svg" viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="8" r="3"/>
+            <circle cx="10" cy="22" r="3"/>
+            <circle cx="30" cy="22" r="3"/>
+            <circle cx="15" cy="34" r="3"/>
+            <circle cx="25" cy="34" r="3"/>
+            <line x1="20" y1="11" x2="12" y2="19"/>
+            <line x1="20" y1="11" x2="28" y2="19"/>
+            <line x1="12" y1="25" x2="15" y2="31"/>
+            <line x1="28" y1="25" x2="25" y2="31"/>
+            <line x1="13" y1="25" x2="25" y2="31"/>
+            <line x1="27" y1="25" x2="15" y2="31"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Quantum Machine Learning</h3>
+        <p class="feature-body">Quantum kernel methods and parameterized quantum circuits for classification tasks. Benchmarked against classical neural networks on structured datasets: 2.7× speedup in training convergence at 512-feature input dimension.</p>
+      </article>
+
+      <article class="feature-card" id="research-optimization">
+        <div class="feature-icon">
+          <svg class="feature-icon-svg" viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M8 30 L16 16 L24 22 L32 10"/>
+            <circle cx="16" cy="16" r="2.5" fill="#fd356e" stroke="none"/>
+            <circle cx="32" cy="10" r="2.5" fill="#fd356e" stroke="none"/>
+            <line x1="8" y1="34" x2="36" y2="34" stroke-width="0.5"/>
+            <line x1="8" y1="6" x2="8" y2="34" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Combinatorial Optimization</h3>
+        <p class="feature-body">QAOA variants for portfolio optimization, route planning, and supply chain problems. Published benchmark showing 15% improvement over best-in-class classical solvers on QUBO instances with 256 binary variables.</p>
+      </article>
+
+      <article class="feature-card" id="research-benchmarking">
+        <div class="feature-icon">
+          <svg class="feature-icon-svg" viewBox="0 0 40 40" aria-hidden="true">
+            <rect x="6" y="6" width="28" height="28" rx="1"/>
+            <line x1="6" y1="16" x2="34" y2="16"/>
+            <line x1="6" y1="26" x2="34" y2="26"/>
+            <line x1="16" y1="6" x2="16" y2="34"/>
+            <line x1="26" y1="6" x2="26" y2="34"/>
+            <rect x="16" y="16" width="10" height="10" fill="#fd356e" stroke="none" opacity="0.6"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Open Benchmarking Suite</h3>
+        <p class="feature-body">Publicly available circuit benchmarks for quantum volume, randomized benchmarking, cross-entropy benchmarking, and application-specific metrics. Reproducible methodology accepted by the quantum computing community as a reference standard.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── PUBLICATIONS (data-grid table) ─────────────────────────────────── -->
+<section class="content-block content-block--dark section" id="publications" aria-label="Recent publications">
+  <div class="data-grid" id="pub-data-grid">
+    <div class="data-grid-rail" id="pub-rail" aria-hidden="true"></div>
+    <div class="data-grid-content">
+      <p class="section-eyebrow">RECENT PUBLICATIONS</p>
+      <h2 class="section-heading" style="margin-bottom:40px;">Selected Research</h2>
+
+      <div id="pub-list">
+        <article class="pub-entry" id="pub-1" style="padding: 20px 0; border-bottom: 1px solid rgba(44,44,48,0.6);">
+          <div style="display:flex; align-items:flex-start; gap:16px;">
+            <span style="font-family:var(--font-mono); font-size:0.6rem; color:#fd356e; letter-spacing:0.1em; white-space:nowrap; margin-top:3px;">2025 · NATURE</span>
+            <div>
+              <h3 style="font-family:var(--font-mono); font-size:0.8rem; font-weight:600; letter-spacing:0.06em; color:#e8e8ea; margin:0 0 8px; text-transform:uppercase;">Logical Qubit Fidelity Above 99.9% at Distance-7 Surface Code</h3>
+              <p style="font-family:var(--font-body); font-size:0.875rem; color:#acacaf; margin:0; line-height:1.6;">Demonstration of sustained logical qubit operation above the fault-tolerance threshold in a distance-7 surface code array. 100,352 physical qubits. Continuous operation over 72-hour window. Nature Physics, Vol. 21, pp. 847–859.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-entry" id="pub-2" style="padding: 20px 0; border-bottom: 1px solid rgba(44,44,48,0.6);">
+          <div style="display:flex; align-items:flex-start; gap:16px;">
+            <span style="font-family:var(--font-mono); font-size:0.6rem; color:#fd356e; letter-spacing:0.1em; white-space:nowrap; margin-top:3px;">2025 · PRX</span>
+            <div>
+              <h3 style="font-family:var(--font-mono); font-size:0.8rem; font-weight:600; letter-spacing:0.06em; color:#e8e8ea; margin:0 0 8px; text-transform:uppercase;">Sub-Microsecond Classical Feedback for Real-Time QEC</h3>
+              <p style="font-family:var(--font-body); font-size:0.875rem; color:#acacaf; margin:0; line-height:1.6;">FPGA-based decoder achieving 700ns end-to-end latency from syndrome extraction to correction pulse output. Physical Review X Quantum, Vol. 6, 030312.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-entry" id="pub-3" style="padding: 20px 0; border-bottom: 1px solid rgba(44,44,48,0.6);">
+          <div style="display:flex; align-items:flex-start; gap:16px;">
+            <span style="font-family:var(--font-mono); font-size:0.6rem; color:#fd356e; letter-spacing:0.1em; white-space:nowrap; margin-top:3px;">2024 · SCIENCE</span>
+            <div>
+              <h3 style="font-family:var(--font-mono); font-size:0.8rem; font-weight:600; letter-spacing:0.06em; color:#e8e8ea; margin:0 0 8px; text-transform:uppercase;">Quantum Advantage in Molecular Energy Estimation</h3>
+              <p style="font-family:var(--font-body); font-size:0.875rem; color:#acacaf; margin:0; line-height:1.6;">First demonstration of computational quantum advantage in a practically relevant chemistry problem: FeMoco active space simulation at chemical accuracy using 256 logical qubits. Science, Vol. 387, pp. 1204–1211.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-entry" id="pub-4" style="padding: 20px 0;">
+          <div style="display:flex; align-items:flex-start; gap:16px;">
+            <span style="font-family:var(--font-mono); font-size:0.6rem; color:#fd356e; letter-spacing:0.1em; white-space:nowrap; margin-top:3px;">2024 · PRL</span>
+            <div>
+              <h3 style="font-family:var(--font-mono); font-size:0.8rem; font-weight:600; letter-spacing:0.06em; color:#e8e8ea; margin:0 0 8px; text-transform:uppercase;">Leakage Suppression in High-Fidelity Superconducting Qubit Arrays</h3>
+              <p style="font-family:var(--font-body); font-size:0.875rem; color:#acacaf; margin:0; line-height:1.6;">Active leakage reduction protocol maintaining transmon leakage below 0.01% per gate across a 100K qubit array. Physical Review Letters, Vol. 133, 210502.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ──────────────────────────────────────────────────────────────── -->
+<section id="cta-section" aria-label="Research collaboration">
+  <p class="cta-eyebrow">RESEARCH COLLABORATION</p>
+  <h2 class="cta-heading">Partner With AXIOM Lab</h2>
+  <p class="cta-body">Academic institutions and industry research groups can apply for collaborative research access, co-publication agreements, and dedicated QPU time allocations.</p>
+  <div class="cta-btn-group">
+    <a href="contact.html" class="btn-primary">Apply for Research Access</a>
+    <a href="platform.html" class="btn-ghost">Platform Documentation</a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ──────────────────────────────────────────────────────────── -->
+<footer id="site-footer" aria-label="Site footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo">AXIOM<span class="accent">·Q</span></a>
+      <p class="footer-tagline">Error-corrected quantum processing for operational deployment.</p>
+      <div class="footer-status">
+        <div class="footer-status-dot" aria-hidden="true"></div>
+        <span>ALL SYSTEMS OPERATIONAL</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col-heading">Platform</h4>
+      <ul class="footer-links">
+        <li><a href="platform.html">Overview</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="lab.html">Research Lab</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col-heading">Access</h4>
+      <ul class="footer-links">
+        <li><a href="contact.html">Apply for Access</a></li>
+        <li><a href="#">API Documentation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col-heading">Company</h4>
+      <ul class="footer-links">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">© 2025 AXIOM QUANTUM, INC. ALL RIGHTS RESERVED.</span>
+    <span class="footer-coords" aria-hidden="true">LAB · 47 PUBLICATIONS · 12 BENCHMARKS</span>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+var EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+
+// Page header
+gsap.fromTo('.page-header-title', { x: -40, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.35, ease: EASE, delay: 0.15 });
+
+// Lab stats counters
+document.querySelectorAll('.metric-count').forEach(function(el) {
+  var target = parseInt(el.getAttribute('data-target'), 10);
+  var obj = { val: 0 };
+  ScrollTrigger.create({
+    trigger: el.closest('.spec-metric-cell'),
+    start: 'top 80%',
+    once: true,
+    onEnter: function() {
+      gsap.to(obj, {
+        val: target, duration: 1.4, ease: 'power2.out',
+        onUpdate: function() { el.textContent = Math.round(obj.val); }
+      });
+    }
+  });
+});
+
+// Lab stats cells: HUD population
+gsap.fromTo('.spec-metric-cell', { opacity: 0, y: 20 },
+  { opacity: 1, y: 0, duration: 0.18, stagger: 0.07, ease: EASE,
+    scrollTrigger: { trigger: '#lab-metrics', start: 'top 75%', once: true } });
+
+// Research rail + feature cards
+var researchRail = document.getElementById('research-rail');
+if (researchRail) {
+  gsap.fromTo(researchRail, { scaleY: 0, transformOrigin: 'top center' },
+    { scaleY: 1, duration: 0.35, ease: EASE,
+      scrollTrigger: { trigger: '#research-areas', start: 'top 80%', once: true } });
+}
+
+// Feature cards: rotate+rise stagger
+gsap.fromTo('.feature-card',
+  { rotation: 2, y: 35, opacity: 0 },
+  { rotation: 0, y: 0, opacity: 1, duration: 0.35,
+    stagger: { each: 0.1, ease: 'none' },
+    ease: EASE,
+    scrollTrigger: { trigger: '#research-areas', start: 'top 75%', once: true } });
+
+// Publication rail
+var pubRail = document.getElementById('pub-rail');
+if (pubRail) {
+  gsap.fromTo(pubRail, { scaleY: 0, transformOrigin: 'top center' },
+    { scaleY: 1, duration: 0.35, ease: EASE,
+      scrollTrigger: { trigger: '#publications', start: 'top 80%', once: true } });
+}
+
+// Publications: wipe from left
+gsap.fromTo('.pub-entry',
+  { x: -50, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.35,
+    stagger: { each: 0.1, ease: 'none' },
+    ease: EASE,
+    scrollTrigger: { trigger: '#publications', start: 'top 78%', once: true } });
+</script>
+
+</body>
+</html>

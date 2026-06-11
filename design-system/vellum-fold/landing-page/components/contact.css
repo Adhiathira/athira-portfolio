@@ -1,0 +1,826 @@
+/* ============================================================
+   Contact / Commission — Deckle & Thread
+   Book-themed commission page: chapters, volumes, journal lines
+   ============================================================ */
+
+/* ── Shared: section wrapper ── */
+.commission-section {
+  padding: var(--space-section) var(--grid-padding);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── SVG section dividers ── */
+.section-divider {
+  display: block;
+  width: 100%;
+  line-height: 0;
+  overflow: hidden;
+  margin-top: -2px;
+}
+
+.section-divider svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── Decorative: pen nib CSS ornament ── */
+.pen-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: var(--space-2xl);
+}
+
+.pen-ornament::before,
+.pen-ornament::after {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.pen-ornament-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-hero-accent);
+}
+
+/* ── Chapter label (h3 subheading) ── */
+.chapter-label {
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: var(--type-h3-weight);
+  letter-spacing: var(--type-h3-spacing);
+  text-transform: var(--type-h3-transform);
+  line-height: var(--type-h3-line);
+  color: var(--color-muted);
+  margin: 0 0 var(--space-md) 0;
+}
+
+/* ── Section heading (h2) ── */
+.section-heading {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2);
+  font-weight: var(--type-h2-weight);
+  letter-spacing: var(--type-h2-spacing);
+  line-height: var(--type-h2-line);
+  color: var(--color-heading);
+  margin: 0;
+}
+
+/* ============================================================
+   1. HERO — "Begin Your Chapter"
+   ============================================================ */
+#commission-hero {
+  max-height: 15vh;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-page-bg) 100%);
+  padding: var(--space-4xl) var(--grid-padding);
+  position: relative;
+}
+
+#commission-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 28px;
+  background: var(--color-hero-accent);
+}
+
+#hero-content {
+  max-width: 560px;
+}
+
+#hero-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h1);
+  font-weight: var(--type-h1-weight);
+  letter-spacing: var(--type-h1-spacing);
+  line-height: var(--type-h1-line);
+  color: var(--color-heading);
+  margin: 0 0 var(--space-md) 0;
+}
+
+#hero-subtitle {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  font-weight: var(--type-p-weight);
+  line-height: var(--type-p-line);
+  color: var(--color-muted);
+  margin: 0;
+}
+
+/* ============================================================
+   2. HOW IT WORKS — "Chapter I — The Commission Process"
+   ============================================================ */
+#process-section {
+  background: var(--color-page-bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+#process-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+}
+
+#process-header {
+  text-align: center;
+  margin-bottom: var(--space-4xl);
+}
+
+#process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Vertical connecting line */
+#process-steps::before {
+  content: '';
+  position: absolute;
+  left: 25px;
+  top: 26px;
+  bottom: 26px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    var(--color-hero-accent) 0%,
+    var(--color-border) 50%,
+    var(--color-hero-accent) 100%
+  );
+}
+
+.process-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  position: relative;
+}
+
+.step-counter {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--color-heading);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-page-bg);
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.step-content {
+  padding-top: 6px;
+}
+
+.step-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.step-description {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  font-weight: var(--type-p-weight);
+  line-height: var(--type-p-line);
+  color: var(--color-body);
+  margin: 0;
+}
+
+/* ============================================================
+   3. PRICING — "Chapter II — Our Volumes"
+   ============================================================ */
+#pricing-section {
+  background: linear-gradient(180deg, var(--color-cream) 0%, #f0e7d8 100%);
+  perspective: 1200px;
+}
+
+#pricing-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+}
+
+#pricing-header {
+  text-align: center;
+  margin-bottom: var(--space-4xl);
+}
+
+#pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: var(--grid-gap);
+  align-items: stretch;
+}
+
+.volume-card {
+  background: var(--color-page-bg);
+  border: 1px solid var(--color-border);
+  padding: var(--space-3xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  transition: box-shadow var(--hover-transition), transform var(--hover-transition);
+}
+
+.volume-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Featured (center) card */
+.volume-card--featured {
+  border-color: var(--color-hero-accent);
+  box-shadow: 0 4px 24px rgba(232, 168, 124, 0.15);
+  padding-top: var(--space-4xl);
+  padding-bottom: var(--space-4xl);
+}
+
+.volume-card--featured::before {
+  content: 'Recommended';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  font-family: var(--font-subheading);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-page-bg);
+  background: var(--color-hero-accent);
+  padding: 4px 16px;
+  white-space: nowrap;
+}
+
+.volume-number {
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: var(--type-h3-weight);
+  letter-spacing: var(--type-h3-spacing);
+  text-transform: var(--type-h3-transform);
+  color: var(--color-muted);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.volume-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-lg) 0;
+}
+
+.volume-price {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.volume-price-note {
+  font-family: var(--font-paragraph);
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-lg) 0;
+}
+
+.volume-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.volume-features li {
+  font-family: var(--font-paragraph);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--color-body);
+  padding-left: 20px;
+  position: relative;
+}
+
+.volume-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 1px;
+  background: var(--color-hero-accent);
+}
+
+.volume-cta {
+  display: block;
+  width: 100%;
+  margin-top: var(--space-xl);
+  padding: var(--space-cta-v) var(--space-cta-h);
+  font-family: var(--font-button);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-weight);
+  letter-spacing: var(--type-button-spacing);
+  text-transform: var(--type-button-transform);
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid var(--color-cta-secondary-border);
+  background: var(--color-cta-secondary-bg);
+  color: var(--color-cta-secondary-text);
+  cursor: pointer;
+  transition: background-color var(--hover-transition),
+              color var(--hover-transition),
+              border-color var(--hover-transition);
+}
+
+.volume-cta:hover {
+  background: var(--color-cta-primary-bg);
+  color: var(--color-cta-primary-text);
+  border-color: var(--color-cta-primary-border);
+}
+
+.volume-card--featured .volume-cta {
+  background: var(--color-cta-primary-bg);
+  color: var(--color-cta-primary-text);
+  border-color: var(--color-cta-primary-border);
+}
+
+.volume-card--featured .volume-cta:hover {
+  background: transparent;
+  color: var(--color-cta-secondary-text);
+  border-color: var(--color-cta-secondary-border);
+}
+
+/* ============================================================
+   4. CONTACT FORM — "Chapter III — Write to Us"
+   ============================================================ */
+#contact-section {
+  background: var(--color-page-bg);
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+#contact-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--space-4xl);
+  align-items: start;
+}
+
+/* Left: Studio info — styled like a book's title page */
+#studio-info {
+  padding-top: var(--space-lg);
+}
+
+#studio-info-label {
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: var(--type-h3-weight);
+  letter-spacing: var(--type-h3-spacing);
+  text-transform: var(--type-h3-transform);
+  color: var(--color-muted);
+  margin: 0 0 var(--space-lg) 0;
+}
+
+#studio-name-display {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-3xl) 0;
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.studio-detail-group {
+  margin-bottom: var(--space-xl);
+}
+
+.studio-detail-heading {
+  font-family: var(--font-subheading);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.studio-detail-text {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  font-weight: var(--type-p-weight);
+  line-height: var(--type-p-line);
+  color: var(--color-body);
+  margin: 0;
+}
+
+.studio-detail-text a {
+  color: var(--color-body);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+  transition: border-color var(--hover-transition);
+}
+
+.studio-detail-text a:hover {
+  border-color: var(--color-heading);
+}
+
+/* Right: Journal-styled form */
+#contact-form-wrapper {
+  position: relative;
+}
+
+#contact-form-header {
+  margin-bottom: var(--space-xl);
+}
+
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-form-gap);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-form-control-gap);
+}
+
+.form-field label {
+  font-family: var(--font-subheading);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Journal writing-line input: bottom border only */
+.form-field input,
+.form-field select,
+.form-field textarea {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--color-heading);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-input-padding-block) 0;
+  outline: none;
+  transition: border-color var(--hover-transition);
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-bottom-color: var(--color-heading);
+  outline: var(--focus-outline);
+  outline-offset: 4px;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  font-family: var(--font-paragraph);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  opacity: 0.7;
+}
+
+/* Select dropdown arrow */
+.form-field select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23858585' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+  padding-right: 20px;
+}
+
+/* Textarea — journal page lines */
+.form-field textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 2;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    var(--color-border) 31px,
+    var(--color-border) 32px
+  );
+  background-size: 100% 32px;
+  background-position: 0 calc(var(--space-input-padding-block) + 1px);
+  border-bottom: none;
+  border-left: 1px solid rgba(232, 168, 124, 0.3);
+  padding-left: var(--space-md);
+}
+
+.form-field textarea:focus {
+  border-bottom: none;
+  border-left-color: var(--color-hero-accent);
+}
+
+/* Submit button */
+#submit-btn {
+  align-self: flex-start;
+  padding: var(--space-cta-v) var(--space-3xl);
+  font-family: var(--font-button);
+  font-size: var(--type-button);
+  font-weight: var(--type-button-weight);
+  letter-spacing: var(--type-button-spacing);
+  text-transform: var(--type-button-transform);
+  background: var(--color-cta-primary-bg);
+  color: var(--color-cta-primary-text);
+  border: 1px solid var(--color-cta-primary-border);
+  cursor: pointer;
+  transition: background-color var(--hover-transition),
+              color var(--hover-transition),
+              transform 0.2s ease;
+  margin-top: var(--space-md);
+}
+
+#submit-btn:hover {
+  background: transparent;
+  color: var(--color-cta-secondary-text);
+}
+
+#submit-btn:active {
+  transform: translateY(1px);
+}
+
+#submit-btn:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 4px;
+}
+
+/* ============================================================
+   5. COLOPHON FOOTER
+   ============================================================ */
+#colophon-footer {
+  background: linear-gradient(180deg, var(--color-section-divider) 0%, var(--color-cream) 100%);
+  padding: var(--space-4xl) var(--grid-padding);
+  text-align: center;
+  position: relative;
+}
+
+#colophon-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: var(--color-hero-accent);
+}
+
+#colophon-inner {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+#colophon-label {
+  font-family: var(--font-subheading);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-xl) 0;
+}
+
+#colophon-studio-name {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-lg) 0;
+}
+
+#colophon-address {
+  font-family: var(--font-paragraph);
+  font-size: 0.875rem;
+  font-weight: var(--type-p-weight);
+  line-height: 1.8;
+  color: var(--color-muted);
+  font-style: normal;
+  margin: 0 0 var(--space-xl) 0;
+}
+
+#colophon-divider {
+  width: 24px;
+  height: 1px;
+  background: var(--color-border);
+  margin: 0 auto var(--space-xl) auto;
+}
+
+#colophon-printed {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-lg) 0;
+}
+
+#colophon-copyright {
+  font-family: var(--font-paragraph);
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin: 0;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   3D Page-flip perspective container
+   ============================================================ */
+.page-flip-wrapper {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+/* Paper-curl shadow on divider edges */
+.paper-curl-shadow {
+  position: relative;
+}
+
+.paper-curl-shadow::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 5%;
+  right: 5%;
+  height: 8px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.06) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ============================================================
+   INK decorative elements (CSS-only)
+   ============================================================ */
+.ink-drop {
+  width: 4px;
+  height: 4px;
+  background: var(--color-heading);
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 8px;
+  opacity: 0.3;
+}
+
+.ink-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-border) 20%,
+    var(--color-border) 80%,
+    transparent 100%
+  );
+  margin: var(--space-xl) 0;
+}
+
+/* ============================================================
+   RESPONSIVE — Tablet (max-width: 900px)
+   ============================================================ */
+@media (max-width: 900px) {
+  .commission-section {
+    padding: var(--space-4xl) var(--space-lg);
+  }
+
+  #commission-hero {
+    padding: var(--space-3xl) var(--space-lg);
+  }
+
+  #pricing-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  .volume-card:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  #contact-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — Mobile (max-width: 600px)
+   ============================================================ */
+@media (max-width: 600px) {
+  .commission-section {
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  #commission-hero {
+    max-height: none;
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  #hero-title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+
+  /* Process steps */
+  #process-steps::before {
+    left: 20px;
+  }
+
+  .step-counter {
+    width: 42px;
+    height: 42px;
+    font-size: 1.125rem;
+  }
+
+  .step-title {
+    font-size: 1.125rem;
+  }
+
+  /* Pricing: single column */
+  #pricing-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .volume-card:nth-child(3) {
+    max-width: none;
+  }
+
+  .volume-card--featured {
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  /* Contact: stack */
+  #contact-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-3xl);
+  }
+
+  #studio-info {
+    padding-top: 0;
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  #submit-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Colophon */
+  #colophon-footer {
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  #colophon-studio-name {
+    font-size: 1.375rem;
+  }
+}

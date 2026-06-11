@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Halcyon Gauge Fellowship Programme — Annual nomination for working oceanographers. Access to 847 precision hydrographic instruments.">
+  <title>Fellowship — Halcyon Gauge</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <style>
+    .container { max-width: var(--grid-max-width); margin-inline: auto; padding-inline: var(--grid-margin); }
+    .container--narrow { max-width: var(--grid-narrow-max); margin-inline: auto; padding-inline: var(--grid-margin); }
+
+    #nav-spacer { height: var(--space-nav-height); }
+
+    /* ── Page header (action archetype: compact) ── */
+    #fellowship-header {
+      padding: var(--space-5) 0;
+      background: linear-gradient(180deg, var(--color-dark-surface) 0%, #2a2420 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #fellowship-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--color-accent), transparent 60%);
+    }
+
+    #fellowship-label {
+      font-family: var(--font-label);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.45);
+      margin: 0 0 var(--space-2) 0;
+    }
+
+    #fellowship-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: var(--weight-light);
+      line-height: 1.1;
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-dark-text);
+      margin: 0 0 var(--space-3) 0;
+    }
+
+    #fellowship-subtitle {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      color: rgba(245, 240, 232, 0.6);
+      max-width: 560px;
+      line-height: var(--leading-body);
+      margin: 0;
+    }
+
+    /* ── Terms section ── */
+    #terms-section {
+      padding: var(--space-6) 0;
+      background: var(--color-page-bg);
+    }
+
+    #terms-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: var(--weight-regular);
+      font-style: italic;
+      color: var(--color-heading);
+      margin: 0 0 var(--space-5) 0;
+    }
+
+    #terms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+
+    .term-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-radius);
+      padding: var(--space-4);
+      position: relative;
+    }
+
+    .term-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--color-accent), transparent);
+    }
+
+    .term-number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: var(--weight-light);
+      color: var(--color-accent);
+      opacity: 0.4;
+      line-height: 1;
+      margin: 0 0 var(--space-3) 0;
+    }
+
+    .term-label {
+      font-family: var(--font-label);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin: 0 0 var(--space-2) 0;
+    }
+
+    .term-value {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: var(--weight-regular);
+      font-style: italic;
+      color: var(--color-heading);
+      margin: 0 0 var(--space-2) 0;
+    }
+
+    .term-desc {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── Eligibility section ── */
+    #eligibility-section {
+      padding: var(--space-6) 0;
+      background: var(--color-surface);
+    }
+
+    #eligibility-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: var(--weight-regular);
+      font-style: italic;
+      color: var(--color-heading);
+      margin: 0 0 var(--space-3) 0;
+    }
+
+    .eligibility-list {
+      list-style: none;
+      margin: 0 0 var(--space-5) 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .eligibility-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: var(--space-3);
+      align-items: baseline;
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .eligibility-item:last-child {
+      border-bottom: none;
+    }
+
+    .eligibility-marker {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--color-accent);
+      line-height: 1.7;
+    }
+
+    .eligibility-text {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-body);
+      margin: 0;
+    }
+
+    /* ── Application form ── */
+    #application-section {
+      padding: var(--space-6) 0 var(--space-7) 0;
+      background: var(--color-page-bg);
+    }
+
+    #application-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: var(--weight-regular);
+      font-style: italic;
+      color: var(--color-heading);
+      margin: 0 0 var(--space-2) 0;
+    }
+
+    #application-sub {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      color: var(--color-text-secondary);
+      margin: 0 0 var(--space-5) 0;
+      line-height: var(--leading-body);
+    }
+
+    #application-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .form-label {
+      font-family: var(--font-label);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--color-body-text);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--btn-radius);
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+      width: 100%;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(184, 92, 42, 0.12);
+    }
+
+    .form-textarea { resize: vertical; min-height: 160px; }
+
+    .btn-primary {
+      display: inline-block;
+      align-self: flex-start;
+      font-family: var(--font-ui);
+      font-size: var(--type-button);
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.04em;
+      color: var(--color-page-bg);
+      background-color: var(--color-accent);
+      border: 1px solid var(--color-accent);
+      border-radius: var(--btn-radius);
+      padding: 14px 36px;
+      text-decoration: none;
+      transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-page-bg);
+      color: var(--color-accent);
+    }
+
+    /* Footer */
+    #site-footer {
+      background: var(--color-dark-surface);
+      border-top: 1px solid rgba(245, 240, 232, 0.1);
+      padding: var(--space-5) 0;
+    }
+    #footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    #footer-copyright { font-family: var(--font-body); font-size: 0.8125rem; color: rgba(245, 240, 232, 0.35); }
+    .footer-link { font-family: var(--font-body); font-size: 0.875rem; color: rgba(245, 240, 232, 0.5); text-decoration: none; transition: color var(--duration-fast) ease; }
+    .footer-link:hover { color: var(--color-dark-text); }
+    #footer-nav-links { display: flex; gap: var(--space-4); }
+
+    @media (max-width: 900px) {
+      #terms-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .container, .container--narrow { padding-inline: 1.5rem; }
+      .btn-primary { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-logo">Halcyon Gauge</a>
+    <ul class="nav-links" role="list">
+      <li><a href="archive.html" class="nav-link">Archive</a></li>
+      <li><a href="collection.html" class="nav-link">Collection</a></li>
+      <li><a href="fellowship.html" class="nav-link nav-link--active" aria-current="page">Fellowship</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+    <a href="archive.html" class="nav-mobile-link">Archive</a>
+    <a href="collection.html" class="nav-mobile-link">Collection</a>
+    <a href="fellowship.html" class="nav-mobile-link">Fellowship</a>
+    <a href="about.html" class="nav-mobile-link">About</a>
+  </div>
+
+  <div id="nav-spacer"></div>
+
+  <header id="fellowship-header">
+    <div class="container">
+      <p id="fellowship-label">Annual Programme</p>
+      <h1 id="fellowship-title">The Fellowship</h1>
+      <p id="fellowship-subtitle">Access to the full Halcyon Gauge collection for working oceanographers. Fourteen fellowships active at any given time.</p>
+    </div>
+  </header>
+
+  <!-- Terms of fellowship -->
+  <section id="terms-section">
+    <div class="container--narrow">
+      <h2 id="terms-heading">What a fellowship provides.</h2>
+      <div id="terms-grid">
+        <div class="term-card">
+          <div class="term-number">3</div>
+          <p class="term-label">Maximum Concurrent Loans</p>
+          <p class="term-value">Three instruments</p>
+          <p class="term-desc">Fellows may borrow up to three instruments simultaneously from the archive collection.</p>
+        </div>
+        <div class="term-card">
+          <div class="term-number">18</div>
+          <p class="term-label">Loan Duration</p>
+          <p class="term-value">Eighteen months</p>
+          <p class="term-desc">Each loan period runs for up to eighteen months, renewable once with current-fellow endorsement.</p>
+        </div>
+        <div class="term-card">
+          <div class="term-number">847</div>
+          <p class="term-label">Objects Available</p>
+          <p class="term-value">Full collection</p>
+          <p class="term-desc">All instruments catalogued are eligible for loan. Condition grade is disclosed at the time of request.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Eligibility -->
+  <section id="eligibility-section">
+    <div class="container--narrow">
+      <h2 id="eligibility-heading">Eligibility criteria.</h2>
+      <ul class="eligibility-list" aria-label="Eligibility requirements">
+        <li class="eligibility-item">
+          <span class="eligibility-marker">i.</span>
+          <p class="eligibility-text">Active affiliation with an oceanographic research programme at the time of application and throughout the fellowship period.</p>
+        </li>
+        <li class="eligibility-item">
+          <span class="eligibility-marker">ii.</span>
+          <p class="eligibility-text">Nomination by a current Halcyon Gauge fellow or by a department head at an affiliated institution. Self-nomination is not accepted.</p>
+        </li>
+        <li class="eligibility-item">
+          <span class="eligibility-marker">iii.</span>
+          <p class="eligibility-text">Demonstrated need for analogue measurement instrumentation in active fieldwork. The fellowship is for researchers who will use the instruments, not study them.</p>
+        </li>
+        <li class="eligibility-item">
+          <span class="eligibility-marker">iv.</span>
+          <p class="eligibility-text">Willingness to return all instruments in the condition received, and to document their use in the archive ledger upon return.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Application form -->
+  <section id="application-section">
+    <div class="container--narrow">
+      <h2 id="application-heading">Application for nomination.</h2>
+      <p id="application-sub">This form reaches the archive committee. Applications are reviewed quarterly. You will receive a written response by post.</p>
+
+      <form id="application-form" action="#" method="post" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="applicant-name">Full Name</label>
+            <input class="form-input" type="text" id="applicant-name" name="name" placeholder="Dr. Marie Vane" required autocomplete="name">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="applicant-email">Email Address</label>
+            <input class="form-input" type="email" id="applicant-email" name="email" placeholder="m.vane@institution.edu" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="applicant-institution">Affiliated Institution</label>
+            <input class="form-input" type="text" id="applicant-institution" name="institution" placeholder="Institut océanographique, Monaco" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="applicant-nominator">Nominator (Current Fellow or Department Head)</label>
+            <input class="form-input" type="text" id="applicant-nominator" name="nominator" placeholder="Prof. E. Castañeda">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="applicant-research">Research Programme Description</label>
+          <textarea class="form-textarea" id="applicant-research" name="research" placeholder="Please describe the active oceanographic research programme you are affiliated with, and the specific instrumentation requirements that would be addressed by a fellowship…" required></textarea>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="applicant-instruments">Instruments of Interest (optional)</label>
+          <input class="form-input" type="text" id="applicant-instruments" name="instruments" placeholder="e.g. HG-0012 Kelvin Sextant Series, HG-0201 Reversing Thermometer Set">
+        </div>
+
+        <div>
+          <button type="submit" class="btn-primary">Submit Application</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer id="site-footer">
+    <div class="container">
+      <div id="footer-bottom">
+        <span id="footer-copyright">© 1962–2026 Halcyon Gauge Archive, Punta Carreiro, Galicia.</span>
+        <nav id="footer-nav-links" aria-label="Footer navigation">
+          <a href="archive.html" class="footer-link">Archive</a>
+          <a href="collection.html" class="footer-link">Collection</a>
+          <a href="about.html" class="footer-link">About</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Nav
+    const nav = document.getElementById('site-nav');
+    const toggle = nav.querySelector('.nav-mobile-toggle');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', open);
+      mobileMenu.classList.toggle('is-open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    // Header
+    gsap.from('#fellowship-title', { y: 30, duration: 0.8, delay: 0.2, ease: 'power3.out' });
+    gsap.from('#fellowship-subtitle', { y: 20, duration: 0.6, delay: 0.5, ease: 'power3.out' });
+
+    // Term cards
+    gsap.from('.term-card', {
+      y: 50,
+      stagger: 0.12,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '#terms-grid', start: 'top 80%', once: true }
+    });
+
+    // Eligibility items
+    gsap.from('.eligibility-item', {
+      x: -40,
+      stagger: 0.09,
+      duration: 0.7,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '.eligibility-list', start: 'top 80%', once: true }
+    });
+
+    // Form fields
+    gsap.from('.form-field', {
+      y: 20,
+      stagger: 0.06,
+      duration: 0.6,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '#application-form', start: 'top 80%', once: true }
+    });
+
+    // Form submit feedback
+    document.getElementById('application-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-primary');
+      btn.textContent = 'Application received.';
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+    });
+  </script>
+</body>
+</html>

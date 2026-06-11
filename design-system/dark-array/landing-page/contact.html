@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Access — AXIOM QUANTUM</title>
+  <meta name="description" content="Apply for access to the AXIOM QUANTUM error-corrected quantum processing platform. Qualified organizations can request dedicated logical qubit allocation.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/subpage.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* Contact-specific: minimal page header */
+    .page-header.contact-header {
+      min-height: 15vh;
+      max-height: 180px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="scan-sweep" aria-hidden="true"></div>
+
+<!-- ─── NAV ──────────────────────────────────────────────────────────────── -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="AXIOM QUANTUM home">
+      <div class="nav-status-dot" aria-hidden="true"></div>
+      <span class="nav-logo-wordmark">AXIOM<span class="accent">·Q</span></span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="platform.html" class="nav-link">Platform</a></li>
+      <li><a href="architecture.html" class="nav-link">Architecture</a></li>
+      <li><a href="lab.html" class="nav-link">Lab</a></li>
+      <li><a href="contact.html" class="nav-link nav-link--active">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="contact.html" class="nav-cta-btn">Request Access</a>
+    </div>
+    <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <ul class="nav-links" role="list">
+    <li><a href="platform.html" class="nav-link">Platform</a></li>
+    <li><a href="architecture.html" class="nav-link">Architecture</a></li>
+    <li><a href="lab.html" class="nav-link">Lab</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta-btn">Request Access</a>
+</div>
+<div class="nav-spacer active"></div>
+<script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var toggle = document.querySelector('.nav-mobile-toggle');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 10) nav.classList.add('nav--scrolled');
+      else nav.classList.remove('nav--scrolled');
+    }, { passive: true });
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var isOpen = nav.classList.toggle('nav-mobile-open');
+        mobileMenu.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen.toString());
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+    }
+  })();
+</script>
+
+<!-- ─── PAGE HEADER ─────────────────────────────────────────────────────── -->
+<header class="page-header contact-header">
+  <div class="page-header-ghost" aria-hidden="true">ACCESS</div>
+  <p class="page-header-eyebrow">OPERATIONAL ACCESS PROGRAM</p>
+  <h1 class="page-header-title">Request Access</h1>
+</header>
+
+<!-- ─── CONTACT MAIN ──────────────────────────────────────────────────────── -->
+<section class="content-block content-block--surface section" id="contact-main" aria-label="Access request form">
+  <div class="split-layout" id="contact-split" style="grid-template-columns: 1.2fr 1fr;">
+    <!-- LEFT: Form -->
+    <div id="contact-form-wrapper">
+      <div class="data-grid" id="form-data-grid">
+        <div class="data-grid-rail" id="form-rail" aria-hidden="true"></div>
+        <div class="data-grid-content">
+          <p class="section-eyebrow">ACCESS APPLICATION</p>
+          <h2 class="section-heading" style="font-size: clamp(1.5rem, 2.5vw, 2.2rem); margin-bottom: 32px;">Submit Application</h2>
+
+          <form class="contact-form" id="access-form" action="#" method="post" novalidate>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label" for="fname">First Name</label>
+                <input class="form-input" type="text" id="fname" name="first_name" placeholder="Ada" autocomplete="given-name" required>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="lname">Last Name</label>
+                <input class="form-input" type="text" id="lname" name="last_name" placeholder="Lovelace" autocomplete="family-name" required>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="email">Work Email</label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="ada@institution.edu" autocomplete="email" required>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="org">Organization</label>
+              <input class="form-input" type="text" id="org" name="organization" placeholder="MIT Lincoln Laboratory" autocomplete="organization" required>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="use_type">Use Case Category</label>
+              <select class="form-select form-input" id="use_type" name="use_type" required>
+                <option value="" disabled selected>Select category</option>
+                <option value="pharma">Pharmaceutical / Drug Discovery</option>
+                <option value="finance">Financial Services / Portfolio Optimization</option>
+                <option value="defense">Defense / National Security</option>
+                <option value="academic">Academic / University Research</option>
+                <option value="quantum_research">Quantum Computing Research</option>
+                <option value="logistics">Logistics / Supply Chain</option>
+                <option value="materials">Materials Science</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="qubit_req">Required Logical Qubit Allocation</label>
+              <select class="form-select form-input" id="qubit_req" name="qubit_req">
+                <option value="" disabled selected>Select allocation tier</option>
+                <option value="tier_1">Tier 1 — 32 logical qubits (evaluation)</option>
+                <option value="tier_2">Tier 2 — 128 logical qubits (development)</option>
+                <option value="tier_3">Tier 3 — 512 logical qubits (production)</option>
+                <option value="tier_4">Tier 4 — 1,024 logical qubits (full platform)</option>
+                <option value="enterprise">Enterprise — Custom allocation + SLA</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="use_case">Describe Your Use Case</label>
+              <textarea class="form-textarea" id="use_case" name="use_case" placeholder="Briefly describe the computational problem you intend to run on AXIOM QUANTUM and the expected circuit depth and shot count requirements." rows="5"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="timeline">Anticipated Start Timeline</label>
+              <select class="form-select form-input" id="timeline" name="timeline">
+                <option value="" disabled selected>Select timeline</option>
+                <option value="immediate">Immediate (within 30 days)</option>
+                <option value="q1">Next quarter</option>
+                <option value="h1">Within 6 months</option>
+                <option value="h2">6–12 months</option>
+                <option value="planning">Planning phase only</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-primary" id="form-submit" style="width: 100%; margin-top: 8px; cursor: pointer; border: none; font-size: 0.8rem; padding: 12px 20px;">
+              SUBMIT APPLICATION
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Context + HUD readouts -->
+    <div id="contact-context">
+      <p class="section-eyebrow">ACCESS PROGRAM</p>
+      <h3 style="font-family:var(--font-display); font-size:1.2rem; font-weight:700; letter-spacing:var(--ls-heading); text-transform:uppercase; color:var(--color-heading); margin-bottom:20px; line-height:1.2;">Who Can Apply</h3>
+      <p style="font-family:var(--font-body); font-size:0.9rem; color:#acacaf; line-height:1.7; margin-bottom:32px;">
+        AXIOM QUANTUM accepts applications from qualified organizations with active quantum computing programs. We prioritize applicants with well-defined computational problems at scale, quantum software expertise on their team, and commitment to publishing benchmark results.
+      </p>
+
+      <!-- HUD readout: current availability -->
+      <div style="margin-bottom: 32px;">
+        <div class="data-grid">
+          <div class="data-grid-rail" id="avail-rail" aria-hidden="true"></div>
+          <div class="data-grid-content">
+            <p style="font-family:var(--font-mono); font-size:0.6rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#fd356e; margin-bottom:16px;">CURRENT AVAILABILITY</p>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(44,44,48,0.5);">
+                <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.06em; color:#acacaf;">TIER 1 (32 LQ)</span>
+                <span style="font-family:var(--font-mono); font-size:0.7rem; color:#4ade80; letter-spacing:0.04em;">AVAILABLE</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(44,44,48,0.5);">
+                <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.06em; color:#acacaf;">TIER 2 (128 LQ)</span>
+                <span style="font-family:var(--font-mono); font-size:0.7rem; color:#4ade80; letter-spacing:0.04em;">AVAILABLE</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(44,44,48,0.5);">
+                <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.06em; color:#acacaf;">TIER 3 (512 LQ)</span>
+                <span style="font-family:var(--font-mono); font-size:0.7rem; color:#fb923c; letter-spacing:0.04em;">LIMITED</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0;">
+                <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.06em; color:#acacaf;">TIER 4 (1024 LQ)</span>
+                <span style="font-family:var(--font-mono); font-size:0.7rem; color:#f87171; letter-spacing:0.04em;">WAITLIST</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Response time -->
+      <div style="background: rgba(44,44,48,0.3); border: 1px solid rgba(44,44,48,0.6); padding: 20px;">
+        <p style="font-family:var(--font-mono); font-size:0.6rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:#fd356e; margin-bottom:10px;">APPLICATION PROCESS</p>
+        <ol style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; counter-reset:process-step;">
+          <li style="font-family:var(--font-body); font-size:0.875rem; color:#acacaf; display:flex; gap:12px; align-items:flex-start;">
+            <span style="font-family:var(--font-mono); font-size:0.6rem; color:#fd356e; min-width:24px; margin-top:2px;">01</span>
+            <span>Submit application (this form)</span>
+          </li>
+          <li style="font-family:var(--font-body); font-size:0.875rem; color:#acacaf; display:flex; gap:12px; align-items:flex-start;">
+            <span style="font-family:var(--font-mono); font-size:0.6rem; color:#fd356e; min-width:24px; margin-top:2px;">02</span>
+            <span>Technical review by our systems team (5 business days)</span>
+          </li>
+          <li style="font-family:var(--font-body); font-size:0.875rem; color:#acacaf; display:flex; gap:12px; align-items:flex-start;">
+            <span style="font-family:var(--font-mono); font-size:0.6rem; color:#fd356e; min-width:24px; margin-top:2px;">03</span>
+            <span>Technical scoping call (1 hour)</span>
+          </li>
+          <li style="font-family:var(--font-body); font-size:0.875rem; color:#acacaf; display:flex; gap:12px; align-items:flex-start;">
+            <span style="font-family:var(--font-mono); font-size:0.6rem; color:#fd356e; min-width:24px; margin-top:2px;">04</span>
+            <span>Access provisioning + onboarding documentation</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ──────────────────────────────────────────────────────────── -->
+<footer id="site-footer" aria-label="Site footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo">AXIOM<span class="accent">·Q</span></a>
+      <p class="footer-tagline">Error-corrected quantum processing for operational deployment.</p>
+      <div class="footer-status">
+        <div class="footer-status-dot" aria-hidden="true"></div>
+        <span>ALL SYSTEMS OPERATIONAL</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col-heading">Platform</h4>
+      <ul class="footer-links">
+        <li><a href="platform.html">Overview</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="lab.html">Research Lab</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col-heading">Access</h4>
+      <ul class="footer-links">
+        <li><a href="contact.html">Apply for Access</a></li>
+        <li><a href="#">API Documentation</a></li>
+        <li><a href="#">Python SDK</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col-heading">Company</h4>
+      <ul class="footer-links">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">© 2025 AXIOM QUANTUM, INC. ALL RIGHTS RESERVED.</span>
+    <span class="footer-coords" aria-hidden="true">ACCESS PROGRAM · OPEN NOW</span>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+var EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+
+// Page header
+gsap.fromTo('.page-header-title', { x: -40, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.35, ease: EASE, delay: 0.1 });
+
+// Form rail
+var formRail = document.getElementById('form-rail');
+if (formRail) {
+  gsap.fromTo(formRail, { scaleY: 0, transformOrigin: 'top center' },
+    { scaleY: 1, duration: 0.35, ease: EASE, delay: 0.2 });
+}
+
+// Availability rail
+var availRail = document.getElementById('avail-rail');
+if (availRail) {
+  gsap.fromTo(availRail, { scaleY: 0, transformOrigin: 'top center' },
+    { scaleY: 1, duration: 0.35, ease: EASE,
+      scrollTrigger: { trigger: '#contact-main', start: 'top 75%', once: true } });
+}
+
+// Form fields: y stagger reveal
+gsap.fromTo('.form-field',
+  { y: 20, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.18,
+    stagger: { each: 0.06, ease: 'none' },
+    ease: EASE,
+    delay: 0.3 });
+
+// Context right column: x sweep from right
+gsap.fromTo('#contact-context',
+  { x: 50, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.35, ease: EASE, delay: 0.25 });
+
+// Submit button elastic hover
+var submitBtn = document.getElementById('form-submit');
+if (submitBtn) {
+  submitBtn.addEventListener('mouseenter', function() {
+    gsap.to(submitBtn, { scale: 1.02, duration: 0.07, ease: EASE });
+  });
+  submitBtn.addEventListener('mouseleave', function() {
+    gsap.to(submitBtn, { scale: 1, duration: 0.11, ease: EASE });
+  });
+}
+
+// Form submit handler
+var form = document.getElementById('access-form');
+if (form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('form-submit');
+    if (btn) {
+      btn.textContent = 'APPLICATION RECEIVED';
+      btn.style.background = '#2c2c30';
+      btn.style.borderColor = '#acacaf';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+  });
+}
+</script>
+
+</body>
+</html>

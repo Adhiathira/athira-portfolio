@@ -1,0 +1,185 @@
+/* ============================================================
+   Science Hero — Boreal Haze / SPECTRA
+   Full-viewport aurora depth hero, CSS-only blobs, no images
+   ============================================================ */
+
+#science-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #161d25;
+  padding-top: 68px; /* nav height clearance */
+}
+
+/* ── Aurora gradient base ── */
+#science-hero-aurora-base {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(33, 243, 182, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 60%, rgba(146, 72, 228, 0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 40% at 50% 80%, rgba(226, 255, 101, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #0d1219 0%, #161d25 40%, #1a1030 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Morphing blob 1 — teal ── */
+#science-blob-1 {
+  position: absolute;
+  width: 700px;
+  height: 500px;
+  top: -10%;
+  left: -15%;
+  background: radial-gradient(ellipse, rgba(33, 243, 182, 0.22) 0%, rgba(33, 243, 182, 0.06) 50%, transparent 75%);
+  filter: blur(40px);
+  animation: blobMorph 18s ease-in-out infinite, glowPulse 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Morphing blob 2 — violet ── */
+#science-blob-2 {
+  position: absolute;
+  width: 600px;
+  height: 500px;
+  top: 20%;
+  right: -10%;
+  background: radial-gradient(ellipse, rgba(146, 72, 228, 0.20) 0%, rgba(146, 72, 228, 0.06) 50%, transparent 75%);
+  filter: blur(50px);
+  animation: blobMorph 22s ease-in-out infinite reverse, glowPulse 10s ease-in-out 2s infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Morphing blob 3 — lime accent ── */
+#science-blob-3 {
+  position: absolute;
+  width: 500px;
+  height: 400px;
+  bottom: -5%;
+  left: 35%;
+  background: radial-gradient(ellipse, rgba(226, 255, 101, 0.10) 0%, rgba(226, 255, 101, 0.03) 50%, transparent 75%);
+  filter: blur(60px);
+  animation: blobMorph 26s ease-in-out 4s infinite, auroraBand 14s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Subtle star-field noise overlay ── */
+#science-hero-noise {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 10%, rgba(255,255,255,0.18) 0%, transparent 100%),
+    radial-gradient(1px 1px at 72% 35%, rgba(255,255,255,0.22) 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 15%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 65%, rgba(255,255,255,0.12) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.20) 0%, transparent 100%),
+    radial-gradient(1px 1px at 5% 85%, rgba(255,255,255,0.18) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Content ── */
+#science-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 960px;
+  padding: 0 32px;
+}
+
+#science-hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+  margin: 0 0 28px 0;
+  display: block;
+}
+
+#science-hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 8vw, 120px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.0;
+  color: #ffffff;
+  margin: 0 0 32px 0;
+  animation: auroraGlow 8s ease-in-out infinite;
+}
+
+#science-hero-subheadline {
+  font-family: var(--font-body);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--color-muted-text);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+#science-hero-subheadline .word-teal {
+  color: var(--color-accent-teal);
+  font-weight: 500;
+}
+
+#science-hero-subheadline .word-violet {
+  color: var(--color-accent-violet);
+  font-weight: 500;
+}
+
+#science-hero-subheadline .word-lime {
+  color: var(--color-primary-action);
+  font-weight: 500;
+}
+
+/* ── Bottom gradient vignette ── */
+#science-hero-vignette {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, #161d25);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Wave divider ── */
+#science-hero-wave {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #science-hero-headline {
+    font-size: clamp(48px, 9vw, 80px);
+  }
+  #science-blob-1 { width: 450px; height: 350px; }
+  #science-blob-2 { width: 400px; height: 330px; }
+}
+
+@media (max-width: 600px) {
+  #science-hero-content {
+    padding: 0 20px;
+  }
+  #science-hero-headline {
+    font-size: clamp(40px, 12vw, 64px);
+  }
+  #science-hero-subheadline {
+    font-size: 17px;
+  }
+}

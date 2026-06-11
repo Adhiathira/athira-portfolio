@@ -1,0 +1,443 @@
+/* ─── HERO — dark-array full-viewport HUD initialization ─────────────────── */
+
+/* ─── Scan-line overlay (global — applied to body) ─────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.04) 2px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: multiply;
+}
+
+/* ─── Scan-line sweep animation ─────────────────────────────────── */
+.scan-sweep {
+  position: fixed;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(253, 53, 110, 0.4),
+    rgba(253, 53, 110, 0.15),
+    transparent
+  );
+  z-index: 9998;
+  pointer-events: none;
+  animation: scanLine 8s linear infinite;
+  opacity: 0;
+}
+
+/* CSS scanLine keyframe from motion.json */
+@keyframes scanLine {
+  0% { transform: translateY(-100%); opacity: 0.8; }
+  5% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* ─── Hero section ─────────────────────────────────── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  background: var(--color-hero-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 44px; /* nav height compensation */
+  padding-left: var(--grid-padding-left);
+  padding-right: var(--grid-padding-right);
+  overflow: hidden;
+}
+
+/* Circuit trace SVG background */
+#hero-bg-circuit {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Hex grid overlay */
+#hero-bg-hex {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ambient radial gradient center spotlight */
+#hero::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120vw;
+  height: 120vh;
+  background: radial-gradient(ellipse at center, rgba(253, 53, 110, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── HUD coordinate readout (top left corner) ─────────────────────────────── */
+#hero-hud-coords {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgba(253, 53, 110, 0.5);
+  z-index: 10;
+  line-height: 1.8;
+  pointer-events: none;
+}
+
+#hero-hud-coords::before {
+  content: '[SYS]';
+  display: block;
+  color: rgba(253, 53, 110, 0.3);
+  font-size: 0.55rem;
+  margin-bottom: 4px;
+}
+
+/* ─── HUD status bar (bottom of hero) ─────────────────────────────── */
+#hero-hud-status {
+  position: absolute;
+  bottom: 32px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: rgba(172, 172, 175, 0.5);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hud-status-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-status-indicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fd356e;
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.hud-status-indicator.offline {
+  background: #acacaf;
+  animation: none;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px rgba(253, 53, 110, 0.8); }
+  50% { opacity: 0.4; box-shadow: 0 0 2px rgba(253, 53, 110, 0.3); }
+}
+
+/* ─── Progress bar HUD ─────────────────────────────────── */
+.hud-progress-bar {
+  width: 80px;
+  height: 2px;
+  background: rgba(172, 172, 175, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.hud-progress-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: #fd356e;
+  animation: progressScan 3s ease-in-out infinite;
+}
+
+@keyframes progressScan {
+  0% { width: 0%; opacity: 1; }
+  70% { width: 100%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
+}
+
+/* ─── Hero content wrapper ─────────────────────────────────── */
+#hero-content {
+  position: relative;
+  z-index: 5;
+  max-width: 960px;
+  padding-top: var(--space-20);
+  padding-bottom: var(--space-20);
+}
+
+/* ─── Hero eyebrow label ─────────────────────────────────── */
+#hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fd356e;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+#hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: #fd356e;
+}
+
+/* ─── Hero title ─────────────────────────────────── */
+#hero-title {
+  font-family: var(--font-display);
+  font-size: var(--type-hero);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-display);
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0 0 8px 0;
+  position: relative;
+}
+
+#hero-title .title-accent {
+  color: #fd356e;
+  position: relative;
+  display: inline-block;
+}
+
+/* Glitch effect keyframes */
+@keyframes glitchShift {
+  0% { clip-path: inset(0 0 100% 0); transform: translateX(0); }
+  20% { clip-path: inset(20% 0 60% 0); transform: translateX(-4px); }
+  40% { clip-path: inset(50% 0 30% 0); transform: translateX(4px); }
+  60% { clip-path: inset(10% 0 80% 0); transform: translateX(-2px); }
+  80% { clip-path: inset(80% 0 5% 0); transform: translateX(2px); }
+  100% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+}
+
+.glitch-target {
+  position: relative;
+}
+
+.glitch-target::before,
+.glitch-target::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glitch-target::before {
+  color: #fd356e;
+  animation: glitch-1 0.4s steps(1, end) infinite;
+  clip-path: inset(0 0 100% 0);
+  opacity: 0;
+}
+
+.glitch-target::after {
+  color: #85dbd8;
+  animation: glitch-2 0.6s steps(1, end) infinite;
+  clip-path: inset(0 0 100% 0);
+  opacity: 0;
+}
+
+@keyframes glitch-1 {
+  0%, 90%, 100% { clip-path: inset(100% 0 0 0); opacity: 0; transform: translateX(0); }
+  92% { clip-path: inset(10% 0 75% 0); opacity: 0.8; transform: translateX(-3px); }
+  94% { clip-path: inset(50% 0 20% 0); opacity: 0.8; transform: translateX(3px); }
+  96% { clip-path: inset(30% 0 55% 0); opacity: 0.8; transform: translateX(-2px); }
+}
+
+@keyframes glitch-2 {
+  0%, 85%, 100% { clip-path: inset(100% 0 0 0); opacity: 0; transform: translateX(0); }
+  87% { clip-path: inset(60% 0 15% 0); opacity: 0.6; transform: translateX(4px); }
+  89% { clip-path: inset(5% 0 80% 0); opacity: 0.6; transform: translateX(-3px); }
+}
+
+/* ─── Hero subtitle ─────────────────────────────────── */
+#hero-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: var(--ls-heading);
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+  margin: 0 0 32px 0;
+  line-height: 1.1;
+  opacity: 0;
+}
+
+/* ─── Hero body ─────────────────────────────────── */
+#hero-body {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(172, 172, 175, 0.85);
+  max-width: 520px;
+  margin-bottom: 40px;
+  opacity: 0;
+}
+
+/* ─── Hero CTA group ─────────────────────────────────── */
+#hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  opacity: 0;
+}
+
+.btn-primary {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #fd356e;
+  border: 1px solid #fd356e;
+  padding: var(--space-btn-block) var(--space-btn-inline);
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.11s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.06s linear;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #e0204f;
+  border-color: #e0204f;
+  box-shadow: var(--hover-neon-primary);
+}
+
+.btn-ghost {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: #acacaf;
+  background: transparent;
+  border: 1px solid #acacaf;
+  padding: var(--space-btn-block) var(--space-btn-inline);
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.11s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.11s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.06s linear;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  color: #e4e4e7;
+  border-color: #e4e4e7;
+  box-shadow: var(--hover-neon-ghost);
+}
+
+/* ─── Hero video placeholder ─────────────────────────────────── */
+#hero-video-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+#hero-video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.25;
+  filter: saturate(0.3) brightness(0.6);
+}
+
+#hero-video-wrapper .img-placeholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0f0f10 0%, #1a1a1f 50%, #0f0f10 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+}
+
+/* Video fade gradient overlay */
+#hero-video-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    #0f0f10 0%,
+    rgba(15, 15, 16, 0.6) 40%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ─── Ghost text watermark ─────────────────────────────────── */
+#hero-ghost-word {
+  position: absolute;
+  bottom: -0.1em;
+  right: -0.02em;
+  font-family: var(--font-display);
+  font-size: min(22vw, 300px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(253, 53, 110, 0.08);
+  line-height: 0.85;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+}
+
+@media (max-width: 900px) {
+  #hero-video-wrapper {
+    width: 100%;
+    opacity: 0.4;
+  }
+  #hero-video-wrapper::after {
+    background: linear-gradient(to bottom, rgba(15,15,16,0.5), rgba(15,15,16,0.85));
+  }
+  #hero-content {
+    padding-top: var(--space-16);
+  }
+  #hero-hud-coords { display: none; }
+}

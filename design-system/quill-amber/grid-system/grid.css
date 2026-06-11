@@ -1,0 +1,132 @@
+/*
+ * grid.css — quill-amber
+ * Source: lusion | Twist: Gap 2vw→1.5vw, container max-width 1440px, responsive breakpoints harmonized
+ */
+
+:root {
+  --grid-gap: 1.5vw;
+  --grid-columns: 12;
+  --grid-max-width: 1440px;
+  --grid-space: calc((100% - 11 * var(--grid-gap)) / 12);
+  --grid-padding-inline: clamp(24px, 4vw, 80px);
+}
+
+/* Container */
+.container {
+  max-width: var(--grid-max-width);
+  padding-inline: var(--grid-padding-inline);
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* Base 12-column grid */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--grid-gap);
+}
+
+/* Asymmetric split 1.4/1 */
+.grid-split-wide {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--grid-gap);
+}
+
+/* Reverse asymmetric 1/1.4 */
+.grid-split-wide-r {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: var(--grid-gap);
+}
+
+/* 3-col equal */
+.grid-3-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap);
+}
+
+/* 2-col equal */
+.grid-2-col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--grid-gap);
+}
+
+/* Nav grid */
+.grid-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14.18px;
+}
+
+/* Feature row (media + text alternating) */
+.grid-feature-row {
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  gap: clamp(24px, 4vw, 80px);
+  align-items: center;
+}
+
+.grid-feature-row--reverse {
+  grid-template-columns: 40fr 60fr;
+}
+
+/* Span utilities */
+.col-span-12 { grid-column: span 12; }
+.col-span-8  { grid-column: span 8; }
+.col-span-6  { grid-column: span 6; }
+.col-span-4  { grid-column: span 4; }
+.col-span-3  { grid-column: span 3; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  :root {
+    --grid-gap: 2vw;
+    --grid-padding-inline: clamp(20px, 3.5vw, 60px);
+  }
+
+  .grid-split-wide,
+  .grid-split-wide-r,
+  .grid-feature-row,
+  .grid-feature-row--reverse {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --grid-gap: 16px;
+    --grid-padding-inline: 20px;
+  }
+
+  .grid-12 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .grid-3-col {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-2-col {
+    grid-template-columns: 1fr;
+  }
+
+  .col-span-8,
+  .col-span-6 {
+    grid-column: span 4;
+  }
+}
+
+@media (max-width: 375px) {
+  :root {
+    --grid-padding-inline: 16px;
+  }
+
+  .grid-12 {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platform — Forma Systems</title>
+  <meta name="description" content="The parametric design platform for modular prefab architecture. Design once. Build everywhere." />
+
+  <!-- GSAP + ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens (includes Google Fonts import) -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css" />
+  <link rel="stylesheet" href="components/platform-hero.css" />
+  <link rel="stylesheet" href="components/platform-capabilities.css" />
+  <link rel="stylesheet" href="components/platform-technical.css" />
+  <link rel="stylesheet" href="components/platform-integrations.css" />
+</head>
+<body>
+
+  <!-- ── NAV (verbatim) ─────────────────────────────────────── -->
+  <nav id="site-nav" class="site-nav">
+    <a href="index.html" class="nav-logo">FORMA</a>
+    <ul class="nav-links">
+      <li><a href="platform.html" class="nav-link nav-link--active">Platform</a></li>
+      <li><a href="solutions.html" class="nav-link">Solutions</a></li>
+      <li><a href="projects.html" class="nav-link">Projects</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <a href="platform.html" class="nav-mobile-link">Platform</a>
+    <a href="solutions.html" class="nav-mobile-link">Solutions</a>
+    <a href="projects.html" class="nav-mobile-link">Projects</a>
+    <a href="contact.html" class="nav-mobile-link">Contact</a>
+  </div>
+  <script>
+    (function () {
+      var nav = document.getElementById('site-nav');
+      var toggle = nav.querySelector('.nav-mobile-toggle');
+      var mobileMenu = document.querySelector('.nav-mobile-menu');
+      function onScroll() {
+        if (window.scrollY > 0) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      toggle.addEventListener('click', function () {
+        var isOpen = mobileMenu.classList.contains('is-open');
+        if (isOpen) {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        } else {
+          mobileMenu.classList.add('is-open');
+          nav.classList.add('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+      mobileMenu.querySelectorAll('.nav-mobile-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    })();
+  </script>
+
+  <!-- ── SECTION 1: Platform Header (50vh) ──────────────────── -->
+  <section id="platform-header" aria-labelledby="platform-hero-heading">
+    <div class="platform-hero__rule" aria-hidden="true"></div>
+    <div class="platform-hero__annotation" aria-hidden="true">Forma Systems / Platform Overview / 2024</div>
+
+    <p class="platform-hero__breadcrumb">Platform / Overview</p>
+    <h1 id="platform-hero-heading" class="platform-hero__heading">The Parametric Core</h1>
+    <p class="platform-hero__sub">A constraint-driven modeling engine that translates architectural intent into buildable modular assemblies — at any scale, from any brief.</p>
+  </section>
+
+  <!-- ── SECTION 2: Core Capabilities (white, bento grid) ────── -->
+  <section id="platform-capabilities" aria-labelledby="capabilities-heading">
+    <p class="capabilities__label">Core Capabilities</p>
+    <h2 id="capabilities-heading" class="capabilities__heading">Six systems. One coherent engine.</h2>
+
+    <div class="capabilities__grid" id="capabilities-grid">
+
+      <!-- Featured card: Parametric Modeling Engine -->
+      <article id="cap-card-featured" class="capabilities__card capabilities__card--featured" aria-labelledby="cap-title-featured">
+        <div class="card__image-wrap">
+          <img
+            src="assets/cap-parametric-engine.jpeg"
+            alt="Parametric modeling engine visualization"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <div class="card__image-placeholder" style="display: none;">
+            <span>cap-parametric-engine.jpeg</span>
+            <span>Asset not generated — run asset pipeline</span>
+          </div>
+        </div>
+        <div class="card__body">
+          <span class="card__tag">Core / 01</span>
+          <h3 id="cap-title-featured" class="card__title">Parametric Modeling Engine</h3>
+          <p class="card__desc">Define constraints once. The engine propagates dimensional rules across every module variant — wall panels, structural bays, facade grids — maintaining integrity from schematic through fabrication.</p>
+        </div>
+      </article>
+
+      <!-- Card B -->
+      <article id="cap-card-b" class="capabilities__card capabilities__card--b" aria-labelledby="cap-title-b">
+        <span class="card__tag">Geometry / 02</span>
+        <h3 id="cap-title-b" class="card__title">Constraint Solver</h3>
+        <p class="card__desc">Bidirectional constraint propagation resolves conflicts in real time. Change one dimension — the system recalculates the whole assembly.</p>
+      </article>
+
+      <!-- Card C -->
+      <article id="cap-card-c" class="capabilities__card capabilities__card--c" aria-labelledby="cap-title-c">
+        <span class="card__tag">Output / 03</span>
+        <h3 id="cap-title-c" class="card__title">Fabrication Export</h3>
+        <p class="card__desc">Direct output to CNC nesting, shop drawings, and IFC-compliant BIM packages. No manual translation.</p>
+      </article>
+
+      <!-- Card D -->
+      <article id="cap-card-d" class="capabilities__card capabilities__card--d" aria-labelledby="cap-title-d">
+        <span class="card__tag">Library / 04</span>
+        <h3 id="cap-title-d" class="card__title">Module Library</h3>
+        <p class="card__desc">350+ certified prefab modules, structurally validated and manufacturer-linked.</p>
+      </article>
+
+      <!-- Card E -->
+      <article id="cap-card-e" class="capabilities__card capabilities__card--e" aria-labelledby="cap-title-e">
+        <span class="card__tag">Analysis / 05</span>
+        <h3 id="cap-title-e" class="card__title">Performance Analysis</h3>
+        <p class="card__desc">Thermal bridging, structural loading, and embodied carbon computed inline as you design. Not as a separate simulation step — integrated into the modeling loop so every design decision carries real data.</p>
+      </article>
+
+      <!-- Card F -->
+      <article id="cap-card-f" class="capabilities__card capabilities__card--f" aria-labelledby="cap-title-f">
+        <span class="card__tag">Collaboration / 06</span>
+        <h3 id="cap-title-f" class="card__title">Multi-discipline Coordination</h3>
+        <p class="card__desc">Structural, MEP, and envelope teams work from a single federated model. Clash detection and version control built in — no separate coordination software required.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: Technical Architecture (annotation diagram) ── -->
+  <section id="platform-technical" aria-labelledby="technical-heading">
+    <span class="technical__label">Technical Architecture</span>
+    <h2 id="technical-heading" class="technical__heading">Layered. Open. Deterministic.</h2>
+
+    <div class="technical__diagram-area" id="tech-diagram-area">
+
+      <!-- LEFT callouts -->
+      <div id="callout-api" class="callout callout--left" aria-label="API Layer callout">
+        <p class="callout__label">API Layer</p>
+        <p class="callout__desc">REST + GraphQL endpoints. Full programmatic access to every constraint parameter.</p>
+        <div class="callout__line" id="callout-line-api" aria-hidden="true"></div>
+        <div class="callout__dot" aria-hidden="true"></div>
+      </div>
+
+      <div id="callout-geometry" class="callout callout--left" aria-label="Geometry Kernel callout">
+        <p class="callout__label">Geometry Kernel</p>
+        <p class="callout__desc">NURBS-based solid modeler with boolean operations and adaptive meshing.</p>
+        <div class="callout__line" id="callout-line-geometry" aria-hidden="true"></div>
+        <div class="callout__dot" aria-hidden="true"></div>
+      </div>
+
+      <div id="callout-solver" class="callout callout--left" aria-label="Constraint Solver callout">
+        <p class="callout__label">Constraint Solver</p>
+        <p class="callout__desc">Variational geometry solver. Bidirectional propagation, sub-10ms response on typical assemblies.</p>
+        <div class="callout__line" id="callout-line-solver" aria-hidden="true"></div>
+        <div class="callout__dot" aria-hidden="true"></div>
+      </div>
+
+      <!-- Central diagram -->
+      <div class="tech-diagram" id="tech-diagram-box" aria-label="System architecture diagram — three nested layers: System Boundary, Engine Layer, Parametric Core">
+        <div class="tech-diagram__outer" aria-hidden="true">
+          <span class="tech-diagram__outer-label">System Boundary</span>
+          <div class="tech-diagram__middle" aria-hidden="true">
+            <span class="tech-diagram__middle-label">Engine Layer</span>
+            <div class="tech-diagram__inner" aria-hidden="true">
+              <span class="tech-diagram__inner-text">Parametric<br>Core</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT callouts -->
+      <div id="callout-output" class="callout callout--right" aria-label="Output Pipeline callout">
+        <p class="callout__label">Output Pipeline</p>
+        <p class="callout__desc">IFC 4.x, DXF, STEP, and custom fabricator formats generated on demand.</p>
+        <div class="callout__line" id="callout-line-output" aria-hidden="true"></div>
+        <div class="callout__dot" aria-hidden="true"></div>
+      </div>
+
+      <div id="callout-bim" class="callout callout--right" aria-label="BIM Integration callout">
+        <p class="callout__label">BIM Integration</p>
+        <p class="callout__desc">Live sync with Revit and ArchiCAD via Speckle transport layer. No file export required.</p>
+        <div class="callout__line" id="callout-line-bim" aria-hidden="true"></div>
+        <div class="callout__dot" aria-hidden="true"></div>
+      </div>
+
+      <div id="callout-render" class="callout callout--right" aria-label="Render Bridge callout">
+        <p class="callout__label">Render Bridge</p>
+        <p class="callout__desc">Geometry streamed directly to Rhino/Grasshopper and Enscape for real-time visualization.</p>
+        <div class="callout__line" id="callout-line-render" aria-hidden="true"></div>
+        <div class="callout__dot" aria-hidden="true"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SECTION 4: Integrations (dark) ──────────────────────── -->
+  <section id="platform-integrations" aria-labelledby="integrations-heading">
+    <span class="integrations__label">Integrations</span>
+    <h2 id="integrations-heading" class="integrations__heading">Connects to your workflow</h2>
+    <p class="integrations__body">Forma exposes a full open API and ships native connectors for the industry-standard BIM and geometry tools your team already uses. No proprietary lock-in. Standards-first, from IFC to REST.</p>
+
+    <div class="integrations__divider" aria-hidden="true"></div>
+
+    <div class="integrations__row" id="integrations-pills" aria-label="Supported integrations">
+      <div class="integration-pill" id="pill-bim360">
+        <span class="integration-pill__dot" aria-hidden="true"></span>
+        BIM 360
+      </div>
+      <div class="integration-pill" id="pill-revit">
+        <span class="integration-pill__dot" aria-hidden="true"></span>
+        Revit
+      </div>
+      <div class="integration-pill" id="pill-rhino">
+        <span class="integration-pill__dot" aria-hidden="true"></span>
+        Rhino 8
+      </div>
+      <div class="integration-pill" id="pill-grasshopper">
+        <span class="integration-pill__dot" aria-hidden="true"></span>
+        Grasshopper
+      </div>
+      <div class="integration-pill" id="pill-ifc">
+        <span class="integration-pill__dot" aria-hidden="true"></span>
+        IFC 4.x
+      </div>
+      <div class="integration-pill" id="pill-speckle">
+        <span class="integration-pill__dot" aria-hidden="true"></span>
+        Speckle
+      </div>
+      <div class="integration-pill" id="pill-archicad">
+        <span class="integration-pill__dot" aria-hidden="true"></span>
+        ArchiCAD
+      </div>
+      <div class="integration-pill" id="pill-enscape">
+        <span class="integration-pill__dot" aria-hidden="true"></span>
+        Enscape
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────── -->
+  <footer id="platform-footer" aria-label="Site footer">
+    <div class="footer__grid">
+      <!-- Brand / tagline column -->
+      <div class="footer__brand" id="footer-brand">
+        <span class="footer__brand-name">Forma Systems</span>
+        <p class="footer__brand-tagline">Design once.<br>Build everywhere.</p>
+      </div>
+
+      <!-- Platform column -->
+      <div class="footer__col" id="footer-col-platform">
+        <span class="footer__col-title">Platform</span>
+        <ul class="footer__col-links">
+          <li><a href="platform.html">Overview</a></li>
+          <li><a href="platform.html#platform-capabilities">Capabilities</a></li>
+          <li><a href="platform.html#platform-technical">Architecture</a></li>
+          <li><a href="platform.html#platform-integrations">Integrations</a></li>
+        </ul>
+      </div>
+
+      <!-- Solutions column -->
+      <div class="footer__col" id="footer-col-solutions">
+        <span class="footer__col-title">Solutions</span>
+        <ul class="footer__col-links">
+          <li><a href="solutions.html">Residential</a></li>
+          <li><a href="solutions.html">Commercial</a></li>
+          <li><a href="solutions.html">Education</a></li>
+          <li><a href="solutions.html">Healthcare</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact column -->
+      <div class="footer__col" id="footer-col-contact">
+        <span class="footer__col-title">Contact</span>
+        <ul class="footer__col-links">
+          <li><a href="contact.html">Get a Demo</a></li>
+          <li><a href="contact.html">Sales</a></li>
+          <li><a href="contact.html">Support</a></li>
+          <li><a href="contact.html">Press</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">© 2024 Forma Systems Ltd. All rights reserved.</p>
+      <nav class="footer__legal" aria-label="Legal links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ── GSAP Animations ─────────────────────────────────────── -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── Section 1: Hero — isoSlideIn on DOMContentLoaded ─────────
+    // Use gsap.fromTo to avoid CSS opacity:0 rule violation
+    gsap.fromTo(
+      '.platform-hero__breadcrumb',
+      { opacity: 0, x: -40, y: -10 },
+      {
+        opacity: 1, x: 0, y: 0,
+        duration: 0.5,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        delay: 0.1
+      }
+    );
+
+    gsap.fromTo(
+      '.platform-hero__heading',
+      { opacity: 0, x: -50, y: -15 },
+      {
+        opacity: 1, x: 0, y: 0,
+        duration: 0.6,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        delay: 0.25
+      }
+    );
+
+    gsap.fromTo(
+      '.platform-hero__sub',
+      { opacity: 0, x: -30, y: -10 },
+      {
+        opacity: 1, x: 0, y: 0,
+        duration: 0.5,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        delay: 0.45
+      }
+    );
+
+    // ── Section 2: Capabilities — clip-path wipe reveal ──────────
+    var capCards = document.querySelectorAll('.capabilities__card');
+    capCards.forEach(function (card) {
+      gsap.set(card, { clipPath: 'inset(0 100% 0 0)' });
+    });
+
+    gsap.to(capCards, {
+      clipPath: 'inset(0 0% 0 0)',
+      duration: 0.7,
+      ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: '#platform-capabilities',
+        start: 'top 80%',
+        once: true
+      }
+    });
+
+    // ── Section 3: Technical — scaleX line draw ───────────────────
+    var calloutLines = [
+      '#callout-line-api',
+      '#callout-line-geometry',
+      '#callout-line-solver',
+      '#callout-line-output',
+      '#callout-line-bim',
+      '#callout-line-render'
+    ];
+
+    calloutLines.forEach(function (sel) {
+      var el = document.querySelector(sel);
+      if (!el) return;
+      gsap.set(el, { scaleX: 0 });
+    });
+
+    // Animate left-side lines
+    ['#callout-line-api', '#callout-line-geometry', '#callout-line-solver'].forEach(function (sel, i) {
+      var el = document.querySelector(sel);
+      if (!el) return;
+      gsap.to(el, {
+        scaleX: 1,
+        duration: 0.5,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        delay: i * 0.15,
+        scrollTrigger: {
+          trigger: '#platform-technical',
+          start: 'top 80%',
+          once: true
+        }
+      });
+    });
+
+    // Animate right-side lines (transform-origin: left)
+    ['#callout-line-output', '#callout-line-bim', '#callout-line-render'].forEach(function (sel, i) {
+      var el = document.querySelector(sel);
+      if (!el) return;
+      gsap.to(el, {
+        scaleX: 1,
+        duration: 0.5,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        delay: i * 0.15,
+        scrollTrigger: {
+          trigger: '#platform-technical',
+          start: 'top 80%',
+          once: true
+        }
+      });
+    });
+
+    // Fade in diagram box
+    gsap.fromTo(
+      '#tech-diagram-box',
+      { opacity: 0, scale: 0.92 },
+      {
+        opacity: 1, scale: 1,
+        duration: 0.6,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        scrollTrigger: {
+          trigger: '#platform-technical',
+          start: 'top 80%',
+          once: true
+        }
+      }
+    );
+
+    // ── Section 4: Integrations — scatter in from random x ───────
+    // Use fromTo on each pill so GSAP owns the initial state (no CSS opacity:0)
+    var pills = document.querySelectorAll('.integration-pill');
+
+    pills.forEach(function (pill) {
+      var xOffset = (Math.random() - 0.5) * 120;
+      gsap.fromTo(
+        pill,
+        { opacity: 0, x: xOffset, y: 10 },
+        {
+          opacity: 1, x: 0, y: 0,
+          duration: 0.55,
+          ease: 'back.out(1.2)',
+          scrollTrigger: {
+            trigger: '#platform-integrations',
+            start: 'top 80%',
+            once: true
+          },
+          delay: Math.random() * 0.35
+        }
+      );
+    });
+  </script>
+
+</body>
+</html>

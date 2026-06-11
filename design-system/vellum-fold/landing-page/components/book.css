@@ -1,0 +1,475 @@
+/* ============================================================
+   Book — Deckle & Thread
+   Full-viewport book container with page-flip system.
+   Pages are stacked absolutely; scroll triggers page turns
+   via clip-path fold geometry (driven by book-flip.js).
+   ============================================================ */
+
+/* ── Desk surface — warm linen under the book ── */
+body {
+  background: #d4c8b8;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      rgba(45, 47, 52, 0.015) 40px,
+      rgba(45, 47, 52, 0.015) 41px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(45, 47, 52, 0.01) 40px,
+      rgba(45, 47, 52, 0.01) 41px
+    );
+}
+
+/* ── Book container: pinned by GSAP ScrollTrigger ── */
+.book {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  /* Book resting on desk — shadow underneath */
+  box-shadow:
+    0 8px 40px rgba(45, 47, 52, 0.2),
+    0 2px 8px rgba(45, 47, 52, 0.15);
+  border-radius: 2px;
+}
+
+.book-stage {
+  position: absolute;
+  inset: 0;
+  /* perspective on the stage for subtle 3D depth */
+  perspective: 1800px;
+}
+
+/* ── Enhanced Spine Bulge (60px wide) ──
+   Multi-layered convex spine: deep shadow, stitching marks, highlight */
+.book-stage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  z-index: 30;
+  pointer-events: none;
+  background:
+    /* Highlight on right edge of spine curve — light hitting paper */
+    linear-gradient(90deg,
+      transparent 0%,
+      transparent 65%,
+      rgba(255,255,255,0.06) 78%,
+      rgba(255,255,255,0.1) 88%,
+      transparent 100%
+    ),
+    /* Stitching marks along spine center */
+    repeating-linear-gradient(
+      180deg,
+      transparent 0px,
+      transparent 8px,
+      rgba(45, 47, 52, 0.06) 8px,
+      rgba(45, 47, 52, 0.06) 12px,
+      transparent 12px,
+      transparent 20px
+    ),
+    /* Deep convex shadow — darker at spine, lightening outward */
+    radial-gradient(
+      ellipse 80px 100% at 0% 50%,
+      rgba(45, 47, 52, 0.18) 0%,
+      rgba(45, 47, 52, 0.1) 30%,
+      rgba(45, 47, 52, 0.04) 60%,
+      transparent 100%
+    );
+  /* Stitching only appears in center strip */
+  background-size: 100% 100%, 4px 20px, 100% 100%;
+  background-position: 0 0, 10px 5%, 0 0;
+  background-repeat: no-repeat, repeat-y, no-repeat;
+}
+
+/* ── Bottom edge — book thickness shadow ── */
+.book-stage::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  z-index: 31;
+  pointer-events: none;
+  background: linear-gradient(
+    0deg,
+    rgba(45, 47, 52, 0.08) 0%,
+    transparent 100%
+  );
+}
+
+/* ── Individual pages ── */
+.book-page {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  backface-visibility: hidden;
+  will-change: clip-path, z-index;
+  /* Solid background so pages fully occlude those behind them */
+  background-color: var(--color-page-bg, #fdfdfd);
+  /* Default: hidden behind current page */
+  z-index: 1;
+  /* Subtle paper corners — slightly more rounded on right/outer edge */
+  border-radius: 1px 2px 2px 1px;
+}
+
+/* Page states managed by JS */
+.book-page.is-current {
+  z-index: 10;
+  visibility: visible;
+}
+
+.book-page.is-turning {
+  z-index: 20;
+  visibility: visible;
+  /* clip-path is set dynamically by JS */
+}
+
+.book-page.is-behind {
+  z-index: 5;
+  visibility: visible;
+  /* visible underneath the turning page */
+}
+
+.book-page.is-turned {
+  z-index: 0;
+  /* Already flipped — behind everything */
+  clip-path: polygon(0 0, 0 0, 0 0);
+  pointer-events: none;
+}
+
+.book-page.is-ahead {
+  z-index: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* ── Page content wrapper ── */
+.book-page-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* Typographic text-block margins — larger gutter near spine */
+  padding: 48px 56px 48px 72px;
+}
+
+/* For sections with more content than fits in viewport */
+.book-page-content--scrollable {
+  overflow-y: auto;
+  align-items: flex-start;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Fold-back overlay ──
+   This div represents the BACK of the turning page.
+   Uses CSS custom properties for dynamic color (set by book-flip.js).
+   Paper fiber texture layers always visible on fold surface. */
+.book-page__fold-back {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  opacity: 0;
+  /* Dynamic colors — set by book-flip.js per turn */
+  --fold-color-start: #f5ede0;
+  --fold-color-end: #e8d9c8;
+  background:
+    /* Paper fiber texture layer — always visible */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(45, 47, 52, 0.04) 2px,
+      rgba(45, 47, 52, 0.04) 3px
+    ),
+    /* Cross-grain fibers */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 5px,
+      rgba(45, 47, 52, 0.015) 5px,
+      rgba(45, 47, 52, 0.015) 6px
+    ),
+    /* Fold highlight — bright strip along the fold edge */
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.05) 5%,
+      transparent 20%
+    ),
+    /* Dynamic base color gradient — uses color-mix for mid-blend */
+    linear-gradient(
+      135deg,
+      var(--fold-color-start) 0%,
+      color-mix(in srgb, var(--fold-color-start) 60%, var(--fold-color-end) 40%) 40%,
+      var(--fold-color-end) 100%
+    );
+  will-change: clip-path, opacity;
+}
+
+/* Fallback for browsers without color-mix support */
+@supports not (background: color-mix(in srgb, red, blue)) {
+  .book-page__fold-back {
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(45, 47, 52, 0.04) 2px,
+        rgba(45, 47, 52, 0.04) 3px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 5px,
+        rgba(45, 47, 52, 0.015) 5px,
+        rgba(45, 47, 52, 0.015) 6px
+      ),
+      linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.05) 5%,
+        transparent 20%
+      ),
+      linear-gradient(
+        135deg,
+        var(--fold-color-start) 0%,
+        var(--fold-color-end) 100%
+      );
+  }
+}
+
+.book-page__fold-back.is-visible {
+  opacity: 1;
+}
+
+/* ── Fold-line shadow ──
+   A narrow gradient strip along the fold crease.
+   Creates the impression of a fold casting a shadow. */
+.book-page__fold-shadow {
+  position: absolute;
+  inset: 0;
+  z-index: 26;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity;
+  /* The actual shadow gradient is set by JS via background */
+}
+
+.book-page__fold-shadow.is-visible {
+  opacity: 1;
+}
+
+/* ── Paper texture overlay ──
+   Very subtle horizontal lines mimicking laid paper texture.
+   Increased opacity for more visible paper feel. */
+.book-page__texture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: multiply;
+  opacity: 0.04;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(45, 47, 52, 0.12) 3px,
+      rgba(45, 47, 52, 0.12) 4px
+    );
+}
+
+/* Dark sections: reduce texture visibility */
+.dark-section .book-page__texture {
+  opacity: 0.015;
+  mix-blend-mode: screen;
+}
+
+/* ── Page number ── */
+.book-page__number {
+  position: absolute;
+  bottom: 32px;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-muted-text);
+  letter-spacing: 0.06em;
+  z-index: 3;
+  opacity: 0.6;
+}
+
+.book-page__number--left {
+  left: var(--grid-padding);
+}
+
+.book-page__number--right {
+  right: var(--grid-padding);
+}
+
+/* Dark section page numbers */
+.dark-section .book-page__number {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Right-side page edge — stacked page lines ──
+   Simulates the visible thickness of stacked pages on the right edge */
+.book-page::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 16px;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    /* Visible individual page edges */
+    repeating-linear-gradient(
+      270deg,
+      rgba(45, 47, 52, 0.08) 0px,
+      rgba(45, 47, 52, 0.04) 1px,
+      rgba(253, 253, 253, 0.6) 1px,
+      rgba(253, 253, 253, 0.3) 2px,
+      rgba(45, 47, 52, 0.03) 2px,
+      rgba(45, 47, 52, 0.01) 3px
+    ),
+    /* Outer shadow gradient */
+    linear-gradient(
+      270deg,
+      rgba(45, 47, 52, 0.06) 0%,
+      transparent 100%
+    );
+}
+
+/* Don't show right-edge shadow on the last page */
+.book-page:last-child::after {
+  display: none;
+}
+
+/* ── Brand watermark (vertical, top-left) ── */
+.book-watermark {
+  position: fixed;
+  top: 40px;
+  left: 20px;
+  z-index: 50;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: var(--color-muted-text);
+  opacity: 0.5;
+  pointer-events: none;
+  transform: rotate(180deg);
+}
+
+/* ── Page progress indicator (bottom center) ── */
+.book-progress {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.book-progress__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-section-divider);
+  transition: all var(--hover-transition);
+}
+
+.book-progress__dot.is-active {
+  width: 20px;
+  border-radius: 3px;
+  background-color: var(--color-hero-accent);
+}
+
+/* ── Reduced motion fallback ── */
+@media (prefers-reduced-motion: reduce) {
+  .book {
+    height: auto;
+    overflow: visible;
+  }
+
+  .book-stage {
+    position: relative;
+    perspective: none;
+  }
+
+  .book-page {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    clip-path: none !important;
+  }
+
+  .book-page__fold-back,
+  .book-page__fold-shadow {
+    display: none;
+  }
+
+  .book-stage::before,
+  .book-stage::after {
+    display: none;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .book-watermark {
+    display: none;
+  }
+
+  .book-page__number {
+    bottom: 16px;
+  }
+
+  .book-page::after {
+    width: 8px;
+  }
+
+  .book-page-content {
+    padding: 32px 24px 32px 40px;
+  }
+
+  .book-stage::before {
+    width: 36px;
+  }
+}
+
+@media (max-width: 600px) {
+  .book-page__number {
+    display: none;
+  }
+
+  .book-page-content {
+    padding: 24px 16px 24px 28px;
+  }
+
+  .book-stage::before {
+    width: 24px;
+  }
+}

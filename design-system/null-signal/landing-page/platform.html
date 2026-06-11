@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Platform — PHANTOM Network Threat Intelligence</title>
+  <meta name="description" content="The PHANTOM detection engine: ingestion architecture, detection algorithms, integration connectors, and pricing tiers for enterprise security operations.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/subpage.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-glyph"></span>
+    <span class="nav-logo-text">PHANTOM</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="platform.html" class="nav-link nav-link--active">Platform</a></li>
+    <li><a href="threats.html" class="nav-link">Threats</a></li>
+    <li><a href="docs.html" class="nav-link">Docs</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu">
+  <a href="platform.html" class="nav-link nav-link--active">Platform</a>
+  <a href="threats.html" class="nav-link">Threats</a>
+  <a href="docs.html" class="nav-link">Docs</a>
+  <a href="about.html" class="nav-link">About</a>
+</div>
+<div class="nav-spacer active"></div>
+<script>
+(function(){
+  var nav=document.getElementById('site-nav');
+  var menu=document.querySelector('.nav-mobile-menu');
+  var toggle=document.querySelector('.nav-mobile-toggle');
+  window.addEventListener('scroll',function(){ nav.classList.toggle('scrolled',window.scrollY>10); },{passive:true});
+  if(toggle&&menu){ toggle.addEventListener('click',function(){ nav.classList.toggle('nav-mobile-open'); menu.classList.toggle('is-open'); document.body.style.overflow=menu.classList.contains('is-open')?'hidden':''; }); }
+})();
+</script>
+
+<!-- PAGE HEADER -->
+<div class="page-header" id="page-header">
+  <span class="page-header-ghost">PLATFORM</span>
+  <div class="page-header-label">Platform</div>
+  <h1 class="page-header-title">Detection Engine</h1>
+  <p class="page-header-sub">Every layer of the PHANTOM stack — from ingest to analyst alert — operates at machine speed, with human-readable context attached at every step.</p>
+</div>
+
+<!-- SECTION: Full-width feature rows (title left, body right) — distinct from home step rows -->
+<section class="subpage-section" id="detection">
+  <div class="section-label" data-reveal="fade-up">Core Engine</div>
+  <h2 class="section-heading" data-reveal="fade-up">DETECTION PIPELINE</h2>
+  <div class="fw-feature-rows" id="fw-rows">
+    <div class="fw-feature-row">
+      <div class="fw-feature-title">Network Traffic Analysis</div>
+      <div class="fw-feature-body">Deep packet inspection at line rate across all protocols. Custom parsers for 280+ application protocols including encrypted TLS 1.3 handshake metadata analysis. Signature matching against 2.4M active IOC hashes and behavioral pattern libraries updated hourly from global sensor data.</div>
+    </div>
+    <div class="fw-feature-row">
+      <div class="fw-feature-title">Endpoint Telemetry Fusion</div>
+      <div class="fw-feature-body">EDR feed normalization across CrowdStrike, SentinelOne, Defender for Endpoint, and Carbon Black. Process trees, registry events, and network connections correlated in a unified graph store for lateral movement reconstruction within seconds of first indicator.</div>
+    </div>
+    <div class="fw-feature-row">
+      <div class="fw-feature-title">Cloud & Identity Layer</div>
+      <div class="fw-feature-body">Native connectors for AWS CloudTrail, Azure AD, GCP Audit Logs, and Okta. Identity-centric attack path analysis maps credential abuse to blast radius in real time. Impossible travel and privilege escalation detection with sub-minute latency.</div>
+    </div>
+    <div class="fw-feature-row">
+      <div class="fw-feature-title">Threat Intelligence Enrichment</div>
+      <div class="fw-feature-body">Every alert automatically enriched with MITRE ATT&CK mapping, CVE correlation, adversary dossier references, and geolocation attribution. No manual pivoting. The analyst receives context at the same time as the alert.</div>
+    </div>
+    <div class="fw-feature-row">
+      <div class="fw-feature-title">Automated Response Playbooks</div>
+      <div class="fw-feature-body">P1 events trigger pre-approved containment actions via SOAR integration: host isolation, account suspension, firewall rule injection. All automated actions are logged, auditable, and reversible with a single API call.</div>
+    </div>
+  </div>
+</section>
+<div class="section-divider"></div>
+
+<!-- SECTION: Video section — data stream, 2-col -->
+<section class="subpage-section" id="ingestion" style="background:#252529;">
+  <div class="section-label" data-reveal="fade-up">Architecture</div>
+  <h2 class="section-heading" data-reveal="fade-up">INGEST AT SCALE</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;margin-top:32px;" id="arch-split">
+    <div class="data-cell" style="min-height:280px;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;">
+        <video autoplay muted loop playsinline src="assets/data-stream.mp4" style="width:100%;height:100%;object-fit:cover;opacity:0.45;"
+          onerror="this.parentElement.querySelector('.vp').style.display='block';this.style.display='none';">
+        </video>
+        <div class="vp" style="display:none;position:absolute;inset:0;background:#252529;color:transparent;"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(37,37,41,0.3) 0%,rgba(37,37,41,0.7) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;">
+          <div class="data-cell-label">Live</div>
+          <div class="data-cell-title">Data Stream Pipeline</div>
+          <div class="data-cell-body">180+ global sensor nodes. Sub-100ms delivery. 2.4M events/sec sustained.</div>
+        </div>
+      </div>
+    </div>
+    <div class="kv-registry" id="kv-arch">
+      <div class="kv-row">
+        <span class="kv-key">Protocols</span>
+        <span class="kv-value">Syslog, PCAP, CEF, LEEF, JSON, Protobuf, gRPC</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Throughput</span>
+        <span class="kv-value">2.4M EPS peak, guaranteed with backpressure control</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Nodes</span>
+        <span class="kv-value">180+ global PoPs across 6 continents</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Latency</span>
+        <span class="kv-value">p99 &lt;100ms ingest-to-normalize</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Persistence</span>
+        <span class="kv-value">Kafka-backed queue, zero message loss SLA</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Storage</span>
+        <span class="kv-value">Columnar hot-tier (13 months) + S3 cold archive</span>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="section-divider"></div>
+
+<!-- SECTION: Integrations — 3-col rotate+rise (distinct from kv-sweep above) -->
+<section class="subpage-section" id="integrations">
+  <div class="section-label" data-reveal="fade-up">Integrations</div>
+  <h2 class="section-heading" data-reveal="fade-up">190+ CONNECTORS</h2>
+  <p class="section-subheading" data-reveal="fade-up">Plug into your existing stack without ripping anything out. PHANTOM is additive.</p>
+  <div class="feature-grid" id="integrations-grid">
+    <div class="feature-card">
+      <div class="feature-card-icon">[SIEM]</div>
+      <div class="feature-card-title">SIEM</div>
+      <div class="feature-card-body">Splunk, IBM QRadar, Microsoft Sentinel, Elastic SIEM, LogRhythm. Bidirectional correlation — send to PHANTOM, receive enriched alerts back.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-icon">[SOAR]</div>
+      <div class="feature-card-title">SOAR & Ticketing</div>
+      <div class="feature-card-body">Palo Alto XSOAR, Splunk SOAR, ServiceNow SecOps, Jira, PagerDuty. Automated case creation and escalation routing on P1/P2 events.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-icon">[EDR]</div>
+      <div class="feature-card-title">Endpoint Detection</div>
+      <div class="feature-card-body">CrowdStrike Falcon, SentinelOne, Microsoft Defender, Carbon Black, Cybereason. Process tree normalization and lateral movement graph construction.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-icon">[FW]</div>
+      <div class="feature-card-title">Firewall & Network</div>
+      <div class="feature-card-body">Palo Alto, Fortinet, Cisco ASA, Check Point, pfSense. Automated block rule injection on confirmed P1 indicators — reversible via API.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-icon">[CLOUD]</div>
+      <div class="feature-card-title">Cloud Platforms</div>
+      <div class="feature-card-body">AWS CloudTrail, Azure AD + Defender, GCP Audit Logs, Okta, Azure Sentinel native connector. Identity and access layer coverage for hybrid environments.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-icon">[API]</div>
+      <div class="feature-card-title">Custom API</div>
+      <div class="feature-card-body">REST and gRPC APIs with OpenAPI 3.1 spec. Webhook delivery for real-time alert forwarding. Python and Go SDKs. Self-hosted connector development kit.</div>
+    </div>
+  </div>
+</section>
+<div class="section-divider"></div>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="cta-band-inner">
+    <div id="cta-block">
+      <div class="cta-band-heading">Start Detecting.</div>
+      <div class="cta-band-sub">Production deployment in under 4 hours. No vendor lock-in.</div>
+    </div>
+    <div class="cta-band-actions" id="cta-actions">
+      <a href="about.html#contact" class="btn-white">Request Access</a>
+      <a href="docs.html" class="btn-white-ghost">Read Docs →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-col-logo">PHANTOM</div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#6b6b70;line-height:1.7;max-width:200px;">Network threat intelligence for security operations teams.</p>
+    </div>
+    <div class="footer-divider-col"></div>
+    <div class="footer-col">
+      <div class="footer-col-label">Platform</div>
+      <div class="footer-links">
+        <a href="platform.html" class="footer-link">Overview</a>
+        <a href="platform.html#detection" class="footer-link">Detection Engine</a>
+        <a href="platform.html#integrations" class="footer-link">Integrations</a>
+        <a href="platform.html#pricing" class="footer-link">Pricing</a>
+      </div>
+    </div>
+    <div class="footer-divider-col"></div>
+    <div class="footer-col">
+      <div class="footer-col-label">Intelligence</div>
+      <div class="footer-links">
+        <a href="threats.html" class="footer-link">Threat Feed</a>
+        <a href="threats.html#apt" class="footer-link">APT Registry</a>
+        <a href="threats.html#ioc" class="footer-link">IOC Database</a>
+        <a href="docs.html" class="footer-link">Documentation</a>
+      </div>
+    </div>
+    <div class="footer-divider-col"></div>
+    <div class="footer-col">
+      <div class="footer-col-label">Company</div>
+      <div class="footer-links">
+        <a href="about.html" class="footer-link">About</a>
+        <a href="about.html#team" class="footer-link">Research Team</a>
+        <a href="about.html#careers" class="footer-link">Careers</a>
+        <a href="about.html#contact" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 2025 PHANTOM Intelligence Inc. All rights reserved.</div>
+    <div class="footer-tagline">Track the threat.</div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Page header — glitch reveal
+gsap.fromTo('#page-header h1', { clipPath: 'inset(0 100% 0 0)', opacity: 0 }, { clipPath: 'inset(0 0% 0 0)', opacity: 1, duration: 0.2, ease: 'steps(4, start)', delay: 0.2 });
+gsap.fromTo('#page-header', { opacity: 0 }, { opacity: 1, duration: 0.15, delay: 0.1 });
+
+// FW feature rows — clip from bottom (y-stagger) — different from homepage clip-from-left
+gsap.set('.fw-feature-row', { opacity: 0, y: 24 });
+ScrollTrigger.create({
+  trigger: '#fw-rows',
+  start: 'top 80%',
+  onEnter: function() {
+    gsap.to('.fw-feature-row', { opacity: 1, y: 0, duration: 0.2, ease: 'steps(4, start)', stagger: 0.07 });
+  }
+});
+
+// Arch split — divergent x
+gsap.set('#arch-split > *:first-child', { opacity: 0, x: -60 });
+gsap.set('#arch-split > *:last-child', { opacity: 0, x: 60 });
+ScrollTrigger.create({
+  trigger: '#arch-split',
+  start: 'top 80%',
+  onEnter: function() {
+    gsap.to('#arch-split > *', { opacity: 1, x: 0, duration: 0.2, ease: 'cubic-bezier(0.55, 0, 1, 0.45)', stagger: 0.05 });
+  }
+});
+
+// KV arch — same x-sweep as home but different parent context
+gsap.set('#kv-arch .kv-row', { opacity: 0, x: 40 });
+ScrollTrigger.create({
+  trigger: '#kv-arch',
+  start: 'top 80%',
+  onEnter: function() {
+    gsap.to('#kv-arch .kv-row', { opacity: 1, x: 0, duration: 0.15, ease: 'cubic-bezier(0.55, 0, 1, 0.45)', stagger: 0.05 });
+  }
+});
+
+// Integration cards — rotate+rise
+gsap.set('#integrations-grid .feature-card', { opacity: 0, rotation: 2, y: 24 });
+ScrollTrigger.create({
+  trigger: '#integrations-grid',
+  start: 'top 80%',
+  onEnter: function() {
+    gsap.to('#integrations-grid .feature-card', { opacity: 1, rotation: 0, y: 0, duration: 0.2, ease: 'cubic-bezier(0.55, 0, 1, 0.45)', stagger: 0.06 });
+  }
+});
+
+// CTA — divergent x±50
+gsap.set('#cta-block', { opacity: 0, x: -50 });
+gsap.set('#cta-actions', { opacity: 0, x: 50 });
+ScrollTrigger.create({
+  trigger: '.cta-band',
+  start: 'top 85%',
+  onEnter: function() {
+    gsap.to('#cta-block', { opacity: 1, x: 0, duration: 0.2, ease: 'cubic-bezier(0.55, 0, 1, 0.45)' });
+    gsap.to('#cta-actions', { opacity: 1, x: 0, duration: 0.2, ease: 'cubic-bezier(0.55, 0, 1, 0.45)' });
+  }
+});
+
+// Generic data-reveal elements
+document.querySelectorAll('[data-reveal]').forEach(function(el) {
+  var type = el.getAttribute('data-reveal');
+  var from = { opacity: 0 };
+  if (type === 'fade-up') from.y = 24;
+  if (type === 'fade-right') from.x = -40;
+  gsap.set(el, from);
+  ScrollTrigger.create({
+    trigger: el, start: 'top 85%',
+    onEnter: function() {
+      gsap.to(el, { opacity: 1, y: 0, x: 0, scale: 1, duration: 0.2, ease: 'steps(4, start)' });
+    }
+  });
+});
+
+// Footer
+gsap.set('.footer', { opacity: 0, clipPath: 'inset(0 0 100% 0)' });
+ScrollTrigger.create({
+  trigger: '.footer', start: 'top 90%',
+  onEnter: function() {
+    gsap.to('.footer', { opacity: 1, clipPath: 'inset(0 0 0% 0)', duration: 0.2, ease: 'steps(4, start)' });
+  }
+});
+</script>
+</body>
+</html>

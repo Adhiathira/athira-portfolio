@@ -1,0 +1,132 @@
+/* ============================================================
+   HOW IT WORKS — vivid-block / Pivot product page
+   Navy background, 3 horizontal step rows, ZERO shadow
+   ============================================================ */
+
+.steps {
+  background-color: #1b1b37;
+  color: rgba(255, 255, 255, 0.88);
+  padding: var(--space-section-top) clamp(32px, 5vw, 96px) var(--space-section-bottom);
+}
+
+.steps__inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+}
+
+.steps__heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--type-h2);
+  letter-spacing: var(--tracking-h2);
+  color: #ffffff;
+  margin: 0 0 var(--space-4) 0;
+}
+
+/* ── Step rows ───────────────────────────────────────────── */
+.steps__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.step-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 60px;
+  align-items: center;
+  gap: var(--space-3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  padding: var(--space-4) var(--space-3);
+}
+
+/* ── Step number ─────────────────────────────────────────── */
+.step-row__number {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 5rem;
+  line-height: 1;
+  color: #63cabe;
+  letter-spacing: -0.04em;
+  user-select: none;
+}
+
+/* ── Step content ────────────────────────────────────────── */
+.step-row__content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step-row__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.step-row__body {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
+
+/* ── Step shape decoration ───────────────────────────────── */
+.step-row__shape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Circle — step 1 */
+.step-shape--circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #63cabe;
+}
+
+/* Square — step 2 */
+.step-shape--square {
+  width: 36px;
+  height: 36px;
+  background-color: #b79cff;
+  border-radius: 2px;
+}
+
+/* Triangle — step 3 (CSS triangle trick) */
+.step-shape--triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 34px solid #63cabe;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .steps {
+    padding-inline: 20px;
+  }
+
+  .step-row {
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .step-row__shape {
+    display: none;
+  }
+
+  .step-row__number {
+    font-size: 3.5rem;
+  }
+
+  .step-row__content {
+    grid-column: 2;
+  }
+}

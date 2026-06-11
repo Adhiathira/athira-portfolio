@@ -1,0 +1,221 @@
+/* =============================================================
+   HOW IT WORKS — Forma Systems
+   Light grey background (#f5f5f5), 4-col horizontal step grid
+   Horizontal sweep from left: x: -60, stagger 0.15
+   ============================================================= */
+
+#how-it-works {
+  position: relative;
+  background: #f5f5f5;
+  padding-block: calc(var(--space-3xl) + 40px) var(--space-3xl);
+  overflow: hidden;
+}
+
+/* ── Inner container ─────────────────────────────────────────── */
+.how-inner {
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  padding-inline: var(--grid-padding-inline);
+}
+
+/* ── Section header ──────────────────────────────────────────── */
+.how-header {
+  margin-bottom: var(--space-3xl);
+}
+
+.how-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  letter-spacing: var(--type-label-letter-spacing);
+  text-transform: var(--type-label-transform);
+  color: rgba(0, 0, 0, 0.35);
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.how-heading {
+  font-family: var(--font-display);
+  font-size: var(--type-h2);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  color: #000000;
+  margin: 0;
+  max-width: 18ch;
+}
+
+/* ── Step grid: 4 equal columns ─────────────────────────────── */
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* GSAP handles initial opacity: 0 state */
+}
+
+/* ── Individual step ─────────────────────────────────────────── */
+.how-step {
+  padding: var(--space-xl) var(--space-lg) var(--space-xl) 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  position: relative;
+  /* GSAP owns initial state — no opacity here */
+}
+
+.how-step:first-child {
+  padding-left: 0;
+}
+
+.how-step:last-child {
+  border-right: none;
+  padding-right: 0;
+  padding-left: var(--space-lg);
+  /* Last step: visually heavier — different bg treatment */
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.03) 0%, transparent 100%);
+}
+
+.how-step:last-child::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: #000000;
+}
+
+.how-step:not(:first-child):not(:last-child) {
+  padding-left: var(--space-lg);
+}
+
+/* ── Large background step number ────────────────────────────── */
+.step-number {
+  font-family: var(--font-mono);
+  font-size: 8rem;
+  font-weight: 400;
+  line-height: 0.85;
+  color: #e0e0e0;
+  display: block;
+  margin-bottom: var(--space-md);
+  letter-spacing: -0.04em;
+  /* Structural muted decoration */
+}
+
+.how-step:last-child .step-number {
+  color: rgba(0, 0, 0, 0.08);
+}
+
+/* ── Step heading ────────────────────────────────────────────── */
+.step-title {
+  font-family: var(--font-display);
+  font-size: var(--type-h4-size);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: #000000;
+  margin: 0 0 var(--space-sm) 0;
+}
+
+/* ── Step body ───────────────────────────────────────────────── */
+.step-body {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(0, 0, 0, 0.55);
+  margin: 0;
+}
+
+/* Arrow connector between steps (decorative) */
+.step-arrow {
+  display: none;
+}
+
+/* ── Step bottom micro-label ─────────────────────────────────── */
+.step-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.25);
+  display: block;
+  margin-top: var(--space-md);
+}
+
+/* ── Section bottom divider ──────────────────────────────────── */
+#how-it-works::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: #1a1a1a;
+  clip-path: polygon(0 60%, 65% 0%, 100% 0%, 100% 100%, 0 100%);
+  z-index: 1;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .how-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .how-step {
+    padding: var(--space-lg) var(--space-md) var(--space-lg) 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .how-step:nth-child(even) {
+    padding-left: var(--space-md);
+  }
+
+  .how-step:nth-child(odd) {
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .how-step:last-child {
+    border-bottom: none;
+    padding-left: var(--space-md);
+  }
+
+  .step-number {
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  #how-it-works {
+    padding-block: var(--space-3xl) var(--space-2xl);
+  }
+
+  .how-inner {
+    padding-inline: 20px;
+  }
+
+  .how-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .how-step {
+    padding: var(--space-lg) 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .how-step:nth-child(odd) {
+    border-right: none;
+  }
+
+  .how-step:last-child {
+    padding-left: 0;
+  }
+
+  .how-step:last-child::before {
+    display: none;
+  }
+
+  .step-number {
+    font-size: 4rem;
+  }
+}

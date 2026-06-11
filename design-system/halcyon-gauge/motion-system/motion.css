@@ -1,0 +1,70 @@
+:root {
+  --motion-duration-micro: 0.1s;
+  --motion-duration-quick: 0.2s;
+  --motion-duration-standard: 0.3s;
+  --motion-duration-expressive: 0.8s;
+  --motion-duration-cinematic: 0.9s;
+  --motion-easing-default: ease;
+  --motion-easing-decelerate: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-easing-material: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* TWIST: Clip-path curtain reveal — primary entrance mechanic */
+@keyframes curtainReveal {
+  0% {
+    clip-path: inset(100% 0 0 0);
+    opacity: 0;
+  }
+  100% {
+    clip-path: inset(0% 0 0 0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-20px, 0px, 0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes loading {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.reveal-curtain {
+  animation: curtainReveal var(--motion-duration-expressive) var(--motion-easing-decelerate) both;
+}
+
+.reveal-scale {
+  animation: scaleIn var(--motion-duration-cinematic) var(--motion-easing-decelerate) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-curtain,
+  .reveal-scale {
+    animation: fadeIn 0.4s ease both;
+    clip-path: none !important;
+  }
+}

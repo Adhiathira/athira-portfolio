@@ -1,0 +1,216 @@
+/* paste-board — Contact Page Components */
+
+.contact-hero {
+  padding-top: calc(var(--nav-height) + var(--space-2xl));
+  padding-bottom: var(--space-section);
+  background-color: var(--color-page-bg);
+}
+
+.contact-hero__title {
+  font-family: var(--font-hand);
+  font-size: var(--size-h1);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-heading);
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.contact-hero__sub {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
+  line-height: var(--lh-body);
+  max-width: 460px;
+}
+
+/* ── Contact layout ── */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: var(--space-2xl);
+  align-items: start;
+  padding-block: var(--space-section);
+}
+
+/* ── Sidebar info ── */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.contact-info__sticky {
+  background-color: var(--color-sticky);
+  border-radius: var(--radius-card);
+  padding: var(--space-card);
+  box-shadow: var(--shadow-sticky);
+  transform: rotate(-1.5deg);
+  transition: transform var(--dur-fast) var(--spring), box-shadow var(--dur-fast) ease;
+}
+
+.contact-info__sticky:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.contact-info__sticky h3 {
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+.contact-info__sticky p,
+.contact-info__sticky a {
+  font-family: var(--font-hand);
+  font-size: var(--size-label);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.contact-info__sticky a:hover {
+  text-decoration: underline;
+}
+
+/* ── Contact form ── */
+.contact-form-wrap {
+  background-color: var(--color-surface-light);
+  border-radius: var(--radius-card);
+  padding: var(--space-card);
+  box-shadow: var(--shadow-paper);
+  position: relative;
+}
+
+/* Tape strip on form card */
+.contact-form-wrap::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 36px;
+  width: 64px;
+  height: 18px;
+  background-color: rgba(255, 213, 79, 0.68);
+  transform: rotate(-3deg);
+  border-radius: 2px;
+}
+
+.form-title {
+  font-family: var(--font-hand);
+  font-size: 1.75rem;
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-xl);
+}
+
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.form-label {
+  display: block;
+  font-family: var(--font-hand);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-text);
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  padding: 10px 14px;
+  transition: border-color var(--dur-fast) ease;
+  appearance: none;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-submit {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  color: var(--color-white);
+  background-color: var(--color-accent);
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 14px;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--spring),
+              transform var(--dur-fast) var(--spring),
+              box-shadow var(--dur-fast) ease;
+  box-shadow: var(--shadow-paper);
+}
+
+.form-submit:hover {
+  background-color: var(--color-accent-hover);
+  transform: scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+.form-submit:active {
+  transform: scale(0.98);
+}
+
+/* ── Contact info sticky variants ── */
+.contact-info__sticky--rotate-positive {
+  transform: rotate(1.2deg);
+  background-color: var(--color-surface-light);
+}
+
+.contact-info__sticky--rotate-negative {
+  transform: rotate(-0.8deg);
+  background-color: var(--color-surface-mid);
+}
+
+.contact-info__sticky h3 {
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+.contact-info__sticky p {
+  font-family: var(--font-hand);
+  font-size: var(--size-label);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.contact-info__sticky a {
+  text-decoration: underline;
+  color: var(--color-text);
+}
+
+/* ── Pull quote spacing override ── */
+.pull-quote-section--spaced {
+  margin-top: var(--space-section);
+}
+
+@media (max-width: 768px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+  .contact-info {
+    order: 2;
+  }
+}

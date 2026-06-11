@@ -1,0 +1,1028 @@
+/* ============================================================
+   SECTIONS — bloom-drift / Solubl
+   All non-hero, non-nav section styles
+   HERO_TREATMENT: light — warm cream dominant, dark as contrast beats
+   ============================================================ */
+
+/* ── Shared section shell ── */
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Shared container ── */
+.container {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/* ── Section eyebrow label ── */
+.section-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 20px;
+}
+
+/* ── SVG organic dividers ── */
+.svg-divider {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.svg-divider svg {
+  display: block;
+  width: 100%;
+}
+
+/* ============================================================
+   SECTION 2 — INTRO PHILOSOPHY
+   Split layout: 2-col text + large stat numbers
+   Background: warm cream gradient continuation from hero
+   Animation: divergent x±60 sweep on the two columns
+   ============================================================ */
+
+#intro {
+  padding: 120px 0 100px;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 240, 232, 0.95) 0%,
+    rgba(252, 247, 241, 0.8) 50%,
+    rgba(240, 235, 255, 0.5) 100%
+  );
+}
+
+#intro-inner {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+#intro-text-col {}
+
+#intro-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #0a0a0a;
+  margin: 0 0 28px;
+}
+
+#intro-body {
+  font-size: 1.0625rem;
+  font-weight: var(--weight-regular);
+  line-height: 1.7;
+  color: var(--color-body-text);
+  max-width: 480px;
+  margin: 0 0 36px;
+}
+
+#intro-link {
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: letter-spacing 250ms var(--fluid-ease), opacity 250ms var(--fluid-ease);
+}
+
+#intro-link:hover {
+  letter-spacing: 0.10em;
+  opacity: 0.75;
+}
+
+#intro-stats-col {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding-top: 8px;
+}
+
+.intro-stat {
+  position: relative;
+  padding-left: 28px;
+  border-left: 2px solid rgba(30, 58, 110, 0.15);
+}
+
+.intro-stat:hover {
+  border-left-color: rgba(30, 58, 110, 0.5);
+}
+
+.intro-stat .stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #0a0a0a;
+}
+
+.intro-stat .stat-unit {
+  font-size: 1.25rem;
+  color: var(--color-accent);
+}
+
+.intro-stat .stat-desc {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-muted-text);
+  margin-top: 8px;
+  max-width: 200px;
+}
+
+/* ============================================================
+   SVG DIVIDER — Wave between intro and collections
+   ============================================================ */
+
+#divider-intro-collections {
+  background: linear-gradient(
+    180deg,
+    rgba(240, 235, 255, 0.5) 0%,
+    transparent 100%
+  );
+}
+
+/* ============================================================
+   SECTION 3 — COLLECTIONS (product cards)
+   Asymmetric bento: 1.6fr 1fr 1fr, first card spans 2 rows
+   Background: soft gradient from violet to aquamarine tones
+   Animation: iris bloom / ellipse reveal on scroll entry
+   ============================================================ */
+
+#collections-preview {
+  padding: 100px 0 120px;
+  background: linear-gradient(
+    160deg,
+    rgba(252, 247, 241, 0.9) 0%,
+    rgba(240, 235, 255, 0.35) 40%,
+    rgba(230, 248, 244, 0.45) 70%,
+    rgba(252, 247, 241, 0.9) 100%
+  );
+}
+
+#collections-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 56px;
+}
+
+#collections-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0a0a0a;
+  margin: 0;
+  max-width: 400px;
+  line-height: 1.15;
+}
+
+#collections-link-all {
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: letter-spacing 250ms var(--fluid-ease);
+  white-space: nowrap;
+  margin-bottom: 4px;
+}
+
+#collections-link-all:hover {
+  letter-spacing: 0.10em;
+}
+
+/* Bento grid — asymmetric featured layout */
+#collections-bento {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 24px;
+}
+
+/* Product card — soft blob card (NO hard borders) */
+.product-card {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  transition: var(--card-transition);
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: var(--card-hover-transform);
+}
+
+/* First card spans 2 rows — featured */
+.product-card--featured {
+  grid-row: span 2;
+  min-height: 560px;
+}
+
+.product-card--standard {
+  min-height: 260px;
+}
+
+/* Radial gradient background — each card has its own tinted blob shadow */
+.product-card--mineral {
+  background: radial-gradient(
+    ellipse at 40% 35%,
+    rgba(196, 175, 242, 0.50) 0%,
+    rgba(163, 228, 215, 0.30) 55%,
+    rgba(245, 240, 232, 0.70) 100%
+  );
+  box-shadow:
+    0 12px 48px rgba(196, 175, 242, 0.22),
+    0 4px 16px rgba(196, 175, 242, 0.12);
+}
+
+.product-card--citrus {
+  background: radial-gradient(
+    ellipse at 60% 40%,
+    rgba(242, 221, 163, 0.55) 0%,
+    rgba(242, 196, 206, 0.30) 50%,
+    rgba(245, 240, 232, 0.70) 100%
+  );
+  box-shadow:
+    0 12px 48px rgba(242, 221, 163, 0.28),
+    0 4px 16px rgba(242, 221, 163, 0.14);
+}
+
+.product-card--bloom {
+  background: radial-gradient(
+    ellipse at 35% 55%,
+    rgba(242, 196, 206, 0.55) 0%,
+    rgba(196, 175, 242, 0.28) 55%,
+    rgba(245, 240, 232, 0.70) 100%
+  );
+  box-shadow:
+    0 12px 48px rgba(242, 196, 206, 0.22),
+    0 4px 16px rgba(242, 196, 206, 0.12);
+}
+
+.product-card--tide {
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    rgba(163, 228, 215, 0.55) 0%,
+    rgba(30, 58, 110, 0.12) 55%,
+    rgba(245, 240, 232, 0.70) 100%
+  );
+  box-shadow:
+    0 12px 48px rgba(163, 228, 215, 0.22),
+    0 4px 16px rgba(163, 228, 215, 0.12);
+}
+
+.product-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 32px;
+}
+
+.product-card-image-area {
+  flex: 1;
+  position: relative;
+  margin: 0 -8px;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 200px;
+}
+
+.product-card--featured .product-card-image-area {
+  min-height: 340px;
+}
+
+.product-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-card-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  background: rgba(255,255,255,0.4);
+  font-size: 0.7rem;
+  color: transparent;
+  text-align: center;
+  padding: 16px;
+}
+
+.product-card-label {
+  font-size: 0.65rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 24px 0 10px;
+}
+
+.product-card-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #0a0a0a;
+  margin: 0 0 8px;
+  line-height: 1.25;
+}
+
+.product-card--featured .product-card-name {
+  font-size: 1.5rem;
+}
+
+.product-card-desc {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--color-body-text);
+  opacity: 0.75;
+  margin: 0;
+}
+
+/* ============================================================
+   SVG DIVIDER — Organic blob wave between collections and how-it-works
+   ============================================================ */
+
+/* ============================================================
+   SECTION 4 — HOW IT WORKS (dissolve process)
+   Numbered step rows — single-column, 64px counter + 1fr text
+   Background: dark contrast beat — near-black with tinted gradient
+   Animation: clip-path wipe left-to-right on each row
+   ============================================================ */
+
+#how-it-works {
+  padding: 100px 0 120px;
+  background: linear-gradient(
+    160deg,
+    #0d0d14 0%,
+    #111828 40%,
+    #0a1520 70%,
+    #0d0d14 100%
+  );
+  color: rgba(255, 255, 255, 0.88);
+}
+
+#how-it-works .section-eyebrow {
+  color: rgba(163, 228, 215, 0.9);
+}
+
+#hiw-header {
+  margin-bottom: 72px;
+}
+
+#hiw-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.1;
+  max-width: 560px;
+}
+
+.hiw-step {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 40px;
+  align-items: start;
+  padding: 40px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 350ms var(--fluid-ease);
+}
+
+.hiw-step:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hiw-step:hover {
+  border-top-color: rgba(163, 228, 215, 0.3);
+}
+
+.hiw-step-number {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(163, 228, 215, 0.6);
+  padding-top: 6px;
+}
+
+.hiw-step-content {}
+
+.hiw-step-title {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin: 0 0 12px;
+  line-height: 1.25;
+}
+
+.hiw-step-body {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 580px;
+  margin: 0;
+}
+
+/* ============================================================
+   SECTION 5 — LIQUID SURFACE (ink-diffuse video / atmospheric)
+   Interstitial editorial — full-bleed video background, editorial quote
+   Background: deep dark continuation + video layer
+   Animation: clip-path ellipse bloom on text entry from center
+   ============================================================ */
+
+#atmospheric {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+#atmospheric-video-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#atmospheric-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+#atmospheric-video-placeholder {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 20, 40, 0.9) 0%,
+    rgba(30, 58, 110, 0.6) 100%
+  );
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: transparent;
+}
+
+#atmospheric-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(10, 15, 30, 0.72) 0%,
+    rgba(20, 30, 60, 0.55) 50%,
+    rgba(10, 15, 30, 0.72) 100%
+  );
+  z-index: 1;
+}
+
+#atmospheric-content {
+  position: relative;
+  z-index: 10;
+  padding: 100px var(--container-padding);
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+#atmospheric-quote {
+  max-width: 680px;
+}
+
+#atmospheric-quote-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0 0 32px;
+}
+
+#atmospheric-quote-attr {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(163, 228, 215, 0.75);
+}
+
+/* ============================================================
+   SECTION 6 — INGREDIENTS SHOWCASE
+   Asymmetric split: 3fr 2fr — text left, rotating ingredient orb right
+   Background: light gradient continuation — from dark back to warm cream
+   Animation: scale-from-center on orb + x:-60 sweep on text
+   ============================================================ */
+
+#ingredients {
+  padding: 120px 0;
+  background: linear-gradient(
+    160deg,
+    rgba(230, 248, 244, 0.45) 0%,
+    rgba(252, 247, 241, 0.9) 35%,
+    rgba(245, 240, 232, 0.95) 100%
+  );
+}
+
+#ingredients-inner {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 80px;
+  align-items: center;
+}
+
+#ingredients-text {}
+
+#ingredients-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0a0a0a;
+  margin: 0 0 24px;
+  line-height: 1.15;
+}
+
+#ingredients-body {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-body-text);
+  max-width: 500px;
+  margin: 0 0 40px;
+  opacity: 0.85;
+}
+
+#ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ingredient-item {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.ingredient-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  margin-top: 6px;
+  opacity: 0.6;
+}
+
+.ingredient-text strong {
+  font-weight: var(--weight-medium);
+  color: #0a0a0a;
+  display: block;
+  font-size: 0.9rem;
+}
+
+.ingredient-text span {
+  font-size: 0.8125rem;
+  color: var(--color-muted-text);
+  line-height: 1.5;
+}
+
+/* Ingredient orb display */
+#ingredients-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 420px;
+}
+
+#ingredients-orb {
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(
+    ellipse at 40% 38%,
+    rgba(196, 175, 242, 0.65) 0%,
+    rgba(163, 228, 215, 0.45) 45%,
+    rgba(242, 221, 163, 0.35) 70%,
+    rgba(245, 240, 232, 0.5) 100%
+  );
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation:
+    liquidMorph 12s var(--ease-primary) infinite,
+    floatA 16s ease-in-out infinite;
+  box-shadow:
+    0 24px 72px rgba(196, 175, 242, 0.3),
+    0 8px 24px rgba(163, 228, 215, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+#ingredients-orb-label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.5);
+  text-align: center;
+}
+
+/* ============================================================
+   SECTION 7 — CTA BAND (dark contrast beat)
+   Full-width centered CTA with gradient background
+   Animation: scale+rise stagger on heading chars + buttons diverge
+   ============================================================ */
+
+#cta-band {
+  padding: 120px 0;
+  background: linear-gradient(
+    135deg,
+    rgba(30, 58, 110, 0.95) 0%,
+    rgba(15, 25, 60, 0.98) 50%,
+    rgba(10, 20, 50, 0.95) 100%
+  );
+  color: rgba(255, 255, 255, 0.92);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Blob in CTA background */
+#cta-blob {
+  position: absolute;
+  top: -40%;
+  left: 30%;
+  width: 500px;
+  height: 420px;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(163, 228, 215, 0.18) 0%,
+    rgba(196, 175, 242, 0.10) 50%,
+    transparent 80%
+  );
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: liquidMorphC 14s var(--ease-primary) infinite;
+  pointer-events: none;
+}
+
+#cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+#cta-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0 0 20px;
+  line-height: 1.1;
+}
+
+#cta-subheading {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0 0 48px;
+}
+
+#cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 36px;
+  font-family: var(--font-body);
+  font-size: var(--type-button);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-wide);
+  color: #0a0a0a;
+  background: #ffffff;
+  border: 1.5px solid #ffffff;
+  border-radius: 100px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--btn-transition);
+}
+
+.btn-light:hover {
+  transform: var(--btn-hover-transform);
+  box-shadow: 0 12px 48px rgba(255,255,255,0.22), var(--btn-hover-shadow);
+}
+
+.btn-light:active {
+  transform: var(--btn-active-transform);
+}
+
+.btn-outline-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 36px;
+  font-family: var(--font-body);
+  font-size: var(--type-button);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-wide);
+  color: rgba(255, 255, 255, 0.88);
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 100px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--btn-transition);
+}
+
+.btn-outline-light:hover {
+  transform: var(--btn-hover-transform);
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--btn-hover-shadow);
+}
+
+/* ============================================================
+   FOOTER
+   Dark, warm — wave arrival animation from concept_by_video.md
+   ============================================================ */
+
+#site-footer {
+  background: linear-gradient(
+    180deg,
+    #0a0a14 0%,
+    #0d0d1a 100%
+  );
+  color: rgba(255, 255, 255, 0.55);
+  padding: 80px 0 48px;
+}
+
+#footer-inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 64px;
+  margin-bottom: 64px;
+}
+
+.footer-brand {}
+
+.footer-logo-text {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.88);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.footer-tagline {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.45);
+  max-width: 240px;
+}
+
+.footer-col-heading {
+  font-size: 0.7rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 20px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition: color 250ms var(--fluid-ease), opacity 250ms var(--fluid-ease);
+}
+
+.footer-links a:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+#footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-legal {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.footer-legal a {
+  color: rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+  margin-left: 20px;
+  transition: color 250ms var(--fluid-ease);
+}
+
+.footer-legal a:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================================
+   SUB-PAGE SHARED STYLES
+   Compact page headers for about, process, contact, collections
+   ============================================================ */
+
+.subpage-header {
+  padding: 100px var(--container-padding) 64px;
+  background: linear-gradient(
+    160deg,
+    rgba(245, 240, 232, 0.95) 0%,
+    rgba(240, 235, 255, 0.35) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.subpage-header-blob {
+  position: absolute;
+  top: -30%;
+  right: 10%;
+  width: 300px;
+  height: 280px;
+  background: radial-gradient(
+    ellipse,
+    rgba(196, 175, 242, 0.3) 0%,
+    rgba(163, 228, 215, 0.15) 60%,
+    transparent 100%
+  );
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: liquidMorph 12s var(--ease-primary) infinite;
+  pointer-events: none;
+}
+
+.subpage-header-eyebrow {
+  font-size: 0.7rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 16px;
+}
+
+.subpage-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0a0a0a;
+  margin: 0 0 16px;
+  line-height: 1.1;
+}
+
+.subpage-header .header-desc {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--color-body-text);
+  opacity: 0.75;
+  max-width: 560px;
+  margin: 0;
+}
+
+/* ── Responsive — all sections ── */
+@media (max-width: 1200px) {
+  #intro-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  #collections-bento {
+    grid-template-columns: 1fr 1fr;
+  }
+  .product-card--featured {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  #ingredients-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  #footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+  #collections-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  #collections-bento {
+    grid-template-columns: 1fr;
+  }
+  .product-card--featured,
+  .product-card--standard {
+    grid-row: span 1;
+    grid-column: span 1;
+    min-height: 360px;
+  }
+  .hiw-step {
+    grid-template-columns: 48px 1fr;
+    gap: 24px;
+  }
+  #footer-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  #footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  #intro,
+  #collections-preview,
+  #how-it-works,
+  #ingredients,
+  #cta-band {
+    padding: 72px 0 80px;
+  }
+  #atmospheric {
+    min-height: 50vh;
+  }
+  #atmospheric-content {
+    padding: 60px 20px;
+  }
+  #cta-buttons {
+    flex-direction: column;
+  }
+  .btn-light,
+  .btn-outline-light {
+    width: 100%;
+    justify-content: center;
+  }
+}

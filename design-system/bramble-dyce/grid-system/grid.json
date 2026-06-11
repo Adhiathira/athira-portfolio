@@ -1,0 +1,80 @@
+{
+  "_source": "enpower-trading",
+  "_twist": "enpower-trading's grid is sparse (flex-only, no column system). Twist: introduce a deliberate asymmetric 12-column system with an explicit 7/5 split for editorial content — echoing the proportional logic of a letterpress composing stick. Breakpoints scaled to 375/768/1024/1440.",
+  "cssVars": {
+    "--grid-columns": "12",
+    "--grid-gutter": "24px",
+    "--grid-margin": "64px",
+    "--grid-max-width": "1320px",
+    "--grid-gutter-mobile": "16px",
+    "--grid-margin-mobile": "20px",
+    "--grid-margin-tablet": "40px"
+  },
+  "container": {
+    "maxWidth": "1320px",
+    "paddingInline": "64px",
+    "centered": true
+  },
+  "grids": {
+    "editorial-asymmetric": {
+      "display": "grid",
+      "gridTemplateColumns": "7fr 5fr",
+      "gap": "48px",
+      "alignItems": "start",
+      "_note": "Primary editorial split — content heavy left, supporting content right"
+    },
+    "feature-bento": {
+      "display": "grid",
+      "gridTemplate": "'a a b' 'a a c' / 2fr 1fr 1fr",
+      "gap": "20px",
+      "_note": "Bento grid with explicit named areas"
+    },
+    "card-3col": {
+      "display": "grid",
+      "gridTemplateColumns": "repeat(3, 1fr)",
+      "gap": "24px"
+    },
+    "card-4col": {
+      "display": "grid",
+      "gridTemplateColumns": "repeat(4, 1fr)",
+      "gap": "20px"
+    },
+    "split-50-50": {
+      "display": "grid",
+      "gridTemplateColumns": "1fr 1fr",
+      "gap": "64px",
+      "alignItems": "center"
+    },
+    "centered-narrow": {
+      "maxWidth": "640px",
+      "marginInline": "auto",
+      "textAlign": "center"
+    },
+    "fullbleed": {
+      "width": "100vw",
+      "marginLeft": "calc(-1 * var(--grid-margin))",
+      "_note": "Extends to viewport edges from within container"
+    }
+  },
+  "responsive": {
+    "bp-1024px": {
+      "query": "(max-width: 1024px)",
+      "container": { "paddingInline": "40px" },
+      "card-3col": { "gridTemplateColumns": "repeat(2, 1fr)" }
+    },
+    "bp-768px": {
+      "query": "(max-width: 768px)",
+      "container": { "paddingInline": "20px" },
+      "editorial-asymmetric": { "gridTemplateColumns": "1fr" },
+      "card-3col": { "gridTemplateColumns": "1fr 1fr" },
+      "card-4col": { "gridTemplateColumns": "1fr 1fr" },
+      "split-50-50": { "gridTemplateColumns": "1fr" }
+    },
+    "bp-375px": {
+      "query": "(max-width: 375px)",
+      "card-3col": { "gridTemplateColumns": "1fr" },
+      "card-4col": { "gridTemplateColumns": "1fr" }
+    }
+  },
+  "visual": []
+}

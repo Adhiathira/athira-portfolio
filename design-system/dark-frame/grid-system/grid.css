@@ -1,0 +1,129 @@
+:root {
+  --container-max: 1440px;
+  --container-padding: 60px;
+  --container-narrow-max: 960px;
+  --grid-gap-photo: 2px;
+  --grid-gap-editorial: 60px;
+}
+
+/* Full-bleed — images and hero sections */
+.full-bleed {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Standard container */
+.container {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/* Narrow container for text sections */
+.container-narrow {
+  max-width: var(--container-narrow-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/* Editorial split: 7fr divider 5fr */
+.grid-editorial {
+  display: grid;
+  grid-template-columns: 7fr 1px 5fr;
+  gap: 0;
+  align-items: start;
+}
+
+.grid-editorial-divider {
+  background-color: #2a2a2a;
+  align-self: stretch;
+}
+
+/* 12-column photo grid */
+.grid-photo-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--grid-gap-photo);
+}
+
+/* Masonry layouts */
+.grid-masonry-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--grid-gap-photo);
+}
+
+.grid-masonry-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap-photo);
+}
+
+/* Services grid */
+.grid-services {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+/* Testimonials */
+.grid-testimonials {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--grid-gap-editorial);
+}
+
+/* Span utilities */
+.span-full  { grid-column: span 12; }
+.span-wide  { grid-column: span 7; }
+.span-narrow { grid-column: span 5; }
+.span-half  { grid-column: span 6; }
+.span-third { grid-column: span 4; }
+
+/* Caption placement */
+.photo-caption {
+  display: inline-block;
+  max-width: 480px;
+  margin-top: 16px;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --container-padding: 32px;
+  }
+  .grid-editorial {
+    grid-template-columns: 1fr;
+  }
+  .grid-editorial-divider {
+    display: none;
+  }
+  .grid-services {
+    grid-template-columns: 1fr;
+  }
+  .grid-testimonials {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-padding: 20px;
+  }
+  .grid-masonry-3 {
+    grid-template-columns: 1fr;
+  }
+  .grid-masonry-2 {
+    grid-template-columns: 1fr;
+  }
+  .span-wide,
+  .span-narrow,
+  .span-half,
+  .span-third {
+    grid-column: span 12;
+  }
+}

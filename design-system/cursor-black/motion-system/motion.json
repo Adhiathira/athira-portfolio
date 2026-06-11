@@ -1,0 +1,105 @@
+{
+  "timing": {
+    "base": "0.08s",
+    "fast": "0.03s",
+    "typewriter": "30ms",
+    "transition": "100ms",
+    "glitch": "0.1s",
+    "blink": "1s",
+    "reveal": "0.15s"
+  },
+  "easing": {
+    "mechanical": "step-start",
+    "snap": "steps(4, start)",
+    "terminal": "cubic-bezier(0.55, 0, 1, 0.45)",
+    "instant": "step-start",
+    "ease": "ease-out"
+  },
+  "keyframes": {
+    "cursor-blink": {
+      "description": "Terminal cursor blink — 1s step-end infinite",
+      "steps": {
+        "0%, 100%": { "opacity": "1" },
+        "50%": { "opacity": "0" }
+      },
+      "duration": "1s",
+      "timingFunction": "step-end",
+      "iteration": "infinite"
+    },
+    "glitch-shift": {
+      "description": "Horizontal translate flicker — CRT sync failure",
+      "steps": {
+        "0%": { "transform": "translateX(0)" },
+        "20%": { "transform": "translateX(-2px)" },
+        "40%": { "transform": "translateX(2px)" },
+        "60%": { "transform": "translateX(-1px)" },
+        "80%": { "transform": "translateX(1px)" },
+        "100%": { "transform": "translateX(0)" }
+      },
+      "duration": "0.1s",
+      "iteration": "1",
+      "fillMode": "both"
+    },
+    "rgb-split": {
+      "description": "Chromatic aberration — color channel separation",
+      "steps": {
+        "0%": { "textShadow": "none" },
+        "25%": { "textShadow": "-2px 0 #39ff14, 2px 0 #00e5ff" },
+        "50%": { "textShadow": "2px 0 #39ff14, -2px 0 #00e5ff" },
+        "75%": { "textShadow": "-1px 0 #39ff14, 1px 0 #00e5ff" },
+        "100%": { "textShadow": "none" }
+      },
+      "duration": "0.1s",
+      "iteration": "1",
+      "fillMode": "both"
+    },
+    "scanline-drift": {
+      "description": "CRT scanline sweep downward",
+      "steps": {
+        "0%": { "backgroundPosition": "0 -100%" },
+        "100%": { "backgroundPosition": "0 100%" }
+      },
+      "duration": "3s",
+      "iteration": "infinite",
+      "timingFunction": "linear"
+    },
+    "phosphor-pulse": {
+      "description": "Phosphor green glow oscillation on accent elements",
+      "steps": {
+        "0%": { "boxShadow": "0 0 4px rgba(57,255,20,0.3)" },
+        "50%": { "boxShadow": "0 0 12px rgba(57,255,20,0.7), 0 0 24px rgba(57,255,20,0.3)" },
+        "100%": { "boxShadow": "0 0 4px rgba(57,255,20,0.3)" }
+      },
+      "duration": "2s",
+      "iteration": "infinite",
+      "timingFunction": "ease-in-out"
+    },
+    "data-reveal": {
+      "description": "4-step clip-path reveal — data loading line by line",
+      "steps": {
+        "0%": { "clipPath": "inset(0 100% 0 0)" },
+        "25%": { "clipPath": "inset(0 75% 0 0)" },
+        "50%": { "clipPath": "inset(0 50% 0 0)" },
+        "75%": { "clipPath": "inset(0 25% 0 0)" },
+        "100%": { "clipPath": "inset(0 0% 0 0)" }
+      },
+      "duration": "0.15s",
+      "easing": "steps(4, start)",
+      "iteration": "1",
+      "fillMode": "both"
+    }
+  },
+  "utilities": {
+    "animate-cursor-blink": "animation: cursor-blink 1s step-end infinite",
+    "animate-glitch": "animation: glitch-shift 0.1s step-start both",
+    "animate-rgb-split": "animation: rgb-split 0.1s step-start both",
+    "animate-data-reveal": "animation: data-reveal 0.15s steps(4, start) both",
+    "animate-phosphor-pulse": "animation: phosphor-pulse 2s ease-in-out infinite",
+    "animate-scanline": "animation: scanline-drift 3s linear infinite"
+  },
+  "_twist": {
+    "sourceSystem": "null-signal",
+    "intensity": 5,
+    "twistDescription": "Typewriter + glitch motion system. Typewriter: 30ms per character, step-start timing. Cursor blink: 1s step-end infinite (true terminal blink, not smooth). Glitch-shift: horizontal ±2px jitter at 0.1s, step-start. RGB-split: phosphor-green/cyan chromatic aberration. Data-reveal: 4-step clip-path discrete reveal (0.15s). Phosphor-pulse: green glow oscillation for accent elements. No easing curves — terminal motion is mechanical and instant."
+  }
+}

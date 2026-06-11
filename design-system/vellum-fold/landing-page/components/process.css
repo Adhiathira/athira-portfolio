@@ -1,0 +1,834 @@
+/* ============================================================
+   Process — "The Craft" page
+   Deckle & Thread — hand papermaking and bookbinding studio
+
+   Sections:
+     1. Hero — compact header, cream bg
+     2. Papermaking — vertical timeline, 4 steps
+     3. Binding — 2x2 bento grid, 4 techniques
+     4. Materials — full-width horizontal cards
+     5. Commission CTA — dark section
+   ============================================================ */
+
+/* ── Shared layout ── */
+.process-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding-inline: var(--grid-padding);
+}
+
+/* ── Section depth: paper-grain texture overlay ── */
+.paper-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' seed='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+/* ── 1. HERO — compact, book cover feel ── */
+#process-hero {
+  position: relative;
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-5xl) var(--grid-padding) var(--space-4xl);
+  background: linear-gradient(178deg, var(--color-cream) 0%, var(--color-page-bg) 100%);
+  overflow: hidden;
+}
+
+#process-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+}
+
+#process-hero-chapter {
+  display: block;
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: var(--type-h3-weight);
+  letter-spacing: var(--type-h3-spacing);
+  text-transform: var(--type-h3-transform);
+  color: var(--color-muted);
+  margin: 0 0 var(--space-lg);
+}
+
+#process-hero-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h1);
+  line-height: var(--type-h1-line);
+  font-weight: var(--type-h1-weight);
+  letter-spacing: var(--type-h1-spacing);
+  color: var(--color-heading);
+  margin: 0 0 var(--space-lg);
+}
+
+#process-hero-tagline {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  line-height: var(--type-p-line);
+  font-weight: var(--type-p-weight);
+  color: var(--color-body);
+  margin: 0;
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+/* Bookmark ribbon — top-right decorative element */
+#hero-bookmark-ribbon {
+  position: absolute;
+  top: 0;
+  right: 15%;
+  width: 28px;
+  height: 96px;
+  background: var(--color-hero-accent);
+  z-index: 3;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+}
+
+/* Page number decorative element */
+.page-number {
+  position: absolute;
+  bottom: var(--space-lg);
+  right: var(--grid-padding);
+  font-family: var(--font-subheading);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  z-index: 2;
+}
+
+/* Scroll hint */
+#process-scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+#process-scroll-hint .scroll-hint-line {
+  width: 1px;
+  height: 40px;
+  background: var(--color-heading);
+  opacity: 0.2;
+  animation: scrollLineDraw 1.8s var(--ease-primary) infinite;
+  transform-origin: top;
+}
+
+@keyframes scrollLineDraw {
+  0%, 100% { transform: scaleY(0); opacity: 0; }
+  30%, 70% { transform: scaleY(1); opacity: 0.2; }
+}
+
+
+/* ── SVG section dividers — deckle / torn paper edges ── */
+.section-divider {
+  display: block;
+  width: 100%;
+  line-height: 0;
+  overflow: hidden;
+  margin-top: -2px;
+  position: relative;
+  z-index: 5;
+}
+
+.section-divider svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+
+/* ── 2. PAPERMAKING — vertical timeline ── */
+#papermaking-section {
+  position: relative;
+  padding: var(--space-5xl) 0;
+  background: var(--color-page-bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+#papermaking-header {
+  text-align: center;
+  margin-bottom: var(--space-4xl);
+}
+
+#papermaking-chapter-label {
+  display: block;
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: var(--type-h3-weight);
+  letter-spacing: var(--type-h3-spacing);
+  text-transform: var(--type-h3-transform);
+  color: var(--color-hero-accent);
+  margin: 0 0 var(--space-md);
+}
+
+#papermaking-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2);
+  line-height: var(--type-h2-line);
+  font-weight: var(--type-h2-weight);
+  letter-spacing: var(--type-h2-spacing);
+  color: var(--color-heading);
+  margin: 0;
+}
+
+/* Timeline container */
+#papermaking-timeline {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Vertical timeline line */
+#papermaking-timeline::before {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-section-divider);
+}
+
+/* Individual step */
+.timeline-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--grid-gap);
+  padding-bottom: var(--space-4xl);
+}
+
+.timeline-step:last-child {
+  padding-bottom: 0;
+}
+
+/* Step counter circle */
+.timeline-step-number {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.timeline-step-number .step-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--color-section-divider);
+  background: var(--color-page-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-heading);
+  z-index: 2;
+  position: relative;
+}
+
+/* Step content */
+.timeline-step-content {
+  padding-top: 6px;
+}
+
+.timeline-step-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-md);
+}
+
+.timeline-step-body {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  line-height: var(--type-p-line);
+  font-weight: var(--type-p-weight);
+  color: var(--color-body);
+  margin: 0 0 var(--space-lg);
+  max-width: 540px;
+}
+
+/* Step image container */
+.timeline-step-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  max-width: 480px;
+  aspect-ratio: 16 / 10;
+  background: var(--color-cream);
+}
+
+.timeline-step-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* ── 3. BINDING — bento grid ── */
+#binding-section {
+  position: relative;
+  padding: var(--space-5xl) 0;
+  background: linear-gradient(180deg, var(--color-cream) 0%, #f0e8da 100%);
+}
+
+#binding-header {
+  text-align: center;
+  margin-bottom: var(--space-4xl);
+}
+
+#binding-chapter-label {
+  display: block;
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: var(--type-h3-weight);
+  letter-spacing: var(--type-h3-spacing);
+  text-transform: var(--type-h3-transform);
+  color: var(--color-hero-accent);
+  margin: 0 0 var(--space-md);
+}
+
+#binding-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2);
+  line-height: var(--type-h2-line);
+  font-weight: var(--type-h2-weight);
+  letter-spacing: var(--type-h2-spacing);
+  color: var(--color-heading);
+  margin: 0;
+}
+
+/* Bento grid — asymmetric 2x2 */
+#binding-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-rows: auto auto;
+  gap: var(--grid-gap);
+}
+
+/* Each bento cell */
+.bento-cell {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--color-page-bg);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+/* First cell spans larger */
+.bento-cell:nth-child(1) {
+  min-height: 340px;
+}
+
+.bento-cell:nth-child(2) {
+  min-height: 300px;
+}
+
+.bento-cell:nth-child(3) {
+  min-height: 300px;
+}
+
+.bento-cell:nth-child(4) {
+  min-height: 340px;
+}
+
+/* Bento cell image area */
+.bento-cell-image {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-height: 180px;
+  background: var(--color-cream);
+}
+
+.bento-cell-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bento cell text area */
+.bento-cell-content {
+  padding: var(--space-lg) var(--space-lg) var(--space-xl);
+}
+
+.bento-cell-label {
+  display: block;
+  font-family: var(--font-subheading);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-sm);
+}
+
+.bento-cell-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  line-height: 1.45;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-sm);
+}
+
+.bento-cell-body {
+  font-family: var(--font-paragraph);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-body);
+  margin: 0;
+}
+
+/* Hover state on bento cells */
+.bento-cell-image img {
+  transition: transform var(--hover-transition);
+}
+
+.bento-cell:hover .bento-cell-image img {
+  transform: scale(1.04);
+}
+
+
+/* ── 4. MATERIALS — horizontal cards ── */
+#materials-section {
+  position: relative;
+  padding: var(--space-5xl) 0;
+  background: var(--color-page-bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+#materials-header {
+  text-align: center;
+  margin-bottom: var(--space-4xl);
+}
+
+#materials-chapter-label {
+  display: block;
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: var(--type-h3-weight);
+  letter-spacing: var(--type-h3-spacing);
+  text-transform: var(--type-h3-transform);
+  color: var(--color-accent);
+  margin: 0 0 var(--space-md);
+}
+
+#materials-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2);
+  line-height: var(--type-h2-line);
+  font-weight: var(--type-h2-weight);
+  letter-spacing: var(--type-h2-spacing);
+  color: var(--color-heading);
+  margin: 0;
+}
+
+/* Materials card list */
+#materials-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid-gap);
+}
+
+/* Individual material card — horizontal layout */
+.material-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--color-cream);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+  min-height: 260px;
+}
+
+/* Alternate cards: image right, text left */
+.material-card:nth-child(even) {
+  direction: rtl;
+}
+
+.material-card:nth-child(even) > * {
+  direction: ltr;
+}
+
+/* Material card image side */
+.material-card-image {
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;
+  background: var(--color-section-divider);
+}
+
+.material-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--hover-transition);
+}
+
+.material-card:hover .material-card-image img {
+  transform: scale(1.03);
+}
+
+/* Material card content side */
+.material-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-3xl) var(--space-3xl);
+}
+
+.material-card-index {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--color-section-divider);
+  line-height: 1;
+  margin: 0 0 var(--space-md);
+}
+
+.material-card-name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-heading);
+  margin: 0 0 var(--space-md);
+}
+
+.material-card-description {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  line-height: var(--type-p-line);
+  font-weight: var(--type-p-weight);
+  color: var(--color-body);
+  margin: 0;
+  max-width: 400px;
+}
+
+
+/* ── 5. COMMISSION CTA — dark section ── */
+#commission-section {
+  position: relative;
+  padding: var(--space-5xl) 0;
+  background: var(--color-dark-section-bg);
+  color: rgba(255, 255, 255, 0.88);
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Subtle depth: inner glow from edges */
+#commission-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232, 168, 124, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+#commission-content {
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+#commission-chapter-label {
+  display: block;
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: var(--type-h3-weight);
+  letter-spacing: var(--type-h3-spacing);
+  text-transform: var(--type-h3-transform);
+  color: var(--color-hero-accent);
+  margin: 0 0 var(--space-lg);
+}
+
+#commission-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2);
+  line-height: var(--type-h2-line);
+  font-weight: var(--type-h2-weight);
+  letter-spacing: var(--type-h2-spacing);
+  color: #fdfdfd;
+  margin: 0 0 var(--space-lg);
+}
+
+#commission-body {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  line-height: var(--type-p-line);
+  font-weight: var(--type-p-weight);
+  color: rgba(255, 255, 255, 0.68);
+  margin: 0 0 var(--space-3xl);
+}
+
+/* CTA buttons */
+.btn-primary {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-button);
+  font-size: var(--type-button);
+  line-height: var(--type-button-line);
+  font-weight: var(--type-button-weight);
+  letter-spacing: var(--type-button-spacing);
+  text-transform: var(--type-button-transform);
+  text-decoration: none;
+  padding: var(--space-cta-v) var(--space-cta-h);
+  min-width: 180px;
+  text-align: center;
+  border-radius: var(--space-cta-radius);
+  transition: background var(--hover-transition), color var(--hover-transition), box-shadow var(--hover-transition);
+}
+
+.btn-primary--light {
+  background: #fdfdfd;
+  color: var(--color-dark-section-bg);
+  border: 1px solid #fdfdfd;
+}
+
+.btn-primary--light:hover {
+  background: transparent;
+  color: #fdfdfd;
+  box-shadow: 0 0 0 1px #fdfdfd inset;
+}
+
+.btn-ghost-light {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-button);
+  font-size: var(--type-button);
+  line-height: var(--type-button-line);
+  font-weight: var(--type-button-weight);
+  letter-spacing: var(--type-button-spacing);
+  text-transform: var(--type-button-transform);
+  text-decoration: none;
+  padding: var(--space-cta-v) var(--space-cta-h);
+  min-width: 180px;
+  text-align: center;
+  border-radius: var(--space-cta-radius);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  transition: color var(--hover-transition), border-color var(--hover-transition);
+}
+
+.btn-ghost-light:hover {
+  color: #fdfdfd;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+#commission-cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* Decorative wax seal */
+#commission-seal {
+  margin-top: var(--space-3xl);
+  opacity: 0.3;
+}
+
+#commission-seal svg {
+  display: inline-block;
+}
+
+
+/* Book-page styling managed by book.css */
+
+
+/* ── feTurbulence grain overlay ── */
+#noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.038;
+  mix-blend-mode: multiply;
+}
+
+
+/* ── Responsive — tablet (900px) ── */
+@media (max-width: 900px) {
+  .process-inner {
+    padding-inline: var(--space-xl);
+  }
+
+  #process-hero {
+    min-height: 35vh;
+    padding: var(--space-4xl) var(--space-xl) var(--space-3xl);
+  }
+
+  #hero-bookmark-ribbon {
+    right: 10%;
+    height: 72px;
+    width: 22px;
+  }
+
+  /* Timeline */
+  #papermaking-timeline::before {
+    left: 28px;
+  }
+
+  .timeline-step {
+    grid-template-columns: 56px 1fr;
+    gap: var(--space-md);
+  }
+
+  .timeline-step-number .step-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
+  }
+
+  /* Bento grid */
+  #binding-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bento-cell:nth-child(1),
+  .bento-cell:nth-child(2),
+  .bento-cell:nth-child(3),
+  .bento-cell:nth-child(4) {
+    min-height: 280px;
+  }
+
+  /* Material cards */
+  .material-card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .material-card:nth-child(even) {
+    direction: ltr;
+  }
+
+  .material-card-image {
+    min-height: 220px;
+  }
+
+  .material-card-content {
+    padding: var(--space-xl) var(--space-xl);
+  }
+}
+
+
+/* ── Responsive — mobile (600px) ── */
+@media (max-width: 600px) {
+  .process-inner {
+    padding-inline: var(--space-md);
+  }
+
+  #process-hero {
+    min-height: 30vh;
+    padding: var(--space-3xl) var(--space-md) var(--space-xl);
+  }
+
+  #hero-bookmark-ribbon {
+    right: 6%;
+    height: 56px;
+    width: 18px;
+  }
+
+  .page-number {
+    display: none;
+  }
+
+  #process-scroll-hint {
+    display: none;
+  }
+
+  /* Timeline collapse */
+  #papermaking-timeline::before {
+    left: 20px;
+  }
+
+  .timeline-step {
+    grid-template-columns: 42px 1fr;
+    gap: var(--space-sm);
+    padding-bottom: var(--space-3xl);
+  }
+
+  .timeline-step-number .step-circle {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .timeline-step-image {
+    max-width: 100%;
+  }
+
+  /* Bento grid — single column */
+  #binding-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bento-cell:nth-child(1),
+  .bento-cell:nth-child(2),
+  .bento-cell:nth-child(3),
+  .bento-cell:nth-child(4) {
+    min-height: 240px;
+  }
+
+  .bento-cell-content {
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+  }
+
+  /* Material cards */
+  .material-card-image {
+    min-height: 180px;
+  }
+
+  .material-card-content {
+    padding: var(--space-lg) var(--space-lg);
+  }
+
+  .material-card-index {
+    font-size: 28px;
+  }
+
+  /* Commission CTA */
+  #commission-cta-row {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-ghost-light {
+    width: 100%;
+  }
+
+  #commission-seal {
+    margin-top: var(--space-xl);
+  }
+}

@@ -1,0 +1,82 @@
+/* Motion System — folio-verge */
+/* Source: lumen-draft | Twist: A duration scaling ×1.5 (intensity 3) */
+
+:root {
+  --motion-duration-micro: 0.225s;
+  --motion-duration-fast: 0.3s;
+  --motion-duration-default: 0.45s;
+  --motion-duration-medium: 0.6s;
+  --motion-duration-slow: 0.75s;
+  --motion-duration-emphasis: 0.975s;
+  --motion-duration-cinematic: 1.05s;
+
+  --motion-easing-standard: ease-in-out;
+  --motion-easing-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --motion-easing-material: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-decelerate: cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+/* Keyframes */
+@keyframes folio-fade-in {
+  0%   { opacity: 0; transform: translateX(5%); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes folio-fade-out {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes folio-scale-in {
+  0%   { transform: scale(0.5); }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes folio-rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes folio-panel-open {
+  0%   { grid-template-rows: 0fr; opacity: 0; }
+  100% { grid-template-rows: 1fr; opacity: 1; }
+}
+
+@keyframes folio-panel-close {
+  0%   { grid-template-rows: 1fr; opacity: 1; }
+  100% { grid-template-rows: 0fr; opacity: 0; }
+}
+
+/* Utility classes */
+.motion-fade-in {
+  animation: folio-fade-in var(--motion-duration-emphasis) var(--motion-easing-standard) both;
+}
+
+.motion-scale-in {
+  animation: folio-scale-in var(--motion-duration-default) var(--motion-easing-standard) both;
+}
+
+/* Transition helpers */
+.transition-default {
+  transition: all var(--motion-duration-default) var(--motion-easing-standard);
+}
+
+.transition-fast {
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.transition-spring {
+  transition: all var(--motion-duration-medium) var(--motion-easing-spring);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

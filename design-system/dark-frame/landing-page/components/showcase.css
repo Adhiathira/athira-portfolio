@@ -1,0 +1,196 @@
+/* ============================================================
+   SHOWCASE GRID — Dark Frame
+   3-col irregular photo grid with hover title overlays
+   ============================================================ */
+
+.showcase {
+  background-color: var(--color-page-bg);
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
+}
+
+.showcase__header {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+
+.showcase__label {
+  font-family: var(--font-body);
+  font-size: var(--type-caption);
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-caption);
+  margin-bottom: 16px;
+}
+
+.showcase__title {
+  font-family: var(--font-display);
+  font-size: var(--type-h2);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+}
+
+.showcase__count {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-text-caption);
+  letter-spacing: 0.05em;
+}
+
+/* Photo grid — 12 col with varied spans */
+.showcase__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--photo-gap);
+}
+
+.showcase__item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.showcase__item--wide {
+  grid-column: span 7;
+}
+
+.showcase__item--narrow {
+  grid-column: span 5;
+}
+
+.showcase__item--half {
+  grid-column: span 6;
+}
+
+/* Photo placeholder within showcase */
+.showcase__photo {
+  position: relative;
+  width: 100%;
+  background-color: var(--color-surface);
+}
+
+.showcase__item--wide .showcase__photo,
+.showcase__item--half .showcase__photo {
+  aspect-ratio: 4 / 3;
+}
+
+.showcase__item--narrow .showcase__photo {
+  aspect-ratio: 3 / 4;
+}
+
+/* Simulated photo depth gradient */
+.showcase__item:nth-child(1) .showcase__photo {
+  background: linear-gradient(160deg, #1e1a16 0%, #0d0c0a 50%, #111010 100%);
+}
+
+.showcase__item:nth-child(2) .showcase__photo {
+  background: linear-gradient(200deg, #12100e 0%, #0a0a0a 60%, #151514 100%);
+}
+
+.showcase__item:nth-child(3) .showcase__photo {
+  background: linear-gradient(120deg, #0e0e12 0%, #0a0a0a 70%, #111010 100%);
+}
+
+.showcase__item:nth-child(4) .showcase__photo {
+  background: linear-gradient(170deg, #141210 0%, #0a0a0a 55%, #0e0d0c 100%);
+}
+
+/* Overlay */
+.showcase__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-overlay-medium);
+  transition: opacity var(--duration-hover) ease-out;
+}
+
+.showcase__item:hover .showcase__overlay {
+  opacity: 0.2;
+}
+
+/* Title reveal on hover */
+.showcase__info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px 24px 24px;
+  background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 100%);
+  z-index: 2;
+  transform: translateY(8px);
+  transition: transform var(--duration-hover) ease-out;
+}
+
+.showcase__item:hover .showcase__info {
+  transform: translateY(0);
+}
+
+.showcase__project-type {
+  font-family: var(--font-body);
+  font-size: var(--type-caption);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 8px;
+}
+
+.showcase__project-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+/* View all link */
+.showcase__footer {
+  max-width: 1440px;
+  margin: 40px auto 0;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 1024px) {
+  .showcase__item--wide,
+  .showcase__item--narrow,
+  .showcase__item--half {
+    grid-column: span 12;
+  }
+
+  .showcase__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .showcase__item {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .showcase__grid {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+
+  .showcase__item {
+    grid-column: span 1;
+  }
+
+  .showcase__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

@@ -1,0 +1,210 @@
+/* ============================================================
+   Instrument Specs — SPECTRA
+   Feature rows alternating, teal-dark section
+   ============================================================ */
+
+#instrument-specs {
+  position: relative;
+  background: var(--color-section-teal-dark);
+  padding: var(--space-section-top) 0 var(--space-section-bottom);
+  overflow: hidden;
+  color: #ffffff;
+}
+
+/* Depth gradient layer */
+#instrument-specs::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 30%, rgba(33, 243, 182, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 70%, rgba(33, 243, 182, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Section inner ── */
+#instrument-specs-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding-inline);
+}
+
+/* ── Section header ── */
+#instrument-specs-header {
+  margin-bottom: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+#instrument-specs-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+}
+
+#instrument-specs-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 60px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* ── Feature rows ── */
+#instrument-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.instrument-row {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 64px;
+  align-items: center;
+  padding: 56px 0;
+  border-top: 1px solid rgba(33, 243, 182, 0.12);
+  position: relative;
+}
+
+.instrument-row:last-child {
+  border-bottom: 1px solid rgba(33, 243, 182, 0.12);
+}
+
+/* Row alternating background accent */
+.instrument-row::before {
+  content: '';
+  position: absolute;
+  inset: 0 -40px;
+  background: rgba(33, 243, 182, 0.015);
+  opacity: 0;
+  border-radius: 4px;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.instrument-row:hover::before {
+  opacity: 1;
+}
+
+/* ── Instrument left column ── */
+.instrument-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.instrument-row-number {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(33, 243, 182, 0.4);
+}
+
+.instrument-name {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.5vw, 36px);
+  font-weight: 800;
+  color: var(--color-accent-teal);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.instrument-spec {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-primary-action);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.instrument-spec::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background: var(--color-primary-action);
+  flex-shrink: 0;
+}
+
+/* ── Instrument right column ── */
+.instrument-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.instrument-desc {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(200, 205, 212, 0.85);
+  margin: 0;
+}
+
+.instrument-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.instrument-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  background: rgba(33, 243, 182, 0.07);
+  border: 1px solid rgba(33, 243, 182, 0.2);
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(33, 243, 182, 0.8);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .instrument-row {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 40px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  #instrument-specs-inner {
+    padding: 0 20px;
+  }
+
+  .instrument-row {
+    padding: 32px 0;
+    gap: 20px;
+  }
+
+  .instrument-name {
+    font-size: clamp(22px, 5vw, 30px);
+  }
+
+  #instrument-specs-header {
+    margin-bottom: 48px;
+  }
+}

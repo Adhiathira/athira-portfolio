@@ -1,0 +1,279 @@
+/* ============================================================
+   Live Stats — SPECTRA
+   Bento grid layout: 3fr 1fr 1fr top row + full-width strip
+   Background: dark navy (#161d25)
+   ============================================================ */
+
+#live-stats {
+  background: linear-gradient(180deg, var(--color-page-bg) 0%, rgba(22, 29, 37, 0.96) 100%);
+  padding: var(--space-section-top) 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle radial glow behind the entire section */
+#live-stats::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 400px;
+  background: radial-gradient(ellipse at center, rgba(33, 243, 182, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#live-stats-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding-inline) var(--space-section-bottom);
+}
+
+/* ── Section header ── */
+#stats-header {
+  margin-bottom: 48px;
+}
+
+#stats-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+  margin-bottom: 16px;
+}
+
+/* ── Bento grid ── */
+#stats-bento {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 16px;
+}
+
+/* Glass card base */
+.bento-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: var(--space-card);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s var(--ease-primary), box-shadow 0.35s var(--ease-primary);
+}
+
+.bento-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.bento-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Large Kp stat card — spans row 1, col 1 */
+#stats-card-kp {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+  border-color: rgba(33, 243, 182, 0.15);
+  background: linear-gradient(135deg, rgba(33, 243, 182, 0.06) 0%, rgba(255,255,255,0.02) 100%);
+}
+
+#stats-kp-number {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 10vw, 160px);
+  font-weight: 800;
+  line-height: 0.9;
+  color: var(--color-accent-teal);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 40px rgba(33, 243, 182, 0.4);
+}
+
+#stats-kp-label {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-muted-text);
+  margin-top: 12px;
+}
+
+#stats-kp-title {
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: rgba(33, 243, 182, 0.6);
+  margin-bottom: 8px;
+}
+
+/* Stations card */
+#stats-card-stations {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 220px;
+  border-color: rgba(146, 72, 228, 0.15);
+  background: linear-gradient(135deg, rgba(146, 72, 228, 0.06) 0%, rgba(255,255,255,0.02) 100%);
+}
+
+#stats-stations-number {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 7vw, 96px);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-accent-violet);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 30px rgba(146, 72, 228, 0.4);
+}
+
+#stats-stations-label {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-muted-text);
+  margin-top: 8px;
+}
+
+/* Storm class card */
+#stats-card-storm {
+  grid-column: 3;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 220px;
+  border-color: rgba(226, 255, 101, 0.2);
+  background: linear-gradient(135deg, rgba(226, 255, 101, 0.08) 0%, rgba(255,255,255,0.02) 100%);
+}
+
+#stats-storm-badge {
+  display: inline-block;
+  padding: 10px 20px;
+  background: var(--color-primary-action);
+  color: #0e1218;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  box-shadow: 0 0 20px rgba(226, 255, 101, 0.3);
+}
+
+#stats-storm-label {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-muted-text);
+  margin-top: 12px;
+}
+
+/* ── Aurora ticker strip ── */
+#stats-ticker-strip {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  background: rgba(33, 243, 182, 0.04);
+  border: 1px solid rgba(33, 243, 182, 0.12);
+  border-radius: 8px;
+  padding: 16px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+#stats-ticker-inner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  animation: tickerScroll 30s linear infinite;
+  white-space: nowrap;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-segment {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 32px;
+  flex-shrink: 0;
+}
+
+.ticker-point {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.ticker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent-teal);
+  box-shadow: 0 0 6px rgba(33, 243, 182, 0.8);
+  flex-shrink: 0;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.ticker-value {
+  color: var(--color-accent-teal);
+  font-weight: 600;
+}
+
+.ticker-sep {
+  color: rgba(33, 243, 182, 0.2);
+  font-size: 10px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #stats-bento {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #stats-card-kp {
+    grid-column: 1 / -1;
+    min-height: 160px;
+  }
+
+  #stats-kp-number {
+    font-size: clamp(64px, 15vw, 100px);
+  }
+}
+
+@media (max-width: 600px) {
+  #stats-bento {
+    grid-template-columns: 1fr;
+  }
+
+  #stats-card-kp,
+  #stats-card-stations,
+  #stats-card-storm {
+    grid-column: 1;
+  }
+}

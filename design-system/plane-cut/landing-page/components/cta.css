@@ -1,0 +1,192 @@
+/* plane-cut — CTA Section */
+/* Dark teal background — reversed text with cut-out shape decoration */
+
+.cta-section {
+  position: relative;
+  background: var(--color-accent-teal);
+  padding: var(--section-padding) 0;
+  z-index: 5;
+  overflow: hidden;
+}
+
+/* Cut-out shape decorations — geometric CSS clip-path */
+.cta-decoration {
+  position: absolute;
+  pointer-events: none;
+}
+
+.cta-decoration--1 {
+  width: 280px;
+  height: 280px;
+  background: var(--color-accent-teal-deep);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  top: -80px;
+  right: -60px;
+}
+
+.cta-decoration--2 {
+  width: 160px;
+  height: 160px;
+  background: rgba(248, 244, 239, 0.06);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  bottom: -40px;
+  left: 80px;
+}
+
+.cta-decoration--3 {
+  width: 80px;
+  height: 80px;
+  background: var(--color-accent);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+  bottom: 40px;
+  right: 200px;
+}
+
+.cta-decoration--4 {
+  width: 200px;
+  height: 200px;
+  background: rgba(198, 93, 58, 0.15);
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  top: 20px;
+  left: -40px;
+}
+
+/* Content */
+.cta-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.cta-content .eyebrow {
+  color: rgba(248, 244, 239, 0.6);
+  margin-bottom: var(--space-lg);
+  display: block;
+}
+
+.cta-content h2 {
+  color: var(--color-text-reversed);
+  margin-bottom: var(--space-lg);
+}
+
+.cta-content p {
+  color: rgba(248, 244, 239, 0.75);
+  font-size: 1.0625rem;
+  margin-bottom: var(--space-2xl);
+}
+
+.cta-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-teal-reversed {
+  background: var(--color-layer-1-alt);
+  color: var(--color-text-primary);
+  border-color: var(--color-layer-1-alt);
+  border: 1.5px solid transparent;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  transition:
+    background-color var(--hover-duration) var(--hover-ease),
+    transform var(--hover-duration) var(--hover-ease),
+    box-shadow var(--hover-duration) var(--hover-ease);
+}
+
+.btn-teal-reversed:hover {
+  background: var(--color-layer-1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.btn-teal-ghost {
+  background: transparent;
+  color: var(--color-text-reversed);
+  border: 1.5px solid rgba(248, 244, 239, 0.4);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  transition:
+    border-color var(--hover-duration) var(--hover-ease),
+    transform var(--hover-duration) var(--hover-ease),
+    background-color var(--hover-duration) var(--hover-ease);
+}
+
+.btn-teal-ghost:hover {
+  border-color: rgba(248, 244, 239, 0.8);
+  background: rgba(248, 244, 239, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Social proof strip */
+.cta-proof {
+  margin-top: var(--space-2xl);
+  display: flex;
+  gap: var(--space-2xl);
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cta-proof-stat {
+  text-align: center;
+}
+
+.cta-proof-stat .stat-number {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text-reversed);
+  display: block;
+}
+
+.cta-proof-stat .stat-label {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 239, 0.55);
+}
+
+/* Focus states */
+.btn-teal-reversed:focus-visible,
+.btn-teal-ghost:focus-visible {
+  outline: 2px solid rgba(248, 244, 239, 0.8);
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .cta-actions {
+    flex-direction: column;
+  }
+
+  .btn-teal-reversed,
+  .btn-teal-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cta-proof {
+    gap: var(--space-xl);
+  }
+}

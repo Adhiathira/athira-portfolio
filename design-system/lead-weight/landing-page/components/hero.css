@@ -1,0 +1,136 @@
+/* ============================================================
+   hero.css — lead-weight / VERDURE
+   Full-viewport masthead with massive display type.
+   Light warm-cream surface (#fcf7f1). Video panel below fold.
+   ============================================================ */
+
+/* ── Hero section ─────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: 72px; /* nav height clearance */
+  padding-bottom: 0;
+  background: var(--color-page-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Above-fold zone (headline + subtext) ─────────────────── */
+#hero-above-fold {
+  padding: 0 40px var(--space-section-break);
+  max-width: var(--grid-max-width);
+  width: 100%;
+}
+
+/* ── Eyebrow label above headline ──────────────────────────── */
+#hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: var(--color-body-text);
+  margin: 0 0 32px;
+  display: block;
+}
+
+/* ── Display headline ─────────────────────────────────────── */
+#hero-headline {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--letter-spacing-h1);
+  color: var(--color-heading);
+  margin: 0 0 48px;
+  max-width: 14ch;
+  /* Defensive: never rely on inherited opacity */
+}
+
+/* ── Sub-tagline ──────────────────────────────────────────── */
+#hero-tagline {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 300;
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
+  color: var(--color-body-text);
+  margin: 0;
+  max-width: 42ch;
+}
+
+/* ── Video panel — full-width, 40vh tall ─────────────────── */
+#hero-video-panel {
+  width: 100%;
+  height: 40vh;
+  min-height: 260px;
+  position: relative;
+  overflow: hidden;
+  background: #1a1714;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.18);
+}
+
+#hero-video-panel video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#hero-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #1a1714;
+  color: rgba(242, 237, 227, 0.38);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  position: absolute;
+  inset: 0;
+}
+
+/* Subtle overlay to keep monochrome letterform feeling controlled */
+#hero-video-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 23, 20, 0.22);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Depth: subtle hairline rule between above-fold and video ─ */
+/* (achieved via border-top on #hero-video-panel above) */
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  #hero-above-fold {
+    padding: 0 28px var(--space-16);
+  }
+
+  #hero-video-panel {
+    height: 35vh;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero {
+    min-height: 100svh;
+  }
+
+  #hero-above-fold {
+    padding: 0 20px 64px;
+  }
+
+  #hero-video-panel {
+    height: 28vh;
+    min-height: 200px;
+  }
+}

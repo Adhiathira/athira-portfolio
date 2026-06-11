@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive - Bramble and Dyce</title>
+  <meta name="description" content="All past editions of Bramble and Dyce botanical letterpress prints, from 2019 to present.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <style>
+    /* Archive-specific page header */
+    #page-header {
+      padding: 140px 0 72px;
+      background: linear-gradient(160deg, var(--color-surface-bone) 0%, var(--color-page-bg) 100%);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    #page-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-margin);
+    }
+
+    #page-header-eyebrow {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    #page-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 300;
+      letter-spacing: -1.8px;
+      line-height: 1.08;
+      color: var(--color-heading);
+      margin: 0 0 16px;
+    }
+
+    #page-header-sub {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-muted-text);
+    }
+
+    /* Archive main */
+    #archive-main {
+      padding: 80px 0 120px;
+      background: var(--color-page-bg);
+    }
+
+    #archive-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-margin);
+    }
+
+    #archive-filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-body-text);
+      border: 1px solid var(--color-border);
+      background: transparent;
+      border-radius: 2px;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-pill:hover, .filter-pill.active {
+      background: var(--color-heading);
+      color: var(--color-page-bg);
+      border-color: var(--color-heading);
+    }
+
+    /* Archive grid — 4 columns asymmetric */
+    #archive-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px 24px;
+    }
+
+    /* stagger offset on 2nd and 4th card for visual interest */
+    .archive-card:nth-child(2) { margin-top: 40px; }
+    .archive-card:nth-child(4) { margin-top: 24px; }
+    .archive-card:nth-child(6) { margin-top: 40px; }
+    .archive-card:nth-child(8) { margin-top: 24px; }
+
+    .archive-card-img-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 130%;
+      background: var(--color-surface-bone);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .archive-card-img-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .archive-card:hover .archive-card-img-wrap img {
+      transform: scale(1.03);
+    }
+
+    .archive-placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      background: var(--color-surface-warm);
+      color: var(--color-muted-text);
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .archive-card-season {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .archive-card-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: -0.2px;
+      color: var(--color-heading);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .archive-card-latin {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+    }
+
+    .archive-card-status {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 1px;
+      margin-top: 8px;
+    }
+
+    .status-available {
+      background: var(--color-surface-warm);
+      color: var(--color-accent);
+      border: 1px solid var(--color-border);
+    }
+
+    .status-sold {
+      background: transparent;
+      color: var(--color-muted-text);
+      border: 1px solid var(--color-border);
+    }
+
+    @media (max-width: 1024px) {
+      #archive-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      #archive-grid { grid-template-columns: repeat(2, 1fr); }
+      .archive-card:nth-child(n) { margin-top: 0; }
+    }
+
+    @media (max-width: 600px) {
+      #page-header-inner, #archive-inner { padding: 0 20px; }
+      #archive-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="site-nav" class="site-nav">
+  <a href="index.html" class="nav-logo">Bramble &amp; Dyce</a>
+  <ul class="nav-links">
+    <li><a href="archive.html" class="nav-link--active">Archive</a></li>
+    <li><a href="process.html">Process</a></li>
+    <li><a href="subscribe.html">Subscribe</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="subscribe.html" class="nav-cta">Current Edition</a>
+  <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div id="nav-mobile-menu" class="nav-mobile-menu">
+  <a href="archive.html" class="nav-link--active">Archive</a>
+  <a href="process.html">Process</a>
+  <a href="subscribe.html">Subscribe</a>
+  <a href="about.html">About</a>
+</div>
+
+<div class="nav-spacer" style="height:64px;"></div>
+
+<!-- PAGE HEADER -->
+<header id="page-header">
+  <div id="page-header-inner">
+    <span id="page-header-eyebrow">All Editions</span>
+    <h1>The Archive</h1>
+    <p id="page-header-sub">52 editions &middot; 2019&ndash;present &middot; Orkney Islands</p>
+  </div>
+</header>
+
+<!-- ARCHIVE MAIN -->
+<main id="archive-main">
+  <div id="archive-inner">
+    <div id="archive-filters">
+      <button class="filter-pill active">All</button>
+      <button class="filter-pill">Spring</button>
+      <button class="filter-pill">Summer</button>
+      <button class="filter-pill">Autumn</button>
+      <button class="filter-pill">Winter</button>
+      <button class="filter-pill">Available</button>
+    </div>
+
+    <div id="archive-grid">
+
+      <div class="archive-card">
+        <div class="archive-card-img-wrap">
+          <img src="assets/archive-sea-thrift.jpeg" alt="Sea Thrift letterpress print"
+            onerror="this.style.display='none';document.getElementById('arch-ph-1').style.display='flex'">
+          <div id="arch-ph-1" class="archive-placeholder">assets/archive-sea-thrift.jpeg</div>
+        </div>
+        <span class="archive-card-season">Spring 2026 &middot; No. 52</span>
+        <span class="archive-card-name">Sea Thrift</span>
+        <span class="archive-card-latin">Armeria maritima</span>
+        <span class="archive-card-status status-available">Available</span>
+      </div>
+
+      <div class="archive-card">
+        <div class="archive-card-img-wrap">
+          <img src="assets/archive-yellow-rattle.jpeg" alt="Yellow Rattle letterpress print"
+            onerror="this.style.display='none';document.getElementById('arch-ph-2').style.display='flex'">
+          <div id="arch-ph-2" class="archive-placeholder">assets/archive-yellow-rattle.jpeg</div>
+        </div>
+        <span class="archive-card-season">Winter 2025 &middot; No. 51</span>
+        <span class="archive-card-name">Yellow Rattle</span>
+        <span class="archive-card-latin">Rhinanthus minor</span>
+        <span class="archive-card-status status-sold">Sold Out</span>
+      </div>
+
+      <div class="archive-card">
+        <div class="archive-card-img-wrap">
+          <img src="assets/archive-bog-cotton.jpeg" alt="Bog Cotton letterpress print"
+            onerror="this.style.display='none';document.getElementById('arch-ph-3').style.display='flex'">
+          <div id="arch-ph-3" class="archive-placeholder">assets/archive-bog-cotton.jpeg</div>
+        </div>
+        <span class="archive-card-season">Autumn 2025 &middot; No. 50</span>
+        <span class="archive-card-name">Bog Cotton</span>
+        <span class="archive-card-latin">Eriophorum angustifolium</span>
+        <span class="archive-card-status status-sold">Sold Out</span>
+      </div>
+
+      <div class="archive-card">
+        <div class="archive-card-img-wrap">
+          <img src="assets/archive-stonecrop.jpeg" alt="Common Stonecrop letterpress print"
+            onerror="this.style.display='none';document.getElementById('arch-ph-4').style.display='flex'">
+          <div id="arch-ph-4" class="archive-placeholder">assets/archive-stonecrop.jpeg</div>
+        </div>
+        <span class="archive-card-season">Summer 2025 &middot; No. 49</span>
+        <span class="archive-card-name">Common Stonecrop</span>
+        <span class="archive-card-latin">Sedum acre</span>
+        <span class="archive-card-status status-sold">Sold Out</span>
+      </div>
+
+      <div class="archive-card">
+        <div class="archive-card-img-wrap">
+          <img src="assets/archive-heath-spotted-orchid.jpeg" alt="Heath Spotted-orchid letterpress print"
+            onerror="this.style.display='none';document.getElementById('arch-ph-5').style.display='flex'">
+          <div id="arch-ph-5" class="archive-placeholder">assets/archive-heath-spotted-orchid.jpeg</div>
+        </div>
+        <span class="archive-card-season">Spring 2025 &middot; No. 48</span>
+        <span class="archive-card-name">Heath Spotted-orchid</span>
+        <span class="archive-card-latin">Dactylorhiza maculata</span>
+        <span class="archive-card-status status-sold">Sold Out</span>
+      </div>
+
+      <div class="archive-card">
+        <div class="archive-card-img-wrap">
+          <img src="assets/archive-sea-campion.jpeg" alt="Sea Campion letterpress print"
+            onerror="this.style.display='none';document.getElementById('arch-ph-6').style.display='flex'">
+          <div id="arch-ph-6" class="archive-placeholder">assets/archive-sea-campion.jpeg</div>
+        </div>
+        <span class="archive-card-season">Winter 2024 &middot; No. 47</span>
+        <span class="archive-card-name">Sea Campion</span>
+        <span class="archive-card-latin">Silene uniflora</span>
+        <span class="archive-card-status status-sold">Sold Out</span>
+      </div>
+
+      <div class="archive-card">
+        <div class="archive-card-img-wrap">
+          <img src="assets/archive-ragged-robin.jpeg" alt="Ragged-Robin letterpress print"
+            onerror="this.style.display='none';document.getElementById('arch-ph-7').style.display='flex'">
+          <div id="arch-ph-7" class="archive-placeholder">assets/archive-ragged-robin.jpeg</div>
+        </div>
+        <span class="archive-card-season">Autumn 2024 &middot; No. 46</span>
+        <span class="archive-card-name">Ragged-Robin</span>
+        <span class="archive-card-latin">Silene flos-cuculi</span>
+        <span class="archive-card-status status-sold">Sold Out</span>
+      </div>
+
+      <div class="archive-card">
+        <div class="archive-card-img-wrap">
+          <img src="assets/archive-grass-of-parnassus.jpeg" alt="Grass of Parnassus letterpress print"
+            onerror="this.style.display='none';document.getElementById('arch-ph-8').style.display='flex'">
+          <div id="arch-ph-8" class="archive-placeholder">assets/archive-grass-of-parnassus.jpeg</div>
+        </div>
+        <span class="archive-card-season">Summer 2024 &middot; No. 45</span>
+        <span class="archive-card-name">Grass of Parnassus</span>
+        <span class="archive-card-latin">Parnassia palustris</span>
+        <span class="archive-card-status status-sold">Sold Out</span>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer id="site-footer">
+  <div class="section-inner">
+    <div id="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-wordmark">Bramble &amp; Dyce</a>
+        <p class="footer-tagline">Hand-pulled botanical letterpress.<br>Established 2019 &middot; Mainland, Orkney.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Editions</p>
+        <ul class="footer-col-links">
+          <li><a href="archive.html">Archive</a></li>
+          <li><a href="subscribe.html">Current Edition</a></li>
+          <li><a href="subscribe.html">Subscribe</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Studio</p>
+        <ul class="footer-col-links">
+          <li><a href="process.html">The Process</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Collect</p>
+        <ul class="footer-col-links">
+          <li><a href="subscribe.html">Individual Prints</a></li>
+          <li><a href="subscribe.html">Gift Subscription</a></li>
+          <li><a href="about.html">Stockists</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-base">
+      <span class="footer-copyright">&copy; 2026 Bramble &amp; Dyce</span>
+      <span class="footer-provenance">Stenness Mill &middot; Mainland &middot; Orkney &middot; KW16</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  var lenis = new Lenis({ duration: 1.4, easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+  function rafLoop(time) { lenis.raf(time); requestAnimationFrame(rafLoop); }
+  requestAnimationFrame(rafLoop);
+
+  var nav = document.getElementById('site-nav');
+  var mobileMenu = document.getElementById('nav-mobile-menu');
+  var toggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+  if (nav) { window.addEventListener('scroll', function() { nav.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true }); }
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function() {
+      var isOpen = mobileMenu.classList.toggle('is-open');
+      nav.classList.toggle('nav-mobile-open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from('#page-header h1', { y: 24, opacity: 0, duration: 0.85, ease: 'power3.out', delay: 0.15 });
+  gsap.from('#page-header-eyebrow', { y: 12, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.05 });
+  gsap.from('#page-header-sub', { y: 12, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.3 });
+
+  // Filter pill behavior
+  var pills = document.querySelectorAll('.filter-pill');
+  pills.forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      pills.forEach(function(p) { p.classList.remove('active'); });
+      pill.classList.add('active');
+    });
+  });
+
+  // Archive cards scattered assembly
+  var cards = document.querySelectorAll('.archive-card');
+  gsap.from(cards, {
+    x: function() { return gsap.utils.random(-window.innerWidth * 0.25, window.innerWidth * 0.25); },
+    y: function() { return gsap.utils.random(-120, 120); },
+    rotation: function() { return gsap.utils.random(-12, 12); },
+    opacity: 0,
+    duration: 0.9,
+    stagger: { each: 0.05, from: 'random' },
+    ease: 'power3.out',
+    scrollTrigger: { trigger: '#archive-grid', start: 'top 80%', once: true }
+  });
+
+  // Footer copyright
+  var copyrightStrip = document.querySelector('.footer-copyright');
+  if (copyrightStrip) {
+    gsap.from(copyrightStrip, { clipPath: 'inset(0 100% 0 0)', duration: 1.08, ease: 'power3.inOut', scrollTrigger: { trigger: copyrightStrip, start: 'top 95%', once: true } });
+    gsap.to(copyrightStrip, { clipPath: 'inset(0 0% 0 0)', duration: 1.08, ease: 'power3.inOut', scrollTrigger: { trigger: copyrightStrip, start: 'top 95%', once: true } });
+  }
+})();
+</script>
+</body>
+</html>

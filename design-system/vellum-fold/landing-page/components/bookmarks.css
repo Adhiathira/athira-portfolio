@@ -1,0 +1,246 @@
+/* ============================================================
+   Bookmarks — Deckle & Thread
+   Physical book tab dividers on the right edge.
+   Each tab is a different color from the palette.
+   Enhanced with layered shadows for card stock depth.
+   ============================================================ */
+
+.bookmarks {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bookmark-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 72px;
+  border-radius: 8px 0 0 8px;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--font-subheading);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    width var(--hover-transition),
+    box-shadow var(--hover-transition),
+    transform var(--hover-transition);
+  position: relative;
+  /* Layered shadows for physical card stock depth */
+  box-shadow:
+    -1px 1px 2px rgba(45, 47, 52, 0.1),
+    -3px 2px 6px rgba(45, 47, 52, 0.08),
+    -5px 3px 12px rgba(45, 47, 52, 0.05);
+  /* Paper texture on tab surface */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(45, 47, 52, 0.02) 3px,
+      rgba(45, 47, 52, 0.02) 4px
+    );
+  /* background-color is set per-tab variant below */
+}
+
+/* ── Card stock thickness edge ── */
+.bookmark-tab::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: -1px;
+  bottom: 3px;
+  width: 100%;
+  z-index: -1;
+  border-radius: 8px 0 0 8px;
+  background: linear-gradient(
+    180deg,
+    rgba(45, 47, 52, 0.06) 0%,
+    rgba(45, 47, 52, 0.12) 50%,
+    rgba(45, 47, 52, 0.08) 100%
+  );
+  transform: translateY(3px) translateX(-2px);
+}
+
+.bookmark-tab:hover {
+  width: 52px;
+  box-shadow:
+    -2px 2px 4px rgba(45, 47, 52, 0.12),
+    -4px 3px 10px rgba(45, 47, 52, 0.08),
+    -6px 4px 16px rgba(45, 47, 52, 0.05);
+  transform: translateX(-4px);
+}
+
+.bookmark-tab.is-active {
+  width: 56px;
+  box-shadow:
+    -2px 2px 4px rgba(45, 47, 52, 0.14),
+    -5px 4px 12px rgba(45, 47, 52, 0.1),
+    -8px 5px 20px rgba(45, 47, 52, 0.06);
+  transform: translateX(-6px);
+}
+
+/* Tab label (rotated vertically) */
+.bookmark-tab__label {
+  transform: rotate(180deg);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── Per-tab colors (from design system palette) ──
+   Each tab uses background-color which coexists with
+   the paper texture set via background-image above. */
+
+/* Tab 1 — Home: cream */
+.bookmark-tab--home {
+  background-color: var(--color-cream);
+  color: var(--color-heading-dark);
+}
+
+/* Tab 2 — Studio: warm sand */
+.bookmark-tab--studio {
+  background-color: var(--color-tag-warm);
+  color: var(--color-heading-dark);
+}
+
+/* Tab 3 — Craft: coral accent */
+.bookmark-tab--craft {
+  background-color: var(--color-hero-accent);
+  color: var(--color-page-bg);
+}
+
+/* Tab 4 — Works: soft green */
+.bookmark-tab--works {
+  background-color: var(--color-tag-success);
+  color: var(--color-tag-success-text);
+}
+
+/* Tab 5 — Commission: periwinkle */
+.bookmark-tab--commission {
+  background-color: var(--color-tag-blue);
+  color: var(--color-tag-blue-text);
+}
+
+/* ── Active indicator — small notch on the left side ── */
+.bookmark-tab.is-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  border-radius: 0 2px 2px 0;
+  background-color: currentColor;
+  opacity: 0.5;
+}
+
+/* ── Mobile: tabs at bottom ── */
+@media (max-width: 768px) {
+  .bookmarks {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2px;
+    padding: 0 16px;
+    background: rgba(253, 253, 253, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid var(--color-border-default);
+  }
+
+  .bookmark-tab {
+    width: auto;
+    height: 44px;
+    border-radius: 8px 8px 0 0;
+    writing-mode: horizontal-tb;
+    text-orientation: initial;
+    padding: 0 12px;
+    font-size: 9px;
+    /* Horizontal shadow direction for bottom tabs */
+    box-shadow:
+      0 -1px 2px rgba(45, 47, 52, 0.08),
+      0 -2px 6px rgba(45, 47, 52, 0.06),
+      0 -4px 10px rgba(45, 47, 52, 0.04);
+  }
+
+  .bookmark-tab::after {
+    /* Adjusted for horizontal orientation */
+    top: -1px;
+    left: 3px;
+    right: 3px;
+    bottom: auto;
+    width: auto;
+    height: 100%;
+    border-radius: 8px 8px 0 0;
+    transform: translateY(-3px) translateX(0);
+  }
+
+  .bookmark-tab:hover {
+    width: auto;
+    height: 48px;
+    transform: translateY(-2px);
+    box-shadow:
+      0 -2px 4px rgba(45, 47, 52, 0.1),
+      0 -3px 10px rgba(45, 47, 52, 0.07),
+      0 -5px 14px rgba(45, 47, 52, 0.04);
+  }
+
+  .bookmark-tab.is-active {
+    width: auto;
+    height: 48px;
+    transform: translateY(-4px);
+    box-shadow:
+      0 -2px 4px rgba(45, 47, 52, 0.12),
+      0 -4px 12px rgba(45, 47, 52, 0.08),
+      0 -6px 18px rgba(45, 47, 52, 0.05);
+  }
+
+  .bookmark-tab__label {
+    transform: none;
+  }
+
+  .bookmark-tab.is-active::before {
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    border-radius: 0 0 2px 2px;
+  }
+
+  .book-progress {
+    bottom: 56px;
+  }
+}
+
+@media (max-width: 600px) {
+  .bookmark-tab {
+    font-size: 8px;
+    letter-spacing: 1px;
+    padding: 0 8px;
+    height: 40px;
+  }
+
+  .bookmark-tab:hover,
+  .bookmark-tab.is-active {
+    height: 44px;
+  }
+}

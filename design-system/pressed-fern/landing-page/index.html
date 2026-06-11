@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seedkeep — Heritage Seed Library & Botanical Archive</title>
+  <meta name="description" content="Seedkeep is a living archive preserving heirloom seed varieties and botanical wisdom for future generations. Become a seed steward today.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo">Seedkeep</a>
+  <ul class="nav-links">
+    <li><a href="collection.html">Collection</a></li>
+    <li><a href="wisdom.html">Wisdom</a></li>
+    <li><a href="almanac.html">Almanac</a></li>
+    <li><a href="stewards.html">Stewards</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html" class="nav-link--active">Home</a>
+  <a href="collection.html">Collection</a>
+  <a href="wisdom.html">Wisdom</a>
+  <a href="almanac.html">Almanac</a>
+  <a href="stewards.html">Stewards</a>
+</div>
+<script>
+(function(){
+  var nav = document.getElementById('site-nav');
+  var mobileMenu = document.getElementById('nav-mobile-menu');
+  var toggle = nav.querySelector('.nav-mobile-toggle');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 20){ nav.classList.add('scrolled'); }
+    else { nav.classList.remove('scrolled'); }
+  }, { passive: true });
+  if(toggle && mobileMenu){
+    toggle.addEventListener('click', function(){
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click', function(){
+        nav.classList.remove('nav-mobile-open');
+        mobileMenu.classList.remove('is-open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+})();
+</script>
+
+<!-- HERO -->
+<section class="site-hero" id="hero">
+  <div class="hero-control">
+    <!-- Ghost letterform watermark -->
+    <span class="ghost-word" style="top: 20px; right: -60px; z-index: 0;">Archive</span>
+
+    <span class="hero-label" id="hero-label">Established 1994 · Living Archive</span>
+    <h1 class="hero-headline" id="hero-headline">Stewardship for seeds<br>that refuse to disappear.</h1>
+    <p class="hero-subline" id="hero-subline">A living botanical archive preserving heirloom varieties<br>for the cultivators who come after us.</p>
+    <div class="hero-cta-group" id="hero-cta">
+      <a href="collection.html" class="btn-primary">Explore the Archive</a>
+      <a href="stewards.html" class="btn-ghost">Become a Steward</a>
+    </div>
+    <span class="hero-rule" id="hero-rule"></span>
+  </div>
+
+  <!-- Hero botanical video -->
+  <div class="hero-media" id="hero-media">
+    <video autoplay muted loop playsinline
+           poster=""
+           onerror="this.style.display='none'; this.nextElementSibling.style.color='transparent';"
+           src="assets/botanical-unfold-loop.mp4">
+    </video>
+    <div class="hero-media-placeholder" style="color:transparent;">
+      <div class="placeholder-inner">
+        <span class="placeholder-label">Hero Video</span>
+        <span class="placeholder-name">botanical-unfold-loop.mp4</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: HEIRLOOM VARIETIES — 3-col botanical card grid, ink-blot entrance -->
+<section class="section" id="varieties-section" style="background: var(--color-page-bg); position: relative;">
+  <div class="container">
+    <span class="ghost-word" style="top: -40px; left: -80px;">Seeds</span>
+
+    <div style="display: grid; grid-template-columns: 5fr 7fr; gap: var(--grid-gutter); align-items: end; margin-bottom: 60px;">
+      <div>
+        <span class="section-label" data-reveal="clip">The Collection</span>
+        <h2 class="section-heading italic" data-reveal="fade-up">Heirloom varieties<br>from every climate.</h2>
+      </div>
+      <div>
+        <p class="body-text" style="max-width: 480px;" data-reveal="fade-up">
+          Each entry in our archive is the result of years of careful selection, cross-generational cultivation,
+          and precise documentation. These are not curiosities. They are the living evidence that diversity
+          is the source of resilience.
+        </p>
+        <a href="collection.html" class="editorial-link" style="font-family: var(--font-body); font-size: var(--type-sm); margin-top: 16px; display: inline-block;" data-reveal="fade-up">View the full collection →</a>
+      </div>
+    </div>
+
+    <hr class="thin-rule" style="margin-bottom: 40px;">
+
+    <div class="varieties-grid" id="varieties-grid">
+      <!-- Card 1 -->
+      <div class="variety-card" data-stagger-group="varieties" style="opacity:0; transform: scale(0) rotate(-5deg);">
+        <span class="card-family">Solanum lycopersicum</span>
+        <div class="card-name">Brandywine Pink</div>
+        <p class="card-desc">Irregular shouldered fruit of the deepest rose-pink. A tomato bred in the 1880s by the Amish for flavour above all else. Still unsurpassed in late-summer kitchens.</p>
+        <span class="card-tag">Heirloom · Open-pollinated</span>
+      </div>
+      <!-- Card 2 -->
+      <div class="variety-card" data-stagger-group="varieties" style="opacity:0; transform: scale(0) rotate(-5deg);">
+        <span class="card-family">Phaseolus vulgaris</span>
+        <div class="card-name">Dragon Tongue</div>
+        <p class="card-desc">A Dutch wax bean from 1885: pale-yellow pods striped with deep violet that cook to buttery green. Produces abundantly in poor soil and forgives the irregular gardener.</p>
+        <span class="card-tag">Open-pollinated · Pre-1900</span>
+      </div>
+      <!-- Card 3 -->
+      <div class="variety-card" data-stagger-group="varieties" style="opacity:0; transform: scale(0) rotate(-5deg);">
+        <span class="card-family">Daucus carota</span>
+        <div class="card-name">Cosmic Purple</div>
+        <p class="card-desc">A deep-violet-skinned carrot with an orange centre that bleeds like ink into the flesh when sliced. Descended from ancestral purple carrots from Afghanistan, rediscovered in the 1990s.</p>
+        <span class="card-tag">Heritage · Root Vegetable</span>
+      </div>
+      <!-- Card 4 -->
+      <div class="variety-card" data-stagger-group="varieties" style="opacity:0; transform: scale(0) rotate(-5deg);">
+        <span class="card-family">Cucurbita pepo</span>
+        <div class="card-name">Rouge Vif d'Étampes</div>
+        <p class="card-desc">The Cinderella pumpkin. Flat, deeply ribbed, brilliant burnt-orange. Grown in France since at least 1883. More art than vegetable — the perfect subject for botanical illustration and autumn kitchens.</p>
+        <span class="card-tag">French Heritage · Pre-1900</span>
+      </div>
+      <!-- Card 5 -->
+      <div class="variety-card" data-stagger-group="varieties" style="opacity:0; transform: scale(0) rotate(-5deg);">
+        <span class="card-family">Lactuca sativa</span>
+        <div class="card-name">Forellenschluss</div>
+        <p class="card-desc">Austrian trout lettuce — lime-green leaves dappled in burgundy freckles. Named by Viennese market gardeners in the 17th century for its resemblance to brook trout. Still perfect 400 years on.</p>
+        <span class="card-tag">Austrian Heritage · Pre-1700</span>
+      </div>
+      <!-- Card 6 -->
+      <div class="variety-card" data-stagger-group="varieties" style="opacity:0; transform: scale(0) rotate(-5deg);">
+        <span class="card-family">Capsicum annuum</span>
+        <div class="card-name">Fish Pepper</div>
+        <p class="card-desc">An African American heirloom from the Baltimore-Philadelphia corridor, documented in use before the American Civil War. Variegated white-and-green foliage, ivory fruit that matures to fiery red.</p>
+        <span class="card-tag">African-American Heritage</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: HERITAGE WISDOM (VIDEO) — asymmetric split, horizontal clip-path wipe per row -->
+<section class="section" id="wisdom-section" style="background: var(--color-surface);">
+  <div class="container">
+    <div class="editorial-feature">
+      <div>
+        <span class="section-label" data-reveal="clip">Cultivation Wisdom</span>
+        <h2 class="section-heading italic" data-reveal="fade-up" style="margin-bottom: 24px;">Knowledge passed<br>hand to hand.</h2>
+        <p class="body-text" data-reveal="fade-up" style="margin-bottom: 32px;">
+          Every variety in our archive comes with growing notes assembled from cultivators across
+          three generations. Not instructions: observations. The kind of knowledge written in soil,
+          not spreadsheets.
+        </p>
+
+        <div class="step-rows" id="wisdom-steps">
+          <div class="step-row" style="opacity:0; clip-path: inset(0 100% 0 0);">
+            <span class="step-number">01</span>
+            <div class="step-content">
+              <div class="step-title">Seed Selection</div>
+              <p class="step-body">Selecting seed from the truest specimens — those that show the original character of the variety, not its adaptations to convenience.</p>
+            </div>
+          </div>
+          <div class="step-row" style="opacity:0; clip-path: inset(0 100% 0 0);">
+            <span class="step-number">02</span>
+            <div class="step-content">
+              <div class="step-title">Isolation & Purity</div>
+              <p class="step-body">Maintaining genetic integrity through careful isolation distances and hand-pollination where needed. The work behind the seed that nobody sees.</p>
+            </div>
+          </div>
+          <div class="step-row" style="opacity:0; clip-path: inset(0 100% 0 0);">
+            <span class="step-number">03</span>
+            <div class="step-content">
+              <div class="step-title">Harvest & Ferment</div>
+              <p class="step-body">Tomato seeds fermented 48–72 hours to remove germination-inhibiting gel. Bean seeds dried slowly on the vine. Each species has its own calendar of readiness.</p>
+            </div>
+          </div>
+          <div class="step-row" style="opacity:0; clip-path: inset(0 100% 0 0);">
+            <span class="step-number">04</span>
+            <div class="step-content">
+              <div class="step-title">Archive & Distribute</div>
+              <p class="step-body">Seeds stored at 35–40°F in sealed glass with silica desiccant. Distributed annually to stewards for grow-outs that maintain living genetic material.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="wisdom.html" class="btn-ghost" style="margin-top: 40px; display: inline-flex;" data-reveal="fade-up">Read the Cultivation Guides</a>
+      </div>
+
+      <div>
+        <!-- Hands video -->
+        <div class="video-container" style="aspect-ratio: 4/5; border-radius: var(--card-radius);" data-reveal="scale-rise">
+          <video autoplay muted loop playsinline
+                 onerror="this.style.display='none'; this.nextElementSibling.style.color='transparent';"
+                 src="assets/hands-in-soil-loop.mp4">
+          </video>
+          <div class="video-placeholder" style="background:var(--color-surface); color:transparent;">
+            <div class="placeholder-inner">
+              <span class="placeholder-label" style="font-family:var(--font-mono);font-size:var(--type-xs);letter-spacing:var(--ls-label);color:transparent;display:block;margin-bottom:8px;">Heritage Video</span>
+              <span style="font-family:var(--font-display);font-size:var(--type-h3);font-style:italic;color:transparent;">hands-in-soil-loop.mp4</span>
+            </div>
+          </div>
+        </div>
+        <!-- Caption -->
+        <p style="font-family:var(--font-secondary); font-size: var(--type-xs); color: var(--color-muted-text); margin-top: 12px; letter-spacing: 0.02em;" data-reveal="fade-up">
+          Seed-saving at Thornfield Farm, Shropshire. Capsicum harvest, September.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: STATISTICS — bento-style with scale-rise stagger, ivory bg -->
+<section class="section" id="stats-section" style="background: var(--color-page-bg); position: relative;">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 4fr 8fr; gap: var(--grid-gutter); align-items: start; margin-bottom: 60px;">
+      <div>
+        <span class="section-label" data-reveal="clip">The Archive</span>
+        <h2 class="section-heading italic" data-reveal="fade-up">Two decades of patient<br>botanical custody.</h2>
+      </div>
+      <div style="padding-top: 40px;">
+        <blockquote class="pull-quote" data-reveal="fade-up" style="opacity:0; transform: translateY(12px);">
+          "A seed is a library no fire can burn — but only if someone tends it."
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item" data-stagger-group="stats">
+        <div class="stat-number" data-count="1847">0</div>
+        <div class="stat-label">Varieties preserved</div>
+      </div>
+      <div class="stat-item" data-stagger-group="stats">
+        <div class="stat-number" data-count="312">0</div>
+        <div class="stat-label">Active stewards</div>
+      </div>
+      <div class="stat-item" data-stagger-group="stats">
+        <div class="stat-number" data-count="29">0</div>
+        <div class="stat-label">Years of curation</div>
+      </div>
+      <div class="stat-item" data-stagger-group="stats">
+        <div class="stat-number" data-count="48">0</div>
+        <div class="stat-label">Countries of origin</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: SEASONAL TIME-LAPSE (VIDEO) — dark contrast beat -->
+<section class="section section--dark" id="seasonal-section" style="position: relative; overflow: hidden;">
+  <div class="container">
+    <div style="max-width: 680px; margin: 0 auto; text-align: center; margin-bottom: 60px;">
+      <span class="section-label" style="color: rgba(252,247,241,0.5);" data-reveal="clip">The Growing Year</span>
+      <h2 class="section-heading italic" style="color: #fcf7f1;" data-reveal="fade-up">From dormant seed<br>to living archive.</h2>
+      <p class="body-text" style="color: rgba(252,247,241,0.7);" data-reveal="fade-up">A full growing season compressed into a single viewing. The complete botanical journey that each variety makes every year — and has made, unbroken, for centuries.</p>
+    </div>
+
+    <!-- Seasonal time-lapse video -->
+    <div style="position: relative; border-radius: var(--card-radius); overflow: hidden; aspect-ratio: 16/9;" data-reveal="scale-rise">
+      <video autoplay muted loop playsinline
+             onerror="this.style.display='none'; this.nextElementSibling.style.color='transparent';"
+             src="assets/garden-cycle-loop.mp4"
+             style="width:100%;height:100%;object-fit:cover;">
+      </video>
+      <div class="video-placeholder" style="background:var(--color-hero-bg); color:transparent; position:absolute; inset:0;">
+        <div class="placeholder-inner" style="text-align:center;">
+          <span style="font-family:var(--font-mono);font-size:var(--type-xs);letter-spacing:var(--ls-label);color:transparent;display:block;margin-bottom:8px;">Seasonal Video</span>
+          <span style="font-family:var(--font-display);font-size:var(--type-h3);font-style:italic;color:transparent;">garden-cycle-loop.mp4</span>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-family:var(--font-secondary); font-size: var(--type-xs); color: rgba(252,247,241,0.4); margin-top: 16px; text-align: center; letter-spacing: 0.02em;">
+      Heritage beds at the Seedkeep reference garden. April–November growing season.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 5: JOIN / CTA — light, divergent sweep -->
+<section class="section" id="join-section" style="background: var(--color-page-bg);">
+  <div class="container">
+    <div style="max-width: 720px; margin: 0 auto; text-align: center;">
+      <span class="section-label" data-reveal="clip">Become a Steward</span>
+      <h2 class="section-heading italic" data-reveal="fade-up">The archive grows only<br>because stewards grow it.</h2>
+      <p class="body-text" style="max-width: 540px; margin: 0 auto 48px; color: var(--color-muted-text);" data-reveal="fade-up">
+        Each steward receives an annual seed allocation from the archive — a small parcel of
+        three to five varieties chosen for their region and growing history — on the condition
+        that they save seed and return a portion to the library. The archive depends on this
+        annual circulation.
+      </p>
+      <div style="display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap;" id="cta-buttons">
+        <a href="stewards.html" class="btn-primary" style="opacity:0; transform: translateX(-60px);">Apply to the Network</a>
+        <a href="almanac.html" class="btn-ghost" style="opacity:0; transform: translateX(60px);">Read the Almanac</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <a href="index.html" class="footer-logo">Seedkeep</a>
+      <p class="footer-tagline">A living botanical archive preserving heirloom varieties for the cultivators who come after us.</p>
+    </div>
+    <div>
+      <div class="footer-nav-heading">Archive</div>
+      <ul class="footer-nav-list">
+        <li><a href="collection.html">The Collection</a></li>
+        <li><a href="wisdom.html">Cultivation Wisdom</a></li>
+        <li><a href="almanac.html">The Almanac</a></li>
+        <li><a href="stewards.html">Steward Network</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-nav-heading">Contact</div>
+      <ul class="footer-nav-list">
+        <li><a href="mailto:archive@seedkeep.org">archive@seedkeep.org</a></li>
+        <li><a href="#">Seed Steward Applications</a></li>
+        <li><a href="#">Donate a Variety</a></li>
+        <li><a href="#">Research Access</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="max-width: var(--grid-max-width); margin: 0 auto; padding: 0 var(--space-container);">
+    <hr class="thin-rule" style="margin: 40px 0 24px;">
+    <p class="footer-copyright">© 2024 Seedkeep Archive. Seeds returned to the earth return the earth to seeds.</p>
+  </div>
+</footer>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+<script>
+(function(){
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── HERO entrance sequence ──
+  // 1. hairline rule sweeps top-to-bottom (simulated as width 0→100%)
+  gsap.to('#hero-rule', {
+    width: '100%',
+    duration: 0.6,
+    ease: 'power2.out',
+    delay: 0.1
+  });
+
+  // 2. Label ink-reveal
+  gsap.to('#hero-label', {
+    clipPath: 'inset(0 0% 0 0)',
+    opacity: 1,
+    duration: 0.75,
+    ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+    delay: 0.2
+  });
+
+  // 3. Headline rise + fade
+  gsap.to('#hero-headline', {
+    opacity: 1,
+    y: 0,
+    duration: 1.0,
+    ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+    delay: 0.6
+  });
+
+  // 4. Subline
+  gsap.to('#hero-subline', {
+    opacity: 1,
+    y: 0,
+    duration: 0.85,
+    ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+    delay: 0.9
+  });
+
+  // 5. CTAs scale in
+  gsap.to('#hero-cta', {
+    opacity: 1,
+    scale: 1,
+    duration: 0.7,
+    ease: 'back.out(1.5)',
+    delay: 1.2
+  });
+
+  // 6. Hero media parchment-fade
+  var heroMedia = document.getElementById('hero-media');
+  if(heroMedia){
+    heroMedia.style.opacity = '0';
+    heroMedia.style.filter = 'blur(4px) sepia(40%)';
+    gsap.to('#hero-media', {
+      opacity: 1,
+      filter: 'blur(0) sepia(0)',
+      duration: 0.8,
+      ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+      delay: 0.8
+    });
+  }
+
+  // ── VARIETIES section — ink-blot entrance with stagger ──
+  ScrollTrigger.create({
+    trigger: '#varieties-grid',
+    start: 'top 75%',
+    once: true,
+    onEnter: function(){
+      gsap.to('#varieties-grid .variety-card', {
+        opacity: 1,
+        scale: 1,
+        rotation: 0,
+        duration: 0.75,
+        ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+        stagger: 0.12
+      });
+    }
+  });
+
+  // ── WISDOM steps — horizontal clip-path wipe (ink-reveal) ──
+  ScrollTrigger.create({
+    trigger: '#wisdom-steps',
+    start: 'top 75%',
+    once: true,
+    onEnter: function(){
+      gsap.to('#wisdom-steps .step-row', {
+        opacity: 1,
+        clipPath: 'inset(0 0% 0 0)',
+        duration: 0.8,
+        ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+        stagger: 0.13
+      });
+    }
+  });
+
+  // ── STATS — scale + rise stagger ──
+  ScrollTrigger.create({
+    trigger: '#stats-section',
+    start: 'top 70%',
+    once: true,
+    onEnter: function(){
+      gsap.to('#stats-section .stat-item', {
+        opacity: 1,
+        y: 0,
+        duration: 0.75,
+        ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+        stagger: 0.12,
+        onComplete: function(){
+          // Counter animations
+          document.querySelectorAll('[data-count]').forEach(function(el){
+            var target = parseInt(el.getAttribute('data-count'), 10);
+            if(isNaN(target)) return;
+            var proxy = { val: 0 };
+            gsap.to(proxy, {
+              val: target,
+              duration: 2.0,
+              ease: 'power2.out',
+              onUpdate: function(){
+                el.textContent = Math.round(proxy.val).toLocaleString();
+              }
+            });
+          });
+        }
+      });
+    }
+  });
+
+  // ── Pull quote — rise ──
+  ScrollTrigger.create({
+    trigger: '.pull-quote',
+    start: 'top 80%',
+    once: true,
+    onEnter: function(){
+      gsap.to('.pull-quote', {
+        opacity: 1,
+        y: 0,
+        duration: 0.85,
+        ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)'
+      });
+    }
+  });
+
+  // ── CTA buttons — divergent x sweep ──
+  ScrollTrigger.create({
+    trigger: '#join-section',
+    start: 'top 75%',
+    once: true,
+    onEnter: function(){
+      var btns = document.querySelectorAll('#cta-buttons a');
+      gsap.to(btns[0], { opacity: 1, x: 0, duration: 0.7, ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)', delay: 0.1 });
+      gsap.to(btns[1], { opacity: 1, x: 0, duration: 0.7, ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)', delay: 0.2 });
+    }
+  });
+
+  // ── Footer copyright clip-path horizontal reveal ──
+  ScrollTrigger.create({
+    trigger: '.footer-copyright',
+    start: 'top 95%',
+    once: true,
+    onEnter: function(){
+      gsap.to('.footer-copyright', {
+        opacity: 0.6,
+        clipPath: 'inset(0 0% 0 0)',
+        duration: 0.8,
+        ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)'
+      });
+    }
+  });
+
+  // ── Generic [data-reveal] scroll triggers ──
+  document.querySelectorAll('[data-reveal]').forEach(function(el){
+    var type = el.getAttribute('data-reveal');
+    var from = {};
+    if(type === 'fade-up'){ from = { opacity: 0, y: 28 }; }
+    else if(type === 'fade-left'){ from = { opacity: 0, x: -40 }; }
+    else if(type === 'fade-right'){ from = { opacity: 0, x: 40 }; }
+    else if(type === 'scale-rise'){ from = { opacity: 0, scale: 0.94, y: 20 }; }
+    else if(type === 'clip'){
+      el.style.clipPath = 'inset(0 100% 0 0)';
+      el.style.opacity = '1';
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        once: true,
+        onEnter: function(){
+          gsap.to(el, { clipPath: 'inset(0 0% 0 0)', duration: 0.75, ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)' });
+        }
+      });
+      return;
+    }
+    if(Object.keys(from).length){
+      gsap.set(el, from);
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        once: true,
+        onEnter: function(){
+          gsap.to(el, {
+            opacity: 1, y: 0, x: 0, scale: 1,
+            duration: 0.75,
+            ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)'
+          });
+        }
+      });
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

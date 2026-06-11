@@ -1,0 +1,837 @@
+/* ============================================================
+   TECHNOLOGY.CSS — IRID Structural Color Systems
+   Page: technology.html
+   Design system: prism-drift
+   ============================================================ */
+
+/* ============================================================
+   @keyframes
+   ============================================================ */
+
+@keyframes holoShift {
+  0%   { filter: hue-rotate(0deg)   saturate(1.2); }
+  25%  { filter: hue-rotate(45deg)  saturate(1.5); }
+  50%  { filter: hue-rotate(90deg)  saturate(1.8); }
+  75%  { filter: hue-rotate(135deg) saturate(1.5); }
+  100% { filter: hue-rotate(180deg) saturate(1.2); }
+}
+
+@keyframes shimmerSweep {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 300% 0; }
+}
+
+@keyframes divider-hue-warm {
+  0%   { fill: #f0ede8; }
+  33%  { fill: rgba(223, 94, 18, 0.06); }
+  66%  { fill: rgba(111, 200, 180, 0.06); }
+  100% { fill: #f0ede8; }
+}
+
+@keyframes divider-hue-dark {
+  0%   { fill: #1e3a35; }
+  50%  { fill: rgba(163, 196, 255, 0.08); }
+  100% { fill: #1e3a35; }
+}
+
+@keyframes divider-hue-footer {
+  0%   { fill: #2b2918; }
+  50%  { fill: rgba(223, 94, 18, 0.07); }
+  100% { fill: #2b2918; }
+}
+
+@keyframes divider-hue-white {
+  0%   { fill: #ffffff; }
+  40%  { fill: rgba(111, 200, 180, 0.05); }
+  80%  { fill: rgba(163, 196, 255, 0.05); }
+  100% { fill: #ffffff; }
+}
+
+@keyframes filmLayerGlow {
+  0%   { box-shadow: inset 0 0 12px rgba(223, 94, 18, 0.15),  0 2px 6px rgba(0,0,0,0.2); }
+  25%  { box-shadow: inset 0 0 12px rgba(111, 200, 180, 0.2), 0 2px 6px rgba(0,0,0,0.2); }
+  50%  { box-shadow: inset 0 0 12px rgba(163, 196, 255, 0.2), 0 2px 6px rgba(0,0,0,0.2); }
+  75%  { box-shadow: inset 0 0 12px rgba(223, 94, 18, 0.15),  0 2px 6px rgba(0,0,0,0.2); }
+  100% { box-shadow: inset 0 0 12px rgba(111, 200, 180, 0.2), 0 2px 6px rgba(0,0,0,0.2); }
+}
+
+@keyframes lightBeamIn {
+  0%   { opacity: 0.7; transform: rotate(-35deg) scaleY(1); }
+  50%  { opacity: 1;   transform: rotate(-35deg) scaleY(1.05); }
+  100% { opacity: 0.7; transform: rotate(-35deg) scaleY(1); }
+}
+
+@keyframes iridFoilShift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ============================================================
+   SHARED UTILITIES
+   ============================================================ */
+
+.tech-container {
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  padding-inline: var(--grid-padding-inline);
+}
+
+.nav-spacer {
+  height: 72px;
+}
+
+/* Eyebrow label */
+.tech-eyebrow {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 20px 0;
+  line-height: 1;
+}
+
+.tech-eyebrow--light {
+  color: var(--color-teal-accent);
+}
+
+/* Section heading */
+.tech-section-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 4vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  line-height: 0.95;
+  margin: 0 0 48px 0;
+}
+
+.tech-section-heading--light {
+  color: #ffffff;
+}
+
+/* ============================================================
+   SECTION 1: PAGE HEADER
+   ============================================================ */
+
+.tech-header {
+  background: var(--color-page-bg);
+  padding-top: clamp(60px, 8vw, 120px);
+  padding-bottom: clamp(60px, 8vw, 100px);
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+}
+
+.tech-headline {
+  font-family: var(--font-heading);
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  line-height: 0.95;
+  margin: 0 0 32px 0;
+  /* Chromatic aberration effect */
+  text-shadow:
+    -2px 0 rgba(255, 50, 50, 0.30),
+     2px 0 rgba(0, 200, 255, 0.30);
+  /* Start clipped for GSAP reveal */
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+}
+
+.tech-header-sub {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: var(--type-body-letter-spacing);
+  color: var(--color-body-text);
+  line-height: 1.7;
+  max-width: 640px;
+  margin: 0;
+}
+
+/* ============================================================
+   SVG DIVIDERS
+   ============================================================ */
+
+.tech-divider {
+  display: block;
+  line-height: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.tech-divider svg {
+  display: block;
+  width: 100%;
+}
+
+/* Wave divider: white → warm surface */
+.tech-divider--wave svg {
+  height: 60px;
+}
+.divider-path--wave {
+  fill: var(--color-surface-bg);
+  animation: divider-hue-warm 6000ms ease-in-out infinite;
+}
+
+/* Zigzag divider: warm surface → white */
+.tech-divider--zigzag svg {
+  height: 60px;
+}
+.divider-path--zigzag {
+  fill: var(--color-page-bg);
+  animation: divider-hue-white 8000ms ease-in-out infinite;
+}
+
+/* S-curve divider: white → dark teal */
+.tech-divider--scurve svg {
+  height: 80px;
+}
+.divider-path--scurve {
+  fill: var(--color-hero-bg);
+  animation: divider-hue-dark 7000ms ease-in-out infinite;
+}
+
+/* Diagonal divider: dark teal → white */
+.tech-divider--diagonal svg {
+  height: 60px;
+}
+.divider-path--diagonal {
+  fill: var(--color-page-bg);
+  animation: divider-hue-white 9000ms ease-in-out infinite;
+}
+
+/* Reverse wave: white → dark footer */
+.tech-divider--revwave svg {
+  height: 60px;
+}
+.divider-path--revwave {
+  fill: var(--color-footer-bg);
+  animation: divider-hue-footer 6000ms ease-in-out infinite;
+}
+
+/* ============================================================
+   SECTION 2: HOW IT WORKS
+   ============================================================ */
+
+.tech-how {
+  background: var(--color-page-bg);
+  padding-top: clamp(80px, 8vw, 120px);
+  padding-bottom: clamp(80px, 8vw, 120px);
+}
+
+/* Feature rows */
+.tech-phenomenon-row {
+  display: grid;
+  grid-template-columns: 2fr 1px 3fr;
+  gap: 0 40px;
+  align-items: start;
+  padding: 48px 0;
+  border-top: 1px solid var(--color-border-default);
+  position: relative;
+  overflow: hidden;
+  /* GSAP start state */
+  opacity: 0;
+}
+
+.tech-phenomenon-row:last-child {
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+/* Large background row number */
+.tech-row-number {
+  position: absolute;
+  top: -10px;
+  left: -8px;
+  font-family: var(--font-condensed);
+  font-size: 120px;
+  font-weight: 300;
+  color: var(--color-body-text);
+  opacity: 0.05;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.05em;
+}
+
+.tech-row-left {
+  padding-right: 24px;
+}
+
+.tech-row-label {
+  font-family: var(--font-heading);
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* Orange hairline divider between left and right columns */
+.tech-row-divider {
+  width: 1px;
+  background: var(--color-accent);
+  align-self: stretch;
+  min-height: 60px;
+  opacity: 0.4;
+}
+
+.tech-row-right {
+  padding-left: 24px;
+}
+
+.tech-row-body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: var(--type-body-letter-spacing);
+  color: var(--color-body-text);
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ============================================================
+   SECTION 3: DEPOSITION CAPABILITIES
+   ============================================================ */
+
+.tech-process {
+  background: var(--color-surface-bg);
+  padding-top: clamp(80px, 8vw, 120px);
+  padding-bottom: clamp(80px, 8vw, 120px);
+}
+
+.tech-process-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.tech-process-intro {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: var(--type-body-letter-spacing);
+  color: var(--color-body-text);
+  line-height: 1.7;
+  margin: 0 0 40px 0;
+}
+
+.tech-capabilities-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tech-capability-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px 0;
+  border-top: 1px solid var(--color-border-default);
+  /* GSAP start state */
+  opacity: 0;
+}
+
+.tech-capability-item:last-child {
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.tech-cap-num {
+  font-family: var(--font-condensed);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  line-height: 1.6;
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.tech-cap-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tech-cap-title {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-heading);
+  letter-spacing: 0.02em;
+  display: block;
+}
+
+.tech-cap-desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-body-text);
+  letter-spacing: var(--type-body-letter-spacing);
+  line-height: 1.65;
+}
+
+/* ── Film-layer diagram ── */
+.tech-process-visual {
+  position: sticky;
+  top: 100px;
+}
+
+.tech-film-diagram {
+  background: var(--color-heading);
+  border-radius: var(--radius-panel);
+  padding: 40px 32px 36px;
+  box-shadow: 0 20px 60px rgba(30, 58, 53, 0.25);
+}
+
+.tech-diagram-label {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 24px 0;
+}
+
+/* The animated film layer stack */
+.tech-film-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  animation: holoShift var(--duration-holo-shift) linear infinite;
+}
+
+.tech-film-layer {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  position: relative;
+  transition: filter 200ms ease;
+}
+
+.tech-film-layer:hover {
+  filter: brightness(1.15);
+}
+
+.tech-film-label {
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  position: relative;
+  z-index: 1;
+}
+
+/* Individual layer colors — cycling through the spectrum */
+.tech-film-layer--cap {
+  background: linear-gradient(90deg, rgba(163, 196, 255, 0.25), rgba(163, 196, 255, 0.15));
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-top: 12px;
+  padding-bottom: 12px;
+  animation: filmLayerGlow 8000ms ease-in-out infinite;
+}
+
+.tech-film-layer--hi-1 {
+  background: linear-gradient(90deg, rgba(223, 94, 18, 0.35), rgba(223, 94, 18, 0.20));
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.tech-film-layer--lo-1 {
+  background: linear-gradient(90deg, rgba(111, 200, 180, 0.30), rgba(111, 200, 180, 0.18));
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.tech-film-layer--hi-2 {
+  background: linear-gradient(90deg, rgba(255, 200, 80, 0.30), rgba(255, 200, 80, 0.18));
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.tech-film-layer--lo-2 {
+  background: linear-gradient(90deg, rgba(163, 196, 255, 0.30), rgba(163, 196, 255, 0.18));
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.tech-film-layer--hi-3 {
+  background: linear-gradient(90deg, rgba(200, 120, 220, 0.30), rgba(200, 120, 220, 0.18));
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.tech-film-layer--adhesion {
+  background: linear-gradient(90deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.tech-film-layer--substrate {
+  background: rgba(0,0,0,0.35);
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+/* Light beam illustration under diagram */
+.tech-film-light {
+  margin-top: 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 40px;
+  padding-left: 12px;
+}
+
+.tech-light-beam {
+  width: 2px;
+  border-radius: 1px;
+  transform-origin: bottom center;
+}
+
+.tech-light-beam--in {
+  height: 36px;
+  background: rgba(255,255,255,0.35);
+  transform: rotate(-35deg);
+  animation: lightBeamIn 3000ms ease-in-out infinite;
+}
+
+.tech-light-beam--out-1 {
+  height: 28px;
+  background: rgba(223, 94, 18, 0.70);
+  transform: rotate(20deg);
+  animation: lightBeamIn 3000ms ease-in-out 400ms infinite;
+}
+
+.tech-light-beam--out-2 {
+  height: 22px;
+  background: rgba(111, 200, 180, 0.70);
+  transform: rotate(35deg);
+  animation: lightBeamIn 3000ms ease-in-out 800ms infinite;
+}
+
+/* ============================================================
+   SECTION 4: TECHNICAL SPECIFICATIONS
+   ============================================================ */
+
+.tech-specs {
+  background: var(--color-hero-bg);
+  padding-top: clamp(80px, 8vw, 120px);
+  padding-bottom: clamp(80px, 8vw, 120px);
+}
+
+.tech-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Spec card */
+.tech-spec-card {
+  background: var(--color-review-card-surface);
+  padding: 36px 32px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Iridescent border via the foil pseudo element */
+  transition: transform var(--duration-reveal) var(--prism-ease),
+              filter var(--duration-reveal) var(--prism-ease);
+  /* GSAP start state */
+  opacity: 0;
+}
+
+.tech-spec-card:hover {
+  transform: var(--card-hover-transform);
+  filter: var(--card-hover-filter);
+}
+
+/* Foil-gap top border using iridescent gradient */
+.tech-spec-foil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #df5e12, #6fc8b4, #a3c4ff, #df5e12);
+  background-size: 200% 100%;
+  animation: iridFoilShift 4000ms linear infinite;
+}
+
+.tech-spec-label {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.50);
+  margin: 0;
+}
+
+.tech-spec-value {
+  font-family: var(--font-heading);
+  font-size: clamp(18px, 1.8vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.tech-spec-desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ============================================================
+   SECTION 5: PRISM REFRACTION VIDEO
+   ============================================================ */
+
+.tech-video-section {
+  background: var(--color-page-bg);
+  padding-top: clamp(80px, 8vw, 120px);
+  padding-bottom: clamp(80px, 8vw, 120px);
+}
+
+.tech-video-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.tech-video-copy {
+  /* GSAP start state */
+  opacity: 0;
+}
+
+.tech-video-body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: var(--type-body-letter-spacing);
+  color: var(--color-body-text);
+  line-height: 1.75;
+  margin: 0 0 20px 0;
+}
+
+.tech-video-body:last-child {
+  margin-bottom: 0;
+}
+
+/* Video wrapper */
+.tech-video-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* GSAP start state */
+  opacity: 0;
+}
+
+.tech-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+  /* Iridescent card border */
+  border: 1px solid transparent;
+  background:
+    linear-gradient(white, white) padding-box,
+    linear-gradient(120deg, #df5e12, #6fc8b4, #a3c4ff) border-box;
+  box-shadow: 0 12px 48px rgba(30,58,53,0.15);
+}
+
+.prism-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Fallback placeholder — visible when video file is absent */
+.tech-video-fallback {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #df5e12 0%, #6fc8b4 50%, #a3c4ff 100%);
+  color: transparent;
+  pointer-events: none;
+  animation: holoShift var(--duration-holo-shift) linear infinite;
+}
+
+.tech-video-caption {
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(43, 43, 41, 0.50);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   SECTION 6: CTA
+   ============================================================ */
+
+.tech-cta {
+  background: var(--color-footer-bg);
+  padding-top: clamp(100px, 10vw, 160px);
+  padding-bottom: clamp(100px, 10vw, 160px);
+  text-align: center;
+}
+
+.tech-cta-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 5vw, 80px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 0.95;
+  margin: 0 0 20px 0;
+}
+
+.tech-cta-sub {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: var(--type-body-letter-spacing);
+  color: rgba(255, 255, 255, 0.60);
+  margin: 0 0 48px 0;
+  line-height: 1.5;
+}
+
+.tech-cta-btn {
+  display: inline-block;
+  font-family: var(--font-condensed);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #2b2918;
+  padding: 18px 48px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #df5e12, #6fc8b4, #a3c4ff, #df5e12);
+  background-size: 300% 100%;
+  background-position: -100% 0;
+  transition: filter 400ms ease, transform 200ms ease;
+  box-shadow: 0 4px 24px rgba(223, 94, 18, 0.35);
+}
+
+.tech-cta-btn:hover {
+  filter: hue-rotate(20deg) brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(223, 94, 18, 0.45);
+}
+
+.tech-cta-btn:active {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE — 1024px
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .tech-process-grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .tech-process-visual {
+    position: static;
+  }
+
+  .tech-video-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .tech-specs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 768px
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .tech-container {
+    padding-inline: 24px;
+  }
+
+  .tech-phenomenon-row {
+    grid-template-columns: 1fr;
+    gap: 20px 0;
+  }
+
+  .tech-row-divider {
+    display: none;
+  }
+
+  .tech-row-left {
+    padding-right: 0;
+  }
+
+  .tech-row-right {
+    padding-left: 0;
+  }
+
+  .tech-row-number {
+    font-size: 80px;
+    opacity: 0.04;
+  }
+
+  .tech-specs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-spec-card {
+    padding: 28px 24px;
+  }
+
+  .tech-video-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 375px
+   ============================================================ */
+
+@media (max-width: 375px) {
+  .tech-container {
+    padding-inline: 16px;
+  }
+
+  .tech-eyebrow {
+    font-size: 10px;
+  }
+}

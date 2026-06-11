@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Forma Systems</title>
+  <meta name="description" content="Forma Systems deployed work: 47 completed prefab structures across 12 countries and 6 sectors. Parametric precision at scale." />
+
+  <!-- GSAP + ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Tokens (includes Google Fonts import) -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css" />
+  <link rel="stylesheet" href="components/projects-hero.css" />
+  <link rel="stylesheet" href="components/projects-grid.css" />
+  <link rel="stylesheet" href="components/projects-process.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAV — verbatim paste
+     ═══════════════════════════════════════════════════════════ -->
+<nav id="site-nav" class="site-nav">
+  <a href="index.html" class="nav-logo">FORMA</a>
+  <ul class="nav-links">
+    <li><a href="platform.html" class="nav-link">Platform</a></li>
+    <li><a href="solutions.html" class="nav-link">Solutions</a></li>
+    <li><a href="projects.html" class="nav-link nav-link--active">Projects</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="platform.html" class="nav-mobile-link">Platform</a>
+  <a href="solutions.html" class="nav-mobile-link">Solutions</a>
+  <a href="projects.html" class="nav-mobile-link">Projects</a>
+  <a href="contact.html" class="nav-mobile-link">Contact</a>
+</div>
+<script>
+  (function () {
+    var nav = document.getElementById('site-nav');
+    var toggle = nav.querySelector('.nav-mobile-toggle');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    function onScroll() {
+      if (window.scrollY > 0) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toggle.addEventListener('click', function () {
+      var isOpen = mobileMenu.classList.contains('is-open');
+      if (isOpen) {
+        mobileMenu.classList.remove('is-open');
+        nav.classList.remove('nav-mobile-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      } else {
+        mobileMenu.classList.add('is-open');
+        nav.classList.add('nav-mobile-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+    mobileMenu.querySelectorAll('.nav-mobile-link').forEach(function (link) {
+      link.addEventListener('click', function () {
+        mobileMenu.classList.remove('is-open');
+        nav.classList.remove('nav-mobile-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  })();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 1: PROJECTS HERO — Dark, 55vh, diagonal clip
+     ═══════════════════════════════════════════════════════════ -->
+<section id="projects-hero" aria-labelledby="projects-main-heading">
+  <div id="projects-hero-inner">
+
+    <span id="projects-breadcrumb">Projects / Built Works</span>
+
+    <h1 id="projects-main-heading">Deployed at Scale</h1>
+
+    <div id="projects-stat-row" aria-label="Project statistics">
+      <div class="stat-item">
+        <span class="stat-number" id="stat-structures" data-target="47">0</span>
+        <span class="stat-label">Completed Structures</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="stat-countries" data-target="12">0</span>
+        <span class="stat-label">Countries</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="stat-sectors" data-target="6">0</span>
+        <span class="stat-label">Sectors</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 2: FEATURED PROJECTS GRID — White, masonry
+     ═══════════════════════════════════════════════════════════ -->
+<section id="projects-grid-section" aria-labelledby="projects-grid-title">
+
+  <div id="projects-grid-header">
+    <div id="projects-grid-heading-group">
+      <span id="projects-grid-label">Selected Work</span>
+      <h2 id="projects-grid-title">Built by Forma</h2>
+    </div>
+    <span id="projects-filter-note">All sectors / All years</span>
+  </div>
+
+  <div id="projects-masonry-grid" role="list">
+
+    <!-- Card 1: Featured large (spans 2 rows) -->
+    <article id="project-card-1" class="project-card" role="listitem">
+      <div class="project-card-img-wrap">
+        <img
+          class="project-card-img"
+          src="assets/project-1.jpeg"
+          alt="Kalvebod Harbour Housing — Copenhagen"
+          onerror="this.style.display='none'; this.parentElement.style.background='#e0e0e0'; this.parentElement.insertAdjacentHTML('afterbegin','<div style=\'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:IBM Plex Mono,monospace;font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.35);text-align:center;padding:20px;\'>assets/project-1.jpeg<br>not found</div>');"
+        />
+      </div>
+      <span class="project-card-index">01</span>
+      <div class="project-card-overlay">
+        <span class="project-overlay-category">Residential / Mixed-Use</span>
+        <h3 class="project-overlay-title">Kalvebod Harbour Housing</h3>
+        <p class="project-overlay-location">Copenhagen, Denmark — 2023</p>
+      </div>
+    </article>
+
+    <!-- Card 2 -->
+    <article id="project-card-2" class="project-card" role="listitem">
+      <div class="project-card-img-wrap">
+        <img
+          class="project-card-img"
+          src="assets/project-2.jpeg"
+          alt="Mesa Research Station — Arizona"
+          onerror="this.style.display='none'; this.parentElement.style.background='#d5d5d5'; this.parentElement.insertAdjacentHTML('afterbegin','<div style=\'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:IBM Plex Mono,monospace;font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.35);text-align:center;padding:20px;\'>assets/project-2.jpeg<br>not found</div>');"
+        />
+      </div>
+      <span class="project-card-index">02</span>
+      <div class="project-card-overlay">
+        <span class="project-overlay-category">Research / Institutional</span>
+        <h3 class="project-overlay-title">Mesa Research Station</h3>
+        <p class="project-overlay-location">Sedona, Arizona — 2022</p>
+      </div>
+    </article>
+
+    <!-- Card 3 -->
+    <article id="project-card-3" class="project-card" role="listitem">
+      <div class="project-card-img-wrap">
+        <img
+          class="project-card-img"
+          src="assets/project-3.jpeg"
+          alt="Koto Micro-Cluster — Osaka"
+          onerror="this.style.display='none'; this.parentElement.style.background='#c8c8c8'; this.parentElement.insertAdjacentHTML('afterbegin','<div style=\'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:IBM Plex Mono,monospace;font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.35);text-align:center;padding:20px;\'>assets/project-3.jpeg<br>not found</div>');"
+        />
+      </div>
+      <span class="project-card-index">03</span>
+      <div class="project-card-overlay">
+        <span class="project-overlay-category">Urban Infill / Micro-Housing</span>
+        <h3 class="project-overlay-title">Koto Micro-Cluster</h3>
+        <p class="project-overlay-location">Osaka, Japan — 2023</p>
+      </div>
+    </article>
+
+    <!-- Card 4 -->
+    <article id="project-card-4" class="project-card" role="listitem">
+      <div class="project-card-img-wrap">
+        <img
+          class="project-card-img"
+          src="assets/project-4.jpeg"
+          alt="Atacama Field Observatory — Chile"
+          onerror="this.style.display='none'; this.parentElement.style.background='#bebebe'; this.parentElement.insertAdjacentHTML('afterbegin','<div style=\'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:IBM Plex Mono,monospace;font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.35);text-align:center;padding:20px;\'>assets/project-4.jpeg<br>not found</div>');"
+        />
+      </div>
+      <span class="project-card-index">04</span>
+      <div class="project-card-overlay">
+        <span class="project-overlay-category">Remote / Scientific</span>
+        <h3 class="project-overlay-title">Atacama Field Observatory</h3>
+        <p class="project-overlay-location">Atacama, Chile — 2022</p>
+      </div>
+    </article>
+
+    <!-- Card 5 -->
+    <article id="project-card-5" class="project-card" role="listitem">
+      <div class="project-card-img-wrap">
+        <img
+          class="project-card-img"
+          src="assets/project-5.jpeg"
+          alt="Nairobi Assembly Hub — Kenya"
+          onerror="this.style.display='none'; this.parentElement.style.background='#e8e8e8'; this.parentElement.insertAdjacentHTML('afterbegin','<div style=\'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:IBM Plex Mono,monospace;font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.35);text-align:center;padding:20px;\'>assets/project-5.jpeg<br>not found</div>');"
+        />
+      </div>
+      <span class="project-card-index">05</span>
+      <div class="project-card-overlay">
+        <span class="project-overlay-category">Civic / Community</span>
+        <h3 class="project-overlay-title">Nairobi Assembly Hub</h3>
+        <p class="project-overlay-location">Nairobi, Kenya — 2024</p>
+      </div>
+    </article>
+
+    <!-- Card 6: Wide (spans 2 columns) -->
+    <article id="project-card-6" class="project-card" role="listitem">
+      <div class="project-card-img-wrap">
+        <img
+          class="project-card-img"
+          src="assets/project-6.jpeg"
+          alt="Reykjavik Modular Hotel — Iceland"
+          onerror="this.style.display='none'; this.parentElement.style.background='#d0d0d0'; this.parentElement.insertAdjacentHTML('afterbegin','<div style=\'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:IBM Plex Mono,monospace;font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.35);text-align:center;padding:20px;\'>assets/project-6.jpeg<br>not found</div>');"
+        />
+      </div>
+      <span class="project-card-index">06</span>
+      <div class="project-card-overlay">
+        <span class="project-overlay-category">Hospitality / Extended Stay</span>
+        <h3 class="project-overlay-title">Reykjavik Modular Hotel</h3>
+        <p class="project-overlay-location">Reykjavik, Iceland — 2024</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 3: PROCESS / HOW WE WORKED — Light grey, vertical timeline
+     ═══════════════════════════════════════════════════════════ -->
+<section id="projects-process" aria-labelledby="projects-process-title">
+  <div id="projects-process-inner">
+
+    <header id="projects-process-header">
+      <span id="projects-process-label">Deployment Method</span>
+      <h2 id="projects-process-title">How Forma Builds</h2>
+      <p id="projects-process-subtitle">
+        Every Forma project runs the same four-phase process. Constraints in, fabrication files out. No variation in rigor — only in parameters.
+      </p>
+    </header>
+
+    <div id="timeline-container" role="list">
+
+      <!-- Vertical line track -->
+      <div id="timeline-track" aria-hidden="true">
+        <div id="timeline-line-bg"></div>
+        <div id="timeline-line-fill"></div>
+      </div>
+
+      <!-- Phases column -->
+      <div id="timeline-phases">
+
+        <!-- Phase 1: Analysis -->
+        <article class="timeline-phase" id="phase-analysis" role="listitem">
+          <div class="phase-number-wrap">
+            <span class="phase-number">01</span>
+            <div class="phase-dot" aria-hidden="true"></div>
+          </div>
+          <div class="phase-content">
+            <h3 class="phase-name">Analysis</h3>
+            <p class="phase-description">
+              Site geometry, program brief, and structural constraints are ingested into the parametric model. Ground conditions, local code overlays, and supply-chain adjacency are weighted before a single module is generated.
+            </p>
+            <div class="phase-tags">
+              <span class="phase-tag">Site Survey</span>
+              <span class="phase-tag">Program Brief</span>
+              <span class="phase-tag">Code Overlay</span>
+              <span class="phase-tag">Constraint Mapping</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Phase 2: Parametric Generation -->
+        <article class="timeline-phase" id="phase-generation" role="listitem">
+          <div class="phase-number-wrap">
+            <span class="phase-number">02</span>
+            <div class="phase-dot" aria-hidden="true"></div>
+          </div>
+          <div class="phase-content">
+            <h3 class="phase-name">Parametric Generation</h3>
+            <p class="phase-description">
+              The constraint set drives the module generation engine. Forma outputs a ranked configuration matrix — typically 6–12 candidate layouts — scored against cost, logistics, and structural efficiency. Client selects; Forma locks.
+            </p>
+            <div class="phase-tags">
+              <span class="phase-tag">Module Configuration</span>
+              <span class="phase-tag">Structural Scoring</span>
+              <span class="phase-tag">Cost Modeling</span>
+              <span class="phase-tag">Layout Matrix</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Phase 3: Documentation -->
+        <article class="timeline-phase" id="phase-documentation" role="listitem">
+          <div class="phase-number-wrap">
+            <span class="phase-number">03</span>
+            <div class="phase-dot" aria-hidden="true"></div>
+          </div>
+          <div class="phase-content">
+            <h3 class="phase-name">Documentation</h3>
+            <p class="phase-description">
+              Locked configuration generates full shop drawing sets, structural calculation packages, BIM export, and permitting submissions — all derived from the same parametric source. No coordination errors between disciplines.
+            </p>
+            <div class="phase-tags">
+              <span class="phase-tag">Shop Drawings</span>
+              <span class="phase-tag">Structural Calcs</span>
+              <span class="phase-tag">BIM Export</span>
+              <span class="phase-tag">Permit Package</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Phase 4: Delivery -->
+        <article class="timeline-phase" id="phase-delivery" role="listitem">
+          <div class="phase-number-wrap">
+            <span class="phase-number">04</span>
+            <div class="phase-dot" aria-hidden="true"></div>
+          </div>
+          <div class="phase-content">
+            <h3 class="phase-name">Delivery</h3>
+            <p class="phase-description">
+              CNC-ready fabrication files route directly to certified manufacturing partners. Forma coordinates logistics sequencing, site assembly schedules, and structural sign-off. Typical on-site assembly: 8–22 days.
+            </p>
+            <div class="phase-tags">
+              <span class="phase-tag">Fabrication Files</span>
+              <span class="phase-tag">Logistics Sequencing</span>
+              <span class="phase-tag">Site Coordination</span>
+              <span class="phase-tag">Assembly Sign-Off</span>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /#timeline-phases -->
+    </div><!-- /#timeline-container -->
+
+    <!-- CTA strip -->
+    <div id="process-cta-strip">
+      <p id="process-cta-text">Start a project with Forma.</p>
+      <a href="contact.html" class="process-cta-btn">Contact Us</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER — Dark, 4 columns
+     ═══════════════════════════════════════════════════════════ -->
+<footer id="projects-footer" aria-label="Site footer">
+  <div id="footer-inner">
+
+    <div id="footer-columns">
+
+      <!-- Column 1: Brand -->
+      <div class="footer-col footer-col-brand">
+        <span class="footer-logo">Forma</span>
+        <p class="footer-tagline">Parametric design platform for modular prefab architecture. Constraints in — structures out.</p>
+      </div>
+
+      <!-- Column 2: Platform -->
+      <div class="footer-col footer-col-platform">
+        <span class="footer-col-heading">Platform</span>
+        <ul class="footer-col-links">
+          <li><a href="platform.html">Overview</a></li>
+          <li><a href="platform.html#engine">Parametric Engine</a></li>
+          <li><a href="platform.html#modules">Module Library</a></li>
+          <li><a href="platform.html#bim">BIM Integration</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Solutions -->
+      <div class="footer-col footer-col-solutions">
+        <span class="footer-col-heading">Solutions</span>
+        <ul class="footer-col-links">
+          <li><a href="solutions.html">Residential</a></li>
+          <li><a href="solutions.html#commercial">Commercial</a></li>
+          <li><a href="solutions.html#civic">Civic</a></li>
+          <li><a href="solutions.html#remote">Remote / Off-Grid</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact -->
+      <div class="footer-col footer-col-contact">
+        <span class="footer-col-heading">Contact</span>
+        <ul class="footer-col-links">
+          <li><a href="contact.html">Start a Project</a></li>
+          <li><a href="contact.html#press">Press</a></li>
+          <li><a href="contact.html#partners">Manufacturing Partners</a></li>
+          <li><a href="contact.html#careers">Careers</a></li>
+        </ul>
+      </div>
+
+    </div><!-- /#footer-columns -->
+
+    <div id="footer-copyright">
+      <span>&copy; 2024 Forma Systems. All rights reserved.</span>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+  /* ── Stat count-up (requestAnimationFrame, not GSAP) ────── */
+  document.addEventListener('DOMContentLoaded', function () {
+    var stats = document.querySelectorAll('.stat-number[data-target]');
+
+    function countUp(el) {
+      var target = parseInt(el.getAttribute('data-target'), 10);
+      var start = 0;
+      var duration = 1400; // ms
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var elapsed = timestamp - startTime;
+        var progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        var easedProgress = 1 - Math.pow(1 - progress, 3);
+        var current = Math.round(start + (target - start) * easedProgress);
+        el.textContent = current;
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = target;
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    stats.forEach(function (el) { countUp(el); });
+  });
+
+  /* ── GSAP ScrollTrigger animations ─────────────────────── */
+  gsap.registerPlugin(ScrollTrigger);
+
+  var BASE_DURATION = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--duration-base')
+  ) / 1000 || 0.7;
+
+  var EASE = getComputedStyle(document.documentElement)
+    .getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+  /* ── Project cards: rotation+y enter on scroll ───────────
+     Uses fromTo to avoid double-animation poisoning.
+     gsap.set initial state, then fromTo on scroll trigger. */
+  var cards = gsap.utils.toArray('.project-card');
+  gsap.set(cards, { rotation: 1, y: 30 });
+
+  cards.forEach(function (card, i) {
+    gsap.fromTo(card,
+      { rotation: 1, y: 30 },
+      {
+        rotation: 0,
+        y: 0,
+        duration: 0.55,
+        ease: EASE,
+        delay: i * 0.12,
+        scrollTrigger: {
+          trigger: '#projects-masonry-grid',
+          start: 'top 80%',
+          once: true
+        }
+      }
+    );
+  });
+
+  /* ── Grid section header ─────────────────────────────────── */
+  gsap.fromTo('#projects-grid-header',
+    { y: 20 },
+    {
+      y: 0,
+      duration: BASE_DURATION,
+      ease: EASE,
+      scrollTrigger: {
+        trigger: '#projects-grid-section',
+        start: 'top 80%',
+        once: true
+      }
+    }
+  );
+
+  /* ── Timeline line fill: scrub on scroll ─────────────────── */
+  gsap.fromTo('#timeline-line-fill',
+    { height: '0%' },
+    {
+      height: '100%',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#timeline-container',
+        start: 'top 70%',
+        end: 'bottom 30%',
+        scrub: true
+      }
+    }
+  );
+
+  /* ── Timeline phase items: slide in from right ───────────── */
+  var phases = gsap.utils.toArray('.timeline-phase');
+  gsap.set(phases, { x: 30 });
+
+  phases.forEach(function (phase, i) {
+    gsap.fromTo(phase,
+      { x: 30 },
+      {
+        x: 0,
+        duration: 0.5,
+        ease: EASE,
+        delay: i * 0.15,
+        scrollTrigger: {
+          trigger: '#timeline-phases',
+          start: 'top 80%',
+          once: true
+        }
+      }
+    );
+  });
+
+  /* ── Process section header ──────────────────────────────── */
+  gsap.fromTo('#projects-process-header',
+    { y: 20 },
+    {
+      y: 0,
+      duration: BASE_DURATION,
+      ease: EASE,
+      scrollTrigger: {
+        trigger: '#projects-process',
+        start: 'top 80%',
+        once: true
+      }
+    }
+  );
+
+  /* ── Process CTA strip ───────────────────────────────────── */
+  gsap.fromTo('#process-cta-strip',
+    { y: 16 },
+    {
+      y: 0,
+      duration: BASE_DURATION,
+      ease: EASE,
+      scrollTrigger: {
+        trigger: '#process-cta-strip',
+        start: 'top 90%',
+        once: true
+      }
+    }
+  );
+</script>
+
+</body>
+</html>

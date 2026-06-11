@@ -1,0 +1,1086 @@
+/* ============================================================
+   APPLICATIONS PAGE — prism-drift / IRID
+   ============================================================ */
+
+/* ── Keyframes ── */
+
+@keyframes holoShift {
+  0%   { filter: hue-rotate(0deg) brightness(1); }
+  25%  { filter: hue-rotate(30deg) brightness(1.05); }
+  50%  { filter: hue-rotate(60deg) brightness(1.1); }
+  75%  { filter: hue-rotate(90deg) brightness(1.05); }
+  100% { filter: hue-rotate(0deg) brightness(1); }
+}
+
+@keyframes conicSpin {
+  0%   { --conic-angle: 0deg; }
+  100% { --conic-angle: 360deg; }
+}
+
+@keyframes autoPaintRotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes shimmerBorder {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes prismaticPulse {
+  0%   { opacity: 0.6; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* ── Layout helpers ── */
+
+.container {
+  max-width: var(--grid-max-width, 1520px);
+  margin-inline: auto;
+  padding-inline: var(--grid-padding-inline, 40px);
+}
+
+/* ── SVG Dividers ── */
+
+.section-divider {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin-bottom: -1px;
+}
+
+.section-divider svg {
+  display: block;
+  width: 100%;
+}
+
+/* ── Chromatic aberration headline utility ── */
+
+.chromatic-headline {
+  position: relative;
+  display: inline-block;
+}
+
+.chromatic-headline::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: #6fc8b4;
+  mix-blend-mode: screen;
+  transform: translate(-2px, -1px);
+  opacity: 0.55;
+  pointer-events: none;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.chromatic-headline::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: #df5e12;
+  mix-blend-mode: screen;
+  transform: translate(2px, 1px);
+  opacity: 0.45;
+  pointer-events: none;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+/* ── Iridescent card border utility ── */
+
+.irid-border {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(white, white) padding-box,
+    linear-gradient(120deg, #df5e12, #6fc8b4, #a3c4ff) border-box;
+  background-size: 100% 100%, 200% 200%;
+  animation: shimmerBorder 4s ease infinite;
+}
+
+.irid-border--dark {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#3d6b5e, #3d6b5e) padding-box,
+    linear-gradient(120deg, #df5e12, #6fc8b4, #a3c4ff) border-box;
+  background-size: 100% 100%, 200% 200%;
+  animation: shimmerBorder 4s ease infinite;
+}
+
+/* ============================================================
+   SECTION 1 — PAGE HEADER
+   ============================================================ */
+
+#page-header {
+  min-height: 35vh;
+  background: linear-gradient(160deg, #ffffff 0%, #f0ede8 60%, #e8f4f1 100%);
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-4xl, 128px) var(--space-3xl, 96px);
+  position: relative;
+  overflow: hidden;
+}
+
+#page-header-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#page-header-spectrum-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #df5e12, #6fc8b4, #a3c4ff, #df5e12);
+  background-size: 200% 100%;
+  animation: shimmerBorder 4s linear infinite;
+}
+
+#page-header-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+#page-header-eyebrow {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent, #df5e12);
+  margin: 0 0 var(--space-md, 16px);
+  display: block;
+}
+
+#page-header-headline {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: clamp(64px, 8vw, 120px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-heading, #263d40);
+  margin: 0 0 var(--space-xl, 40px);
+}
+
+#page-header-subhead {
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-body-text, #2b2b29);
+  max-width: 600px;
+  margin: 0;
+}
+
+/* ============================================================
+   SECTION 2 — AUTOMOTIVE
+   ============================================================ */
+
+#automotive {
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  padding-block: var(--space-section, 120px);
+  position: relative;
+  overflow: hidden;
+}
+
+#automotive-layout {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--space-2xl, 64px);
+  align-items: center;
+}
+
+#automotive-text {
+  position: relative;
+}
+
+#automotive-eyebrow {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-teal-accent, #6fc8b4);
+  display: block;
+  margin-bottom: var(--space-md, 16px);
+}
+
+#automotive-heading {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: clamp(36px, 4vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-heading, #263d40);
+  margin: 0 0 var(--space-lg, 24px);
+}
+
+#automotive-body {
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--color-body-text, #2b2b29);
+  margin: 0 0 var(--space-xl, 40px);
+}
+
+#automotive-specs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 8px);
+}
+
+.auto-spec-item {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-body-text, #2b2b29);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+}
+
+.auto-spec-item::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, #df5e12, #6fc8b4);
+}
+
+/* CSS Car Paint Visual */
+
+#automotive-visual {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: var(--radius-container, 22px);
+  overflow: hidden;
+}
+
+#auto-paint-surface {
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    #a3c4ff 0deg,
+    #6fc8b4 60deg,
+    #df5e12 120deg,
+    #263d40 180deg,
+    #6fc8b4 240deg,
+    #a3c4ff 300deg,
+    #a3c4ff 360deg
+  );
+  border-radius: var(--radius-container, 22px);
+  animation: holoShift 8s ease-in-out infinite;
+}
+
+#auto-paint-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 35% 40%, rgba(255,255,255,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 70% 65%, rgba(163,196,255,0.35) 0%, transparent 55%);
+  border-radius: var(--radius-container, 22px);
+  pointer-events: none;
+}
+
+#auto-paint-reflection {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+  width: 45%;
+  height: 30%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 100%);
+  border-radius: 40% 60% 50% 50% / 30% 30% 70% 70%;
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+#auto-paint-border {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-container, 22px);
+  box-shadow:
+    inset 0 0 60px rgba(111,200,180,0.2),
+    inset 0 0 120px rgba(163,196,255,0.1),
+    0 0 40px rgba(223,94,18,0.15);
+  pointer-events: none;
+}
+
+#auto-paint-label {
+  position: absolute;
+  bottom: var(--space-lg, 24px);
+  left: var(--space-lg, 24px);
+  right: var(--space-lg, 24px);
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  z-index: 1;
+}
+
+#automotive-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg, 24px);
+  margin-top: var(--space-3xl, 96px);
+  padding-top: var(--space-2xl, 64px);
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.auto-stat {
+  text-align: left;
+}
+
+.auto-stat-number {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: clamp(36px, 3.5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--color-accent, #df5e12);
+  display: block;
+  margin-bottom: var(--space-sm, 8px);
+}
+
+.auto-stat-label {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-body-text, #2b2b29);
+}
+
+/* ============================================================
+   SECTION 3 — ARCHITECTURE
+   ============================================================ */
+
+#architecture {
+  background: linear-gradient(160deg, var(--color-surface-bg, #f0ede8) 0%, #e8ece9 100%);
+  padding-block: var(--space-section, 120px);
+  position: relative;
+  overflow: hidden;
+}
+
+#architecture-header {
+  margin-bottom: var(--space-3xl, 96px);
+}
+
+#architecture-eyebrow {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-teal-accent, #6fc8b4);
+  display: block;
+  margin-bottom: var(--space-md, 16px);
+}
+
+#architecture-heading {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: clamp(36px, 4vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-heading, #263d40);
+  margin: 0;
+  max-width: 700px;
+}
+
+/* Masonry grid */
+#architecture-masonry {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: var(--space-lg, 24px);
+  align-items: start;
+}
+
+.arch-card {
+  padding: var(--space-card-padding, 40px);
+  border-radius: var(--radius-panel, 12px);
+  position: relative;
+  transition: transform 300ms var(--ease-primary), box-shadow 300ms var(--ease-primary);
+}
+
+.arch-card:nth-child(1) {
+  grid-row: span 1;
+  margin-top: 0;
+}
+
+.arch-card:nth-child(2) {
+  grid-row: span 1;
+  margin-top: 48px;
+}
+
+.arch-card:nth-child(3) {
+  grid-row: span 1;
+  margin-top: 20px;
+}
+
+.arch-card:hover {
+  transform: translateY(-3px);
+  filter: hue-rotate(15deg);
+  box-shadow: 0 12px 40px rgba(111,200,180,0.15);
+}
+
+.arch-card-number {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: clamp(48px, 5vw, 80px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  color: var(--color-accent, #df5e12);
+  display: block;
+  margin-bottom: var(--space-xl, 40px);
+}
+
+.arch-card-heading {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-heading, #263d40);
+  margin: 0 0 var(--space-md, 16px);
+}
+
+.arch-card-body {
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-body-text, #2b2b29);
+  margin: 0 0 var(--space-md, 16px);
+}
+
+.arch-card-metric {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-teal-accent, #6fc8b4);
+}
+
+/* ============================================================
+   SECTION 4 — PRISM REFRACTION VIDEO
+   ============================================================ */
+
+#prism-video {
+  background: linear-gradient(135deg, #1e3a35 0%, #152d28 100%);
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+#prism-video-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 70vh;
+}
+
+#prism-video-left {
+  position: relative;
+  overflow: hidden;
+  min-height: 500px;
+}
+
+#prism-video-element {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#prism-video-placeholder {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #6fc8b4, #a3c4ff, #df5e12);
+  align-items: center;
+  justify-content: center;
+}
+
+#prism-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(30,58,53,0) 0%, rgba(30,58,53,0.15) 100%);
+  pointer-events: none;
+}
+
+#prism-video-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-3xl, 96px) var(--space-2xl, 64px);
+  position: relative;
+}
+
+#prism-video-right-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+#prism-video-eyebrow {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-teal-accent, #6fc8b4);
+  display: block;
+  margin-bottom: var(--space-md, 16px);
+  position: relative;
+  z-index: 1;
+}
+
+#prism-video-heading {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: clamp(32px, 3.5vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 var(--space-xl, 40px);
+  position: relative;
+  z-index: 1;
+}
+
+#prism-video-body {
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.78);
+  margin: 0 0 var(--space-2xl, 64px);
+  position: relative;
+  z-index: 1;
+}
+
+#prism-video-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  border: 1px solid rgba(111,200,180,0.45);
+  padding: 14px 28px;
+  border-radius: 2px;
+  transition: border-color 300ms ease, background 300ms ease, filter 300ms ease;
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+}
+
+#prism-video-cta:hover {
+  border-color: rgba(111,200,180,0.9);
+  background: rgba(111,200,180,0.1);
+  filter: hue-rotate(15deg);
+}
+
+#prism-video-cta-arrow {
+  display: inline-block;
+  transition: transform 250ms ease;
+}
+
+#prism-video-cta:hover #prism-video-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   SECTION 5 — FASHION & TEXTILES
+   ============================================================ */
+
+#fashion {
+  background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);
+  padding-block: var(--space-section, 120px);
+  position: relative;
+  overflow: hidden;
+}
+
+#fashion-header {
+  margin-bottom: var(--space-3xl, 96px);
+}
+
+#fashion-eyebrow {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent, #df5e12);
+  display: block;
+  margin-bottom: var(--space-md, 16px);
+}
+
+#fashion-heading {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: clamp(36px, 4vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-heading, #263d40);
+  margin: 0;
+  max-width: 700px;
+}
+
+#fashion-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fashion-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-2xl, 64px);
+  align-items: center;
+  padding-block: var(--space-2xl, 64px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.fashion-row:last-child {
+  border-bottom: none;
+}
+
+.fashion-row-number {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(38,61,64,0.25);
+  display: block;
+  margin-bottom: var(--space-sm, 8px);
+}
+
+.fashion-row-title {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: clamp(20px, 2.5vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--color-heading, #263d40);
+  margin: 0;
+}
+
+.fashion-row-right {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3xl, 96px);
+}
+
+.fashion-row-body {
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--color-body-text, #2b2b29);
+  margin: 0;
+  flex: 1;
+}
+
+.fashion-row-tag {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-teal-accent, #6fc8b4);
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+.fashion-row-clip-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, #df5e12, #6fc8b4, #a3c4ff);
+}
+
+/* ============================================================
+   SECTION 6 — SCIENTIFIC INSTRUMENTS
+   ============================================================ */
+
+#scientific {
+  background: linear-gradient(160deg, var(--color-surface-bg, #f0ede8) 0%, #eaeae6 100%);
+  padding-block: var(--space-section, 120px);
+  position: relative;
+  overflow: hidden;
+}
+
+#scientific-header {
+  margin-bottom: var(--space-3xl, 96px);
+}
+
+#scientific-eyebrow {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-teal-accent, #6fc8b4);
+  display: block;
+  margin-bottom: var(--space-md, 16px);
+}
+
+#scientific-heading {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: clamp(36px, 4vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-heading, #263d40);
+  margin: 0;
+  max-width: 700px;
+}
+
+#scientific-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg, 24px);
+}
+
+.sci-card {
+  padding: var(--space-card-padding, 40px) var(--space-lg, 24px);
+  border-radius: var(--radius-panel, 12px);
+  background: linear-gradient(160deg, #ffffff 0%, #f8f6f3 100%);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  transition: transform 300ms var(--ease-primary), box-shadow 300ms var(--ease-primary), filter 300ms var(--ease-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.sci-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #df5e12, #6fc8b4, #a3c4ff);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.sci-card:hover {
+  transform: translateY(-3px);
+  filter: hue-rotate(15deg);
+  box-shadow: 0 12px 32px rgba(111,200,180,0.15);
+}
+
+.sci-card:hover::before {
+  opacity: 1;
+}
+
+.sci-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(111,200,180,0.15), rgba(163,196,255,0.15));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-xl, 40px);
+}
+
+.sci-card-icon-inner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6fc8b4, #a3c4ff);
+}
+
+.sci-card-heading {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-heading, #263d40);
+  margin: 0 0 var(--space-md, 16px);
+  line-height: 1.3;
+}
+
+.sci-card-body {
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-body-text, #2b2b29);
+  margin: 0 0 var(--space-lg, 24px);
+}
+
+.sci-card-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sci-spec-item {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-teal-accent, #6fc8b4);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sci-spec-item::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   SECTION 7 — CTA
+   ============================================================ */
+
+#cta-section {
+  background: linear-gradient(135deg, #2b2918 0%, #1e1e14 50%, #2b2918 100%);
+  padding-block: 120px;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+#cta-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+}
+
+#cta-spectrum-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #df5e12 20%, #6fc8b4 50%, #a3c4ff 80%, transparent 100%);
+}
+
+#cta-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+#cta-eyebrow {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-teal-accent, #6fc8b4);
+  display: block;
+  margin-bottom: var(--space-md, 16px);
+}
+
+#cta-headline {
+  font-family: var(--font-heading, 'Syncopate', sans-serif);
+  font-size: clamp(32px, 4.5vw, 72px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 var(--space-2xl, 64px);
+}
+
+#cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg, 24px);
+  flex-wrap: wrap;
+}
+
+#cta-primary {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  background: var(--color-accent, #df5e12);
+  padding: 16px 36px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  transition: filter 300ms ease, transform 200ms ease;
+  display: inline-block;
+}
+
+#cta-primary:hover {
+  filter: hue-rotate(15deg) brightness(1.1);
+  transform: translateY(-2px);
+}
+
+#cta-secondary {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 16px 36px;
+  border-radius: 2px;
+  transition: border-color 300ms ease, color 300ms ease;
+  display: inline-block;
+}
+
+#cta-secondary:hover {
+  border-color: rgba(111,200,180,0.6);
+  color: #ffffff;
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+@media (max-width: 1100px) {
+  #automotive-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl, 40px);
+  }
+
+  #scientific-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  #automotive-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #automotive-visual {
+    aspect-ratio: 16/9;
+  }
+
+  #automotive-stats {
+    margin-top: var(--space-2xl, 64px);
+    padding-top: var(--space-xl, 40px);
+  }
+
+  #architecture-masonry {
+    grid-template-columns: 1fr;
+  }
+
+  .arch-card:nth-child(2),
+  .arch-card:nth-child(3) {
+    margin-top: 0;
+  }
+
+  #prism-video-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #prism-video-left {
+    min-height: 50vw;
+  }
+
+  #prism-video-right {
+    padding: var(--space-2xl, 64px) var(--space-xl, 40px);
+  }
+
+  .fashion-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg, 24px);
+  }
+
+  .fashion-row-right {
+    flex-direction: column;
+    gap: var(--space-md, 16px);
+  }
+
+  #scientific-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  #page-header {
+    padding-block: 80px 60px;
+  }
+
+  #automotive-stats {
+    grid-template-columns: 1fr;
+    gap: var(--space-md, 16px);
+  }
+
+  #architecture-masonry {
+    grid-template-columns: 1fr;
+  }
+
+  #scientific-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #cta-actions {
+    flex-direction: column;
+  }
+
+  #cta-primary,
+  #cta-secondary {
+    width: 100%;
+    text-align: center;
+  }
+
+  .fashion-row-right {
+    flex-direction: column;
+  }
+
+  #prism-video-right {
+    padding: var(--space-xl, 40px) var(--space-lg, 24px);
+  }
+
+  .container {
+    padding-inline: 24px;
+  }
+}

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process — Quill Plane Instrument Co.</title>
+  <meta name="description" content="The measurement method and calibration protocol used with QP instruments. Sample conditioning, ISO 5626 and TAPPI T511 fold endurance testing, and ISO 534 thickness measurement.">
+
+  <!-- Design System Tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <!-- Components -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/subpages.css">
+
+  <!-- Splitting.js -->
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ── NAV ── -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Quill Plane Instrument Co. home">
+      <span class="nav-logo-mark">QP</span>
+      <span class="nav-logo-sub">Instrument Co.</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="instruments.html" class="nav-link">Instruments</a></li>
+      <li><a href="process.html" class="nav-link nav-link--active">Process</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="instruments.html" class="nav-link btn-primary" style="padding:8px 18px;font-size:0.75rem;">Enquire</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="instruments.html" class="nav-link">Instruments</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="instruments.html" class="nav-link">Enquire</a>
+</div>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+  const mobileToggle = document.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile-menu');
+  mobileToggle.addEventListener('click', () => {
+    nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open');
+    document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+  });
+</script>
+
+<!-- ── PAGE HEADER (compact: max-height 20vh) ── -->
+<header id="page-header">
+  <div id="page-header-inner">
+    <p id="page-header-eyebrow">— Method &amp; Protocol</p>
+    <h1 id="page-header-title">A measurement is only as good as the method that produces it.</h1>
+  </div>
+</header>
+
+<!-- ── STANDARDS SECTION ── -->
+<section id="standards-section">
+  <div id="standards-inner">
+    <p id="standards-eyebrow">— Test Standards</p>
+    <h2 id="standards-heading">Three international standards govern every QP result.</h2>
+
+    <div id="standards-grid">
+      <div class="standard-item" id="std-iso5626">
+        <p class="standard-item-code">ISO 5626</p>
+        <p class="standard-item-name">Fold Endurance</p>
+        <p class="standard-item-desc">Paper and board. Determination of folding endurance. Specifies the double-fold method and the tensile load applied during folding. The primary standard for QP-7 results.</p>
+      </div>
+      <div class="standard-item" id="std-tappi">
+        <p class="standard-item-code">TAPPI T511</p>
+        <p class="standard-item-name">Fold Endurance (Alternative)</p>
+        <p class="standard-item-desc">MIT fold endurance test for paper and paperboard. Alternative to ISO 5626 used in North American laboratory practice. QP-7 calibrated to both; values are not directly convertible.</p>
+      </div>
+      <div class="standard-item" id="std-iso534">
+        <p class="standard-item-code">ISO 534</p>
+        <p class="standard-item-name">Paper Thickness</p>
+        <p class="standard-item-desc">Paper and board. Determination of thickness, density and specific volume. Governs the measurement geometry, contact pressure, and cycle time for QP-12 caliper readings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── METHOD SECTION ── -->
+<section id="method-section">
+  <div id="method-inner">
+    <p id="method-eyebrow">— Step by Step</p>
+    <h2 id="method-heading">Four stages. No shortcuts.</h2>
+
+    <div id="method-steps">
+      <div class="method-step" id="step-conditioning">
+        <p class="method-step-number">01</p>
+        <div>
+          <h3 class="method-step-title">Sample Conditioning</h3>
+          <p class="method-step-note">23°C / 50% RH / 4 hours minimum</p>
+        </div>
+        <p class="method-step-body">Each test sample must be conditioned at 23°C and 50% relative humidity for a minimum of four hours before measurement begins. Moisture content is the primary variable affecting fold endurance — an unconditioned sample can read up to 18% higher than a properly conditioned one due to plasticisation of the fibre network. The QP protocol is strict: conditioning is not optional and cannot be abbreviated. Samples are held flat in a conditioning chamber, not stacked. Coated papers require an additional 2 hours.</p>
+      </div>
+
+      <div class="method-step" id="step-calibration">
+        <p class="method-step-number">02</p>
+        <div>
+          <h3 class="method-step-title">Instrument Calibration</h3>
+          <p class="method-step-note">Before each test session</p>
+        </div>
+        <p class="method-step-body">The QP-12 is zeroed against the 250µm reference gauge block at the start of each session. The QP-7's fold tension is set using the dead-weight calibration set: two screws on the spring-load mechanism are adjusted until the pointer aligns with the 0.5 kN or 1.0 kN mark. Both adjustments are logged on the QP data sheet with the technician's initials. Instruments that have been transported require a 20-minute thermal rest before calibration — particularly in cold or humid environments.</p>
+      </div>
+
+      <div class="method-step" id="step-measurement">
+        <p class="method-step-number">03</p>
+        <div>
+          <h3 class="method-step-title">Measurement Cycle</h3>
+          <p class="method-step-note">QP-12: 2.2 seconds / QP-7: until fracture</p>
+        </div>
+        <p class="method-step-body">The QP-12 measurement cycle completes in 2.2 seconds from contact to recorded value. The instrument applies a controlled contact pressure, holds for 0.5 seconds to allow fibre compression to stabilise, and releases. The QP-7 counts double-folds automatically; the fold mechanism is motorised and stops at fracture detection via the resistance sensor. Minimum recommended sample count for a statistically valid result is five specimens, with outliers flagged if the range exceeds 15% of the mean.</p>
+      </div>
+
+      <div class="method-step" id="step-reporting">
+        <p class="method-step-number">04</p>
+        <div>
+          <h3 class="method-step-title">Reporting</h3>
+          <p class="method-step-note">ISO 5626 / ISO 534 format</p>
+        </div>
+        <p class="method-step-body">QP results are reported against the relevant standard. Fold endurance is expressed as the logarithm (base 10) of the double-fold count — the MIT fold number. Thickness is reported in micrometres, rounded to the nearest 1µm. Conservation studios typically report QP-7 values alongside Betti number readings from separate folding endurance tests; the two methods use different fold tension geometries and are not interchangeable. Binderies use QP-12 caliper data to select scoring blades: a 120gsm sheet reading 138µm requires a different blade than one reading 152µm.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS IMAGE SECTION (dark contrast beat) ── -->
+<section id="process-image-section">
+  <img
+    id="process-image-full"
+    src="assets/calibration-process.jpeg"
+    alt="Hands adjusting QP-12 contact faces against folded Rives BFK paper edge on a light table, Gloucestershire studio"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+  >
+  <div id="process-image-full-placeholder" style="display:none;width:100%;height:50vh;background:var(--color-dark-surface);display:none;align-items:center;justify-content:center;color:rgba(242,242,242,0.3);font-family:var(--font-body);font-size:0.8rem;">
+    → assets/calibration-process.jpeg
+  </div>
+  <div id="process-image-overlay"></div>
+  <div id="process-image-caption-block">
+    <p id="process-image-caption-text">QP-12 in use during a caliper verification session. Rives BFK 120gsm, 23°C conditioning chamber, Gloucestershire studio.</p>
+  </div>
+</section>
+
+<!-- ── STANDARDS DETAIL: Why conditioning matters ── -->
+<section id="standards-section" style="background:var(--color-page-bg);padding:100px 0;">
+  <div id="standards-inner" style="max-width:var(--grid-max-width);margin:0 auto;padding:0 40px;">
+    <p id="conditioning-eyebrow" style="font-family:var(--font-body);font-size:0.625rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--color-muted-text);margin:0 0 48px;">— Why Conditioning Matters</p>
+
+    <div id="conditioning-grid" style="display:grid;grid-template-columns:1.4fr 1fr;gap:90px;align-items:start;">
+      <div id="conditioning-left">
+        <h2 id="conditioning-heading" style="font-family:var(--font-heading);font-size:var(--type-h2);font-weight:500;letter-spacing:var(--tracking-heading);color:var(--color-heading);margin:0 0 32px;line-height:1.2;max-width:480px;">A 4% humidity shift changes your fold reading by 8%.</h2>
+        <p id="conditioning-body-1" style="font-family:var(--font-body);font-size:1rem;font-weight:400;color:var(--color-body-text);line-height:1.75;margin:0 0 24px;">The cellulose fibres in paper are hygroscopic — they absorb and release moisture with changes in ambient relative humidity. At low humidity, fibres contract and stiffen, making them more brittle and reducing fold endurance. At high humidity, they swell and become more pliable. A single percentage point change in RH shifts fold endurance by approximately 2%.</p>
+        <p id="conditioning-body-2" style="font-family:var(--font-body);font-size:1rem;font-weight:400;color:var(--color-muted-text);line-height:1.75;margin:0;">This is why QP results from an unconditioned environment cannot be compared against certified values. The QP protocol mandates conditioning not as bureaucratic caution but as a physical necessity: without it, fold numbers are site-specific rather than universal. Conditioning chambers are available from QP as an accessory to the instrument package.</p>
+      </div>
+      <div id="conditioning-right" style="display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(0,0,0,0.07);">
+        <div style="padding:24px 0;border-bottom:1px solid rgba(0,0,0,0.07);">
+          <p style="font-family:var(--font-body);font-size:0.625rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-muted-text);margin:0 0 8px;">Standard condition</p>
+          <p style="font-family:var(--font-heading);font-size:1.4rem;font-weight:500;color:var(--color-heading);margin:0;">23°C / 50% RH</p>
+        </div>
+        <div style="padding:24px 0;border-bottom:1px solid rgba(0,0,0,0.07);">
+          <p style="font-family:var(--font-body);font-size:0.625rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-muted-text);margin:0 0 8px;">Coated stock (additional)</p>
+          <p style="font-family:var(--font-heading);font-size:1.4rem;font-weight:500;color:var(--color-heading);margin:0;">+ 2 hours</p>
+        </div>
+        <div style="padding:24px 0;border-bottom:1px solid rgba(0,0,0,0.07);">
+          <p style="font-family:var(--font-body);font-size:0.625rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-muted-text);margin:0 0 8px;">RH effect on fold endurance</p>
+          <p style="font-family:var(--font-heading);font-size:1.4rem;font-weight:500;color:var(--color-heading);margin:0;">±2% per 1% RH</p>
+        </div>
+        <div style="padding:24px 0;">
+          <p style="font-family:var(--font-body);font-size:0.625rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-muted-text);margin:0 0 8px;">Minimum specimen count</p>
+          <p style="font-family:var(--font-heading);font-size:1.4rem;font-weight:500;color:var(--color-heading);margin:0;">5 specimens</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SUB CTA BAND ── -->
+<section id="sub-cta">
+  <div id="sub-cta-inner">
+    <div id="sub-cta-text">
+      <h2 id="sub-cta-heading">The instruments behind the method.</h2>
+      <p id="sub-cta-body">QP-7 and QP-12 specifications, materials, and commissioning information.</p>
+    </div>
+    <a href="instruments.html" class="btn-primary-light">View Instruments</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div id="footer-top">
+      <div class="footer-brand">
+        <p class="footer-brand-name">Quill Plane Instrument Co.</p>
+        <p class="footer-brand-desc">Precision calibration instruments for paper engineers, conservators, and archival binderies. QP-7 and QP-12 in continuous production since 1971.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Instruments</p>
+        <ul class="footer-links-list">
+          <li><a href="instruments.html">QP-7 Fold Tester</a></li>
+          <li><a href="instruments.html">QP-12 Thickness Comparator</a></li>
+          <li><a href="instruments.html">Accessories</a></li>
+          <li><a href="instruments.html">Enquire</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Studio</p>
+        <ul class="footer-links-list">
+          <li><a href="process.html">Method</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Heritage</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Standards</p>
+        <ul class="footer-links-list">
+          <li><a href="process.html">ISO 5626</a></li>
+          <li><a href="process.html">TAPPI T511</a></li>
+          <li><a href="process.html">ISO 534</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p class="footer-copyright">© 2024 Quill Plane Instrument Co. Stroud, Gloucestershire, UK.</p>
+      <ul class="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── LENIS SMOOTH SCROLL ──
+  const lenis = new Lenis({ lerp: 0.08, duration: 1.6, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  function raf(time) { lenis.raf(time); ScrollTrigger.update(); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── CUSTOM CURSOR ──
+  (function() {
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring || window.innerWidth < 900) return;
+    document.body.style.cursor = 'none';
+    const xDot = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power2.out' });
+    const yDot = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power2.out' });
+    const xRing = gsap.quickTo(ring, 'x', { duration: 0.55, ease: 'power3.out' });
+    const yRing = gsap.quickTo(ring, 'y', { duration: 0.55, ease: 'power3.out' });
+    window.addEventListener('mousemove', (e) => { xDot(e.clientX); yDot(e.clientY); xRing(e.clientX); yRing(e.clientY); }, { passive: true });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => gsap.to(ring, { scale: 2.2, opacity: 0.4, duration: 0.4, ease: 'power2.out' }));
+      el.addEventListener('mouseleave', () => gsap.to(ring, { scale: 1, opacity: 0.6, duration: 0.4, ease: 'power2.out' }));
+    });
+  })();
+
+  // ── PAGE HEADER entrance ──
+  window.addEventListener('load', () => {
+    gsap.from('#page-header-eyebrow', { y: 12, duration: 0.6, ease: 'power2.out', delay: 0.1 });
+    gsap.from('#page-header-title', { y: 20, duration: 0.8, ease: 'power2.out', delay: 0.25 });
+  });
+
+  // ── STANDARDS: scale-from-center on grid items ──
+  gsap.from('.standard-item', {
+    scale: 0.94,
+    duration: 0.8,
+    ease: 'power2.out',
+    stagger: 0.1,
+    scrollTrigger: { trigger: '#standards-grid', start: 'top 80%' }
+  });
+
+  // ── METHOD STEPS: horizontal slide-in alternating ──
+  document.querySelectorAll('.method-step').forEach((step, i) => {
+    const dir = i % 2 === 0 ? -60 : 60;
+    gsap.from(step, {
+      x: dir,
+      duration: 0.95,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: step, start: 'top 85%' }
+    });
+  });
+
+  // Method heading scale-rise
+  gsap.from('#method-heading', {
+    y: 30,
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#method-inner', start: 'top 80%' }
+  });
+
+  // ── PROCESS IMAGE: parallax ──
+  gsap.to('#process-image-full', {
+    y: '-8%',
+    ease: 'none',
+    scrollTrigger: { trigger: '#process-image-section', scrub: 1.5, start: 'top bottom', end: 'bottom top' }
+  });
+
+  gsap.from('#process-image-caption-block', {
+    y: 20,
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#process-image-section', start: 'top 70%' }
+  });
+
+  // ── CONDITIONING SECTION: clip-path reveal on heading ──
+  gsap.from('#conditioning-heading', {
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 1.0,
+    ease: 'power3.inOut',
+    scrollTrigger: { trigger: '#conditioning-heading', start: 'top 80%' }
+  });
+
+  gsap.from('#conditioning-left p', {
+    y: 20,
+    duration: 0.8,
+    ease: 'power2.out',
+    stagger: 0.15,
+    scrollTrigger: { trigger: '#conditioning-left', start: 'top 75%' }
+  });
+
+  gsap.from('#conditioning-right > div', {
+    y: 16,
+    duration: 0.7,
+    ease: 'power2.out',
+    stagger: 0.1,
+    scrollTrigger: { trigger: '#conditioning-right', start: 'top 75%' }
+  });
+
+  // ── FOOTER CLIP REVEAL ──
+  gsap.from('#site-footer', {
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 1.2,
+    ease: 'power3.inOut',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 90%' }
+  });
+
+  // ── CTA BUTTON elastic hover ──
+  document.querySelectorAll('.btn-primary, .btn-ghost, .btn-primary-light').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+      gsap.to(btn, { x: dx * 0.15, y: dy * 0.15, ease: 'power1.out', duration: 0.3 });
+    });
+    btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, ease: 'elastic.out(1, 0.3)', duration: 1.2 }));
+  });
+</script>
+
+</body>
+</html>

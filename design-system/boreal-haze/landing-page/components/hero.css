@@ -1,0 +1,237 @@
+/* ============================================================
+   Hero — SPECTRA
+   Full-viewport dark hero with aurora blob mesh
+   ============================================================ */
+
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--color-page-bg);
+  padding-top: 68px;
+}
+
+/* ── Aurora blob mesh ── */
+#hero-aurora-mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.aurora-blob {
+  position: absolute;
+  width: clamp(340px, 50vw, 700px);
+  height: clamp(340px, 50vw, 700px);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  mix-blend-mode: screen;
+  animation: blobMorph var(--duration-aurora-drift) ease-in-out infinite;
+  will-change: border-radius, transform;
+}
+
+.aurora-blob--teal {
+  background: radial-gradient(ellipse at center, rgba(33, 243, 182, 0.22) 0%, transparent 70%);
+  top: -10%;
+  left: -5%;
+  animation-delay: 0s;
+  animation-duration: 9000ms;
+}
+
+.aurora-blob--violet {
+  background: radial-gradient(ellipse at center, rgba(146, 72, 228, 0.20) 0%, transparent 70%);
+  top: 20%;
+  right: -10%;
+  animation-delay: -3000ms;
+  animation-duration: 11000ms;
+}
+
+.aurora-blob--lime {
+  background: radial-gradient(ellipse at center, rgba(226, 255, 101, 0.15) 0%, transparent 70%);
+  bottom: -10%;
+  left: 30%;
+  animation-delay: -6000ms;
+  animation-duration: 13000ms;
+}
+
+/* Radial gradient vignette over mesh */
+#hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(22, 29, 37, 0.6) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Content wrapper ── */
+#hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: var(--space-hero-top) var(--grid-padding-inline) var(--space-hero-bottom);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 32px;
+  width: 100%;
+}
+
+/* ── Kp live badge ── */
+#hero-kp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border: 1px solid rgba(33, 243, 182, 0.4);
+  border-radius: 100px;
+  background: rgba(33, 243, 182, 0.06);
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+#hero-kp-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent-teal);
+  box-shadow: 0 0 8px rgba(33, 243, 182, 0.8);
+  animation: glowPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+#hero-kp-badge-text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+}
+
+/* ── Headline ── */
+#hero-headline-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 960px;
+}
+
+#hero-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h1);
+  font-weight: 800;
+  letter-spacing: var(--tracking-heading);
+  line-height: 1.05;
+  color: var(--color-heading);
+  margin: 0;
+  animation: auroraGlow 8s ease-in-out infinite;
+}
+
+/* Individual words for clip-path reveal */
+.hero-word {
+  display: inline-block;
+  margin-right: 0.22em;
+  /* GSAP sets initial clip-path via gsap.set — no CSS opacity:0 */
+}
+
+.hero-word:last-child {
+  margin-right: 0;
+}
+
+#hero-sub {
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: var(--line-height-body);
+  color: var(--color-muted-text);
+  max-width: 600px;
+  margin: 0;
+}
+
+/* ── CTA row ── */
+#hero-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-primary-lime {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 36px;
+  background: var(--color-primary-action);
+  color: #0e1218;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: 4px;
+  border: 1px solid var(--color-primary-action);
+  transition: transform 0.25s var(--ease-spring), box-shadow 0.25s var(--ease-primary);
+  white-space: nowrap;
+}
+
+.btn-primary-lime:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 24px rgba(226, 255, 101, 0.5), 0 0 60px rgba(226, 255, 101, 0.2);
+}
+
+.btn-ghost-teal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 36px;
+  background: transparent;
+  color: var(--color-accent-teal);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: 4px;
+  border: 1px solid rgba(33, 243, 182, 0.5);
+  transition: background 0.25s var(--ease-primary), border-color 0.25s var(--ease-primary), box-shadow 0.25s var(--ease-primary);
+  white-space: nowrap;
+}
+
+.btn-ghost-teal:hover {
+  background: rgba(33, 243, 182, 0.08);
+  border-color: rgba(33, 243, 182, 0.8);
+  box-shadow: 0 0 16px rgba(33, 243, 182, 0.25);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #hero-title {
+    font-size: clamp(48px, 7vw, 90px);
+  }
+
+  #hero-sub {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero-cta-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary-lime,
+  .btn-ghost-teal {
+    width: 100%;
+    justify-content: center;
+  }
+
+  #hero-title {
+    font-size: clamp(40px, 10vw, 64px);
+  }
+}

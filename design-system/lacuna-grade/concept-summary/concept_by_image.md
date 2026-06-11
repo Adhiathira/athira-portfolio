@@ -1,148 +1,166 @@
-# Visual Design System Analysis
+# Visual Design System Analysis — Noir Register
 
-## Section Design Patterns Identified
+## The Scene
 
-Only **two distinct section patterns** are visible across the three screenshots:
+Two sections. That is all this page gives you. Two sections and a silence between them that tells you everything about what kind of world this is.
 
-1. **Hero / Landing Screen** — full-viewport composition with display type, 3D media object, and branded identity elements
-2. **Persistent Utility Bar** — anchored bottom-edge cookie/consent strip with copy and ghost CTA buttons
+The hero fills the frame like a confession you cannot unsay. Below it, anchored to the viewport floor like a warning scratched into the wall of a cell, the utility bar sits in near-black — watching.
 
-These are the only structural sections present. No scroll-revealed sections, feature grids, or footer content appears.
+This is not a layout. This is a stakeout.
 
 ---
 
 ## 1. Internal Section Organization
 
-**Hero section:** Uses a **layered, media-dominant composition** with no traditional grid zones. The layout operates on three overlapping strata:
+The hero operates on **three overlapping strata**, each holding its position in the composition like a suspect frozen under a single lamp.
 
-- **Background stratum:** Flat chromatic field (full-bleed solid color, no gradient or texture)
-- **Typography stratum:** Display headline at extreme scale, left-anchored, extending beyond the visible viewport edge — intentionally overflowing the container
-- **Media stratum:** A high-fidelity 3D-rendered object floats at center-right, physically overlapping and obscuring portions of the headline text
+- **Background stratum:** A flat chromatic field — full-bleed, no gradient, no texture — electric yellow burning like a sodium streetlight against nothing at all. The color does not breathe. It does not move. It *waits*.
+- **Typography stratum:** A display headline at environmental scale, left-anchored, its body running past the right edge of the frame as though it has somewhere to be that is none of your business. The letters are too large to be read comfortably. That is the point.
+- **Media stratum:** A machined three-dimensional object, heavy with specificity, floats center-right — physically in front of the headline, occluding it. The object does not explain itself. Its presence is the explanation.
 
-This is **composition-driven rather than grid-driven** — elements are positioned relationally to each other, not to a column system. The subheading copy sits in the lower-left quadrant, typographically isolated from the headline and physically separated by significant vertical distance.
+There is no grid here. This is a compositional arrangement driven by **tension and weight**, not by column counts. The subheading copy — smaller, factual, stranded in the lower-left quadrant — is separated from the headline by a vertical gulf that functions less like spacing and more like a period. The sentence is over. This is something else now.
 
-**Utility bar:** Strictly functional, horizontally split — body copy left-anchored, two ghost CTA buttons right-anchored. Dark surface contrasts sharply against the hero above.
+The utility bar at the bottom is the other kind of register entirely: cold, horizontal, functional, dark. Text on the left, two ghost buttons on the right, nothing decorative. This is where the deal gets offered.
 
 ---
 
 ## 2. Grid System and Spacing System
 
-The hero section **does not follow a conventional column grid**. No container margins are enforced at the headline level — the display type intentionally breaks the page boundary. This is a deliberate design choice: the type is meant to feel like environmental signage, not page content.
+The headline breaks the container. It does not observe the margin. It exits frame-right with the indifference of a man who has already decided what he is going to do before you could warn him.
 
-The utility bar does use an implied horizontal two-zone split: text occupies roughly 60–65% of the bar width, CTAs occupy the remaining right zone. This aligns with a loose 12-column grid logic, but the implementation is compositionally loose.
+This is a **deliberate act** — the display type is environmental signage, not page content. It is the stencil on the warehouse wall, the billboard you pass without choosing to read. The viewport is not its container; the viewport is a window into a composition larger than the frame.
 
-Navigation uses a **three-zone horizontal split**: far-left icon, centered logotype/symbol, far-right link cluster. This is a classic trinity nav pattern with strong visual balance through symmetry around the center mark.
+The utility bar aligns to a loose two-zone split: text occupying roughly 60% of the width, the paired CTAs anchored right. A 12-column logic exists beneath the surface but barely announces itself — the composition is too confident to show its infrastructure.
 
-Vertical spacing in the hero is generous and intentional — the subheading sits roughly at the 35–40% vertical mark, well below the headline cap-height. This creates a large breathing zone that gives the 3D object room to dominate.
+Navigation runs the **trinity pattern**: far-left icon mark, center logotype, far-right link cluster. Three points. A stable triangle. A geometry that has witnessed things and held together anyway.
+
+Vertical spacing in the hero is generous and merciless — the subheading sits at the 35–40% vertical mark, far below the headline's cap-height. The breathing zone is not comfort. It is the silence before someone speaks.
 
 ---
 
 ## 3. Media Composition and Art Direction
 
-The 3D rendered object is the **structural anchor of the composition** — a machined thing with weight, with surface. It occupies the center-right of the frame at roughly 35–40% of viewport width, its chassis built from exposed geometry: rectangular panels, circuit-board detailing, the kind of physical construction that implies hours of modeling and material study rather than procedural generation. The render itself carries this craft — ambient occlusion pools in the object's recesses, specular light drags across its surfaces, the transparent sections reveal interior structure the way a watch back reveals its movement.
+The object is the witness.
 
-The object is tilted on a diagonal axis (~15–20° pitch, ~10° yaw), and this tilt is not an accident of angle selection — it is the difference between an object that sits passively and one that occupies space. The sizing runs the full vertical height of the visible viewport: it is not placed into the composition so much as it fills it.
+A machined thing with mass and surface — rectangular panels, circuit-board detailing, geometry that implies hours of material study rather than algorithmic generation. Ambient occlusion pools in its recesses the way shadow pools in the corners of rooms you should not enter. Specular light tracks across its surfaces. Transparent sections reveal interior structure the way a cracked safe door reveals the combination dial.
 
-The object is **art-directed to interact with the headline text** — it sits in front of the type, creating a deliberate occlusion relationship. This foreground/background inversion (media in front of text) is compositionally aggressive and marks the design as media-dominant.
+It is tilted on a diagonal axis — 15 to 20 degrees pitch, 10 degrees yaw — because an object that sits flat is an object that has given up. This tilt is the difference between evidence and artifact.
 
-The background is a **text-safe zone by design** — the flat electric yellow (#FFD600) has no photographic complexity, no gradients, no texture, making it perfectly readable for large black display type at any placement.
+The object fills the full vertical height of the visible viewport. It does not sit in the composition. It occupies it.
+
+It sits **in front of the type**, physically occluding the headline. This is not an accident of layering. This is art direction at its most aggressive: the visual interrupts the verbal. The thing you came to read is partially hidden by the thing that will not let you look away.
+
+The background field — flat electric yellow — is a **text-safe zone designed to bear witness**. No photographic complexity, no gradient texture, no depth to compete with. Just the color, burning. It makes the 3D object appear more real by providing nothing else for the eye to hold.
 
 ---
 
 ## 4. Visual Composition and Layout Intent
 
-This interface behaves as **image-driven narrative design** rather than structured grid UI. The layout grammar prioritizes:
+This interface reads like a **poster recovered from the scene**.
 
-- **Tension between type and object** — the headline begins to read, then is interrupted by the 3D media, creating visual curiosity and forcing the eye to track around the object
-- **Scale contrast as hierarchy** — the headline is 10–12× larger than any other text element on screen, making it operate more as a visual texture than readable copy at first glance
-- **Spatial generosity** — large amounts of unused background space frame both the text and the object, preventing visual crowding
+The grammar prioritizes three things that no conventional grid UI would admit to:
 
-The composition creates a poster-like quality. The layout intent is **brand declaration, not information delivery**.
+- **Tension between type and object** — the headline begins to declare itself and then is cut off by the media object in the foreground. The eye does not read; it navigates. Around the obstruction, hunting for the sentence's end. That tension is the product.
+- **Scale contrast as hierarchy** — the headline is ten to twelve times larger than any other text element. At that scale, typography is no longer read. It is experienced as texture, as environment, as weather. The smaller elements — subheading, nav labels, utility copy — are the only things speaking at a human register. Everything else is architecture.
+- **Spatial generosity as menace** — the unused yellow field is not white space in the typographic sense. It is exposure. Nothing is hidden here. The object floats in the open, lit, observable. There is nowhere to stand that is not under the light.
+
+The composition is a **brand declaration, not a service delivery**. What you see is: we know what we are. Now you do too.
 
 ---
 
 ## 5. Background and Section Design Behavior
 
-The hero background is a **monochromatic, full-bleed solid field** in a high-chroma yellow (#FFD600). No texture, no gradient, no photography.
+The hero is **monochromatic and sovereign** — #FFD600, full-bleed, no gradient, no photography, no texture. The color does not shift across the viewport. It does not acknowledge edges. It simply is.
 
-The utility bar switches to a near-black (#101010) surface, creating an immediate **light-to-dark section boundary** at the bottom edge of the viewport. This transition is abrupt — no separator shape, no decorative edge treatment — which functions as a functional zone demarcation rather than a design narrative transition.
+Then the page ends.
 
-No other background types appear in the visible screenshots. The section pacing is therefore: **brand field → functional dark bar**, a minimal two-state rhythm.
+Or rather — the hero ends and the utility bar begins, and the transition between them is an abrupt hard cut from amber to near-black (#101010). No separator shape. No decorative edge. No dissolve. A cut, the way a scene changes in a film when the conversation is over and the next location is where you always knew it was going.
+
+The rhythm of this page is therefore: **warm amber field → cold dark strip**. Two states. One story. The first promises. The second collects.
 
 ---
 
 ## 6. Depth, Layering, and Visual Hierarchy
 
-The interface uses **strong foreground layering** despite a flat color background. Depth is created entirely through:
+The interface is **strongly dimensional despite using zero shadow tokens**.
 
-- **Occlusion** — the 3D object covers portions of the display headline, establishing clear foreground/background relationship
-- **Render quality contrast** — the photorealistic, specular-lit 3D object reads as physically present against the flat color field, creating strong perceptual depth without any drop shadows or elevation tokens
-- **Type scale differential** — the massive headline behind the object recedes by scale into "environmental" space, while the smaller subheading reads as "near" and accessible
+Depth is constructed through:
 
-The interface feels **strongly dimensional** despite using zero shadow tokens or blur effects. Depth is achieved through compositional placement and render contrast, not CSS elevation.
+- **Occlusion** — the 3D object covers the display headline, establishing unambiguous foreground and background. You cannot see through it. That is the point.
+- **Render quality contrast** — the photorealistic object reads as physically present against the flat field. The contrast between its specular surfaces and the matte chromatic background creates perceptual depth without a single CSS elevation token. The object is *there*, in the room, on the table.
+- **Type scale differential** — the massive headline behind the object recedes into "environmental" space by its own weight. The smaller subheading, readable at human scale, reads as *near*, as immediate. What is huge becomes background. What is small comes forward. The hierarchy is inverted and correct.
+
+This is **depth by implication, not by decoration**. No blur. No shadow. No layered gradients. Just placement, scale, and render quality — the same tools a photographer uses in the dark room.
 
 ---
 
-## 7. Component Styling (Borders, Surfaces, Elevation)
+## 7. Component Styling — Borders, Surfaces, Elevation
 
-Navigation items use **thin outlined pill buttons** with black (#000000) border on the yellow background. The pill border radius is substantial — buttons read as capsule-shaped, not rounded rectangles.
+**Borders are the confession mechanism of this design system.**
 
-The utility bar CTAs use the **same pill geometry** but with yellow (#FFD600) border on dark surface — a color-inverted version of the same component. This is a clean dark-mode variant of the navigation button pattern.
+Navigation items are thin-outlined pill buttons — black on yellow, capsule-shaped, with no fill. The outline is the whole thing. Remove it and the button disappears.
 
-No card surfaces, elevation shadows, or background-contrast component styling appears. **Borders are the primary component definition mechanism** — the design relies on outline shapes rather than filled surfaces.
+The utility bar inverts the logic exactly: same pill geometry, yellow border on dark surface. Same component, opposite context, identical grammar. This is the design equivalent of meeting the same person on opposite sides of the law and recognizing them by their posture.
+
+No card surfaces. No elevation shadows. No background-contrast component styling. The design defines its interactive elements entirely through outline shapes — **the border is the only credential these elements carry**. In a system with no surface fills, the border is the guarantee.
 
 ---
 
 ## 8. Shape Language
 
-The interface uses a **pill-dominant shape language** consistently across all interactive components. Navigation links, the logo symbol, and utility bar CTAs all share heavy circular border-radius. This creates a rounded, friendly geometry that contrasts with the aggressive scale of the display typography.
+Every interactive element in this system is a **pill**.
 
-The 3D object has its own internal shape language (mechanical, rectangular, with exposed circuit geometry) which sits in deliberate tension with the organic pill shapes of the UI system.
+Navigation links, the logo symbol capsule, utility bar CTAs — all share the same heavy circular border-radius. The pill shape is consistent, unwavering, and applied without exception. It is a rounded, continuous geometry that reads — against the hard yellow field and the environmental scale of the display type — as the one thing on this page that was designed to be touched.
+
+The 3D object has its own shape language: mechanical, rectangular, exposed. It is built from right angles and circuit geometry. Its internal structure is orthogonal and declarative.
+
+These two shape grammars sit in **deliberate tension**: the organic, continuous pill curve of the UI system versus the hard, constructed geometry of the media object. The object says: this was built. The buttons say: you can still leave.
 
 ---
 
 ## 9. Section Divider Geometry
 
-The only visible section transition (hero → utility bar) uses a **straight horizontal edge** — no curves, no diagonals, no decorative separator. The transition is purely functional, delineated by the abrupt dark background of the utility bar.
+One visible transition. One straight horizontal edge. No curves, no diagonals, no decorative treatment.
 
-This is consistent with the overall design philosophy: ornament is reserved for the brand color and the 3D object. Structural transitions are handled minimally.
+The hero to utility bar transition is handled by nothing more than the abrupt dark surface of the bar itself. The line between them is not designed — it is simply where the yellow ends and the dark begins.
+
+This is structural minimalism carried to its logical conclusion: **the section boundary is invisible because the design does not waste attention on transitions**. All ornamental energy is concentrated in the 3D object and the brand color field. Everything structural is handled cleanly, without announcement.
 
 ---
 
 ## Hero Section Analysis
 
-- **Background:** Full-bleed flat solid color (#FFD600) — no image, no gradient
-- **Viewport coverage:** Full-viewport height, edge-to-edge width
-- **Text placement:** Display headline is left-anchored, baseline near vertical center, extends past right viewport edge (overflow-visible). Subheading is left-anchored, lower-left quadrant
-- **Headline scale:** Extremely large — roughly 20–24vw cap-height, operating at environmental/signage scale
-- **CTA presence:** None in the hero itself — CTAs are nav-level (outlined pill links)
-- **Scroll indicator:** Not visible as a static element
-- **Navigation state:** Transparent background at page top — nav items render directly against the yellow field, using black pill-outline buttons and a centered logotype mark
+- **Background:** Full-bleed flat solid — #FFD600 — no image, no gradient. An amber field that does not apologize.
+- **Viewport coverage:** Full height, edge to edge. Nothing left unclaimed.
+- **Text placement:** Display headline left-anchored, running past the right viewport edge without permission. Subheading lower-left, isolated, functional.
+- **Headline scale:** 20–24vw cap-height. Environmental scale. Signage. Not a heading — a statement of terms.
+- **CTA presence:** None in the hero proper. The nav provides the only interactive surfaces.
+- **Navigation state:** Transparent background at page-top — nav items float directly against the yellow field. Black pill-outline buttons. Centered logotype mark. The nav does not announce itself; it is simply there.
 
 ---
 
-## Footer/Utility Bar Analysis
+## Footer / Utility Bar Analysis
 
-The bottom persistent strip is a **consent/utility bar**, not a traditional site footer. It is:
+This is not a footer. A footer closes a story. This closes a deal.
 
-- **Full-width, single-row** — no column structure
-- **Dark surface (#101010)** contrasting against the hero yellow
-- **Typography:** Small-scale, capitalized, white text — lower visual weight, functional register
-- **CTA count:** Two — pill-outline buttons with yellow (#FFD600) border, functioning as binary choice CTAs
-- **No logo, no link groups, no social icons, no copyright block**
+The bottom persistent strip is a consent mechanism:
 
-This is not a footer — it is a transient overlay element. The actual site footer is not visible in any of the three screenshots.
+- **Full-width, single-row** — no column structure, no decoration
+- **Surface: #101010** — near-black against the amber hero above, a hard contrast that reads as a different room entirely
+- **Typography:** Small-scale, capitalized, white — functional, terse, stripped of sentiment
+- **Two CTAs:** Pill-outline buttons, yellow borders on dark surface — the same buttons from the nav, now reading as binary options. Yes or no. Accept or decline. There is no third choice in this world.
+- **No logo, no links, no copyright** — the utility bar is not interested in being recognized. It only wants your decision.
 
 ---
 
 ## Navigation Bar Analysis
 
-- **Layout:** Three-zone — far-left icon mark (X symbol), center logotype mark (horizontal oval/eye symbol), far-right link group
-- **Link count:** Three — short all-caps labels (single words)
-- **CTA differentiation:** Navigation links are styled as outlined pill buttons, identical in weight to each other — no primary CTA differentiation within the nav
-- **Background:** Transparent — nav floats over the yellow hero field
-- **Position:** Appears fixed or sticky at top of viewport across all three screenshots
-- **Visual tone:** Minimal, high-contrast, clean — black-on-yellow pill outlines
+- **Layout:** Three-zone — far-left icon mark (X symbol), centered logotype mark (horizontal oval form), far-right link group
+- **Link count:** Three — all-caps, single-word labels
+- **CTA differentiation:** None — all three links carry equal visual weight, all styled as outlined pill buttons. No primary, no secondary. Equals.
+- **Background:** Transparent — the nav is not a surface, it is a presence floating against the amber field
+- **Position:** Fixed or sticky at viewport top throughout
+- **Visual tone:** Minimal, high-contrast, economical. Black on yellow. Enough.
 
 ---
 
@@ -150,78 +168,61 @@ This is not a footer — it is a transient overlay element. The actual site foot
 
 | Section | Background | Typography Scale | Media Density | Component Type |
 |---|---|---|---|---|
-| Hero | Solid yellow | Extreme display | High (3D object dominant) | Nav pills, decorative |
-| Utility bar | Solid near-black | Small utility copy | None | Action pills (binary CTA) |
+| Hero | Solid amber #FFD600 | Extreme display — environmental scale | High — 3D object dominant | Nav pill outlines, decorative |
+| Utility bar | Near-black #101010 | Small utility copy | None | Action pills — binary choice |
 
-The differentiation between sections is achieved entirely through **background color contrast** and **typographic scale shift**. No shape change, no texture change, no layout structure change.
+Differentiation is achieved entirely through **background color contrast** and **typographic scale shift**. No shape change. No texture shift. No structural reorganization. The two sections speak the same formal language in different registers — the same voice, one declaiming, one whispering.
 
 ---
 
-## Design System Signals Across Sections
+## Design System Signals
 
-**Consistent:** Pill shape language, font weight (semibold throughout), all-caps labeling, border-as-definition (no filled surfaces except the two background fields), uppercase small-scale labels
+**Consistent throughout:** Pill shape language, weight (semibold throughout), all-caps labeling, border-as-definition (no filled surfaces), uppercase utility register.
 
-**Deliberate variation:** Button border color inverts between sections — black on yellow in nav, yellow on dark in utility bar. This is a clean **dark/light variant system** applied consistently to the same component token.
+**Deliberate inversion:** Button border color inverts exactly between sections — black on yellow in nav, yellow on dark in utility bar. This is the **dark/light variant system** applied to a single component with precision. The same pill. The same grammar. Different light.
 
 ---
 
 ## Color System and Visual Hierarchy
 
-Two-color palette in active use:
+Two colors. That is the vocabulary.
 
-- **Primary field: #FFD600** — dominates 90%+ of the visible viewport; functions as background, brand identity, and positive/action surface
-- **Secondary field: #101010** — used exclusively for the utility bar; signals functional/dark mode context
-- **Typography: #000000** — headline and nav links; maximum contrast on yellow
-- **Accent in dark context: #FFD600** — button borders and text within the dark utility bar; the same brand yellow functions as an accent/highlight color on dark surfaces
+- **Primary field: #FFD600** — dominates over 90% of the visible viewport. It is not an accent. It is the interface. The entire screen is the brand color. This inverts conventional web layout logic: there is no neutral canvas here, no whitespace, no resting place. You are inside the brand.
+- **Secondary field: #101010** — the utility bar, the dark. Where the amber world ends.
+- **Typography on light: #000000** — maximum contrast, uncompromising. The text is readable because it could not be anything else.
+- **Accent in dark context: #FFD600** — the same brand yellow returns as border and text color within the dark utility bar. The amber that was the whole world above is now a thin line of definition below. It travels with you.
 
-The color system is **binary and deliberate** — two background states, one text color per background, one accent per background. No tertiary colors, no neutrals, no gradients.
+The color system is **binary, deliberate, and complete**. Two background states. One text color per background. One accent per background. No tertiary tones, no neutrals, no gradients. This is not a color system that was designed — it is a color system that was *decided*.
 
 ---
 
 ## Typography System
 
-The system uses a **single typeface family** across all elements (proprietary, not web-accessible — identified as "my Font" in tokens). Key observations:
+A single typeface family across all elements — proprietary, not web-accessible. But what it does with itself is enough.
 
-- **Display headline:** ~20–24vw, weight 600/semibold, tight or negative tracking — operates as environmental signage
-- **Subheading/caption:** ~14px, weight 600, uppercase, tight letter-spacing (~-0.7px) — functional descriptor register
-- **Nav labels:** ~10–11px, weight 600, uppercase, tight tracking — minimal UI register
-- **Utility bar copy:** ~10px, weight 600, uppercase — identical register to nav labels
+- **Display headline:** 20–24vw, weight 600/semibold, tight to negative tracking — environmental signage. It is not asking to be read; it is asserting the right to occupy space.
+- **Subheading / caption:** ~14px, weight 600, uppercase, tight letter-spacing — the functional register. Small, precise, declarative.
+- **Nav labels:** ~10–11px, weight 600, uppercase, minimal — the minimum vocabulary required.
+- **Utility bar copy:** ~10px, weight 600, uppercase — identical register to nav labels. No one is announcing themselves here.
 
-The typeface features **strong calligraphic contrast** in display sizes — the screenshots at different moments reveal a cursive/script secondary word appearing alongside the block-weight primary headline. This **dual-weight display pairing** (grotesque block + expressive script) is a key typographic signature of the design system.
+The typeface reveals its character at display scale: **strong calligraphic contrast** between thick and thin strokes, and — most critically — a cursive/script secondary form that appears alongside the grotesque block-weight primary. This **dual-weight display pairing** is the typographic signature of this system: grotesque block announcing, expressive script qualifying. Fate stated. Then fate named.
 
 ---
 
 ## Visual Affordances
 
-Interactive elements are signaled through:
+Interactive elements are identified by one signal and one signal only: **the pill outline border**.
 
-- **Pill-outline border** — the primary affordance signal. All tappable/clickable elements use this shape. Nothing else on the page uses bordered pill shapes
-- **Label casing** — all interactive labels are all-caps, distinguishing them from any potential mixed-case editorial copy
-- **High contrast** — black border on yellow or yellow border on dark; both configurations exceed 4.5:1 contrast ratio
+- **Pill-outline border** — every tappable element is bordered and capsule-shaped. Nothing else on the page shares this treatment. The affordance is unambiguous.
+- **Label casing** — all interactive labels are all-caps. The form signals the function.
+- **High contrast** — both configurations (black on amber, yellow on dark) exceed 4.5:1. Nothing is hidden. The deal is in plain sight.
 
-Non-interactive elements (headline, subheading, 3D object) have no border treatment. The visual distinction is clean and unambiguous.
+Non-interactive elements — headline, subheading, 3D object — carry no border. The distinction is clean. In this design system, if it has a border, it can be pressed. If it does not, you can only look.
 
 ---
 
 ## Section Transitions
 
-Hero → Utility bar: **Immediate dark field cut**, no transition geometry. The utility bar appears as a hard edge anchored to the viewport bottom, not a scroll-revealed section. This functions as a viewport layer (always-present overlay) rather than a content section.
+Hero to utility bar: **immediate hard cut**. No transition geometry. The dark surface of the utility bar simply begins where the yellow ends — an abrupt edge anchored to the viewport bottom, visible from frame zero.
 
----
-
-## Notable UX/UI Design Observations
-
-**1. Compositional occlusion as brand statement**
-The 3D object physically obscures the display headline. This is a mature art direction decision — it signals that the brand's aesthetic confidence is high enough to sacrifice readability for composition. The effect says "the visual experience is the message."
-
-**2. Overflow typography as spatial device**
-The headline extends beyond the right viewport edge without constraint. This treats the viewport as a **window into a larger composition space** rather than a container to fill. It implies lateral content or motion, creating tension that encourages engagement.
-
-**3. Single-family display pairing (block grotesque + script)**
-Using both a slab-weight grotesque and an expressive script form within the same typeface family — rendered at display scale — achieves maximum typographic contrast with minimal system complexity. This is a sophisticated restraint: personality through weight extremes, not through introducing additional fonts.
-
-**4. Color as brand field, not decoration**
-The dominant yellow is not an accent color — it *is* the interface. The entire viewport is the brand color. This inverts conventional web layout logic (white/neutral canvas + brand accents) and creates an immersive brand environment rather than a content presentation surface.
-
-**5. Component color inversion as dark mode token**
-The pill button inverts exactly between light context (black border, black text on yellow) and dark context (yellow border, yellow text on near-black). This is a clean **two-token variant system** applied to a single component, suggesting a mature design system architecture even within a visually minimal interface.
+This is not a transition. It is a **cut**. The kind that happens in editing rooms when a scene has said everything it has to say.

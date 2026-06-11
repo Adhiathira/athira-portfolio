@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs — PHANTOM Network Threat Intelligence</title>
+  <meta name="description" content="PHANTOM API reference, integration guides, query language specification, and deployment documentation for security engineers.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/subpage.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-glyph"></span>
+    <span class="nav-logo-text">PHANTOM</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="platform.html" class="nav-link">Platform</a></li>
+    <li><a href="threats.html" class="nav-link">Threats</a></li>
+    <li><a href="docs.html" class="nav-link nav-link--active">Docs</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu">
+  <a href="platform.html" class="nav-link">Platform</a>
+  <a href="threats.html" class="nav-link">Threats</a>
+  <a href="docs.html" class="nav-link nav-link--active">Docs</a>
+  <a href="about.html" class="nav-link">About</a>
+</div>
+<div class="nav-spacer active"></div>
+<script>
+(function(){
+  var nav=document.getElementById('site-nav');
+  var menu=document.querySelector('.nav-mobile-menu');
+  var toggle=document.querySelector('.nav-mobile-toggle');
+  window.addEventListener('scroll',function(){ nav.classList.toggle('scrolled',window.scrollY>10); },{passive:true});
+  if(toggle&&menu){ toggle.addEventListener('click',function(){ nav.classList.toggle('nav-mobile-open'); menu.classList.toggle('is-open'); document.body.style.overflow=menu.classList.contains('is-open')?'hidden':''; }); }
+})();
+</script>
+
+<!-- PAGE HEADER -->
+<div class="page-header" id="page-header">
+  <span class="page-header-ghost">DOCS</span>
+  <div class="page-header-label">Documentation</div>
+  <h1 class="page-header-title">API Reference</h1>
+  <p class="page-header-sub">Everything you need to integrate PHANTOM into your security stack. REST, gRPC, and WebSocket APIs. OpenAPI 3.1 spec. SDKs for Python and Go.</p>
+</div>
+
+<!-- SECTION: Doc navigation — 4-col feature grid -->
+<section class="subpage-section" id="doc-nav">
+  <div class="section-label" data-reveal="fade-up">Quick Start</div>
+  <h2 class="section-heading" data-reveal="fade-up">DOCUMENTATION SECTIONS</h2>
+  <div class="feature-grid" id="doc-grid" style="margin-top:32px;">
+    <div class="feature-card" data-stagger-group="docs" id="doc-card-1">
+      <div class="feature-card-icon">[API]</div>
+      <div class="feature-card-title">REST API</div>
+      <div class="feature-card-body">Query threat intelligence, pull IOC data, retrieve adversary profiles, and submit enrichment requests. Authenticated via API key or OAuth 2.0.</div>
+      <div style="margin-top:16px;"><a href="#rest-api" style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#fd356e;text-decoration:none;">View Reference →</a></div>
+    </div>
+    <div class="feature-card" data-stagger-group="docs" id="doc-card-2">
+      <div class="feature-card-icon">[gRPC]</div>
+      <div class="feature-card-title">gRPC Streaming</div>
+      <div class="feature-card-body">Real-time event streaming via bidirectional gRPC. Protobuf schemas published. Designed for high-throughput SIEM and SOAR integrations.</div>
+      <div style="margin-top:16px;"><a href="#grpc" style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#fd356e;text-decoration:none;">View Reference →</a></div>
+    </div>
+    <div class="feature-card" data-stagger-group="docs" id="doc-card-3">
+      <div class="feature-card-icon">[PQL]</div>
+      <div class="feature-card-title">PHANTOM Query Language</div>
+      <div class="feature-card-body">SQL-like query syntax for hunting across your event store. Temporal joins, aggregation, regex matching, and MITRE ATT&CK filter primitives.</div>
+      <div style="margin-top:16px;"><a href="#pql" style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#fd356e;text-decoration:none;">View Reference →</a></div>
+    </div>
+    <div class="feature-card" data-stagger-group="docs" id="doc-card-4">
+      <div class="feature-card-icon">[SDK]</div>
+      <div class="feature-card-title">SDKs</div>
+      <div class="feature-card-body">Official Python (3.10+) and Go (1.21+) SDKs. Automatic retry, rate limit handling, and response deserialization. Published on PyPI and pkg.go.dev.</div>
+      <div style="margin-top:16px;"><a href="#sdks" style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#fd356e;text-decoration:none;">View Reference →</a></div>
+    </div>
+    <div class="feature-card" data-stagger-group="docs" id="doc-card-5">
+      <div class="feature-card-icon">[WH]</div>
+      <div class="feature-card-title">Webhooks</div>
+      <div class="feature-card-body">Push delivery for real-time alert routing. JSON payload with HMAC-SHA256 signature. Configurable retry with exponential backoff. Event filtering by severity, actor, and technique.</div>
+      <div style="margin-top:16px;"><a href="#webhooks" style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#fd356e;text-decoration:none;">View Reference →</a></div>
+    </div>
+    <div class="feature-card" data-stagger-group="docs" id="doc-card-6">
+      <div class="feature-card-icon">[DEPLOY]</div>
+      <div class="feature-card-title">Deployment</div>
+      <div class="feature-card-body">Helm chart for Kubernetes. Docker Compose for dev environments. Air-gapped deployment guide. Performance tuning and resource requirements.</div>
+      <div style="margin-top:16px;"><a href="#deploy" style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#fd356e;text-decoration:none;">View Reference →</a></div>
+    </div>
+  </div>
+</section>
+<div class="section-divider"></div>
+
+<!-- SECTION: REST API reference — terminal split layout -->
+<section class="subpage-section" id="rest-api" style="background:#252529;">
+  <div class="section-label" data-reveal="fade-up">REST API</div>
+  <h2 class="section-heading" data-reveal="fade-up">CORE ENDPOINTS</h2>
+  <div style="margin-top:32px;" id="api-terminal-split">
+    <div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:0;">
+      <div style="padding-right:40px;">
+        <div class="step-rows" id="api-endpoints">
+          <div class="step-row">
+            <div class="step-num" style="font-size:11px;padding-top:6px;color:#00e5ff;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0.05em;">GET</div>
+            <div>
+              <div class="step-content-title" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#fd356e;">/v1/threats</div>
+              <div class="step-content-body">List all tracked adversary groups with filtering by severity, category, and status. Paginated.</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num" style="font-size:11px;padding-top:6px;color:#00e5ff;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0.05em;">GET</div>
+            <div>
+              <div class="step-content-title" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#fd356e;">/v1/ioc/lookup</div>
+              <div class="step-content-body">Single IOC enrichment — hash, IP, domain, or URL. Returns actor attribution, MITRE tags, confidence score.</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num" style="font-size:11px;padding-top:6px;color:#00e5ff;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0.05em;">POST</div>
+            <div>
+              <div class="step-content-title" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#fd356e;">/v1/ioc/bulk</div>
+              <div class="step-content-body">Bulk IOC lookup — up to 500 indicators per request. Returns matched entries with enrichment payload.</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num" style="font-size:11px;padding-top:6px;color:#fd356e;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0.05em;">WS</div>
+            <div>
+              <div class="step-content-title" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#fd356e;">/v1/feed/live</div>
+              <div class="step-content-body">WebSocket live feed — subscribe to real-time threat events filtered by severity threshold. Push delivery.</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num" style="font-size:11px;padding-top:6px;color:#00e5ff;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0.05em;">POST</div>
+            <div>
+              <div class="step-content-title" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#fd356e;">/v1/hunt</div>
+              <div class="step-content-body">Submit a PHANTOM Query Language expression. Execute against the event store and return matching records.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="background:rgba(172,172,175,0.12);"></div>
+      <!-- Code example panel -->
+      <div style="padding-left:40px;">
+        <div class="section-label" style="margin-bottom:12px;">Example Request</div>
+        <div style="background:#1d1d20;border:1px solid rgba(172,172,175,0.12);padding:20px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.8;overflow-x:auto;" id="code-panel">
+          <div style="color:#6b6b70;margin-bottom:8px;"># IOC Lookup — Python SDK</div>
+          <div><span style="color:#00e5ff;">import</span> <span style="color:#ffffff;">phantom</span></div>
+          <div>&nbsp;</div>
+          <div><span style="color:#acacaf;">client</span> <span style="color:#fd356e;">=</span> <span style="color:#ffffff;">phantom</span><span style="color:#acacaf;">.Client(</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#acacaf;">api_key</span><span style="color:#fd356e;">=</span><span style="color:#00e5ff;">"ph_live_xxxx"</span></div>
+          <div><span style="color:#acacaf;">)</span></div>
+          <div>&nbsp;</div>
+          <div><span style="color:#acacaf;">result</span> <span style="color:#fd356e;">=</span> <span style="color:#acacaf;">client.ioc.lookup(</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#acacaf;">value</span><span style="color:#fd356e;">=</span><span style="color:#00e5ff;">"185.220.101.45"</span><span style="color:#acacaf;">,</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#acacaf;">type</span><span style="color:#fd356e;">=</span><span style="color:#00e5ff;">"ip"</span></div>
+          <div><span style="color:#acacaf;">)</span></div>
+          <div>&nbsp;</div>
+          <div style="color:#6b6b70;"># Response</div>
+          <div><span style="color:#acacaf;">{</span></div>
+          <div>&nbsp;&nbsp;<span style="color:#00e5ff;">"value"</span><span style="color:#acacaf;">:</span> <span style="color:#00e5ff;">"185.220.101.45"</span><span style="color:#acacaf;">,</span></div>
+          <div>&nbsp;&nbsp;<span style="color:#00e5ff;">"type"</span><span style="color:#acacaf;">:</span> <span style="color:#00e5ff;">"ip"</span><span style="color:#acacaf;">,</span></div>
+          <div>&nbsp;&nbsp;<span style="color:#00e5ff;">"actor"</span><span style="color:#acacaf;">:</span> <span style="color:#00e5ff;">"APT28"</span><span style="color:#acacaf;">,</span></div>
+          <div>&nbsp;&nbsp;<span style="color:#00e5ff;">"severity"</span><span style="color:#acacaf;">:</span> <span style="color:#00e5ff;">"CRITICAL"</span><span style="color:#acacaf;">,</span></div>
+          <div>&nbsp;&nbsp;<span style="color:#00e5ff;">"confidence"</span><span style="color:#acacaf;">:</span> <span style="color:#fd356e;">0.97</span><span style="color:#acacaf;">,</span></div>
+          <div>&nbsp;&nbsp;<span style="color:#00e5ff;">"mitre"</span><span style="color:#acacaf;">:</span> <span style="color:#00e5ff;">"T1566.001"</span></div>
+          <div><span style="color:#acacaf;">}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="section-divider"></div>
+
+<!-- SECTION: PQL — step rows with code snippets -->
+<section class="subpage-section" id="pql">
+  <div class="section-label" data-reveal="fade-up">Query Language</div>
+  <h2 class="section-heading" data-reveal="fade-up">PHANTOM QUERY LANGUAGE</h2>
+  <p class="section-subheading" data-reveal="fade-up">Write precise threat hunt queries against your event history. Full temporal support, MITRE filtering, and regex matching built in.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:32px;" id="pql-grid">
+    <div class="data-cell">
+      <div class="data-cell-label">Example</div>
+      <div class="data-cell-title" style="font-size:15px;">Find Lateral Movement</div>
+      <div style="background:#1d1d20;border:1px solid rgba(172,172,175,0.12);padding:16px;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.8;overflow-x:auto;">
+        <div><span style="color:#00e5ff;">SELECT</span> <span style="color:#acacaf;">src_ip, dst_ip, technique, ts</span></div>
+        <div><span style="color:#00e5ff;">FROM</span> <span style="color:#acacaf;">events</span></div>
+        <div><span style="color:#00e5ff;">WHERE</span> <span style="color:#acacaf;">mitre_tactic</span> <span style="color:#fd356e;">=</span> <span style="color:#00e5ff;">'lateral-movement'</span></div>
+        <div><span style="color:#00e5ff;">AND</span> <span style="color:#acacaf;">confidence</span> <span style="color:#fd356e;">&gt;</span> <span style="color:#acacaf;">0.85</span></div>
+        <div><span style="color:#00e5ff;">AND</span> <span style="color:#acacaf;">ts</span> <span style="color:#fd356e;">&gt;</span> <span style="color:#acacaf;">NOW() - INTERVAL 24h</span></div>
+        <div><span style="color:#00e5ff;">ORDER BY</span> <span style="color:#acacaf;">ts DESC</span></div>
+        <div><span style="color:#00e5ff;">LIMIT</span> <span style="color:#acacaf;">100</span></div>
+      </div>
+    </div>
+    <div class="data-cell">
+      <div class="data-cell-label">Example</div>
+      <div class="data-cell-title" style="font-size:15px;">APT Attribution Hunt</div>
+      <div style="background:#1d1d20;border:1px solid rgba(172,172,175,0.12);padding:16px;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.8;overflow-x:auto;">
+        <div><span style="color:#00e5ff;">SELECT</span> <span style="color:#acacaf;">actor, technique, count(*)</span></div>
+        <div><span style="color:#00e5ff;">FROM</span> <span style="color:#acacaf;">events</span></div>
+        <div><span style="color:#00e5ff;">WHERE</span> <span style="color:#acacaf;">actor</span> <span style="color:#fd356e;">IN</span> <span style="color:#acacaf;">(</span></div>
+        <div>&nbsp;&nbsp;<span style="color:#00e5ff;">'APT28'</span><span style="color:#acacaf;">, </span><span style="color:#00e5ff;">'Sandworm'</span><span style="color:#acacaf;">, </span><span style="color:#00e5ff;">'Lazarus'</span></div>
+        <div><span style="color:#acacaf;">)</span></div>
+        <div><span style="color:#00e5ff;">AND</span> <span style="color:#acacaf;">severity</span> <span style="color:#fd356e;">=</span> <span style="color:#00e5ff;">'CRITICAL'</span></div>
+        <div><span style="color:#00e5ff;">GROUP BY</span> <span style="color:#acacaf;">actor, technique</span></div>
+        <div><span style="color:#00e5ff;">ORDER BY</span> <span style="color:#acacaf;">count DESC</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="section-divider"></div>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="cta-band-inner">
+    <div id="cta-block">
+      <div class="cta-band-heading">Start Integrating.</div>
+      <div class="cta-band-sub">API keys issued in minutes. No sales call required.</div>
+    </div>
+    <div class="cta-band-actions" id="cta-actions">
+      <a href="about.html#contact" class="btn-white">Get API Access</a>
+      <a href="platform.html" class="btn-white-ghost">Platform Overview →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-col-logo">PHANTOM</div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#6b6b70;line-height:1.7;max-width:200px;">Network threat intelligence for security operations teams.</p>
+    </div>
+    <div class="footer-divider-col"></div>
+    <div class="footer-col">
+      <div class="footer-col-label">Platform</div>
+      <div class="footer-links">
+        <a href="platform.html" class="footer-link">Overview</a>
+        <a href="platform.html#detection" class="footer-link">Detection Engine</a>
+        <a href="platform.html#integrations" class="footer-link">Integrations</a>
+      </div>
+    </div>
+    <div class="footer-divider-col"></div>
+    <div class="footer-col">
+      <div class="footer-col-label">Docs</div>
+      <div class="footer-links">
+        <a href="docs.html#rest-api" class="footer-link">REST API</a>
+        <a href="docs.html#pql" class="footer-link">Query Language</a>
+        <a href="docs.html#sdks" class="footer-link">SDKs</a>
+        <a href="docs.html#deploy" class="footer-link">Deployment</a>
+      </div>
+    </div>
+    <div class="footer-divider-col"></div>
+    <div class="footer-col">
+      <div class="footer-col-label">Company</div>
+      <div class="footer-links">
+        <a href="about.html" class="footer-link">About</a>
+        <a href="about.html#contact" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 2025 PHANTOM Intelligence Inc. All rights reserved.</div>
+    <div class="footer-tagline">Track the threat.</div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Page header
+gsap.fromTo('#page-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.2, ease: 'steps(4, start)', delay: 0.15 });
+
+// Doc grid cards — scale-rise stagger (distinct from rotate+rise on platform, x-sweep on threats)
+gsap.set('[data-stagger-group="docs"]', { opacity: 0, scale: 0.94, y: 20 });
+ScrollTrigger.create({
+  trigger: '#doc-grid', start: 'top 80%',
+  onEnter: function() {
+    gsap.to('[data-stagger-group="docs"]', { opacity: 1, scale: 1, y: 0, duration: 0.15, ease: 'steps(4, start)', stagger: 0.06 });
+  }
+});
+
+// API terminal split — divergent x
+gsap.set('#api-terminal-split > div > *:first-child', { opacity: 0, x: -50 });
+gsap.set('#code-panel', { opacity: 0, x: 50 });
+ScrollTrigger.create({
+  trigger: '#api-terminal-split', start: 'top 80%',
+  onEnter: function() {
+    gsap.to('#api-terminal-split > div > *:first-child', { opacity: 1, x: 0, duration: 0.2, ease: 'cubic-bezier(0.55, 0, 1, 0.45)' });
+    gsap.to('#code-panel', { opacity: 1, x: 0, duration: 0.2, ease: 'cubic-bezier(0.55, 0, 1, 0.45)', delay: 0.05 });
+  }
+});
+
+// API endpoints rows — clip from bottom
+gsap.set('#api-endpoints .step-row', { opacity: 0, clipPath: 'inset(0 0 100% 0)' });
+ScrollTrigger.create({
+  trigger: '#api-endpoints', start: 'top 80%',
+  onEnter: function() {
+    gsap.to('#api-endpoints .step-row', { opacity: 1, clipPath: 'inset(0 0 0% 0)', duration: 0.15, ease: 'steps(4, start)', stagger: 0.06 });
+  }
+});
+
+// PQL grid — scale-rise
+gsap.set('#pql-grid > *', { opacity: 0, y: 24 });
+ScrollTrigger.create({
+  trigger: '#pql-grid', start: 'top 80%',
+  onEnter: function() {
+    gsap.to('#pql-grid > *', { opacity: 1, y: 0, duration: 0.2, ease: 'steps(4, start)', stagger: 0.08 });
+  }
+});
+
+// CTA divergent
+gsap.set('#cta-block', { opacity: 0, x: -50 });
+gsap.set('#cta-actions', { opacity: 0, x: 50 });
+ScrollTrigger.create({
+  trigger: '.cta-band', start: 'top 85%',
+  onEnter: function() {
+    gsap.to('#cta-block', { opacity: 1, x: 0, duration: 0.2 });
+    gsap.to('#cta-actions', { opacity: 1, x: 0, duration: 0.2 });
+  }
+});
+
+// Generic reveals
+document.querySelectorAll('[data-reveal]').forEach(function(el) {
+  var from = { opacity: 0 };
+  if (el.getAttribute('data-reveal') === 'fade-up') from.y = 24;
+  gsap.set(el, from);
+  ScrollTrigger.create({
+    trigger: el, start: 'top 85%',
+    onEnter: function() { gsap.to(el, { opacity: 1, y: 0, duration: 0.2, ease: 'steps(4, start)' }); }
+  });
+});
+
+// Footer
+gsap.set('.footer', { opacity: 0, clipPath: 'inset(0 0 100% 0)' });
+ScrollTrigger.create({
+  trigger: '.footer', start: 'top 90%',
+  onEnter: function() { gsap.to('.footer', { opacity: 1, clipPath: 'inset(0 0 0% 0)', duration: 0.2, ease: 'steps(4, start)' }); }
+});
+</script>
+</body>
+</html>

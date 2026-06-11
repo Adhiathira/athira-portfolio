@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process — Loam & Silver</title>
+  <meta name="description" content="The silver-gelatin coating process at Loam & Silver — emulsion preparation, ripening, hand coating, and drying.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/grain-overlay.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+  /* Process page specific — no inline style blocks in other pages */
+  /* This page has its own unique layout so it gets its own local styles */
+
+  #process-page-header {
+    background: var(--color-hero-background, #f5efe6);
+    padding: 80px 0 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #process-page-header::before {
+    content: '01';
+    position: absolute;
+    right: 4%;
+    bottom: -0.1em;
+    font-family: var(--font-display);
+    font-size: 22vw;
+    font-weight: 300;
+    color: var(--color-charcoal, #1a1814);
+    opacity: 0.03;
+    pointer-events: none;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  #process-page-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-heading);
+    text-shadow: 0.5px 0.5px 0px rgba(184, 92, 42, 0.15);
+    margin: 0 0 0.75rem 0;
+  }
+
+  #process-page-header p {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--color-muted-text, #616161);
+    max-width: 56ch;
+    margin: 0;
+  }
+
+  /* Process timeline — full vertical steps with film-edge left border */
+  #process-timeline {
+    background: var(--color-page-bg, #f5f5f0);
+    padding: 100px 0 120px;
+  }
+
+  .process-stage {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 3.5rem 0;
+    border-bottom: 1px solid var(--color-border-subtle, rgba(36,36,36,0.07));
+    position: relative;
+  }
+
+  .process-stage:first-child {
+    border-top: 1px solid var(--color-border-subtle, rgba(36,36,36,0.07));
+  }
+
+  /* Amber vertical strip on left — like a film edge */
+  .process-stage::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 3.5rem;
+    bottom: 3.5rem;
+    width: 2px;
+    background: var(--color-amber-clay, #b85c2a);
+    opacity: 0.4;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s ease;
+  }
+
+  .process-stage.is-visible::before {
+    transform: scaleY(1);
+  }
+
+  .process-stage-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .process-stage-number {
+    font-family: var(--font-ui);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-amber-clay, #b85c2a);
+  }
+
+  .process-stage-title {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-heading);
+    line-height: 1.3;
+  }
+
+  .process-stage-duration {
+    font-family: var(--font-ui);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--color-muted-text);
+    margin-top: 0.5rem;
+  }
+
+  .process-stage-body h3 {
+    font-family: var(--font-ui);
+    font-size: var(--type-h4-size, 0.8125rem);
+    font-weight: var(--type-h4-weight, 500);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-heading);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .process-stage-body p {
+    font-family: var(--font-body);
+    font-size: var(--type-body-size);
+    line-height: 1.9;
+    color: var(--color-muted-text);
+    margin: 0 0 1.25rem 0;
+    max-width: 60ch;
+  }
+
+  .process-stage-body p:first-of-type::first-line {
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  /* Process spec table inside stage body */
+  .process-spec-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem 1.5rem;
+    margin-top: 1.25rem;
+    padding: 1.25rem;
+    background: var(--color-parchment, #f5f0e8);
+    border-left: 2px solid var(--color-amber-clay, #b85c2a);
+  }
+
+  .spec-block-label {
+    font-family: var(--font-ui);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted-text);
+    margin: 0 0 0.2rem 0;
+  }
+
+  .spec-block-value {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  /* Filmstrip video section */
+  #filmstrip-section {
+    background: var(--color-charcoal, #1a1814);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #filmstrip-video-container {
+    width: 100%;
+    aspect-ratio: 21/9;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+
+  #filmstrip-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.4) contrast(1.08);
+  }
+
+  #filmstrip-video-placeholder {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(36, 36, 36, 0.6);
+    color: rgba(245, 240, 232, 0.4);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  #filmstrip-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(26, 24, 20, 0.45) 0%,
+      rgba(26, 24, 20, 0.08) 40%,
+      rgba(26, 24, 20, 0.08) 60%,
+      rgba(26, 24, 20, 0.50) 100%
+    );
+    pointer-events: none;
+  }
+
+  #filmstrip-caption {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.5);
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .process-stage {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .process-spec-table {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .process-spec-table {
+      grid-template-columns: 1fr;
+    }
+  }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Loam &amp; Silver</a>
+    <ul class="nav-links">
+      <li><a href="about.html" class="nav-link">Archive</a></li>
+      <li><a href="papers.html" class="nav-link">Papers</a></li>
+      <li><a href="process.html" class="nav-link nav-link--active">Process</a></li>
+      <li><a href="contact.html" class="nav-link">Fellowship</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Apply</a>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <ul class="nav-mobile-links">
+    <li><a href="about.html" class="nav-link">Archive</a></li>
+    <li><a href="papers.html" class="nav-link">Papers</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="contact.html" class="nav-link">Fellowship</a></li>
+  </ul>
+</div>
+<div class="nav-spacer active"></div>
+
+<!-- PROCESS HEADER -->
+<section id="process-page-header">
+  <div class="section-inner--narrow">
+    <span class="section-label">How It's Made</span>
+    <h1 id="process-page-title">From precipitation to print.</h1>
+    <p>
+      Silver-gelatin emulsion production has not changed in its fundamentals since 1880.
+      What has changed is the consistency of who makes it and the care of how it is done.
+      This page documents what we do, in the order we do it.
+    </p>
+  </div>
+</section>
+
+<!-- BOUNDARY — torn paper edge -->
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,18 L55,5 L118,24 L183,4 L245,20 L308,7 L371,23 L434,5 L497,21 L560,6 L623,24 L686,4 L749,20 L812,8 L875,26 L938,5 L1001,23 L1064,6 L1127,22 L1190,7 L1253,25 L1316,4 L1440,15 L1440,52 L0,52 Z" fill="#f5f5f0"/>
+  </svg>
+</div>
+
+<!-- PROCESS TIMELINE -->
+<section id="process-timeline">
+  <div class="section-inner" style="max-width:var(--grid-max-width-wide,1200px);">
+
+    <div id="process-intro" style="margin-bottom:4rem;">
+      <span class="section-label">The Sequence</span>
+      <h2 id="timeline-heading" style="font-family:var(--font-display);font-size:var(--type-h2-size);font-weight:400;letter-spacing:-0.01em;color:var(--color-heading);margin:0 0 1rem 0;">
+        Seven stages. Forty-eight hours.
+      </h2>
+    </div>
+
+    <div class="process-stage" id="stage-1">
+      <div class="process-stage-label">
+        <span class="process-stage-number">Stage 01</span>
+        <p class="process-stage-title">Silver Nitrate Preparation</p>
+        <p class="process-stage-duration">Duration: 2 hours</p>
+      </div>
+      <div class="process-stage-body">
+        <p>
+          Silver nitrate is weighed and dissolved in distilled water at room temperature.
+          Concentration is measured by refractive index to within 0.2%. This step is done the
+          morning before the main precipitation, allowing full dissolution and temperature equilibration.
+          The water is sourced from our own distillation unit; municipal water contains chloride ions
+          that will trigger premature precipitation.
+        </p>
+        <div class="process-spec-table">
+          <div>
+            <p class="spec-block-label">Temperature</p>
+            <p class="spec-block-value">18°C</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Concentration check</p>
+            <p class="spec-block-value">Refractive index</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Water source</p>
+            <p class="spec-block-value">On-site distillation</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-stage" id="stage-2">
+      <div class="process-stage-label">
+        <span class="process-stage-number">Stage 02</span>
+        <p class="process-stage-title">Gelatin Pre-soak</p>
+        <p class="process-stage-duration">Duration: 45 minutes</p>
+      </div>
+      <div class="process-stage-body">
+        <p>
+          Photographic-grade gelatin is soaked in cold water to swell the granules before heating.
+          This produces a more uniform melt without localized overheating. The gelatin we use is
+          bovine bone gelatin at 220 Bloom. We have used the same supplier since 1974.
+          A different gelatin makes a different emulsion — this is not a replaceable component.
+        </p>
+        <div class="process-spec-table">
+          <div>
+            <p class="spec-block-label">Gelatin grade</p>
+            <p class="spec-block-value">220 Bloom</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Soak time</p>
+            <p class="spec-block-value">45 min cold water</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Source</p>
+            <p class="spec-block-value">Since 1974</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-stage" id="stage-3">
+      <div class="process-stage-label">
+        <span class="process-stage-number">Stage 03</span>
+        <p class="process-stage-title">Precipitation</p>
+        <p class="process-stage-duration">Duration: 4 hours (Baryta), 2.5 hours (Linen)</p>
+      </div>
+      <div class="process-stage-body">
+        <p>
+          Silver nitrate solution is added to potassium bromide-gelatin at controlled rate, temperature,
+          and stirring speed. The rate of addition determines grain size. Faster addition = coarser grain.
+          The Baryta emulsion is precipitated more slowly than the Linen, producing the finer grain that
+          registers at the resolution of the baryta interlayer.
+        </p>
+        <p>
+          Precipitation is done in complete darkness with safelight off. There is no automation.
+          The rate is regulated by a stoppered addition funnel and a clock.
+        </p>
+        <div class="process-spec-table">
+          <div>
+            <p class="spec-block-label">Baryta time</p>
+            <p class="spec-block-value">4 hours</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Linen time</p>
+            <p class="spec-block-value">2.5 hours</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Control</p>
+            <p class="spec-block-value">Manual addition funnel</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-stage" id="stage-4">
+      <div class="process-stage-label">
+        <span class="process-stage-number">Stage 04</span>
+        <p class="process-stage-title">Ripening</p>
+        <p class="process-stage-duration">Duration: 90 minutes at 52°C</p>
+      </div>
+      <div class="process-stage-body">
+        <p>
+          The emulsion is held at elevated temperature while silver halide crystals reorganize
+          and grow through Ostwald ripening. This is where contrast and photographic speed are
+          determined. We ripen at 52°C for 90 minutes. The chemistry log from 1928 shows the
+          same temperature and time — it was correct then and has not needed changing.
+        </p>
+        <div class="process-spec-table">
+          <div>
+            <p class="spec-block-label">Temperature</p>
+            <p class="spec-block-value">52°C</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Duration</p>
+            <p class="spec-block-value">90 minutes</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Protocol source</p>
+            <p class="spec-block-value">Palacios log, 1928</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-stage" id="stage-5">
+      <div class="process-stage-label">
+        <span class="process-stage-number">Stage 05</span>
+        <p class="process-stage-title">Washing</p>
+        <p class="process-stage-duration">Duration: 6 hours (three washes)</p>
+      </div>
+      <div class="process-stage-body">
+        <p>
+          Soluble salts — excess potassium nitrate, unreacted bromide — are washed from the emulsion
+          in three changes of distilled water. The emulsion is allowed to set between washes and
+          then cut and rewashed. This step cannot be accelerated. Residual soluble salts cause
+          emulsion fog, mottled fixing, and — over time — image deterioration.
+        </p>
+      </div>
+    </div>
+
+    <div class="process-stage" id="stage-6">
+      <div class="process-stage-label">
+        <span class="process-stage-number">Stage 06</span>
+        <p class="process-stage-title">Hand Coating</p>
+        <p class="process-stage-duration">Duration: 1 paper per 4 minutes</p>
+      </div>
+      <div class="process-stage-body">
+        <p>
+          The redispersed emulsion is poured onto a temperature-controlled coating plate at 38°C
+          and spread with a precision-gap coating knife. The gap is set per grade: 180 microns
+          wet for Linen, 230 microns for Baryta, 280 microns for Carta. Each sheet is coated
+          individually and transferred immediately to the drying rack.
+        </p>
+        <p>
+          There is no continuous coating line. There is no automated weight check. Quality control
+          is the person coating: if the emulsion does not spread cleanly across the paper surface,
+          the sheet is discarded. The reject rate for Baryta grade is approximately 12%.
+        </p>
+        <div class="process-spec-table">
+          <div>
+            <p class="spec-block-label">Coating temperature</p>
+            <p class="spec-block-value">38°C</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Baryta wet gap</p>
+            <p class="spec-block-value">230 microns</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Reject rate (Baryta)</p>
+            <p class="spec-block-value">~12%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-stage" id="stage-7">
+      <div class="process-stage-label">
+        <span class="process-stage-number">Stage 07</span>
+        <p class="process-stage-title">Drying &amp; Inspection</p>
+        <p class="process-stage-duration">Duration: 18–24 hours</p>
+      </div>
+      <div class="process-stage-body">
+        <p>
+          Coated sheets are hung on wire racks in the same room where the chemistry is mixed.
+          Temperature and relative humidity are controlled, but not mechanically — the building
+          itself, a converted lighthouse keeper's station built in 1908 with stone walls 60cm thick,
+          maintains conditions within acceptable range for most of the year.
+          In summer we hang fewer sheets per day.
+        </p>
+        <p>
+          After drying, each sheet is inspected under a Macbeth daylight fluorescent lamp for
+          coating defects: pinholes, streaks, uneven density. Defective sheets are destroyed.
+          Acceptable sheets are cut to format and packaged in black polyethylene.
+        </p>
+        <div class="process-spec-table">
+          <div>
+            <p class="spec-block-label">Drying time</p>
+            <p class="spec-block-value">18–24 hours</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Inspection lamp</p>
+            <p class="spec-block-value">Macbeth daylight FL</p>
+          </div>
+          <div>
+            <p class="spec-block-label">Building year</p>
+            <p class="spec-block-value">1908</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FILM STRIP VIDEO SECTION — catalog divider moment -->
+<section id="filmstrip-section">
+  <div class="section-inner" style="max-width:100%;padding:0;">
+    <div id="filmstrip-video-container">
+      <video
+        id="filmstrip-video"
+        src="assets/filmstrip-advance.mp4"
+        autoplay muted loop playsinline
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      ></video>
+      <div id="filmstrip-video-placeholder" style="display:none;">→ assets/filmstrip-advance.mp4</div>
+      <div id="filmstrip-overlay"></div>
+    </div>
+  </div>
+  <div class="section-inner" style="padding-top:0;">
+    <p id="filmstrip-caption">35mm archive contact prints — one frame per accession record</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="section-inner">
+    <div id="footer-grid">
+      <div id="footer-brand">
+        <h3>Loam &amp; Silver</h3>
+        <p>Heritage silver-gelatin chemistry and papers, produced at Punta Carreiro, Galicia since 1961.</p>
+        <div id="footer-stamp">Est. 1961 — Punta Carreiro, Galicia</div>
+      </div>
+      <div id="footer-col-materials">
+        <p class="footer-col-heading">Materials</p>
+        <ul class="footer-links-list">
+          <li><a href="papers.html">Papers</a></li>
+          <li><a href="papers.html">Chemistry</a></li>
+        </ul>
+      </div>
+      <div id="footer-col-archive">
+        <p class="footer-col-heading">Navigation</p>
+        <ul class="footer-links-list">
+          <li><a href="about.html">Archive</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="contact.html">Fellowship</a></li>
+        </ul>
+      </div>
+      <div id="footer-col-contact">
+        <p class="footer-col-heading">Contact</p>
+        <ul class="footer-links-list">
+          <li><a href="contact.html">Apply</a></li>
+          <li><a href="mailto:archive@loamandsilver.es">archive@loamandsilver.es</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p>© 1961–2026 Loam &amp; Silver. All formulations registered.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+  const EASE = 'power2.out';
+  const SLOW = 0.761;
+  const LANGUID = 1.4;
+
+  // Header title
+  gsap.from('#process-page-title', { y: 28, opacity: 0, duration: SLOW, ease: EASE, delay: 0.2 });
+
+  // Timeline heading
+  gsap.from('#timeline-heading', {
+    scrollTrigger: { trigger: '#timeline-heading', start: 'top 85%', once: true },
+    y: 20, opacity: 0, duration: SLOW, ease: EASE
+  });
+
+  // Process stages — each animates on entry with left-to-right stage line draw
+  var stages = gsap.utils.toArray('.process-stage');
+  stages.forEach(function(stage, i) {
+    // Stage body content slides in from right
+    var body = stage.querySelector('.process-stage-body');
+    var label = stage.querySelector('.process-stage-label');
+
+    gsap.fromTo(label,
+      { x: -40, opacity: 0 },
+      {
+        scrollTrigger: { trigger: stage, start: 'top 85%', once: true },
+        x: 0, opacity: 1,
+        duration: SLOW,
+        ease: EASE
+      }
+    );
+
+    gsap.fromTo(body,
+      { x: 30, opacity: 0 },
+      {
+        scrollTrigger: { trigger: stage, start: 'top 85%', once: true },
+        x: 0, opacity: 1,
+        duration: SLOW,
+        delay: 0.1,
+        ease: EASE
+      }
+    );
+
+    // Animate the amber left-border strip on entry
+    ScrollTrigger.create({
+      trigger: stage,
+      start: 'top 85%',
+      once: true,
+      onEnter: function() {
+        stage.classList.add('is-visible');
+      }
+    });
+  });
+
+  // Spec blocks — scale from center
+  gsap.utils.toArray('.process-spec-table').forEach(function(table) {
+    gsap.fromTo(table,
+      { scale: 0.96, opacity: 0 },
+      {
+        scrollTrigger: { trigger: table, start: 'top 88%', once: true },
+        scale: 1, opacity: 1,
+        duration: SLOW,
+        ease: EASE
+      }
+    );
+  });
+
+  // Nav
+  var nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', function() {
+    nav.classList[window.scrollY > 10 ? 'add' : 'remove']('scrolled');
+  }, { passive: true });
+  nav.classList.add('scrolled');
+
+  // Mobile nav
+  var toggle = document.querySelector('.nav-mobile-toggle');
+  var menu = document.querySelector('.nav-mobile-menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', function() {
+      var open = menu.classList.toggle('is-open');
+      nav.classList[open ? 'add' : 'remove']('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+  }
+})();
+</script>
+</body>
+</html>

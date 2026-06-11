@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loam & Silver — Heritage Photographic Chemistry & Silver-Gelatin Papers</title>
+  <meta name="description" content="Loam & Silver produces silver-gelatin darkroom papers and chemistry for working photographers. Established 1961 in coastal Galicia. Fellowship-based consultation available.">
+
+  <!-- Google Fonts preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Tokens (includes Google Fonts imports) -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/grain-overlay.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Splitting.js for char scatter -->
+  <script src="https://cdn.jsdelivr.net/npm/splitting@1.0.6/dist/splitting.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/splitting@1.0.6/dist/splitting.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- NAV -->
+<!-- ══════════════════════════════════════════════════════ -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Loam &amp; Silver</a>
+    <ul class="nav-links">
+      <li><a href="about.html" class="nav-link">Archive</a></li>
+      <li><a href="papers.html" class="nav-link">Papers</a></li>
+      <li><a href="process.html" class="nav-link">Process</a></li>
+      <li><a href="contact.html" class="nav-link nav-cta-text">Fellowship</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Apply</a>
+    <!-- Mobile hamburger -->
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile overlay menu -->
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <ul class="nav-mobile-links">
+    <li><a href="about.html" class="nav-link">Archive</a></li>
+    <li><a href="papers.html" class="nav-link">Papers</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="contact.html" class="nav-link">Fellowship</a></li>
+  </ul>
+</div>
+
+<!-- SVG defs: turbulence filters -->
+<svg id="hero-turbulence-filter" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;">
+  <defs>
+    <filter id="hero-turbulence" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence id="turbulence-node" type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="5" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" id="displace-node"/>
+    </filter>
+    <filter id="editorial-turbulence" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence id="editorial-turbulence-node" type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="9" result="noise2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise2" scale="0" xChannelSelector="R" yChannelSelector="G" id="editorial-displace-node"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- HERO — Parchment + darkroom grain + ghost letterform -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="hero">
+  <!-- Ghost watermark letterform -->
+  <div id="hero-ghost-letterform" aria-hidden="true">
+    <span id="hero-ghost-text">SILVER</span>
+  </div>
+
+  <!-- Parallax depth layers -->
+  <div id="hero-depth-layer-far" aria-hidden="true"></div>
+  <div id="hero-depth-layer-near" aria-hidden="true"></div>
+
+  <!-- Video background — darkroom print drying -->
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/darkroom-print-drying.mp4"
+      autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;filter:saturate(0.5) brightness(0.9);"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="hero-bg-video-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-hero-background);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.8rem;letter-spacing:0.05em;">
+      → assets/darkroom-print-drying.mp4
+    </div>
+    <!-- Light overlay for HERO_TREATMENT=light -->
+    <div id="hero-video-overlay" aria-hidden="true"></div>
+  </div>
+
+  <!-- Hero content -->
+  <div id="hero-content">
+    <span id="hero-label">Est. 1961 — Galicia, Spain</span>
+    <!-- data-splitting attribute enables char scatter via Splitting.js -->
+    <h1 id="hero-title" data-splitting>Loam &amp; Silver</h1>
+    <p id="hero-subheading">
+      Heritage silver-gelatin papers and darkroom chemistry for those who still work by hand.
+      Seventy years of analogue photographic process — made without concession to convenience.
+    </p>
+    <div id="hero-cta-group">
+      <a href="papers.html" class="btn-primary">View Papers</a>
+      <a href="about.html" class="btn-ghost">Our Archive &rarr;</a>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div id="hero-scroll-cue" aria-hidden="true">
+    <div id="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- SQUIGGLY SECTION BOUNDARY 1 — compound irregular wave -->
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 88" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,38 C95,72 183,12 297,44 C411,76 489,8 611,41 C733,74 798,14 934,47 C1070,80 1172,18 1309,38 C1378,48 1414,28 1440,32 L1440,88 L0,88 Z" fill="#f5f0e8"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION: Process / About — parchment, editorial narrow, drop caps -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="process">
+  <!-- SVG filter for editorial heading turbulence -->
+  <svg id="process-heading-filter" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;">
+    <defs>
+      <filter id="process-turbulence-filter" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence id="process-turb-node" type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="3" result="pnoise"/>
+        <feDisplacementMap in="SourceGraphic" in2="pnoise" scale="0" id="process-displace" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="section-inner--narrow">
+    <span class="section-label">The Work</span>
+
+    <!-- Pull quote floated right (amber accent element) -->
+    <blockquote id="process-pull-quote">
+      "A print from our Baryta grade is an object you hold differently.
+      Not because we say so — because the paper makes you."
+    </blockquote>
+
+    <h2 id="process-heading" style="filter:url(#process-turbulence-filter);">
+      Chemistry that develops with time, not against it.
+    </h2>
+
+    <div id="process-intro-text">
+      <p>
+        Loam &amp; Silver began when Edith Palacios-Vane's darkroom was dismantled after her death in 1959.
+        Her former assistant, a photographic chemist named Javier Gallo Ferrer, preserved her formulas — not as
+        artifacts, but as working instructions. He began producing them in small batches under a lighthouse keeper's
+        station at Punta Carreiro. By 1965 he was supplying four Spanish film schools and a single Paris printer.
+        The operation has not changed its physical address since.
+      </p>
+
+      <p>
+        We produce three silver-gelatin paper grades: Linen, Baryta, and Carta. Each is coated by hand on a single
+        coating table, dried on wire racks in the same room where the chemistry is mixed. There is no continuous
+        coating line. There is no automated quality assurance. There is a coating knife, a thermometer, and a person
+        who has been doing this for a long time.
+      </p>
+
+      <p>
+        Fellowship access is open to working photographers, darkroom printers, and photographic conservators by
+        annual nomination. Fourteen fellowships are active at any given time. The median tenancy is three years.
+        There are no application fees. There is a waiting list.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SQUIGGLY SECTION BOUNDARY 2 — torn paper / irregular triangular points -->
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 L72,6 L124,26 L198,3 L256,22 L318,8 L381,28 L447,5 L503,19 L568,7 L634,25 L697,4 L752,21 L818,9 L876,27 L941,6 L998,22 L1062,5 L1119,24 L1184,8 L1241,26 L1303,4 L1368,20 L1440,10 L1440,52 L0,52 Z" fill="#f5f5f0"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION: Film Contact Sheet Catalog — page-bg, 3-col grid -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="catalog">
+  <div class="section-inner">
+    <span class="section-label">Materials</span>
+    <h2 id="catalog-heading" data-splitting>Our Papers</h2>
+
+    <!-- Tick ruler — drawn by GSAP DrawSVG on scroll -->
+    <svg id="catalog-tick-ruler" viewBox="0 0 1120 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="margin-bottom:2.5rem;overflow:visible;">
+      <!-- Major ticks every 80px, minor ticks every 20px — irregular spacing for analog feel -->
+      <g stroke="#b85c2a" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.7">
+        <line id="tick-r0" x1="0" y1="0" x2="0" y2="14"/>
+        <line id="tick-r1" x1="17" y1="0" x2="17" y2="6"/>
+        <line id="tick-r2" x1="36" y1="0" x2="36" y2="6"/>
+        <line id="tick-r3" x1="53" y1="0" x2="53" y2="10"/>
+        <line id="tick-r4" x1="72" y1="0" x2="72" y2="6"/>
+        <line id="tick-r5" x1="89" y1="0" x2="89" y2="6"/>
+        <line id="tick-r6" x1="107" y1="0" x2="107" y2="14"/>
+        <line id="tick-r7" x1="124" y1="0" x2="124" y2="6"/>
+        <line id="tick-r8" x1="143" y1="0" x2="143" y2="6"/>
+        <line id="tick-r9" x1="161" y1="0" x2="161" y2="10"/>
+        <line id="tick-r10" x1="180" y1="0" x2="180" y2="6"/>
+        <line id="tick-r11" x1="199" y1="0" x2="199" y2="6"/>
+        <line id="tick-r12" x1="214" y1="0" x2="214" y2="14"/>
+        <line id="tick-r13" x1="233" y1="0" x2="233" y2="6"/>
+        <line id="tick-r14" x1="252" y1="0" x2="252" y2="6"/>
+        <line id="tick-r15" x1="268" y1="0" x2="268" y2="10"/>
+        <line id="tick-r16" x1="287" y1="0" x2="287" y2="6"/>
+        <line id="tick-r17" x1="305" y1="0" x2="305" y2="6"/>
+        <line id="tick-r18" x1="321" y1="0" x2="321" y2="14"/>
+        <line id="tick-r19" x1="340" y1="0" x2="340" y2="6"/>
+        <line id="tick-r20" x1="357" y1="0" x2="357" y2="6"/>
+        <line id="tick-r21" x1="375" y1="0" x2="375" y2="10"/>
+        <line id="tick-r22" x1="393" y1="0" x2="393" y2="6"/>
+        <line id="tick-r23" x1="411" y1="0" x2="411" y2="6"/>
+        <line id="tick-r24" x1="428" y1="0" x2="428" y2="14"/>
+        <line id="tick-r25" x1="447" y1="0" x2="447" y2="6"/>
+        <line id="tick-r26" x1="466" y1="0" x2="466" y2="6"/>
+        <line id="tick-r27" x1="481" y1="0" x2="481" y2="10"/>
+        <line id="tick-r28" x1="499" y1="0" x2="499" y2="6"/>
+        <line id="tick-r29" x1="517" y1="0" x2="517" y2="6"/>
+        <line id="tick-r30" x1="534" y1="0" x2="534" y2="14"/>
+        <line id="tick-r31" x1="551" y1="0" x2="551" y2="6"/>
+        <line id="tick-r32" x1="570" y1="0" x2="570" y2="6"/>
+        <line id="tick-r33" x1="588" y1="0" x2="588" y2="10"/>
+        <line id="tick-r34" x1="607" y1="0" x2="607" y2="6"/>
+        <line id="tick-r35" x1="623" y1="0" x2="623" y2="6"/>
+        <line id="tick-r36" x1="641" y1="0" x2="641" y2="14"/>
+        <line id="tick-r37" x1="659" y1="0" x2="659" y2="6"/>
+        <line id="tick-r38" x1="677" y1="0" x2="677" y2="6"/>
+        <line id="tick-r39" x1="694" y1="0" x2="694" y2="10"/>
+        <line id="tick-r40" x1="713" y1="0" x2="713" y2="6"/>
+        <line id="tick-r41" x1="730" y1="0" x2="730" y2="6"/>
+        <line id="tick-r42" x1="747" y1="0" x2="747" y2="14"/>
+        <line id="tick-r43" x1="764" y1="0" x2="764" y2="6"/>
+        <line id="tick-r44" x1="782" y1="0" x2="782" y2="6"/>
+        <line id="tick-r45" x1="799" y1="0" x2="799" y2="10"/>
+        <line id="tick-r46" x1="817" y1="0" x2="817" y2="6"/>
+        <line id="tick-r47" x1="834" y1="0" x2="834" y2="6"/>
+        <line id="tick-r48" x1="854" y1="0" x2="854" y2="14"/>
+        <line id="tick-r49" x1="872" y1="0" x2="872" y2="6"/>
+        <line id="tick-r50" x1="889" y1="0" x2="889" y2="6"/>
+        <line id="tick-r51" x1="907" y1="0" x2="907" y2="10"/>
+        <line id="tick-r52" x1="926" y1="0" x2="926" y2="6"/>
+        <line id="tick-r53" x1="943" y1="0" x2="943" y2="6"/>
+        <line id="tick-r54" x1="961" y1="0" x2="961" y2="14"/>
+        <line id="tick-r55" x1="978" y1="0" x2="978" y2="6"/>
+        <line id="tick-r56" x1="997" y1="0" x2="997" y2="6"/>
+        <line id="tick-r57" x1="1014" y1="0" x2="1014" y2="10"/>
+        <line id="tick-r58" x1="1033" y1="0" x2="1033" y2="6"/>
+        <line id="tick-r59" x1="1050" y1="0" x2="1050" y2="6"/>
+        <line id="tick-r60" x1="1068" y1="0" x2="1068" y2="14"/>
+        <line id="tick-r61" x1="1086" y1="0" x2="1086" y2="6"/>
+        <line id="tick-r62" x1="1105" y1="0" x2="1105" y2="6"/>
+        <line id="tick-r63" x1="1120" y1="0" x2="1120" y2="14"/>
+      </g>
+    </svg>
+
+    <!-- Contact sheet grid — 3 col, 9 cards, film frame numbers -->
+    <div id="catalog-grid">
+
+      <div class="film-card grain-develop">
+        <span class="film-card-frame-number">01</span>
+        <img
+          src="assets/catalog-linen-paper.jpeg"
+          alt="Loam & Silver Linen grade paper — warm base tone, visible fiber"
+          class="film-card-image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="film-card-image-placeholder" style="display:none;">→ assets/catalog-linen-paper.jpeg</div>
+        <p class="film-card-name">Linen Grade</p>
+        <p class="film-card-sub">RC Warmtone · 190gsm</p>
+      </div>
+
+      <div class="film-card grain-develop">
+        <span class="film-card-frame-number">02</span>
+        <img
+          src="assets/catalog-baryta-paper.jpeg"
+          alt="Loam & Silver Baryta grade paper — fine barium sulfate coating"
+          class="film-card-image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="film-card-image-placeholder" style="display:none;">→ assets/catalog-baryta-paper.jpeg</div>
+        <p class="film-card-name">Baryta Grade</p>
+        <p class="film-card-sub">FB Baryta · 270gsm</p>
+      </div>
+
+      <div class="film-card grain-develop">
+        <span class="film-card-frame-number">03</span>
+        <img
+          src="assets/catalog-carta-paper.jpeg"
+          alt="Loam & Silver Carta grade paper — coarse fiber base, high contrast"
+          class="film-card-image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="film-card-image-placeholder" style="display:none;">→ assets/catalog-carta-paper.jpeg</div>
+        <p class="film-card-name">Carta Grade</p>
+        <p class="film-card-sub">FB Cotton · 320gsm</p>
+      </div>
+
+      <div class="film-card grain-develop">
+        <span class="film-card-frame-number">04</span>
+        <img
+          src="assets/catalog-developer-d76.jpeg"
+          alt="Loam & Silver D-76 analog developer formula"
+          class="film-card-image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="film-card-image-placeholder" style="display:none;">→ assets/catalog-developer-d76.jpeg</div>
+        <p class="film-card-name">D-76 Formula</p>
+        <p class="film-card-sub">Film Developer · 1L</p>
+      </div>
+
+      <div class="film-card grain-develop">
+        <span class="film-card-frame-number">05</span>
+        <img
+          src="assets/catalog-paper-developer.jpeg"
+          alt="Loam & Silver LV-30 paper developer"
+          class="film-card-image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="film-card-image-placeholder" style="display:none;">→ assets/catalog-paper-developer.jpeg</div>
+        <p class="film-card-name">LV-30 Developer</p>
+        <p class="film-card-sub">Paper Developer · 1L</p>
+      </div>
+
+      <div class="film-card grain-develop">
+        <span class="film-card-frame-number">06</span>
+        <img
+          src="assets/catalog-fixer.jpeg"
+          alt="Loam & Silver sodium thiosulfate fixer, slow-clearing archival formula"
+          class="film-card-image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="film-card-image-placeholder" style="display:none;">→ assets/catalog-fixer.jpeg</div>
+        <p class="film-card-name">Archival Fixer</p>
+        <p class="film-card-sub">Paper &amp; Film · 1L</p>
+      </div>
+
+      <div class="film-card grain-develop">
+        <span class="film-card-frame-number">07</span>
+        <img
+          src="assets/catalog-toner-sepia.jpeg"
+          alt="Loam & Silver selenium-sepia toner"
+          class="film-card-image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="film-card-image-placeholder" style="display:none;">→ assets/catalog-toner-sepia.jpeg</div>
+        <p class="film-card-name">Sepia Toner</p>
+        <p class="film-card-sub">Selenium-Sepia · 200ml</p>
+      </div>
+
+      <div class="film-card grain-develop">
+        <span class="film-card-frame-number">08</span>
+        <img
+          src="assets/catalog-stop-bath.jpeg"
+          alt="Loam & Silver acetic stop bath"
+          class="film-card-image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="film-card-image-placeholder" style="display:none;">→ assets/catalog-stop-bath.jpeg</div>
+        <p class="film-card-name">Stop Bath</p>
+        <p class="film-card-sub">Acetic Acid · 200ml</p>
+      </div>
+
+      <div class="film-card grain-develop">
+        <span class="film-card-frame-number">09</span>
+        <img
+          src="assets/catalog-wetting-agent.jpeg"
+          alt="Loam & Silver wetting agent for final wash"
+          class="film-card-image"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div class="film-card-image-placeholder" style="display:none;">→ assets/catalog-wetting-agent.jpeg</div>
+        <p class="film-card-name">Wetting Agent</p>
+        <p class="film-card-sub">Final Wash · 100ml</p>
+      </div>
+
+    </div>
+
+    <div style="margin-top:2.5rem;text-align:left;">
+      <a href="papers.html" class="btn-primary">Full Catalogue</a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION BOUNDARY 3 — film strip band with sprocket holes -->
+<section id="film-divider-band">
+  <div class="film-ticker">
+    <div class="film-ticker-track">
+      <span>SILVER GELATIN — BARYTA — DARKROOM — ANALOG — SILVER GELATIN — BARYTA — DARKROOM — ANALOG — SILVER GELATIN — BARYTA — DARKROOM — ANALOG — SILVER GELATIN — BARYTA — DARKROOM — ANALOG — </span>
+      <span>SILVER GELATIN — BARYTA — DARKROOM — ANALOG — SILVER GELATIN — BARYTA — DARKROOM — ANALOG — SILVER GELATIN — BARYTA — DARKROOM — ANALOG — SILVER GELATIN — BARYTA — DARKROOM — ANALOG — </span>
+    </div>
+  </div>
+</section>
+
+<!-- SQUIGGLY SECTION BOUNDARY 4 — ink-blob / irregular arc boundary -->
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,36 C82,62 164,18 268,44 Q376,68 490,30 C604,0 712,58 850,36 Q948,18 1062,54 C1148,74 1256,12 1360,28 C1392,34 1420,24 1440,22 L1440,70 L0,70 Z" fill="#ffffff"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION: Chemistry / Process Steps — white bg, asymmetric featured -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="chemistry">
+  <div class="section-inner">
+    <span class="section-label">How It Works</span>
+
+    <div id="chemistry-grid">
+      <!-- Process steps — numbered step rows -->
+      <div id="chemistry-steps">
+        <h2 id="chemistry-heading">From silver nitrate to your print.</h2>
+
+        <ol class="step-list">
+          <li class="step-item">
+            <span class="step-number">01</span>
+            <div class="step-content">
+              <p class="step-title">Silver Nitrate Preparation</p>
+              <p class="step-body">We begin with silver nitrate dissolved in distilled water. The concentration is measured to within 0.2% by refractive index, not by weight alone. Temperature is held at 18°C throughout.</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-number">02</span>
+            <div class="step-content">
+              <p class="step-title">Emulsion Precipitation</p>
+              <p class="step-body">Gelatin is pre-soaked, then silver nitrate is added to potassium bromide solution in controlled increments. The precipitation reaction determines grain size. Our Baryta emulsion takes 4 hours.</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-number">03</span>
+            <div class="step-content">
+              <p class="step-title">Ripening &amp; Digestion</p>
+              <p class="step-body">The emulsion is held at elevated temperature while the silver halide crystals reorganize and grow. This is where contrast and speed are determined. We ripen at 52°C for 90 minutes.</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-number">04</span>
+            <div class="step-content">
+              <p class="step-title">Washing &amp; Redispersion</p>
+              <p class="step-body">Soluble salts are washed out in multiple distilled water changes. The emulsion is then redispersed in fresh gelatin before coating.</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-number">05</span>
+            <div class="step-content">
+              <p class="step-title">Hand Coating</p>
+              <p class="step-body">The liquid emulsion is applied to paper base with a precision-gap coating knife at 38°C. Each sheet is coated individually. There is no batch coating. There is no continuous line.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Featured visual — instrument under enlarger light -->
+      <div id="chemistry-visual">
+        <img
+          id="chemistry-img"
+          src="assets/instrument-enlarger.jpeg"
+          alt="Silver-gelatin coating process — precision knife on the coating table"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div id="chemistry-img-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-parchment);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.8rem;letter-spacing:0.05em;">
+          → assets/instrument-enlarger.jpeg
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SQUIGGLY SECTION BOUNDARY 5 — diagonal blade (dark contrast section coming) -->
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L1440,42 L1440,60 L0,60 Z" fill="#1a1814"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION: Archival Voices — dark charcoal, testimonials -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="voices">
+  <div class="section-inner">
+    <span class="section-label" style="color:rgba(245,240,232,0.5);">Voices</span>
+    <h2 id="voices-heading">From those who still use us.</h2>
+
+    <div id="voices-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
+
+      <blockquote class="voice-card">
+        <p class="voice-quote">
+          "I have used five different baryta papers in the last decade.
+          Loam &amp; Silver Baryta is the only one that behaves like paper
+          rather than a coated industrial substrate."
+        </p>
+        <cite class="voice-attribution">Mireia Torrent — Commercial Printer, Barcelona</cite>
+      </blockquote>
+
+      <blockquote class="voice-card">
+        <p class="voice-quote">
+          "Their D-76 formula uses phenidone at a concentration I have not
+          seen elsewhere. It produces a grain structure in 35mm Tri-X that
+          is almost cellular under a loupe. Nothing else does this."
+        </p>
+        <cite class="voice-attribution">Kasimir Strek — Photographic Conservator, Kraków</cite>
+      </blockquote>
+
+      <blockquote class="voice-card">
+        <p class="voice-quote">
+          "The Linen warmtone base is 2°K warmer than RC Warmtone from any
+          other manufacturer I have tested. That is not marketing. I measured it."
+        </p>
+        <cite class="voice-attribution">A.L. — Fellowship Holder, 2019–present</cite>
+      </blockquote>
+
+      <blockquote class="voice-card">
+        <p class="voice-quote">
+          "Javier's grandfather coated the paper. His son now does the chemistry.
+          That continuity is in the product. You feel it under your hands in the wash."
+        </p>
+        <cite class="voice-attribution">Thomas Kiehl — Darkroom Instructor, Hamburg</cite>
+      </blockquote>
+
+    </div>
+  </div>
+</section>
+
+<!-- SQUIGGLY SECTION BOUNDARY 6 — quadratic sine wave returning to light -->
+<div class="section-divider" aria-hidden="true" style="background:#1a1814;">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 Q144,60 288,0 Q432,60 576,0 Q720,60 864,0 Q1008,60 1152,0 Q1296,60 1440,0 L1440,70 L0,70 Z" fill="#f5f0e8"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION: Contact / Fellowship CTA — parchment -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="contact-cta">
+  <div class="section-inner--narrow">
+    <span class="section-label">Fellowship</span>
+    <h2>Access is by nomination.</h2>
+    <p style="font-family:var(--font-body);font-size:var(--type-body-size);line-height:1.9;color:var(--color-muted-text);max-width:52ch;margin:0 0 2.5rem 0;">
+      Fourteen annual fellowships allow working photographers and conservators direct access to our coating room, chemistry archive, and formulation records. Fellowship holders may request custom paper grades outside our standard production run.
+    </p>
+    <form id="contact-form" action="#" method="post">
+      <div class="form-field">
+        <label class="form-label" for="inquiry-name">Full Name</label>
+        <input class="form-input" type="text" id="inquiry-name" name="name" placeholder="Your full name" autocomplete="name">
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="inquiry-email">Email</label>
+        <input class="form-input" type="email" id="inquiry-email" name="email" placeholder="your@address.com" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="inquiry-practice">Practice</label>
+        <input class="form-input" type="text" id="inquiry-practice" name="practice" placeholder="Photographer, printer, conservator…">
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="inquiry-message">Statement of Practice (optional)</label>
+        <textarea class="form-input" id="inquiry-message" name="message" rows="4" placeholder="Briefly describe your darkroom practice and why you are applying…" style="resize:vertical;"></textarea>
+      </div>
+      <div style="margin-top:0.5rem;">
+        <button type="submit" class="btn-primary">Submit Application</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- FOOTER — narrow, studio stamp, back-of-print feel -->
+<!-- ══════════════════════════════════════════════════════ -->
+<footer id="footer">
+  <div class="section-inner">
+    <div id="footer-grid">
+      <div id="footer-brand">
+        <h3>Loam &amp; Silver</h3>
+        <p>
+          Heritage silver-gelatin chemistry and papers, produced at Punta Carreiro, Galicia since 1961.
+          Not available in shops. Not for general sale. Fellowship access only.
+        </p>
+        <div id="footer-stamp">Est. 1961 — Punta Carreiro, Galicia</div>
+      </div>
+      <div id="footer-col-materials">
+        <p class="footer-col-heading">Materials</p>
+        <ul class="footer-links-list">
+          <li><a href="papers.html">Linen Grade</a></li>
+          <li><a href="papers.html">Baryta Grade</a></li>
+          <li><a href="papers.html">Carta Grade</a></li>
+          <li><a href="papers.html">Developers</a></li>
+          <li><a href="papers.html">Fixers &amp; Toners</a></li>
+        </ul>
+      </div>
+      <div id="footer-col-archive">
+        <p class="footer-col-heading">Archive</p>
+        <ul class="footer-links-list">
+          <li><a href="about.html">History</a></li>
+          <li><a href="about.html">Edith Palacios-Vane</a></li>
+          <li><a href="about.html">Javier Gallo Ferrer</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="contact.html">Fellowship</a></li>
+        </ul>
+      </div>
+      <div id="footer-col-contact">
+        <p class="footer-col-heading">Contact</p>
+        <ul class="footer-links-list">
+          <li><a href="contact.html">Apply for Fellowship</a></li>
+          <li><a href="contact.html">Enquiries</a></li>
+          <li><a href="mailto:archive@loamandsilver.es">archive@loamandsilver.es</a></li>
+        </ul>
+        <p style="font-family:var(--font-ui);font-size:0.75rem;line-height:1.7;color:rgba(245,240,232,0.35);margin-top:1.5rem;">
+          Faro de Punta Carreiro<br>
+          36980 Ribeira, A Coruña<br>
+          Galicia, España
+        </p>
+      </div>
+    </div>
+
+    <div id="footer-bottom">
+      <p>© 1961–2026 Loam &amp; Silver. All formulations registered. No social accounts exist.</p>
+      <p style="font-family:var(--font-ui);font-size:0.6875rem;letter-spacing:0.06em;color:rgba(245,240,232,0.25);">
+        Coating record: 14 active fellowships · 3 paper grades · 1 address
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- GSAP ANIMATIONS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const EASE_FILM = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  const BASE_DUR = 0.572;
+  const SLOW_DUR = 0.761;
+  const LANGUID_DUR = 1.4;
+
+  // ── Init Splitting.js for char scatter ──────────────────
+  if (typeof Splitting !== 'undefined') {
+    Splitting();
+  }
+
+  // ── Hero: darkroom print development animation ──────────
+  // Text starts with feTurbulence displacement, resolves to clarity over 1.4s
+  // Characters scatter radially, converge from center outward over 0.85s
+  const heroTitle = document.getElementById('hero-title');
+  const displaceNode = document.getElementById('displace-node');
+
+  if (heroTitle && displaceNode) {
+    // Phase 1: displacement filter starts at 28px, resolves to 0 over 1.4s
+    const turbObj = { scale: 28 };
+    gsap.to(turbObj, {
+      scale: 0,
+      duration: LANGUID_DUR,
+      delay: 0.3,
+      ease: 'power2.out',
+      onUpdate: function() {
+        displaceNode.setAttribute('scale', turbObj.scale);
+      }
+    });
+
+    // Phase 2: Splitting.js chars scatter then converge (center chars first)
+    const chars = heroTitle.querySelectorAll('.char');
+    if (chars.length > 0) {
+      const midIdx = Math.floor(chars.length / 2);
+      chars.forEach((char, i) => {
+        const distFromCenter = Math.abs(i - midIdx);
+        const delay = 0.2 + (distFromCenter * 0.038); // center arrives first
+        const angle = ((i - midIdx) / chars.length) * Math.PI * 2;
+        const startX = Math.cos(angle) * 60;
+        const startY = Math.sin(angle) * 30;
+
+        gsap.fromTo(char,
+          { x: startX, y: startY, opacity: 0 },
+          {
+            x: 0,
+            y: 0,
+            opacity: 1,
+            duration: 0.85,
+            delay: delay,
+            ease: 'power3.out'
+          }
+        );
+      });
+    }
+  }
+
+  // ── Hero: label, subheading, CTA sequential entrance ───
+  const heroTL = gsap.timeline({ delay: 0.15 });
+  heroTL
+    .to('#hero-label', { opacity: 1, y: 0, duration: BASE_DUR, ease: 'power2.out' }, 0.1)
+    .to('#hero-subheading', { opacity: 1, duration: SLOW_DUR, ease: 'power2.out' }, 0.85)
+    .to('#hero-cta-group', { opacity: 1, y: 0, duration: BASE_DUR, ease: 'power2.out' }, 1.15)
+    .to('#hero-scroll-cue', { opacity: 1, duration: BASE_DUR, ease: 'power2.out' }, 1.55);
+
+  // Scroll cue line initial state
+  gsap.set('#hero-scroll-line', { scaleX: 0 });
+  gsap.to('#hero-scroll-line', {
+    scaleX: 1,
+    duration: SLOW_DUR,
+    delay: 1.7,
+    ease: 'power2.inOut'
+  });
+
+  // ── Hero: parallax depth layers ─────────────────────────
+  gsap.to('#hero-depth-layer-far', {
+    scrollTrigger: { trigger: '#hero', scrub: 2.2 },
+    y: '-38%',
+    ease: 'none'
+  });
+  gsap.to('#hero-depth-layer-near', {
+    scrollTrigger: { trigger: '#hero', scrub: 1.6 },
+    y: '-19%',
+    ease: 'none'
+  });
+  gsap.to('#hero-ghost-text', {
+    scrollTrigger: { trigger: '#hero', scrub: 2.0 },
+    y: '-8%',
+    ease: 'none'
+  });
+
+  // ── Process section: editorial heading feTurbulence ─────
+  // Text 'develops' like a darkroom print — distorted → clear over 1.4s
+  // Fires ONCE when the heading enters viewport (ScrollTrigger)
+  const processHeading = document.getElementById('process-heading');
+  const processDisplace = document.getElementById('process-displace');
+
+  if (processHeading && processDisplace) {
+    ScrollTrigger.create({
+      trigger: processHeading,
+      start: 'top 82%',
+      once: true,
+      onEnter: () => {
+        const editObj = { scale: 28 };
+        gsap.to(editObj, {
+          scale: 0,
+          duration: LANGUID_DUR,
+          ease: 'power2.out',
+          onUpdate: function() {
+            processDisplace.setAttribute('scale', editObj.scale);
+          }
+        });
+      }
+    });
+
+    // Process heading letter-spacing bloom on enter
+    ScrollTrigger.create({
+      trigger: processHeading,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.fromTo(processHeading,
+          { letterSpacing: '0.04em' },
+          { letterSpacing: '-0.01em', duration: LANGUID_DUR, ease: 'power2.out' }
+        );
+      }
+    });
+  }
+
+  // Process content: paragraph horizontal wipe reveal (developer wash)
+  gsap.utils.toArray('#process-intro-text p').forEach((p, i) => {
+    gsap.fromTo(p,
+      { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
+      {
+        scrollTrigger: { trigger: p, start: 'top 88%', once: true },
+        clipPath: 'inset(0 0% 0 0)',
+        opacity: 1,
+        duration: SLOW_DUR + 0.15,
+        delay: i * 0.08,
+        ease: 'power2.inOut'
+      }
+    );
+  });
+
+  // Pull quote: slide in from right
+  gsap.from('#process-pull-quote', {
+    scrollTrigger: { trigger: '#process-pull-quote', start: 'top 85%', once: true },
+    x: 50,
+    duration: SLOW_DUR,
+    ease: 'power2.out'
+  });
+
+  // ── Catalog section: card tumble-in ─────────────────────
+  // Cards scatter from random angles (±15°), settle to 0° — prints dropped on a light table
+  const filmCards = gsap.utils.toArray('.film-card');
+
+  filmCards.forEach((card, i) => {
+    const randomAngle = (Math.random() - 0.5) * 30; // ±15°
+    const randomX = (Math.random() - 0.5) * 40;
+
+    gsap.fromTo(card,
+      { rotation: randomAngle, x: randomX, y: 40, opacity: 0 },
+      {
+        scrollTrigger: {
+          trigger: '#catalog-grid',
+          start: 'top 80%',
+          once: true
+        },
+        rotation: 0,
+        x: 0,
+        y: 0,
+        opacity: 1,
+        duration: SLOW_DUR,
+        delay: i * 0.065,
+        ease: 'power3.out'
+      }
+    );
+  });
+
+  // Catalog heading: Splitting.js char scatter with scrollTrigger
+  const catalogHeading = document.getElementById('catalog-heading');
+  if (catalogHeading) {
+    const catChars = catalogHeading.querySelectorAll('.char');
+    if (catChars.length > 0) {
+      gsap.fromTo(catChars,
+        {
+          opacity: 0,
+          y: () => gsap.utils.random(-18, 18),
+          rotation: () => gsap.utils.random(-8, 8)
+        },
+        {
+          scrollTrigger: { trigger: catalogHeading, start: 'top 82%', once: true },
+          opacity: 1,
+          y: 0,
+          rotation: 0,
+          ease: 'back.out(1.4)',
+          duration: 0.65,
+          stagger: 0.025
+        }
+      );
+    }
+  }
+
+  // ── Tick ruler: GSAP scrub draw on catalog section enter ─
+  // Animate all tick lines from scaleY 0 → 1 left-to-right as catalog enters
+  const tickLines = gsap.utils.toArray('#catalog-tick-ruler line');
+  if (tickLines.length > 0) {
+    gsap.fromTo(tickLines,
+      { scaleY: 0, transformOrigin: 'top center' },
+      {
+        scrollTrigger: {
+          trigger: '#catalog',
+          start: 'top 75%',
+          once: true
+        },
+        scaleY: 1,
+        duration: 0.4,
+        stagger: {
+          amount: 1.2,
+          from: 'start',
+          ease: 'power1.inOut'
+        },
+        ease: 'power2.out'
+      }
+    );
+  }
+
+  // ── Chemistry section: step items wipe in from left ─────
+  // Different from catalog's tumble — horizontal sweep revealing like a developer wash
+  gsap.utils.toArray('.step-item').forEach((item, i) => {
+    gsap.fromTo(item,
+      { x: -70, opacity: 0 },
+      {
+        scrollTrigger: { trigger: item, start: 'top 88%', once: true },
+        x: 0,
+        opacity: 1,
+        duration: SLOW_DUR,
+        delay: i * 0.09,
+        ease: 'power2.out'
+      }
+    );
+  });
+
+  // Chemistry visual — divergent bento: wipes down from top
+  gsap.fromTo('#chemistry-visual',
+    { clipPath: 'inset(100% 0 0 0)' },
+    {
+      scrollTrigger: { trigger: '#chemistry-grid', start: 'top 78%', once: true },
+      clipPath: 'inset(0% 0 0 0)',
+      duration: LANGUID_DUR,
+      ease: 'power3.out'
+    }
+  );
+
+  // Chemistry heading
+  gsap.from('#chemistry-heading', {
+    scrollTrigger: { trigger: '#chemistry-heading', start: 'top 85%', once: true },
+    y: 30,
+    opacity: 0,
+    duration: SLOW_DUR,
+    ease: 'power2.out'
+  });
+
+  // ── Voices: voice cards rotate in ───────────────────────
+  // Different pattern: scale from center + rise — contrast to catalog tumble
+  gsap.utils.toArray('.voice-card').forEach((card, i) => {
+    gsap.fromTo(card,
+      { scale: 0.94, y: 24, opacity: 0 },
+      {
+        scrollTrigger: { trigger: card, start: 'top 85%', once: true },
+        scale: 1,
+        y: 0,
+        opacity: 1,
+        duration: SLOW_DUR,
+        delay: i * 0.12,
+        ease: 'power2.out'
+      }
+    );
+  });
+
+  // Voices heading
+  gsap.from('#voices-heading', {
+    scrollTrigger: { trigger: '#voices-heading', start: 'top 82%', once: true },
+    letterSpacing: '0.08em',
+    duration: LANGUID_DUR,
+    ease: 'power2.out'
+  });
+
+  // ── Contact CTA: clip-path wipe from bottom (dev wash) ──
+  gsap.fromTo('#contact-cta',
+    { clipPath: 'inset(0 0 100% 0)' },
+    {
+      scrollTrigger: { trigger: '#contact-cta', start: 'top 80%', once: true },
+      clipPath: 'inset(0 0 0% 0)',
+      duration: LANGUID_DUR,
+      ease: 'power3.inOut'
+    }
+  );
+
+  gsap.from('#contact-form .form-field', {
+    scrollTrigger: { trigger: '#contact-form', start: 'top 85%', once: true },
+    y: 20,
+    opacity: 0,
+    duration: BASE_DUR,
+    stagger: 0.1,
+    ease: 'power2.out'
+  });
+
+  // ── Nav scroll handler ───────────────────────────────────
+  const nav = document.getElementById('site-nav');
+  function handleScroll() {
+    if (window.scrollY > 30) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  // ── Mobile nav toggle ────────────────────────────────────
+  const mobileToggle = document.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile-menu');
+  const navEl = document.getElementById('site-nav');
+
+  if (mobileToggle && mobileMenu) {
+    mobileToggle.addEventListener('click', function() {
+      const isOpen = mobileMenu.classList.contains('is-open');
+      if (isOpen) {
+        mobileMenu.classList.remove('is-open');
+        navEl.classList.remove('nav-mobile-open');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      } else {
+        mobileMenu.classList.add('is-open');
+        navEl.classList.add('nav-mobile-open');
+        mobileToggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+
+    // Close menu on link click
+    mobileMenu.querySelectorAll('.nav-link').forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileMenu.classList.remove('is-open');
+        navEl.classList.remove('nav-mobile-open');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+})();
+</script>
+</body>
+</html>

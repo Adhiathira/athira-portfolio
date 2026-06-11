@@ -1,0 +1,92 @@
+/* half-tone — Grid System */
+/* Split-screen first: every section is a two-panel divide */
+
+:root {
+  --grid-max: 1440px;
+  --panel-padding: 80px;
+  --panel-padding-md: 48px;
+  --panel-padding-sm: 32px;
+
+  /* Split ratios */
+  --split-50: 50fr 50fr;
+  --split-48-52: 48fr 52fr;
+  --split-42-58: 42fr 58fr;
+  --split-40-60: 40fr 60fr;
+}
+
+/* Base split container */
+.split {
+  display: grid;
+  grid-template-columns: var(--split-50);
+  max-width: var(--grid-max);
+  margin: 0 auto;
+  width: 100%;
+  overflow: hidden;
+}
+
+.split--48-52 { grid-template-columns: var(--split-48-52); }
+.split--42-58 { grid-template-columns: var(--split-42-58); }
+.split--40-60 { grid-template-columns: var(--split-40-60); }
+
+/* Panel base */
+.split__panel {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--panel-padding);
+}
+
+/* Panel height modifiers */
+.split--hero { height: 100vh; }
+.split--60 { min-height: 60vh; }
+.split--auto { height: auto; }
+
+/* Panel color variants */
+.split__panel--dark { background-color: var(--color-panel-dark); }
+.split__panel--plum { background-color: var(--color-panel-plum); }
+.split__panel--terracotta { background-color: var(--color-panel-terracotta); }
+.split__panel--vellum { background-color: var(--color-panel-vellum); }
+.split__panel--surface { background-color: var(--color-surface); }
+
+/* Full-width single panel (quote section) */
+.panel-full {
+  width: 100%;
+  padding: var(--panel-padding) calc(var(--panel-padding) * 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile: stack panels */
+@media (max-width: 768px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .split__panel {
+    padding: var(--panel-padding-sm);
+  }
+
+  /* Accent panel becomes top band */
+  .split__panel--dark,
+  .split__panel--plum,
+  .split__panel--terracotta {
+    min-height: 220px;
+  }
+
+  .split--hero {
+    height: auto;
+  }
+
+  .split--60 {
+    min-height: auto;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .split__panel {
+    padding: var(--panel-padding-md);
+  }
+}

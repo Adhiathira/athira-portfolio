@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — Pivot</title>
+  <meta name="description" content="Simple, transparent pricing for Pivot — the product analytics platform that turns data into direction." />
+
+  <!-- Design tokens -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+
+  <!-- Component styles -->
+  <link rel="stylesheet" href="components/nav.css" />
+  <link rel="stylesheet" href="components/pricing-header.css" />
+  <link rel="stylesheet" href="components/pricing-tiers.css" />
+  <link rel="stylesheet" href="components/pricing-table.css" />
+  <link rel="stylesheet" href="components/pricing-faq.css" />
+  <link rel="stylesheet" href="components/pricing-footer.css" />
+</head>
+<body>
+
+  <!-- ── NAV — sub-page version ─────────────────────────────── -->
+  <div class="nav-spacer active" id="nav-spacer"></div>
+  <nav class="site-nav" id="site-nav">
+    <a href="index.html" class="nav-logo" aria-label="Home">Pivot</a>
+    <ul class="nav-links" role="list">
+      <li><a href="product.html" class="nav-link">Product</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="team.html" class="nav-link">Team</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="Site navigation">
+    <ul class="nav-overlay-links" role="list">
+      <li><a href="product.html" class="nav-link">Product</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="team.html" class="nav-link">Team</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-overlay-footer">Pivot &mdash; &copy; 2025</div>
+  </div>
+  <script>
+    (function () {
+      var nav = document.getElementById('site-nav');
+      var toggle = document.getElementById('nav-mobile-toggle');
+      var overlay = document.getElementById('nav-mobile-menu');
+      function handleScroll() { if ((window.scrollY||window.pageYOffset)>80){nav.classList.add('isVisible');}else{nav.classList.remove('isVisible');} }
+      window.addEventListener('scroll', handleScroll, { passive: true }); handleScroll();
+      function openMenu(){nav.classList.add('nav-mobile-open');overlay.classList.add('is-open');toggle.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
+      function closeMenu(){nav.classList.remove('nav-mobile-open');overlay.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');document.body.style.overflow='';}
+      toggle.addEventListener('click',function(){overlay.classList.contains('is-open')?closeMenu():openMenu();});
+      overlay.querySelectorAll('a').forEach(function(l){l.addEventListener('click',closeMenu);});
+      document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('is-open')){closeMenu();toggle.focus();}});
+      var cp=window.location.pathname.split('/').pop()||'index.html';
+      document.querySelectorAll('.nav-link').forEach(function(link){if(link.getAttribute('href')===cp){link.classList.add('nav-link--active');link.setAttribute('aria-current','page');}});
+    })();
+  </script>
+
+  <!-- ── SECTION 1: PRICING HEADER ─────────────────────────── -->
+  <section class="pricing-header" aria-label="Pricing introduction">
+    <!-- Decorators -->
+    <div class="pricing-header__bar" aria-hidden="true"></div>
+    <div class="pricing-header__circle" aria-hidden="true"></div>
+
+    <div class="pricing-header__inner">
+      <h1 class="pricing-header__h1" id="pricing-h1">Simple pricing.<br>Serious power.</h1>
+      <p class="pricing-header__tagline">One flat monthly price per plan. No hidden fees, no surprise overages. Just clean analytics that move your product forward.</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: PRICING TIERS ──────────────────────────── -->
+  <section class="pricing-tiers" aria-label="Pricing plans">
+    <div class="pricing-tiers__inner">
+      <h2 class="pricing-tiers__heading">Choose your plan</h2>
+
+      <div class="pricing-tiers__grid" id="pricing-cards">
+
+        <!-- Starter -->
+        <article class="pricing-card" aria-label="Starter plan">
+          <div class="pricing-card__header pricing-card__header--light">
+            <p class="pricing-card__plan">Starter</p>
+            <p class="pricing-card__price">$29<span class="pricing-card__period">/mo</span></p>
+          </div>
+          <div class="pricing-card__body">
+            <ul class="pricing-card__features" aria-label="Starter plan features">
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                Up to 50,000 tracked events
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                3 team seats included
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                Basic funnel analysis
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                30-day data retention
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                Email support
+              </li>
+            </ul>
+            <a href="contact.html" class="pricing-card__cta pricing-card__cta--outline-navy">Get started free</a>
+          </div>
+        </article>
+
+        <!-- Pro (featured) -->
+        <article class="pricing-card pricing-card--featured" aria-label="Pro plan, recommended">
+          <div class="pricing-card__header pricing-card__header--teal">
+            <p class="pricing-card__plan">Pro</p>
+            <p class="pricing-card__price">$79<span class="pricing-card__period">/mo</span></p>
+          </div>
+          <div class="pricing-card__body">
+            <ul class="pricing-card__features" aria-label="Pro plan features">
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                Unlimited tracked events
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                10 team seats included
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                Advanced funnels + A/B testing
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                Custom dashboards
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                Full REST API access
+              </li>
+            </ul>
+            <a href="contact.html" class="pricing-card__cta pricing-card__cta--fill-navy">Start Pro trial</a>
+          </div>
+        </article>
+
+        <!-- Enterprise -->
+        <article class="pricing-card" aria-label="Enterprise plan">
+          <div class="pricing-card__header pricing-card__header--navy">
+            <p class="pricing-card__plan">Enterprise</p>
+            <p class="pricing-card__price">Custom<span class="pricing-card__period"> pricing</span></p>
+          </div>
+          <div class="pricing-card__body">
+            <ul class="pricing-card__features" aria-label="Enterprise plan features">
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                Unlimited events + seats
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                Dedicated infrastructure
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                SSO + advanced security
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                SLA + uptime guarantee
+              </li>
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check" aria-hidden="true"></span>
+                Priority onboarding
+              </li>
+            </ul>
+            <a href="contact.html" class="pricing-card__cta pricing-card__cta--fill-teal">Contact sales</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: FEATURE COMPARISON TABLE ────────────────── -->
+  <section class="pricing-table" aria-label="Feature comparison">
+    <div class="pricing-table__inner">
+      <h2 class="pricing-table__heading">What's included</h2>
+      <div class="pricing-table__wrap">
+        <table class="pricing-table__table" id="pricing-comparison-table">
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col">Starter</th>
+              <th scope="col">Pro</th>
+              <th scope="col">Enterprise</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Event tracking</td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+            </tr>
+            <tr>
+              <td>Funnel analysis</td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+            </tr>
+            <tr>
+              <td>A/B testing</td>
+              <td><span class="table-dash" aria-label="Not included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+            </tr>
+            <tr>
+              <td>Custom dashboards</td>
+              <td><span class="table-dash" aria-label="Not included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+            </tr>
+            <tr>
+              <td>API access</td>
+              <td><span class="table-dash" aria-label="Not included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+            </tr>
+            <tr>
+              <td>Team seats</td>
+              <td>3</td>
+              <td>10</td>
+              <td>Unlimited</td>
+            </tr>
+            <tr>
+              <td>Priority support</td>
+              <td><span class="table-dash" aria-label="Not included"></span></td>
+              <td><span class="table-dash" aria-label="Not included"></span></td>
+              <td><span class="table-check" aria-label="Included"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 4: FAQ ─────────────────────────────────────── -->
+  <section class="pricing-faq" aria-label="Frequently asked questions">
+    <div class="pricing-faq__inner">
+      <h2 class="pricing-faq__heading">Frequently asked</h2>
+
+      <div class="pricing-faq__grid" id="pricing-faq-grid">
+
+        <!-- Left column -->
+        <div class="pricing-faq__col">
+          <div class="pricing-faq__item">
+            <h3 class="pricing-faq__question">Can I change plans?</h3>
+            <p class="pricing-faq__answer">Yes, you can upgrade or downgrade at any time. Changes take effect at the start of your next billing cycle. No penalties, no lock-in.</p>
+          </div>
+          <div class="pricing-faq__item">
+            <h3 class="pricing-faq__question">Is there a free trial?</h3>
+            <p class="pricing-faq__answer">Pivot offers a 14-day free trial on the Pro plan. No credit card required. You'll get full access to every Pro feature from day one.</p>
+          </div>
+          <div class="pricing-faq__item">
+            <h3 class="pricing-faq__question">How does billing work?</h3>
+            <p class="pricing-faq__answer">Plans are billed monthly or annually. Annual billing saves 20%. All payments are processed securely through Stripe.</p>
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div class="pricing-faq__col">
+          <div class="pricing-faq__item">
+            <h3 class="pricing-faq__question">What analytics does Pivot track?</h3>
+            <p class="pricing-faq__answer">Pivot captures custom events, page views, user flows, retention cohorts, funnel drop-offs, and A/B test results. You define what matters.</p>
+          </div>
+          <div class="pricing-faq__item">
+            <h3 class="pricing-faq__question">Do you offer annual discounts?</h3>
+            <p class="pricing-faq__answer">Annual plans are discounted 20% versus monthly billing. Enterprise customers can negotiate custom annual contracts with added terms.</p>
+          </div>
+          <div class="pricing-faq__item">
+            <h3 class="pricing-faq__question">What support is included?</h3>
+            <p class="pricing-faq__answer">Starter plans include email support with a 48-hour response time. Pro includes priority email and live chat. Enterprise gets a dedicated success manager.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <a href="index.html" class="site-footer__logo">Pivot</a>
+        <p class="site-footer__tagline">Turn data into direction.</p>
+      </div>
+      <nav class="site-footer__nav-cols" aria-label="Footer navigation">
+        <div class="site-footer__nav-col">
+          <p class="site-footer__nav-label">Product</p>
+          <a href="product.html" class="site-footer__nav-link">Features</a>
+          <a href="pricing.html" class="site-footer__nav-link">Pricing</a>
+          <a href="contact.html" class="site-footer__nav-link">Changelog</a>
+        </div>
+        <div class="site-footer__nav-col">
+          <p class="site-footer__nav-label">Company</p>
+          <a href="team.html" class="site-footer__nav-link">Team</a>
+          <a href="contact.html" class="site-footer__nav-link">Contact</a>
+        </div>
+        <div class="site-footer__nav-col">
+          <p class="site-footer__nav-label">Resources</p>
+          <a href="contact.html" class="site-footer__nav-link">Docs</a>
+          <a href="contact.html" class="site-footer__nav-link">Blog</a>
+          <a href="contact.html" class="site-footer__nav-link">Status</a>
+        </div>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <p class="site-footer__copy">&copy; 2025 Pivot Analytics Inc. All rights reserved.</p>
+      <div class="site-footer__legal">
+        <a href="#" class="site-footer__legal-link">Privacy</a>
+        <a href="#" class="site-footer__legal-link">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── GSAP CDN ───────────────────────────────────────────── -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── Section 1: Pricing Header ──────────────────────────────
+    // DOMContentLoaded animation — NO ScrollTrigger
+    // h1 from y:-30 opacity:0, linear 0.3s
+    document.addEventListener('DOMContentLoaded', function () {
+      gsap.set('#pricing-h1', { opacity: 0, y: -30 });
+      gsap.to('#pricing-h1', {
+        opacity: 1,
+        y: 0,
+        duration: 0.3,
+        ease: 'none',
+        delay: 0.1
+      });
+
+      // Tagline follows with slight delay
+      var tagline = document.querySelector('.pricing-header__tagline');
+      if (tagline) {
+        gsap.set(tagline, { opacity: 0, y: -20 });
+        gsap.to(tagline, {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: 'none',
+          delay: 0.25
+        });
+      }
+    });
+
+    // ── Section 2: Pricing Tiers ───────────────────────────────
+    // Cards from y:60 opacity:0, stagger:0.15, linear, once:true
+    (function () {
+      var cards = document.querySelectorAll('#pricing-cards .pricing-card');
+      if (cards.length) {
+        gsap.set(cards, { opacity: 0, y: 60 });
+        ScrollTrigger.create({
+          trigger: '#pricing-cards',
+          start: 'top 80%',
+          once: true,
+          onEnter: function () {
+            gsap.to(cards, {
+              opacity: 1,
+              y: 0,
+              duration: 0.45,
+              ease: 'none',
+              stagger: 0.15
+            });
+          }
+        });
+      }
+    })();
+
+    // ── Section 3: Comparison Table ───────────────────────────
+    // Table rows from x:20 opacity:0, stagger:0.06, linear, once:true
+    (function () {
+      var rows = document.querySelectorAll('#pricing-comparison-table tbody tr');
+      if (rows.length) {
+        gsap.set(rows, { opacity: 0, x: 20 });
+        ScrollTrigger.create({
+          trigger: '#pricing-comparison-table',
+          start: 'top 80%',
+          once: true,
+          onEnter: function () {
+            gsap.to(rows, {
+              opacity: 1,
+              x: 0,
+              duration: 0.35,
+              ease: 'none',
+              stagger: 0.06
+            });
+          }
+        });
+      }
+    })();
+
+    // ── Section 4: FAQ ─────────────────────────────────────────
+    // FAQ items from y:30 opacity:0, stagger:0.08, linear, once:true
+    (function () {
+      var items = document.querySelectorAll('#pricing-faq-grid .pricing-faq__item');
+      if (items.length) {
+        gsap.set(items, { opacity: 0, y: 30 });
+        ScrollTrigger.create({
+          trigger: '#pricing-faq-grid',
+          start: 'top 80%',
+          once: true,
+          onEnter: function () {
+            gsap.to(items, {
+              opacity: 1,
+              y: 0,
+              duration: 0.4,
+              ease: 'none',
+              stagger: 0.08
+            });
+          }
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>

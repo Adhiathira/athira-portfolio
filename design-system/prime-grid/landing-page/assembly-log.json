@@ -1,0 +1,84 @@
+{
+  "designSystemPath": "/Users/delusionalmakubex/Documents/projects/design-system/design-system/prime-grid/",
+  "slug": "prime-grid",
+  "productConcept": {
+    "name": "GRUNDFORM",
+    "tagline": "Structure is teachable. Form is the lesson.",
+    "description": "A Bauhaus-rooted design workshop school in Stuttgart, Germany, founded 1969. Teaches structural typography, visible grid systems, geometric composition, and analogue print methods before any digital tool is introduced.",
+    "rationale": "The prime-grid design system is explicitly Bauhaus/Constructivist: asymmetric 5-column grid with visible 2px gaps, Bebas Neue 900 at 120px, primary color structural blocks (red/blue/yellow), linear motion throughout, and press-displacement active states. A design workshop school is the most direct institutional expression of these values — teaching the philosophy IS the product. The caller's recommendations specifically named Bauhaus/design school as the target territory."
+  },
+  "animationMode": "animated",
+  "animationDecision": "motion-tokens — non-trivial named keyframes (slideFromLeft, constructBar, gridReveal), scroll-triggered Intersection Observer references in concept_by_video.md, linear easing throughout (mechanical precision), durations 0.12s–0.5s",
+  "pages": [
+    "index.html",
+    "workshops.html",
+    "studio.html",
+    "faculty.html",
+    "contact.html"
+  ],
+  "sectionCount": 5,
+  "heroTreatment": "light",
+  "assetMode": "generated",
+  "assetGenerationStatus": "skipped — do not run Steps 7-8, do not invoke use-higgsfield per caller instruction",
+  "assetsSkipped": {
+    "index.html": ["assets/workshop-hands-on.mp4"],
+    "workshops.html": ["assets/grid-construction-time-lapse.mp4"],
+    "studio.html": ["assets/bauhaus-archive-footage.mp4"]
+  },
+  "videoPromptFiles": [],
+  "imagePromptFiles": [],
+  "imageCount": 0,
+  "videoCount": 0,
+  "animationTechniques": [
+    "Hero construction sequence (slideFromLeft — primary color block + headline enter at linear velocity)",
+    "constructBar scaleX on all .bauhaus-bar dividers (left-to-right mechanical draw)",
+    "Counter animation via ScrollTrigger.create + gsap.fromTo proxy (56, 1840, 12, 8)",
+    "Manifesto statement x-slide (linear, 0.4s, scroll-triggered)",
+    "Principles grid: reading-order opacity stagger (L→R, T→B, 0.06s stagger)",
+    "SVG diagram blocks: opacity stagger in construction sequence",
+    "Workshop cards: scale-from-center stagger (scale 0.94→1)",
+    "Faculty rows: clip-path horizontal wipe inset(0 100% 0 0)→inset(0 0% 0 0)",
+    "CTA buttons: divergent x-sweep (first x:-80, second x:80)",
+    "Workshops featured row: scale rise (0.96→1)",
+    "Workshops bento: rotate+rise stagger (1° + y:30→0)",
+    "Studio spaces: y-stagger (y:40→0)",
+    "Archive heading: clip-path horizontal wipe",
+    "Archive stats: scale-rise stagger",
+    "Faculty list rows: clip-path horizontal wipe staggered",
+    "FAQ rows: clip-path horizontal wipe staggered",
+    "Form fields: y+opacity stagger",
+    "Divergent section reveals on all 5 pages"
+  ],
+  "gridVariety": [
+    "index: 5-column asymmetric hero grid (1fr 2fr 1fr 2fr 1fr), dark manifesto with 4-col stats, 3-col principles, 2-col diagram split, sidebar workshop grid, counter row faculty",
+    "workshops: Asymmetric 1fr/1.618fr feature row, 12-column bento grid with explicit span placement",
+    "studio: 1fr/2fr asymmetric split, 3-col equal spaces, 2-col archive split",
+    "faculty: 52px/1fr/1fr/200px full-width horizontal rows, 3-col guest grid",
+    "contact: 1.618fr/1fr form+sidebar, 52px/1fr/1fr FAQ rows, 1fr/1fr visit split"
+  ],
+  "bauhausElementsImplemented": [
+    ".bauhaus-bar: 8px full-width structural dividers in black/red/blue/yellow between every section",
+    ".bauhaus-diagonal: -14deg tilted 120px Bebas Neue hero headline",
+    "Visible 2px grid gaps in SVG diagram and asymmetric grid layouts",
+    "Ghost letterform watermarks: 'FORM' on hero, 'ARCHIVE' on studio, 'STU'/'FAC'/'WRK'/'APPLY' on sub-page headers",
+    "Primary color structural blocks: red fills 42% of hero background, blue featured workshop card, yellow grid diagram section",
+    "NO photography — only geometric SVG diagram (5-column grid with proportional blocks and registration marks)",
+    "Linear easing throughout (0.12s/0.25s/0.4s/0.5s)",
+    "56px nav with 4px black bottom border",
+    "Golden ratio spacing (8/13/21/34/55/89/144px used throughout)",
+    "Press-displacement active state on all buttons (translate(2px,2px))",
+    "2px solid borders on cards, 2px focus rings",
+    "Asymmetric 5-column hero composition (1fr 2fr 1fr 2fr 1fr)"
+  ],
+  "qaResults": {
+    "iterations": 1,
+    "issuesFixed": [
+      "GSAP TypeError: gsap.fromTo({val:0},{val:target,...}) — invalid proxy pattern in GSAP 3. Fixed by using ScrollTrigger.create onEnter callback with gsap.fromTo on explicit proxy object."
+    ],
+    "unresolvedIssues": [],
+    "expectedErrors": [
+      "3 × video 404s (assets/workshop-hands-on.mp4, grid-construction-time-lapse.mp4, bauhaus-archive-footage.mp4) — asset generation skipped per caller instruction; onerror handles gracefully"
+    ]
+  },
+  "generatedAt": "2026-04-05T00:46:00Z"
+}

@@ -1,0 +1,219 @@
+/* lens-noir — Pricing Page Styles */
+
+.pricing-hero {
+  padding-top: calc(var(--spacing-nav-height) + var(--spacing-letterbox) + var(--space-12));
+  padding-bottom: var(--space-20);
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.pricing-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--spacing-letterbox);
+  background: var(--color-pure-black);
+  z-index: 2;
+}
+
+.pricing-hero__content {
+  position: relative;
+  z-index: 3;
+}
+
+/* Pricing plans */
+.pricing-section {
+  padding-block: var(--spacing-section);
+  background: var(--color-surface);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-base);
+  margin-top: var(--space-12);
+}
+
+.pricing-card {
+  background: var(--color-bg);
+  box-shadow: 0 0 0 1px var(--color-border);
+  padding: var(--space-12) var(--space-8);
+  position: relative;
+  transition: box-shadow var(--transition-interaction);
+}
+
+.pricing-card:hover {
+  box-shadow: 0 0 0 1px var(--color-border-strong);
+}
+
+.pricing-card--featured {
+  box-shadow: 0 0 0 1px var(--color-accent);
+  background: var(--color-surface-raised);
+}
+
+.pricing-card--featured:hover {
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.pricing-card__badge {
+  font-family: var(--font-body);
+  font-size: var(--font-size-label);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-bg);
+  background: var(--color-accent);
+  padding: 4px 12px;
+  display: inline-block;
+  margin-bottom: var(--space-6);
+}
+
+.pricing-card__tier {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing-heading);
+  text-transform: uppercase;
+  color: var(--color-primary-text);
+  display: block;
+  margin-bottom: var(--space-4);
+}
+
+.pricing-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.pricing-card__amount {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--color-secondary);
+  line-height: 1;
+}
+
+.pricing-card__period {
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  font-style: italic;
+  color: var(--color-muted-text);
+}
+
+.pricing-card__desc {
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  font-style: italic;
+  color: var(--color-muted-text);
+  line-height: var(--line-height-credits);
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pricing-card__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+}
+
+.pricing-card__feature {
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  color: var(--color-body-text);
+  padding-left: var(--space-6);
+  position: relative;
+  font-style: italic;
+  line-height: var(--line-height-credits);
+}
+
+.pricing-card__feature::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+}
+
+.pricing-card__feature--muted {
+  color: var(--color-muted-text);
+}
+
+.pricing-card__cta {
+  display: block;
+  text-align: center;
+  margin-top: auto;
+}
+
+/* FAQ section */
+.faq-section {
+  padding-block: var(--spacing-section);
+  background: var(--color-bg);
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: var(--space-12);
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-8) 0;
+}
+
+.faq-item__question {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 700;
+  color: var(--color-primary-text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.faq-item__question::after {
+  content: '+';
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-left: var(--space-6);
+}
+
+.faq-item__answer {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-style: italic;
+  color: var(--color-body-text);
+  line-height: var(--line-height-body);
+  margin-top: var(--space-4);
+  display: none;
+}
+
+.faq-item.open .faq-item__answer {
+  display: block;
+}
+
+.faq-item.open .faq-item__question::after {
+  content: '−';
+}
+
+@media (max-width: 1024px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin-inline: auto;
+  }
+}

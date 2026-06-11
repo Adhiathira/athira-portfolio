@@ -1,0 +1,145 @@
+/* ============================================================
+   CTA Band — SPECTRA
+   Centered layout with aurora gradient mesh bg
+   Background: radial teal+violet on navy
+   ============================================================ */
+
+#cta-band {
+  position: relative;
+  padding: var(--space-section-top) 0 var(--space-section-bottom);
+  overflow: hidden;
+  background: var(--color-page-bg);
+}
+
+/* Layered gradient mesh background */
+#cta-band-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Base deep gradient */
+#cta-band-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 80% at 20% 50%, rgba(33, 243, 182, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 80% at 80% 50%, rgba(146, 72, 228, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 100% at 50% 0%, rgba(226, 255, 101, 0.03) 0%, transparent 70%);
+}
+
+/* Animated blob 1 */
+.cta-blob {
+  position: absolute;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  mix-blend-mode: screen;
+  animation: blobMorph var(--duration-aurora-drift) ease-in-out infinite;
+  will-change: border-radius;
+}
+
+#cta-blob-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(33, 243, 182, 0.10) 0%, transparent 65%);
+  top: -100px;
+  left: -80px;
+  animation-duration: 9000ms;
+  animation-delay: 0s;
+}
+
+#cta-blob-2 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(ellipse at center, rgba(146, 72, 228, 0.10) 0%, transparent 65%);
+  bottom: -80px;
+  right: -60px;
+  animation-duration: 11000ms;
+  animation-delay: -4000ms;
+}
+
+#cta-blob-3 {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(ellipse at center, rgba(226, 255, 101, 0.06) 0%, transparent 65%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-duration: 7000ms;
+  animation-delay: -2000ms;
+}
+
+/* Content wrapper */
+#cta-band-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding-inline);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 40px;
+}
+
+#cta-band-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 760px;
+}
+
+#cta-band-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+}
+
+#cta-band-headline {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h2);
+  font-weight: 800;
+  letter-spacing: var(--tracking-heading);
+  line-height: 1.1;
+  color: var(--color-heading);
+  margin: 0;
+  animation: auroraGlow 8s ease-in-out infinite;
+}
+
+#cta-band-sub {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: var(--line-height-body);
+  color: var(--color-muted-text);
+  margin: 0;
+}
+
+#cta-band-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  #cta-band-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #cta-band-buttons .btn-primary-lime,
+  #cta-band-buttons .btn-ghost-teal {
+    width: 100%;
+    justify-content: center;
+  }
+}

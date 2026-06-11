@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Threats — PHANTOM Network Threat Intelligence</title>
+  <meta name="description" content="Live threat feed, APT registry, IOC database, and active campaign tracking across 340 adversary groups monitored by PHANTOM.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/subpage.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-glyph"></span>
+    <span class="nav-logo-text">PHANTOM</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="platform.html" class="nav-link">Platform</a></li>
+    <li><a href="threats.html" class="nav-link nav-link--active">Threats</a></li>
+    <li><a href="docs.html" class="nav-link">Docs</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu">
+  <a href="platform.html" class="nav-link">Platform</a>
+  <a href="threats.html" class="nav-link nav-link--active">Threats</a>
+  <a href="docs.html" class="nav-link">Docs</a>
+  <a href="about.html" class="nav-link">About</a>
+</div>
+<div class="nav-spacer active"></div>
+<script>
+(function(){
+  var nav=document.getElementById('site-nav');
+  var menu=document.querySelector('.nav-mobile-menu');
+  var toggle=document.querySelector('.nav-mobile-toggle');
+  window.addEventListener('scroll',function(){ nav.classList.toggle('scrolled',window.scrollY>10); },{passive:true});
+  if(toggle&&menu){ toggle.addEventListener('click',function(){ nav.classList.toggle('nav-mobile-open'); menu.classList.toggle('is-open'); document.body.style.overflow=menu.classList.contains('is-open')?'hidden':''; }); }
+})();
+</script>
+
+<!-- PAGE HEADER -->
+<div class="page-header" id="page-header">
+  <span class="page-header-ghost">THREATS</span>
+  <div class="page-header-label">Intelligence</div>
+  <h1 class="page-header-title">Live Threat Registry</h1>
+  <p class="page-header-sub">340 adversary groups tracked. Updated continuously. Every entry is machine-readable and analyst-verified.</p>
+  <!-- Status row -->
+  <div style="display:flex;align-items:center;gap:24px;margin-top:24px;flex-wrap:wrap;">
+    <span class="badge badge--active" style="margin:0;"><span class="badge-dot"></span>Feed Live</span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6b6b70;letter-spacing:0.1em;">LAST UPDATED: <span id="last-updated">--:--:-- UTC</span></span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6b6b70;letter-spacing:0.1em;">ACTIVE CAMPAIGNS: <span style="color:#fd356e;">23</span></span>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-band" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">CRITICAL: APT28 spearphish campaign — EU government targets</span>
+    <span class="ticker-item">HIGH: BlackCat ransomware infrastructure — new C2 IPs</span>
+    <span class="ticker-item">MEDIUM: Lazarus Group — crypto exchange reconnaissance observed</span>
+    <span class="ticker-item">LOW: Sandworm — dormant implants in Eastern European utilities</span>
+    <span class="ticker-item">CRITICAL: APT28 spearphish campaign — EU government targets</span>
+    <span class="ticker-item">HIGH: BlackCat ransomware infrastructure — new C2 IPs</span>
+    <span class="ticker-item">MEDIUM: Lazarus Group — crypto exchange reconnaissance observed</span>
+    <span class="ticker-item">LOW: Sandworm — dormant implants in Eastern European utilities</span>
+  </div>
+</div>
+
+<!-- SECTION: APT registry — table-style rows (clip-path left-to-right) — distinct layout -->
+<section class="subpage-section" id="apt">
+  <div class="section-label" data-reveal="fade-up">APT Registry</div>
+  <h2 class="section-heading" data-reveal="fade-up">TRACKED ADVERSARIES</h2>
+
+  <div style="margin-top:32px;" id="apt-table">
+    <!-- Header row -->
+    <div style="display:grid;grid-template-columns:160px 1fr 80px 120px 100px;gap:8px;padding:8px 0;border-bottom:1px solid rgba(172,172,175,0.25);">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#6b6b70;">Actor</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#6b6b70;">Attribution</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#6b6b70;">Severity</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#6b6b70;">Category</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#6b6b70;">Status</span>
+    </div>
+
+    <!-- APT rows -->
+    <div class="apt-row" style="display:grid;grid-template-columns:160px 1fr 80px 120px 100px;gap:8px;padding:16px 0;border-bottom:1px solid rgba(172,172,175,0.12);align-items:start;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#ffffff;letter-spacing:0.05em;">APT28</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6b6b70;">Fancy Bear</div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#acacaf;line-height:1.5;">Russia / GRU Unit 26165. NATO member state government targeting, credential harvesting via spearphishing, OWA exploitation, VPN vulnerabilities.</div>
+      <div><span class="badge badge--active" style="border-color:rgba(253,53,110,0.8);"><span class="badge-dot" style="background:#fd356e;"></span>CRIT</span></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#acacaf;letter-spacing:0.05em;">Nation-State</div>
+      <div><span class="badge badge--active"><span class="badge-dot"></span>Active</span></div>
+    </div>
+
+    <div class="apt-row" style="display:grid;grid-template-columns:160px 1fr 80px 120px 100px;gap:8px;padding:16px 0;border-bottom:1px solid rgba(172,172,175,0.12);align-items:start;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#ffffff;letter-spacing:0.05em;">BlackCat</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6b6b70;">ALPHV</div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#acacaf;line-height:1.5;">RaaS collective. Rust-based encryptor with Tor-based leak site. Triple extortion model. 8-sector targeting concentration: healthcare, critical infra, legal.</div>
+      <div><span class="badge badge--active" style="border-color:rgba(253,53,110,0.8);"><span class="badge-dot" style="background:#fd356e;"></span>HIGH</span></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#acacaf;letter-spacing:0.05em;">Ransomware</div>
+      <div><span class="badge badge--active"><span class="badge-dot"></span>Active</span></div>
+    </div>
+
+    <div class="apt-row" style="display:grid;grid-template-columns:160px 1fr 80px 120px 100px;gap:8px;padding:16px 0;border-bottom:1px solid rgba(172,172,175,0.12);align-items:start;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#ffffff;letter-spacing:0.05em;">Sandworm</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6b6b70;">GRU Unit 74455</div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#acacaf;line-height:1.5;">Russia / GRU. ICS/SCADA specialist. Power grid disruption capability confirmed (2015–2016 Ukraine incidents). Wiper malware deployment history. NotPetya attribution.</div>
+      <div><span class="badge" style="color:#acacaf;"><span class="badge-dot" style="background:#acacaf;"></span>MED</span></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#acacaf;letter-spacing:0.05em;">Disruption</div>
+      <div><span class="badge"><span class="badge-dot"></span>Monitor</span></div>
+    </div>
+
+    <div class="apt-row" style="display:grid;grid-template-columns:160px 1fr 80px 120px 100px;gap:8px;padding:16px 0;border-bottom:1px solid rgba(172,172,175,0.12);align-items:start;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#ffffff;letter-spacing:0.05em;">Lazarus</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6b6b70;">Group / HIDDEN COBRA</div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#acacaf;line-height:1.5;">DPRK / RGB. Financial system and crypto targeting. $3.8B attributed cryptocurrency theft 2016–2024. Supply chain compromise. Job-offer spearphishing lures.</div>
+      <div><span class="badge" style="color:#acacaf;"><span class="badge-dot" style="background:#acacaf;"></span>MED</span></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#acacaf;letter-spacing:0.05em;">Espionage</div>
+      <div><span class="badge"><span class="badge-dot"></span>Monitor</span></div>
+    </div>
+
+    <div class="apt-row" style="display:grid;grid-template-columns:160px 1fr 80px 120px 100px;gap:8px;padding:16px 0;border-bottom:1px solid rgba(172,172,175,0.12);align-items:start;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#ffffff;letter-spacing:0.05em;">Volt Typhoon</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6b6b70;">Bronze Silhouette</div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#acacaf;line-height:1.5;">China / MSS. Living-off-the-land techniques. US critical infrastructure pre-positioning. SOHO router botnet (KV-Botnet). Communications sector primary target.</div>
+      <div><span class="badge badge--active" style="border-color:rgba(253,53,110,0.8);"><span class="badge-dot" style="background:#fd356e;"></span>HIGH</span></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#acacaf;letter-spacing:0.05em;">Nation-State</div>
+      <div><span class="badge badge--active"><span class="badge-dot"></span>Active</span></div>
+    </div>
+  </div>
+</section>
+<div class="section-divider"></div>
+
+<!-- SECTION: IOC Database — bento 2fr 1fr -->
+<section class="subpage-section" id="ioc" style="background:#252529;">
+  <div class="section-label" data-reveal="fade-up">IOC Database</div>
+  <h2 class="section-heading" data-reveal="fade-up">INDICATORS OF COMPROMISE</h2>
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-top:32px;" id="ioc-grid">
+    <div class="data-cell">
+      <div class="data-cell-label">Volume</div>
+      <div class="data-cell-title" style="font-size:clamp(28px,5vw,56px);font-family:'VT323',monospace;font-weight:400;letter-spacing:0.02em;margin-bottom:8px;">2.4M+</div>
+      <div class="data-cell-body">Active IOC entries across hash (MD5/SHA-1/SHA-256), IP, domain, URL, and email address types. Updated continuously from global sensor network and curated threat intelligence feeds.</div>
+      <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div style="border:1px solid rgba(172,172,175,0.12);padding:12px;">
+          <div style="font-family:'VT323',monospace;font-size:28px;color:#fd356e;margin-bottom:4px;">840K</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6b6b70;">File Hashes</div>
+        </div>
+        <div style="border:1px solid rgba(172,172,175,0.12);padding:12px;">
+          <div style="font-family:'VT323',monospace;font-size:28px;color:#fd356e;margin-bottom:4px;">620K</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6b6b70;">IP Addresses</div>
+        </div>
+        <div style="border:1px solid rgba(172,172,175,0.12);padding:12px;">
+          <div style="font-family:'VT323',monospace;font-size:28px;color:#fd356e;margin-bottom:4px;">940K</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6b6b70;">Domains / URLs</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="data-cell">
+        <div class="data-cell-label">Sources</div>
+        <div class="data-cell-title" style="font-size:15px;">Feed Coverage</div>
+        <div class="data-cell-body" style="margin-top:12px;">
+          <div class="kv-row" style="padding:6px 0;"><span class="kv-key" style="font-size:11px;min-width:80px;">OSINT</span><span class="kv-value" style="font-size:11px;">VirusTotal, Shodan, Censys, MISP</span></div>
+          <div class="kv-row" style="padding:6px 0;"><span class="kv-key" style="font-size:11px;min-width:80px;">Gov</span><span class="kv-value" style="font-size:11px;">CISA KEV, NSA advisories, FBI IC3</span></div>
+          <div class="kv-row" style="padding:6px 0;"><span class="kv-key" style="font-size:11px;min-width:80px;">Internal</span><span class="kv-value" style="font-size:11px;">180+ global PHANTOM sensors</span></div>
+        </div>
+      </div>
+      <div class="data-cell">
+        <div class="data-cell-label">Freshness</div>
+        <div class="data-cell-title" style="font-size:15px;">Update Cadence</div>
+        <div class="data-cell-body" style="margin-top:8px;font-size:13px;">Hourly IOC refresh cycle. P1 indicators pushed within 15 minutes of first sensor detection. Full STIX 2.1 export available.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="section-divider"></div>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="cta-band-inner">
+    <div id="cta-block">
+      <div class="cta-band-heading">Access the Full Feed.</div>
+      <div class="cta-band-sub">API access, STIX export, and real-time webhook delivery included.</div>
+    </div>
+    <div class="cta-band-actions" id="cta-actions">
+      <a href="about.html#contact" class="btn-white">Request Access</a>
+      <a href="docs.html" class="btn-white-ghost">API Docs →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-col-logo">PHANTOM</div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#6b6b70;line-height:1.7;max-width:200px;">Network threat intelligence for security operations teams.</p>
+    </div>
+    <div class="footer-divider-col"></div>
+    <div class="footer-col">
+      <div class="footer-col-label">Platform</div>
+      <div class="footer-links">
+        <a href="platform.html" class="footer-link">Overview</a>
+        <a href="platform.html#detection" class="footer-link">Detection Engine</a>
+        <a href="platform.html#integrations" class="footer-link">Integrations</a>
+      </div>
+    </div>
+    <div class="footer-divider-col"></div>
+    <div class="footer-col">
+      <div class="footer-col-label">Intelligence</div>
+      <div class="footer-links">
+        <a href="threats.html" class="footer-link">Threat Feed</a>
+        <a href="threats.html#apt" class="footer-link">APT Registry</a>
+        <a href="threats.html#ioc" class="footer-link">IOC Database</a>
+        <a href="docs.html" class="footer-link">Documentation</a>
+      </div>
+    </div>
+    <div class="footer-divider-col"></div>
+    <div class="footer-col">
+      <div class="footer-col-label">Company</div>
+      <div class="footer-links">
+        <a href="about.html" class="footer-link">About</a>
+        <a href="about.html#team" class="footer-link">Research Team</a>
+        <a href="about.html#contact" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 2025 PHANTOM Intelligence Inc. All rights reserved.</div>
+    <div class="footer-tagline">Track the threat.</div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Live clock
+function updateClock() {
+  var el = document.getElementById('last-updated');
+  if (!el) return;
+  var now = new Date();
+  el.textContent = now.getUTCHours().toString().padStart(2,'0') + ':' + now.getUTCMinutes().toString().padStart(2,'0') + ':' + now.getUTCSeconds().toString().padStart(2,'0') + ' UTC';
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// Page header
+gsap.fromTo('#page-header', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.2, ease: 'steps(4, start)', delay: 0.15 });
+
+// APT rows — clip-path left-to-right, scale-Y from center — distinct from homepage x-sweep
+gsap.set('.apt-row', { opacity: 0, clipPath: 'inset(0 0 100% 0)' });
+ScrollTrigger.create({
+  trigger: '#apt-table',
+  start: 'top 80%',
+  onEnter: function() {
+    gsap.to('.apt-row', { opacity: 1, clipPath: 'inset(0 0 0% 0)', duration: 0.15, ease: 'steps(4, start)', stagger: 0.06 });
+  }
+});
+
+// IOC grid — divergent x
+gsap.set('#ioc-grid > *:first-child', { opacity: 0, x: -50 });
+gsap.set('#ioc-grid > *:last-child', { opacity: 0, x: 50 });
+ScrollTrigger.create({
+  trigger: '#ioc-grid', start: 'top 80%',
+  onEnter: function() {
+    gsap.to('#ioc-grid > *', { opacity: 1, x: 0, duration: 0.2, ease: 'cubic-bezier(0.55, 0, 1, 0.45)', stagger: 0.06 });
+  }
+});
+
+// CTA divergent
+gsap.set('#cta-block', { opacity: 0, x: -50 });
+gsap.set('#cta-actions', { opacity: 0, x: 50 });
+ScrollTrigger.create({
+  trigger: '.cta-band', start: 'top 85%',
+  onEnter: function() {
+    gsap.to('#cta-block', { opacity: 1, x: 0, duration: 0.2 });
+    gsap.to('#cta-actions', { opacity: 1, x: 0, duration: 0.2 });
+  }
+});
+
+// Generic reveals
+document.querySelectorAll('[data-reveal]').forEach(function(el) {
+  var type = el.getAttribute('data-reveal');
+  var from = { opacity: 0 };
+  if (type === 'fade-up') from.y = 24;
+  gsap.set(el, from);
+  ScrollTrigger.create({
+    trigger: el, start: 'top 85%',
+    onEnter: function() { gsap.to(el, { opacity: 1, y: 0, duration: 0.2, ease: 'steps(4, start)' }); }
+  });
+});
+
+// Footer
+gsap.set('.footer', { opacity: 0, clipPath: 'inset(0 0 100% 0)' });
+ScrollTrigger.create({
+  trigger: '.footer', start: 'top 90%',
+  onEnter: function() { gsap.to('.footer', { opacity: 1, clipPath: 'inset(0 0 0% 0)', duration: 0.2, ease: 'steps(4, start)' }); }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+/* Cursor Black — How It Works Section */
+
+.how-it-works {
+  background-color: var(--surface-background);
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
+  border-top: 1px solid var(--border-hairline);
+  border-bottom: 1px solid var(--border-hairline);
+  position: relative;
+}
+
+.how-it-works::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    transparent 50%,
+    rgba(0, 0, 0, 0.03) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+.how-it-works .container {
+  position: relative;
+  z-index: 1;
+}
+
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid-gap);
+  margin-top: var(--s-6);
+}
+
+.step-item {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: var(--s-3);
+  border: 1px solid var(--border-hairline);
+  padding: var(--card-padding);
+  background-color: var(--card-background);
+  align-items: start;
+  transition: border-color 80ms step-start;
+}
+
+.step-item:hover {
+  border-color: var(--accent-dim);
+}
+
+.step-number {
+  font-family: var(--font-heading);
+  font-size: var(--size-xl);
+  font-weight: var(--weight-bold);
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+  padding-top: 3px;
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.step-title {
+  font-family: var(--font-heading);
+  font-size: var(--size-base);
+  font-weight: var(--weight-semibold);
+  color: var(--heading-text);
+  line-height: var(--lh-snug);
+}
+
+.step-desc {
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--body-text);
+}
+
+.step-command {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  color: var(--body-text);
+  background-color: var(--page-background);
+  border: 1px solid var(--border-faint);
+  padding: 8px 12px;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.step-command .cmd-prompt {
+  color: var(--accent);
+  user-select: none;
+}
+
+.step-command .cmd-text {
+  color: var(--heading-text);
+}
+
+.step-command .cmd-arg {
+  color: var(--body-text);
+}
+
+.step-command .cmd-flag {
+  color: var(--muted-text);
+}
+
+@media (max-width: 768px) {
+  .step-item {
+    grid-template-columns: 1fr;
+    gap: var(--s-2);
+  }
+
+  .step-number {
+    font-size: var(--size-base);
+  }
+}

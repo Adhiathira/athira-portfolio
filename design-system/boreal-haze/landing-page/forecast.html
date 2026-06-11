@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forecast — SPECTRA Aurora Monitoring</title>
+  <meta name="description" content="Real-time geomagnetic forecast and Kp index data from SPECTRA. Updated every 15 minutes from NOAA satellite feeds.">
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/forecast-hero.css">
+  <link rel="stylesheet" href="components/kp-display.css">
+  <link rel="stylesheet" href="components/viewing-windows.css">
+  <link rel="stylesheet" href="components/storm-alerts.css">
+  <link rel="stylesheet" href="components/methodology.css">
+  <link rel="stylesheet" href="components/footer.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     NAV — SPECTRA (sub-page: Forecast active)
+═══════════════════════════════════════════════ -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">SPECTRA</a>
+    <ul class="nav-links">
+      <li><a href="forecast.html" class="nav-link nav-link--active">Forecast</a></li>
+      <li><a href="stations.html" class="nav-link">Stations</a></li>
+      <li><a href="science.html" class="nav-link">Science</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="forecast.html" class="nav-cta">Track Aurora</a>
+      <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile-scrim" id="nav-scrim"></div>
+<nav class="nav-mobile-menu" id="nav-mobile-menu" aria-hidden="true">
+  <ul class="nav-mobile-links">
+    <li><a href="forecast.html" class="nav-mobile-link nav-link--active">Forecast</a></li>
+    <li><a href="stations.html" class="nav-mobile-link">Stations</a></li>
+    <li><a href="science.html" class="nav-mobile-link">Science</a></li>
+  </ul>
+  <a href="forecast.html" class="nav-cta-mobile">Track Aurora</a>
+</nav>
+<div class="nav-spacer active" id="nav-spacer"></div>
+<script>
+(function(){var nav=document.getElementById('site-nav'),scrim=document.getElementById('nav-scrim'),mobileMenu=document.getElementById('nav-mobile-menu'),toggle=nav.querySelector('.nav-mobile-toggle');function onScroll(){window.scrollY>20?nav.classList.add('scrolled'):nav.classList.remove('scrolled');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();function open(){nav.classList.add('nav-mobile-open');mobileMenu.classList.add('is-open');scrim.classList.add('is-open');toggle.setAttribute('aria-expanded','true');mobileMenu.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}function close(){nav.classList.remove('nav-mobile-open');mobileMenu.classList.remove('is-open');scrim.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');mobileMenu.setAttribute('aria-hidden','true');document.body.style.overflow='';}toggle.addEventListener('click',function(){nav.classList.contains('nav-mobile-open')?close():open();});scrim.addEventListener('click',close);mobileMenu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});})();
+</script>
+
+
+<!-- ══════════════════════════════════════════════
+     1. PAGE HERO — compact 280px dark aurora
+═══════════════════════════════════════════════ -->
+<section id="forecast-hero">
+  <div id="forecast-hero-glow"></div>
+  <div id="forecast-hero-violet-haze"></div>
+  <div id="forecast-hero-bottom-fade"></div>
+
+  <div id="forecast-hero-content">
+    <p id="forecast-hero-eyebrow">Geomagnetic Forecast</p>
+    <h1 id="forecast-hero-title">Current Aurora Conditions</h1>
+    <p id="forecast-hero-sub">Updated every 15 minutes from NOAA satellite feeds and ground magnetometer data.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     WAVE DIVIDER — Hero → Kp Display
+═══════════════════════════════════════════════ -->
+<div id="wave-divider-1" class="wave-divider-above" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none" width="100%" height="60">
+    <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#1a2330"/>
+    <path d="M0,40 C180,10 360,55 540,35 C720,15 900,50 1080,32 C1260,14 1380,44 1440,38"
+          fill="none" stroke="rgba(33,243,182,0.25)" stroke-width="1.5"
+          stroke-dasharray="2000" stroke-dashoffset="2000"
+          id="wave1-stroke"/>
+  </svg>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     2. KP INDEX DISPLAY
+═══════════════════════════════════════════════ -->
+<section id="kp-display">
+  <div id="kp-display-bg-glow"></div>
+
+  <div id="kp-display-inner">
+    <p id="kp-eyebrow">Planetary K-Index</p>
+
+    <!-- Large Kp number -->
+    <div id="kp-number-center">
+      <span id="kp-number">3.2</span>
+    </div>
+    <p id="kp-activity-label">Moderate Geomagnetic Activity</p>
+
+    <!-- Kp Scale Bar -->
+    <div id="kp-scale-wrapper">
+      <div id="kp-scale-track">
+        <div id="kp-scale-marker"></div>
+      </div>
+      <div id="kp-scale-labels">
+        <span class="kp-scale-label kp-scale-label--g1">G1</span>
+        <span class="kp-scale-label kp-scale-label--g2">G2</span>
+        <span class="kp-scale-label kp-scale-label--g3">G3</span>
+        <span class="kp-scale-label kp-scale-label--g4">G4</span>
+        <span class="kp-scale-label kp-scale-label--g5">G5</span>
+      </div>
+    </div>
+
+    <!-- 27-day history bars -->
+    <div id="kp-history-wrapper">
+      <p id="kp-history-label">27-Day Kp History</p>
+      <div id="kp-history-bars">
+        <!-- 27 bars — heights represent varying Kp values 0–9 -->
+        <div class="kp-bar" id="kpb-1"  style="height:22%"></div>
+        <div class="kp-bar" id="kpb-2"  style="height:31%"></div>
+        <div class="kp-bar" id="kpb-3"  style="height:15%"></div>
+        <div class="kp-bar" id="kpb-4"  style="height:44%"></div>
+        <div class="kp-bar" id="kpb-5"  style="height:38%"></div>
+        <div class="kp-bar" id="kpb-6"  style="height:18%"></div>
+        <div class="kp-bar" id="kpb-7"  style="height:55%"></div>
+        <div class="kp-bar" id="kpb-8"  style="height:67%"></div>
+        <div class="kp-bar" id="kpb-9"  style="height:28%"></div>
+        <div class="kp-bar" id="kpb-10" style="height:20%"></div>
+        <div class="kp-bar" id="kpb-11" style="height:42%"></div>
+        <div class="kp-bar" id="kpb-12" style="height:60%"></div>
+        <div class="kp-bar" id="kpb-13" style="height:78%"></div>
+        <div class="kp-bar" id="kpb-14" style="height:34%"></div>
+        <div class="kp-bar" id="kpb-15" style="height:25%"></div>
+        <div class="kp-bar" id="kpb-16" style="height:48%"></div>
+        <div class="kp-bar" id="kpb-17" style="height:56%"></div>
+        <div class="kp-bar" id="kpb-18" style="height:33%"></div>
+        <div class="kp-bar" id="kpb-19" style="height:19%"></div>
+        <div class="kp-bar" id="kpb-20" style="height:45%"></div>
+        <div class="kp-bar" id="kpb-21" style="height:70%"></div>
+        <div class="kp-bar" id="kpb-22" style="height:52%"></div>
+        <div class="kp-bar" id="kpb-23" style="height:29%"></div>
+        <div class="kp-bar" id="kpb-24" style="height:41%"></div>
+        <div class="kp-bar" id="kpb-25" style="height:24%"></div>
+        <div class="kp-bar" id="kpb-26" style="height:36%"></div>
+        <!-- Current day — highlighted teal -->
+        <div class="kp-bar kp-bar--current" id="kpb-27" style="height:35.6%"></div>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div id="kp-stats-row">
+      <div class="kp-stat-card" id="kp-stat-solar-wind">
+        <p class="kp-stat-label">Solar Wind Speed</p>
+        <p class="kp-stat-value">420</p>
+        <p class="kp-stat-unit">km/s</p>
+      </div>
+      <div class="kp-stat-card" id="kp-stat-imf">
+        <p class="kp-stat-label">IMF Bz</p>
+        <p class="kp-stat-value">−8.3</p>
+        <p class="kp-stat-unit">nT</p>
+      </div>
+      <div class="kp-stat-card" id="kp-stat-forecast">
+        <p class="kp-stat-label">Kp Forecast 3hr</p>
+        <p class="kp-stat-value">4.1</p>
+        <p class="kp-stat-unit">predicted</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     WAVE DIVIDER — Kp Display → Viewing Windows
+═══════════════════════════════════════════════ -->
+<div id="wave-divider-2" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none" width="100%" height="60">
+    <path d="M0,0 L1440,0 L1440,20 C1200,55 960,5 720,25 C480,45 240,8 0,35 Z" fill="#1e1a35"/>
+    <path d="M0,15 C300,50 600,0 900,28 C1080,42 1260,12 1440,25"
+          fill="none" stroke="rgba(146,72,228,0.2)" stroke-width="1.5"
+          stroke-dasharray="2000" stroke-dashoffset="2000"
+          id="wave2-stroke"/>
+  </svg>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     3. REGIONAL VIEWING WINDOWS
+═══════════════════════════════════════════════ -->
+<section id="viewing-windows">
+  <div id="viewing-windows-bg-glow"></div>
+
+  <div id="viewing-windows-inner">
+    <!-- Section header -->
+    <div id="viewing-windows-header">
+      <p id="viewing-windows-eyebrow">Aurora Viewing Conditions</p>
+      <h2 id="viewing-windows-headline">Where to Watch Tonight</h2>
+    </div>
+
+    <!-- Asymmetric cards grid -->
+    <div id="viewing-cards-grid">
+
+      <!-- Featured card — Northern Scandinavia -->
+      <article class="region-card" id="region-card-featured">
+        <div class="region-card-header">
+          <div id="region-featured-flag-name">
+            <div class="region-flag">🇳🇴</div>
+          </div>
+          <span class="region-condition-badge condition--excellent">Excellent Conditions</span>
+        </div>
+        <h3 class="region-name">Northern Scandinavia</h3>
+        <p class="region-latitude">67°N – 71°N · Tromsø / Abisko / Nordkapp</p>
+        <div class="region-stars" id="region-featured-stars">
+          <span class="star star--filled">★</span>
+          <span class="star star--filled">★</span>
+          <span class="star star--filled">★</span>
+          <span class="star star--filled">★</span>
+          <span class="star star--filled">★</span>
+        </div>
+        <div class="region-stats" id="region-featured-stats">
+          <div class="region-stat-row">
+            <span class="region-stat-key">Sky Coverage</span>
+            <span class="region-stat-val region-stat-val--accent">12% cloud</span>
+          </div>
+          <div class="region-sky-bar">
+            <div class="region-sky-fill" style="width:88%"></div>
+          </div>
+          <div class="region-stat-row" id="region-featured-window-row">
+            <span class="region-stat-key">Best Window</span>
+            <span class="region-stat-val">21:00 – 02:00 UTC</span>
+          </div>
+          <div class="region-stat-row" id="region-featured-kp-row">
+            <span class="region-stat-key">Min Kp Required</span>
+            <span class="region-stat-val region-stat-val--accent">Kp 2</span>
+          </div>
+          <div class="region-stat-row" id="region-featured-horizon-row">
+            <span class="region-stat-key">Local Midnight</span>
+            <span class="region-stat-val">00:28 UTC</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 — Northern Canada -->
+      <article class="region-card" id="region-card-canada">
+        <div class="region-card-header">
+          <div class="region-flag">🇨🇦</div>
+          <span class="region-condition-badge condition--good">Good</span>
+        </div>
+        <h3 class="region-name">Northern Canada</h3>
+        <p class="region-latitude">60°N – 68°N</p>
+        <div class="region-stats" id="region-canada-stats">
+          <div class="region-stat-row">
+            <span class="region-stat-key">Clear Sky</span>
+            <span class="region-stat-val region-stat-val--accent">68%</span>
+          </div>
+          <div class="region-sky-bar">
+            <div class="region-sky-fill" style="width:68%"></div>
+          </div>
+          <div class="region-stat-row">
+            <span class="region-stat-key">Window</span>
+            <span class="region-stat-val">22:00 – 03:00 UTC</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 — Iceland -->
+      <article class="region-card" id="region-card-iceland">
+        <div class="region-card-header">
+          <div class="region-flag">🇮🇸</div>
+          <span class="region-condition-badge condition--fair">Fair</span>
+        </div>
+        <h3 class="region-name">Iceland</h3>
+        <p class="region-latitude">63°N – 66°N</p>
+        <div class="region-stats" id="region-iceland-stats">
+          <div class="region-stat-row">
+            <span class="region-stat-key">Clear Sky</span>
+            <span class="region-stat-val">44%</span>
+          </div>
+          <div class="region-sky-bar">
+            <div class="region-sky-fill" style="width:44%"></div>
+          </div>
+          <div class="region-stat-row">
+            <span class="region-stat-key">Window</span>
+            <span class="region-stat-val">21:30 – 01:30 UTC</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 — Southern Alaska -->
+      <article class="region-card" id="region-card-alaska">
+        <div class="region-card-header">
+          <div class="region-flag">🇺🇸</div>
+          <span class="region-condition-badge condition--good">Good</span>
+        </div>
+        <h3 class="region-name">Southern Alaska</h3>
+        <p class="region-latitude">59°N – 64°N</p>
+        <div class="region-stats" id="region-alaska-stats">
+          <div class="region-stat-row">
+            <span class="region-stat-key">Clear Sky</span>
+            <span class="region-stat-val region-stat-val--accent">71%</span>
+          </div>
+          <div class="region-sky-bar">
+            <div class="region-sky-fill" style="width:71%"></div>
+          </div>
+          <div class="region-stat-row">
+            <span class="region-stat-key">Window</span>
+            <span class="region-stat-val">08:00 – 13:00 UTC</span>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /viewing-cards-grid -->
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     WAVE DIVIDER — Viewing Windows → Storm Alerts
+═══════════════════════════════════════════════ -->
+<div id="wave-divider-3" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none" width="100%" height="60">
+    <path d="M0,0 L1440,0 L1440,40 C1100,10 800,55 500,30 C300,12 120,50 0,28 Z" fill="#0d3330"/>
+    <path d="M0,22 C200,48 440,8 680,32 C880,50 1100,15 1440,35"
+          fill="none" stroke="rgba(33,243,182,0.18)" stroke-width="1.5"
+          stroke-dasharray="2000" stroke-dashoffset="2000"
+          id="wave3-stroke"/>
+  </svg>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     4. STORM ALERTS
+═══════════════════════════════════════════════ -->
+<section id="storm-alerts">
+  <div id="storm-alerts-texture"></div>
+
+  <div id="storm-alerts-inner">
+    <!-- Header -->
+    <div id="storm-alerts-header">
+      <p id="storm-alerts-eyebrow">Active Alerts</p>
+      <h2 id="storm-alerts-headline">Storm Classification</h2>
+    </div>
+
+    <!-- Storm level rows -->
+    <div id="storm-rows-list">
+
+      <!-- G1 — Minor (WATCH — teal border) -->
+      <div class="storm-row storm-row--watch" id="storm-row-g1">
+        <div class="storm-label-group" id="storm-label-g1">
+          <span class="storm-level-badge">G1 Minor</span>
+          <span class="storm-kp-tag">Kp 5</span>
+        </div>
+        <p class="storm-description" id="storm-desc-g1">Weak power grid fluctuations. Aurora visible at high latitudes. Minor satellite orientation irregularities.</p>
+        <div class="storm-status" id="storm-status-g1">
+          <span class="storm-status-pill status--watch">Watch</span>
+        </div>
+      </div>
+
+      <!-- G2 — Moderate (ELEVATED — active lime highlight) -->
+      <div class="storm-row storm-row--active" id="storm-row-g2">
+        <div class="storm-label-group" id="storm-label-g2">
+          <span class="storm-level-badge">G2 Moderate</span>
+          <span class="storm-kp-tag">Kp 6</span>
+        </div>
+        <p class="storm-description" id="storm-desc-g2">Power systems affected at high latitudes. Aurora visible to 55° geographic latitude. HF radio propagation degraded.</p>
+        <div class="storm-status" id="storm-status-g2">
+          <span class="storm-status-pill status--elevated">Elevated</span>
+        </div>
+      </div>
+
+      <!-- G3 — Strong (CLEAR) -->
+      <div class="storm-row" id="storm-row-g3">
+        <div class="storm-label-group" id="storm-label-g3">
+          <span class="storm-level-badge">G3 Strong</span>
+          <span class="storm-kp-tag">Kp 7</span>
+        </div>
+        <p class="storm-description" id="storm-desc-g3">Voltage corrections required. False alarms triggered on protection devices. Aurora down to 50° latitude.</p>
+        <div class="storm-status" id="storm-status-g3">
+          <span class="storm-status-pill status--clear">Clear</span>
+        </div>
+      </div>
+
+      <!-- G4 — Severe (CLEAR) -->
+      <div class="storm-row" id="storm-row-g4">
+        <div class="storm-label-group" id="storm-label-g4">
+          <span class="storm-level-badge">G4 Severe</span>
+          <span class="storm-kp-tag">Kp 8</span>
+        </div>
+        <p class="storm-description" id="storm-desc-g4">Widespread voltage control problems. Some grid systems may experience complete collapse. Aurora visible to 40°.</p>
+        <div class="storm-status" id="storm-status-g4">
+          <span class="storm-status-pill status--clear">Clear</span>
+        </div>
+      </div>
+
+      <!-- G5 — Extreme (CLEAR) -->
+      <div class="storm-row" id="storm-row-g5">
+        <div class="storm-label-group" id="storm-label-g5">
+          <span class="storm-level-badge">G5 Extreme</span>
+          <span class="storm-kp-tag">Kp 9</span>
+        </div>
+        <p class="storm-description" id="storm-desc-g5">Grid collapse risk across multiple regions. Satellite navigation and communication severely degraded. Aurora visible to tropical latitudes.</p>
+        <div class="storm-status" id="storm-status-g5">
+          <span class="storm-status-pill status--clear">Clear</span>
+        </div>
+      </div>
+
+    </div><!-- /storm-rows-list -->
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     WAVE DIVIDER — Storm Alerts → Methodology
+═══════════════════════════════════════════════ -->
+<div id="wave-divider-4" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none" width="100%" height="60">
+    <path d="M0,0 L1440,0 L1440,50 C1300,20 1050,58 780,34 C560,15 260,52 0,22 Z" fill="#161d25"/>
+    <path d="M0,30 C240,5 500,50 740,28 C980,6 1200,45 1440,18"
+          fill="none" stroke="rgba(226,255,101,0.15)" stroke-width="1.5"
+          stroke-dasharray="2000" stroke-dashoffset="2000"
+          id="wave4-stroke"/>
+  </svg>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     5. METHODOLOGY
+═══════════════════════════════════════════════ -->
+<section id="methodology">
+  <div id="methodology-glow-tl"></div>
+  <div id="methodology-glow-br"></div>
+
+  <div id="methodology-inner">
+    <!-- Header -->
+    <div id="methodology-header">
+      <p id="methodology-eyebrow">Forecast Methodology</p>
+      <h2 id="methodology-headline">How Spectra Predicts</h2>
+    </div>
+
+    <!-- 3-col grid -->
+    <div id="methodology-cards-grid">
+
+      <!-- Card 1 — NOAA ACE Satellite -->
+      <article class="method-card" id="method-card-noaa">
+        <div class="method-card-indicator"></div>
+        <p class="method-card-number">01</p>
+        <h3 class="method-card-title">NOAA ACE Satellite</h3>
+        <p class="method-card-subtitle">1.5M km from Earth</p>
+        <p class="method-card-body">Real-time solar wind monitoring at the L1 Lagrange point. ACE measures magnetic field strength, particle density, and velocity — providing a 30–60 minute warning before geomagnetic impact.</p>
+      </article>
+
+      <!-- Card 2 — 48-Station Network -->
+      <article class="method-card" id="method-card-network">
+        <div class="method-card-indicator"></div>
+        <p class="method-card-number">02</p>
+        <h3 class="method-card-title">48-Station Network</h3>
+        <p class="method-card-subtitle">Global ground array</p>
+        <p class="method-card-body">Ground-based magnetometers distributed across auroral zones measuring geomagnetic field disturbances in real time. Cross-station correlation improves Kp derivation accuracy to ±0.1 units.</p>
+      </article>
+
+      <!-- Card 3 — ML Forecast Engine -->
+      <article class="method-card" id="method-card-ml">
+        <div class="method-card-indicator"></div>
+        <p class="method-card-number">03</p>
+        <h3 class="method-card-title">ML Forecast Engine</h3>
+        <p class="method-card-subtitle">87% accuracy at 1hr lead</p>
+        <p class="method-card-body">Trained on 25 years of solar cycle data spanning cycles 22 through 25. Ensemble model combining LSTM sequence prediction with gradient-boosted short-range estimators for robust storm forecasting.</p>
+      </article>
+
+    </div><!-- /methodology-cards-grid -->
+
+    <!-- Footer accuracy strip -->
+    <div id="methodology-footer-strip">
+      <div id="methodology-accuracy-badge">
+        <div id="methodology-accuracy-dot"></div>
+        <p id="methodology-accuracy-text">Data latency <strong>under 4 minutes</strong> from NOAA ingestion to display</p>
+      </div>
+      <a href="science.html" id="methodology-learn-more" class="btn-ghost-teal btn-ghost-teal--sm">Read the Science</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════ -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-left">
+      <a href="index.html" id="footer-logo">SPECTRA</a>
+      <p id="footer-tagline">See the sky before it shifts.</p>
+      <p id="footer-copyright">© 2026 Spectra Aurora Monitoring. All rights reserved.</p>
+    </div>
+    <div id="footer-right">
+      <ul id="footer-nav">
+        <li><a href="forecast.html" class="footer-nav-link">Forecast</a></li>
+        <li><a href="stations.html" class="footer-nav-link">Stations</a></li>
+        <li><a href="science.html" class="footer-nav-link">Science</a></li>
+      </ul>
+      <div id="footer-status">
+        <div id="footer-status-dot"></div>
+        <span>Live data</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════════
+     GSAP ANIMATIONS
+═══════════════════════════════════════════════ -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const EASE = 'cubic-bezier(0.16,1,0.3,1)';
+const EASE_GSAP = 'power3.out';
+
+// ── 1. FORECAST HERO — entrance sequence on load ──
+(function() {
+  var tl = gsap.timeline({ defaults: { ease: EASE_GSAP } });
+  tl.from('#forecast-hero-eyebrow', { y: 20, duration: 0.6 })
+    .from('#forecast-hero-title',    { y: 30, duration: 0.8, ease: EASE_GSAP }, '-=0.3')
+    .from('#forecast-hero-sub',      { y: 20, duration: 0.6 }, '-=0.4');
+})();
+
+// ── 2. KP NUMBER — cosmicReveal clip-path on enter ──
+gsap.set('#kp-number', { clipPath: 'inset(0 100% 0 0)', transformOrigin: 'left center' });
+gsap.to('#kp-number', {
+  scrollTrigger: {
+    trigger: '#kp-display',
+    start: 'top 75%',
+    once: true
+  },
+  clipPath: 'inset(0 0% 0 0)',
+  duration: 1.1,
+  ease: EASE_GSAP
+});
+
+// Kp activity label fade-in after number
+gsap.from('#kp-activity-label', {
+  scrollTrigger: {
+    trigger: '#kp-display',
+    start: 'top 70%',
+    once: true
+  },
+  y: 12,
+  duration: 0.7,
+  ease: EASE_GSAP,
+  delay: 0.4
+});
+
+// ── History bars — stagger scale from bottom ──
+(function() {
+  var bars = gsap.utils.toArray('.kp-bar');
+  gsap.from(bars, {
+    scrollTrigger: {
+      trigger: '#kp-history-bars',
+      start: 'top 85%',
+      once: true
+    },
+    scaleY: 0,
+    transformOrigin: 'bottom',
+    duration: 0.55,
+    stagger: 0.015,
+    ease: EASE_GSAP
+  });
+})();
+
+// Kp stat cards
+gsap.from('#kp-stats-row .kp-stat-card', {
+  scrollTrigger: {
+    trigger: '#kp-stats-row',
+    start: 'top 85%',
+    once: true
+  },
+  y: 24,
+  duration: 0.65,
+  stagger: 0.1,
+  ease: EASE_GSAP
+});
+
+// ── 3. VIEWING WINDOW HEADER ──
+gsap.from('#viewing-windows-header', {
+  scrollTrigger: {
+    trigger: '#viewing-windows',
+    start: 'top 78%',
+    once: true
+  },
+  y: 28,
+  duration: 0.75,
+  ease: EASE_GSAP
+});
+
+// ── Region cards — scale + rise stagger ──
+gsap.from('#viewing-cards-grid .region-card', {
+  scrollTrigger: {
+    trigger: '#viewing-cards-grid',
+    start: 'top 82%',
+    once: true
+  },
+  scale: 0.94,
+  y: 20,
+  duration: 0.75,
+  stagger: 0.1,
+  ease: EASE_GSAP
+});
+
+// ── 4. STORM ROWS — clip-path cosmicReveal stagger ──
+(function() {
+  var rows = gsap.utils.toArray('.storm-row');
+  rows.forEach(function(row) {
+    gsap.set(row, { clipPath: 'inset(0 100% 0 0)' });
+  });
+  gsap.to(rows, {
+    scrollTrigger: {
+      trigger: '#storm-rows-list',
+      start: 'top 78%',
+      once: true
+    },
+    clipPath: 'inset(0 0% 0 0)',
+    duration: 0.8,
+    stagger: 0.15,
+    ease: EASE_GSAP
+  });
+})();
+
+// ── 5. METHODOLOGY CARDS — rotation + rise stagger ──
+gsap.from('#methodology-cards-grid .method-card', {
+  scrollTrigger: {
+    trigger: '#methodology-cards-grid',
+    start: 'top 80%',
+    once: true
+  },
+  rotation: 1.5,
+  y: 35,
+  duration: 0.85,
+  stagger: 0.14,
+  ease: EASE_GSAP
+});
+
+// Methodology header
+gsap.from('#methodology-header', {
+  scrollTrigger: {
+    trigger: '#methodology',
+    start: 'top 78%',
+    once: true
+  },
+  y: 28,
+  duration: 0.75,
+  ease: EASE_GSAP
+});
+
+// Methodology footer strip
+gsap.from('#methodology-footer-strip', {
+  scrollTrigger: {
+    trigger: '#methodology-footer-strip',
+    start: 'top 90%',
+    once: true
+  },
+  y: 18,
+  duration: 0.6,
+  ease: EASE_GSAP
+});
+
+// ── WAVE STROKE ANIMATIONS (scroll-triggered draw) ──
+['wave1-stroke','wave2-stroke','wave3-stroke','wave4-stroke'].forEach(function(id, i) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  gsap.to(el, {
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 90%',
+      once: true
+    },
+    strokeDashoffset: 0,
+    duration: 1.6,
+    ease: 'power2.inOut',
+    delay: i * 0.05
+  });
+});
+
+// ── Section headers cosmicReveal for alerts ──
+gsap.from('#storm-alerts-header', {
+  scrollTrigger: {
+    trigger: '#storm-alerts',
+    start: 'top 78%',
+    once: true
+  },
+  y: 24,
+  duration: 0.7,
+  ease: EASE_GSAP
+});
+
+</script>
+
+</body>
+</html>

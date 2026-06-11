@@ -1,0 +1,324 @@
+/* ink-burst — Hero Section
+   Yellow background panel. Comic headline. Speech bubble callout.
+   Ben-Day dot texture overlay. ZAP-in animation via GSAP.
+*/
+
+.hero {
+  background-color: var(--color-comic-yellow);
+  border-bottom: var(--border-ink);
+  padding-top: calc(var(--nav-height) + 64px);
+  padding-bottom: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ben-Day dot texture */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--dot-pattern);
+  background-size: var(--dot-size);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--panel-gap-loose);
+  align-items: center;
+}
+
+/* Left: text content */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.hero-badge {
+  background-color: var(--color-comic-red);
+  color: var(--color-white);
+  border: 2px solid var(--color-ink);
+  box-shadow: 2px 2px 0 var(--color-ink);
+  padding: 2px 10px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  display: inline-block;
+  transform: rotate(-2deg);
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  font-weight: 400;
+  letter-spacing: var(--ls-display);
+  line-height: 0.95;
+  color: var(--color-ink);
+  text-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+}
+
+.hero-headline .accent-word {
+  color: var(--color-comic-red);
+  text-shadow: 3px 3px 0 var(--color-ink);
+  display: inline-block;
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-ink);
+  max-width: 480px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* Speech bubble callout */
+.speech-bubble {
+  background-color: var(--color-white);
+  border: var(--border-ink);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-2) var(--space-3);
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 24px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 14px solid var(--color-ink);
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 26px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 11px solid var(--color-white);
+}
+
+/* Right: visual panel */
+.hero-visual {
+  position: relative;
+}
+
+.hero-panel {
+  border: var(--border-ink);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--dot-pattern);
+  background-size: var(--dot-size);
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.hero-panel-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: relative;
+  z-index: 1;
+}
+
+/* Mock comic strip inside hero panel */
+.mock-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  border: var(--border-ink);
+}
+
+.mock-panel {
+  aspect-ratio: 1;
+  border-right: 2px solid var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+}
+
+.mock-panel:last-child { border-right: none; }
+.mock-panel--red  { background-color: var(--color-comic-red); color: var(--color-white); }
+.mock-panel--yellow { background-color: var(--color-comic-yellow); color: var(--color-ink); }
+.mock-panel--cyan { background-color: var(--color-comic-cyan); color: var(--color-ink); }
+
+.hero-panel-caption {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+  text-align: center;
+}
+
+/* ZAP starburst badge */
+.zap-badge {
+  position: absolute;
+  top: -20px;
+  right: -16px;
+  background-color: var(--color-comic-yellow);
+  border: var(--border-ink);
+  box-shadow: 3px 3px 0 var(--color-ink);
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  color: var(--color-ink);
+  transform: rotate(8deg);
+  z-index: 2;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background-color: var(--color-comic-red);
+  color: var(--color-white);
+}
+
+/* === BUTTONS === */
+.btn {
+  font-family: var(--font-display);
+  font-size: var(--text-btn);
+  font-weight: 400;
+  letter-spacing: var(--ls-btn);
+  text-transform: uppercase;
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  border: var(--border-ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform var(--dur-fast) var(--ease-spring),
+              box-shadow var(--dur-fast) var(--ease-spring),
+              background-color var(--dur-fast) ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.btn:focus-visible {
+  outline: 3px dashed var(--color-ink);
+  outline-offset: 3px;
+}
+
+.btn-primary {
+  background-color: var(--color-comic-red);
+  color: var(--color-white);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  background-color: #d50000;
+  transform: translate(-2px, -2px) scale(1.02);
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+
+.btn-primary:active {
+  transform: translate(2px, 2px) scale(0.96);
+  box-shadow: 2px 2px 0 var(--color-ink);
+}
+
+.btn-secondary {
+  background-color: var(--color-white);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:hover {
+  transform: translate(-2px, -2px) scale(1.02);
+  box-shadow: 6px 6px 0 var(--color-ink);
+  background-color: var(--color-panel-yellow);
+}
+
+.btn-secondary:active {
+  transform: translate(2px, 2px) scale(0.96);
+  box-shadow: 2px 2px 0 var(--color-ink);
+}
+
+.btn-dark {
+  background-color: var(--color-ink);
+  color: var(--color-white);
+  box-shadow: var(--shadow-red);
+}
+
+.btn-dark:hover {
+  transform: translate(-2px, -2px) scale(1.02);
+  box-shadow: 6px 6px 0 var(--color-comic-red);
+}
+
+.btn-dark:active {
+  transform: translate(2px, 2px) scale(0.96);
+  box-shadow: 2px 2px 0 var(--color-comic-red);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1023px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  .hero-visual {
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    padding-top: calc(var(--nav-height) + 40px);
+    padding-bottom: 48px;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

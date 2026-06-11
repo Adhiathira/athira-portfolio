@@ -1,0 +1,140 @@
+/* plane-cut — Features Section */
+/* 3-col cards at different elevation depths */
+
+.features {
+  position: relative;
+  background: var(--color-layer-1-alt);
+  padding: var(--section-padding) 0;
+  z-index: 2;
+  margin-bottom: calc(var(--section-overlap) * -1);
+  box-shadow: var(--shadow-layer-sm);
+}
+
+.features-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto var(--space-3xl);
+}
+
+.features-header .eyebrow {
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+.features-header h2 {
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.features-header p {
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
+}
+
+/* 3-col card grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--card-gap);
+}
+
+/* Each card at slightly different elevation */
+.feature-card {
+  background: var(--color-layer-1);
+  border-radius: 2px;
+  padding: var(--card-padding);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition:
+    transform var(--hover-duration) var(--hover-ease),
+    box-shadow var(--hover-duration) var(--hover-ease);
+}
+
+/* Staggered box-shadow depth */
+.feature-card:nth-child(1) {
+  box-shadow: var(--shadow-layer-sm);
+  z-index: 1;
+}
+
+.feature-card:nth-child(2) {
+  box-shadow: var(--shadow-layer-md);
+  z-index: 2;
+}
+
+.feature-card:nth-child(3) {
+  box-shadow: var(--shadow-layer-lg);
+  z-index: 3;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-layer-hover);
+}
+
+/* Geometric clip-path icon shape */
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: var(--space-lg);
+  position: relative;
+}
+
+.feature-icon-shape {
+  width: 56px;
+  height: 56px;
+  background: var(--color-accent);
+}
+
+/* Different clip-path per icon — paper-cut silhouettes */
+.feature-icon-shape--hex {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: var(--color-accent);
+}
+
+.feature-icon-shape--diamond {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  background: var(--color-accent-teal);
+}
+
+.feature-icon-shape--step {
+  clip-path: polygon(0 0, 70% 0, 100% 30%, 100% 100%, 30% 100%, 0 70%);
+  background: var(--color-layer-3);
+}
+
+.feature-card h3 {
+  font-size: 1.375rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.feature-card p {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+/* Decorative corner cut */
+.feature-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  background: var(--color-page-bg);
+  clip-path: polygon(100% 0%, 0% 0%, 100% 100%);
+}
+
+@media (max-width: 1024px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}

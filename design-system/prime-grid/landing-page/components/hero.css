@@ -1,0 +1,220 @@
+/* ── GRUNDFORM Hero — Bauhaus Manifesto Composition ── */
+
+/* ── Hero: Full viewport Bauhaus manifesto ── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  background: #ffffff;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 2fr 1fr;
+  column-gap: 2px;
+  padding-top: 56px; /* nav height */
+}
+
+/* Primary color block — red structural field left of hero */
+#hero-color-block-red {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 42%;
+  height: 100%;
+  background: #e30000;
+  z-index: 1;
+  transform-origin: left center;
+}
+
+/* Yellow accent strip */
+#hero-color-block-yellow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 42%;
+  height: 8px;
+  background: #ffe045;
+  z-index: 3;
+}
+
+/* Blue accent strip right */
+#hero-color-block-blue {
+  position: absolute;
+  top: 89px;
+  right: 48px;
+  width: 8px;
+  height: 60%;
+  background: #0071e3;
+  z-index: 3;
+}
+
+/* Grid gap lines overlay */
+#hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(90deg, transparent calc(20% - 1px), rgba(0,0,0,0.08) calc(20% - 1px), rgba(0,0,0,0.08) 20%, transparent 20%),
+    linear-gradient(90deg, transparent calc(40% - 1px), rgba(0,0,0,0.08) calc(40% - 1px), rgba(0,0,0,0.08) 40%, transparent 40%),
+    linear-gradient(90deg, transparent calc(60% - 1px), rgba(0,0,0,0.08) calc(60% - 1px), rgba(0,0,0,0.08) 60%, transparent 60%),
+    linear-gradient(90deg, transparent calc(80% - 1px), rgba(0,0,0,0.08) calc(80% - 1px), rgba(0,0,0,0.08) 80%, transparent 80%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+#hero-content {
+  position: relative;
+  z-index: 4;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 56px);
+  padding: 89px 48px;
+}
+
+#hero-manifesto {
+  max-width: 100%;
+}
+
+/* Tilted Bauhaus headline — the constructivist off-axis statement */
+#hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(72px, 10vw, 120px);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: 0em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+  transform: rotate(-14deg);
+  transform-origin: left center;
+  display: inline-block;
+  position: relative;
+  z-index: 5;
+  width: max-content;
+  max-width: 90vw;
+}
+
+/* Large ghost background word — Constructivist watermark */
+#hero-ghost-word {
+  position: absolute;
+  top: 50%;
+  right: -2%;
+  transform: translateY(-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 18vw, 260px);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0,0,0,0.04);
+  text-transform: uppercase;
+  letter-spacing: 0em;
+  pointer-events: none;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+#hero-subheading-group {
+  margin-top: 89px;
+  margin-left: 44%;
+  position: relative;
+  z-index: 5;
+}
+
+#hero-tagline {
+  font-family: 'Barlow', sans-serif;
+  font-size: clamp(18px, 2.5vw, 30px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0em;
+  text-transform: uppercase;
+  color: #1d1d1f;
+  margin: 0 0 21px 0;
+}
+
+#hero-body {
+  font-family: 'Barlow', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #1d1d1f;
+  max-width: 520px;
+  margin: 0 0 34px 0;
+}
+
+#hero-cta-group {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ── Bauhaus structural divider bar ── */
+.bauhaus-bar {
+  width: 100%;
+  height: 8px;
+  background: currentColor;
+  display: block;
+}
+
+.bauhaus-bar--black { color: #000000; }
+.bauhaus-bar--red { color: #e30000; }
+.bauhaus-bar--blue { color: #0071e3; }
+.bauhaus-bar--yellow { color: #ffe045; }
+
+/* ── Diagonal text utility ── */
+.bauhaus-diagonal {
+  transform: rotate(-12deg);
+  transform-origin: left center;
+  display: inline-block;
+}
+
+/* ── Bleed utility ── */
+.bauhaus-bleed {
+  margin-left: -48px;
+  margin-right: -48px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  #hero-subheading-group {
+    margin-left: 5%;
+    margin-top: 55px;
+  }
+
+  #hero-title {
+    font-size: clamp(56px, 9vw, 100px);
+  }
+}
+
+@media (max-width: 768px) {
+  #hero {
+    grid-template-columns: 1fr;
+  }
+
+  #hero-content {
+    padding: 55px 21px;
+  }
+
+  #hero-title {
+    font-size: clamp(48px, 13vw, 80px);
+    transform: rotate(-10deg);
+  }
+
+  #hero-subheading-group {
+    margin-left: 0;
+    margin-top: 55px;
+  }
+
+  #hero-color-block-red {
+    width: 55%;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero-title {
+    font-size: clamp(42px, 14vw, 64px);
+    transform: rotate(-8deg);
+  }
+}

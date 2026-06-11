@@ -1,0 +1,145 @@
+/* ink-burst — Navigation Component
+   Yellow comic-panel bar with Bangers font and bold black bottom border.
+*/
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background-color: var(--color-comic-yellow);
+  border-bottom: var(--border-ink);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+/* Logo */
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-shadow: 2px 2px 0 var(--color-comic-red);
+  line-height: 1;
+}
+
+.nav-logo span {
+  color: var(--color-comic-red);
+  text-shadow: 2px 2px 0 var(--color-ink);
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--font-display);
+  font-size: var(--text-nav);
+  font-weight: 400;
+  letter-spacing: var(--ls-nav);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  position: relative;
+  transition: transform var(--dur-fast) var(--ease-spring),
+              text-shadow var(--dur-fast) ease;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.nav-links a:hover {
+  transform: scale(1.05);
+  text-shadow: 2px 2px 0 var(--color-comic-red);
+}
+
+/* Speech-bubble active indicator */
+.nav-links a.is-active {
+  color: var(--color-comic-red);
+}
+
+.nav-links a.is-active::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-comic-red);
+  border: 2px solid var(--color-ink);
+  border-radius: 50%;
+}
+
+/* CTA in nav */
+.nav-cta {
+  font-family: var(--font-display);
+  font-size: var(--text-btn);
+  font-weight: 400;
+  letter-spacing: var(--ls-btn);
+  text-transform: uppercase;
+  background-color: var(--color-comic-red);
+  color: var(--color-white);
+  border: var(--border-ink);
+  box-shadow: var(--shadow-md);
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-spring),
+              box-shadow var(--dur-fast) var(--ease-spring);
+  display: inline-block;
+}
+
+.nav-cta:hover {
+  transform: translate(-2px, -2px) scale(1.02);
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+
+.nav-cta:active {
+  transform: translate(2px, 2px) scale(0.96);
+  box-shadow: 2px 2px 0 var(--color-ink);
+}
+
+/* Hamburger — mobile */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 3px;
+  background-color: var(--color-ink);
+}
+
+/* Mobile nav */
+@media (max-width: 767px) {
+  .nav-links,
+  .nav-cta {
+    display: none;
+  }
+  .nav-hamburger {
+    display: flex;
+  }
+}

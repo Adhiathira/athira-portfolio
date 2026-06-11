@@ -1,0 +1,130 @@
+/* nav.css — folio-verge */
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  height: var(--nav-height);
+  padding: 0 var(--grid-padding);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-nav-bg);
+  transition: var(--transition-nav);
+  box-sizing: border-box;
+}
+
+.site-nav.scrolled {
+  height: var(--nav-height-scrolled);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(214, 217, 252, 0.6);
+}
+
+.nav-logo {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--color-nav-text);
+  text-decoration: none;
+  line-height: 1;
+}
+
+.nav-logo span {
+  color: var(--color-heading-accent);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--nav-item-spacing);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: var(--font-body);
+  font-size: var(--font-size-nav);
+  font-weight: var(--font-weight-button);
+  letter-spacing: var(--nav-letter-spacing);
+  color: var(--color-nav-text);
+  text-decoration: none;
+  position: relative;
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-nav-link);
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+  color: var(--color-nav-link);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link-secondary {
+  font-family: var(--font-body);
+  font-size: var(--font-size-nav);
+  font-weight: var(--font-weight-button);
+  letter-spacing: var(--nav-letter-spacing);
+  color: var(--color-nav-link);
+  text-decoration: none;
+  transition: opacity var(--motion-fast) var(--ease-standard);
+}
+
+.nav-link-secondary:hover {
+  opacity: 0.7;
+}
+
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: var(--font-size-nav);
+  font-weight: var(--font-weight-button);
+  letter-spacing: var(--nav-letter-spacing);
+  color: #ffffff;
+  background: var(--color-primary-action);
+  border: 1px solid var(--color-primary-action);
+  padding: 8px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: var(--transition-hover);
+  white-space: nowrap;
+}
+
+.nav-cta:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .site-nav {
+    padding: 0 24px;
+  }
+}

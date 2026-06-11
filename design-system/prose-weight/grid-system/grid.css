@@ -1,0 +1,127 @@
+/* prose-weight — Grid System
+   Storytelling / Long-Form Narrative
+   Reading-optimized layouts
+*/
+
+:root {
+  --container-max: 1200px;
+  --container-padding: 40px;
+  --reading-col: 680px;
+  --reading-col-wide: 800px;
+  --sidebar-width: 280px;
+  --grid-gap: 48px;
+  --grid-gap-wide: 64px;
+}
+
+/* Site container */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+/* Reading column — primary text measure */
+.reading-col {
+  width: 100%;
+  max-width: var(--reading-col);
+  margin-inline: auto;
+}
+
+/* Wide reading column */
+.reading-col-wide {
+  width: 100%;
+  max-width: var(--reading-col-wide);
+  margin-inline: auto;
+}
+
+/* Two-column with annotations sidebar */
+.grid-text-sidebar {
+  display: grid;
+  grid-template-columns: 1fr var(--sidebar-width);
+  gap: var(--grid-gap-wide);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+/* Three-column feature cards */
+.grid-three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap);
+}
+
+/* Two-column layout */
+.grid-two-col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--grid-gap-wide);
+}
+
+/* Three-column stats */
+.grid-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+/* Chapter header — full width */
+.chapter-header {
+  width: 100%;
+  padding-block: 120px 80px;
+}
+
+/* Full-bleed pull quote */
+.pull-quote-full {
+  width: 100%;
+  padding-inline: var(--container-padding);
+}
+
+/* Section spacing */
+.section {
+  padding-block: 80px;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+    --grid-gap: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-padding: 24px;
+    --grid-gap: 32px;
+    --grid-gap-wide: 40px;
+  }
+
+  .grid-three-col {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-text-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-stats {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .chapter-header {
+    padding-block: 80px 48px;
+  }
+}
+
+@media (max-width: 375px) {
+  :root {
+    --container-padding: 20px;
+  }
+}

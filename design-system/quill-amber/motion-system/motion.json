@@ -1,0 +1,143 @@
+{
+  "_source": "caitlin-christinee",
+  "_twist": "Agent 3: Duration inflation (×2.2) + custom easing upgrade — all transition durations scaled up for a more deliberate, unhurried feel. Slide keyframes gain an overshoot cubic-bezier. New scroll-reveal keyframe added. opacity transitions replaced with transform+opacity compound easing.",
+  "videos": {
+    "count": 0,
+    "hasHeroVideo": false,
+    "items": [],
+    "animatedGifs": 0,
+    "libraries": ["GSAP", "ScrollTrigger"]
+  },
+  "cssAnimations": {
+    "keyframes": [
+      {
+        "name": "qa-slideInUp",
+        "steps": [
+          { "offset": "0%", "properties": { "opacity": "0", "transform": "translateY(40px)" } },
+          { "offset": "100%", "properties": { "opacity": "1", "transform": "translateY(0)" } }
+        ],
+        "_note": "Primary scroll-reveal entry. Duration: 0.88s cubic-bezier(0.16, 1, 0.3, 1)."
+      },
+      {
+        "name": "qa-fadeIn",
+        "steps": [
+          { "offset": "0%", "properties": { "opacity": "0" } },
+          { "offset": "100%", "properties": { "opacity": "1" } }
+        ],
+        "_note": "Simple fade. Duration 0.66s."
+      },
+      {
+        "name": "qa-slideHorizontalNew",
+        "steps": [
+          { "offset": "0%", "properties": { "transform": "translate(110%) scaleX(0.92)" } },
+          { "offset": "100%", "properties": { "transform": "translate(0) scaleX(1)" } }
+        ],
+        "_note": "Overshoot scale added to original slide-horizontal-new. Duration 0.88s."
+      },
+      {
+        "name": "qa-slideHorizontalOld",
+        "steps": [
+          { "offset": "75%", "properties": { "opacity": "1" } },
+          { "offset": "100%", "properties": { "opacity": "0", "transform": "translate(-110%)" } }
+        ]
+      },
+      {
+        "name": "qa-slideVerticalNew",
+        "steps": [
+          { "offset": "0%", "properties": { "transform": "translateY(-110%) scaleY(0.94)" } },
+          { "offset": "100%", "properties": { "transform": "translateY(0) scaleY(1)" } }
+        ]
+      },
+      {
+        "name": "qa-slideVerticalOld",
+        "steps": [
+          { "offset": "75%", "properties": { "opacity": "1" } },
+          { "offset": "100%", "properties": { "opacity": "0", "transform": "translateY(110%)" } }
+        ]
+      },
+      {
+        "name": "qa-changingBackground",
+        "steps": [
+          { "offset": "0%", "properties": { "background-color": "rgba(242, 239, 233, 0.15)" } },
+          { "offset": "50%", "properties": { "background-color": "rgba(242, 239, 233, 0.72)" } },
+          { "offset": "100%", "properties": { "background-color": "rgba(242, 239, 233, 0.15)" } }
+        ]
+      }
+    ],
+    "animatedElements": [],
+    "transitionElements": [
+      {
+        "selector": "nav a, .nav-link",
+        "transition": {
+          "property": "color, opacity",
+          "duration": "0.44s",
+          "timingFunction": "cubic-bezier(0.16, 1, 0.3, 1)"
+        }
+      },
+      {
+        "selector": ".gallery-item, .card",
+        "transition": {
+          "property": "opacity, transform",
+          "duration": "0.44s",
+          "timingFunction": "cubic-bezier(0.16, 1, 0.3, 1)"
+        }
+      }
+    ],
+    "timingTokens": {
+      "durations": ["0.88s", "0.66s", "0.44s", "0.33s"],
+      "easings": [
+        "cubic-bezier(0.16, 1, 0.3, 1)",
+        "cubic-bezier(0.4, 0, 0.2, 1)",
+        "ease-in-out"
+      ]
+    }
+  },
+  "scrollAnimations": {
+    "libraries": ["GSAP", "ScrollTrigger"],
+    "elements": [
+      { "trigger": ".section-reveal", "animation": "slideInUp", "start": "top 85%", "toggleActions": "play none none none" },
+      { "trigger": ".hero-text", "animation": "charScatter", "start": "top 70%", "scrub": false }
+    ],
+    "parallaxElements": [
+      { "selector": ".parallax-bg", "yPercent": -20, "ease": "none", "scrub": true },
+      { "selector": ".parallax-mid", "yPercent": -10, "ease": "none", "scrub": true }
+    ],
+    "patterns": ["gallery-slider", "scroll-reveal", "parallax-depth", "char-scramble", "path-draw"]
+  },
+  "microInteractions": {
+    "buttonTransitions": [
+      {
+        "selector": "button, .btn",
+        "transition": "transform 0.33s cubic-bezier(0.16,1,0.3,1), background-color 0.44s ease-in-out, color 0.44s ease-in-out, border-color 0.44s ease-in-out",
+        "transitionDuration": "0.44s"
+      }
+    ],
+    "loadingStates": [],
+    "iconAnimations": [],
+    "customCursor": false,
+    "inputFocusAnimations": [
+      { "selector": "input, textarea", "transition": "border-color 0.33s ease-in-out, box-shadow 0.33s ease-in-out" }
+    ],
+    "hasSkeletonScreens": false
+  },
+  "performance": {
+    "totalAnimatedElements": 18,
+    "simultaneousAnimations": 4,
+    "videoLoad": "none",
+    "complexAnimations": 6,
+    "reducedMotionSupport": "@media (prefers-reduced-motion: reduce)",
+    "usesHardwareAcceleration": true,
+    "recommendations": [
+      "Use transform + opacity only for GPU-accelerated animation paths",
+      "Batch ScrollTrigger instances per section to reduce listener overhead"
+    ],
+    "summary": {
+      "videos": 0,
+      "animatedGifs": 0,
+      "keyframes": 7,
+      "scrollLibraries": 2,
+      "hasLoadingStates": false,
+      "hasSkeletonScreens": false
+    }
+  }
+}

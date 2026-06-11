@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Roundwork Studio</title>
+  <meta name="description" content="Get in touch with Roundwork Studio. Studio questions, wholesale inquiries, commissions — we read every message.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/contact-page.css">
+  <!-- GSAP + ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       NAV
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <nav id="site-nav" class="site-nav">
+    <a href="index.html" class="nav-logo">Roundwork Studio</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="collection.html" class="nav-link">Collection</a></li>
+      <li><a href="process.html" class="nav-link">Process</a></li>
+      <li><a href="studio.html" class="nav-link">Studio</a></li>
+      <li><a href="contact.html" class="nav-link nav-link--active">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+    <button class="nav-mobile-close" aria-label="Close menu"><span></span><span></span></button>
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="collection.html" class="nav-link">Collection</a>
+    <a href="process.html" class="nav-link">Process</a>
+    <a href="studio.html" class="nav-link">Studio</a>
+    <a href="contact.html" class="nav-link nav-link--active">Contact</a>
+  </div>
+  <script>
+    (function () {
+      var nav = document.getElementById('site-nav'); var mobileMenu = document.querySelector('.nav-mobile-menu'); var mobileToggle = document.querySelector('.nav-mobile-toggle'); var mobileClose = document.querySelector('.nav-mobile-close');
+      function onScroll() { if (window.scrollY > 80) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); } } window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+      function openMenu() { nav.classList.add('nav-mobile-open'); mobileMenu.classList.add('is-open'); mobileToggle.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; }
+      function closeMenu() { nav.classList.remove('nav-mobile-open'); mobileMenu.classList.remove('is-open'); mobileToggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+      mobileToggle.addEventListener('click', function () { if (mobileMenu.classList.contains('is-open')) { closeMenu(); } else { openMenu(); } });
+      if (mobileClose) { mobileClose.addEventListener('click', closeMenu); }
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) { closeMenu(); } });
+    })();
+  </script>
+
+  <!-- Nav spacer -->
+  <div style="height: 64px;"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SECTION 1 — PAGE HERO
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section id="contact-hero" aria-labelledby="contact-hero-headline">
+    <div class="container">
+      <div id="contact-hero-content">
+        <span id="contact-hero-eyebrow">Get in Touch</span>
+        <h1 id="contact-hero-headline">We read every message.</h1>
+        <p id="contact-hero-body">Studio questions, wholesale inquiries, commissions — we're slow to respond but thoughtful when we do.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SQUIGGLY DIVIDER 1 — surface → white
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="divider-contact-surface-to-white" class="contact-squiggle-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" height="64">
+      <path class="squiggle-path" d="M0,32 C120,8 240,56 360,32 C480,8 600,56 720,32 C840,8 960,56 1080,32 C1200,8 1320,56 1440,32 L1440,64 L0,64 Z"/>
+    </svg>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SECTION 2 — CONTACT FORM + INFO
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section id="contact-main-section" aria-labelledby="contact-form-title">
+    <div class="container">
+      <div id="contact-main-grid">
+
+        <!-- Left: Contact Form Card -->
+        <div id="contact-form-card">
+          <h2 id="contact-form-title">Send us a message</h2>
+          <form id="contact-form" novalidate>
+
+            <div class="form-field-group">
+              <label class="form-label" for="field-name">Name</label>
+              <input
+                id="field-name"
+                class="form-input"
+                type="text"
+                name="name"
+                autocomplete="given-name"
+                placeholder="Your full name"
+                required
+              >
+            </div>
+
+            <div class="form-field-group">
+              <label class="form-label" for="field-email">Email</label>
+              <input
+                id="field-email"
+                class="form-input"
+                type="email"
+                name="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+                required
+              >
+            </div>
+
+            <div class="form-field-group">
+              <label class="form-label" for="field-subject">Subject</label>
+              <select id="field-subject" class="form-select" name="subject">
+                <option value="general">General</option>
+                <option value="wholesale">Wholesale</option>
+                <option value="commission">Commission</option>
+                <option value="press">Press</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-field-group">
+              <label class="form-label" for="field-message">Message</label>
+              <textarea
+                id="field-message"
+                class="form-textarea"
+                name="message"
+                placeholder="Tell us what's on your mind…"
+                required
+              ></textarea>
+            </div>
+
+            <button id="contact-submit-btn" type="submit">
+              Send Message
+            </button>
+
+          </form>
+        </div>
+
+        <!-- Right: Studio Info -->
+        <div id="contact-info-col">
+
+          <!-- Address card -->
+          <div id="info-address-card" class="info-card">
+            <span class="info-card__label">Studio Address</span>
+            <p class="info-card__title">Roundwork Studio</p>
+            <address class="info-card__address">
+              Calle Xochimilco 14<br>
+              San Marcos Tlapazola<br>
+              Oaxaca 68726, México
+            </address>
+          </div>
+
+          <!-- Hours card -->
+          <div id="info-hours-card" class="info-card info-card--surface">
+            <span class="info-card__label">Studio Visits</span>
+            <p class="info-card__text">By appointment only</p>
+            <p class="info-card__text">Mon–Fri&nbsp;&nbsp;9am–6pm (CST)</p>
+          </div>
+
+          <!-- Email card -->
+          <div id="info-email-card" class="info-card">
+            <span class="info-card__label">Email</span>
+            <ul id="contact-email-list">
+              <li class="contact-email-item">
+                <a href="mailto:hello@roundworkstudio.com" class="contact-email-link">hello@roundworkstudio.com</a>
+              </li>
+              <li class="contact-email-item">
+                <a href="mailto:wholesale@roundworkstudio.com" class="contact-email-link">wholesale@roundworkstudio.com</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Social card -->
+          <div id="info-social-card" class="info-card info-card--surface">
+            <span class="info-card__label">Follow Along</span>
+            <div id="contact-social-row">
+              <a href="https://www.instagram.com/roundworkstudio" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Follow @roundworkstudio on Instagram">
+                <!-- Instagram SVG icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <circle cx="12" cy="12" r="5"/>
+                  <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+                </svg>
+                @roundworkstudio
+              </a>
+            </div>
+          </div>
+
+        </div><!-- /contact-info-col -->
+      </div><!-- /contact-main-grid -->
+    </div><!-- /container -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SQUIGGLY DIVIDER 2 — white → surface
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="divider-contact-white-to-surface" class="contact-squiggle-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" height="64">
+      <path class="squiggle-path" d="M0,28 C180,56 360,4 540,32 C720,60 900,8 1080,36 C1260,60 1380,16 1440,32 L1440,64 L0,64 Z"/>
+    </svg>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SECTION 3 — FAQ ACCORDION
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section id="faq-section" aria-labelledby="faq-headline">
+    <div class="container">
+
+      <div id="faq-header">
+        <span id="faq-eyebrow">Questions</span>
+        <h2 id="faq-headline">Things people ask</h2>
+      </div>
+
+      <div id="faq-accordion" role="list">
+
+        <!-- FAQ Item 1 -->
+        <div class="faq-item" role="listitem">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-answer-1">
+            <span class="faq-question">Do you ship internationally?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 14 14" fill="none" stroke="#2b2b29" stroke-width="2" stroke-linecap="round">
+                <line x1="7" y1="2" x2="7" y2="12"/>
+                <line x1="2" y1="7" x2="12" y2="7"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-body" id="faq-answer-1" role="region">
+            <p class="faq-answer">Yes, we ship worldwide via DHL. Shipping rates and transit times vary by destination — you'll see the full breakdown at checkout. All pieces are individually wrapped and packed in custom moulded boxes.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="faq-item" role="listitem">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-answer-2">
+            <span class="faq-question">Can I commission a custom piece?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 14 14" fill="none" stroke="#2b2b29" stroke-width="2" stroke-linecap="round">
+                <line x1="7" y1="2" x2="7" y2="12"/>
+                <line x1="2" y1="7" x2="12" y2="7"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-body" id="faq-answer-2" role="region">
+            <p class="faq-answer">Yes. Commission work requires a minimum order of 6 pieces and carries an 8-week lead time from confirmed deposit. Use the contact form above — select "Commission" from the subject dropdown — and we'll respond with our current availability and a brief questionnaire.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="faq-item" role="listitem">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-answer-3">
+            <span class="faq-question">Are the pieces dishwasher safe?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 14 14" fill="none" stroke="#2b2b29" stroke-width="2" stroke-linecap="round">
+                <line x1="7" y1="2" x2="7" y2="12"/>
+                <line x1="2" y1="7" x2="12" y2="7"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-body" id="faq-answer-3" role="region">
+            <p class="faq-answer">Hand washing is recommended and will extend the life of the glaze significantly. That said, running a piece through the dishwasher once a week is fine — use a gentle cycle and avoid high-heat dry settings.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="faq-item" role="listitem">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-answer-4">
+            <span class="faq-question">How do I care for the glaze?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 14 14" fill="none" stroke="#2b2b29" stroke-width="2" stroke-linecap="round">
+                <line x1="7" y1="2" x2="7" y2="12"/>
+                <line x1="2" y1="7" x2="12" y2="7"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-body" id="faq-answer-4" role="region">
+            <p class="faq-answer">Season with food-safe mineral oil twice yearly — apply a thin coat to the unglazed base and foot ring, let it soak for 10 minutes, then wipe away the excess. This keeps the raw clay from absorbing moisture and preserves the matte exterior finish.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 5 -->
+        <div class="faq-item" role="listitem">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-answer-5">
+            <span class="faq-question">Do you offer wholesale?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 14 14" fill="none" stroke="#2b2b29" stroke-width="2" stroke-linecap="round">
+                <line x1="7" y1="2" x2="7" y2="12"/>
+                <line x1="2" y1="7" x2="12" y2="7"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-body" id="faq-answer-5" role="region">
+            <p class="faq-answer">Yes. Wholesale accounts require a minimum opening order of 12 pieces. Trade pricing is available to qualifying retailers, hotels, and hospitality groups. Select "Wholesale" from the contact form and we'll send our trade packet.</p>
+          </div>
+        </div>
+
+      </div><!-- /faq-accordion -->
+    </div><!-- /container -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SQUIGGLY DIVIDER 3 — surface → dark
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="divider-contact-surface-to-dark" class="contact-squiggle-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" height="64">
+      <path class="squiggle-path" d="M0,40 C200,10 400,60 600,30 C800,4 1000,52 1200,28 C1320,12 1400,44 1440,36 L1440,64 L0,64 Z"/>
+    </svg>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SECTION 4 — NEWSLETTER (dark)
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section id="newsletter-section" aria-labelledby="newsletter-headline">
+    <div id="newsletter-inner">
+      <h2 id="newsletter-headline">The quarterly dispatch</h2>
+      <p id="newsletter-body">New pieces, process notes, and occasionally a photo of the kiln at 3am.</p>
+      <form id="newsletter-form" novalidate>
+        <input
+          id="newsletter-email-input"
+          type="email"
+          name="newsletter_email"
+          placeholder="your@email.com"
+          autocomplete="email"
+          aria-label="Email address for newsletter"
+        >
+        <button id="newsletter-submit-btn" type="submit">Subscribe</button>
+      </form>
+      <p id="newsletter-privacy">Quarterly only. No spam. Unsubscribe anytime.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SQUIGGLY DIVIDER 4 — dark newsletter → dark footer
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="divider-contact-dark-to-footer" class="contact-squiggle-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" height="56">
+      <path class="squiggle-path" d="M0,24 C240,48 480,4 720,28 C960,52 1200,8 1440,24 L1440,56 L0,56 Z"/>
+    </svg>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SECTION 5 — FOOTER (dark, #2b2918)
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <footer id="contact-footer" aria-label="Site footer">
+    <div class="container">
+      <div id="contact-footer-inner">
+
+        <!-- Brand + tagline -->
+        <div id="footer-brand-col">
+          <a id="footer-logo" href="index.html">Roundwork Studio</a>
+          <p id="footer-tagline">Hand-pressed kitchen tools and home objects, made in Oaxaca.</p>
+        </div>
+
+        <!-- Page links -->
+        <div id="footer-pages-col">
+          <span class="footer-col-title">Pages</span>
+          <ul class="footer-links-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li><a href="process.html">Process</a></li>
+            <li><a href="studio.html">Studio</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Footer newsletter -->
+        <div id="footer-newsletter-col">
+          <span class="footer-col-title">Newsletter</span>
+          <form id="footer-newsletter-form" novalidate>
+            <input
+              id="footer-newsletter-input"
+              type="email"
+              name="footer_email"
+              placeholder="your@email.com"
+              autocomplete="email"
+              aria-label="Email address for newsletter"
+            >
+            <button id="footer-newsletter-btn" type="submit">Subscribe</button>
+          </form>
+        </div>
+
+      </div><!-- /contact-footer-inner -->
+
+      <!-- Footer bottom -->
+      <div id="footer-bottom">
+        <p id="footer-copyright">&copy; 2024 Roundwork Studio. All rights reserved.</p>
+        <div id="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+
+    </div><!-- /container -->
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       ACCORDION JS
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      var triggers = document.querySelectorAll('.faq-trigger');
+      triggers.forEach(function (trigger) {
+        trigger.addEventListener('click', function () {
+          var item = trigger.closest('.faq-item');
+          var isOpen = item.classList.contains('is-open');
+
+          // Close all items first
+          document.querySelectorAll('.faq-item.is-open').forEach(function (openItem) {
+            openItem.classList.remove('is-open');
+            openItem.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+          });
+
+          // If clicking a closed item, open it
+          if (!isOpen) {
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       GSAP ANIMATIONS
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    var EASE_SPRING = 'elastic.out(1, 0.4)';
+    var EASE_STANDARD = 'power2.out';
+
+    // ── Hero: springIn on page load ────────────────────────────────────────
+    // Use gsap.set first so content is visible without GSAP (CSS has no opacity:0)
+    gsap.set('#contact-hero-content', { scale: 0.88, y: 20 });
+    gsap.to('#contact-hero-content', {
+      scale: 1,
+      y: 0,
+      duration: 0.9,
+      ease: EASE_SPRING,
+      delay: 0.15,
+      clearProps: 'transform'
+    });
+
+    // ── Form card: clayInflate on scroll ───────────────────────────────────
+    gsap.set('#contact-form-card', { scale: 0.88, y: 32 });
+    gsap.to('#contact-form-card', {
+      scrollTrigger: {
+        trigger: '#contact-form-card',
+        start: 'top 82%',
+        once: true
+      },
+      scale: 1,
+      y: 0,
+      duration: 0.8,
+      ease: EASE_SPRING,
+      clearProps: 'transform'
+    });
+
+    // ── Info cards: staggered elastic springIn ─────────────────────────────
+    var infoCards = gsap.utils.toArray('.info-card');
+    infoCards.forEach(function (card, i) {
+      gsap.set(card, { scale: 0.88, y: 24 });
+      gsap.to(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          once: true
+        },
+        scale: 1,
+        y: 0,
+        duration: 0.65,
+        ease: EASE_SPRING,
+        delay: i * 0.06,
+        clearProps: 'transform'
+      });
+    });
+
+    // ── FAQ header ─────────────────────────────────────────────────────────
+    gsap.set('#faq-header', { y: 28 });
+    gsap.to('#faq-header', {
+      scrollTrigger: {
+        trigger: '#faq-header',
+        start: 'top 82%',
+        once: true
+      },
+      y: 0,
+      duration: 0.7,
+      ease: EASE_STANDARD,
+      clearProps: 'transform'
+    });
+
+    // ── FAQ items: stagger slide up ────────────────────────────────────────
+    var faqItems = gsap.utils.toArray('.faq-item');
+    faqItems.forEach(function (item, i) {
+      gsap.set(item, { y: 20, scale: 0.97 });
+      gsap.to(item, {
+        scrollTrigger: {
+          trigger: '#faq-accordion',
+          start: 'top 80%',
+          once: true
+        },
+        y: 0,
+        scale: 1,
+        duration: 0.55,
+        ease: EASE_SPRING,
+        delay: i * 0.07,
+        clearProps: 'transform'
+      });
+    });
+
+    // ── Newsletter section: clip-path tidal reveal ─────────────────────────
+    gsap.set('#newsletter-inner', { y: 32 });
+    gsap.to('#newsletter-inner', {
+      scrollTrigger: {
+        trigger: '#newsletter-section',
+        start: 'top 75%',
+        once: true
+      },
+      y: 0,
+      duration: 0.9,
+      ease: EASE_SPRING,
+      clearProps: 'transform'
+    });
+
+    // ── Footer: clay slab rise (springIn) ─────────────────────────────────
+    gsap.set('#contact-footer', { y: 40 });
+    gsap.to('#contact-footer', {
+      scrollTrigger: {
+        trigger: '#contact-footer',
+        start: 'top 90%',
+        once: true
+      },
+      y: 0,
+      duration: 1.0,
+      ease: EASE_SPRING,
+      clearProps: 'transform'
+    });
+
+    // Footer columns stagger
+    var footerCols = gsap.utils.toArray('#contact-footer-inner > *');
+    footerCols.forEach(function (col, i) {
+      gsap.set(col, { y: 20 });
+      gsap.to(col, {
+        scrollTrigger: {
+          trigger: '#contact-footer',
+          start: 'top 85%',
+          once: true
+        },
+        y: 0,
+        duration: 0.6,
+        ease: EASE_SPRING,
+        delay: 0.2 + (i * 0.08),
+        clearProps: 'transform'
+      });
+    });
+  </script>
+
+</body>
+</html>

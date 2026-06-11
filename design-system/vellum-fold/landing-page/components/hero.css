@@ -1,0 +1,264 @@
+/* ============================================================
+   Hero — Deckle & Thread
+   Full-viewport book-opening reveal animation
+   Light cream background, video with vellum overlay
+   ============================================================ */
+
+/* ── Book cover (initial state before open) ── */
+.hero-book-cover {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.hero-book-cover-inner {
+  text-align: center;
+}
+
+.hero-book-cover-title {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 600;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: var(--color-heading-dark);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.hero-book-cover-subtitle {
+  font-family: var(--font-subheading);
+  font-size: var(--type-h3);
+  font-weight: 600;
+  letter-spacing: var(--type-h3-spacing);
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+}
+
+/* Decorative border on cover */
+.hero-book-cover::before {
+  content: '';
+  position: absolute;
+  inset: 24px;
+  border: 1px solid var(--color-section-divider);
+  pointer-events: none;
+}
+
+/* ── Hero section ── */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-cream);
+  overflow: hidden;
+  /* Override book-page-content padding for full-bleed hero */
+  margin: -48px -56px -48px -72px;
+  padding: 0;
+  width: calc(100% + 56px + 72px);
+  height: calc(100% + 96px);
+}
+
+/* Video background */
+.hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.hero-video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Vellum-filtered overlay */
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 237, 224, 0.88) 0%,
+    rgba(245, 237, 224, 0.75) 40%,
+    rgba(245, 237, 224, 0.92) 100%
+  );
+  mix-blend-mode: normal;
+}
+
+/* Video fallback */
+.hero-video-fallback {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    var(--color-cream) 0%,
+    var(--color-section-divider) 50%,
+    var(--color-tag-warm) 100%
+  );
+}
+
+/* Content */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  padding-inline: var(--grid-padding);
+  padding-block: 120px 140px;
+}
+
+.hero-chapter {
+  font-family: var(--font-subheading);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-chapter::after {
+  content: '';
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background-color: var(--color-hero-accent);
+}
+
+.hero-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2.75rem, 6vw, 3.4375rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: var(--font-letter-spacing-heading);
+  color: var(--color-heading-dark);
+  max-width: 620px;
+  margin-bottom: 24px;
+}
+
+.hero-heading .accent-stroke {
+  position: relative;
+  display: inline;
+}
+
+.hero-heading .accent-stroke::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  bottom: 8px;
+  height: 3px;
+  background-color: var(--color-hero-accent);
+  z-index: -1;
+}
+
+.hero-body {
+  font-family: var(--font-paragraph);
+  font-size: var(--type-p);
+  line-height: var(--type-p-line);
+  color: var(--color-body-text);
+  max-width: 480px;
+  margin-bottom: 40px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-actions .btn-primary,
+.hero-actions .btn-ghost {
+  padding: 15px 36px;
+}
+
+/* Page number — bottom left */
+.hero-page-number {
+  position: absolute;
+  bottom: 40px;
+  left: var(--grid-padding);
+  z-index: 3;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-muted-text);
+  letter-spacing: 0.06em;
+}
+
+/* Bookmark ribbon — right edge */
+.hero-bookmark {
+  position: absolute;
+  top: 0;
+  right: 72px;
+  z-index: 4;
+  width: 28px;
+  height: 80px;
+  background-color: var(--color-hero-accent);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero {
+    /* Match book-page-content responsive padding: 32px 24px 32px 40px */
+    margin: -32px -24px -32px -40px;
+    width: calc(100% + 24px + 40px);
+    height: calc(100% + 64px);
+  }
+
+  .hero-content {
+    padding-block: 100px 120px;
+  }
+
+  .hero-heading {
+    max-width: 100%;
+  }
+
+  .hero-body {
+    max-width: 100%;
+  }
+
+  .hero-bookmark {
+    right: 24px;
+    width: 22px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    /* Match book-page-content responsive padding: 24px 16px 24px 28px */
+    margin: -24px -16px -24px -28px;
+    width: calc(100% + 16px + 28px);
+    height: calc(100% + 48px);
+  }
+
+  .hero-content {
+    padding-inline: 24px;
+    padding-block: 80px 100px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .btn-primary,
+  .hero-actions .btn-ghost {
+    text-align: center;
+  }
+
+  .hero-page-number {
+    left: 24px;
+  }
+}

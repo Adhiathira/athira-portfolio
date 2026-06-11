@@ -1,0 +1,164 @@
+/* Aurora/Gradient Glow Motion System — Source: phosphor-haze, Intensity 5 */
+/* Twist C — Full Aurora Motion Reimagining */
+
+:root {
+  --ds-motion-duration-xs: 200ms;
+  --ds-motion-duration-sm: 400ms;
+  --ds-motion-duration-md: 800ms;
+  --ds-motion-duration-lg: 1400ms;
+  --ds-motion-duration-xl: 2200ms;
+  --ds-motion-duration-aurora-drift: 8000ms;
+  --ds-motion-duration-aurora-cycle: 20000ms;
+
+  --ds-motion-easing-primary: cubic-bezier(0.16, 1, 0.3, 1);
+  --ds-motion-easing-drift:   cubic-bezier(0.4, 0, 0.2, 1);
+  --ds-motion-easing-reveal:  cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ds-motion-easing-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --ds-motion-stagger-delay: 120ms;
+}
+
+/* ============================================================
+   AURORA KEYFRAMES
+   ============================================================ */
+
+@keyframes auroraShimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; filter: blur(20px); }
+  50%       { opacity: 1;   filter: blur(12px); }
+}
+
+@keyframes auroraBand {
+  0%   { transform: translateY(0px)  scaleX(1);    }
+  33%  { transform: translateY(-8px) scaleX(1.02); }
+  66%  { transform: translateY(4px)  scaleX(0.99); }
+  100% { transform: translateY(0px)  scaleX(1);    }
+}
+
+@keyframes cosmicReveal {
+  0%   { clip-path: inset(0 100% 0 0); opacity: 0; }
+  100% { clip-path: inset(0 0%   0 0); opacity: 1; }
+}
+
+@keyframes gradientDrift {
+  0%   { filter: hue-rotate(0deg)   brightness(1);    }
+  25%  { filter: hue-rotate(15deg)  brightness(1.1);  }
+  50%  { filter: hue-rotate(-10deg) brightness(0.95); }
+  75%  { filter: hue-rotate(20deg)  brightness(1.05); }
+  100% { filter: hue-rotate(0deg)   brightness(1);    }
+}
+
+@keyframes auroraGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(33, 243, 182, 0.3),
+      0 0 20px rgba(33, 243, 182, 0.1);
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(33, 243, 182, 0.8),
+      0 0 40px rgba(33, 243, 182, 0.4),
+      0 0 80px rgba(33, 243, 182, 0.2);
+  }
+}
+
+@keyframes particleDrift {
+  0%   { transform: translateY(0)     translateX(0)    scale(1);   opacity: 0.6; }
+  50%  { transform: translateY(-40px) translateX(20px) scale(1.2); opacity: 1;   }
+  100% { transform: translateY(-80px) translateX(-10px) scale(0.8); opacity: 0;  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: rgba(33, 243, 182, 0.3);
+    box-shadow: 0 0 10px rgba(33, 243, 182, 0.1);
+  }
+  50% {
+    border-color: rgba(33, 243, 182, 0.8);
+    box-shadow:
+      0 0 20px rgba(33, 243, 182, 0.4),
+      0 0 40px rgba(33, 243, 182, 0.2);
+  }
+}
+
+/* ============================================================
+   UTILITY CLASSES — AMBIENT LOOPS
+   ============================================================ */
+
+.aurora-shimmer {
+  background-size: 200% 200%;
+  animation: auroraShimmer var(--ds-motion-duration-aurora-drift) ease-in-out infinite;
+}
+
+.aurora-glow-pulse {
+  animation: glowPulse var(--ds-motion-duration-aurora-drift) ease-in-out infinite;
+}
+
+.aurora-band {
+  animation: auroraBand var(--ds-motion-duration-aurora-cycle) ease-in-out infinite;
+}
+
+.aurora-gradient-drift {
+  animation: gradientDrift var(--ds-motion-duration-aurora-cycle) ease-in-out infinite;
+}
+
+.aurora-text-glow {
+  animation: auroraGlow var(--ds-motion-duration-aurora-drift) ease-in-out infinite;
+}
+
+.aurora-border-glow {
+  animation: borderGlow var(--ds-motion-duration-aurora-drift) ease-in-out infinite;
+}
+
+/* ============================================================
+   UTILITY CLASSES — SCROLL REVEALS
+   ============================================================ */
+
+.aurora-reveal {
+  animation: cosmicReveal var(--ds-motion-duration-md) var(--ds-motion-easing-primary) both;
+}
+
+.aurora-reveal-page {
+  animation: cosmicReveal var(--ds-motion-duration-lg) var(--ds-motion-easing-reveal) both;
+}
+
+/* ============================================================
+   INTERACTIVE ELEMENT DEFAULTS
+   ============================================================ */
+
+a, button, .btn {
+  transition:
+    color        var(--ds-motion-duration-sm) var(--ds-motion-easing-primary),
+    background   var(--ds-motion-duration-sm) var(--ds-motion-easing-primary),
+    box-shadow   var(--ds-motion-duration-sm) var(--ds-motion-easing-primary),
+    border-color var(--ds-motion-duration-sm) var(--ds-motion-easing-primary),
+    text-shadow  var(--ds-motion-duration-sm) var(--ds-motion-easing-primary),
+    transform    var(--ds-motion-duration-sm) var(--ds-motion-easing-spring);
+}
+
+.card, [data-card] {
+  transition:
+    box-shadow var(--ds-motion-duration-md) var(--ds-motion-easing-primary),
+    transform  var(--ds-motion-duration-md) var(--ds-motion-easing-primary),
+    filter     var(--ds-motion-duration-md) var(--ds-motion-easing-drift);
+}
+
+nav, [role="navigation"] {
+  transition:
+    background      var(--ds-motion-duration-md) var(--ds-motion-easing-drift),
+    backdrop-filter var(--ds-motion-duration-md) var(--ds-motion-easing-drift),
+    border-color    var(--ds-motion-duration-md) var(--ds-motion-easing-drift);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

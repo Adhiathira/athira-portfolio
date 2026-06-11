@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quill Plane Instrument Co. — Precision Calibration Instruments for Soft Materials</title>
+  <meta name="description" content="QP instruments measure what matters. The QP-7 Fold Endurance Tester and QP-12 Thickness Comparator — precision tools for conservation studios, archival binderies, and European paper mills since 1971.">
+
+  <!-- Design System Tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <!-- Components -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+
+  <!-- Splitting.js -->
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- Paper grain SVG filter (invisible) -->
+<svg id="paper-grain-filter" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;">
+  <defs>
+    <filter id="paper-grain">
+      <feTurbulence id="turbulence-node" type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+      <feBlend in="SourceGraphic" in2="gray" mode="overlay" result="blended"/>
+      <feComponentTransfer in="blended">
+        <feFuncA type="linear" slope="0.03"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ── NAV ── -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Quill Plane Instrument Co. home">
+      <span class="nav-logo-mark">QP</span>
+      <span class="nav-logo-sub">Instrument Co.</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="instruments.html" class="nav-link">Instruments</a></li>
+      <li><a href="process.html" class="nav-link">Process</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="instruments.html" class="nav-link btn-primary" style="padding:8px 18px;font-size:0.75rem;">Enquire</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="instruments.html" class="nav-link">Instruments</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="instruments.html" class="nav-link">Enquire</a>
+</div>
+
+<script>
+  // Nav scroll behavior
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Mobile hamburger
+  const mobileToggle = document.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile-menu');
+  mobileToggle.addEventListener('click', () => {
+    nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open');
+    document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+  });
+</script>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div id="hero-bg-word" aria-hidden="true">MEASURE</div>
+  <div id="hero-grain-overlay" aria-hidden="true"></div>
+
+  <div id="hero-inner">
+    <div id="hero-left">
+      <p id="hero-eyebrow">Est. 1971 · Stroud, Gloucestershire</p>
+      <h1 id="hero-title">Instruments for Paper.</h1>
+      <p id="hero-tagline" style="font-family:var(--font-body);font-size:1rem;color:var(--color-muted-text);line-height:1.65;margin:0 0 40px;max-width:400px;">
+        The QP-7 and QP-12 measure what matters — fold endurance, sheet thickness, formation quality. Tools that calibrate to ISO 5626 and live beside your bone folder.
+      </p>
+      <div id="hero-ctas">
+        <a href="instruments.html" class="btn-primary">View Instruments</a>
+        <a href="process.html" class="btn-ghost">How We Test</a>
+      </div>
+    </div>
+
+    <div id="hero-right">
+      <div id="hero-image-container">
+        <img
+          id="hero-bg-img"
+          src="assets/hero-paper-surface.jpeg"
+          alt="120gsm Rives BFK uncoated paper surface under raking side light — grain structure and fibre clusters visible"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div id="hero-img-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.8rem;">
+          → assets/hero-paper-surface.jpeg
+        </div>
+        <div id="hero-img-overlay" style="position:absolute;inset:0;background:linear-gradient(to bottom, transparent 60%, rgba(242,242,242,0.4) 100%);pointer-events:none;"></div>
+      </div>
+
+      <div id="hero-spec-strip">
+        <div class="hero-spec-item">
+          <p class="hero-spec-label">Accuracy</p>
+          <p class="hero-spec-value" id="spec-accuracy">±0.3</p>
+          <p class="hero-spec-label" style="margin-top:2px;">mm tolerance</p>
+        </div>
+        <div class="hero-spec-item">
+          <p class="hero-spec-label">In service since</p>
+          <p class="hero-spec-value" id="spec-year">1971</p>
+          <p class="hero-spec-label" style="margin-top:2px;">Stroud, UK</p>
+        </div>
+        <div class="hero-spec-item">
+          <p class="hero-spec-label">Test standard</p>
+          <p class="hero-spec-value">ISO</p>
+          <p class="hero-spec-label" style="margin-top:2px;">5626 · TAPPI T511</p>
+        </div>
+        <div class="hero-spec-item">
+          <p class="hero-spec-label">Instrument weight</p>
+          <p class="hero-spec-value" id="spec-weight">870</p>
+          <p class="hero-spec-label" style="margin-top:2px;">g — cast aluminium</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Divider 1: Wave -->
+<div class="divider-wrap" aria-hidden="true">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 C180,60 360,0 540,30 C720,60 900,0 1080,30 C1260,60 1380,20 1440,30 L1440,60 L0,60 Z" fill="#f2f2f2"/>
+  </svg>
+</div>
+
+<!-- ── INSTRUMENTS SECTION ── -->
+<section id="instruments-section">
+  <div class="section-inner">
+    <p id="instruments-label" class="section-label">— Instrument Range</p>
+
+    <div id="instruments-grid">
+      <!-- Card 1: QP-7 (spans 2 rows) -->
+      <article class="instrument-card" id="instrument-qp7">
+        <p class="instrument-card-number">01</p>
+        <h2 class="instrument-card-name">QP-7 Fold<br>Endurance Tester</h2>
+        <p class="instrument-card-spec">Tests the number of folds a paper sample can withstand before fracture. Calibrated to ISO 5626 and TAPPI T511 sp. Double-fold method, adjustable tension. Used by conservation studios and archival binderies requiring quantified fold life.</p>
+        <div class="instrument-card-image" id="work-panel">
+          <img
+            src="assets/qp7-tester.jpeg"
+            alt="QP-7 Fold Endurance Tester — precision fold testing instrument for paper and board"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.8rem;">→ assets/qp7-tester.jpeg</div>
+        </div>
+        <a href="instruments.html" class="instrument-card-cta">View Specifications</a>
+      </article>
+
+      <!-- Card 2: QP-12 -->
+      <article class="instrument-card" id="instrument-qp12">
+        <p class="instrument-card-number">02</p>
+        <h2 class="instrument-card-name">QP-12 Thickness Comparator</h2>
+        <p class="instrument-card-spec">Cast aluminium body, 870g, matte powder coat. Stainless contact faces. Audible click at zero. Measures caliper of single sheets from 20–1200 microns. Cylinder mould mill compatible.</p>
+        <a href="instruments.html" class="instrument-card-cta">View Specifications</a>
+      </article>
+
+      <!-- Card 3: Accessories -->
+      <article class="instrument-card" id="instrument-accessories">
+        <p class="instrument-card-number">03</p>
+        <h2 class="instrument-card-name">Calibration Weights &amp; Accessories</h2>
+        <p class="instrument-card-spec">Reference weight sets, replacement contact faces, tension calibration tools, and the QP field carry case in BS 10 B 17 powder coat.</p>
+        <a href="instruments.html" class="instrument-card-cta">Browse Accessories</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Divider 2: Blob edge -->
+<div class="divider-wrap" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C80,20 160,60 280,35 C400,10 480,55 600,40 C720,25 800,65 920,38 C1040,11 1140,58 1260,40 C1350,26 1400,48 1440,40 L1440,80 L0,80 Z" fill="#f2f2f2"/>
+  </svg>
+</div>
+
+<!-- ── SPECIFICATION SECTION (dark contrast) ── -->
+<section id="spec-section">
+  <div id="spec-bg-word" aria-hidden="true">TOLERANCE</div>
+  <div class="spec-section-inner">
+    <h2 id="spec-heading">Every number is a measurement. Not a claim.</h2>
+
+    <div id="spec-grid">
+      <div class="spec-item">
+        <p class="spec-item-label">Fold endurance range</p>
+        <p class="spec-item-value" id="counter-folds">0</p>
+        <p class="spec-item-unit">to 100,000 folds</p>
+      </div>
+      <div class="spec-item">
+        <p class="spec-item-label">Thickness range (QP-12)</p>
+        <p class="spec-item-value" id="counter-thickness">0</p>
+        <p class="spec-item-unit">to 1,200 µm</p>
+      </div>
+      <div class="spec-item">
+        <p class="spec-item-label">Instrument service life</p>
+        <p class="spec-item-value" id="counter-service">0</p>
+        <p class="spec-item-unit">years avg. in field</p>
+      </div>
+      <div class="spec-item">
+        <p class="spec-item-label">Measurement accuracy</p>
+        <p class="spec-item-value" id="counter-accuracy">0</p>
+        <p class="spec-item-unit">µm resolution</p>
+      </div>
+      <div class="spec-item">
+        <p class="spec-item-label">Active institutions</p>
+        <p class="spec-item-value" id="counter-institutions">0</p>
+        <p class="spec-item-unit">conservation studios</p>
+      </div>
+      <div class="spec-item">
+        <p class="spec-item-label">Founded</p>
+        <p class="spec-item-value">1971</p>
+        <p class="spec-item-unit">Stroud, Glos.</p>
+      </div>
+    </div>
+
+    <!-- SVG line draw: QP-7 outline schematic -->
+    <div id="instrument-svg-container">
+      <svg id="qp7-outline" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" aria-label="QP-7 instrument schematic outline">
+        <path d="M40,160 L40,40 L80,40 L80,20 L240,20 L240,40 L280,40 L280,160 L240,160 L240,140 L200,140 L200,120 L160,120 L160,140 L120,140 L120,160 Z M80,40 L80,80 L240,80 L240,40 M160,80 L160,120 M100,60 L100,80 M140,60 L140,80 M180,60 L180,80 M220,60 L220,80 M80,100 L240,100 M80,120 L120,120 M200,120 L240,120" fill="none" stroke="#f2f2f2" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Divider 3: Zigzag -->
+<div class="divider-wrap" aria-hidden="true" style="background:#1a1a18;">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L90,60 L180,0 L270,60 L360,0 L450,60 L540,0 L630,60 L720,0 L810,60 L900,0 L990,60 L1080,0 L1170,60 L1260,0 L1350,60 L1440,0 L1440,60 L0,60 Z" fill="#e9e9eb"/>
+  </svg>
+</div>
+
+<!-- ── PROCESS SECTION ── -->
+<section id="process-section">
+  <div id="process-heading-wrap">
+    <p id="process-eyebrow">— Method</p>
+    <h2 id="process-heading">A measurement is only as good as the method that produces it.</h2>
+  </div>
+
+  <div id="process-steps">
+    <div class="process-step">
+      <span class="process-step-number">01</span>
+      <div class="process-step-content">
+        <h3 class="process-step-title">Sample Preparation</h3>
+        <p class="process-step-body">Each test sample is conditioned at 23°C and 50% RH for a minimum of 4 hours prior to measurement. This eliminates moisture-content variables that would otherwise compromise fold endurance readings by up to 18%.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <span class="process-step-number">02</span>
+      <div class="process-step-content">
+        <h3 class="process-step-title">Instrument Calibration</h3>
+        <p class="process-step-body">The QP-12 is zeroed against a 250µm reference gauge before each session. The QP-7's fold tension is calibrated to the specified load (0.5kN standard, 1kN optional) using the included dead-weight set. Verification is traceable to national standards.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <span class="process-step-number">03</span>
+      <div class="process-step-content">
+        <h3 class="process-step-title">Measurement Cycle</h3>
+        <p class="process-step-body">The QP-12 completes a full thickness reading cycle in 2.2 seconds. The QP-7 counts each complete double-fold and automatically stops at fracture. Results are logged directly onto the QP data sheet or export-ready CSV if used with the optional QP DataLogger.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <span class="process-step-number">04</span>
+      <div class="process-step-content">
+        <h3 class="process-step-title">Reporting</h3>
+        <p class="process-step-body">QP results are reported against ISO 5626 (fold endurance) and ISO 534 (thickness). Conservation studios typically report QP-7 values alongside Betti number readings. Binderies use QP-12 caliper data to select appropriate scoring blades for first-edition work.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlapping image: crosses into next section -->
+  <div id="process-image-overlap">
+    <div id="process-overlap-img-wrap">
+      <img
+        id="process-overlap-img"
+        src="assets/calibration-process.jpeg"
+        alt="Hand adjusting micrometer thimble on QP-12 Thickness Comparator against folded paper edge"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-2);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.8rem;">→ assets/calibration-process.jpeg</div>
+    </div>
+  </div>
+</section>
+
+<!-- Divider 4: Tilted plane -->
+<div class="divider-wrap" aria-hidden="true" style="background:var(--color-surface-1);">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,80 L1440,0 L1440,80 Z" fill="#f2f2f2"/>
+  </svg>
+</div>
+
+<!-- ── HERITAGE SECTION ── -->
+<section id="heritage-section">
+  <div class="heritage-inner">
+    <div id="heritage-left">
+      <p id="heritage-eyebrow">— The Studio</p>
+      <h2 id="heritage-heading">Instrument-making for people who make by hand.</h2>
+      <p id="heritage-body">Quill Plane Instrument Co. was founded in 1971 to serve the British hand-papermaking revival — a moment when craftspeople needed tools that matched the precision of their practice. The QP instruments were never designed for mass production. They were designed for the bench: for the space between the vat and the press, between the stone and the forme, where a 0.3mm variance in caliper can determine whether a first-edition binding holds for fifty years or fails in ten.</p>
+      <p id="heritage-body-2" style="font-family:var(--font-body);font-size:1rem;font-weight:400;color:var(--color-muted-text);line-height:1.7;margin:0 0 40px;">The instruments remain in production today for conservation studios, archival binderies, and the handful of European mills still using cylinder mould formation. Acquired by private trust in 1998 and never modernised.</p>
+      <a href="about.html" class="btn-ghost">About the studio</a>
+
+      <div id="heritage-facts" style="margin-top:48px;">
+        <div class="heritage-fact">
+          <p class="heritage-fact-value" id="counter-years">0</p>
+          <p class="heritage-fact-label">Years in production</p>
+        </div>
+        <div class="heritage-fact">
+          <p class="heritage-fact-value">2</p>
+          <p class="heritage-fact-label">Core instruments</p>
+        </div>
+        <div class="heritage-fact">
+          <p class="heritage-fact-value">BS 10 B 17</p>
+          <p class="heritage-fact-label">Body finish</p>
+        </div>
+        <div class="heritage-fact">
+          <p class="heritage-fact-value">ISO 5626</p>
+          <p class="heritage-fact-label">Primary standard</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="heritage-right">
+      <div id="heritage-image-wrap">
+        <img
+          id="heritage-img"
+          src="assets/work-surface.jpeg"
+          alt="Top-down view of light table with Pergamenata vellum partially unrolled and QP-7 fold tester set beside it"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.8rem;">→ assets/work-surface.jpeg</div>
+      </div>
+      <p id="heritage-caption">QP-7 Fold Endurance Tester and Pergamenata vellum on a Dolan&Bullock light table, conservation studio, Gloucestershire.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Divider 5: Inverted arch -->
+<div class="divider-wrap" aria-hidden="true" style="background:var(--color-page-bg);">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 Q120,70 240,30 Q360,0 480,40 Q600,70 720,30 Q840,0 960,40 Q1080,70 1200,30 Q1320,0 1440,40 L1440,70 L0,70 Z" fill="#202020"/>
+  </svg>
+</div>
+
+<!-- ── CTA SECTION ── -->
+<section id="cta-section">
+  <div class="cta-inner">
+    <h2 id="cta-heading">Enquire about the QP-7 and QP-12.</h2>
+    <p style="font-family:var(--font-body);font-size:1rem;color:rgba(242,242,242,0.65);line-height:1.65;margin:0;max-width:480px;">
+      QP instruments are available directly from the studio. Lead time is typically 6–8 weeks. Calibration certificates and test weight sets included.
+    </p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+      <a href="instruments.html" class="btn-primary-light">Request Enquiry Form</a>
+      <a href="process.html" style="font-family:var(--font-body);font-size:0.75rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(242,242,242,0.5);text-decoration:none;transition:opacity var(--duration-slow) var(--ease-primary);" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Read the method →</a>
+    </div>
+    <div id="cta-meta">
+      <span class="cta-meta-item">Stroud, Gloucestershire</span>
+      <span class="cta-meta-item">Est. 1971</span>
+      <span class="cta-meta-item">Private commission only</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div id="footer-top">
+      <div class="footer-brand">
+        <p class="footer-brand-name">Quill Plane Instrument Co.</p>
+        <p class="footer-brand-desc">Precision calibration instruments for paper engineers, conservators, and archival binderies. QP-7 and QP-12 in continuous production since 1971.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Instruments</p>
+        <ul class="footer-links-list">
+          <li><a href="instruments.html">QP-7 Fold Tester</a></li>
+          <li><a href="instruments.html">QP-12 Thickness Comparator</a></li>
+          <li><a href="instruments.html">Accessories</a></li>
+          <li><a href="instruments.html">Enquire</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Studio</p>
+        <ul class="footer-links-list">
+          <li><a href="process.html">Method</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Heritage</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Standards</p>
+        <ul class="footer-links-list">
+          <li><a href="process.html">ISO 5626</a></li>
+          <li><a href="process.html">TAPPI T511</a></li>
+          <li><a href="process.html">ISO 534</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p class="footer-copyright">© 2024 Quill Plane Instrument Co. Stroud, Gloucestershire, UK.</p>
+      <ul class="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── LENIS SMOOTH SCROLL ──
+  const lenis = new Lenis({
+    lerp: 0.08,
+    duration: 1.6,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    ScrollTrigger.update();
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  // ── GSAP SETUP ──
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── CUSTOM CURSOR ──
+  (function() {
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring || window.innerWidth < 900) return;
+    document.body.style.cursor = 'none';
+
+    const xDot = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power2.out' });
+    const yDot = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power2.out' });
+    const xRing = gsap.quickTo(ring, 'x', { duration: 0.55, ease: 'power3.out' });
+    const yRing = gsap.quickTo(ring, 'y', { duration: 0.55, ease: 'power3.out' });
+
+    window.addEventListener('mousemove', (e) => {
+      xDot(e.clientX); yDot(e.clientY);
+      xRing(e.clientX); yRing(e.clientY);
+    }, { passive: true });
+
+    document.querySelectorAll('a, button, .instrument-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        gsap.to(ring, { scale: 2.2, opacity: 0.4, duration: 0.4, ease: 'power2.out' });
+      });
+      el.addEventListener('mouseleave', () => {
+        gsap.to(ring, { scale: 1, opacity: 0.6, duration: 0.4, ease: 'power2.out' });
+      });
+    });
+  })();
+
+  // ── SVG FÉTURBULENCE PAPER GRAIN ──
+  (function() {
+    const turbulence = document.getElementById('turbulence-node');
+    if (!turbulence) return;
+    const obj = { freq: 0.65 };
+    gsap.to(obj, {
+      freq: 0.70,
+      duration: 4,
+      ease: 'sine.inOut',
+      repeat: -1,
+      yoyo: true,
+      onUpdate: () => {
+        turbulence.setAttribute('baseFrequency', obj.freq.toFixed(3));
+      }
+    });
+  })();
+
+  // ── HERO: CHARACTER SCATTER ASSEMBLY ──
+  window.addEventListener('load', () => {
+    Splitting({ target: '#hero-title', by: 'chars' });
+
+    gsap.from('#hero-title .char', {
+      x: gsap.utils.random(-340, 340, true),
+      y: gsap.utils.random(-180, 180, true),
+      rotation: gsap.utils.random(-72, 72, true),
+      opacity: 0,
+      stagger: { each: 0.022, from: 'center' },
+      ease: 'back.out(1.7)',
+      duration: 0.85,
+      delay: 0.3
+    });
+
+    // Hero elements entrance
+    gsap.from('#hero-eyebrow', { y: 20, duration: 0.8, ease: 'power2.out', delay: 0.1 });
+    gsap.from('#hero-tagline', { y: 20, duration: 0.9, ease: 'power2.out', delay: 1.2 });
+    gsap.from('#hero-ctas', { y: 20, duration: 0.9, ease: 'power2.out', delay: 1.4 });
+    gsap.from('#hero-right', { x: 30, duration: 1.1, ease: 'power2.out', delay: 0.6 });
+  });
+
+  // ── HERO PARALLAX ──
+  gsap.to('#hero-bg-word', {
+    yPercent: -15,
+    ease: 'none',
+    scrollTrigger: { trigger: '#hero', scrub: 2.2, start: 'top top', end: 'bottom top' }
+  });
+
+  gsap.to('#hero-image-container', {
+    y: 40,
+    ease: 'none',
+    scrollTrigger: { trigger: '#hero', scrub: 1.3, start: 'top top', end: 'bottom top' }
+  });
+
+  // ── INSTRUMENTS SECTION: word rotation stagger ──
+  Splitting({ target: '.section-label', by: 'words' });
+
+  gsap.from('#instruments-label .word', {
+    rotationY: 90,
+    transformOrigin: 'left center',
+    opacity: 0,
+    stagger: 0.08,
+    ease: 'power3.out',
+    duration: 0.7,
+    scrollTrigger: { trigger: '#instruments-section', start: 'top 80%' }
+  });
+
+  // Instrument cards: divergent entrance
+  gsap.from('#instrument-qp7', {
+    x: -60,
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#instruments-grid', start: 'top 75%' }
+  });
+  gsap.from('#instrument-qp12', {
+    x: 60,
+    duration: 1.0,
+    ease: 'power2.out',
+    delay: 0.1,
+    scrollTrigger: { trigger: '#instruments-grid', start: 'top 75%' }
+  });
+  gsap.from('#instrument-accessories', {
+    x: 60,
+    duration: 1.0,
+    ease: 'power2.out',
+    delay: 0.2,
+    scrollTrigger: { trigger: '#instruments-grid', start: 'top 75%' }
+  });
+
+  // Elastic magnetic hover on instrument cards
+  document.querySelectorAll('.instrument-card').forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+      gsap.to(el, { x: dx * 0.06, y: dy * 0.06, ease: 'power1.out', duration: 0.35 });
+    });
+    el.addEventListener('mouseleave', () => {
+      gsap.to(el, { x: 0, y: 0, ease: 'elastic.out(1, 0.3)', duration: 1.4 });
+    });
+  });
+
+  // Clip-path bloom: work panel (QP-7 image)
+  gsap.fromTo('#work-panel',
+    { clipPath: 'ellipse(0% 0% at 50% 50%)' },
+    {
+      clipPath: 'ellipse(200% 200% at 50% 50%)',
+      ease: 'power3.inOut',
+      duration: 1.1,
+      scrollTrigger: { trigger: '#work-panel', start: 'top 60%' }
+    }
+  );
+
+  // ── SVG LINE DRAW: QP-7 Schematic ──
+  (function() {
+    const paths = document.querySelectorAll('#qp7-outline path');
+    paths.forEach(path => {
+      const length = path.getTotalLength();
+      gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+    });
+
+    ScrollTrigger.create({
+      trigger: '#instrument-svg-container',
+      start: 'top 80%',
+      end: 'top 20%',
+      scrub: 1.2,
+      onUpdate: (self) => {
+        paths.forEach(path => {
+          const length = path.getTotalLength();
+          gsap.set(path, { strokeDashoffset: length * (1 - self.progress) });
+        });
+      }
+    });
+  })();
+
+  // ── SPEC COUNTERS ──
+  function animateCounter(id, target, suffix) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const obj = { val: 0 };
+    gsap.to(obj, {
+      val: target,
+      duration: 2.2,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: '#spec-section', start: 'top 70%' },
+      onUpdate: () => {
+        el.textContent = Math.round(obj.val).toLocaleString();
+      }
+    });
+  }
+
+  animateCounter('counter-folds', 100000);
+  animateCounter('counter-thickness', 1200);
+  animateCounter('counter-service', 18);
+  animateCounter('counter-accuracy', 1);
+  animateCounter('counter-institutions', 47);
+
+  // Heritage year counter
+  gsap.to({ val: 0 }, {
+    val: 53,
+    duration: 2.2,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#heritage-section', start: 'top 70%' },
+    onUpdate: function() {
+      const el = document.getElementById('counter-years');
+      if (el) el.textContent = Math.round(this.targets()[0].val);
+    }
+  });
+
+  // Spec section heading: scale-rise on entry
+  gsap.from('#spec-heading', {
+    y: 40,
+    duration: 1.1,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#spec-section', start: 'top 75%' }
+  });
+
+  // ── PROCESS SECTION ──
+  gsap.from('#process-heading', {
+    y: 30,
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#process-heading-wrap', start: 'top 80%' }
+  });
+
+  document.querySelectorAll('.process-step').forEach((step, i) => {
+    gsap.from(step, {
+      x: -40,
+      duration: 0.9,
+      ease: 'power2.out',
+      delay: i * 0.08,
+      scrollTrigger: { trigger: step, start: 'top 85%' }
+    });
+  });
+
+  // Parallax depth on process overlap image
+  gsap.to('#process-overlap-img-wrap', {
+    yPercent: -10,
+    ease: 'none',
+    scrollTrigger: { trigger: '#process-section', scrub: 1.5, start: 'top bottom', end: 'bottom top' }
+  });
+
+  // ── HERITAGE SECTION ──
+  gsap.from('#heritage-left', {
+    x: -40,
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#heritage-section', start: 'top 70%' }
+  });
+
+  // Heritage image parallax
+  gsap.to('#heritage-img', {
+    y: -30,
+    ease: 'none',
+    scrollTrigger: { trigger: '#heritage-section', scrub: 1.0, start: 'top bottom', end: 'bottom top' }
+  });
+
+  // ── CTA SECTION: character scatter ──
+  window.addEventListener('load', () => {
+    Splitting({ target: '#cta-heading', by: 'chars' });
+    gsap.from('#cta-heading .char', {
+      x: gsap.utils.random(-200, 200, true),
+      y: gsap.utils.random(-80, 80, true),
+      rotation: gsap.utils.random(-45, 45, true),
+      opacity: 0,
+      stagger: { each: 0.018, from: 'start' },
+      ease: 'back.out(1.7)',
+      duration: 0.75,
+      scrollTrigger: { trigger: '#cta-section', start: 'top 70%' }
+    });
+  });
+
+  // ── FOOTER CLIP REVEAL ──
+  gsap.from('#site-footer', {
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 1.2,
+    ease: 'power3.inOut',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 90%' }
+  });
+
+  // ── SPEC SECTION BG WORD PARALLAX ──
+  gsap.to('#spec-bg-word', {
+    yPercent: -12,
+    ease: 'none',
+    scrollTrigger: { trigger: '#spec-section', scrub: 2.0, start: 'top bottom', end: 'bottom top' }
+  });
+
+  // ── CTA BUTTON elastic hover ──
+  document.querySelectorAll('.btn-primary, .btn-ghost, .btn-primary-light').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+      gsap.to(btn, { x: dx * 0.15, y: dy * 0.15, ease: 'power1.out', duration: 0.3 });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, ease: 'elastic.out(1, 0.3)', duration: 1.2 });
+    });
+  });
+</script>
+
+</body>
+</html>

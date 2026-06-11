@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — FIELDSET</title>
+  <meta name="description" content="About FIELDSET — an independent quarterly publication for working engineers. Our editorial philosophy, document standards, and submission process.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/about-page.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Fieldset</a>
+      <ul class="nav-links">
+        <li><a href="issues.html" class="nav-link">Issues</a></li>
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="archive.html" class="nav-link">Archive</a></li>
+        <li><a href="about.html" class="nav-link nav-link--active">About</a></li>
+        <li><a href="subscribe.html" class="nav-link">Subscribe</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="issues.html" class="nav-link">Issues</a>
+    <a href="features.html" class="nav-link">Features</a>
+    <a href="archive.html" class="nav-link">Archive</a>
+    <a href="about.html" class="nav-link nav-link--active">About</a>
+    <a href="subscribe.html" class="nav-link">Subscribe</a>
+  </div>
+  <script>
+    (function(){
+      var toggle = document.querySelector('.nav-mobile-toggle');
+      var menu = document.getElementById('nav-mobile-menu');
+      var nav = document.getElementById('site-nav');
+      if(toggle && menu) {
+        toggle.addEventListener('click', function(){
+          nav.classList.toggle('nav-mobile-open');
+          menu.classList.toggle('is-open');
+          document.body.style.overflow = menu.classList.contains('is-open') ? 'hidden' : '';
+        });
+        menu.querySelectorAll('.nav-link').forEach(function(link){
+          link.addEventListener('click', function(){
+            nav.classList.remove('nav-mobile-open');
+            menu.classList.remove('is-open');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+    })();
+  </script>
+
+  <!-- HERO -->
+  <section class="hero hero--subpage" role="banner">
+    <div style="max-width:1440px;margin:0 auto;">
+      <span class="hero__overline">Independent Publication — Founded 2022</span>
+      <h1 class="hero__headline">About</h1>
+      <p class="hero__tagline">FIELDSET is an independent quarterly publication for working engineers. No investment. No advertisers. No sponsored content. Funded by readers who believe engineering has a written record worth keeping.</p>
+    </div>
+  </section>
+
+  <!-- MANIFESTO: Why we exist -->
+  <section class="section" aria-labelledby="manifesto-heading">
+    <div class="section__container">
+      <div class="section__header">
+        <h2 class="section__heading" id="manifesto-heading">The Argument</h2>
+        <span class="section__label">Editorial Philosophy</span>
+      </div>
+      <div class="ap-two-col">
+        <div class="ap-col-primary">
+          <p class="ap-body-lg">Engineering decisions are made in meetings, in Slack threads, in pull request comments, and in the two-hour window before an incident escalates. The reasoning disappears. The decision persists. The next engineer inherits the result without the argument.</p>
+          <p class="ap-body">FIELDSET exists to publish the argument. A post-mortem is not a blame document — it is a reasoning document. An RFC is not a proposal — it is a decision in progress. An architecture decision record is not documentation — it is the written form of institutional memory. When these documents are published, engineering becomes a discipline with a written record. When they are not published, it remains a series of undocumented choices.</p>
+          <p class="ap-body">We do not publish abstractions. We publish decisions. The documents in FIELDSET are primary sources: the actual post-mortem as submitted, the actual RFC draft with its revision history, the actual incident timeline with the Slack thread attached. No editorial translation. No retrospective wisdom. The engineering in its own words.</p>
+          <blockquote class="ap-pull-quote">
+            "A specification is a contract written in advance. The question is whether anyone reads it after the contract is signed."
+          </blockquote>
+        </div>
+        <div class="ap-col-secondary">
+          <div class="ap-fact-stack">
+            <div class="ap-fact">
+              <span class="ap-fact-label">Founded</span>
+              <span class="ap-fact-value">April 2022</span>
+            </div>
+            <div class="ap-fact">
+              <span class="ap-fact-label">Publishing Cadence</span>
+              <span class="ap-fact-value">Quarterly</span>
+            </div>
+            <div class="ap-fact">
+              <span class="ap-fact-label">Document Types</span>
+              <span class="ap-fact-value">8 categories</span>
+            </div>
+            <div class="ap-fact">
+              <span class="ap-fact-label">Review Process</span>
+              <span class="ap-fact-value">Structural only — no editorial rewriting</span>
+            </div>
+            <div class="ap-fact">
+              <span class="ap-fact-label">Tracking</span>
+              <span class="ap-fact-value">None. No analytics. No pixels.</span>
+            </div>
+            <div class="ap-fact">
+              <span class="ap-fact-label">Revenue Model</span>
+              <span class="ap-fact-value">Reader subscriptions. No ads.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCUMENT STANDARDS -->
+  <section class="section section--dark" aria-labelledby="standards-heading">
+    <div class="section__container">
+      <div class="section__header" style="border-bottom-color:#6e6e73;">
+        <h2 class="section__heading" id="standards-heading" style="color:#ffffff;">Document Standards</h2>
+        <span class="section__label">Eight Categories</span>
+      </div>
+      <!-- Distinct grid: 3-column card grid — different from all other section grids -->
+      <div class="ap-standards-grid">
+        <div class="ap-standard-card">
+          <span class="ap-std-num">01</span>
+          <h3 class="ap-std-title">Post-Mortem</h3>
+          <p class="ap-std-body">Timeline + contributing factors + immediate response + systemic remediation. Published within 90 days of incident. The five-whys analysis is optional; the timeline is not.</p>
+        </div>
+        <div class="ap-standard-card">
+          <span class="ap-std-num">02</span>
+          <h3 class="ap-std-title">Incident Report</h3>
+          <p class="ap-std-body">Real-time timeline of a service disruption. Slack thread excerpts permitted and encouraged. Published as-submitted — editorial cleanup is not applied to timestamps or communication records.</p>
+        </div>
+        <div class="ap-standard-card">
+          <span class="ap-std-num">03</span>
+          <h3 class="ap-std-title">RFC Draft</h3>
+          <p class="ap-std-body">A change proposal at any stage of its lifecycle — open, accepted, or rejected. Revision history must be included. An accepted RFC without its alternatives is an incomplete document.</p>
+        </div>
+        <div class="ap-standard-card">
+          <span class="ap-std-num">04</span>
+          <h3 class="ap-std-title">RFC Commentary</h3>
+          <p class="ap-std-body">A structured analysis of a published RFC — examining the reasoning, the deferred edge cases, and the implementation divergence. Must cite the specific RFC version being examined.</p>
+        </div>
+        <div class="ap-standard-card">
+          <span class="ap-std-num">05</span>
+          <h3 class="ap-std-title">Architecture Decision Record</h3>
+          <p class="ap-std-body">The ADR format: context, decision, status, consequences. Superseded ADRs are published with their successor — the full chain of decisions, not just the current one.</p>
+        </div>
+        <div class="ap-standard-card">
+          <span class="ap-std-num">06</span>
+          <h3 class="ap-std-title">Infrastructure Note</h3>
+          <p class="ap-std-body">Practitioner notes on a specific infrastructure concern: configuration, capacity, observability, or operational behavior. Field notes, not tutorials. The reader is assumed to be at parity.</p>
+        </div>
+        <div class="ap-standard-card">
+          <span class="ap-std-num">07</span>
+          <h3 class="ap-std-title">Spec Review</h3>
+          <p class="ap-std-body">A technical examination of a published specification against observed implementation behavior. Where the spec and the production system diverge — and why.</p>
+        </div>
+        <div class="ap-standard-card">
+          <span class="ap-std-num">08</span>
+          <h3 class="ap-std-title">Essay</h3>
+          <p class="ap-std-body">A structured argument about an engineering practice, concept, or decision. Must take a position. Opinion without evidence is not an essay. Evidence without a position is a data dump.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBMISSION PROCESS -->
+  <section class="section" id="submit" aria-labelledby="submit-heading">
+    <div class="section__container">
+      <div class="section__header">
+        <h2 class="section__heading" id="submit-heading">Submit</h2>
+        <span class="section__label">How to Contribute</span>
+      </div>
+      <!-- Distinct grid: horizontal step rows with number prefix (same structure as section 3 of index) -->
+      <div class="ap-steps-list">
+        <div class="ap-step">
+          <span class="ap-step-num">1.</span>
+          <div class="ap-step-body">
+            <h3 class="ap-step-title">Determine Document Type</h3>
+            <p class="ap-step-text">Identify which of the eight document categories your submission falls under. A document that spans multiple categories should be split into separate submissions or restructured to fit one category. Hybrid documents are rejected — not because they lack value, but because they lack form.</p>
+          </div>
+        </div>
+        <div class="ap-step">
+          <span class="ap-step-num">2.</span>
+          <div class="ap-step-body">
+            <h3 class="ap-step-title">Prepare the Document</h3>
+            <p class="ap-step-text">Plain text or Markdown only. No formatted Word documents. No PDFs. Company names and individual names may be anonymized — but technical details may not be. A post-mortem with anonymized infrastructure specifics is not a post-mortem.</p>
+          </div>
+        </div>
+        <div class="ap-step">
+          <span class="ap-step-num">3.</span>
+          <div class="ap-step-body">
+            <h3 class="ap-step-title">Structural Review</h3>
+            <p class="ap-step-text">FIELDSET editors review for structural completeness only — does the document contain the required elements for its category? We do not rewrite, polish, or improve your writing. A document that is technically complete but poorly written will be published poorly written. Writing is engineering.</p>
+          </div>
+        </div>
+        <div class="ap-step">
+          <span class="ap-step-num">4.</span>
+          <div class="ap-step-body">
+            <h3 class="ap-step-title">Publication</h3>
+            <p class="ap-step-text">Documents are held for the next quarterly issue. Accepted documents are published without modification to any technical content. The version published is the version submitted. The permanent archive version is the version published.</p>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:24px;">
+        <a href="subscribe.html#submit-email" class="hero__ghost-cta">Submit a Document →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div>
+        <a href="index.html" class="footer-brand">Fieldset</a>
+        <p class="footer-tagline">Engineering as Written Practice.<br>Published quarterly since 2022.</p>
+      </div>
+      <nav aria-label="Publication">
+        <span class="footer-nav-heading">Publication</span>
+        <ul class="footer-nav-list">
+          <li><a href="issues.html">Issues</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="archive.html">Archive</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="About">
+        <span class="footer-nav-heading">About</span>
+        <ul class="footer-nav-list">
+          <li><a href="about.html">About FIELDSET</a></li>
+          <li><a href="about.html#submit">Submit a Document</a></li>
+          <li><a href="subscribe.html">Subscribe</a></li>
+        </ul>
+      </nav>
+      <div class="footer-copyright">
+        &copy; 2026 FIELDSET.<br>No rights reserved.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

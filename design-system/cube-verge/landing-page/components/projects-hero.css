@@ -1,0 +1,171 @@
+/* =============================================================
+   PROJECTS HERO — Forma Systems
+   Dark typography-only header, 55vh, diagonal clip-path exit
+   ============================================================= */
+
+/* ── Section wrapper ─────────────────────────────────────────── */
+#projects-hero {
+  position: relative;
+  min-height: 55vh;
+  background: var(--color-surface-dark);
+  color: rgba(255, 255, 255, 0.88);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: 80px;
+  padding-bottom: 96px;
+  padding-inline: var(--grid-padding-inline);
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  overflow: hidden;
+  /* Depth: subtle inner radial gradient to break flat surface */
+  background-image: radial-gradient(ellipse 80% 60% at 60% 40%, #2a2a2a 0%, #1a1a1a 60%);
+  z-index: 1;
+}
+
+/* ── Geometric background accent ─────────────────────────────── */
+#projects-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,0.02) 0px,
+    rgba(255,255,255,0.02) 1px,
+    transparent 1px,
+    transparent 48px
+  );
+  pointer-events: none;
+}
+
+#projects-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #000000;
+  pointer-events: none;
+}
+
+/* ── Inner content layout ─────────────────────────────────────── */
+#projects-hero-inner {
+  max-width: var(--grid-max-width);
+  width: 100%;
+  margin-inline: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Breadcrumb ───────────────────────────────────────────────── */
+#projects-breadcrumb {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 28px;
+  display: block;
+}
+
+/* ── Main heading ─────────────────────────────────────────────── */
+#projects-main-heading {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 7vw, 8rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0 0 48px 0;
+  animation: isoSlideIn 500ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ── Stat row ─────────────────────────────────────────────────── */
+#projects-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-right: 40px;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  margin-right: 40px;
+}
+
+.stat-item:last-child {
+  border-right: none;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.stat-number {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  #projects-hero {
+    padding-inline: 24px;
+    min-height: 50vh;
+    padding-bottom: 80px;
+  }
+
+  #projects-stat-row {
+    gap: 0;
+  }
+
+  .stat-item {
+    padding-right: 24px;
+    margin-right: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  #projects-hero {
+    padding-inline: 20px;
+    clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%);
+  }
+
+  #projects-stat-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .stat-item {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 16px;
+  }
+
+  .stat-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}

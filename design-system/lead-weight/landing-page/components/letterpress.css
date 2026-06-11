@@ -1,0 +1,176 @@
+/* ============================================================
+   letterpress.css — lead-weight / VERDURE
+   Section 6: Letterpress — craft + video
+   Light warm cream surface. 2fr/3fr grid.
+   Video in left col (contained 50vh). h3 + body right col.
+   ============================================================ */
+
+/* ── Section wrapper ──────────────────────────────────────── */
+#letterpress {
+  background: var(--color-page-bg);
+  padding: var(--space-section-break) 40px;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.15);
+}
+
+#letterpress-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: calc(var(--grid-gutter) * 3);
+  align-items: center;
+}
+
+/* ── Left column: video ──────────────────────────────────── */
+#letterpress-video-col {
+  position: relative;
+}
+
+#letterpress-video-frame {
+  width: 100%;
+  height: 50vh;
+  min-height: 360px;
+  position: relative;
+  overflow: hidden;
+  background: #edeae2;
+}
+
+#letterpress-video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#letterpress-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #edeae2;
+  color: rgba(26, 23, 20, 0.3);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  position: absolute;
+  inset: 0;
+}
+
+#letterpress-video-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: var(--color-muted-text);
+  margin-top: 14px;
+  display: block;
+}
+
+/* ── Right column: text ───────────────────────────────────── */
+#letterpress-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+#letterpress-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: var(--color-body-text);
+  margin: 0;
+}
+
+#letterpress-heading {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-h3);
+  line-height: var(--line-height-h3);
+  letter-spacing: var(--letter-spacing-h3);
+  color: var(--color-heading);
+  margin: 0;
+}
+
+.letterpress-body-para {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
+  color: var(--color-body-text);
+  margin: 0;
+  max-width: 50ch;
+}
+
+#letterpress-link {
+  font-family: var(--font-body);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-button);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-button);
+  color: var(--color-accent);
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+  transition: letter-spacing 200ms ease-out;
+}
+
+#letterpress-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 0.5px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease-out;
+}
+
+#letterpress-link:hover {
+  letter-spacing: calc(var(--letter-spacing-button) + 0.02em);
+}
+
+#letterpress-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  #letterpress-inner {
+    gap: calc(var(--grid-gutter) * 2);
+  }
+}
+
+@media (max-width: 900px) {
+  #letterpress {
+    padding: 80px 28px;
+  }
+
+  #letterpress-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  #letterpress-video-frame {
+    height: 40vh;
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  #letterpress {
+    padding: 64px 20px;
+  }
+
+  #letterpress-video-frame {
+    height: 35vh;
+    min-height: 240px;
+  }
+}

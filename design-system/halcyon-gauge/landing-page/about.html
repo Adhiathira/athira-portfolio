@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Halcyon Gauge — The history of the archive, the life of Edith Palacios-Vane, and the institution she established at Punta Carreiro.">
+  <title>About — Halcyon Gauge</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <style>
+    .container { max-width: var(--grid-max-width); margin-inline: auto; padding-inline: var(--grid-margin); }
+    .container--narrow { max-width: var(--grid-narrow-max); margin-inline: auto; padding-inline: var(--grid-margin); }
+
+    #nav-spacer { height: var(--space-nav-height); }
+
+    /* ── Page header ── */
+    #about-header {
+      padding: var(--space-5) 0;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    #about-label {
+      font-family: var(--font-label);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin: 0 0 var(--space-2) 0;
+    }
+
+    #about-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: var(--weight-light);
+      line-height: 1.1;
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-heading);
+      margin: 0;
+    }
+
+    /* ── Founder section ── */
+    #founder-section {
+      padding: var(--space-7) 0;
+      background: var(--color-page-bg);
+    }
+
+    #founder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    #founder-portrait-container {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-surface-alt);
+      border-radius: var(--card-radius);
+    }
+
+    #founder-portrait {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+    }
+
+    #founder-portrait-placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--color-surface-alt);
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+      font-family: var(--font-body);
+    }
+
+    #founder-portrait-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-3);
+      background: linear-gradient(to top, rgba(26, 24, 20, 0.8) 0%, transparent 100%);
+    }
+
+    #founder-portrait-caption p {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: rgba(245, 240, 232, 0.7);
+      margin: 0;
+      font-style: italic;
+    }
+
+    #founder-text {}
+
+    #founder-date {
+      font-family: var(--font-label);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin: 0 0 var(--space-2) 0;
+    }
+
+    #founder-name {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: var(--weight-light);
+      font-style: italic;
+      line-height: 1.1;
+      color: var(--color-heading);
+      margin: 0 0 var(--space-5) 0;
+    }
+
+    .about-body {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: var(--leading-body);
+      color: var(--color-text-secondary);
+      margin: 0 0 var(--space-4) 0;
+    }
+
+    #founder-rule {
+      width: 48px;
+      height: 1px;
+      background: var(--color-accent);
+      border: none;
+      margin: var(--space-5) 0;
+    }
+
+    #founder-quote {
+      border-left: 2px solid var(--color-border);
+      padding-left: var(--space-4);
+    }
+
+    #founder-quote p {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: var(--weight-regular);
+      font-style: italic;
+      color: var(--color-heading);
+      line-height: 1.5;
+      margin: 0 0 var(--space-2) 0;
+    }
+
+    #founder-quote cite {
+      font-family: var(--font-label);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      font-style: normal;
+    }
+
+    /* ── Timeline ── */
+    #timeline-section {
+      padding: var(--space-6) 0;
+      background: var(--color-surface);
+    }
+
+    #timeline-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: var(--weight-regular);
+      font-style: italic;
+      color: var(--color-heading);
+      margin: 0 0 var(--space-5) 0;
+    }
+
+    #timeline-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+
+    #timeline-list::before {
+      content: '';
+      position: absolute;
+      left: 80px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--color-accent), var(--color-border-light));
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: var(--space-4);
+      padding-bottom: var(--space-5);
+      position: relative;
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: 78px;
+      top: 6px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+
+    .timeline-year {
+      font-family: var(--font-label);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      color: var(--color-text-muted);
+      text-align: right;
+      padding-right: var(--space-4);
+      line-height: 1.7;
+    }
+
+    .timeline-content {}
+
+    .timeline-title {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: var(--weight-regular);
+      font-style: italic;
+      color: var(--color-heading);
+      margin: 0 0 var(--space-1) 0;
+    }
+
+    .timeline-desc {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── Location section ── */
+    #location-section {
+      padding: var(--space-6) 0;
+      background: var(--color-dark-surface);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #location-section::before {
+      content: 'Punta\ACarreiro';
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 14vw, 12rem);
+      font-weight: var(--weight-light);
+      color: #f5f0e8;
+      opacity: 0.03;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      user-select: none;
+      white-space: pre;
+      line-height: 1;
+    }
+
+    #location-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    #location-label {
+      font-family: var(--font-label);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.4);
+      margin: 0 0 var(--space-3) 0;
+    }
+
+    #location-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: var(--weight-light);
+      color: var(--color-dark-text);
+      margin: 0 0 var(--space-4) 0;
+    }
+
+    #location-address {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      color: rgba(245, 240, 232, 0.6);
+      line-height: 1.8;
+      margin: 0 0 var(--space-4) 0;
+      font-style: normal;
+    }
+
+    #location-note {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: rgba(245, 240, 232, 0.4);
+      line-height: var(--leading-body);
+      max-width: 480px;
+      margin: 0;
+    }
+
+    #location-coordinates {
+      font-family: var(--font-label);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.25);
+      margin-top: var(--space-5);
+    }
+
+    /* Footer */
+    #site-footer {
+      background: var(--color-dark-surface);
+      border-top: 1px solid rgba(245, 240, 232, 0.1);
+      padding: var(--space-5) 0;
+    }
+    #footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    #footer-copyright { font-family: var(--font-body); font-size: 0.8125rem; color: rgba(245, 240, 232, 0.35); }
+    .footer-link { font-family: var(--font-body); font-size: 0.875rem; color: rgba(245, 240, 232, 0.5); text-decoration: none; transition: color var(--duration-fast) ease; }
+    .footer-link:hover { color: var(--color-dark-text); }
+    #footer-nav-links { display: flex; gap: var(--space-4); }
+
+    @media (max-width: 900px) {
+      #founder-grid { grid-template-columns: 1fr; }
+      #timeline-list::before { left: 60px; }
+      .timeline-item { grid-template-columns: 60px 1fr; }
+      .timeline-item::after { left: 58px; }
+    }
+    @media (max-width: 600px) {
+      .container, .container--narrow { padding-inline: 1.5rem; }
+      #timeline-list::before { display: none; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .timeline-item::after { display: none; }
+      .timeline-year { text-align: left; padding-right: 0; color: var(--color-accent); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-logo">Halcyon Gauge</a>
+    <ul class="nav-links" role="list">
+      <li><a href="archive.html" class="nav-link">Archive</a></li>
+      <li><a href="collection.html" class="nav-link">Collection</a></li>
+      <li><a href="fellowship.html" class="nav-link">Fellowship</a></li>
+      <li><a href="about.html" class="nav-link nav-link--active" aria-current="page">About</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+    <a href="archive.html" class="nav-mobile-link">Archive</a>
+    <a href="collection.html" class="nav-mobile-link">Collection</a>
+    <a href="fellowship.html" class="nav-mobile-link">Fellowship</a>
+    <a href="about.html" class="nav-mobile-link">About</a>
+  </div>
+
+  <div id="nav-spacer"></div>
+
+  <header id="about-header">
+    <div class="container">
+      <p id="about-label">Our History</p>
+      <h1 id="about-title">The archive, the surveyor, the institution.</h1>
+    </div>
+  </header>
+
+  <!-- Founder section -->
+  <section id="founder-section">
+    <div class="container">
+      <div id="founder-grid">
+        <div id="founder-portrait-container">
+          <img id="founder-portrait" src="assets/founder-portrait.jpeg" alt="Edith Palacios-Vane at the Galician survey station, c. 1948"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div id="founder-portrait-placeholder">→ assets/founder-portrait.jpeg</div>
+          <div id="founder-portrait-caption">
+            <p>Edith Palacios-Vane at the Spanish Hydrographic Institute survey station, Ría de Arousa, c. 1948.</p>
+          </div>
+        </div>
+
+        <div id="founder-text">
+          <p id="founder-date">1894 — 1959</p>
+          <h2 id="founder-name">Edith Palacios-Vane</h2>
+
+          <p class="about-body">
+            Born in Cádiz in 1894, Edith Palacios-Vane spent thirty-four years as a senior hydrographic surveyor with the Spanish Hydrographic Institute. She was among the first women appointed to the Institute's survey corps and conducted systematic depth surveys of the Galician continental shelf from 1920 to 1954.
+          </p>
+
+          <p class="about-body">
+            Over the course of her career, Palacios-Vane accumulated 847 instruments of working survey provenance. She did not collect for collection's sake. Each object was acquired because she needed it, repaired it, recalibrated it, or had it fabricated to specification. Many instruments in the archive bear her annotations in pencil on the original carrying cases.
+          </p>
+
+          <hr id="founder-rule">
+
+          <blockquote id="founder-quote">
+            <p>"I have never been interested in instruments as objects. I have been interested in what they tell you, when they are properly used."</p>
+            <cite>Edith Palacios-Vane, letter to the Instituto Hidrográfico de la Marina, 1956</cite>
+          </blockquote>
+
+          <p class="about-body" style="margin-top: var(--space-5);">
+            Upon her death in 1959, Palacios-Vane's estate fulfilled her standing instruction: the instruments were to be governed by working oceanographers and made available to those who still needed them. The Halcyon Gauge archive was formally established in 1962 at the converted lighthouse keeper's station at Punta Carreiro. Nothing has been sold or deaccessioned.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section id="timeline-section">
+    <div class="container--narrow">
+      <h2 id="timeline-heading">Archive history.</h2>
+      <ol id="timeline-list" aria-label="Archive history timeline">
+        <li class="timeline-item">
+          <span class="timeline-year">1894</span>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Edith Palacios-Vane born in Cádiz</h3>
+            <p class="timeline-desc">Daughter of a lighthouse keeper and a schoolteacher. First accessed a Kelvin sextant at age eleven at the Cádiz maritime station.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <span class="timeline-year">1920</span>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Appointed to Spanish Hydrographic Institute survey corps</h3>
+            <p class="timeline-desc">One of the first women in the corps. Assigned to systematic depth surveys of the Galician shelf and the Ría de Arousa estuary.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <span class="timeline-year">1938</span>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Acquisition of the Negretti & Zambra barometers</h3>
+            <p class="timeline-desc">Two mercurial station barometers acquired from the decommissioned Gibraltar naval meteorological station. Both calibrated to their original 1938 factory certificates. Both still in the archive.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <span class="timeline-year">1951</span>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Reversing thermometer set commissioned</h3>
+            <p class="timeline-desc">Twelve Negretti & Zambra reversing deep-sea thermometers commissioned to Palacios-Vane's specification for the Bay of Biscay deep-water temperature survey. The original carrying case is still present.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <span class="timeline-year">1959</span>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Death of Edith Palacios-Vane</h3>
+            <p class="timeline-desc">Her estate implemented the standing instruction. 847 instruments inventoried. Lighthouse keeper's station at Punta Carreiro conveyed to a trust governing body of active oceanographers.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <span class="timeline-year">1962</span>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Halcyon Gauge archive formally opens</h3>
+            <p class="timeline-desc">First fellowship awarded to Dr. Manuel Ferreira, Universidade de Vigo. The archive ledger opens with his loan of the Kelvin sextant series.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <span class="timeline-year">2026</span>
+          <div class="timeline-content">
+            <h3 class="timeline-title">847 objects. 14 active fellowships. Nothing deaccessioned.</h3>
+            <p class="timeline-desc">The archive continues its original purpose. Every instrument received is still present. Every loan is documented.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Location -->
+  <section id="location-section">
+    <div class="container" id="location-inner">
+      <p id="location-label">Location</p>
+      <h2 id="location-heading">Punta Carreiro, Galicia</h2>
+      <address id="location-address">
+        Archivo Halcyon Gauge<br>
+        Faro de Punta Carreiro<br>
+        36618 Ribeira, A Coruña<br>
+        Galicia, Spain
+      </address>
+      <p id="location-note">
+        The archive is not open to casual visitors. Access is by fellowship appointment only. All correspondence by post. Fellowship enquiries may also be submitted using the form on the Fellowship page.
+      </p>
+      <p id="location-coordinates">42°52′N 9°08′W — Ría de Arousa, Galician coast</p>
+    </div>
+  </section>
+
+  <footer id="site-footer">
+    <div class="container">
+      <div id="footer-bottom">
+        <span id="footer-copyright">© 1962–2026 Halcyon Gauge Archive, Punta Carreiro, Galicia.</span>
+        <nav id="footer-nav-links" aria-label="Footer navigation">
+          <a href="archive.html" class="footer-link">Archive</a>
+          <a href="collection.html" class="footer-link">Collection</a>
+          <a href="fellowship.html" class="footer-link">Fellowship</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Nav
+    const nav = document.getElementById('site-nav');
+    const toggle = nav.querySelector('.nav-mobile-toggle');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', open);
+      mobileMenu.classList.toggle('is-open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    // Header
+    gsap.from('#about-title', { y: 30, duration: 0.8, delay: 0.2, ease: 'power3.out' });
+
+    // Portrait curtain reveal
+    gsap.from('#founder-portrait-container', {
+      clipPath: 'inset(100% 0 0 0)',
+      duration: 1.2,
+      ease: 'power3.inOut',
+      scrollTrigger: { trigger: '#founder-grid', start: 'top 78%', once: true }
+    });
+
+    // Founder text
+    gsap.from('#founder-text', {
+      x: 50,
+      duration: 1.0,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '#founder-grid', start: 'top 78%', once: true }
+    });
+
+    // Timeline items
+    gsap.from('.timeline-item', {
+      x: -30,
+      stagger: 0.08,
+      duration: 0.7,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '#timeline-list', start: 'top 80%', once: true }
+    });
+
+    // Location
+    gsap.from('#location-heading', {
+      y: 40,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '#location-section', start: 'top 80%', once: true }
+    });
+    gsap.from('#location-address', {
+      y: 24,
+      duration: 0.7,
+      delay: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '#location-section', start: 'top 80%', once: true }
+    });
+  </script>
+</body>
+</html>

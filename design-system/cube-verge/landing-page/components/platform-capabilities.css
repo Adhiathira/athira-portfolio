@@ -1,0 +1,255 @@
+/* =============================================================
+   PLATFORM CAPABILITIES — cube-verge / Forma Systems
+   Section 2: white bento/asymmetric grid, clip-path wipe reveal
+   ============================================================= */
+
+/* ── Capabilities Section ─────────────────────────────────── */
+#platform-capabilities {
+  position: relative;
+  background: #ffffff;
+  padding: var(--space-3xl) var(--grid-padding-inline);
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* ── Section label ────────────────────────────────────────── */
+.capabilities__label {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  letter-spacing: var(--type-label-letter-spacing);
+  text-transform: var(--type-label-transform);
+  color: #000000;
+  margin: 0 0 var(--space-sm) 0;
+}
+
+/* ── Section heading ──────────────────────────────────────── */
+.capabilities__heading {
+  font-family: var(--font-display);
+  font-size: var(--type-h2);
+  font-weight: var(--type-h2-weight);
+  line-height: var(--type-h2-line-height);
+  color: #000000;
+  margin: 0 0 var(--space-xl) 0;
+  max-width: 700px;
+}
+
+/* ── Bento grid container ─────────────────────────────────── */
+.capabilities__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: var(--space-md);
+}
+
+/* ── Bento layout assignments ─────────────────────────────── */
+/* Featured card: top-left, spans 2 columns × 2 rows */
+.capabilities__card--featured {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
+
+/* Card B: top-right col 3, row 1 */
+.capabilities__card--b {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+}
+
+/* Card C: col 3, row 2 */
+.capabilities__card--c {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+
+/* Bottom row: D spans 1 col, E spans 2 cols */
+.capabilities__card--d {
+  grid-column: 1 / 2;
+  grid-row: 3 / 4;
+}
+
+.capabilities__card--e {
+  grid-column: 2 / 4;
+  grid-row: 3 / 4;
+}
+
+/* Card F: full-width bottom */
+.capabilities__card--f {
+  grid-column: 1 / 4;
+  grid-row: 4 / 5;
+}
+
+/* ── Base card styles ─────────────────────────────────────── */
+.capabilities__card {
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-top: 3px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  border-radius: 0px;
+  padding: var(--space-md);
+  position: relative;
+  overflow: hidden;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.capabilities__card:hover {
+  transform: translateY(-2px) translateX(1px);
+  box-shadow: 6px 6px 0px #000000;
+}
+
+/* ── Featured card specifics ──────────────────────────────── */
+.capabilities__card--featured {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.capabilities__card--featured .card__image-wrap {
+  flex: 1;
+  min-height: 240px;
+  position: relative;
+  overflow: hidden;
+  background: #e0e0e0;
+  border-bottom: 2px solid #000000;
+}
+
+.capabilities__card--featured .card__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.capabilities__card--featured .card__image-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #e0e0e0;
+  gap: var(--space-xs);
+}
+
+.capabilities__card--featured .card__image-placeholder span:first-child {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  letter-spacing: var(--type-label-letter-spacing);
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.capabilities__card--featured .card__image-placeholder span:last-child {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.05em;
+}
+
+.capabilities__card--featured .card__body {
+  padding: var(--space-md);
+}
+
+/* ── Card label (tag) ─────────────────────────────────────── */
+.card__tag {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  letter-spacing: var(--type-label-letter-spacing);
+  text-transform: var(--type-label-transform);
+  color: rgba(0, 0, 0, 0.45);
+  margin: 0 0 var(--space-xs) 0;
+  display: block;
+}
+
+/* ── Card title ───────────────────────────────────────────── */
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--type-h4-size);
+  font-weight: var(--type-h4-weight);
+  line-height: var(--type-h4-line-height);
+  letter-spacing: var(--type-h4-letter-spacing);
+  color: #000000;
+  margin: 0 0 var(--space-xs) 0;
+}
+
+/* Featured card gets larger title */
+.capabilities__card--featured .card__title {
+  font-size: var(--type-h3);
+}
+
+/* ── Card description ─────────────────────────────────────── */
+.card__desc {
+  font-family: var(--font-body);
+  font-size: var(--type-body-small-size);
+  line-height: var(--type-body-small-line-height);
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+}
+
+/* ── Clip-path divider into next section ─────────────────── */
+#platform-capabilities::after {
+  content: '';
+  position: absolute;
+  bottom: -64px;
+  left: 0;
+  width: 100%;
+  height: 128px;
+  background: #f5f5f5;
+  clip-path: polygon(0 0%, 60% 55%, 100% 20%, 100% 100%, 0 100%);
+  z-index: 2;
+}
+
+/* ── Responsive — 900px: 2-col standard grid ─────────────── */
+@media (max-width: 900px) {
+  #platform-capabilities {
+    padding: var(--space-2xl) var(--grid-tablet-padding-inline);
+  }
+
+  .capabilities__grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+
+  .capabilities__card--featured {
+    grid-column: 1 / 3;
+    grid-row: auto;
+  }
+
+  .capabilities__card--b,
+  .capabilities__card--c,
+  .capabilities__card--d,
+  .capabilities__card--e,
+  .capabilities__card--f {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .capabilities__card--e {
+    grid-column: auto;
+  }
+
+  .capabilities__card--f {
+    grid-column: 1 / 3;
+  }
+}
+
+/* ── Responsive — 600px: single column ───────────────────── */
+@media (max-width: 600px) {
+  #platform-capabilities {
+    padding: var(--space-xl) var(--grid-mobile-padding-inline);
+  }
+
+  .capabilities__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .capabilities__card--featured,
+  .capabilities__card--f {
+    grid-column: 1 / 2;
+  }
+
+  .capabilities__card--e {
+    grid-column: 1 / 2;
+  }
+}

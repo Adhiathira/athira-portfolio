@@ -1,0 +1,98 @@
+:root {
+  --grid-container-max: 1440px;
+  --grid-container-padding: 24px;
+  --grid-columns: 12;
+  --grid-gutter: 16px;
+  --grid-card-gap: 24px;
+  --grid-sidebar-width: 240px;
+  --grid-stats-min: 200px;
+}
+
+.container {
+  max-width: var(--grid-container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--grid-container-padding);
+  padding-right: var(--grid-container-padding);
+}
+
+/* Main 12-column grid */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--grid-gutter);
+}
+
+/* Card grid — auto-fill for stats and feature grids */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-stats-min), 1fr));
+  gap: var(--grid-card-gap);
+}
+
+/* 3-column grid */
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-card-gap);
+}
+
+/* 2-column equal */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--grid-card-gap);
+}
+
+/* Feature split 3fr 2fr */
+.grid-feature-split {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Sidebar layout */
+.grid-sidebar {
+  display: grid;
+  grid-template-columns: var(--grid-sidebar-width) 1fr;
+  gap: var(--grid-card-gap);
+}
+
+/* Stats row — 4-col */
+.grid-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--grid-card-gap);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .grid-feature-split {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .grid-sidebar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-3col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-3col,
+  .grid-2col,
+  .grid-stats {
+    grid-template-columns: 1fr;
+  }
+}

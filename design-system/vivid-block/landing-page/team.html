@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team — Pivot</title>
+  <meta name="description" content="Meet the people behind Pivot, the product analytics platform that turns data into direction." />
+
+  <!-- Tokens + Component CSS -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="components/nav.css" />
+  <link rel="stylesheet" href="components/team-header.css" />
+  <link rel="stylesheet" href="components/team-grid.css" />
+  <link rel="stylesheet" href="components/team-roles.css" />
+  <link rel="stylesheet" href="components/team-footer.css" />
+
+  <!-- GSAP CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────────── -->
+  <div class="nav-spacer active" id="nav-spacer"></div>
+  <nav class="site-nav" id="site-nav">
+    <a href="index.html" class="nav-logo" aria-label="Home">Pivot</a>
+    <ul class="nav-links" role="list">
+      <li><a href="product.html" class="nav-link">Product</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="team.html" class="nav-link">Team</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="Site navigation">
+    <ul class="nav-overlay-links" role="list">
+      <li><a href="product.html" class="nav-link">Product</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="team.html" class="nav-link">Team</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-overlay-footer">Pivot &mdash; &copy; 2025</div>
+  </div>
+  <script>
+  (function(){var nav=document.getElementById('site-nav');var toggle=document.getElementById('nav-mobile-toggle');var overlay=document.getElementById('nav-mobile-menu');function handleScroll(){if((window.scrollY||window.pageYOffset)>80){nav.classList.add('isVisible');}else{nav.classList.remove('isVisible');}}window.addEventListener('scroll',handleScroll,{passive:true});handleScroll();function openMenu(){nav.classList.add('nav-mobile-open');overlay.classList.add('is-open');toggle.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}function closeMenu(){nav.classList.remove('nav-mobile-open');overlay.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');document.body.style.overflow='';}toggle.addEventListener('click',function(){overlay.classList.contains('is-open')?closeMenu():openMenu();});overlay.querySelectorAll('a').forEach(function(l){l.addEventListener('click',closeMenu);});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('is-open')){closeMenu();toggle.focus();}});var cp=window.location.pathname.split('/').pop()||'index.html';document.querySelectorAll('.nav-link').forEach(function(link){if(link.getAttribute('href')===cp){link.classList.add('nav-link--active');link.setAttribute('aria-current','page');}});})();
+  </script>
+
+  <!-- ── SECTION 1: TEAM HEADER ───────────────────────────────── -->
+  <section class="team-header" id="team-header" aria-labelledby="team-header-h1">
+    <!-- Background geometric decorators -->
+    <div class="team-header__deco" aria-hidden="true">
+      <div class="team-header__rect team-header__rect--a"></div>
+      <div class="team-header__rect team-header__rect--b"></div>
+      <div class="team-header__rect team-header__rect--c"></div>
+    </div>
+
+    <div class="team-header__inner">
+      <h1 class="team-header__h1" id="team-header-h1">The people behind Pivot.</h1>
+      <p class="team-header__copy">We are a small, intentional team of builders, analysts, and storytellers. Every decision we make is driven by a single belief: great product analytics should feel as clear as a conversation, not as cryptic as a spreadsheet. We built Pivot because we were tired of guessing, and we think you are too.</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: TEAM GRID ─────────────────────────────────── -->
+  <section class="team-grid" id="team-grid" aria-labelledby="team-grid-heading">
+    <div class="team-grid__inner">
+      <h2 class="team-grid__heading" id="team-grid-heading">Meet the team.</h2>
+
+      <ul class="team-grid__grid" role="list">
+
+        <!-- Member 1 -->
+        <li class="team-card">
+          <div class="team-card__avatar" role="img" aria-label="Portrait of Mara Osei"></div>
+          <div class="team-card__body">
+            <p class="team-card__name">Mara Osei</p>
+            <p class="team-card__title">Co-Founder &amp; CEO</p>
+            <span class="team-card__location">San Francisco, CA</span>
+          </div>
+        </li>
+
+        <!-- Member 2 -->
+        <li class="team-card">
+          <div class="team-card__avatar" role="img" aria-label="Portrait of Daniel Krawetz"></div>
+          <div class="team-card__body">
+            <p class="team-card__name">Daniel Krawetz</p>
+            <p class="team-card__title">Co-Founder &amp; CTO</p>
+            <span class="team-card__location">Berlin, Germany</span>
+          </div>
+        </li>
+
+        <!-- Member 3 -->
+        <li class="team-card">
+          <div class="team-card__avatar" role="img" aria-label="Portrait of Yuki Tanaka"></div>
+          <div class="team-card__body">
+            <p class="team-card__name">Yuki Tanaka</p>
+            <p class="team-card__title">Head of Product</p>
+            <span class="team-card__location">Tokyo, Japan</span>
+          </div>
+        </li>
+
+        <!-- Member 4 -->
+        <li class="team-card">
+          <div class="team-card__avatar" role="img" aria-label="Portrait of Priya Menon"></div>
+          <div class="team-card__body">
+            <p class="team-card__name">Priya Menon</p>
+            <p class="team-card__title">Lead Data Engineer</p>
+            <span class="team-card__location">Bangalore, India</span>
+          </div>
+        </li>
+
+        <!-- Member 5 -->
+        <li class="team-card">
+          <div class="team-card__avatar" role="img" aria-label="Portrait of James Okafor"></div>
+          <div class="team-card__body">
+            <p class="team-card__name">James Okafor</p>
+            <p class="team-card__title">Senior Frontend Engineer</p>
+            <span class="team-card__location">Lagos, Nigeria</span>
+          </div>
+        </li>
+
+        <!-- Member 6 -->
+        <li class="team-card">
+          <div class="team-card__avatar" role="img" aria-label="Portrait of Sofía Reyes"></div>
+          <div class="team-card__body">
+            <p class="team-card__name">Sofía Reyes</p>
+            <p class="team-card__title">Product Designer</p>
+            <span class="team-card__location">Mexico City, MX</span>
+          </div>
+        </li>
+
+        <!-- Member 7 -->
+        <li class="team-card">
+          <div class="team-card__avatar" role="img" aria-label="Portrait of Marcus Webb"></div>
+          <div class="team-card__body">
+            <p class="team-card__name">Marcus Webb</p>
+            <p class="team-card__title">Head of Growth</p>
+            <span class="team-card__location">New York, NY</span>
+          </div>
+        </li>
+
+        <!-- Member 8 -->
+        <li class="team-card">
+          <div class="team-card__avatar" role="img" aria-label="Portrait of Ingrid Solberg"></div>
+          <div class="team-card__body">
+            <p class="team-card__name">Ingrid Solberg</p>
+            <p class="team-card__title">Customer Success Lead</p>
+            <span class="team-card__location">Oslo, Norway</span>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: OPEN ROLES ────────────────────────────────── -->
+  <section class="team-roles" id="team-roles" aria-labelledby="team-roles-heading">
+    <div class="team-roles__inner">
+      <h2 class="team-roles__heading" id="team-roles-heading">Join the team.</h2>
+
+      <ul class="team-roles__list" role="list">
+
+        <li class="role-item">
+          <div class="role-item__left">
+            <span class="role-item__number" aria-hidden="true">01</span>
+            <p class="role-item__title">Senior Product Designer</p>
+          </div>
+          <div class="role-item__right">
+            <span class="role-item__location">Remote</span>
+            <a href="contact.html" class="role-item__apply" aria-label="Apply for Senior Product Designer">Apply &rarr;</a>
+          </div>
+        </li>
+
+        <li class="role-item">
+          <div class="role-item__left">
+            <span class="role-item__number" aria-hidden="true">02</span>
+            <p class="role-item__title">Data Engineer</p>
+          </div>
+          <div class="role-item__right">
+            <span class="role-item__location">San Francisco, CA</span>
+            <a href="contact.html" class="role-item__apply" aria-label="Apply for Data Engineer">Apply &rarr;</a>
+          </div>
+        </li>
+
+        <li class="role-item">
+          <div class="role-item__left">
+            <span class="role-item__number" aria-hidden="true">03</span>
+            <p class="role-item__title">Growth Lead</p>
+          </div>
+          <div class="role-item__right">
+            <span class="role-item__location">Remote</span>
+            <a href="contact.html" class="role-item__apply" aria-label="Apply for Growth Lead">Apply &rarr;</a>
+          </div>
+        </li>
+
+        <li class="role-item">
+          <div class="role-item__left">
+            <span class="role-item__number" aria-hidden="true">04</span>
+            <p class="role-item__title">Customer Success Manager</p>
+          </div>
+          <div class="role-item__right">
+            <span class="role-item__location">New York, NY</span>
+            <a href="contact.html" class="role-item__apply" aria-label="Apply for Customer Success Manager">Apply &rarr;</a>
+          </div>
+        </li>
+
+        <li class="role-item">
+          <div class="role-item__left">
+            <span class="role-item__number" aria-hidden="true">05</span>
+            <p class="role-item__title">Frontend Engineer</p>
+          </div>
+          <div class="role-item__right">
+            <span class="role-item__location">Remote</span>
+            <a href="contact.html" class="role-item__apply" aria-label="Apply for Frontend Engineer">Apply &rarr;</a>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <a href="index.html" class="site-footer__logo">Pivot</a>
+        <p class="site-footer__tagline">Turn data into direction.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer navigation">
+        <ul class="site-footer__nav-list" role="list">
+          <li><a href="product.html">Product</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <hr class="site-footer__divider" />
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__copy">&copy; 2025 Pivot Analytics, Inc. All rights reserved.</p>
+      <ul class="site-footer__legal" role="list">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ── GSAP ANIMATIONS ──────────────────────────────────────── -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Guard: GSAP and ScrollTrigger may not be loaded yet via defer;
+    // poll until available (max ~2s).
+    var attempts = 0;
+    var maxAttempts = 40;
+
+    function initAnimations() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        attempts++;
+        if (attempts < maxAttempts) {
+          setTimeout(initAnimations, 50);
+        }
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ─────────────────────────────────────────────────────────
+      // SECTION 1 — TEAM HEADER
+      // DOMContentLoaded: h1 from y:-20, linear 0.3s
+      // Rectangles from scale:0, staggered 0.1s
+      // ─────────────────────────────────────────────────────────
+      var h1 = document.querySelector('.team-header__h1');
+      var rects = document.querySelectorAll('.team-header__rect');
+
+      if (h1) {
+        gsap.set(h1, { y: -20, opacity: 0 });
+        gsap.to(h1, {
+          y: 0,
+          opacity: 1,
+          duration: 0.3,
+          ease: 'none',
+          delay: 0.05
+        });
+      }
+
+      if (rects.length) {
+        gsap.set(rects, { scale: 0, opacity: 0 });
+        gsap.to(rects, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.35,
+          ease: 'none',
+          stagger: 0.1,
+          delay: 0.1
+        });
+      }
+
+      // Header copy fade
+      var headerCopy = document.querySelector('.team-header__copy');
+      if (headerCopy) {
+        gsap.set(headerCopy, { opacity: 0, y: 10 });
+        gsap.to(headerCopy, {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: 'none',
+          delay: 0.25
+        });
+      }
+
+      // ─────────────────────────────────────────────────────────
+      // SECTION 2 — TEAM GRID
+      // ScrollTrigger: cards from scale:0.9, opacity:0
+      // stagger:0.07, linear, once:true
+      // ─────────────────────────────────────────────────────────
+      var teamCards = document.querySelectorAll('.team-card');
+
+      if (teamCards.length) {
+        gsap.set(teamCards, { scale: 0.9, opacity: 0 });
+
+        ScrollTrigger.create({
+          trigger: '.team-grid',
+          start: 'top 80%',
+          once: true,
+          onEnter: function () {
+            gsap.to(teamCards, {
+              scale: 1,
+              opacity: 1,
+              duration: 0.4,
+              ease: 'none',
+              stagger: 0.07
+            });
+          }
+        });
+      }
+
+      // Section 2 heading
+      var gridHeading = document.querySelector('.team-grid__heading');
+      if (gridHeading) {
+        gsap.set(gridHeading, { opacity: 0, y: 16 });
+        ScrollTrigger.create({
+          trigger: gridHeading,
+          start: 'top 85%',
+          once: true,
+          onEnter: function () {
+            gsap.to(gridHeading, { opacity: 1, y: 0, duration: 0.28, ease: 'none' });
+          }
+        });
+      }
+
+      // ─────────────────────────────────────────────────────────
+      // SECTION 3 — OPEN ROLES
+      // ScrollTrigger: roles from x:-50, opacity:0
+      // stagger:0.1, linear, once:true (horizontal sweep)
+      // ─────────────────────────────────────────────────────────
+      var roleItems = document.querySelectorAll('.role-item');
+
+      if (roleItems.length) {
+        gsap.set(roleItems, { x: -50, opacity: 0 });
+
+        ScrollTrigger.create({
+          trigger: '.team-roles',
+          start: 'top 80%',
+          once: true,
+          onEnter: function () {
+            gsap.to(roleItems, {
+              x: 0,
+              opacity: 1,
+              duration: 0.45,
+              ease: 'none',
+              stagger: 0.1
+            });
+          }
+        });
+      }
+
+      // Section 3 heading
+      var rolesHeading = document.querySelector('.team-roles__heading');
+      if (rolesHeading) {
+        gsap.set(rolesHeading, { opacity: 0, y: 16 });
+        ScrollTrigger.create({
+          trigger: rolesHeading,
+          start: 'top 88%',
+          once: true,
+          onEnter: function () {
+            gsap.to(rolesHeading, { opacity: 1, y: 0, duration: 0.28, ease: 'none' });
+          }
+        });
+      }
+    }
+
+    initAnimations();
+  });
+  </script>
+
+</body>
+</html>

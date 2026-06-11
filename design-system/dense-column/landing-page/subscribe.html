@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscribe — FIELDSET</title>
+  <meta name="description" content="Subscribe to FIELDSET — free quarterly delivery of engineering documents: post-mortems, RFC drafts, infrastructure notes, and architecture decision records. No ads, no tracking.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/subscribe-page.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Fieldset</a>
+      <ul class="nav-links">
+        <li><a href="issues.html" class="nav-link">Issues</a></li>
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="archive.html" class="nav-link">Archive</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="subscribe.html" class="nav-link nav-link--active">Subscribe</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="issues.html" class="nav-link">Issues</a>
+    <a href="features.html" class="nav-link">Features</a>
+    <a href="archive.html" class="nav-link">Archive</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="subscribe.html" class="nav-link nav-link--active">Subscribe</a>
+  </div>
+  <script>
+    (function(){
+      var toggle = document.querySelector('.nav-mobile-toggle');
+      var menu = document.getElementById('nav-mobile-menu');
+      var nav = document.getElementById('site-nav');
+      if(toggle && menu) {
+        toggle.addEventListener('click', function(){
+          nav.classList.toggle('nav-mobile-open');
+          menu.classList.toggle('is-open');
+          document.body.style.overflow = menu.classList.contains('is-open') ? 'hidden' : '';
+        });
+        menu.querySelectorAll('.nav-link').forEach(function(link){
+          link.addEventListener('click', function(){
+            nav.classList.remove('nav-mobile-open');
+            menu.classList.remove('is-open');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+    })();
+  </script>
+
+  <!-- HERO: dark — contrast section for CTA emphasis -->
+  <section class="hero hero--subpage hero--dark" role="banner">
+    <div style="max-width:1440px;margin:0 auto;">
+      <span class="hero__overline" style="color:#86868b;">Free — Quarterly — No Tracking</span>
+      <h1 class="hero__headline" style="color:#ffffff;">Subscribe</h1>
+      <p class="hero__tagline" style="color:#86868b;">Email delivery. HTML and plain-text editions. Permanent archive access from day one. No analytics pixel. No third-party scripts. No advertising. The document arrives; nothing else does.</p>
+    </div>
+  </section>
+
+  <!-- SUBSCRIBE FORM: Primary -->
+  <section class="section" aria-labelledby="sub-form-heading">
+    <div class="section__container">
+      <div class="section__header">
+        <h2 class="section__heading" id="sub-form-heading">Subscribe Free</h2>
+        <span class="section__label">11,000+ Engineers Subscribed</span>
+      </div>
+      <div class="sp-form-layout">
+        <div class="sp-form-primary">
+          <p class="sp-form-intro">FIELDSET publishes quarterly — January, April, July, October. Each issue is delivered as HTML (clean, readable, no tracking) and plain text. You can read it in your email client or in a browser. The archive is immediately accessible after subscription. No waiting period.</p>
+          <form class="sp-subscribe-form" id="sp-subscribe-form" action="#" method="POST" novalidate>
+            <div class="sp-field">
+              <label class="sp-label" for="sp-email">Email address</label>
+              <input class="sp-input" type="email" id="sp-email" name="email" placeholder="name@company.com" autocomplete="email" required>
+            </div>
+            <div class="sp-field">
+              <label class="sp-label" for="sp-role">Your role (optional)</label>
+              <input class="sp-input" type="text" id="sp-role" name="role" placeholder="Staff engineer, SRE, platform lead...">
+            </div>
+            <div class="sp-field">
+              <label class="sp-label sp-checkbox-label">
+                <input type="checkbox" name="plain-text-only" id="sp-plaintext">
+                <span>Plain text only — no HTML edition</span>
+              </label>
+            </div>
+            <button class="sp-submit" type="submit" id="sp-submit">Subscribe</button>
+            <div class="sp-confirm" id="sp-confirm" hidden>
+              <span class="sp-confirm-text">Confirmed. Issue 14 is in your inbox.</span>
+            </div>
+          </form>
+        </div>
+        <div class="sp-form-aside">
+          <div class="sp-terms">
+            <span class="sp-terms-heading">What you get</span>
+            <ul class="sp-terms-list">
+              <li>Quarterly issue — HTML + plain text</li>
+              <li>Full archive access (Issues 1–14)</li>
+              <li>No welcome email. No onboarding drip. The first thing you receive is Issue 14.</li>
+            </ul>
+          </div>
+          <div class="sp-terms">
+            <span class="sp-terms-heading">What you don't get</span>
+            <ul class="sp-terms-list">
+              <li>Analytics pixels in email HTML</li>
+              <li>Third-party tracking scripts</li>
+              <li>Sponsored content or advertisements</li>
+              <li>Weekly digests, newsletters, or drip sequences</li>
+              <li>Your data sold to anyone, ever</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT SUBSCRIBERS SAY: Pull quotes as text — no cards, pure typography -->
+  <!-- Distinct grid: full-width single-column pull quotes, left-bordered -->
+  <section class="section section--surface" aria-labelledby="quotes-heading">
+    <div class="section__container">
+      <div class="section__header">
+        <h2 class="section__heading" id="quotes-heading">Readers</h2>
+        <span class="section__label">Unsolicited</span>
+      </div>
+      <div class="sp-quotes">
+        <blockquote class="sp-quote">
+          <p class="sp-quote-text">"The incident report format forces clarity. You can't pad a timeline. Either the event happened at 14:08 or it didn't. Every incident report I've written since reading Issue 6 follows this format."</p>
+          <cite class="sp-quote-source">— SRE, fintech infrastructure team</cite>
+        </blockquote>
+        <blockquote class="sp-quote">
+          <p class="sp-quote-text">"We circulated the leap-second post-mortem from Issue 12 internally. It changed how we think about testing clock assumptions. That's what technical publishing should do."</p>
+          <cite class="sp-quote-source">— Platform engineer, distributed systems</cite>
+        </blockquote>
+        <blockquote class="sp-quote">
+          <p class="sp-quote-text">"The ADR decay essay from Issue 14 is getting sent to every new engineer on our team. We've had three ADRs rot into mythology in the last year. This names the problem precisely."</p>
+          <cite class="sp-quote-source">— Engineering manager, 40-person team</cite>
+        </blockquote>
+        <blockquote class="sp-quote">
+          <p class="sp-quote-text">"It reads like engineering actually works — messy, conditional, context-dependent. Not like a textbook. Not like a blog post. Like an actual record."</p>
+          <cite class="sp-quote-source">— Senior backend engineer</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBMIT A DOCUMENT -->
+  <section class="section" id="submit-email" aria-labelledby="submit-doc-heading">
+    <div class="section__container">
+      <div class="section__header">
+        <h2 class="section__heading" id="submit-doc-heading">Submit</h2>
+        <span class="section__label">Contribute a Document</span>
+      </div>
+      <div class="sp-submit-layout">
+        <div>
+          <p class="sp-form-intro">FIELDSET publishes post-mortems, incident reports, RFC drafts, infrastructure notes, and essays from working engineers. Documents are published as submitted — structural completeness is the only editorial filter. We do not rewrite.</p>
+          <p class="sp-form-intro" style="margin-top:12px;">Review the <a href="about.html#submit" style="color:#0071e3;text-decoration:none;border-bottom:1px solid #0071e3;">document standards</a> before submitting. A document that does not meet the structural requirements for its category will be returned, not edited.</p>
+        </div>
+        <form class="sp-subscribe-form" action="#" method="POST" novalidate>
+          <div class="sp-field">
+            <label class="sp-label" for="sub-doc-email">Your email address</label>
+            <input class="sp-input" type="email" id="sub-doc-email" name="email" placeholder="name@company.com" required>
+          </div>
+          <div class="sp-field">
+            <label class="sp-label" for="sub-doc-type">Document type</label>
+            <select class="sp-input sp-select" id="sub-doc-type" name="doc-type">
+              <option value="">Select document type</option>
+              <option value="post-mortem">Post-Mortem</option>
+              <option value="incident">Incident Report</option>
+              <option value="rfc-draft">RFC Draft</option>
+              <option value="rfc-commentary">RFC Commentary</option>
+              <option value="adr">Architecture Decision Record</option>
+              <option value="infra-note">Infrastructure Note</option>
+              <option value="spec-review">Spec Review</option>
+              <option value="essay">Essay</option>
+            </select>
+          </div>
+          <div class="sp-field">
+            <label class="sp-label" for="sub-doc-title">Document title</label>
+            <input class="sp-input" type="text" id="sub-doc-title" name="title" placeholder="e.g. RFC 0048: Database Connection Pool Sizing">
+          </div>
+          <button class="sp-submit" type="submit">Begin Submission</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div>
+        <a href="index.html" class="footer-brand">Fieldset</a>
+        <p class="footer-tagline">Engineering as Written Practice.<br>Published quarterly since 2022.</p>
+      </div>
+      <nav aria-label="Publication">
+        <span class="footer-nav-heading">Publication</span>
+        <ul class="footer-nav-list">
+          <li><a href="issues.html">Issues</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="archive.html">Archive</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="About">
+        <span class="footer-nav-heading">About</span>
+        <ul class="footer-nav-list">
+          <li><a href="about.html">About FIELDSET</a></li>
+          <li><a href="about.html#submit">Submit a Document</a></li>
+          <li><a href="subscribe.html">Subscribe</a></li>
+        </ul>
+      </nav>
+      <div class="footer-copyright">
+        &copy; 2026 FIELDSET.<br>No rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Subscribe form: instant confirmation feedback
+    (function(){
+      var form = document.getElementById('sp-subscribe-form');
+      var confirm = document.getElementById('sp-confirm');
+      var submit = document.getElementById('sp-submit');
+      if(!form) return;
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var email = document.getElementById('sp-email');
+        if(!email || !email.value.includes('@')) {
+          email.focus();
+          email.style.borderColor = '#e30000';
+          return;
+        }
+        email.style.borderColor = '';
+        if(submit) { submit.textContent = 'Subscribed'; submit.disabled = true; }
+        if(confirm) confirm.removeAttribute('hidden');
+      });
+    })();
+  </script>
+
+</body>
+</html>

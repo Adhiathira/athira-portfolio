@@ -1,0 +1,77 @@
+:root {
+  --ds-container-max-width: 1440px;
+  --ds-container-padding-inline: 22px;
+  --ds-zine-grid-col1: 1fr;
+  --ds-zine-grid-col2: 2fr;
+  --ds-zine-grid-col3: 1fr;
+  --ds-zine-overlap-margin: -24px;
+  --ds-zine-bleed-margin-left: -32px;
+  --ds-zine-rotation: -1.5deg;
+}
+
+.container {
+  max-width: var(--ds-container-max-width);
+  width: 100%;
+  padding-inline: var(--ds-container-padding-inline);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+/* PUNK/ZINE asymmetric collage grid (1fr 2fr 1fr) */
+.zine-grid {
+  display: grid;
+  grid-template-columns: var(--ds-zine-grid-col1) var(--ds-zine-grid-col2) var(--ds-zine-grid-col3);
+  grid-template-rows: auto auto auto;
+  gap: 16px;
+}
+
+/* Overlapping stack — cut-and-paste zine paste-up */
+.zine-overlap {
+  margin-top: var(--ds-zine-overlap-margin);
+  position: relative;
+  z-index: 1;
+}
+
+/* Left bleed — breaks formal grid edge */
+.zine-bleed {
+  margin-left: var(--ds-zine-bleed-margin-left);
+}
+
+/* Slight rotation — content glued crookedly */
+.zine-rotated {
+  transform: rotate(var(--ds-zine-rotation));
+}
+
+/* Editorial column with generous gutters */
+.editorial {
+  margin-inline: 244px;
+  max-width: calc(100% - 488px);
+}
+
+/* Asymmetric two-column split */
+.two-col-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: flex-end;
+}
+
+/* Three overlapping cards */
+.three-col-overlap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.three-col-overlap > :nth-child(2) {
+  margin-top: 24px;
+}
+
+.three-col-overlap > :nth-child(3) {
+  margin-top: 48px;
+}
+
+/* Full-bleed background escape */
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(-1 * var(--ds-container-padding-inline));
+}

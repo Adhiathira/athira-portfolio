@@ -1,0 +1,110 @@
+/* Motion System — Prism Drift
+   Source: flint-shore (holographic twist, intensity 5)
+   Adds: holoShift, shimmerSweep, rainbowShift, prismaticReveal, chromaFlicker
+   Easings renamed: prismEase, foilEase, shimmerEase
+*/
+
+:root {
+  /* Duration scale — holographic */
+  --motion-micro-duration: 80ms;
+  --motion-hover-duration: 200ms;
+  --motion-reveal-duration: 600ms;
+  --motion-holo-shift-duration: 8000ms;
+  --motion-rainbow-cycle-duration: 4000ms;
+  --motion-prismatic-duration: 12000ms;
+
+  --motion-stagger-delay: 0.1s;
+  --motion-primary-duration: 0.4s;
+  --motion-fast-duration: var(--motion-hover-duration);
+
+  /* Holographic easing suite */
+  --prism-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --foil-ease: cubic-bezier(0.4, 0, 1, 1);
+  --shimmer-ease: cubic-bezier(0, 0, 0.2, 1);
+
+  --motion-easing-standard: var(--prism-ease);
+  --motion-easing-exit: var(--foil-ease);
+  --motion-easing-enter: var(--shimmer-ease);
+}
+
+/* ─── Base keyframes ─── */
+
+@keyframes fade-in-base {
+  0% { opacity: 0; transform: translateY(60px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+
+@keyframes fade-in-scale {
+  0% { opacity: 0; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Holographic keyframes ─── */
+
+@keyframes holoShift {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(360deg); }
+}
+
+@keyframes shimmerSweep {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@keyframes rainbowShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes prismaticReveal {
+  0% { opacity: 0; clip-path: inset(0 100% 0 0); }
+  40% { opacity: 0.6; clip-path: inset(0 40% 0 0); }
+  100% { opacity: 1; clip-path: inset(0 0% 0 0); }
+}
+
+@keyframes chromaFlicker {
+  0% { filter: saturate(0.8); }
+  50% { filter: saturate(1.6); }
+  100% { filter: saturate(1.0); }
+}
+
+@keyframes iridescent-shift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ─── Stagger utilities ─── */
+.stagger-item:nth-child(1) { animation-delay: 0s; }
+.stagger-item:nth-child(2) { animation-delay: var(--motion-stagger-delay); }
+.stagger-item:nth-child(3) { animation-delay: calc(var(--motion-stagger-delay) * 2); }
+.stagger-item:nth-child(4) { animation-delay: calc(var(--motion-stagger-delay) * 3); }
+.stagger-item:nth-child(5) { animation-delay: calc(var(--motion-stagger-delay) * 4); }
+
+/* ─── Holographic utility classes ─── */
+
+.holo-shift {
+  animation: holoShift var(--motion-holo-shift-duration) linear infinite;
+}
+
+.shimmer-sweep {
+  background-size: 200% 200%;
+  animation: shimmerSweep 2000ms ease-in-out infinite alternate;
+}
+
+.rainbow-shift {
+  background-size: 300% 300%;
+  animation: rainbowShift var(--motion-rainbow-cycle-duration) linear infinite;
+}
+
+.prismatic-reveal {
+  animation: prismaticReveal var(--motion-reveal-duration) var(--shimmer-ease) both;
+}
+
+.chroma-flicker {
+  animation: chromaFlicker 3000ms ease-in-out infinite;
+}

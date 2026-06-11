@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instruments — Quill Plane Instrument Co.</title>
+  <meta name="description" content="The QP-7 Fold Endurance Tester and QP-12 Thickness Comparator. Precision calibration instruments for paper, board, and soft material measurement since 1971.">
+
+  <!-- Design System Tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <!-- Components -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/subpages.css">
+
+  <!-- Splitting.js -->
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ── NAV ── -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Quill Plane Instrument Co. home">
+      <span class="nav-logo-mark">QP</span>
+      <span class="nav-logo-sub">Instrument Co.</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="instruments.html" class="nav-link nav-link--active">Instruments</a></li>
+      <li><a href="process.html" class="nav-link">Process</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="instruments.html" class="nav-link btn-primary" style="padding:8px 18px;font-size:0.75rem;">Enquire</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="instruments.html" class="nav-link">Instruments</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="instruments.html" class="nav-link">Enquire</a>
+</div>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+  const mobileToggle = document.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile-menu');
+  mobileToggle.addEventListener('click', () => {
+    nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open');
+    document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+  });
+</script>
+
+<!-- ── INSTRUMENTS HERO (product archetype: 40-60vh) ── -->
+<section id="instruments-hero">
+  <div id="instruments-hero-inner">
+    <div id="instruments-hero-left">
+      <p id="instruments-hero-eyebrow">— Instrument Range</p>
+      <h1 id="instruments-hero-title">
+        <span class="line">Two instruments.</span>
+        <span class="line">One standard.</span>
+      </h1>
+      <p id="instruments-hero-lead">The QP-7 and QP-12 remain the field instruments of choice for conservation studios and European paper mills requiring verifiable measurement of fold endurance and caliper. Both calibrated to ISO, both serviceable for 18 years and beyond.</p>
+    </div>
+    <div id="instruments-hero-right">
+      <img
+        id="instruments-hero-img"
+        src="assets/hero-paper-surface.jpeg"
+        alt="QP instruments on a conservation bench — fold tester and thickness comparator side by side"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div id="instruments-hero-img-placeholder" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.8rem;">
+        → assets/hero-paper-surface.jpeg
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── QP-7 SECTION ── -->
+<section id="qp7-section">
+  <div id="qp7-section-inner">
+    <div id="qp7-left">
+      <p id="qp7-section-tag">— Model QP-7</p>
+      <h2 id="qp7-name">Fold Endurance Tester</h2>
+      <p id="qp7-model">QP-7 / ISO 5626 / TAPPI T511</p>
+      <p id="qp7-description">Measures the number of double-folds a paper sample can endure before fracture at a specified tensile load. Designed for use in conservation studios, archival binderies, and certification laboratories where fold life must be quantified against an international standard.</p>
+
+      <div id="qp7-specs" role="table" aria-label="QP-7 specifications">
+        <div class="spec-row" role="row">
+          <p class="spec-row-label" role="columnheader">Test Standard</p>
+          <p class="spec-row-value" role="cell">ISO 5626 / TAPPI T511</p>
+        </div>
+        <div class="spec-row" role="row">
+          <p class="spec-row-label" role="columnheader">Method</p>
+          <p class="spec-row-value" role="cell">Double-fold, adjustable tension</p>
+        </div>
+        <div class="spec-row" role="row">
+          <p class="spec-row-label" role="columnheader">Load Options</p>
+          <p class="spec-row-value" role="cell">0.5 kN (standard) / 1.0 kN</p>
+        </div>
+        <div class="spec-row" role="row">
+          <p class="spec-row-label" role="columnheader">Range</p>
+          <p class="spec-row-value" role="cell">1 to 100,000 folds</p>
+        </div>
+        <div class="spec-row" role="row">
+          <p class="spec-row-label" role="columnheader">Body</p>
+          <p class="spec-row-value" role="cell">870g cast aluminium, BS 10 B 17 powder coat</p>
+        </div>
+        <div class="spec-row" role="row">
+          <p class="spec-row-label" role="columnheader">Auto-stop</p>
+          <p class="spec-row-value" role="cell">At fracture detection</p>
+        </div>
+        <div class="spec-row" role="row">
+          <p class="spec-row-label" role="columnheader">Optional</p>
+          <p class="spec-row-value" role="cell">QP DataLogger (CSV export)</p>
+        </div>
+      </div>
+
+      <a href="#enquiry-section" class="btn-primary">Enquire about the QP-7</a>
+    </div>
+
+    <div id="qp7-right">
+      <div id="qp7-image-wrap">
+        <img
+          id="qp7-img"
+          src="assets/qp7-tester.jpeg"
+          alt="QP-7 Fold Endurance Tester — cast aluminium body, BS 10 B 17 powder coat, fold test in progress on archival paper"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-1);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.8rem;">→ assets/qp7-tester.jpeg</div>
+      </div>
+      <p id="qp7-caption">QP-7 in active test. Schleicher &amp; Schuell 597 filter paper, 0.5 kN load setting, archival testing protocol.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── QP-12 SECTION (dark contrast beat) ── -->
+<section id="qp12-section">
+  <div id="qp12-section-inner">
+    <div id="qp12-left">
+      <img
+        id="qp12-img"
+        src="assets/calibration-process.jpeg"
+        alt="QP-12 Thickness Comparator — stainless contact faces on folded paper edge, micrometer thimble in hand"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:rgba(255,255,255,0.04);color:rgba(242,242,242,0.4);font-family:var(--font-body);font-size:0.8rem;">→ assets/calibration-process.jpeg</div>
+    </div>
+
+    <div id="qp12-right">
+      <p id="qp12-section-tag">— Model QP-12</p>
+      <h2 id="qp12-name">Thickness Comparator</h2>
+      <p id="qp12-model">QP-12 / ISO 534 / Caliper</p>
+      <p id="qp12-description">Measures caliper of single sheets from 20 to 1,200 microns. Contact faces are 304 stainless steel with audible click at zero. Cylinder mould mill compatible. Used by European hand-papermakers and production mills where thickness consistency determines scoring blade selection and fold quality in bookbinding.</p>
+
+      <div id="qp12-specs" role="table" aria-label="QP-12 specifications">
+        <div class="spec-row spec-row--dark" role="row">
+          <p class="spec-row-label" role="columnheader">Test Standard</p>
+          <p class="spec-row-value" role="cell">ISO 534 (Thickness)</p>
+        </div>
+        <div class="spec-row spec-row--dark" role="row">
+          <p class="spec-row-label" role="columnheader">Range</p>
+          <p class="spec-row-value" role="cell">20 to 1,200 µm</p>
+        </div>
+        <div class="spec-row spec-row--dark" role="row">
+          <p class="spec-row-label" role="columnheader">Resolution</p>
+          <p class="spec-row-value" role="cell">1 µm</p>
+        </div>
+        <div class="spec-row spec-row--dark" role="row">
+          <p class="spec-row-label" role="columnheader">Contact Faces</p>
+          <p class="spec-row-value" role="cell">304 stainless steel</p>
+        </div>
+        <div class="spec-row spec-row--dark" role="row">
+          <p class="spec-row-label" role="columnheader">Body</p>
+          <p class="spec-row-value" role="cell">870g cast aluminium, BS 10 B 17 powder coat</p>
+        </div>
+        <div class="spec-row spec-row--dark" role="row">
+          <p class="spec-row-label" role="columnheader">Cycle Time</p>
+          <p class="spec-row-value" role="cell">2.2 seconds per reading</p>
+        </div>
+        <div class="spec-row spec-row--dark" role="row">
+          <p class="spec-row-label" role="columnheader">Zero Indication</p>
+          <p class="spec-row-value" role="cell">Audible click at contact</p>
+        </div>
+      </div>
+
+      <a href="#enquiry-section" class="btn-primary-light" style="align-self:flex-start;">Enquire about the QP-12</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── ACCESSORIES SECTION ── -->
+<section id="accessories-section">
+  <div id="accessories-section-inner">
+    <p id="accessories-eyebrow">— Accessories &amp; Consumables</p>
+    <h2 id="accessories-heading">Supporting equipment for complete calibration readiness.</h2>
+
+    <div id="accessories-grid">
+      <div class="accessory-item" id="acc-weights">
+        <p class="accessory-item-num">A01</p>
+        <h3 class="accessory-item-name">Reference Weight Set</h3>
+        <p class="accessory-item-desc">Dead-weight calibration set for QP-7 tension verification. Four weights traceable to NPL standards. Supplied in aluminium carry case.</p>
+      </div>
+      <div class="accessory-item" id="acc-faces">
+        <p class="accessory-item-num">A02</p>
+        <h3 class="accessory-item-name">Replacement Contact Faces</h3>
+        <p class="accessory-item-desc">Matched pair of 304 stainless contact faces for QP-12. Factory lapped to 0.1µm flatness. Supplied as a calibrated pair — never individual.</p>
+      </div>
+      <div class="accessory-item" id="acc-gauge">
+        <p class="accessory-item-num">A03</p>
+        <h3 class="accessory-item-name">Reference Gauge Block</h3>
+        <p class="accessory-item-desc">250µm hardened steel gauge block for QP-12 zero-point verification. Certification traceable to ISO 3650 Grade K. One block per instrument.</p>
+      </div>
+      <div class="accessory-item" id="acc-datalogger">
+        <p class="accessory-item-num">A04</p>
+        <h3 class="accessory-item-name">QP DataLogger</h3>
+        <p class="accessory-item-desc">Serial interface unit for QP-7. Logs fold count per sample, exports as ISO-formatted CSV. Compatible with Windows 10/11 and macOS Sonoma via RS-232 adaptor.</p>
+      </div>
+      <div class="accessory-item" id="acc-tension">
+        <p class="accessory-item-num">A05</p>
+        <h3 class="accessory-item-name">Tension Calibration Tool</h3>
+        <p class="accessory-item-desc">Dedicated torque wrench and spring scale for QP-7 fold tension adjustment. Required for annual recertification. Marked 0.5 kN and 1.0 kN.</p>
+      </div>
+      <div class="accessory-item" id="acc-case">
+        <p class="accessory-item-num">A06</p>
+        <h3 class="accessory-item-name">QP Field Carry Case</h3>
+        <p class="accessory-item-desc">Extruded aluminium case in BS 10 B 17 powder coat matching the instrument body. Foam-lined for QP-7 + QP-12 together with weight set. Lockable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ENQUIRY FORM ── -->
+<section id="enquiry-section">
+  <div id="enquiry-section-inner">
+    <div id="enquiry-left">
+      <p id="enquiry-eyebrow">— Commission Enquiry</p>
+      <h2 id="enquiry-heading">QP instruments are made to order. Lead time 6–8 weeks.</h2>
+      <p id="enquiry-body">All QP instruments are assembled in Stroud and include a full calibration certificate traceable to national standards. Calibration weights, contact faces, and carry case are included. Recalibration service available every 24 months.</p>
+    </div>
+
+    <form id="enquiry-form" name="enquiry" method="POST" action="#" novalidate>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="field-name">Name</label>
+          <input type="text" id="field-name" name="name" placeholder="Your full name" autocomplete="name">
+        </div>
+        <div class="form-field">
+          <label for="field-org">Organisation</label>
+          <input type="text" id="field-org" name="organisation" placeholder="Studio or institution" autocomplete="organization">
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="field-email">Email</label>
+        <input type="email" id="field-email" name="email" placeholder="Your email address" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label for="field-instrument">Instrument of interest</label>
+        <select id="field-instrument" name="instrument">
+          <option value="">Select instrument</option>
+          <option value="qp7">QP-7 Fold Endurance Tester</option>
+          <option value="qp12">QP-12 Thickness Comparator</option>
+          <option value="both">Both QP-7 and QP-12</option>
+          <option value="accessories">Accessories only</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="field-message">Notes</label>
+        <textarea id="field-message" name="message" placeholder="Intended application, relevant standards, or questions about certification..."></textarea>
+      </div>
+      <div id="form-submit">
+        <button type="submit" class="btn-primary">Submit Enquiry</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ── SUB CTA BAND ── -->
+<section id="sub-cta">
+  <div id="sub-cta-inner">
+    <div id="sub-cta-text">
+      <h2 id="sub-cta-heading">How we test.</h2>
+      <p id="sub-cta-body">The measurement protocol and conditioning standards that make QP results reproducible across labs and years.</p>
+    </div>
+    <a href="process.html" class="btn-primary-light">View the Method</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div id="footer-top">
+      <div class="footer-brand">
+        <p class="footer-brand-name">Quill Plane Instrument Co.</p>
+        <p class="footer-brand-desc">Precision calibration instruments for paper engineers, conservators, and archival binderies. QP-7 and QP-12 in continuous production since 1971.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Instruments</p>
+        <ul class="footer-links-list">
+          <li><a href="instruments.html">QP-7 Fold Tester</a></li>
+          <li><a href="instruments.html">QP-12 Thickness Comparator</a></li>
+          <li><a href="instruments.html">Accessories</a></li>
+          <li><a href="instruments.html">Enquire</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Studio</p>
+        <ul class="footer-links-list">
+          <li><a href="process.html">Method</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Heritage</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Standards</p>
+        <ul class="footer-links-list">
+          <li><a href="process.html">ISO 5626</a></li>
+          <li><a href="process.html">TAPPI T511</a></li>
+          <li><a href="process.html">ISO 534</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p class="footer-copyright">© 2024 Quill Plane Instrument Co. Stroud, Gloucestershire, UK.</p>
+      <ul class="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── LENIS SMOOTH SCROLL ──
+  const lenis = new Lenis({ lerp: 0.08, duration: 1.6, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  function raf(time) { lenis.raf(time); ScrollTrigger.update(); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── CUSTOM CURSOR ──
+  (function() {
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring || window.innerWidth < 900) return;
+    document.body.style.cursor = 'none';
+    const xDot = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power2.out' });
+    const yDot = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power2.out' });
+    const xRing = gsap.quickTo(ring, 'x', { duration: 0.55, ease: 'power3.out' });
+    const yRing = gsap.quickTo(ring, 'y', { duration: 0.55, ease: 'power3.out' });
+    window.addEventListener('mousemove', (e) => { xDot(e.clientX); yDot(e.clientY); xRing(e.clientX); yRing(e.clientY); }, { passive: true });
+    document.querySelectorAll('a, button, .accessory-item').forEach(el => {
+      el.addEventListener('mouseenter', () => gsap.to(ring, { scale: 2.2, opacity: 0.4, duration: 0.4, ease: 'power2.out' }));
+      el.addEventListener('mouseleave', () => gsap.to(ring, { scale: 1, opacity: 0.6, duration: 0.4, ease: 'power2.out' }));
+    });
+  })();
+
+  // ── HERO: Line-by-line clip reveal (distinct from homepage scatter) ──
+  window.addEventListener('load', () => {
+    const lines = document.querySelectorAll('#instruments-hero-title .line');
+    lines.forEach((line, i) => {
+      const wrapper = document.createElement('span');
+      wrapper.style.cssText = 'display:block;overflow:hidden;';
+      line.parentNode.insertBefore(wrapper, line);
+      wrapper.appendChild(line);
+      gsap.from(line, {
+        y: '100%',
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: 0.2 + i * 0.14
+      });
+    });
+    gsap.from('#instruments-hero-eyebrow', { y: 16, duration: 0.7, ease: 'power2.out', delay: 0.1 });
+    gsap.from('#instruments-hero-lead', { y: 20, duration: 0.9, ease: 'power2.out', delay: 0.55 });
+    gsap.from('#instruments-hero-right', { scale: 0.96, duration: 1.2, ease: 'power2.out', delay: 0.2 });
+  });
+
+  // ── QP-7 SECTION: spec rows reveal right-to-left clip wipe ──
+  const specRows = document.querySelectorAll('#qp7-specs .spec-row');
+  specRows.forEach((row, i) => {
+    gsap.from(row, {
+      clipPath: 'inset(0 100% 0 0)',
+      duration: 0.7,
+      ease: 'power3.inOut',
+      delay: i * 0.06,
+      scrollTrigger: { trigger: '#qp7-specs', start: 'top 80%' }
+    });
+  });
+
+  // QP-7 image: scale-from-center on enter
+  gsap.from('#qp7-image-wrap', {
+    scale: 1.06,
+    duration: 1.2,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#qp7-right', start: 'top 70%' }
+  });
+
+  gsap.from('#qp7-left', {
+    x: -40,
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#qp7-section', start: 'top 70%' }
+  });
+
+  // ── QP-12 SECTION: vertical stagger on spec rows + image parallax ──
+  const darkSpecRows = document.querySelectorAll('#qp12-specs .spec-row--dark');
+  darkSpecRows.forEach((row, i) => {
+    gsap.from(row, {
+      y: 24,
+      duration: 0.7,
+      ease: 'power2.out',
+      delay: i * 0.07,
+      scrollTrigger: { trigger: '#qp12-specs', start: 'top 80%' }
+    });
+  });
+
+  gsap.from('#qp12-right', {
+    x: 40,
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#qp12-section', start: 'top 70%' }
+  });
+
+  // QP-12 image parallax
+  gsap.to('#qp12-left', {
+    y: -30,
+    ease: 'none',
+    scrollTrigger: { trigger: '#qp12-section', scrub: 1.0, start: 'top bottom', end: 'bottom top' }
+  });
+
+  // ── ACCESSORIES: rotate-and-rise stagger ──
+  gsap.from('.accessory-item', {
+    y: 40,
+    rotation: 1.5,
+    transformOrigin: 'bottom left',
+    duration: 0.8,
+    ease: 'power2.out',
+    stagger: 0.09,
+    scrollTrigger: { trigger: '#accessories-grid', start: 'top 80%' }
+  });
+
+  // ── ENQUIRY SECTION: horizontal reveal ──
+  gsap.from('#enquiry-left', {
+    x: -50,
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#enquiry-section', start: 'top 75%' }
+  });
+
+  gsap.from('#enquiry-form', {
+    x: 40,
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#enquiry-section', start: 'top 75%' }
+  });
+
+  // ── FOOTER CLIP REVEAL ──
+  gsap.from('#site-footer', {
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 1.2,
+    ease: 'power3.inOut',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 90%' }
+  });
+
+  // ── CTA BUTTON elastic hover ──
+  document.querySelectorAll('.btn-primary, .btn-ghost, .btn-primary-light').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+      gsap.to(btn, { x: dx * 0.15, y: dy * 0.15, ease: 'power1.out', duration: 0.3 });
+    });
+    btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, ease: 'elastic.out(1, 0.3)', duration: 1.2 }));
+  });
+
+  // Smooth scroll to enquiry form when clicking enquiry links
+  document.querySelectorAll('a[href="#enquiry-section"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      lenis.scrollTo('#enquiry-section', { offset: -80, duration: 1.8 });
+    });
+  });
+</script>
+
+</body>
+</html>

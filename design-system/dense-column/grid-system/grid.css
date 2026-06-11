@@ -1,0 +1,76 @@
+:root {
+  --ds-grid-columns: 6;
+  --ds-grid-gap: 16px;
+  --ds-grid-column-gap: 16px;
+  --ds-grid-row-gap: 16px;
+  --ds-grid-template-columns: repeat(6, 1fr);
+  --ds-grid-container-max-width: 1440px;
+  --ds-grid-container-padding: 16px;
+}
+
+.ds-container {
+  max-width: var(--ds-grid-container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--ds-grid-container-padding);
+}
+
+.ds-grid {
+  display: grid;
+  grid-template-columns: var(--ds-grid-template-columns);
+  column-gap: var(--ds-grid-column-gap);
+  row-gap: var(--ds-grid-row-gap);
+}
+
+/* Brutal span utilities */
+.brutal-full {
+  grid-column: 1 / -1;
+}
+
+.brutal-half {
+  grid-column: span 3;
+}
+
+.brutal-third {
+  grid-column: span 2;
+}
+
+.brutal-two-thirds {
+  grid-column: span 4;
+}
+
+/* Brutal structural lines */
+.brutal-divider {
+  grid-column: 1 / -1;
+  border: 0;
+  border-top: 2px solid #000000;
+  margin: 0;
+  height: 0;
+}
+
+.brutal-rule {
+  border-left: 2px solid #000000;
+  padding-left: 16px;
+}
+
+/* Newspaper section rule above heading */
+.brutal-section-heading {
+  border-top: 4px solid #000000;
+  padding-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .ds-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .brutal-half,
+  .brutal-third,
+  .brutal-two-thirds {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 375px) {
+  .ds-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,107 @@
+/* strata-drift — depth-aware grid system */
+
+:root {
+  --container-max: 1440px;
+  --container-pad: 60px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+  --gap-lg: 40px;
+  --gap-xl: 60px;
+}
+
+/* Base container */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+/* Full-bleed wrapper */
+.full-bleed {
+  width: 100%;
+  position: relative;
+}
+
+/* Depth stage — full-viewport with z-layer system */
+.depth-stage {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Grid layouts */
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-md);
+}
+
+.grid-2col-deep {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--gap-xl);
+  align-items: center;
+}
+
+.grid-4col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-lg);
+}
+
+.grid-2col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap-md);
+}
+
+/* Alternating heights on 3-col grid */
+.grid-3col .card:first-child {
+  grid-row: span 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  :root {
+    --container-pad: 40px;
+  }
+
+  .grid-3col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-4col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-2col-deep {
+    grid-template-columns: 1fr;
+    gap: var(--gap-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-pad: 32px;
+  }
+
+  .grid-3col {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-4col {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap-md);
+  }
+}
+
+@media (max-width: 375px) {
+  :root {
+    --container-pad: 20px;
+  }
+
+  .grid-4col {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,96 @@
+:root {
+  --grid-system-max-width: 1600px;
+  --grid-system-gutter: 28px;
+  --grid-system-columns: 12;
+  --grid-system-accent-gold: #b0915b;
+  --grid-system-brand-sage: #3f4d33;
+}
+
+.grid-container {
+  max-width: var(--grid-system-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-system-gutter);
+}
+
+.salon-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--grid-system-gutter);
+  max-width: var(--grid-system-max-width);
+  margin: 0 auto;
+}
+
+/* ─── Layout Utilities ───────────────────────────────────── */
+
+.salon-full       { grid-column: 1 / -1; }
+.salon-feature    { grid-column: 2 / span 8; }
+.salon-narrow     { grid-column: 3 / span 8; }
+.salon-aside      { grid-column: 1 / span 4; }
+.salon-wide       { grid-column: 2 / span 10; }
+
+/* Asymmetric split with gold divider */
+.salon-split {
+  grid-column: 1 / span 7;
+  border-right: 2px solid var(--grid-system-accent-gold);
+  padding-right: var(--grid-system-gutter);
+}
+
+.salon-split-right {
+  grid-column: 8 / span 5;
+}
+
+/* ─── Ornamental Framed Component ───────────────────────── */
+
+.salon-framed {
+  position: relative;
+  padding: 32px;
+  border: 1px solid var(--grid-system-accent-gold);
+}
+
+/* Art Nouveau corner flourishes — top-left and bottom-right (gold) */
+.salon-framed::before,
+.salon-framed::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--grid-system-accent-gold);
+}
+
+.salon-framed::before {
+  top: -8px;
+  left: -8px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.salon-framed::after {
+  bottom: -8px;
+  right: -8px;
+  border-left: none;
+  border-top: none;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .salon-grid { grid-template-columns: repeat(8, 1fr); gap: 24px; }
+  .salon-feature    { grid-column: 1 / span 6; }
+  .salon-narrow     { grid-column: 1 / span 8; }
+  .salon-split      { grid-column: 1 / span 5; }
+  .salon-split-right { grid-column: 6 / span 3; }
+  .salon-aside      { grid-column: 1 / span 3; }
+  .salon-wide       { grid-column: 1 / span 8; }
+}
+
+@media (max-width: 767px) {
+  .salon-grid { grid-template-columns: 1fr; gap: 24px; }
+  .salon-full, .salon-feature, .salon-narrow, .salon-split,
+  .salon-split-right, .salon-aside, .salon-wide { grid-column: 1 / -1; }
+  .salon-split {
+    border-right: none;
+    border-bottom: 2px solid var(--grid-system-accent-gold);
+    padding-right: 0;
+    padding-bottom: 24px;
+  }
+}

@@ -1,0 +1,60 @@
+/* Motion System — silver-grain (source: gilded-tempo) */
+/* Twist A: Duration x1.5 (intensity 3) — languid analog darkroom pacing */
+/* All easings: cubic-bezier(0.25, 0.46, 0.45, 0.94) — mechanical film advance */
+
+:root {
+  --motion-duration-fast: 0.287s;
+  --motion-duration-base: 0.572s;
+  --motion-duration-slow: 0.761s;
+  --motion-duration-video: 1.901s;
+  --motion-easing-default: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translate3d(0px, 20px, 0px); }
+  100% { opacity: 1; transform: translate3d(0px, 0px, 0px); }
+}
+
+@keyframes fadeInLeft {
+  0% { opacity: 0; transform: translate3d(-20px, 0px, 0px); }
+  100% { opacity: 1; transform: translate3d(0px, 0px, 0px); }
+}
+
+@keyframes loading {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.header {
+  transition: all var(--motion-duration-base) var(--motion-easing-default);
+}
+.nav-link {
+  transition: opacity var(--motion-duration-fast) var(--motion-easing-default);
+}
+.card {
+  transition: opacity var(--motion-duration-base) var(--motion-easing-default),
+              transform var(--motion-duration-base) var(--motion-easing-default);
+}
+button, a {
+  transition: all var(--motion-duration-fast) var(--motion-easing-default);
+}
+input, textarea {
+  transition: border-color var(--motion-duration-fast) var(--motion-easing-default),
+              box-shadow var(--motion-duration-fast) var(--motion-easing-default);
+}
+.loading {
+  animation: loading var(--motion-duration-video) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

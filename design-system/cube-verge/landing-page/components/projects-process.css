@@ -1,0 +1,430 @@
+/* =============================================================
+   PROJECTS PROCESS — Forma Systems
+   Vertical timeline, scrub-fill vertical line, horizontal slide entries
+   Light grey #f5f5f5 background
+   ============================================================= */
+
+/* ── Section wrapper ─────────────────────────────────────────── */
+#projects-process {
+  position: relative;
+  background: var(--color-surface-light);
+  padding-top: 96px;
+  padding-bottom: 96px;
+  padding-inline: var(--grid-padding-inline);
+  /* Depth: stacked left border accent + inset bottom gradient */
+  background-image: linear-gradient(to top, #efefef 0%, #f5f5f5 60px);
+  overflow: hidden;
+}
+
+/* ── Parallelogram clip divider from grid section ─────────────── */
+#projects-process::before {
+  content: '';
+  position: absolute;
+  top: -32px;
+  left: 0;
+  width: 100%;
+  height: 32px;
+  background: var(--color-surface-light);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  pointer-events: none;
+}
+
+/* ── Inner layout ─────────────────────────────────────────────── */
+#projects-process-inner {
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+}
+
+/* ── Section header ───────────────────────────────────────────── */
+#projects-process-header {
+  margin-bottom: 72px;
+}
+
+#projects-process-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  display: block;
+  margin-bottom: 12px;
+}
+
+#projects-process-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  color: var(--color-heading);
+  margin: 0 0 16px 0;
+}
+
+#projects-process-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.55);
+  max-width: 480px;
+  margin: 0;
+}
+
+/* ── Timeline container ───────────────────────────────────────── */
+#timeline-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 0 48px;
+}
+
+/* ── Vertical line track (background) ───────────────────────────── */
+#timeline-track {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1 / span 4;
+  display: flex;
+  justify-content: center;
+}
+
+#timeline-line-bg {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background: var(--color-surface-mid);
+}
+
+/* ── Animated fill line (GSAP scrub target) ───────────────────── */
+#timeline-line-fill {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 0%;
+  background: #000000;
+  z-index: 2;
+  transform-origin: top center;
+}
+
+/* ── Phase items column ───────────────────────────────────────── */
+#timeline-phases {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Individual phase item ────────────────────────────────────── */
+.timeline-phase {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 0 32px;
+  padding-bottom: 64px;
+  align-items: start;
+}
+
+.timeline-phase:last-child {
+  padding-bottom: 0;
+}
+
+/* ── Phase number (left col) ─────────────────────────────────── */
+.phase-number-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.phase-number {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.35);
+  line-height: 1;
+}
+
+/* Phase dot on the vertical line */
+.phase-dot {
+  width: 10px;
+  height: 10px;
+  background: #000000;
+  border: 2px solid #000000;
+  border-radius: 0;
+  position: absolute;
+  left: -87px;
+  top: 6px;
+  z-index: 3;
+  transition: background 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Phase content (right col) ───────────────────────────────── */
+.phase-content {
+  padding-top: 0;
+}
+
+.phase-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-heading);
+  margin: 0 0 12px 0;
+  line-height: 1.1;
+}
+
+.phase-description {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0 0 16px 0;
+  max-width: 520px;
+}
+
+/* Phase detail tags */
+.phase-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.phase-tag {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.5);
+  background: var(--color-surface-mid);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 4px 10px;
+}
+
+/* ── Footer CTA strip ─────────────────────────────────────────── */
+#process-cta-strip {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 2px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+#process-cta-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-heading);
+  margin: 0;
+}
+
+.process-cta-btn {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #000000;
+  background: transparent;
+  border: 2px solid #000000;
+  padding: 14px 32px;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: var(--btn-box-shadow);
+  transition: var(--btn-transition);
+}
+
+.process-cta-btn:hover {
+  transform: var(--btn-hover-transform);
+  box-shadow: var(--btn-hover-shadow);
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  #projects-process {
+    padding-inline: 24px;
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  #timeline-container {
+    grid-template-columns: 40px 1fr;
+    gap: 0 32px;
+  }
+
+  .phase-dot {
+    left: -61px;
+  }
+}
+
+@media (max-width: 600px) {
+  #projects-process {
+    padding-inline: 20px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  #projects-process-header {
+    margin-bottom: 48px;
+  }
+
+  #timeline-container {
+    grid-template-columns: 1fr;
+  }
+
+  #timeline-track {
+    display: none;
+  }
+
+  .timeline-phase {
+    grid-template-columns: 1fr;
+    padding-left: 0;
+    padding-bottom: 48px;
+    border-left: 2px solid var(--color-surface-mid);
+    padding-left: 24px;
+  }
+
+  .phase-dot {
+    display: none;
+  }
+
+  .phase-number-wrap {
+    margin-bottom: 8px;
+  }
+
+  #process-cta-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+}
+
+/* ── Footer ───────────────────────────────────────────────────── */
+#projects-footer {
+  background: var(--color-surface-dark);
+  color: rgba(255, 255, 255, 0.88);
+  padding-top: 72px;
+  padding-bottom: 40px;
+  padding-inline: var(--grid-padding-inline);
+  /* Depth: subtle left-skewed gradient for isometric feel */
+  background-image: linear-gradient(135deg, #222222 0%, #1a1a1a 50%, #111111 100%);
+}
+
+#footer-inner {
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+}
+
+#footer-columns {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 32px;
+}
+
+.footer-col-brand .footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.footer-col-brand .footer-tagline {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.45);
+  max-width: 260px;
+  margin: 0;
+}
+
+.footer-col-heading {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.footer-col-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-col-links a {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-col-links a:hover {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+#footer-copyright {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 900px) {
+  #projects-footer {
+    padding-inline: 24px;
+  }
+
+  #footer-columns {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 32px;
+  }
+
+  .footer-col-brand {
+    grid-column: 1 / span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  #projects-footer {
+    padding-inline: 20px;
+    padding-top: 48px;
+  }
+
+  #footer-columns {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-col-brand {
+    grid-column: auto;
+  }
+}

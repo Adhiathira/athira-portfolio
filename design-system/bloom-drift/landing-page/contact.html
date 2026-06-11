@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Solubl</title>
+  <meta name="description" content="Contact Solubl for wholesale enquiries, studio partnerships, and press. Copenhagen-based cold-process concentrate studio.">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/subpages.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav" class="site-nav">
+  <a href="index.html" class="nav-logo">solubl</a>
+  <ul class="nav-links">
+    <li><a href="collections.html" class="nav-link">Collections</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+    <li><a href="contact.html" class="nav-link nav-link--active">Contact</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu">
+  <a href="index.html" class="nav-mobile-link">Home</a>
+  <a href="collections.html" class="nav-mobile-link">Collections</a>
+  <a href="process.html" class="nav-mobile-link">Process</a>
+  <a href="about.html" class="nav-mobile-link">About</a>
+  <a href="contact.html" class="nav-mobile-link nav-link--active">Contact</a>
+</div>
+<script>
+(function(){
+  const nav = document.getElementById('site-nav');
+  const toggle = document.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile-menu');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 20){ nav.classList.add('scrolled'); }
+    else { nav.classList.remove('scrolled'); }
+  }, {passive:true});
+  if(toggle && mobileMenu){
+    toggle.addEventListener('click', function(){
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+  }
+})();
+</script>
+
+<!-- PAGE HEADER — minimal (contact archetype, max-height ~28vh) -->
+<header id="contact-page-header" class="contact-header" style="background:linear-gradient(160deg,rgba(245,240,232,0.95) 0%,rgba(240,235,255,0.35) 100%);">
+  <div class="container">
+    <p class="subpage-header-eyebrow">Get in touch</p>
+    <h1 style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;letter-spacing:-0.02em;color:#0a0a0a;margin:0 0 12px;line-height:1.1;">Let's talk.</h1>
+    <p style="font-size:1.0625rem;line-height:1.6;color:var(--color-body-text);opacity:0.72;max-width:480px;margin:0;">Wholesale, studio partnerships, press, and general enquiries.</p>
+  </div>
+</header>
+
+<!-- SVG divider -->
+<div class="svg-divider" style="background:linear-gradient(180deg,rgba(240,235,255,0.35) 0%,transparent 100%);">
+  <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C360,40 720,0 1080,20 C1260,30 1380,8 1440,15 L1440,40 L0,40 Z"
+          fill="rgba(252,247,241,0.95)" />
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CONTACT LAYOUT — info left / form right
+     Animation: y stagger rise on form fields
+══════════════════════════════════════════ -->
+<div id="contact-page">
+  <div id="contact-layout">
+    <div class="container">
+      <div id="contact-grid">
+
+        <!-- Info column -->
+        <div id="contact-info">
+          <h2 class="contact-info-heading">Solubl ApS</h2>
+          <p class="contact-info-body">We're a small studio. We read and respond to every enquiry directly — no automated responses, no form letters. Response time is typically 1–2 business days.</p>
+
+          <div class="contact-channel">
+            <div class="contact-channel-label">General</div>
+            <div class="contact-channel-value"><a href="mailto:hello@solubl.dk">hello@solubl.dk</a></div>
+          </div>
+
+          <div class="contact-channel">
+            <div class="contact-channel-label">Wholesale &amp; Trade</div>
+            <div class="contact-channel-value"><a href="mailto:trade@solubl.dk">trade@solubl.dk</a></div>
+          </div>
+
+          <div class="contact-channel">
+            <div class="contact-channel-label">Press</div>
+            <div class="contact-channel-value"><a href="mailto:press@solubl.dk">press@solubl.dk</a></div>
+          </div>
+
+          <div class="contact-channel" style="margin-top:40px;">
+            <div class="contact-channel-label">Studio address</div>
+            <div class="contact-channel-value">
+              Blågårds Plads 14, 2.<br>
+              2200 Copenhagen N<br>
+              Denmark
+            </div>
+          </div>
+
+          <div class="contact-channel">
+            <div class="contact-channel-label">Studio hours</div>
+            <div class="contact-channel-value">Monday–Friday, 09:00–17:00 CET<br>Visits by appointment</div>
+          </div>
+
+          <!-- Atmospheric mini-blob decoration -->
+          <div id="contact-blob-decoration" style="margin-top:60px;width:140px;height:130px;background:radial-gradient(ellipse at 45% 45%,rgba(196,175,242,0.45),rgba(163,228,215,0.28),rgba(245,240,232,0.6) 80%);border-radius:60% 40% 55% 45% / 50% 60% 40% 55%;animation:liquidMorphB 14s cubic-bezier(0.25,0.46,0.45,0.94) infinite,floatB 18s ease-in-out infinite;"></div>
+        </div>
+
+        <!-- Form column -->
+        <div id="contact-form-wrapper">
+          <div id="contact-form">
+            <h3 style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;letter-spacing:-0.01em;color:#0a0a0a;margin:0 0 32px;">Send a message</h3>
+
+            <form id="contact-form-el" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="contact-first-name">First name</label>
+                  <input type="text" id="contact-first-name" name="first_name" placeholder="Your first name" autocomplete="given-name">
+                </div>
+                <div class="form-group">
+                  <label for="contact-last-name">Last name</label>
+                  <input type="text" id="contact-last-name" name="last_name" placeholder="Your last name" autocomplete="family-name">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email">Email address</label>
+                <input type="email" id="contact-email" name="email" placeholder="you@yourdomain.com" autocomplete="email" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-subject">Enquiry type</label>
+                <select id="contact-subject" name="subject">
+                  <option value="">Select an enquiry type</option>
+                  <option value="wholesale">Wholesale / trade partnership</option>
+                  <option value="studio">Studio visit</option>
+                  <option value="press">Press &amp; media</option>
+                  <option value="product">Product question</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-company">Company or organisation <span style="color:var(--color-muted-text);font-weight:400;">(optional)</span></label>
+                <input type="text" id="contact-company" name="company" placeholder="Where you work or trade from" autocomplete="organization">
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" name="message" placeholder="Tell us what you're looking for. The more context you give, the better we can respond." required></textarea>
+              </div>
+
+              <div class="form-submit">
+                <button type="submit" class="btn-primary" id="form-submit-btn">Send message</button>
+              </div>
+            </form>
+
+            <!-- Success state (hidden until form submit) -->
+            <div id="form-success" style="display:none;text-align:center;padding:40px 20px;">
+              <div id="form-success-icon" style="width:56px;height:56px;border-radius:50%;background:radial-gradient(ellipse,rgba(163,228,215,0.5),rgba(196,175,242,0.3));display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.5rem;">◎</div>
+              <h3 style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:#0a0a0a;margin:0 0 12px;">Message received.</h3>
+              <p style="font-size:0.9375rem;line-height:1.65;color:var(--color-body-text);opacity:0.8;max-width:320px;margin:0 auto;">We'll respond to your enquiry directly. Typically within 1–2 business days.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div class="container">
+    <div id="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo-text">solubl</a>
+        <p class="footer-tagline">Cold-process soluble concentrates for bath and skin. Made in Copenhagen.</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-heading">Collections</h4>
+        <ul class="footer-links">
+          <li><a href="collections.html#mineral-drift">Mineral Drift</a></li>
+          <li><a href="collections.html#citrus-float">Citrus Float</a></li>
+          <li><a href="collections.html#bloom-field">Bloom Field</a></li>
+          <li><a href="collections.html#deep-tide">Deep Tide</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-heading">Company</h4>
+        <ul class="footer-links">
+          <li><a href="process.html">Our Process</a></li>
+          <li><a href="about.html">About Solubl</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-heading">Elsewhere</h4>
+        <ul class="footer-links">
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Lab Notes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p class="footer-legal">© 2026 Solubl ApS, Copenhagen<a href="#">Privacy</a><a href="#">Terms</a></p>
+      <p class="footer-legal">Zero-waste certified production</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const FLUID_EASE = 'power2.out';
+
+// Header entrance
+gsap.from('#contact-page-header h1', {
+  y: 40, duration: 0.9, ease: FLUID_EASE, delay: 0.2
+});
+
+// Info column x sweep
+gsap.from('#contact-info', {
+  scrollTrigger: { trigger: '#contact-grid', start: 'top 80%', once: true },
+  x: -50,
+  duration: 1.08,
+  ease: FLUID_EASE
+});
+
+// Form fields — y stagger rise
+document.querySelectorAll('#contact-form .form-group').forEach(function(group, i) {
+  gsap.from(group, {
+    scrollTrigger: { trigger: '#contact-form', start: 'top 78%', once: true },
+    y: 30,
+    duration: 0.7,
+    ease: FLUID_EASE,
+    delay: i * 0.08
+  });
+});
+
+// Form blob decoration — scale-from-zero entrance
+gsap.from('#contact-blob-decoration', {
+  scrollTrigger: { trigger: '#contact-blob-decoration', start: 'top 85%', once: true },
+  scale: 0,
+  duration: 1.0,
+  ease: 'back.out(1.4)'
+});
+
+// Form submit
+const form = document.getElementById('contact-form-el');
+const successEl = document.getElementById('form-success');
+const submitBtn = document.getElementById('form-submit-btn');
+
+if (form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('contact-email').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('contact-email').style.borderColor = 'rgba(200,50,50,0.5)';
+      return;
+    }
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+
+    setTimeout(function() {
+      form.style.display = 'none';
+      successEl.style.display = 'block';
+      gsap.from('#form-success', {
+        scale: 0.9,
+        duration: 0.6,
+        ease: 'back.out(1.4)'
+      });
+    }, 900);
+  });
+}
+</script>
+
+</body>
+</html>

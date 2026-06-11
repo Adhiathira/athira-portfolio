@@ -1,0 +1,79 @@
+{
+  "twist": "Stripped all Toastify/Swiper animation noise from off-white source. Retained the 0.5s ease-in-out base rhythm but added a slow reveal language — transitions breathe at 0.65s rather than snap. Primary easing becomes cubic-bezier(0.19, 1, 0.22, 1) (expo-out feel) for entrances; cubic-bezier(0.4, 0, 0.6, 1) for exits. Color properties are never animated.",
+  "cssAnimations": {
+    "keyframes": [
+      {
+        "name": "qm-slide-up",
+        "steps": [
+          { "offset": "0%", "properties": { "transform": "translateY(28px)", "opacity": "0" } },
+          { "offset": "100%", "properties": { "transform": "translateY(0px)", "opacity": "1" } }
+        ]
+      },
+      {
+        "name": "qm-draw-rule",
+        "steps": [
+          { "offset": "0%", "properties": { "transform": "scaleX(0)", "transform-origin": "left center" } },
+          { "offset": "100%", "properties": { "transform": "scaleX(1)", "transform-origin": "left center" } }
+        ]
+      },
+      {
+        "name": "qm-ticker",
+        "steps": [
+          { "offset": "0%", "properties": { "transform": "translateX(0%)" } },
+          { "offset": "100%", "properties": { "transform": "translateX(-50%)" } }
+        ]
+      }
+    ],
+    "transitionElements": [
+      {
+        "selector": ".nav-link",
+        "transition": {
+          "property": "opacity",
+          "duration": "0.3s",
+          "timingFunction": "cubic-bezier(0.4, 0, 0.2, 1)"
+        }
+      },
+      {
+        "selector": ".cta-btn",
+        "transition": {
+          "property": "background-color, border-color",
+          "duration": "0.4s",
+          "timingFunction": "cubic-bezier(0.19, 1, 0.22, 1)"
+        }
+      },
+      {
+        "selector": ".card",
+        "transition": {
+          "property": "transform, box-shadow",
+          "duration": "0.65s",
+          "timingFunction": "cubic-bezier(0.19, 1, 0.22, 1)"
+        }
+      }
+    ],
+    "timingTokens": {
+      "durations": ["0.3s", "0.4s", "0.5s", "0.65s", "1.0s", "1.4s"],
+      "easings": [
+        "cubic-bezier(0.19, 1, 0.22, 1)",
+        "cubic-bezier(0.4, 0, 0.2, 1)",
+        "cubic-bezier(0.4, 0, 0.6, 1)",
+        "ease-in-out"
+      ]
+    }
+  },
+  "scrollAnimations": {
+    "libraries": ["GSAP ScrollTrigger"],
+    "patterns": ["slide-up", "draw-rule", "clip-reveal", "counter-up"]
+  },
+  "microInteractions": {
+    "buttonTransitions": [
+      { "selector": "button", "transition": "background-color, border-color 0.4s cubic-bezier(0.19,1,0.22,1)", "transitionDuration": "0.4s" }
+    ],
+    "customCursor": false,
+    "hasSkeletonScreens": false
+  },
+  "performance": {
+    "totalAnimatedElements": 18,
+    "simultaneousAnimations": 4,
+    "reducedMotionSupport": true
+  }
+}

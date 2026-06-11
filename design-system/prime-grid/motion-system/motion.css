@@ -1,0 +1,80 @@
+/* Motion System — Bauhaus/Constructivist (Linear Mechanical)
+   Source: pale-ledger
+   Twist: All easing replaced with linear — industrial, machine-like precision
+   Intensity: 5 — radical shift from organic ease-in-out to constant-velocity motion
+   Philosophy: Motion like a printing press, loom, or metal workshop. Every movement
+   deliberate and designed, with no acceleration curves. Constant velocity = mechanical truth.
+*/
+
+:root {
+  --motion-easing-primary: linear;
+  --motion-duration-fast: 0.12s;
+  --motion-duration-base: 0.25s;
+  --motion-duration-slow: 0.5s;
+  --motion-duration-entrance: 0.4s;
+  --motion-stagger: 0.06s;
+}
+
+/* Horizontal slide — linear entrance from left */
+@keyframes slideFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Bar construction — width reveals itself at constant rate, like a printing press advancing */
+@keyframes constructBar {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+/* Grid reveal — 4-step staircase opacity, structural disclosure */
+@keyframes gridReveal {
+  0%   { opacity: 0; }
+  33%  { opacity: 0.33; }
+  66%  { opacity: 0.66; }
+  100% { opacity: 1; }
+}
+
+/* Utility animation classes */
+.animate-slide-left {
+  animation: slideFromLeft var(--motion-duration-entrance) linear both;
+}
+
+.animate-construct-bar {
+  animation: constructBar var(--motion-duration-entrance) linear both;
+}
+
+.animate-grid-reveal {
+  animation: gridReveal var(--motion-duration-base) linear both;
+}
+
+/* Standard transitions — linear, no curves */
+a {
+  transition: all var(--motion-duration-fast) linear;
+}
+
+button, .btn {
+  transition:
+    background-color var(--motion-duration-fast) linear,
+    color var(--motion-duration-fast) linear,
+    border-color var(--motion-duration-fast) linear;
+}
+
+/* Stagger utility for grid reveals */
+.stagger-1 { animation-delay: calc(1 * var(--motion-stagger)); }
+.stagger-2 { animation-delay: calc(2 * var(--motion-stagger)); }
+.stagger-3 { animation-delay: calc(3 * var(--motion-stagger)); }
+.stagger-4 { animation-delay: calc(4 * var(--motion-stagger)); }
+.stagger-5 { animation-delay: calc(5 * var(--motion-stagger)); }

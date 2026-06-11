@@ -1,0 +1,640 @@
+/* ═══════════════════════════════════════════════════
+   BOOK SYSTEM — Core page-flip mechanics
+   ═══════════════════════════════════════════════════
+   OWNERSHIP: This file owns ALL .book-page positioning,
+   overflow, visibility, z-index, and clip-path.
+   NO other CSS file may redeclare these selectors.
+   ═══════════════════════════════════════════════════ */
+
+/* ── Desk Surface ── */
+.book-desk {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--book-desk-surface);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(180,165,145,0.08) 3px,
+      rgba(180,165,145,0.08) 4px
+    );
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+/* ── Book Container ── */
+.book {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  min-height: 100vh;
+  box-shadow: var(--book-shadow);
+  border-radius: 2px 6px 6px 2px;
+}
+
+/* ── Spine ── */
+.book-spine {
+  position: fixed;
+  left: calc(50% - 550px - 10px);
+  top: 0;
+  bottom: 0;
+  width: var(--book-spine-width);
+  z-index: 100;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 80% 50%, rgba(210,200,185,0.6) 0%, transparent 70%),
+    linear-gradient(90deg, #c8b8a4 0%, #d8ccbc 40%, #e4ddd2 70%, transparent 100%);
+  border-radius: 2px 0 0 2px;
+}
+
+/* Stitching marks on spine */
+.book-spine::after {
+  content: '';
+  position: absolute;
+  top: 60px;
+  bottom: 60px;
+  left: 50%;
+  width: 1px;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 12px,
+    rgba(160,140,110,0.4) 12px,
+    rgba(160,140,110,0.4) 18px
+  );
+}
+
+/* ── Page Stack (right edge) ── */
+.book-edge {
+  position: fixed;
+  right: calc(50% - 560px);
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  z-index: 100;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    #f5f0e8 0px,
+    #f5f0e8 1px,
+    #e8e2d9 1px,
+    #e8e2d9 2px
+  );
+  border-radius: 0 3px 3px 0;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.08);
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGES CONTAINER — Pinned by GSAP ScrollTrigger.
+   Height = 100vh so pages fill the viewport.
+   ═══════════════════════════════════════════════════ */
+.book-pages {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Stacked-page edge below the book — the accumulated thickness
+   of all pages, like looking at a book's fore-edge. Lives on
+   the .book wrapper so overflow:hidden on .book-pages won't clip it. */
+.book::after {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 6px;
+  right: 2px;
+  height: 18px;
+  z-index: 0;
+  background:
+    /* Individual page edges — alternating cream/bone stripes */
+    repeating-linear-gradient(
+      180deg,
+      #f5f0e8 0px,
+      #f5f0e8 1.4px,
+      #ece7dc 1.4px,
+      #ece7dc 1.8px,
+      #f2ede4 1.8px,
+      #f2ede4 3.2px,
+      #e8e2d8 3.2px,
+      #e8e2d8 3.6px
+    );
+  border-radius: 0 0 3px 3px;
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.14),
+    0 1px 2px rgba(0,0,0,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    inset 0 -1px 0 rgba(0,0,0,0.06);
+  /* Slight taper: pages fan slightly from spine to fore-edge */
+  clip-path: polygon(0% 0%, 100% 0%, 99% 100%, 1% 100%);
+}
+
+/* Right-edge page stack (fore-edge) — visible beside the book */
+.book::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  right: -14px;
+  width: 14px;
+  z-index: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #f5f0e8 0px,
+      #f5f0e8 1.4px,
+      #ece7dc 1.4px,
+      #ece7dc 1.8px,
+      #f2ede4 1.8px,
+      #f2ede4 3.2px,
+      #e8e2d8 3.2px,
+      #e8e2d8 3.6px
+    );
+  border-radius: 0 3px 3px 0;
+  box-shadow:
+    3px 0 8px rgba(0,0,0,0.10),
+    1px 0 2px rgba(0,0,0,0.08),
+    inset -1px 0 0 rgba(0,0,0,0.05),
+    inset 1px 0 0 rgba(255,255,255,0.2);
+  clip-path: polygon(0% 0%, 100% 1%, 100% 99%, 0% 100%);
+}
+
+/* ═══════════════════════════════════════════════════
+   INDIVIDUAL PAGE — Absolutely stacked.
+   z-index is set by JS (first page on top).
+   clip-path driven by JS for the fold animation.
+   ═══════════════════════════════════════════════════ */
+.book-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--book-page-bg);
+  overflow: hidden;
+  will-change: clip-path;
+}
+
+/* Drop-shadow follows the curved clip edge — creates fold depth */
+.book-page.is-turning {
+  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.25));
+}
+
+/* Paper texture overlay */
+.book-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      var(--book-paper-line) 28px,
+      var(--book-paper-line) 29px
+    );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE CONTENT — Fills one viewport exactly.
+   Asymmetric padding: larger gutter near spine.
+   ═══════════════════════════════════════════════════ */
+.book-page-content {
+  position: relative;
+  z-index: 2;
+  padding: var(--book-margin-top) var(--book-margin-fore) var(--book-margin-bottom) var(--book-margin-spine);
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════
+   FOLD-BACK — The visible reverse side of a turning
+   page. Lives as a SIBLING of .book-page (not a child)
+   so it isn't clipped by the page's clip-path.
+   JS moves these out of pages at init and sets z-index.
+   Gradient + clip-path both driven by JS per frame.
+   ═══════════════════════════════════════════════════ */
+.book-fold {
+  position: absolute;
+  inset: 0;
+  /* z-index set by JS (same as its page — later DOM order wins) */
+  pointer-events: none;
+  opacity: 0;
+  will-change: clip-path, opacity;
+}
+
+.book-fold-inner {
+  position: absolute;
+  inset: 0;
+  /* Solid opaque paper back + fold-shadow gradient set dynamically by JS.
+     The back of a real page is opaque — never see-through.
+     --fold-bg is the page's own background color (same paper, reverse side).
+     JS overlays a directional shadow gradient near the fold crease. */
+  background-color: var(--fold-bg, #f5f0e8);
+}
+
+/* Paper fiber texture on fold-back */
+.book-fold-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      transparent,
+      transparent 2px,
+      rgba(200,190,175,0.08) 2px,
+      rgba(200,190,175,0.08) 3px
+    );
+  mix-blend-mode: multiply;
+}
+
+/* Highlight strip along fold edge — simulates light catching bent paper */
+.book-fold-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      315deg,
+      rgba(255,255,255,0.25) 0%,
+      rgba(255,255,255,0.08) 8%,
+      transparent 20%
+    );
+  pointer-events: none;
+}
+
+/* ── Running Header ── */
+.book-running-header {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-caption, 0.625rem);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  opacity: 0.5;
+  margin-bottom: var(--space-lg);
+  flex-shrink: 0;
+}
+
+/* ── Chapter Label ── */
+.book-chapter-label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-body-xs);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+  flex-shrink: 0;
+}
+
+/* ── Folio (page number) ── */
+.book-folio {
+  font-family: var(--font-edito);
+  font-size: var(--font-size-body-sm);
+  font-style: italic;
+  color: var(--color-text-muted);
+  opacity: 0.4;
+  margin-top: auto;
+  padding-top: var(--space-md);
+  flex-shrink: 0;
+}
+
+.book-folio--left {
+  text-align: left;
+}
+
+.book-folio--right {
+  text-align: right;
+}
+
+/* ── Drop Cap ── */
+.book-drop-cap::first-letter {
+  font-family: var(--font-edito);
+  font-size: 3.2em;
+  font-weight: 500;
+  float: left;
+  line-height: 0.8;
+  margin-right: 8px;
+  margin-top: 4px;
+  color: var(--color-text-heading);
+}
+
+/* ── Marginalia (pull quotes near outer margin) ── */
+.book-marginalia {
+  position: absolute;
+  right: -20px;
+  width: 160px;
+  font-family: var(--font-edito);
+  font-size: var(--font-size-body-sm);
+  font-style: italic;
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-muted);
+  border-left: 1px solid var(--color-surface-bone);
+  padding-left: var(--space-md);
+}
+
+/* ── Bookmark Tabs ── */
+.book-bookmarks {
+  position: fixed;
+  right: calc(50% - 570px);
+  top: 120px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.book-bookmark {
+  position: relative;
+  width: 32px;
+  height: 100px;
+  margin-bottom: -6px; /* overlap: each tab sits on top of the next */
+  background: var(--book-page-bg);
+  background-image:
+    /* Paper line texture */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.015) 3px,
+      rgba(0,0,0,0.015) 4px
+    ),
+    /* Top-edge highlight (paper thickness catching light) */
+    linear-gradient(180deg,
+      rgba(255,255,255,0.7) 0%,
+      rgba(255,255,255,0) 3px
+    ),
+    /* Left-edge shadow (where tab meets page) */
+    linear-gradient(90deg,
+      rgba(0,0,0,0.06) 0%,
+      rgba(0,0,0,0) 6px
+    );
+  border-radius: 0 4px 4px 0;
+  /* Layered shadows: cast shadow falls on the tab below */
+  box-shadow:
+    0 4px 6px -2px rgba(0,0,0,0.18),    /* shadow cast on tab below */
+    2px 2px 4px rgba(0,0,0,0.10),        /* side depth */
+    inset 0 1px 0 rgba(255,255,255,0.5), /* top edge highlight */
+    inset -1px 0 0 rgba(0,0,0,0.04),     /* right edge definition */
+    inset 0 -1px 0 rgba(180,165,140,0.2);/* bottom edge */
+  cursor: pointer;
+  transition: transform 0.4s var(--ease-nav), width 0.3s var(--ease-nav), box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--font-primary);
+  font-size: 8px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-nav);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 8px 4px;
+}
+
+/* Page-stack depth: a left-edge strip showing accumulated pages
+   behind each tab. Thicker for deeper bookmarks. */
+.book-bookmark::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--stack-depth, 2px);
+  background:
+    /* Layered page edges — subtle horizontal striping */
+    repeating-linear-gradient(
+      180deg,
+      rgba(210,200,185,0.6) 0px,
+      rgba(230,222,210,0.4) 1px,
+      rgba(245,240,232,0.8) 2px
+    );
+  border-radius: 0;
+  box-shadow: inset -1px 0 2px rgba(0,0,0,0.08);
+  pointer-events: none;
+}
+
+/* Stacking order: first tab on top, last on bottom.
+   --stack-depth grows per tab (pages accumulate deeper in the book). */
+.book-bookmark:nth-child(1) { z-index: 10; --stack-depth: 2px; }
+.book-bookmark:nth-child(2) { z-index: 9;  --stack-depth: 4px; }
+.book-bookmark:nth-child(3) { z-index: 8;  --stack-depth: 7px; }
+.book-bookmark:nth-child(4) { z-index: 7;  --stack-depth: 10px; }
+.book-bookmark:nth-child(5) { z-index: 6;  --stack-depth: 13px; }
+.book-bookmark:nth-child(6) { z-index: 5;  --stack-depth: 16px; }
+.book-bookmark:last-child { margin-bottom: 0; }
+
+.book-bookmark:hover {
+  z-index: 20 !important;
+  transform: translateX(6px);
+  width: 38px;
+  box-shadow:
+    0 5px 10px -2px rgba(0,0,0,0.22),
+    3px 3px 6px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    inset -1px 0 0 rgba(0,0,0,0.04),
+    inset 0 -1px 0 rgba(180,165,140,0.2);
+}
+
+.book-bookmark.is-active {
+  z-index: 20 !important;
+  background-color: var(--color-surface-cream);
+  box-shadow:
+    0 5px 8px -2px rgba(0,0,0,0.20),
+    2px 2px 4px rgba(0,0,0,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    inset -1px 0 0 rgba(0,0,0,0.04),
+    inset 0 -3px 0 var(--color-accent);
+  color: var(--color-text-heading);
+}
+
+/* ── Page Progress Dots ── */
+.book-progress {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(245,240,232,0.9);
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.book-progress-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-surface-bone);
+  transition: all 0.4s var(--ease-nav);
+  cursor: pointer;
+}
+
+.book-progress-dot.is-active {
+  background: var(--color-text-heading);
+  transform: scale(1.3);
+}
+
+/* ── Brand Watermark ── */
+.book-watermark {
+  position: fixed;
+  left: calc(50% - 540px);
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: center center;
+  z-index: 90;
+  font-family: var(--font-primary);
+  font-size: 9px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: rgba(160,145,125,0.3);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── Endpapers (marbled pattern) ── */
+.book-endpapers {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(30,58,110,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(30,58,110,0.06) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 80%, rgba(200,192,180,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 30% 30%, rgba(30,58,110,0.04) 0%, transparent 30%),
+    radial-gradient(circle at 70% 70%, rgba(200,192,180,0.08) 0%, transparent 35%),
+    linear-gradient(135deg,
+      var(--color-surface-cream) 0%,
+      var(--book-page-bg) 25%,
+      var(--color-surface-cream) 50%,
+      var(--book-page-bg) 75%,
+      var(--color-surface-cream) 100%
+    );
+}
+
+/* ── Printer's Mark ── */
+.book-printers-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-muted);
+  opacity: 0.4;
+}
+
+.book-printers-mark-device {
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-edito);
+  font-size: 14px;
+  font-style: italic;
+}
+
+.book-printers-mark-text {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-micro);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+}
+
+/* ── Section Divider (decorative rule) ── */
+.book-rule {
+  width: 60px;
+  height: 1px;
+  background: var(--color-text-muted);
+  opacity: 0.2;
+  margin: var(--space-lg) 0;
+  flex-shrink: 0;
+}
+
+.book-rule--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Ornament (fleuron/aldus leaf) ── */
+.book-ornament {
+  text-align: center;
+  font-family: var(--font-edito);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  opacity: 0.3;
+  margin: var(--space-md) 0;
+  letter-spacing: 0.5em;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — tablets and below
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 1200px) {
+  .book-spine,
+  .book-edge,
+  .book-bookmarks,
+  .book-watermark {
+    display: none;
+  }
+
+  .book-desk {
+    padding: 0;
+  }
+
+  .book {
+    max-width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .book-page-content {
+    padding: var(--space-xl) var(--space-lg) var(--space-xl) var(--space-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .book-page-content {
+    padding: var(--space-lg) var(--space-md) var(--space-lg) var(--space-md);
+  }
+
+  .book-marginalia {
+    position: relative;
+    right: auto;
+    width: 100%;
+    margin: var(--space-md) 0;
+    padding-left: var(--space-lg);
+  }
+
+  .book-progress {
+    bottom: 12px;
+    padding: 6px 12px;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-page-content {
+    padding: var(--space-md) var(--space-sm) var(--space-md) var(--space-sm);
+  }
+
+  .book-drop-cap::first-letter {
+    font-size: 2.5em;
+  }
+}

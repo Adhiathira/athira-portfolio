@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Quill Plane Instrument Co.</title>
+  <meta name="description" content="Quill Plane Instrument Co., founded 1971 in Stroud, Gloucestershire. Precision calibration instruments made for the British hand-papermaking tradition. QP-7 and QP-12 in continuous production since the studio's founding.">
+
+  <!-- Design System Tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <!-- Components -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/subpages.css">
+
+  <!-- Splitting.js -->
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ── NAV ── -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Quill Plane Instrument Co. home">
+      <span class="nav-logo-mark">QP</span>
+      <span class="nav-logo-sub">Instrument Co.</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="instruments.html" class="nav-link">Instruments</a></li>
+      <li><a href="process.html" class="nav-link">Process</a></li>
+      <li><a href="about.html" class="nav-link nav-link--active">About</a></li>
+      <li><a href="instruments.html" class="nav-link btn-primary" style="padding:8px 18px;font-size:0.75rem;">Enquire</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="instruments.html" class="nav-link">Instruments</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="instruments.html" class="nav-link">Enquire</a>
+</div>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+  const mobileToggle = document.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile-menu');
+  mobileToggle.addEventListener('click', () => {
+    nav.classList.toggle('nav-mobile-open');
+    mobileMenu.classList.toggle('is-open');
+    document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+  });
+</script>
+
+<!-- ── PAGE HEADER (compact: max-height 20vh, information archetype) ── -->
+<header id="page-header">
+  <div id="page-header-inner">
+    <p id="page-header-eyebrow">— Founded 1971, Stroud, Gloucestershire</p>
+    <h1 id="page-header-title">Instrument-making for people who make by hand.</h1>
+  </div>
+</header>
+
+<!-- ── NARRATIVE SECTION ── -->
+<section id="about-narrative">
+  <div id="about-narrative-inner">
+    <div id="about-lead-text">
+      <p id="about-pull-quote">"The instruments were never designed for mass production. They were designed for the bench."</p>
+      <p id="about-body-1">Quill Plane Instrument Co. was founded in 1971 to serve the British hand-papermaking revival — a moment when craftspeople needed measurement tools that matched the precision of their practice. The first QP instruments were made for the space between the vat and the press, between the stone and the forme, where a 0.3mm variance in caliper can determine whether a first-edition binding holds for fifty years or fails in ten.</p>
+      <p id="about-body-2">The instruments remain in production today for conservation studios, archival binderies, and the handful of European mills still using cylinder mould formation. In 1998 the studio was acquired by a private trust that committed to maintaining production without modernisation. The QP-7 and QP-12 have not changed in specification since 1971 — only the reference standards they are calibrated to have been updated as ISO superseded older national equivalents.</p>
+    </div>
+
+    <div id="about-sidebar">
+      <div class="about-sidebar-fact">
+        <p class="about-sidebar-label">Founded</p>
+        <p class="about-sidebar-value">1971 — Stroud, Gloucestershire</p>
+      </div>
+      <div class="about-sidebar-fact">
+        <p class="about-sidebar-label">Acquired by private trust</p>
+        <p class="about-sidebar-value">1998 — production unchanged</p>
+      </div>
+      <div class="about-sidebar-fact">
+        <p class="about-sidebar-label">Instruments in production</p>
+        <p class="about-sidebar-value">QP-7 and QP-12 — continuously since founding</p>
+      </div>
+      <div class="about-sidebar-fact">
+        <p class="about-sidebar-label">Primary standard</p>
+        <p class="about-sidebar-value">ISO 5626 (fold endurance), ISO 534 (thickness)</p>
+      </div>
+      <div class="about-sidebar-fact">
+        <p class="about-sidebar-label">Body specification</p>
+        <p class="about-sidebar-value">870g cast aluminium, BS 10 B 17 powder coat</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WORK SURFACE IMAGE SECTION ── -->
+<section id="process-image-section">
+  <img
+    id="process-image-full"
+    src="assets/work-surface.jpeg"
+    alt="Top-down view of a light table with Pergamenata vellum and QP-7 fold tester, conservation studio Gloucestershire"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+  >
+  <div id="about-image-placeholder" style="display:none;width:100%;height:50vh;background:var(--color-dark-surface);">
+    <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(242,242,242,0.3);font-family:var(--font-body);font-size:0.8rem;">→ assets/work-surface.jpeg</span>
+  </div>
+  <div id="process-image-overlay"></div>
+  <div id="process-image-caption-block">
+    <p id="process-image-caption-text">QP-7 and Pergamenata vellum on a Dolan &amp; Bullock light table, conservation studio, Gloucestershire.</p>
+  </div>
+</section>
+
+<!-- ── TIMELINE SECTION ── -->
+<section id="timeline-section">
+  <div id="timeline-inner">
+    <p id="timeline-eyebrow">— Studio History</p>
+
+    <ol id="timeline-list">
+      <li class="timeline-entry" id="tl-1971">
+        <p class="timeline-year">1971</p>
+        <div class="timeline-content">
+          <h3 class="timeline-title">Studio founded, Stroud</h3>
+          <p class="timeline-body">The QP-7 Fold Endurance Tester is completed and put into production. First instruments delivered to three British hand-paper mills and one conservation bindery. The design brief: instrument weight under 1kg, compatible with existing paper mill bench dimensions, calibrated to the prevailing BS standard.</p>
+        </div>
+      </li>
+      <li class="timeline-entry" id="tl-1974">
+        <p class="timeline-year">1974</p>
+        <div class="timeline-content">
+          <h3 class="timeline-title">QP-12 Thickness Comparator introduced</h3>
+          <p class="timeline-body">A second instrument — the QP-12 — is developed in response to requests from cylinder mould mills for a caliper gauge with audible zero indication. The stainless contact-face design is established. Both instruments share the same body casting, finishing, and weight specification.</p>
+        </div>
+      </li>
+      <li class="timeline-entry" id="tl-1987">
+        <p class="timeline-year">1987</p>
+        <div class="timeline-content">
+          <h3 class="timeline-title">ISO 5626 recalibration</h3>
+          <p class="timeline-body">As ISO 5626 supersedes the British Standard BS 4432, QP-7 calibration is updated. This is the first specification change in the instrument's history. No changes are made to the body, mechanism, or contact geometry — only the reference standard used during factory calibration.</p>
+        </div>
+      </li>
+      <li class="timeline-entry" id="tl-1998">
+        <p class="timeline-year">1998</p>
+        <div class="timeline-content">
+          <h3 class="timeline-title">Acquisition by private trust</h3>
+          <p class="timeline-body">The studio is acquired by a private conservation instrument trust. The founding condition of the acquisition is that production continues unchanged and that the instruments are not redesigned for industrial manufacturing. The trust commits to maintaining hand-assembly and individual certification for each instrument.</p>
+        </div>
+      </li>
+      <li class="timeline-entry" id="tl-2003">
+        <p class="timeline-year">2003</p>
+        <div class="timeline-content">
+          <h3 class="timeline-title">QP DataLogger accessory</h3>
+          <p class="timeline-body">A serial interface unit is introduced for QP-7, enabling CSV export of fold count data per sample. This is the first electronic accessory in the QP range. The instrument itself remains mechanical; the DataLogger is an external peripheral. TAPPI T511 support is added alongside ISO 5626.</p>
+        </div>
+      </li>
+      <li class="timeline-entry" id="tl-2024">
+        <p class="timeline-year">2024</p>
+        <div class="timeline-content">
+          <h3 class="timeline-title">53 years in continuous production</h3>
+          <p class="timeline-body">The QP-7 and QP-12 remain in production, unchanged in specification. Current active instruments in field service span 47 conservation studios and European paper mills. The oldest QP-7 in documented service was assembled in 1973 — it remains calibrated and in regular use at a Gloucestershire archive.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ── MATERIALS SECTION (dark contrast beat) ── -->
+<section id="materials-section">
+  <div id="materials-inner">
+    <div id="materials-left">
+      <p id="materials-eyebrow">— Material Specification</p>
+      <h2 id="materials-heading">Every material chosen for service life, not appearance.</h2>
+      <p id="materials-body">The QP body specification has not changed since 1971. BS 10 B 17 is a natural grey powder coat that resists chemical splash common in papermaking studios. Cast aluminium at 870g provides enough mass to sit stably on a mill bench without external clamping. Stainless contact faces resist corrosion in high-humidity mill environments where mild steel would pit within a season.</p>
+    </div>
+
+    <div id="materials-right">
+      <div class="material-item" id="mat-aluminium">
+        <h3 class="material-item-name">Cast Aluminium Body</h3>
+        <p class="material-item-spec">870g / LM6 / precision cast</p>
+        <p class="material-item-desc">High-silicon LM6 aluminium alloy. Precision cast for dimensional consistency across batches. Machined contact surfaces. 870g provides bench stability without requiring clamps.</p>
+      </div>
+      <div class="material-item" id="mat-powder">
+        <h3 class="material-item-name">BS 10 B 17 Powder Coat</h3>
+        <p class="material-item-spec">Natural grey / chemical resistant</p>
+        <p class="material-item-desc">British Standard 10 B 17 is a neutral warm grey selected for legibility in low-light studio conditions. The powder coat resists weak acids and alkalis common in papermaking vats and conservation baths.</p>
+      </div>
+      <div class="material-item" id="mat-stainless">
+        <h3 class="material-item-name">304 Stainless Contact Faces</h3>
+        <p class="material-item-spec">QP-12 / factory-lapped pair</p>
+        <p class="material-item-desc">Austenitic 304 stainless for corrosion resistance in high-humidity mill environments. Contact faces are factory lapped to 0.1µm flatness and supplied as calibrated pairs — matching is critical to measurement geometry.</p>
+      </div>
+      <div class="material-item" id="mat-spring">
+        <h3 class="material-item-name">Hardened Spring Mechanism</h3>
+        <p class="material-item-spec">QP-7 / phosphor bronze / 18-year service life</p>
+        <p class="material-item-desc">The fold mechanism spring is phosphor bronze, chosen for consistent elastic return over millions of cycles. Rated for 18-year average service life before recalibration-interval reduction is recommended.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SUB CTA BAND ── -->
+<section id="sub-cta">
+  <div id="sub-cta-inner">
+    <div id="sub-cta-text">
+      <h2 id="sub-cta-heading">Commission a QP instrument.</h2>
+      <p id="sub-cta-body">All instruments are made to order with an individual calibration certificate. Lead time 6–8 weeks from Stroud.</p>
+    </div>
+    <a href="instruments.html" class="btn-primary-light">View Instruments &amp; Enquire</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div id="footer-top">
+      <div class="footer-brand">
+        <p class="footer-brand-name">Quill Plane Instrument Co.</p>
+        <p class="footer-brand-desc">Precision calibration instruments for paper engineers, conservators, and archival binderies. QP-7 and QP-12 in continuous production since 1971.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Instruments</p>
+        <ul class="footer-links-list">
+          <li><a href="instruments.html">QP-7 Fold Tester</a></li>
+          <li><a href="instruments.html">QP-12 Thickness Comparator</a></li>
+          <li><a href="instruments.html">Accessories</a></li>
+          <li><a href="instruments.html">Enquire</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Studio</p>
+        <ul class="footer-links-list">
+          <li><a href="process.html">Method</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Heritage</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Standards</p>
+        <ul class="footer-links-list">
+          <li><a href="process.html">ISO 5626</a></li>
+          <li><a href="process.html">TAPPI T511</a></li>
+          <li><a href="process.html">ISO 534</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p class="footer-copyright">© 2024 Quill Plane Instrument Co. Stroud, Gloucestershire, UK.</p>
+      <ul class="footer-legal-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── LENIS SMOOTH SCROLL ──
+  const lenis = new Lenis({ lerp: 0.08, duration: 1.6, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  function raf(time) { lenis.raf(time); ScrollTrigger.update(); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── CUSTOM CURSOR ──
+  (function() {
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring || window.innerWidth < 900) return;
+    document.body.style.cursor = 'none';
+    const xDot = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power2.out' });
+    const yDot = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power2.out' });
+    const xRing = gsap.quickTo(ring, 'x', { duration: 0.55, ease: 'power3.out' });
+    const yRing = gsap.quickTo(ring, 'y', { duration: 0.55, ease: 'power3.out' });
+    window.addEventListener('mousemove', (e) => { xDot(e.clientX); yDot(e.clientY); xRing(e.clientX); yRing(e.clientY); }, { passive: true });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => gsap.to(ring, { scale: 2.2, opacity: 0.4, duration: 0.4, ease: 'power2.out' }));
+      el.addEventListener('mouseleave', () => gsap.to(ring, { scale: 1, opacity: 0.6, duration: 0.4, ease: 'power2.out' }));
+    });
+  })();
+
+  // ── PAGE HEADER entrance ──
+  window.addEventListener('load', () => {
+    gsap.from('#page-header-eyebrow', { y: 12, duration: 0.6, ease: 'power2.out', delay: 0.1 });
+    gsap.from('#page-header-title', { y: 20, duration: 0.8, ease: 'power2.out', delay: 0.3 });
+  });
+
+  // ── PULL QUOTE: word-by-word rotation stagger (same technique as homepage label) ──
+  Splitting({ target: '#about-pull-quote', by: 'words' });
+  gsap.from('#about-pull-quote .word', {
+    rotationY: 90,
+    transformOrigin: 'left center',
+    duration: 0.65,
+    ease: 'power3.out',
+    stagger: 0.06,
+    scrollTrigger: { trigger: '#about-narrative', start: 'top 80%' }
+  });
+
+  // Body text stagger-rise
+  gsap.from(['#about-body-1', '#about-body-2'], {
+    y: 24,
+    duration: 0.8,
+    ease: 'power2.out',
+    stagger: 0.18,
+    scrollTrigger: { trigger: '#about-narrative', start: 'top 70%' }
+  });
+
+  // Sidebar facts: stagger-left sweep
+  gsap.from('.about-sidebar-fact', {
+    x: 30,
+    duration: 0.75,
+    ease: 'power2.out',
+    stagger: 0.1,
+    scrollTrigger: { trigger: '#about-sidebar', start: 'top 75%' }
+  });
+
+  // ── WORK SURFACE IMAGE: parallax ──
+  gsap.to('#process-image-full', {
+    y: '-8%',
+    ease: 'none',
+    scrollTrigger: { trigger: '#process-image-section', scrub: 1.5, start: 'top bottom', end: 'bottom top' }
+  });
+
+  // ── TIMELINE: entry-by-entry reveal (scale from left edge) ──
+  document.querySelectorAll('.timeline-entry').forEach((entry, i) => {
+    gsap.from(entry, {
+      scale: 0.97,
+      x: -20,
+      transformOrigin: 'left center',
+      duration: 0.75,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: entry, start: 'top 88%' }
+    });
+  });
+
+  // ── MATERIALS: clip-path reveal per item ──
+  gsap.from('.material-item', {
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 0.8,
+    ease: 'power3.inOut',
+    stagger: 0.12,
+    scrollTrigger: { trigger: '#materials-right', start: 'top 80%' }
+  });
+
+  gsap.from('#materials-left', {
+    y: 40,
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#materials-section', start: 'top 75%' }
+  });
+
+  // ── FOOTER CLIP REVEAL ──
+  gsap.from('#site-footer', {
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 1.2,
+    ease: 'power3.inOut',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 90%' }
+  });
+
+  // ── CTA BUTTON elastic hover ──
+  document.querySelectorAll('.btn-primary, .btn-ghost, .btn-primary-light').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+      gsap.to(btn, { x: dx * 0.15, y: dy * 0.15, ease: 'power1.out', duration: 0.3 });
+    });
+    btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, ease: 'elastic.out(1, 0.3)', duration: 1.2 }));
+  });
+</script>
+
+</body>
+</html>

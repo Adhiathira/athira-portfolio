@@ -1,0 +1,122 @@
+{
+  "_source": "copper-still",
+  "_agent": "Agent 3 — motion-system",
+  "_twist": "Twist: Easing inversion — replace all ease-in-out with custom cubic-bezier(0.76, 0, 0.24, 1) (sharp anticipation, decisive release) to give the languid copper-still durations a more editorial snap. Add spring-out keyframe for elements that 'arrive' rather than fade. Base durations preserved from copper-still (already scaled ×1.3 from off-white origin). Add a 'reveal-clip' keyframe using clip-path for section reveals.",
+  "videos": {
+    "count": 0,
+    "hasHeroVideo": false,
+    "items": [],
+    "animatedGifs": 0,
+    "libraries": []
+  },
+  "cssAnimations": {
+    "keyframes": [
+      {
+        "name": "fade-up",
+        "steps": [
+          { "offset": "0%", "properties": { "opacity": "0", "transform": "translateY(28px)" } },
+          { "offset": "100%", "properties": { "opacity": "1", "transform": "translateY(0px)" } }
+        ]
+      },
+      {
+        "name": "fade-in",
+        "steps": [
+          { "offset": "0%", "properties": { "opacity": "0" } },
+          { "offset": "100%", "properties": { "opacity": "1" } }
+        ]
+      },
+      {
+        "name": "reveal-clip",
+        "steps": [
+          { "offset": "0%", "properties": { "clip-path": "inset(0 100% 0 0)" } },
+          { "offset": "100%", "properties": { "clip-path": "inset(0 0% 0 0)" } }
+        ],
+        "_note": "New keyframe: horizontal clip-path wipe for editorial text reveals"
+      },
+      {
+        "name": "spring-arrive",
+        "steps": [
+          { "offset": "0%", "properties": { "opacity": "0", "transform": "scale(0.94) translateY(16px)" } },
+          { "offset": "65%", "properties": { "opacity": "1", "transform": "scale(1.01) translateY(-2px)" } },
+          { "offset": "100%", "properties": { "opacity": "1", "transform": "scale(1) translateY(0px)" } }
+        ],
+        "_note": "New keyframe: spring overshoot arrival for cards and feature panels"
+      },
+      {
+        "name": "scroll-marquee",
+        "steps": [
+          { "offset": "0%", "properties": { "transform": "translateX(0%)" } },
+          { "offset": "100%", "properties": { "transform": "translateX(-50%)" } }
+        ]
+      },
+      {
+        "name": "draw-line",
+        "steps": [
+          { "offset": "0%", "properties": { "stroke-dashoffset": "1" } },
+          { "offset": "100%", "properties": { "stroke-dashoffset": "0" } }
+        ],
+        "_note": "For SVG stroke-dashoffset path drawing via scroll scrub"
+      }
+    ],
+    "transitionElements": [
+      {
+        "selector": ".header",
+        "transition": {
+          "property": "transform, background-color, height",
+          "duration": "0.65s, 0.65s, 0.65s",
+          "timingFunction": "cubic-bezier(0.76, 0, 0.24, 1)"
+        }
+      },
+      {
+        "selector": ".button, .btn",
+        "transition": {
+          "property": "all",
+          "duration": "0.45s",
+          "timingFunction": "cubic-bezier(0.76, 0, 0.24, 1)"
+        }
+      },
+      {
+        "selector": ".nav-link",
+        "transition": {
+          "property": "color",
+          "duration": "0.26s",
+          "timingFunction": "cubic-bezier(0.76, 0, 0.24, 1)"
+        }
+      }
+    ],
+    "timingTokens": {
+      "durations": [
+        "0.26s",
+        "0.45s",
+        "0.65s",
+        "1.17s",
+        "1.5s"
+      ],
+      "easings": [
+        "cubic-bezier(0.76, 0, 0.24, 1)",
+        "cubic-bezier(0.19, 1, 0.22, 1)",
+        "cubic-bezier(0, 0, 0.2, 1)",
+        "linear"
+      ]
+    }
+  },
+  "scrollAnimations": {
+    "libraries": ["GSAP", "ScrollTrigger"],
+    "patterns": [
+      "fade-up",
+      "reveal-clip",
+      "spring-arrive",
+      "stroke-dashoffset",
+      "parallax"
+    ]
+  },
+  "microInteractions": {
+    "buttonTransitions": [
+      {
+        "selector": "button, .btn",
+        "transition": "0.45s cubic-bezier(0.76, 0, 0.24, 1)"
+      }
+    ],
+    "customCursor": false
+  }
+}

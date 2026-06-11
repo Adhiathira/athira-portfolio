@@ -1,0 +1,112 @@
+{
+  "timing": {
+    "base": "0.2s",
+    "fast": "0.1s",
+    "medium": "0.3s",
+    "slow": "0.5s",
+    "glitch": "0.15s",
+    "reveal": "0.2s"
+  },
+  "easing": {
+    "mechanical": "cubic-bezier(0.55, 0, 1, 0.45)",
+    "snap": "cubic-bezier(0.4, 0, 0.6, 1)",
+    "stepReveal": "steps(4, start)",
+    "instant": "step-start",
+    "ease": "ease-out"
+  },
+  "keyframes": {
+    "glitch-shift": {
+      "description": "Horizontal translate flicker — CRT horizontal sync failure",
+      "steps": {
+        "0%": { "transform": "translateX(0)" },
+        "15%": { "transform": "translateX(-4px)" },
+        "30%": { "transform": "translateX(2px)" },
+        "45%": { "transform": "translateX(-2px)" },
+        "60%": { "transform": "translateX(4px)" },
+        "75%": { "transform": "translateX(-1px)" },
+        "100%": { "transform": "translateX(0)" }
+      },
+      "duration": "0.15s",
+      "iteration": "1",
+      "fillMode": "both"
+    },
+    "rgb-split": {
+      "description": "Chromatic aberration text-shadow flicker — red/cyan channel separation",
+      "steps": {
+        "0%": { "textShadow": "none" },
+        "20%": { "textShadow": "-2px 0 #ff0055, 2px 0 #00e5ff" },
+        "40%": { "textShadow": "2px 0 #ff0055, -2px 0 #00e5ff" },
+        "60%": { "textShadow": "-3px 0 #ff0055, 3px 0 #00e5ff" },
+        "80%": { "textShadow": "1px 0 #ff0055, -1px 0 #00e5ff" },
+        "100%": { "textShadow": "none" }
+      },
+      "duration": "0.15s",
+      "iteration": "1",
+      "fillMode": "both"
+    },
+    "scanline": {
+      "description": "Horizontal scanline sweep — CRT raster scan visual",
+      "steps": {
+        "0%": { "backgroundPosition": "0 -100%" },
+        "100%": { "backgroundPosition": "0 100%" }
+      },
+      "duration": "2s",
+      "iteration": "infinite",
+      "timingFunction": "linear"
+    },
+    "data-reveal": {
+      "description": "Step-by-step clip-path reveal — data loading line by line",
+      "steps": {
+        "0%": { "clipPath": "inset(0 100% 0 0)" },
+        "25%": { "clipPath": "inset(0 75% 0 0)" },
+        "50%": { "clipPath": "inset(0 50% 0 0)" },
+        "75%": { "clipPath": "inset(0 25% 0 0)" },
+        "100%": { "clipPath": "inset(0 0% 0 0)" }
+      },
+      "duration": "0.2s",
+      "easing": "steps(4, start)",
+      "iteration": "1",
+      "fillMode": "both"
+    },
+    "flicker": {
+      "description": "Opacity jitter — electronic power fluctuation",
+      "steps": {
+        "0%": { "opacity": "1" },
+        "10%": { "opacity": "0.85" },
+        "20%": { "opacity": "1" },
+        "55%": { "opacity": "0.9" },
+        "60%": { "opacity": "1" },
+        "75%": { "opacity": "0.95" },
+        "80%": { "opacity": "1" },
+        "100%": { "opacity": "1" }
+      },
+      "duration": "0.15s",
+      "iteration": "1",
+      "fillMode": "both"
+    },
+    "neon-pulse": {
+      "description": "Magenta glow pulsation on accent elements",
+      "steps": {
+        "0%": { "boxShadow": "0 0 4px rgba(253,53,110,0.4)" },
+        "50%": { "boxShadow": "0 0 12px rgba(253,53,110,0.8), 0 0 24px rgba(253,53,110,0.4)" },
+        "100%": { "boxShadow": "0 0 4px rgba(253,53,110,0.4)" }
+      },
+      "duration": "1.5s",
+      "iteration": "infinite",
+      "timingFunction": "ease-in-out"
+    }
+  },
+  "utilities": {
+    "animate-glitch": "animation: glitch-shift 0.15s cubic-bezier(0.55, 0, 1, 0.45) both",
+    "animate-rgb-split": "animation: rgb-split 0.15s cubic-bezier(0.55, 0, 1, 0.45) both",
+    "animate-data-reveal": "animation: data-reveal 0.2s steps(4, start) both",
+    "animate-flicker": "animation: flicker 0.15s step-start both",
+    "animate-neon-pulse": "animation: neon-pulse 1.5s ease-in-out infinite",
+    "animate-scanline": "animation: scanline 2s linear infinite"
+  },
+  "_twist": {
+    "sourceSystem": "oxide-night",
+    "intensity": 5,
+    "twistDescription": "Replaced smooth editorial easing with twitchy mechanical glitch system. Base 0.1–0.2s (vs typical 0.3–0.8s editorial). Keyframes: glitch-shift (horizontal translate jitter), rgb-split (chromatic aberration text-shadow), scanline (CRT raster sweep), data-reveal (clip-path 4-step discrete reveal), flicker (opacity jitter), neon-pulse (magenta glow oscillation). Primary easing cubic-bezier(0.55, 0, 1, 0.45) — sharp mechanical decelerate. Step easing for digital reveal effects. No organic curves."
+  }
+}

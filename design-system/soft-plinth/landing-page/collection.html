@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collection — Roundwork Studio</title>
+  <meta name="description" content="Every piece in our collection begins as a block of raw stoneware and ends as something your hand wants to hold.">
+
+  <!-- Tokens first -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <!-- Nav -->
+  <link rel="stylesheet" href="components/nav.css">
+  <!-- Page-specific -->
+  <link rel="stylesheet" href="components/collection-page.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- NAV TEMPLATE — paste verbatim into <body> -->
+<nav id="site-nav" class="site-nav">
+  <a href="index.html" class="nav-logo">Roundwork Studio</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="collection.html" class="nav-link nav-link--active">Collection</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="studio.html" class="nav-link">Studio</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <button class="nav-mobile-close" aria-label="Close menu"><span></span><span></span></button>
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="collection.html" class="nav-link nav-link--active">Collection</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="studio.html" class="nav-link">Studio</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+</div>
+<script>
+  (function () {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var mobileToggle = document.querySelector('.nav-mobile-toggle');
+    var mobileClose = document.querySelector('.nav-mobile-close');
+    function onScroll() { if (window.scrollY > 80) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); } }
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    function openMenu() { nav.classList.add('nav-mobile-open'); mobileMenu.classList.add('is-open'); mobileToggle.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { nav.classList.remove('nav-mobile-open'); mobileMenu.classList.remove('is-open'); mobileToggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    mobileToggle.addEventListener('click', function () { if (mobileMenu.classList.contains('is-open')) { closeMenu(); } else { openMenu(); } });
+    if (mobileClose) { mobileClose.addEventListener('click', closeMenu); }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) { closeMenu(); } });
+  })();
+</script>
+
+<!-- Nav spacer -->
+<div style="height: 64px;"></div>
+
+<!-- =========================================================
+     SECTION 1: PAGE HERO
+     ========================================================= -->
+<section class="collection-hero">
+  <div class="container">
+    <span class="collection-hero__eyebrow">The Collection</span>
+    <h1 class="collection-hero__headline" id="hero-headline">Objects without corners</h1>
+    <p class="collection-hero__body">
+      Every piece in our collection begins as a block of raw stoneware and ends as something your hand wants to hold.
+    </p>
+  </div>
+</section>
+
+<!-- =========================================================
+     SQUIGGLY DIVIDER — surface to white
+     ========================================================= -->
+<div class="squiggly-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" height="80">
+    <path class="wave-path" fill="#f0ede8"
+      d="M0,40 C180,5 360,75 540,40 C720,5 900,75 1080,40 C1260,5 1380,60 1440,40 L1440,0 L0,0 Z"/>
+    <path fill="#ffffff"
+      d="M0,40 C180,75 360,5 540,40 C720,75 900,5 1080,40 C1260,75 1380,20 1440,40 L1440,80 L0,80 Z"/>
+  </svg>
+</div>
+
+<!-- =========================================================
+     SECTION 2: FILTER + PRODUCT GRID
+     ========================================================= -->
+<section class="collection-grid-section">
+  <div class="container">
+
+    <!-- Filter tabs -->
+    <div class="filter-bar" role="group" aria-label="Filter products by category">
+      <button class="filter-btn filter-btn--active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="bowl">Bowls</button>
+      <button class="filter-btn" data-filter="mug">Mugs</button>
+      <button class="filter-btn" data-filter="vase">Vases</button>
+      <button class="filter-btn" data-filter="object">Objects</button>
+    </div>
+
+    <!-- Product grid -->
+    <div class="product-grid" id="product-grid">
+
+      <!-- BOWLS -->
+      <article class="clay-card clay-card--bowl" data-category="bowl">
+        <div class="clay-card__image" role="img" aria-label="The Round Bowl — stoneware bowl"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">The Round Bowl</h3>
+          <span class="clay-card__badge">Bowl</span>
+          <p class="clay-card__desc">Our signature form. Thrown wide and low, with a foot ring that lifts it just enough to feel intentional.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$68</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--bowl" data-category="bowl">
+        <div class="clay-card__image" role="img" aria-label="Wide Salad Bowl — large stoneware bowl"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Wide Salad Bowl</h3>
+          <span class="clay-card__badge">Bowl</span>
+          <p class="clay-card__desc">Generous enough for a family meal. Smooth interior, textured outer wall that catches light beautifully.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$95</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--bowl" data-category="bowl">
+        <div class="clay-card__image" role="img" aria-label="Small Prep Bowl — stoneware prep bowl"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Small Prep Bowl</h3>
+          <span class="clay-card__badge">Bowl</span>
+          <p class="clay-card__desc">Fits a handful of salt or a squeeze of lemon. Sits anywhere, catches everything you reach for.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$42</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--bowl" data-category="bowl">
+        <div class="clay-card__image" role="img" aria-label="Nesting Pair — set of two stoneware bowls"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Nesting Pair</h3>
+          <span class="clay-card__badge">Bowl</span>
+          <p class="clay-card__desc">Two bowls that live together — one large, one small. Thrown as a set so their curves repeat each other.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$145</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- MUGS -->
+      <article class="clay-card clay-card--mug" data-category="mug">
+        <div class="clay-card__image" role="img" aria-label="Mug No.7 — everyday stoneware mug"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Mug No.7</h3>
+          <span class="clay-card__badge">Mug</span>
+          <p class="clay-card__desc">The seventh iteration of our everyday mug. The loop handle sits exactly where your thumb wants to rest.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$48</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--mug" data-category="mug">
+        <div class="clay-card__image" role="img" aria-label="Tall Pour Mug — tall stoneware mug"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Tall Pour Mug</h3>
+          <span class="clay-card__badge">Mug</span>
+          <p class="clay-card__desc">Holds a full pour without rushing you. Taller than standard, narrower at the rim to keep heat in.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$52</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--mug" data-category="mug">
+        <div class="clay-card__image" role="img" aria-label="Espresso Cup — small stoneware espresso cup"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Espresso Cup</h3>
+          <span class="clay-card__badge">Mug</span>
+          <p class="clay-card__desc">75ml capacity. Wide base, narrow top. The thick walls keep your shot warm while you breathe in the steam.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$38</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--mug" data-category="mug">
+        <div class="clay-card__image" role="img" aria-label="Handle-Free Cup — handleless stoneware cup"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Handle-Free Cup</h3>
+          <span class="clay-card__badge">Mug</span>
+          <p class="clay-card__desc">Inspired by yunomi tradition. No handle means you hold the warmth directly. For slow mornings.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$44</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- VASES -->
+      <article class="clay-card clay-card--vase" data-category="vase">
+        <div class="clay-card__image" role="img" aria-label="Oval Vase — oval stoneware vase"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Oval Vase</h3>
+          <span class="clay-card__badge">Vase</span>
+          <p class="clay-card__desc">Softly oval when viewed from above. Holds three or four stems in a way that looks unconsidered.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$75</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--vase" data-category="vase">
+        <div class="clay-card__image" role="img" aria-label="Bud Vase — small stoneware bud vase"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Bud Vase</h3>
+          <span class="clay-card__badge">Vase</span>
+          <p class="clay-card__desc">Made for a single stem. The neck is narrow by design — so the flower always tilts at exactly the right angle.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$38</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--vase" data-category="vase">
+        <div class="clay-card__image" role="img" aria-label="Floor Vase — large floor-standing stoneware vase"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Floor Vase</h3>
+          <span class="clay-card__badge">Vase</span>
+          <p class="clay-card__desc">Hand-built, not thrown. 55cm tall. Made for branches, dried grasses, and long-stemmed botanicals.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$185</span>
+            <button class="clay-card__cta">View details</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--vase" data-category="vase">
+        <div class="clay-card__image" role="img" aria-label="Cluster Set — set of three bud vases"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Cluster Set</h3>
+          <span class="clay-card__badge">Vase</span>
+          <p class="clay-card__desc">Three bud vases at different heights. Arrange them together or spread them apart. No rules.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$145</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- OBJECTS -->
+      <article class="clay-card clay-card--object" data-category="object">
+        <div class="clay-card__image" role="img" aria-label="Butter Keeper — stoneware butter keeper"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Butter Keeper</h3>
+          <span class="clay-card__badge">Object</span>
+          <p class="clay-card__desc">A lid and a base. Fill the lid with cold water, press in the butter. It stays soft and spreadable for weeks.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$62</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--object" data-category="object">
+        <div class="clay-card__image" role="img" aria-label="Oil Bottle — stoneware oil bottle"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Oil Bottle</h3>
+          <span class="clay-card__badge">Object</span>
+          <p class="clay-card__desc">Keeps light out so your olive oil stays fresher. Cork stopper, natural glaze, generous pour spout.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$78</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--object" data-category="object">
+        <div class="clay-card__image" role="img" aria-label="Soap Dish — stoneware soap dish"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Soap Dish</h3>
+          <span class="clay-card__badge">Object</span>
+          <p class="clay-card__desc">Ribbed interior keeps your bar off the surface so it dries between uses. Low profile, high impact.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$35</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="clay-card clay-card--object" data-category="object">
+        <div class="clay-card__image" role="img" aria-label="Catchall Tray — stoneware catchall tray"></div>
+        <div class="clay-card__body">
+          <h3 class="clay-card__name">Catchall Tray</h3>
+          <span class="clay-card__badge">Object</span>
+          <p class="clay-card__desc">Shallow, wide, and slightly raised at the edges. For keys, coins, rings, and everything in between.</p>
+          <div class="clay-card__footer">
+            <span class="clay-card__price">$58</span>
+            <button class="clay-card__cta">Add to cart</button>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /product-grid -->
+  </div><!-- /container -->
+</section>
+
+<!-- =========================================================
+     SQUIGGLY DIVIDER — white to dark #1e3a35
+     ========================================================= -->
+<div class="squiggly-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" height="80">
+    <path fill="#ffffff"
+      d="M0,40 C180,5 360,75 540,40 C720,5 900,75 1080,40 C1260,5 1380,60 1440,40 L1440,0 L0,0 Z"/>
+    <path class="wave-path" fill="#1e3a35"
+      d="M0,40 C180,75 360,5 540,40 C720,75 900,5 1080,40 C1260,75 1380,20 1440,40 L1440,80 L0,80 Z"/>
+  </svg>
+</div>
+
+<!-- =========================================================
+     SECTION 3: FEATURED PIECE
+     ========================================================= -->
+<section class="featured-piece">
+  <div class="container">
+    <div class="featured-piece__inner">
+
+      <!-- Text side (1.4fr) -->
+      <div class="featured-piece__text">
+        <h2 class="featured-piece__headline">The piece that started it all.</h2>
+        <p class="featured-piece__body">
+          The Round Bowl came before the studio had a name. It was thrown in a rented space on a borrowed wheel,
+          glazed with whatever was on hand, and fired in a communal kiln. When it came out, something clicked.
+          A form that simple — low, wide, completely without corners — turned out to be the hardest thing to
+          get right. We've refined it 23 times since that first pull of clay. The proportions are now fixed.
+          We won't change them.
+        </p>
+        <p class="featured-piece__specs">Stoneware &middot; 1260&deg;C &middot; &oslash; 22cm</p>
+        <button class="featured-piece__cta">Add to Collection &mdash; $68</button>
+      </div>
+
+      <!-- Visual side (0.6fr) -->
+      <div class="featured-piece__visual">
+        <div class="featured-bowl" role="img" aria-label="The Round Bowl — a wide, low stoneware bowl with warm glaze"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SQUIGGLY DIVIDER — dark to white
+     ========================================================= -->
+<div class="squiggly-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" height="80">
+    <path fill="#1e3a35"
+      d="M0,40 C180,5 360,75 540,40 C720,5 900,75 1080,40 C1260,5 1380,60 1440,40 L1440,0 L0,0 Z"/>
+    <path class="wave-path" fill="#ffffff"
+      d="M0,40 C180,75 360,5 540,40 C720,75 900,5 1080,40 C1260,75 1380,20 1440,40 L1440,80 L0,80 Z"/>
+  </svg>
+</div>
+
+<!-- =========================================================
+     SECTION 4: CARE INSTRUCTIONS
+     ========================================================= -->
+<section class="care-section">
+  <div class="container">
+
+    <header class="care-section__header">
+      <span class="care-section__eyebrow">Care Guide</span>
+      <h2 class="care-section__headline">These pieces last lifetimes</h2>
+    </header>
+
+    <div class="care-steps" id="care-steps">
+
+      <div class="care-step" id="care-step-1">
+        <h3 class="care-step__title">Hand wash only</h3>
+        <p class="care-step__body">
+          Warm water and a gentle cloth. No dishwasher — the constant thermal cycling dulls the glaze
+          over years. Five seconds of care preserves decades of beauty.
+        </p>
+      </div>
+
+      <div class="care-step" id="care-step-2">
+        <h3 class="care-step__title">Microwave safe</h3>
+        <p class="care-step__body">
+          All our glazes are lead-free and food-safe. Heat evenly in short bursts.
+          The stoneware body holds warmth longer than glass or thin porcelain — by design.
+        </p>
+      </div>
+
+      <div class="care-step" id="care-step-3">
+        <h3 class="care-step__title">Season with oil</h3>
+        <p class="care-step__body">
+          Unglazed bases benefit from occasional conditioning with food-grade mineral oil.
+          Rub in, let absorb overnight, wipe clean. The clay darkens slightly. That is correct.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SECTION 5: FOOTER
+     ========================================================= -->
+<footer class="collection-footer">
+  <div class="container">
+    <div class="collection-footer__inner">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="index.html" class="footer-brand__logo">Roundwork Studio</a>
+        <p class="footer-brand__tagline">No corners. No compromises.<br>Stoneware made by hand in small batches.</p>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <span class="footer-nav__title">Navigate</span>
+        <ul class="footer-nav__list">
+          <li><a href="index.html" class="footer-nav__link">Home</a></li>
+          <li><a href="collection.html" class="footer-nav__link">Collection</a></li>
+          <li><a href="process.html" class="footer-nav__link">Process</a></li>
+          <li><a href="studio.html" class="footer-nav__link">Studio</a></li>
+          <li><a href="contact.html" class="footer-nav__link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Newsletter -->
+      <div class="footer-newsletter">
+        <span class="footer-newsletter__title">Stay in touch</span>
+        <p class="footer-newsletter__body">New pieces, kiln notes, and studio updates — once a month. Nothing more.</p>
+        <form class="footer-newsletter__form" onsubmit="return false;">
+          <label for="footer-email" class="sr-only">Email address</label>
+          <input
+            id="footer-email"
+            class="footer-newsletter__input"
+            type="email"
+            placeholder="your@email.com"
+            autocomplete="email"
+          >
+          <button class="footer-newsletter__submit" type="submit">Subscribe</button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; 2026 Roundwork Studio. All rights reserved.</p>
+      <p class="footer-copyright">Handmade in small batches. Fired at 1260&deg;C.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- =============================================================================
+     GSAP ANIMATIONS
+     ============================================================================= -->
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── Hero headline: elastic inflate from scale(0.8) ── */
+  gsap.from('#hero-headline', {
+    opacity: 0,
+    scale: 0.8,
+    y: 20,
+    duration: 1.1,
+    ease: 'elastic.out(1, 0.4)',
+    delay: 0.15
+  });
+
+  gsap.from('.collection-hero__eyebrow', {
+    opacity: 0,
+    y: 16,
+    duration: 0.7,
+    ease: 'power3.out',
+    delay: 0.05
+  });
+
+  gsap.from('.collection-hero__body', {
+    opacity: 0,
+    y: 16,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.45
+  });
+
+  /* ── Filter bar: spring in ── */
+  gsap.from('.filter-btn', {
+    opacity: 0,
+    y: 16,
+    scale: 0.9,
+    stagger: 0.08,
+    duration: 0.7,
+    ease: 'elastic.out(1, 0.5)',
+    scrollTrigger: {
+      trigger: '.filter-bar',
+      start: 'top 85%',
+      once: true
+    }
+  });
+
+  /* ── Product cards: inflate on scroll — the core Claymorphism scroll reveal ── */
+  gsap.from('.clay-card', {
+    opacity: 0,
+    scale: 0.88,
+    y: 20,
+    stagger: 0.1,
+    duration: 0.9,
+    ease: 'elastic.out(1, 0.4)',
+    scrollTrigger: {
+      trigger: '#product-grid',
+      start: 'top 82%',
+      once: true
+    }
+  });
+
+  /* ── Featured piece: slide in from left + right ── */
+  gsap.from('.featured-piece__text', {
+    opacity: 0,
+    x: -48,
+    duration: 1,
+    ease: 'elastic.out(1, 0.45)',
+    scrollTrigger: {
+      trigger: '.featured-piece__inner',
+      start: 'top 78%',
+      once: true
+    }
+  });
+
+  gsap.from('.featured-piece__visual', {
+    opacity: 0,
+    x: 48,
+    scale: 0.85,
+    duration: 1.1,
+    ease: 'elastic.out(1, 0.4)',
+    scrollTrigger: {
+      trigger: '.featured-piece__inner',
+      start: 'top 78%',
+      once: true
+    }
+  });
+
+  /* ── Care steps: clip-path from right, stagger 0.2s ── */
+  gsap.from('.care-step', {
+    opacity: 0,
+    clipPath: 'inset(0 100% 0 0)',
+    x: 40,
+    stagger: 0.2,
+    duration: 0.9,
+    ease: 'elastic.out(1, 0.5)',
+    scrollTrigger: {
+      trigger: '#care-steps',
+      start: 'top 80%',
+      once: true
+    }
+  });
+
+  gsap.from('.care-section__header', {
+    opacity: 0,
+    y: 32,
+    duration: 0.8,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.care-section__header',
+      start: 'top 85%',
+      once: true
+    }
+  });
+
+  /* ── Footer: fade up ── */
+  gsap.from('.collection-footer__inner > *', {
+    opacity: 0,
+    y: 32,
+    stagger: 0.15,
+    duration: 0.8,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.collection-footer',
+      start: 'top 88%',
+      once: true
+    }
+  });
+
+  /* ── Filter logic — instant show/hide by data-category ── */
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  var cards = document.querySelectorAll('.clay-card[data-category]');
+
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var filter = btn.getAttribute('data-filter');
+
+      /* update active state */
+      filterBtns.forEach(function (b) { b.classList.remove('filter-btn--active'); });
+      btn.classList.add('filter-btn--active');
+
+      /* show/hide cards */
+      cards.forEach(function (card) {
+        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+          card.removeAttribute('data-hidden');
+        } else {
+          card.setAttribute('data-hidden', 'true');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

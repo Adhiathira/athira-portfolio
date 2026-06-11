@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forma Systems — Parametric Architecture Platform</title>
+  <meta name="description" content="Forma Systems enables architects and developers to design parametric modular systems and deploy them at any scale — residential, commercial, infrastructure.">
+
+  <!-- GSAP + ScrollTrigger from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens (includes Google Fonts import) -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component styles -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/platform-overview.css">
+  <link rel="stylesheet" href="components/assembly-showcase.css">
+  <link rel="stylesheet" href="components/how-it-works.css">
+  <link rel="stylesheet" href="components/editorial-cta.css">
+  <link rel="stylesheet" href="components/footer.css">
+</head>
+<body>
+
+<!-- ============================================================
+     NAV — verbatim paste
+     ============================================================ -->
+<nav id="site-nav" class="site-nav">
+  <a href="index.html" class="nav-logo">FORMA</a>
+  <ul class="nav-links">
+    <li><a href="platform.html" class="nav-link">Platform</a></li>
+    <li><a href="solutions.html" class="nav-link">Solutions</a></li>
+    <li><a href="projects.html" class="nav-link">Projects</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="platform.html" class="nav-mobile-link">Platform</a>
+  <a href="solutions.html" class="nav-mobile-link">Solutions</a>
+  <a href="projects.html" class="nav-mobile-link">Projects</a>
+  <a href="contact.html" class="nav-mobile-link">Contact</a>
+</div>
+<script>
+  (function () {
+    var nav = document.getElementById('site-nav');
+    var toggle = nav.querySelector('.nav-mobile-toggle');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    function onScroll() {
+      if (window.scrollY > 0) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toggle.addEventListener('click', function () {
+      var isOpen = mobileMenu.classList.contains('is-open');
+      if (isOpen) {
+        mobileMenu.classList.remove('is-open');
+        nav.classList.remove('nav-mobile-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      } else {
+        mobileMenu.classList.add('is-open');
+        nav.classList.add('nav-mobile-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+    mobileMenu.querySelectorAll('.nav-mobile-link').forEach(function (link) {
+      link.addEventListener('click', function () {
+        mobileMenu.classList.remove('is-open');
+        nav.classList.remove('nav-mobile-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  })();
+</script>
+
+<!-- ============================================================
+     SECTION 1: HERO
+     Full viewport dark, video bg, CSS isometric cube
+     ============================================================ -->
+<section id="hero">
+
+  <!-- Video background -->
+  <div class="hero-video-wrap">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      id="hero-video"
+      onerror="this.style.display='none';document.getElementById('hero-video-placeholder').style.display='flex'">
+      <source src="assets/iso-city.mp4" type="video/mp4">
+    </video>
+    <div
+      id="hero-video-placeholder"
+      class="hero-video-placeholder"
+      style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:#1a1a1a;color:rgba(255,255,255,0.3);font-family:var(--font-mono);font-size:0.75rem;">
+      → assets/iso-city.mp4
+    </div>
+  </div>
+
+  <!-- Inner split grid -->
+  <div class="hero-inner">
+
+    <!-- Left: text column -->
+    <div class="hero-text" id="hero-text-col">
+
+      <p class="hero-label" id="hero-label">Parametric Architecture Platform</p>
+
+      <h1 class="hero-title" id="hero-title">
+        <span class="title-line" id="hero-title-line-1">FORMA</span>
+        <span class="title-line" id="hero-title-line-2">SYSTEMS</span>
+      </h1>
+
+      <p class="hero-tagline" id="hero-tagline">Design once.<br>Build everywhere.</p>
+
+      <p class="hero-body" id="hero-body">
+        A parametric platform for modular prefab architecture. Define once — deploy across residential, commercial, and infrastructure projects at any scale.
+      </p>
+
+      <div class="hero-actions" id="hero-actions">
+        <a href="platform.html" class="btn-primary">Start Building</a>
+        <a href="projects.html" class="btn-outline">View Projects</a>
+      </div>
+
+    </div>
+
+    <!-- Right: isometric cube scene -->
+    <div class="hero-cube-scene" id="hero-cube-scene">
+
+      <div class="cube-container" id="cube-main">
+        <div class="iso-face-top"></div>
+        <div class="iso-face-front"></div>
+        <div class="iso-face-side"></div>
+      </div>
+
+      <!-- Decorative smaller cubes -->
+      <div class="cube-decoration cube-decoration--1">
+        <div class="cube-deco-inner">
+          <div class="iso-face-top"></div>
+          <div class="iso-face-front"></div>
+          <div class="iso-face-side"></div>
+        </div>
+      </div>
+
+      <div class="cube-decoration cube-decoration--2">
+        <div class="cube-deco-inner">
+          <div class="iso-face-top"></div>
+          <div class="iso-face-front"></div>
+          <div class="iso-face-side"></div>
+        </div>
+      </div>
+
+      <!-- Floating stat cards -->
+      <div class="hero-stat-cards" id="hero-stat-cards">
+        <div class="hero-stat-card">
+          <span class="hero-stat-value">12k+</span>
+          <span class="hero-stat-label">Module types</span>
+        </div>
+        <div class="hero-stat-card">
+          <span class="hero-stat-value">1:1</span>
+          <span class="hero-stat-label">Scale export</span>
+        </div>
+        <div class="hero-stat-card">
+          <span class="hero-stat-value">BIM</span>
+          <span class="hero-stat-label">Native output</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 2: PLATFORM OVERVIEW
+     White bg, 3-col feature card grid, isoDepthPop scroll reveal
+     ============================================================ -->
+<section id="platform-overview">
+  <div class="platform-inner">
+
+    <!-- Section header -->
+    <div class="platform-header" id="platform-header">
+      <div>
+        <span class="platform-label">The Platform</span>
+        <h2 class="platform-heading">
+          Every tool the<br>
+          <span class="heading-accent">system requires.</span>
+        </h2>
+      </div>
+      <p class="platform-intro">
+        Forma packages the complete design-to-build pipeline. From parametric constraints to BIM-ready export — each module is engineered to interoperate without friction.
+      </p>
+    </div>
+
+    <!-- Feature card grid -->
+    <div class="platform-grid" id="platform-grid">
+
+      <!-- Card 01 -->
+      <article class="feature-card" id="feature-card-1">
+        <span class="card-number">01</span>
+        <div class="card-icon"><div class="card-icon-shape"></div></div>
+        <h3 class="card-title">Parametric Modeling</h3>
+        <p class="card-description">Define rules, not shapes. Encode dimensional logic that propagates across every module in the system — change one parameter, update everything.</p>
+      </article>
+
+      <!-- Card 02 -->
+      <article class="feature-card" id="feature-card-2">
+        <span class="card-number">02</span>
+        <div class="card-icon"><div class="card-icon-shape"></div></div>
+        <h3 class="card-title">Module Library</h3>
+        <p class="card-description">12,000+ certified prefab components across structural, envelope, MEP, and finish categories. Filter by load, climate zone, and regulatory standard.</p>
+      </article>
+
+      <!-- Card 03 -->
+      <article class="feature-card" id="feature-card-3">
+        <span class="card-number">03</span>
+        <div class="card-icon"><div class="card-icon-shape"></div></div>
+        <h3 class="card-title">Constraint Engine</h3>
+        <p class="card-description">Hard constraints enforce code compliance. Soft constraints guide design intent. The engine resolves conflicts before they reach fabrication.</p>
+      </article>
+
+      <!-- Card 04 -->
+      <article class="feature-card" id="feature-card-4">
+        <span class="card-number">04</span>
+        <div class="card-icon"><div class="card-icon-shape"></div></div>
+        <h3 class="card-title">Site Analysis</h3>
+        <p class="card-description">Topographic data, solar exposure, wind loads, and zoning overlays — all resolved against your module system before a single element is placed.</p>
+      </article>
+
+      <!-- Card 05 -->
+      <article class="feature-card" id="feature-card-5">
+        <span class="card-number">05</span>
+        <div class="card-icon"><div class="card-icon-shape"></div></div>
+        <h3 class="card-title">BIM Export</h3>
+        <p class="card-description">IFC, Revit, and STEP outputs with full LOD 400 geometry. Every module carries embedded metadata — cost codes, spec sheets, lead times.</p>
+      </article>
+
+      <!-- Card 06 -->
+      <article class="feature-card" id="feature-card-6">
+        <span class="card-number">06</span>
+        <div class="card-icon"><div class="card-icon-shape"></div></div>
+        <h3 class="card-title">Collaboration</h3>
+        <p class="card-description">Shared model state across teams. Role-based access for architects, engineers, and contractors. Version-controlled design history with diff views.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3: ASSEMBLY SHOWCASE
+     Dark contrast, video left / text right, clip-path wipe reveal
+     ============================================================ -->
+<section id="assembly-showcase">
+  <div class="assembly-inner">
+
+    <!-- Left: video -->
+    <div class="assembly-video-wrap" id="assembly-video-wrap">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        id="assembly-video"
+        onerror="this.style.display='none';document.getElementById('assembly-video-placeholder').style.display='flex'">
+        <source src="assets/iso-assembly.mp4" type="video/mp4">
+      </video>
+      <div
+        id="assembly-video-placeholder"
+        class="assembly-video-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:#0d0d0d;color:rgba(255,255,255,0.3);font-family:var(--font-mono);font-size:0.75rem;">
+        → assets/iso-assembly.mp4
+      </div>
+    </div>
+
+    <!-- Right: text -->
+    <div class="assembly-text" id="assembly-text">
+
+      <span class="assembly-label">Assembly Principle</span>
+
+      <h2 class="assembly-heading">
+        Base module.<br>
+        Infinite system.
+      </h2>
+
+      <p class="assembly-body" style="color: rgba(255,255,255,0.5);">
+        Forma builds from the ground up. Every project starts with a single validated module — then the system assembles upward, outward, and across contexts. No custom solutions. No one-offs.
+      </p>
+
+      <p class="assembly-body" style="color: rgba(255,255,255,0.5);">
+        The assembly principle means every module decision is structural. Change a base component and the system recalculates load paths, spatial arrangements, and fabrication schedules in real time.
+      </p>
+
+      <!-- Stats row -->
+      <div class="assembly-stats" id="assembly-stats">
+        <div class="assembly-stat">
+          <span class="assembly-stat-value">400+</span>
+          <span class="assembly-stat-label">Module types</span>
+        </div>
+        <div class="assembly-stat">
+          <span class="assembly-stat-value">12s</span>
+          <span class="assembly-stat-label">Assembly preview</span>
+        </div>
+        <div class="assembly-stat">
+          <span class="assembly-stat-value">1:1</span>
+          <span class="assembly-stat-label">Scale export</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 4: HOW IT WORKS
+     Light grey #f5f5f5, 4-col horizontal steps, left sweep
+     ============================================================ -->
+<section id="how-it-works">
+  <div class="how-inner">
+
+    <div class="how-header" id="how-header">
+      <span class="how-label">Process</span>
+      <h2 class="how-heading">From parameter<br>to prefab.</h2>
+    </div>
+
+    <div class="how-steps" id="how-steps">
+
+      <!-- Step 01 -->
+      <div class="how-step" id="how-step-1">
+        <span class="step-number">01</span>
+        <h3 class="step-title">Define the System</h3>
+        <p class="step-body">Set your site constraints, program requirements, and module preferences. The parameter engine builds the decision tree before any geometry exists.</p>
+        <span class="step-tag">Configuration</span>
+      </div>
+
+      <!-- Step 02 -->
+      <div class="how-step" id="how-step-2">
+        <span class="step-number">02</span>
+        <h3 class="step-title">Select Modules</h3>
+        <p class="step-body">The library surfaces only what fits. Filtered by your constraints — structural, regulatory, climatic — and sorted by cost and lead time.</p>
+        <span class="step-tag">Selection</span>
+      </div>
+
+      <!-- Step 03 -->
+      <div class="how-step" id="how-step-3">
+        <span class="step-number">03</span>
+        <h3 class="step-title">Assemble &amp; Validate</h3>
+        <p class="step-body">The constraint engine resolves structural, spatial, and code requirements in real time. Watch the assembly build — and validate — as you design.</p>
+        <span class="step-tag">Validation</span>
+      </div>
+
+      <!-- Step 04 — last step: visually distinct -->
+      <div class="how-step" id="how-step-4">
+        <span class="step-number">04</span>
+        <h3 class="step-title">Export for Build</h3>
+        <p class="step-body">One-click BIM export with full LOD 400 geometry, embedded cost data, and fabrication-ready drawings. From Forma to factory floor.</p>
+        <span class="step-tag">Output</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 5: EDITORIAL CTA
+     Dark #1a1a1a, wireframe video bg, scale-from-center reveal
+     ============================================================ -->
+<section id="editorial-cta">
+
+  <!-- Wireframe video background -->
+  <div class="cta-video-wrap">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      id="cta-video"
+      onerror="this.style.display='none';document.getElementById('cta-video-placeholder').style.display='flex'">
+      <source src="assets/iso-wireframe.mp4" type="video/mp4">
+    </video>
+    <div
+      id="cta-video-placeholder"
+      class="cta-video-placeholder"
+      style="display:none;align-items:center;justify-content:center;width:100%;height:100%;font-family:var(--font-mono);font-size:0.75rem;">
+      → assets/iso-wireframe.mp4
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="cta-inner" id="cta-inner">
+
+    <div class="cta-manifesto">
+      <span class="cta-manifesto-line">Architecture is a system problem.</span>
+      <span class="cta-manifesto-line">Treat it like one.</span>
+      <span class="cta-manifesto-line">Design once. Build everywhere.</span>
+    </div>
+
+    <h2 class="cta-heading" style="color: rgba(255,255,255,0.88);">
+      Built for the way architecture actually works.
+    </h2>
+
+    <p class="cta-body" style="color: rgba(255,255,255,0.45);">
+      Forma isn't a visualization tool. It's the operating system for modular construction — from first parameter to final fabrication drawing.
+    </p>
+
+    <div class="cta-actions">
+      <a href="platform.html" class="btn-cta-outline">Request Access</a>
+      <a href="projects.html" class="btn-cta-ghost">Explore Projects</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     Dark #1a1a1a, 4-col grid, ground plane
+     ============================================================ -->
+<footer id="site-footer">
+  <div class="footer-inner">
+
+    <!-- 4 columns -->
+    <div class="footer-columns">
+
+      <!-- Brand column -->
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Forma</a>
+        <p class="footer-tagline">Parametric design platform for modular prefab architecture at any scale.</p>
+        <div class="footer-social">
+          <a href="#" class="footer-social-link">LinkedIn</a>
+          <a href="#" class="footer-social-link">X</a>
+          <a href="#" class="footer-social-link">GitHub</a>
+        </div>
+      </div>
+
+      <!-- Platform links -->
+      <div class="footer-col">
+        <span class="footer-col-label">Platform</span>
+        <ul class="footer-links">
+          <li><a href="platform.html">Parametric Engine</a></li>
+          <li><a href="platform.html">Module Library</a></li>
+          <li><a href="platform.html">Constraint System</a></li>
+          <li><a href="platform.html">BIM Export</a></li>
+          <li><a href="platform.html">Site Analysis</a></li>
+          <li><a href="platform.html">Collaboration</a></li>
+        </ul>
+      </div>
+
+      <!-- Solutions links -->
+      <div class="footer-col">
+        <span class="footer-col-label">Solutions</span>
+        <ul class="footer-links">
+          <li><a href="solutions.html">Residential</a></li>
+          <li><a href="solutions.html">Commercial</a></li>
+          <li><a href="solutions.html">Infrastructure</a></li>
+          <li><a href="solutions.html">Developers</a></li>
+          <li><a href="solutions.html">Contractors</a></li>
+          <li><a href="solutions.html">Enterprise</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact links -->
+      <div class="footer-col">
+        <span class="footer-col-label">Contact</span>
+        <ul class="footer-links">
+          <li><a href="contact.html">Request a Demo</a></li>
+          <li><a href="contact.html">Sales</a></li>
+          <li><a href="contact.html">Support</a></li>
+          <li><a href="contact.html">Partnerships</a></li>
+          <li><a href="contact.html">Press</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom row -->
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Forma Systems. All rights reserved.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Cookies</a></li>
+      </ul>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ============================================================
+     GSAP ANIMATIONS
+     All scroll-triggered animations + hero entrance
+     ============================================================ -->
+<script>
+  (function () {
+    'use strict';
+
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── Easing constant (no bounce — cubic-bezier(0.4, 0, 0.2, 1)) ──
+    var EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+
+    // ── HERO ENTRANCE ─────────────────────────────────────────────
+    // Runs on DOMContentLoaded — NOT scroll-triggered
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var tl = gsap.timeline({ delay: 0.15 });
+
+      // Set initial states
+      gsap.set('#hero-label', { opacity: 0, y: 20 });
+      gsap.set('#hero-title-line-1', { opacity: 0, x: -30, y: -15 });
+      gsap.set('#hero-title-line-2', { opacity: 0, x: -30, y: -15 });
+      gsap.set('#hero-tagline', { opacity: 0, y: 24 });
+      gsap.set('#hero-body', { opacity: 0, y: 20 });
+      gsap.set('#hero-actions', { opacity: 0, y: 16 });
+      gsap.set('#hero-stat-cards', { opacity: 0, x: 20 });
+      gsap.set('#cube-main', { opacity: 0, scale: 0.85 });
+
+      // Label
+      tl.to('#hero-label', {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: EASE
+      });
+
+      // Title lines — isoSlideIn effect staggered
+      tl.to('#hero-title-line-1', {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: 0.6,
+        ease: EASE
+      }, '-=0.2');
+
+      tl.to('#hero-title-line-2', {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: 0.6,
+        ease: EASE
+      }, '-=0.4');
+
+      // Tagline
+      tl.to('#hero-tagline', {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: EASE
+      }, '-=0.3');
+
+      // Body
+      tl.to('#hero-body', {
+        opacity: 1,
+        y: 0,
+        duration: 0.45,
+        ease: EASE
+      }, '-=0.25');
+
+      // Actions
+      tl.to('#hero-actions', {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: EASE
+      }, '-=0.2');
+
+      // Cube entrance
+      tl.to('#cube-main', {
+        opacity: 1,
+        scale: 1,
+        duration: 0.7,
+        ease: EASE
+      }, '-=0.5');
+
+      // Stat cards
+      tl.to('#hero-stat-cards', {
+        opacity: 1,
+        x: 0,
+        duration: 0.45,
+        ease: EASE
+      }, '-=0.4');
+
+    });
+
+    // ── PLATFORM OVERVIEW — isoDepthPop scroll reveal ─────────────
+    (function () {
+      var cards = document.querySelectorAll('.feature-card');
+
+      // GSAP owns initial state
+      gsap.set(cards, { opacity: 0, scale: 0.95, y: 30 });
+
+      cards.forEach(function (card, i) {
+        gsap.to(card, {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.55,
+          delay: i * 0.12,
+          ease: EASE,
+          scrollTrigger: {
+            trigger: '#platform-grid',
+            start: 'top 78%',
+            once: true
+          }
+        });
+      });
+
+      // Section header
+      gsap.set('#platform-header', { opacity: 0, y: 30 });
+      gsap.to('#platform-header', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: EASE,
+        scrollTrigger: {
+          trigger: '#platform-overview',
+          start: 'top 80%',
+          once: true
+        }
+      });
+    })();
+
+    // ── ASSEMBLY SHOWCASE — clip-path wipe reveal ─────────────────
+    (function () {
+      // Video wrap clip-path wipe: inset(0 100% 0 0) → inset(0 0% 0 0)
+      gsap.fromTo('#assembly-video-wrap',
+        { clipPath: 'inset(0 100% 0 0)' },
+        {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 1.1,
+          ease: EASE,
+          scrollTrigger: {
+            trigger: '#assembly-showcase',
+            start: 'top 70%',
+            once: true
+          }
+        }
+      );
+
+      // Text column enters from right
+      gsap.set('#assembly-text', { opacity: 0, x: 40 });
+      gsap.to('#assembly-text', {
+        opacity: 1,
+        x: 0,
+        duration: 0.75,
+        delay: 0.35,
+        ease: EASE,
+        scrollTrigger: {
+          trigger: '#assembly-showcase',
+          start: 'top 70%',
+          once: true
+        }
+      });
+
+      // Stats row
+      gsap.set('#assembly-stats', { opacity: 0, y: 16 });
+      gsap.to('#assembly-stats', {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        delay: 0.7,
+        ease: EASE,
+        scrollTrigger: {
+          trigger: '#assembly-showcase',
+          start: 'top 70%',
+          once: true
+        }
+      });
+    })();
+
+    // ── HOW IT WORKS — horizontal left sweep ──────────────────────
+    (function () {
+      var steps = document.querySelectorAll('.how-step');
+
+      // GSAP owns initial state
+      gsap.set(steps, { opacity: 0, x: -60 });
+
+      steps.forEach(function (step, i) {
+        gsap.to(step, {
+          opacity: 1,
+          x: 0,
+          duration: 0.55,
+          delay: i * 0.15,
+          ease: EASE,
+          scrollTrigger: {
+            trigger: '#how-steps',
+            start: 'top 78%',
+            once: true
+          }
+        });
+      });
+
+      // Header
+      gsap.set('#how-header', { opacity: 0, y: 24 });
+      gsap.to('#how-header', {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        ease: EASE,
+        scrollTrigger: {
+          trigger: '#how-it-works',
+          start: 'top 82%',
+          once: true
+        }
+      });
+    })();
+
+    // ── EDITORIAL CTA — scale from center reveal ───────────────────
+    (function () {
+      gsap.set('#cta-inner', { opacity: 0, scale: 0.88 });
+      gsap.to('#cta-inner', {
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        ease: EASE,
+        scrollTrigger: {
+          trigger: '#editorial-cta',
+          start: 'top 72%',
+          once: true
+        }
+      });
+    })();
+
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+{
+  "timingTokens": {
+    "durations": {
+      "fast": "400ms",
+      "base": "500ms",
+      "slow": "600ms",
+      "reading": "800ms"
+    },
+    "easings": {
+      "readingEase": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+      "gentle": "ease-out"
+    }
+  },
+  "scrollAnimations": {
+    "patterns": [
+      {
+        "name": "chapterReveal",
+        "description": "Chapter title letter-spacing animates from 0.5em to normal (0em) over 800ms ease-out",
+        "property": "letterSpacing",
+        "from": "0.5em",
+        "to": "0em",
+        "duration": "800ms",
+        "easing": "ease-out",
+        "trigger": "ScrollTrigger",
+        "once": true
+      },
+      {
+        "name": "paragraphFadeUp",
+        "description": "Paragraphs fade in with y:16 translation, 500ms, stagger 0.1s per element",
+        "property": "opacity, y",
+        "from": { "opacity": 0, "y": 16 },
+        "to": { "opacity": 1, "y": 0 },
+        "duration": "500ms",
+        "stagger": "0.1s",
+        "easing": "ease-out",
+        "trigger": "ScrollTrigger",
+        "once": true
+      },
+      {
+        "name": "pullQuoteEntrance",
+        "description": "Pull quote scales subtly from 0.97 to 1.0 while fading in, 600ms",
+        "property": "scale, opacity",
+        "from": { "scale": 0.97, "opacity": 0 },
+        "to": { "scale": 1, "opacity": 1 },
+        "duration": "600ms",
+        "easing": "ease-out",
+        "trigger": "ScrollTrigger",
+        "once": true
+      },
+      {
+        "name": "annotationSlideIn",
+        "description": "Margin annotations slide in from x:16 (right margin), 400ms ease-out",
+        "property": "x, opacity",
+        "from": { "x": 16, "opacity": 0 },
+        "to": { "x": 0, "opacity": 1 },
+        "duration": "400ms",
+        "easing": "ease-out",
+        "trigger": "ScrollTrigger",
+        "once": true
+      }
+    ],
+    "libraries": ["GSAP 3.12.5", "ScrollTrigger"]
+  },
+  "readingProgress": {
+    "description": "Top-of-nav thin 2px bar fills left-to-right as user scrolls the page",
+    "implementation": "scroll event listener, no GSAP",
+    "selector": ".reading-progress-bar",
+    "property": "width",
+    "unit": "%",
+    "calculation": "scrollY / (documentHeight - windowHeight) * 100"
+  },
+  "microInteractions": {
+    "linkHover": {
+      "property": "color, text-decoration",
+      "transition": "color 200ms ease-out",
+      "defaultState": "no underline, body text color",
+      "hoverState": "wine red #8b1f2e + underline appears"
+    },
+    "navActive": {
+      "property": "color",
+      "activeColor": "#8b1f2e"
+    }
+  },
+  "reducedMotionSupport": "@media (prefers-reduced-motion: reduce) — all GSAP animations disabled, progress bar still works"
+}

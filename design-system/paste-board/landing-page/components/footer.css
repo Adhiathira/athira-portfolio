@@ -1,0 +1,156 @@
+/* paste-board — Footer Component */
+
+.site-footer {
+  background-color: var(--color-surface-footer);
+  color: var(--color-text-on-dark);
+  position: relative;
+}
+
+/* Torn edge at top — paper torn from above */
+.site-footer::before {
+  content: '';
+  display: block;
+  height: 20px;
+  background-color: var(--color-surface-footer);
+  clip-path: polygon(
+    0% 100%, 0% 60%,
+    1% 30%, 2% 70%, 3% 20%, 4% 55%, 5% 10%, 6% 40%, 7% 70%, 8% 25%,
+    9% 60%, 10% 15%, 11% 50%, 12% 80%, 13% 35%, 14% 65%, 15% 20%, 16% 55%,
+    17% 85%, 18% 40%, 19% 70%, 20% 25%, 21% 60%, 22% 10%, 23% 45%,
+    24% 75%, 25% 30%, 26% 65%, 27% 15%, 28% 50%, 29% 80%, 30% 35%,
+    31% 70%, 32% 20%, 33% 55%, 34% 85%, 35% 40%, 36% 75%, 37% 25%,
+    38% 60%, 39% 10%, 40% 45%, 41% 80%, 42% 30%, 43% 65%, 44% 15%,
+    45% 50%, 46% 85%, 47% 35%, 48% 70%, 49% 20%, 50% 55%,
+    51% 90%, 52% 40%, 53% 75%, 54% 25%, 55% 60%, 56% 10%, 57% 45%,
+    58% 80%, 59% 30%, 60% 65%, 61% 15%, 62% 50%, 63% 85%, 64% 35%,
+    65% 70%, 66% 20%, 67% 55%, 68% 90%, 69% 40%, 70% 75%, 71% 25%,
+    72% 60%, 73% 10%, 74% 45%, 75% 80%, 76% 30%, 77% 65%, 78% 15%,
+    79% 50%, 80% 85%, 81% 35%, 82% 70%, 83% 20%, 84% 55%, 85% 90%,
+    86% 40%, 87% 75%, 88% 25%, 89% 60%, 90% 10%, 91% 45%, 92% 80%,
+    93% 30%, 94% 65%, 95% 15%, 96% 50%, 97% 85%, 98% 35%, 99% 70%,
+    100% 20%, 100% 100%
+  );
+  margin-top: -1px;
+}
+
+.site-footer__inner {
+  padding-block: var(--space-2xl) var(--space-xl);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.site-footer__top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+  border-bottom: 1px solid rgba(245, 240, 232, 0.12);
+}
+
+.footer-brand__logo {
+  font-family: var(--font-hand);
+  font-size: 1.75rem;
+  font-weight: var(--weight-bold);
+  color: var(--color-sticky);
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+.footer-brand__tagline {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: rgba(245, 240, 232, 0.65);
+  line-height: var(--lh-body);
+  max-width: 280px;
+  margin-bottom: var(--space-xl);
+}
+
+.footer-social {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.footer-social__link {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(245, 240, 232, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-hand);
+  font-size: var(--size-small);
+  color: rgba(245, 240, 232, 0.65);
+  transition: border-color var(--dur-fast) ease,
+              color var(--dur-fast) ease,
+              transform var(--dur-fast) var(--spring);
+}
+
+.footer-social__link:hover {
+  border-color: var(--color-sticky);
+  color: var(--color-sticky);
+  transform: rotate(-5deg) scale(1.1);
+}
+
+.footer-col__title {
+  font-family: var(--font-hand);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-on-dark);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.02em;
+}
+
+.footer-col__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.footer-col__links a {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: rgba(245, 240, 232, 0.55);
+  transition: color var(--dur-fast) ease;
+}
+
+.footer-col__links a:hover {
+  color: var(--color-sticky);
+}
+
+/* Bottom row */
+.site-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.footer-copy {
+  font-family: var(--font-hand);
+  font-size: var(--size-small);
+  color: rgba(245, 240, 232, 0.35);
+}
+
+.footer-annotation {
+  font-family: var(--font-hand);
+  font-size: var(--size-small);
+  color: rgba(245, 240, 232, 0.35);
+}
+
+@media (max-width: 1024px) {
+  .site-footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-footer__top {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}

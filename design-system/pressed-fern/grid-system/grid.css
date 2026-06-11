@@ -1,0 +1,127 @@
+:root {
+  --grid-system-container-maxWidth: 1520px;
+  --grid-system-container-paddingLeft: 32px;
+  --grid-system-container-paddingRight: 32px;
+  --grid-system-journal-gutter: 28px;
+  --grid-system-journal-divider-color: var(--ds-color-border, currentColor);
+  --grid-system-journal-base-columns: 12;
+}
+
+/* 12-column editorial grid foundation */
+.journal-layout-12col {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-system-journal-base-columns), 1fr);
+  gap: var(--grid-system-journal-gutter);
+}
+
+/* Full-bleed feature spanning all columns */
+.journal-full {
+  grid-column: 1 / -1;
+}
+
+/* Centered editorial feature with breathing room: span 8, offset 2 */
+.journal-feature {
+  grid-column: 3 / span 8;
+}
+
+/* Asymmetric botanical split: 5fr / 7fr with thin decorative divider */
+.journal-split {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--grid-system-journal-gutter);
+  align-items: start;
+}
+
+.journal-split > :last-child {
+  border-left: 1px solid var(--grid-system-journal-divider-color);
+  padding-left: var(--grid-system-journal-gutter);
+}
+
+/* Reversed asymmetric split: 7fr / 5fr */
+.journal-split-reversed {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: var(--grid-system-journal-gutter);
+  align-items: start;
+}
+
+.journal-split-reversed > :last-child {
+  border-left: 1px solid var(--grid-system-journal-divider-color);
+  padding-left: var(--grid-system-journal-gutter);
+}
+
+/* Narrow centered text column for body copy: span 6, offset 3 */
+.journal-narrow {
+  grid-column: 4 / span 6;
+}
+
+/* Narrow column for botanical illustration or pull quote: span 3 */
+.journal-aside {
+  grid-column: span 3;
+}
+
+/* Wide centered layout: span 10, offset 1 */
+.journal-wide {
+  grid-column: 2 / span 10;
+}
+
+/* Botanical accent: thin decorative rule */
+.journal-divider {
+  border-top: 1px solid var(--grid-system-journal-divider-color);
+  margin: var(--grid-system-journal-gutter) 0;
+}
+
+/* Responsive breakpoint for tablet */
+@media (max-width: 1024px) {
+  :root {
+    --grid-system-journal-gutter: 24px;
+  }
+
+  .journal-feature {
+    grid-column: 2 / span 10;
+  }
+
+  .journal-narrow {
+    grid-column: 2 / span 10;
+  }
+
+  .journal-wide {
+    grid-column: 1 / -1;
+  }
+
+  .journal-split,
+  .journal-split-reversed {
+    grid-template-columns: 1fr;
+  }
+
+  .journal-split > :last-child,
+  .journal-split-reversed > :last-child {
+    border-left: none;
+    border-top: 1px solid var(--grid-system-journal-divider-color);
+    padding-left: 0;
+    padding-top: var(--grid-system-journal-gutter);
+  }
+}
+
+/* Responsive breakpoint for mobile */
+@media (max-width: 768px) {
+  :root {
+    --grid-system-container-paddingLeft: 20px;
+    --grid-system-container-paddingRight: 20px;
+    --grid-system-journal-gutter: 20px;
+  }
+
+  .journal-layout-12col {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .journal-feature,
+  .journal-narrow,
+  .journal-wide {
+    grid-column: 1 / -1;
+  }
+
+  .journal-aside {
+    grid-column: span 3;
+  }
+}

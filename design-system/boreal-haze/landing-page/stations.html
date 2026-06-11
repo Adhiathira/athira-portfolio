@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stations — SPECTRA Aurora Forecasting</title>
+  <meta name="description" content="48 magnetometer stations across the aurora oval. SPECTRA monitoring network — Tromsø to Antarctica, sampling every 60 seconds.">
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component styles -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/stations-hero.css">
+  <link rel="stylesheet" href="components/featured-stations.css">
+  <link rel="stylesheet" href="components/coverage-grid.css">
+  <link rel="stylesheet" href="components/instrument-specs.css">
+  <link rel="stylesheet" href="components/footer.css">
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">SPECTRA</a>
+    <ul class="nav-links">
+      <li><a href="forecast.html" class="nav-link">Forecast</a></li>
+      <li><a href="stations.html" class="nav-link nav-link--active">Stations</a></li>
+      <li><a href="science.html" class="nav-link">Science</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="forecast.html" class="nav-cta">Track Aurora</a>
+      <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile-scrim" id="nav-scrim"></div>
+<nav class="nav-mobile-menu" id="nav-mobile-menu" aria-hidden="true">
+  <ul class="nav-mobile-links">
+    <li><a href="forecast.html" class="nav-mobile-link">Forecast</a></li>
+    <li><a href="stations.html" class="nav-mobile-link nav-link--active">Stations</a></li>
+    <li><a href="science.html" class="nav-mobile-link">Science</a></li>
+  </ul>
+  <a href="forecast.html" class="nav-cta-mobile">Track Aurora</a>
+</nav>
+<div class="nav-spacer active" id="nav-spacer"></div>
+<script>
+(function(){var nav=document.getElementById('site-nav'),scrim=document.getElementById('nav-scrim'),mobileMenu=document.getElementById('nav-mobile-menu'),toggle=nav.querySelector('.nav-mobile-toggle');function onScroll(){window.scrollY>20?nav.classList.add('scrolled'):nav.classList.remove('scrolled');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();function open(){nav.classList.add('nav-mobile-open');mobileMenu.classList.add('is-open');scrim.classList.add('is-open');toggle.setAttribute('aria-expanded','true');mobileMenu.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}function close(){nav.classList.remove('nav-mobile-open');mobileMenu.classList.remove('is-open');scrim.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');mobileMenu.setAttribute('aria-hidden','true');document.body.style.overflow='';}toggle.addEventListener('click',function(){nav.classList.contains('nav-mobile-open')?close():open();});scrim.addEventListener('click',close);mobileMenu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});})();
+</script>
+
+<!-- ============================================================
+     SECTION 1 — STATIONS HERO
+     ============================================================ -->
+<section id="stations-hero">
+  <div id="stations-hero-glow"></div>
+  <div id="stations-hero-glow-secondary"></div>
+
+  <!-- Ghost number — absolute, behind content -->
+  <div id="stations-ghost-number" aria-hidden="true">48</div>
+
+  <div id="stations-hero-content">
+    <span id="stations-hero-eyebrow">Monitoring Network</span>
+    <h1 id="stations-hero-title">48 Stations Across the Aurora Oval</h1>
+    <p id="stations-hero-sub">Magnetometers sampling the geomagnetic field every 60 seconds, from Alaska to Antarctica.</p>
+  </div>
+</section>
+
+<!-- Wave divider: hero → featured stations -->
+<div id="wave-divider-1" aria-hidden="true">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+    style="display:block;width:100%;height:56px;margin-top:-2px;">
+    <path id="wave-path-1"
+      d="M0,28 C240,56 480,0 720,28 C960,56 1200,0 1440,28 L1440,56 L0,56 Z"
+      fill="#1a2330"
+      stroke="rgba(33,243,182,0.18)"
+      stroke-width="1.5"
+      fill-opacity="1"
+      vector-effect="non-scaling-stroke"
+    />
+  </svg>
+</div>
+
+<!-- ============================================================
+     SECTION 2 — FEATURED STATIONS (BENTO MASONRY)
+     ============================================================ -->
+<section id="featured-stations">
+  <div id="featured-stations-inner">
+
+    <header id="featured-stations-header">
+      <span id="featured-stations-eyebrow">Primary Observatories</span>
+      <h2 id="featured-stations-title">The Aurora Oval</h2>
+    </header>
+
+    <div id="featured-stations-grid">
+
+      <!-- Card A: Tromsø (spans 2 rows) -->
+      <article id="station-card-tromso" class="station-card">
+        <div class="station-card-header">
+          <h3 class="station-card-name">Tromsø,<br>Norway</h3>
+          <div class="station-card-status">
+            <span class="status-dot"></span>
+            <span class="status-label">Online</span>
+          </div>
+        </div>
+        <p class="station-card-coords">69.6°N &nbsp;18.9°E</p>
+        <p class="station-card-role">Northern Hemisphere Reference Station</p>
+        <p class="station-card-desc">Primary calibration reference for the entire Northern Hemisphere network. Operating since 1954, Tromsø sets the baseline against which all other magnetometer readings are normalized during geomagnetic storm events.</p>
+        <div class="station-card-instruments">
+          <span class="station-card-instruments-count">14</span>
+          <span class="station-card-instruments-label">Active Instruments</span>
+        </div>
+      </article>
+
+      <!-- Card B: Fairbanks -->
+      <article id="station-card-fairbanks" class="station-card">
+        <div class="station-card-header">
+          <h3 class="station-card-name">Fairbanks,<br>Alaska</h3>
+          <div class="station-card-status">
+            <span class="status-dot"></span>
+            <span class="status-label">Online</span>
+          </div>
+        </div>
+        <p class="station-card-coords">64.8°N &nbsp;147.9°W</p>
+        <div class="station-card-instruments">
+          <span class="station-card-instruments-count">8</span>
+          <span class="station-card-instruments-label">Active Instruments</span>
+        </div>
+      </article>
+
+      <!-- Card C: Reykjavik -->
+      <article id="station-card-reykjavik" class="station-card">
+        <div class="station-card-header">
+          <h3 class="station-card-name">Reykjavik,<br>Iceland</h3>
+          <div class="station-card-status">
+            <span class="status-dot"></span>
+            <span class="status-label">Online</span>
+          </div>
+        </div>
+        <p class="station-card-coords">64.1°N &nbsp;21.9°W</p>
+        <div class="station-card-instruments">
+          <span class="station-card-instruments-count">6</span>
+          <span class="station-card-instruments-label">Active Instruments</span>
+        </div>
+      </article>
+
+      <!-- Card E: Yellowknife -->
+      <article id="station-card-yellowknife" class="station-card">
+        <div class="station-card-header">
+          <h3 class="station-card-name">Yellowknife,<br>Canada</h3>
+          <div class="station-card-status">
+            <span class="status-dot"></span>
+            <span class="status-label">Online</span>
+          </div>
+        </div>
+        <p class="station-card-coords">62.5°N &nbsp;114.4°W</p>
+        <div class="station-card-instruments">
+          <span class="station-card-instruments-count">7</span>
+          <span class="station-card-instruments-label">Active Instruments</span>
+        </div>
+      </article>
+
+      <!-- Card D: McMurdo (spans 2 rows) -->
+      <article id="station-card-mcmurdo" class="station-card">
+        <div class="station-card-header">
+          <h3 class="station-card-name">McMurdo,<br>Antarctica</h3>
+          <div class="station-card-status">
+            <span class="status-dot"></span>
+            <span class="status-label">Online</span>
+          </div>
+        </div>
+        <p class="station-card-coords">77.8°S &nbsp;166.7°E</p>
+        <p class="station-card-role">Southern Hemisphere Conjugate Station</p>
+        <p class="station-card-desc">Mirror site measuring conjugate field lines from the South Pole aurora oval. McMurdo captures geomagnetic activity simultaneous with Tromsø, enabling cross-hemisphere storm symmetry analysis.</p>
+        <div class="station-card-instruments">
+          <span class="station-card-instruments-count">11</span>
+          <span class="station-card-instruments-label">Active Instruments</span>
+        </div>
+      </article>
+
+      <!-- Card F: Longyearbyen -->
+      <article id="station-card-longyearbyen" class="station-card">
+        <div class="station-card-header">
+          <h3 class="station-card-name">Longyearbyen,<br>Svalbard</h3>
+          <div class="station-card-status">
+            <span class="status-dot"></span>
+            <span class="status-label">Online</span>
+          </div>
+        </div>
+        <p class="station-card-coords">78.2°N &nbsp;15.6°E</p>
+        <p class="station-badge-northernmost">Northernmost Station</p>
+        <div class="station-card-instruments">
+          <span class="station-card-instruments-count">9</span>
+          <span class="station-card-instruments-label">Active Instruments</span>
+        </div>
+      </article>
+
+    </div><!-- /featured-stations-grid -->
+  </div><!-- /featured-stations-inner -->
+</section>
+
+<!-- Wave divider: featured → coverage grid -->
+<div id="wave-divider-2" aria-hidden="true">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+    style="display:block;width:100%;height:56px;margin-top:-2px;">
+    <path id="wave-path-2"
+      d="M0,0 C360,48 720,8 1080,40 C1260,56 1380,16 1440,32 L1440,56 L0,56 Z"
+      fill="#1e1a35"
+      stroke="rgba(146,72,228,0.18)"
+      stroke-width="1.5"
+      fill-opacity="1"
+      vector-effect="non-scaling-stroke"
+    />
+  </svg>
+</div>
+
+<!-- ============================================================
+     SECTION 3 — STATION COVERAGE GRID
+     ============================================================ -->
+<section id="coverage-grid">
+  <div id="coverage-grid-inner">
+
+    <header id="coverage-grid-header">
+      <span id="coverage-grid-eyebrow">All 48 Stations</span>
+      <h2 id="coverage-grid-title">Global Coverage</h2>
+      <p id="coverage-grid-sub">Distributed across 12 countries in the northern and southern aurora ovals.</p>
+    </header>
+
+    <!-- 6-col compact station indicator grid -->
+    <div id="station-cards-grid">
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Alta</span>
+        <span class="mini-card-lat">70.0°N</span>
+        <span class="mini-card-code">NO</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Abisko</span>
+        <span class="mini-card-lat">68.4°N</span>
+        <span class="mini-card-code">SE</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Kiruna</span>
+        <span class="mini-card-lat">67.8°N</span>
+        <span class="mini-card-code">SE</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Oulu</span>
+        <span class="mini-card-lat">65.1°N</span>
+        <span class="mini-card-code">FI</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Sodankylä</span>
+        <span class="mini-card-lat">67.4°N</span>
+        <span class="mini-card-code">FI</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Nurmijärvi</span>
+        <span class="mini-card-lat">60.5°N</span>
+        <span class="mini-card-code">FI</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Rovaniemi</span>
+        <span class="mini-card-lat">66.5°N</span>
+        <span class="mini-card-code">FI</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Andøya</span>
+        <span class="mini-card-lat">69.3°N</span>
+        <span class="mini-card-code">NO</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Hopen</span>
+        <span class="mini-card-lat">76.5°N</span>
+        <span class="mini-card-code">NO</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Jan Mayen</span>
+        <span class="mini-card-lat">71.0°N</span>
+        <span class="mini-card-code">NO</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Bear Island</span>
+        <span class="mini-card-lat">74.5°N</span>
+        <span class="mini-card-code">NO</span>
+      </div>
+
+      <div class="station-mini-card">
+        <div class="mini-card-status-row">
+          <span class="mini-status-dot"></span>
+          <span class="mini-status-label">Online</span>
+        </div>
+        <span class="mini-card-name">Gakkel Ridge</span>
+        <span class="mini-card-lat">85.6°N</span>
+        <span class="mini-card-code">ARC</span>
+      </div>
+
+    </div><!-- /station-cards-grid -->
+
+    <!-- Regional stat bands -->
+    <div id="coverage-stats-bands">
+      <div class="region-stat-band">
+        <span class="region-stat-count">12</span>
+        <span class="region-stat-name">Norway</span>
+        <span class="region-stat-label">Stations</span>
+      </div>
+      <div class="region-stat-band">
+        <span class="region-stat-count">10</span>
+        <span class="region-stat-name">Canada</span>
+        <span class="region-stat-label">Stations</span>
+      </div>
+      <div class="region-stat-band">
+        <span class="region-stat-count">8</span>
+        <span class="region-stat-name">Alaska</span>
+        <span class="region-stat-label">Stations</span>
+      </div>
+      <div class="region-stat-band">
+        <span class="region-stat-count">5</span>
+        <span class="region-stat-name">Iceland</span>
+        <span class="region-stat-label">Stations</span>
+      </div>
+      <div class="region-stat-band">
+        <span class="region-stat-count">7</span>
+        <span class="region-stat-name">Svalbard</span>
+        <span class="region-stat-label">Stations</span>
+      </div>
+      <div class="region-stat-band">
+        <span class="region-stat-count">6</span>
+        <span class="region-stat-name">Antarctic</span>
+        <span class="region-stat-label">Stations</span>
+      </div>
+    </div><!-- /coverage-stats-bands -->
+
+  </div><!-- /coverage-grid-inner -->
+</section>
+
+<!-- Wave divider: coverage grid → instrument specs -->
+<div id="wave-divider-3" aria-hidden="true">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+    style="display:block;width:100%;height:56px;margin-top:-2px;">
+    <path id="wave-path-3"
+      d="M0,40 C180,8 360,52 540,20 C720,0 900,48 1080,16 C1260,0 1380,44 1440,28 L1440,56 L0,56 Z"
+      fill="#0d3330"
+      stroke="rgba(33,243,182,0.15)"
+      stroke-width="1.5"
+      fill-opacity="1"
+      vector-effect="non-scaling-stroke"
+    />
+  </svg>
+</div>
+
+<!-- ============================================================
+     SECTION 4 — INSTRUMENT SPECS
+     ============================================================ -->
+<section id="instrument-specs">
+  <div id="instrument-specs-inner">
+
+    <header id="instrument-specs-header">
+      <span id="instrument-specs-eyebrow">Instrumentation</span>
+      <h2 id="instrument-specs-title">What Each Station Measures</h2>
+    </header>
+
+    <div id="instrument-rows">
+
+      <!-- Row 1: Fluxgate Magnetometer -->
+      <div id="instrument-row-1" class="instrument-row">
+        <div class="instrument-left">
+          <span class="instrument-row-number">01</span>
+          <h3 class="instrument-name">Fluxgate<br>Magnetometer</h3>
+          <span class="instrument-spec">0.1 nT resolution / 1s cadence</span>
+        </div>
+        <div class="instrument-right">
+          <p class="instrument-desc">Measures three-axis magnetic field variations with 0.1 nT resolution at 1-second cadence. Primary Kp input sensor. The fluxgate core saturates and desaturates with the ambient field, producing a voltage signal proportional to field strength in all three spatial components.</p>
+          <div class="instrument-detail-tags">
+            <span class="instrument-tag">X / Y / Z axes</span>
+            <span class="instrument-tag">Primary Kp sensor</span>
+            <span class="instrument-tag">1s sampling</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Search-coil Magnetometer -->
+      <div id="instrument-row-2" class="instrument-row">
+        <div class="instrument-left">
+          <span class="instrument-row-number">02</span>
+          <h3 class="instrument-name">Search-coil<br>Magnetometer</h3>
+          <span class="instrument-spec">0.001 – 10 Hz band</span>
+        </div>
+        <div class="instrument-right">
+          <p class="instrument-desc">High-sensitivity pulsation detector capturing ULF wave activity 0.001–10 Hz. Captures Pc1–Pc5 pulsation bands. The induction coil detects rapid field changes invisble to fluxgate sensors, providing critical early warning signatures during substorm onset and solar wind pressure pulses.</p>
+          <div class="instrument-detail-tags">
+            <span class="instrument-tag">Pc1 – Pc5 bands</span>
+            <span class="instrument-tag">Substorm onset</span>
+            <span class="instrument-tag">ULF waves</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: All-sky Camera -->
+      <div id="instrument-row-3" class="instrument-row">
+        <div class="instrument-left">
+          <span class="instrument-row-number">03</span>
+          <h3 class="instrument-name">All-sky<br>Camera</h3>
+          <span class="instrument-spec">4K / 30s exposure cycle</span>
+        </div>
+        <div class="instrument-right">
+          <p class="instrument-desc">Full 180° fisheye lens capturing the aurora oval every 30 seconds. 4K resolution, monochrome + RGB filter channels. Each frame covers the entire sky dome overhead, enabling automated morphology classification — arcs, bands, coronae, diffuse glow — feeding directly into aurora shape prediction models.</p>
+          <div class="instrument-detail-tags">
+            <span class="instrument-tag">180° fisheye</span>
+            <span class="instrument-tag">Mono + RGB</span>
+            <span class="instrument-tag">30s cycle</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /instrument-rows -->
+  </div><!-- /instrument-specs-inner -->
+</section>
+
+<!-- Wave divider: instrument specs → footer -->
+<div id="wave-divider-4" aria-hidden="true">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+    style="display:block;width:100%;height:56px;margin-top:-2px;">
+    <path id="wave-path-4"
+      d="M0,20 C360,56 720,4 1080,36 C1260,52 1380,12 1440,24 L1440,56 L0,56 Z"
+      fill="#161d25"
+      stroke="rgba(33,243,182,0.10)"
+      stroke-width="1.5"
+      fill-opacity="1"
+      vector-effect="non-scaling-stroke"
+    />
+  </svg>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-left">
+      <a href="index.html" id="footer-logo">SPECTRA</a>
+      <p id="footer-tagline">See the sky before it shifts.</p>
+      <p id="footer-copyright">&copy; 2026 SPECTRA Aurora Forecasting. All rights reserved.</p>
+    </div>
+    <div id="footer-right">
+      <ul id="footer-nav" aria-label="Footer navigation">
+        <li><a href="forecast.html" class="footer-nav-link">Forecast</a></li>
+        <li><a href="stations.html" class="footer-nav-link">Stations</a></li>
+        <li><a href="science.html" class="footer-nav-link">Science</a></li>
+        <li><a href="forecast.html" class="footer-nav-link">Track Aurora</a></li>
+      </ul>
+      <div id="footer-status">
+        <span id="footer-status-dot"></span>
+        <span>All 48 stations nominal</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     GSAP ANIMATIONS
+     ============================================================ -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Motion tokens ──
+var BASE_DURATION = parseFloat(getComputedStyle(document.documentElement)
+  .getPropertyValue('--duration-sm')) || 0.4;
+var EASE = getComputedStyle(document.documentElement)
+  .getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+// ──────────────────────────────────────────────────────────────
+// HERO: Ghost number — set initial state then animate in
+// Final opacity is 0.04, NOT 1
+// ──────────────────────────────────────────────────────────────
+gsap.set('#stations-ghost-number', { opacity: 0, y: 20 });
+gsap.to('#stations-ghost-number', {
+  opacity: 0.04,
+  y: 0,
+  duration: 1.6,
+  ease: 'power2.out',
+  delay: 0.3
+});
+
+// Hero content — entrance sequence on page load
+gsap.set('#stations-hero-eyebrow', { opacity: 0, y: 12 });
+gsap.set('#stations-hero-title', { opacity: 0, y: 24 });
+gsap.set('#stations-hero-sub', { opacity: 0, y: 16 });
+
+gsap.to('#stations-hero-eyebrow', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', delay: 0.15 });
+gsap.to('#stations-hero-title', { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out', delay: 0.32 });
+gsap.to('#stations-hero-sub', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.52 });
+
+// Wave path 1 — stroke-dashoffset draw
+(function() {
+  var path = document.getElementById('wave-path-1');
+  if (!path) return;
+  var length = 2000;
+  gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+  gsap.to(path, {
+    strokeDashoffset: 0,
+    duration: 1.8,
+    ease: 'power2.inOut',
+    scrollTrigger: { trigger: '#wave-divider-1', start: 'top 90%', once: true }
+  });
+})();
+
+// ──────────────────────────────────────────────────────────────
+// FEATURED STATIONS — rotation+rise masonry cards, stagger 0.1
+// ──────────────────────────────────────────────────────────────
+(function() {
+  var cards = document.querySelectorAll('#featured-stations-grid .station-card');
+  gsap.set(cards, { rotation: 2, y: 40 });
+  gsap.to(cards, {
+    rotation: 0,
+    y: 0,
+    duration: 0.85,
+    ease: 'power2.out',
+    stagger: 0.1,
+    scrollTrigger: {
+      trigger: '#featured-stations-grid',
+      start: 'top 80%',
+      once: true
+    }
+  });
+})();
+
+// Featured stations header — letter-spacing bloom
+gsap.fromTo('#featured-stations-title',
+  { letterSpacing: '0.05em' },
+  {
+    letterSpacing: '-0.01em',
+    duration: 0.9,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '#featured-stations-header', start: 'top 85%', once: true }
+  }
+);
+
+// Wave path 2
+(function() {
+  var path = document.getElementById('wave-path-2');
+  if (!path) return;
+  gsap.set(path, { strokeDasharray: 2000, strokeDashoffset: 2000 });
+  gsap.to(path, {
+    strokeDashoffset: 0,
+    duration: 2.0,
+    ease: 'power2.inOut',
+    scrollTrigger: { trigger: '#wave-divider-2', start: 'top 90%', once: true }
+  });
+})();
+
+// ──────────────────────────────────────────────────────────────
+// COVERAGE GRID — x:-70 sweep from left, stagger 0.04
+// ──────────────────────────────────────────────────────────────
+(function() {
+  var miniCards = document.querySelectorAll('#station-cards-grid .station-mini-card');
+  gsap.set(miniCards, { x: -70 });
+  gsap.to(miniCards, {
+    x: 0,
+    duration: 0.65,
+    ease: 'power2.out',
+    stagger: 0.04,
+    scrollTrigger: {
+      trigger: '#station-cards-grid',
+      start: 'top 82%',
+      once: true
+    }
+  });
+})();
+
+// Coverage grid header
+gsap.set('#coverage-grid-title', { x: -40 });
+gsap.to('#coverage-grid-title', {
+  x: 0,
+  duration: 0.9,
+  ease: 'power2.out',
+  scrollTrigger: { trigger: '#coverage-grid-header', start: 'top 85%', once: true }
+});
+
+// Regional stat bands — scale from center
+(function() {
+  var bands = document.querySelectorAll('.region-stat-band');
+  gsap.set(bands, { y: 20 });
+  gsap.to(bands, {
+    y: 0,
+    duration: 0.7,
+    ease: 'power2.out',
+    stagger: 0.07,
+    scrollTrigger: {
+      trigger: '#coverage-stats-bands',
+      start: 'top 85%',
+      once: true
+    }
+  });
+})();
+
+// Wave path 3
+(function() {
+  var path = document.getElementById('wave-path-3');
+  if (!path) return;
+  gsap.set(path, { strokeDasharray: 2000, strokeDashoffset: 2000 });
+  gsap.to(path, {
+    strokeDashoffset: 0,
+    duration: 2.2,
+    ease: 'power2.inOut',
+    scrollTrigger: { trigger: '#wave-divider-3', start: 'top 90%', once: true }
+  });
+})();
+
+// ──────────────────────────────────────────────────────────────
+// INSTRUMENT SPECS — divergent: row1 x:-60, row2 x:+60, row3 x:-60
+// ──────────────────────────────────────────────────────────────
+(function() {
+  var row1 = document.getElementById('instrument-row-1');
+  var row2 = document.getElementById('instrument-row-2');
+  var row3 = document.getElementById('instrument-row-3');
+
+  if (row1) {
+    gsap.set(row1, { x: -60 });
+    gsap.to(row1, {
+      x: 0,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: row1, start: 'top 82%', once: true }
+    });
+  }
+
+  if (row2) {
+    gsap.set(row2, { x: 60 });
+    gsap.to(row2, {
+      x: 0,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: row2, start: 'top 82%', once: true }
+    });
+  }
+
+  if (row3) {
+    gsap.set(row3, { x: -60 });
+    gsap.to(row3, {
+      x: 0,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: row3, start: 'top 82%', once: true }
+    });
+  }
+})();
+
+// Instrument specs header
+gsap.set('#instrument-specs-title', { y: 24 });
+gsap.to('#instrument-specs-title', {
+  y: 0,
+  duration: 0.9,
+  ease: 'power2.out',
+  scrollTrigger: { trigger: '#instrument-specs-header', start: 'top 85%', once: true }
+});
+
+// Wave path 4
+(function() {
+  var path = document.getElementById('wave-path-4');
+  if (!path) return;
+  gsap.set(path, { strokeDasharray: 2000, strokeDashoffset: 2000 });
+  gsap.to(path, {
+    strokeDashoffset: 0,
+    duration: 1.8,
+    ease: 'power2.inOut',
+    scrollTrigger: { trigger: '#wave-divider-4', start: 'top 90%', once: true }
+  });
+})();
+
+// Footer entrance
+gsap.set('#footer-inner', { y: 20 });
+gsap.to('#footer-inner', {
+  y: 0,
+  duration: 1.0,
+  ease: 'power2.out',
+  scrollTrigger: { trigger: '#site-footer', start: 'top 90%', once: true }
+});
+</script>
+
+</body>
+</html>

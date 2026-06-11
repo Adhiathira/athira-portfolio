@@ -1,0 +1,172 @@
+/* =============================================================
+   SOLUTIONS INDUSTRIES — cube-verge / Forma Systems
+   Section 3: dark #1a1a1a industry tag cloud with scatter reveal
+   ============================================================= */
+
+/* ── Section wrapper ──────────────────────────────────────── */
+#solutions-industries {
+  position: relative;
+  background: #1a1a1a;
+  color: rgba(255, 255, 255, 0.88);
+  padding: var(--space-3xl) var(--grid-padding-inline);
+  overflow: hidden;
+}
+
+/* ── Top diagonal cut (coming from grey section above) ────── */
+#solutions-industries::before {
+  content: '';
+  position: absolute;
+  top: -52px;
+  left: 0;
+  width: 100%;
+  height: 104px;
+  background: #1a1a1a;
+  clip-path: polygon(0 55%, 100% 0%, 100% 100%, 0 100%);
+  z-index: 1;
+}
+
+/* ── Bottom parallelogram cut ─────────────────────────────── */
+#solutions-industries::after {
+  content: '';
+  position: absolute;
+  bottom: -44px;
+  left: 0;
+  width: 100%;
+  height: 88px;
+  background: #ffffff;
+  clip-path: polygon(0 55%, 100% 10%, 100% 100%, 0 100%);
+  z-index: 1;
+}
+
+/* ── Section header ───────────────────────────────────────── */
+#industries-header {
+  margin-bottom: var(--space-2xl);
+  position: relative;
+  z-index: 2;
+}
+
+.industries__label {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  letter-spacing: var(--type-label-letter-spacing);
+  text-transform: var(--type-label-transform);
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0 0 var(--space-md) 0;
+}
+
+.industries__heading {
+  font-family: var(--font-display);
+  font-size: var(--type-h2);
+  font-weight: var(--type-h2-weight);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+}
+
+/* ── Industry pills grid ──────────────────────────────────── */
+#industries-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Individual industry pill ─────────────────────────────── */
+.industry-pill {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.88);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--space-md) var(--space-xl);
+  cursor: default;
+  transition: background 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.industry-pill:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ── Count decoration ─────────────────────────────────────── */
+#industries-count {
+  margin-top: var(--space-2xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  position: relative;
+  z-index: 2;
+}
+
+.industries__count-number {
+  font-family: var(--font-display);
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.12);
+  letter-spacing: -0.04em;
+}
+
+.industries__count-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  max-width: 200px;
+  line-height: 1.6;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  #solutions-industries {
+    padding: var(--space-2xl) var(--grid-tablet-padding-inline);
+  }
+
+  #industries-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+
+  .industry-pill {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .industries__count-number {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  #solutions-industries {
+    padding: var(--space-xl) var(--grid-mobile-padding-inline);
+  }
+
+  #industries-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs);
+  }
+
+  .industry-pill {
+    font-size: 1rem;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .industries__count-number {
+    font-size: 2.5rem;
+  }
+
+  .industries__label {
+    font-size: 0.625rem;
+  }
+}

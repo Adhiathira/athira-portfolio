@@ -1,0 +1,101 @@
+{
+  "twist": "Took auxility's rigid pixel-perfect column system and converted all column definitions to fractional/percentage units, making the grid fluid and scale-aware. Added a named-area bento grid template not present in source. Removed hardcoded pixel column widths in favor of proportional equivalents. Introduced an asymmetric 3:2 split for editorial sections.",
+  "cssVars": {
+    "grid-max-width": "1440px",
+    "grid-gutter": "32px",
+    "grid-columns": "12",
+    "grid-margin": "clamp(24px, 5vw, 96px)"
+  },
+  "container": {
+    "maxWidth": "1440px",
+    "paddingInline": "clamp(24px, 5vw, 96px)"
+  },
+  "grids": {
+    "hero-split": {
+      "display": "grid",
+      "templateColumns": "3fr 2fr",
+      "columnCount": "2",
+      "gap": "0px 32px",
+      "parentSection": "section",
+      "description": "Asymmetric 3:2 — left holds the primary statement, right holds a secondary visual or annotation panel."
+    },
+    "feature-3col": {
+      "display": "grid",
+      "templateColumns": "repeat(3, 1fr)",
+      "columnCount": "3",
+      "gap": "48px 32px",
+      "parentSection": "section",
+      "description": "Three equal columns for feature/methodology cards."
+    },
+    "bento-main": {
+      "display": "grid",
+      "templateColumns": "2fr 1fr 1fr",
+      "templateRows": "auto auto",
+      "templateAreas": "'primary primary side-a' 'primary primary side-b'",
+      "columnCount": "3",
+      "gap": "2px",
+      "parentSection": "section",
+      "description": "Bento grid: primary cell spans 2 rows and 2 columns, two side cells stack vertically."
+    },
+    "two-equal": {
+      "display": "grid",
+      "templateColumns": "1fr 1fr",
+      "columnCount": "2",
+      "gap": "0px 16px",
+      "parentSection": "section"
+    },
+    "four-service": {
+      "display": "grid",
+      "templateColumns": "repeat(4, 1fr)",
+      "columnCount": "4",
+      "gap": "0px 31px",
+      "parentSection": "section"
+    }
+  },
+  "responsive": {
+    "bp-tablet": {
+      "query": "screen and (max-width: 1024px)",
+      "heroSplit": "1fr",
+      "feature3col": "1fr 1fr",
+      "bento": "1fr 1fr"
+    },
+    "bp-mobile": {
+      "query": "screen and (max-width: 640px)",
+      "heroSplit": "1fr",
+      "feature3col": "1fr",
+      "bento": "1fr"
+    }
+  },
+  "visual": [
+    {
+      "section": "nav",
+      "layout": "full-width-split",
+      "description": "Logo left, nav links center, CTA right — 46px height, 30px item spacing."
+    },
+    {
+      "section": "hero",
+      "layout": "asymmetric-3-2",
+      "description": "Left 3/5: oversized tracked heading at weight 300, single sentence sub. Right 2/5: specimen-label annotation column."
+    },
+    {
+      "section": "method",
+      "layout": "three-column-equal",
+      "description": "Three method cards with horizontal rule above each, number label, heading, body."
+    },
+    {
+      "section": "bento",
+      "layout": "named-area-bento",
+      "description": "Primary cell spans 2 rows — contains the central product statement. Two side cells stack vertically with complementary details."
+    },
+    {
+      "section": "services",
+      "layout": "four-column-equal",
+      "description": "Four service category cards in a row."
+    },
+    {
+      "section": "cta",
+      "layout": "full-width-centered",
+      "description": "Single large CTA block, full page width."
+    }
+  ]
+}

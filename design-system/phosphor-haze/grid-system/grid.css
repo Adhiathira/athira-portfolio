@@ -1,0 +1,87 @@
+:root {
+  --ds-grid-columns: 12;
+  --ds-grid-gap: 28px;
+  --ds-grid-column-gap: 28px;
+  --ds-grid-row-gap: 32px;
+  --ds-grid-container-max-width: 1600px;
+  --ds-grid-container-padding: 32px;
+  --vaporwave-perspective: 1200px;
+  --vaporwave-neon-cyan: #63cabe;
+  --vaporwave-neon-purple: #b79cff;
+}
+
+.ds-container {
+  max-width: var(--ds-grid-container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--ds-grid-container-padding);
+  perspective: var(--vaporwave-perspective);
+}
+
+.ds-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--ds-grid-column-gap);
+  row-gap: var(--ds-grid-row-gap);
+}
+
+/* Perspective grid floor — the vaporwave horizon effect */
+.vaporwave-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--ds-grid-column-gap);
+  row-gap: 32px;
+  perspective: var(--vaporwave-perspective);
+  transform-style: preserve-3d;
+  transform: rotateX(65deg);
+  transform-origin: center bottom;
+  padding-bottom: 400px;
+}
+
+/* Full-width bleed */
+.vapor-full {
+  grid-column: 1 / -1;
+}
+
+/* Centered narrow with neon left accent */
+.vapor-centered {
+  grid-column: 3 / 11;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--vaporwave-neon-cyan);
+}
+
+/* Asymmetric 40/60 split with neon vertical divider */
+.vapor-split {
+  display: grid;
+  grid-template-columns: 4fr 6fr;
+  column-gap: var(--ds-grid-column-gap);
+}
+
+.vapor-split > :first-child {
+  border-right: 2px solid var(--vaporwave-neon-purple);
+  padding-right: calc(var(--ds-grid-column-gap) / 2);
+}
+
+.vapor-split > :nth-child(2) {
+  padding-left: calc(var(--ds-grid-column-gap) / 2);
+}
+
+.vapor-half { grid-column: span 6; }
+.vapor-third { grid-column: span 4; }
+.vapor-two-thirds { grid-column: span 8; }
+
+@media (max-width: 1024px) {
+  .ds-grid { grid-template-columns: repeat(8, 1fr); }
+  .vapor-centered { grid-column: 1 / -1; }
+  .vapor-half, .vapor-third, .vapor-two-thirds { grid-column: span 4; }
+}
+
+@media (max-width: 768px) {
+  .ds-grid { grid-template-columns: repeat(4, 1fr); }
+  .vapor-split { grid-template-columns: 1fr; }
+  .vapor-split > :first-child { border-right: none; border-bottom: 2px solid var(--vaporwave-neon-purple); padding-right: 0; }
+  .vapor-half, .vapor-third, .vapor-two-thirds { grid-column: 1 / -1; }
+}
+
+@media (max-width: 375px) {
+  .ds-grid { grid-template-columns: repeat(2, 1fr); column-gap: 12px; }
+}

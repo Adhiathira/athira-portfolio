@@ -1,0 +1,237 @@
+/* ============================================================
+   Aurora Colors / Emission Spectra — SPECTRA / Boreal Haze
+   Section teal-dark #0d3330, editorial masonry 2-col layout
+   ============================================================ */
+
+#aurora-colors {
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 30%, rgba(33, 243, 182, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 70% at 85% 70%, rgba(146, 72, 228, 0.08) 0%, transparent 55%),
+    linear-gradient(160deg, #0d3330 0%, #0b2a28 50%, #0d3330 100%);
+  padding: 120px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+#aurora-colors-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ── Header ── */
+#aurora-colors-header {
+  margin-bottom: 64px;
+}
+
+#aurora-colors-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+  display: block;
+  margin-bottom: 16px;
+}
+
+#aurora-colors-headline {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.5vw, 60px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0;
+  max-width: 640px;
+}
+
+/* ── Card grid: masonry-style 2-col ── */
+#aurora-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 24px;
+}
+
+/* Card 1 spans full width */
+#aurora-card-1 {
+  grid-column: 1 / -1;
+}
+
+/* Cards 2 and 3 are side by side */
+#aurora-card-2,
+#aurora-card-3 {
+  grid-column: span 1;
+}
+
+/* ── Base card styles ── */
+.aurora-color-card {
+  background: rgba(13, 51, 48, 0.7);
+  border: 1px solid rgba(33, 243, 182, 0.12);
+  border-radius: 16px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  transition: border-color 0.35s var(--ease-primary), transform 0.35s var(--ease-primary);
+  backdrop-filter: blur(8px);
+}
+
+.aurora-color-card:hover {
+  border-color: rgba(33, 243, 182, 0.25);
+  transform: translateY(-4px);
+}
+
+/* ── Glowing color swatch bar ── */
+.aurora-swatch {
+  width: 100%;
+  height: 6px;
+  border-radius: 4px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: visible;
+}
+
+/* Card 1 — oxygen green/teal 558nm */
+#aurora-card-1 .aurora-swatch {
+  background: linear-gradient(90deg, rgba(33, 243, 182, 0.3) 0%, rgba(33, 243, 182, 1) 40%, rgba(0, 210, 150, 0.9) 100%);
+  box-shadow: 0 0 16px rgba(33, 243, 182, 0.6), 0 0 40px rgba(33, 243, 182, 0.25);
+}
+
+/* Card 2 — oxygen red 630nm */
+#aurora-card-2 .aurora-swatch {
+  background: linear-gradient(90deg, rgba(180, 40, 40, 0.3) 0%, rgba(220, 60, 60, 1) 40%, rgba(180, 30, 50, 0.9) 100%);
+  box-shadow: 0 0 16px rgba(220, 60, 60, 0.55), 0 0 40px rgba(180, 30, 50, 0.25);
+}
+
+/* Card 3 — nitrogen violet 391nm */
+#aurora-card-3 .aurora-swatch {
+  background: linear-gradient(90deg, rgba(100, 40, 200, 0.3) 0%, rgba(146, 72, 228, 1) 40%, rgba(120, 50, 220, 0.9) 100%);
+  box-shadow: 0 0 16px rgba(146, 72, 228, 0.6), 0 0 40px rgba(100, 40, 200, 0.25);
+}
+
+/* ── Card content ── */
+.aurora-card-wavelength {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+
+#aurora-card-1 .aurora-card-wavelength { color: var(--color-accent-teal); }
+#aurora-card-2 .aurora-card-wavelength { color: rgba(220, 80, 80, 0.9); }
+#aurora-card-3 .aurora-card-wavelength { color: rgba(180, 120, 255, 0.9); }
+
+.aurora-card-headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+#aurora-card-1 .aurora-card-headline {
+  font-size: clamp(24px, 2.5vw, 32px);
+  max-width: 640px;
+}
+
+#aurora-card-2 .aurora-card-headline,
+#aurora-card-3 .aurora-card-headline {
+  font-size: clamp(20px, 2vw, 26px);
+}
+
+.aurora-card-body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.72;
+  color: rgba(200, 205, 212, 0.85);
+  margin: 0;
+}
+
+#aurora-card-1 .aurora-card-body {
+  max-width: 720px;
+}
+
+/* ── Atmospheric glow on hover ── */
+#aurora-card-1::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(33, 243, 182, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+#aurora-card-2::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(220, 60, 60, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#aurora-card-3::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(146, 72, 228, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Wave divider ── */
+#aurora-colors-wave {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #aurora-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #aurora-card-1,
+  #aurora-card-2,
+  #aurora-card-3 {
+    grid-column: 1 / -1;
+  }
+
+  .aurora-color-card {
+    padding: 32px 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  #aurora-colors {
+    padding: 80px 0;
+  }
+
+  #aurora-colors-inner {
+    padding: 0 20px;
+  }
+
+  .aurora-color-card {
+    padding: 24px 20px;
+  }
+}

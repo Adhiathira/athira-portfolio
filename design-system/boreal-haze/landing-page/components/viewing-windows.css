@@ -1,0 +1,295 @@
+/* ============================================================
+   Regional Viewing Windows — SPECTRA
+   Section purple #1e1a35, asymmetric glass cards
+   ============================================================ */
+
+#viewing-windows {
+  position: relative;
+  background: linear-gradient(180deg, var(--color-section-purple) 0%, rgba(30, 26, 53, 0.95) 100%);
+  padding: var(--space-section-top) 0 var(--space-section-bottom);
+  overflow: hidden;
+}
+
+/* Ambient violet glow in upper right */
+#viewing-windows-bg-glow {
+  position: absolute;
+  top: -80px;
+  right: -100px;
+  width: 600px;
+  height: 500px;
+  background: radial-gradient(
+    ellipse at 70% 30%,
+    rgba(146, 72, 228, 0.12) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* SVG wave divider above section */
+.wave-divider-above {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin-top: -1px;
+}
+
+/* SVG wave divider below section */
+.wave-divider-below {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin-bottom: -1px;
+}
+
+#viewing-windows-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding-inline);
+}
+
+/* ── Section Header ── */
+#viewing-windows-header {
+  margin-bottom: 56px;
+}
+
+#viewing-windows-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+  margin: 0 0 16px;
+}
+
+#viewing-windows-headline {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h2);
+  font-weight: 800;
+  letter-spacing: var(--tracking-heading);
+  line-height: var(--line-height-heading);
+  color: #ffffff;
+  margin: 0;
+}
+
+/* ── Asymmetric Cards Grid — 2fr 1fr 1fr layout with featured spanning rows ── */
+#viewing-cards-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Featured card spans both rows in first column */
+#region-card-featured {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+/* Other cards in second and third columns */
+.region-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 32px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    transform 0.35s var(--ease-primary),
+    border-color 0.35s var(--ease-primary),
+    box-shadow 0.35s var(--ease-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.region-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(146, 72, 228, 0.03) 0%,
+    transparent 60%
+  );
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.region-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(146, 72, 228, 0.35);
+  box-shadow: 0 0 30px rgba(146, 72, 228, 0.2), 0 0 80px rgba(146, 72, 228, 0.1);
+}
+
+/* Featured card additional inner glow */
+#region-card-featured {
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Card header row */
+.region-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.region-flag {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.region-condition-badge {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.condition--excellent {
+  color: var(--color-primary-action);
+  background: rgba(226, 255, 101, 0.1);
+  border: 1px solid rgba(226, 255, 101, 0.25);
+}
+
+.condition--good {
+  color: var(--color-accent-teal);
+  background: rgba(33, 243, 182, 0.08);
+  border: 1px solid rgba(33, 243, 182, 0.2);
+}
+
+.condition--fair {
+  color: var(--color-muted-text);
+  background: rgba(200, 205, 212, 0.06);
+  border: 1px solid rgba(200, 205, 212, 0.15);
+}
+
+.region-name {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.region-latitude {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--color-muted-text);
+  opacity: 0.6;
+  margin: 0 0 20px;
+}
+
+/* Featured card: star rating */
+.region-stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.star {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.star--filled {
+  color: var(--color-primary-action);
+  filter: drop-shadow(0 0 4px rgba(226, 255, 101, 0.6));
+}
+
+/* Visibility stats */
+.region-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.region-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.region-stat-key {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--color-muted-text);
+  opacity: 0.65;
+  text-transform: uppercase;
+}
+
+.region-stat-val {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.region-stat-val--accent {
+  color: var(--color-accent-teal);
+}
+
+/* Clear sky progress bar */
+.region-sky-bar {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.region-sky-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--color-accent-teal),
+    var(--color-primary-action)
+  );
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #viewing-cards-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+
+  #region-card-featured {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  #viewing-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #region-card-featured {
+    grid-column: 1;
+  }
+
+  .region-card {
+    padding: 24px;
+  }
+}

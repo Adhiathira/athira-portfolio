@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features — FIELDSET</title>
+  <meta name="description" content="Features from FIELDSET — in-depth post-mortems, RFC drafts, infrastructure notes, and essays from working engineers across all fourteen issues.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/features-page.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Fieldset</a>
+      <ul class="nav-links">
+        <li><a href="issues.html" class="nav-link">Issues</a></li>
+        <li><a href="features.html" class="nav-link nav-link--active">Features</a></li>
+        <li><a href="archive.html" class="nav-link">Archive</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="subscribe.html" class="nav-link">Subscribe</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="issues.html" class="nav-link">Issues</a>
+    <a href="features.html" class="nav-link nav-link--active">Features</a>
+    <a href="archive.html" class="nav-link">Archive</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="subscribe.html" class="nav-link">Subscribe</a>
+  </div>
+  <script>
+    (function(){
+      var toggle = document.querySelector('.nav-mobile-toggle');
+      var menu = document.getElementById('nav-mobile-menu');
+      var nav = document.getElementById('site-nav');
+      if(toggle && menu) {
+        toggle.addEventListener('click', function(){
+          nav.classList.toggle('nav-mobile-open');
+          menu.classList.toggle('is-open');
+          document.body.style.overflow = menu.classList.contains('is-open') ? 'hidden' : '';
+        });
+        menu.querySelectorAll('.nav-link').forEach(function(link){
+          link.addEventListener('click', function(){
+            nav.classList.remove('nav-mobile-open');
+            menu.classList.remove('is-open');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+    })();
+  </script>
+
+  <!-- HERO -->
+  <section class="hero hero--subpage" role="banner">
+    <div style="max-width:1440px;margin:0 auto;">
+      <span class="hero__overline">312 Documents Published</span>
+      <h1 class="hero__headline">Features</h1>
+      <p class="hero__tagline">Post-mortems, RFC drafts, infrastructure notes, architecture decision records, and essays. Organized by document type. Published in full, without abridgment.</p>
+    </div>
+  </section>
+
+  <!-- FILTER: Document type tabs -->
+  <section class="section section--surface" aria-label="Filter by document type">
+    <div class="section__container">
+      <div class="fp-filter-row" id="fp-filter-row" role="tablist" aria-label="Document type filter">
+        <button class="fp-filter-btn fp-filter-btn--active" data-filter="all" role="tab" aria-selected="true">All Types</button>
+        <button class="fp-filter-btn" data-filter="post-mortem" role="tab" aria-selected="false">Post-Mortem</button>
+        <button class="fp-filter-btn" data-filter="rfc" role="tab" aria-selected="false">RFC</button>
+        <button class="fp-filter-btn" data-filter="essay" role="tab" aria-selected="false">Essay</button>
+        <button class="fp-filter-btn" data-filter="infrastructure" role="tab" aria-selected="false">Infrastructure</button>
+        <button class="fp-filter-btn" data-filter="incident" role="tab" aria-selected="false">Incident Report</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES: Newspaper column rows — distinct from index.html bento grid -->
+  <section class="section" aria-labelledby="features-all-heading">
+    <div class="section__container">
+      <div class="section__header">
+        <h2 class="section__heading" id="features-all-heading">All Features</h2>
+        <span class="section__label" id="fp-result-count">Showing all 14 documents</span>
+      </div>
+
+      <!-- Document grid: numbered step rows — label prefix + title -->
+      <!-- Distinct from index.html: uses 3-column numbered step layout -->
+      <div class="fp-doc-grid" id="fp-doc-grid">
+
+        <div class="fp-doc-row" data-type="post-mortem">
+          <span class="fp-doc-num">01</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Post-Mortem</span>
+              <span class="fp-doc-issue">Issue 14</span>
+            </div>
+            <h3 class="fp-doc-title">Three Hours of Missing WAL</h3>
+            <p class="fp-doc-excerpt">A full timeline of the Postgres write-ahead log gap, the recovery procedure that almost made it worse, and what the monitoring didn't surface.</p>
+          </div>
+          <a href="#postgres-wal" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="incident">
+          <span class="fp-doc-num">02</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Incident Report</span>
+              <span class="fp-doc-issue">Issue 14</span>
+            </div>
+            <h3 class="fp-doc-title">22 Minutes: A Payment Network Incident</h3>
+            <p class="fp-doc-excerpt">The load-balancer configuration change was reviewed, approved, and merged at 14:08. By 14:31 it had cascaded through three regions.</p>
+          </div>
+          <a href="#load-balancer" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="rfc">
+          <span class="fp-doc-num">03</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">RFC Commentary</span>
+              <span class="fp-doc-issue">Issue 14</span>
+            </div>
+            <h3 class="fp-doc-title">RFC 0047: Preventing Distributed Deadlocks at the Service Boundary</h3>
+            <p class="fp-doc-excerpt">An examination of the lock-ordering protocol and the edge cases the proposal explicitly deferred.</p>
+          </div>
+          <a href="#rfc-deadlock" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="essay">
+          <span class="fp-doc-num">04</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Essay</span>
+              <span class="fp-doc-issue">Issue 14</span>
+            </div>
+            <h3 class="fp-doc-title">The ADR as Institutional Memory</h3>
+            <p class="fp-doc-excerpt">Architecture Decision Records have a lifespan problem. A proposal for dating ADRs against their decay conditions, not their creation date.</p>
+          </div>
+          <a href="#on-writing" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="infrastructure">
+          <span class="fp-doc-num">05</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Infrastructure Note</span>
+              <span class="fp-doc-issue">Issue 14</span>
+            </div>
+            <h3 class="fp-doc-title">Notes on Capacity Planning Under Uncertainty</h3>
+            <p class="fp-doc-excerpt">An inventory of the tools that don't work and the ones that do — covering spike forecasting, headroom calculation, and the organizational behavior that defeats both.</p>
+          </div>
+          <a href="#infra-note" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="post-mortem">
+          <span class="fp-doc-num">06</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Post-Mortem</span>
+              <span class="fp-doc-issue">Issue 14</span>
+            </div>
+            <h3 class="fp-doc-title">The Cache Invalidation That Wasn't</h3>
+            <p class="fp-doc-excerpt">The stale cache wasn't expired — it was being actively repopulated by a background job that had no awareness of the primary key change. A documentation failure, not a code failure.</p>
+          </div>
+          <a href="#cache-invalidation" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="essay">
+          <span class="fp-doc-num">07</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Essay</span>
+              <span class="fp-doc-issue">Issue 14</span>
+            </div>
+            <h3 class="fp-doc-title">On Reading Other People's Runbooks</h3>
+            <p class="fp-doc-excerpt">A runbook written for its author is a private language. An examination of the gap between the runbook's author and its reader — and what that gap costs at 3am.</p>
+          </div>
+          <a href="#runbooks" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="infrastructure">
+          <span class="fp-doc-num">08</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Infrastructure Note</span>
+              <span class="fp-doc-issue">Issue 13</span>
+            </div>
+            <h3 class="fp-doc-title">Dependency Pinning as Specification</h3>
+            <p class="fp-doc-excerpt">A pinned dependency version is an implicit specification. An exploration of what that means for reproducibility, security, and engineering contract.</p>
+          </div>
+          <a href="archive.html#issue-13" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="post-mortem">
+          <span class="fp-doc-num">09</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Post-Mortem</span>
+              <span class="fp-doc-issue">Issue 12</span>
+            </div>
+            <h3 class="fp-doc-title">The Leap Second That Wasn't Expected</h3>
+            <p class="fp-doc-excerpt">A distributed system that assumed monotonic time encountered a leap-second smear that wasn't. Three clusters diverged. The resolution took 4 hours and involved a phone call with a vendor.</p>
+          </div>
+          <a href="archive.html#issue-12" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="essay">
+          <span class="fp-doc-num">10</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Essay</span>
+              <span class="fp-doc-issue">Issue 12</span>
+            </div>
+            <h3 class="fp-doc-title">Lamport Clocks in Practice</h3>
+            <p class="fp-doc-excerpt">A return to the original paper, and a survey of the three ways production teams misapply it — including the one that's almost always correct.</p>
+          </div>
+          <a href="archive.html#issue-12" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="rfc">
+          <span class="fp-doc-num">11</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">RFC Draft</span>
+              <span class="fp-doc-issue">Issue 13</span>
+            </div>
+            <h3 class="fp-doc-title">Proposal: Versioned Contract Testing at Service Boundary</h3>
+            <p class="fp-doc-excerpt">A draft RFC for a contract-versioning protocol that separates interface version from implementation version, with a migration path for existing service consumers.</p>
+          </div>
+          <a href="archive.html#issue-13" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="incident">
+          <span class="fp-doc-num">12</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Incident Report</span>
+              <span class="fp-doc-issue">Issue 11</span>
+            </div>
+            <h3 class="fp-doc-title">The On-Call Handoff That Lost Context</h3>
+            <p class="fp-doc-excerpt">A mid-incident handoff between two engineers on different continents. The incoming engineer had no context. The outgoing engineer had no time. What the handoff document should have contained.</p>
+          </div>
+          <a href="archive.html#issue-11" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="infrastructure">
+          <span class="fp-doc-num">13</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Infrastructure Note</span>
+              <span class="fp-doc-issue">Issue 12</span>
+            </div>
+            <h3 class="fp-doc-title">NTP Drift in Multi-Region Deployments</h3>
+            <p class="fp-doc-excerpt">Field notes on measuring, detecting, and tolerating NTP drift across a multi-region cluster. Includes the three situations where drift becomes a correctness problem, not just a performance one.</p>
+          </div>
+          <a href="archive.html#issue-12" class="fp-doc-read">Read →</a>
+        </div>
+
+        <div class="fp-doc-row" data-type="essay">
+          <span class="fp-doc-num">14</span>
+          <div class="fp-doc-body">
+            <div class="fp-doc-head">
+              <span class="fp-doc-type-tag">Essay</span>
+              <span class="fp-doc-issue">Issue 13</span>
+            </div>
+            <h3 class="fp-doc-title">The Spec That Survived Its System</h3>
+            <p class="fp-doc-excerpt">On the strange phenomenon of a technical specification that outlives the system it described — and becomes documentation for the next system built in its shadow.</p>
+          </div>
+          <a href="archive.html#issue-13" class="fp-doc-read">Read →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS VIDEO: Platform in use — documentary placement -->
+  <section class="section process-section" aria-labelledby="process-heading">
+    <div class="section__container">
+      <div class="section__header" style="border-bottom-color:#6e6e73;">
+        <h2 class="section__heading" id="process-heading" style="color:#ffffff;">Platform in Use</h2>
+        <span class="section__label">Documentation</span>
+      </div>
+      <div class="process-video-wrapper">
+        <video class="process-video" src="assets/platform-in-use.mp4" muted autoplay loop playsinline
+          onerror="this.style.display='none'">
+        </video>
+        <div class="process-video-placeholder">
+          <span style="color:transparent;"></span>
+        </div>
+      </div>
+      <p class="process-caption">Screen recording of FIELDSET's editorial pipeline — document intake, structural review, and version-controlled publication. Real workflow, unedited.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div>
+        <a href="index.html" class="footer-brand">Fieldset</a>
+        <p class="footer-tagline">Engineering as Written Practice.<br>Published quarterly since 2022.</p>
+      </div>
+      <nav aria-label="Publication">
+        <span class="footer-nav-heading">Publication</span>
+        <ul class="footer-nav-list">
+          <li><a href="issues.html">Issues</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="archive.html">Archive</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="About">
+        <span class="footer-nav-heading">About</span>
+        <ul class="footer-nav-list">
+          <li><a href="about.html">About FIELDSET</a></li>
+          <li><a href="about.html#submit">Submit a Document</a></li>
+          <li><a href="subscribe.html">Subscribe</a></li>
+        </ul>
+      </nav>
+      <div class="footer-copyright">
+        &copy; 2026 FIELDSET.<br>No rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Document type filter — instant state change, no animation
+    (function(){
+      var filterRow = document.getElementById('fp-filter-row');
+      var docGrid = document.getElementById('fp-doc-grid');
+      var resultCount = document.getElementById('fp-result-count');
+      if(!filterRow || !docGrid) return;
+
+      filterRow.addEventListener('click', function(e){
+        var btn = e.target.closest('.fp-filter-btn');
+        if(!btn) return;
+
+        // Instant active switch
+        filterRow.querySelectorAll('.fp-filter-btn').forEach(function(b){
+          b.classList.remove('fp-filter-btn--active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('fp-filter-btn--active');
+        btn.setAttribute('aria-selected', 'true');
+
+        var filter = btn.dataset.filter;
+        var rows = docGrid.querySelectorAll('.fp-doc-row');
+        var visible = 0;
+        rows.forEach(function(row){
+          var show = filter === 'all' || row.dataset.type === filter;
+          row.style.display = show ? '' : 'none';
+          if(show) visible++;
+        });
+        if(resultCount) {
+          resultCount.textContent = 'Showing ' + visible + ' document' + (visible !== 1 ? 's' : '');
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

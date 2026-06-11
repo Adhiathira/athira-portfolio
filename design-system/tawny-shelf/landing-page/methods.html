@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Method — Foliant</title>
+  <meta name="description" content="Foliant's three-stage archive methodology: field assessment, provenance documentation, and specification export for heritage building restoration projects.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    /* ── Shared page hero ── */
+    .page-hero-medium {
+      position: relative; width: 100%; height: 48vh;
+      min-height: 320px; max-height: 560px;
+      display: flex; align-items: flex-end;
+      overflow: hidden; background: var(--color-dark);
+    }
+    #page-hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to top, rgba(24,63,38,0.88) 0%, rgba(24,63,38,0.2) 100%);
+    }
+    #page-hero-img-bg { position: absolute; inset: 0; z-index: 0; }
+    #page-hero-img-bg img { width: 100%; height: 100%; object-fit: cover; }
+    #page-hero-content {
+      position: relative; z-index: 2; width: 100%;
+      max-width: var(--grid-max-width); margin: 0 auto;
+      padding: 0 var(--grid-container-padding) 3rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .page-hero-eyebrow {
+      font-family: var(--font-body); font-size: var(--type-nav);
+      font-weight: var(--weight-nav); letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase; color: var(--color-accent); margin: 0;
+    }
+    .page-hero-title {
+      font-family: var(--font-heading); font-size: var(--type-h1);
+      font-weight: var(--weight-heading); letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading); color: var(--color-white); margin: 0;
+    }
+    .page-hero-subtitle {
+      font-family: var(--font-body); font-size: var(--type-body);
+      color: rgba(255,255,255,0.7); margin: 0; max-width: 52ch;
+      letter-spacing: var(--font-letter-spacing-body);
+    }
+
+    /* ── Methods — full-width feature rows ── */
+    #methods-section {
+      background: var(--color-page-bg);
+      padding: var(--space-section-y) 0;
+    }
+    #methods-intro {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-container-padding);
+      margin-bottom: 5rem;
+    }
+    #methods-intro-heading {
+      font-family: var(--font-heading); font-size: var(--type-h1);
+      font-weight: var(--weight-heading); letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading); color: var(--color-heading);
+      margin: 0 0 1.5rem 0; max-width: 18ch;
+    }
+    #methods-intro-body {
+      font-family: var(--font-body); font-size: var(--type-p);
+      font-weight: var(--weight-body); line-height: var(--line-height-relaxed);
+      color: var(--color-body-text); margin: 0;
+      letter-spacing: var(--font-letter-spacing-body); max-width: 60ch;
+    }
+
+    /* Full-width horizontal method cards */
+    .method-row {
+      border-top: 1px solid var(--color-border);
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 3.5rem var(--grid-container-padding);
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 3rem;
+      align-items: start;
+      will-change: transform, opacity;
+    }
+    .method-row:last-of-type {
+      border-bottom: 1px solid var(--color-border);
+    }
+    .method-num {
+      font-family: var(--font-heading); font-size: 3.5rem;
+      font-weight: var(--weight-heading); letter-spacing: 0.04em;
+      color: rgba(24,63,38,0.12); line-height: 1;
+    }
+    .method-content { display: flex; flex-direction: column; gap: 1rem; }
+    .method-title {
+      font-family: var(--font-heading); font-size: var(--type-h2);
+      font-weight: var(--weight-heading); letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading); color: var(--color-heading); margin: 0;
+    }
+    .method-body {
+      font-family: var(--font-body); font-size: var(--type-p);
+      font-weight: var(--weight-body); line-height: var(--line-height-relaxed);
+      color: var(--color-body-text); margin: 0;
+      letter-spacing: var(--font-letter-spacing-body); max-width: 56ch;
+    }
+    .method-detail-list {
+      list-style: none; margin: 0.5rem 0 0 0; padding: 0;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .method-detail-list li {
+      font-family: var(--font-body); font-size: var(--type-body);
+      font-weight: var(--weight-body); color: var(--color-muted);
+      padding-left: 1.2rem; position: relative;
+      letter-spacing: var(--font-letter-spacing-body);
+    }
+    .method-detail-list li::before {
+      content: '—'; position: absolute; left: 0;
+      color: var(--color-accent);
+    }
+    .method-img {
+      width: 280px; aspect-ratio: 3/4; overflow: hidden;
+      background: var(--color-surface); flex-shrink: 0;
+    }
+    .method-img img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;
+    }
+
+    /* Standards section — dark with rule list */
+    #standards-section {
+      background: var(--color-surface-dark);
+      padding: var(--space-section-y) 0;
+    }
+    #standards-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start;
+    }
+    #standards-heading {
+      font-family: var(--font-heading); font-size: var(--type-h2);
+      font-weight: var(--weight-heading); letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading); color: var(--color-white); margin: 0 0 1.5rem 0;
+    }
+    #standards-body {
+      font-family: var(--font-body); font-size: var(--type-body);
+      line-height: var(--line-height-relaxed); color: rgba(255,255,255,0.65);
+      margin: 0; letter-spacing: var(--font-letter-spacing-body);
+    }
+    #standards-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+    .standard-item {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 1.25rem 0;
+    }
+    .standard-item:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+    .standard-name {
+      font-family: var(--font-heading); font-size: var(--type-h3);
+      font-weight: var(--weight-heading); letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-white);
+    }
+    .standard-desc {
+      font-family: var(--font-body); font-size: var(--type-caption);
+      color: rgba(255,255,255,0.45); letter-spacing: var(--font-letter-spacing-body);
+      text-align: right; max-width: 28ch;
+    }
+
+    @media (max-width: 1024px) {
+      .method-row { grid-template-columns: 60px 1fr; }
+      .method-img { display: none; }
+      #standards-inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .method-row { grid-template-columns: 40px 1fr; gap: 1.5rem; }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-text">Foliant</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="materials.html">Materials</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="methods.html" class="nav-link--active">Methods</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="materials.html">Materials</a>
+  <a href="projects.html">Projects</a>
+  <a href="methods.html" class="nav-link--active">Methods</a>
+  <a href="about.html">About</a>
+</div>
+
+<!-- PAGE HERO -->
+<section id="page-hero" class="page-hero-medium">
+  <div id="page-hero-overlay"></div>
+  <div id="page-hero-img-bg" aria-hidden="true">
+    <img src="assets/methods-hero.jpeg" alt="Field assessment tools: calipers and sample notebooks"
+      onerror="this.style.display='none'">
+  </div>
+  <div id="page-hero-content">
+    <p class="page-hero-eyebrow">The Process</p>
+    <h1 class="page-hero-title">Methods</h1>
+    <p class="page-hero-subtitle">Three stages from field survey to conservation-grade specification.</p>
+  </div>
+</section>
+
+<!-- METHODS SECTION -->
+<section id="methods-section">
+  <div id="methods-intro">
+    <h2 id="methods-intro-heading">How the archive is built and how you use it</h2>
+    <p id="methods-intro-body">Every Foliant material record begins in the field and ends as a specification document. The process is repeatable, documented at every stage, and structured to meet the evidentiary requirements of listed building consent applications.</p>
+  </div>
+
+  <div class="method-row" id="method-1">
+    <div class="method-num">01</div>
+    <div class="method-content">
+      <h2 class="method-title">Field Assessment</h2>
+      <p class="method-body">Material surveyors document samples on-site before any remediation begins. Dimensional survey, petrographic thin-section testing, mortar analysis by XRF, and dendrochronological sampling where timber is involved. Nothing enters the archive without site documentation.</p>
+      <ul class="method-detail-list">
+        <li>Dimensional analysis and photographic record</li>
+        <li>Petrographic thin-section microscopy (stone)</li>
+        <li>XRF mortar composition analysis</li>
+        <li>Dendrochronological dating (structural timber)</li>
+      </ul>
+    </div>
+    <div class="method-img">
+      <img src="assets/method-field.jpeg" alt="Surveyor with calipers measuring stone dimension"
+        onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <div class="method-row" id="method-2">
+    <div class="method-num">02</div>
+    <div class="method-content">
+      <h2 class="method-title">Provenance Chain</h2>
+      <p class="method-body">Every material record traces origin through documented ownership. Quarry to demolition site to Foliant to your project. Conservation architects receive a complete paper trail acceptable under ICOMOS guidelines and Historic England requirements for listed building work.</p>
+      <ul class="method-detail-list">
+        <li>Source origin documentation (quarry, kiln, sawmill)</li>
+        <li>Chain-of-custody transfer certificates</li>
+        <li>ICOMOS-compliant provenance report format</li>
+        <li>Digital audit trail, exportable on request</li>
+      </ul>
+    </div>
+    <div class="method-img">
+      <img src="assets/method-provenance.jpeg" alt="Archive documentation, provenance certificates"
+        onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <div class="method-row" id="method-3">
+    <div class="method-num">03</div>
+    <div class="method-content">
+      <h2 class="method-title">Specification Export</h2>
+      <p class="method-body">Archive entries export directly to NBS, RIBA, or bespoke format specification sheets. Structural data, composition analysis, and sourcing records transfer to your project documentation without transcription error. Formatted for consent applications, contractor packages, and conservation management plans.</p>
+      <ul class="method-detail-list">
+        <li>NBS clause-ready specification exports</li>
+        <li>RIBA job book integration (on request)</li>
+        <li>Bespoke format for conservation management plans</li>
+        <li>PDF and structured XML deliverables</li>
+      </ul>
+    </div>
+    <div class="method-img">
+      <img src="assets/method-spec.jpeg" alt="Specification document on drawing table"
+        onerror="this.style.display='none'">
+    </div>
+  </div>
+</section>
+
+<!-- STANDARDS SECTION — DARK -->
+<div class="section-divider" style="margin-top:-2px;">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 C360,70 720,0 1080,50 C1260,70 1380,20 1440,35 L1440,70 L0,70 Z" fill="var(--color-surface-dark)"/>
+  </svg>
+</div>
+
+<section id="standards-section">
+  <div class="section-inner">
+    <div id="standards-inner">
+      <div>
+        <h2 id="standards-heading">The frameworks we work within</h2>
+        <p id="standards-body">Foliant's documentation standards are aligned to the principal frameworks governing listed building work in the United Kingdom and Europe. Every archive record is structured to produce evidence acceptable under these frameworks.</p>
+      </div>
+      <ul id="standards-list">
+        <li class="standard-item">
+          <span class="standard-name">ICOMOS</span>
+          <span class="standard-desc">International conservation guidelines for cultural heritage fabric</span>
+        </li>
+        <li class="standard-item">
+          <span class="standard-name">Historic England</span>
+          <span class="standard-desc">Guidance on building conservation and listed building consent</span>
+        </li>
+        <li class="standard-item">
+          <span class="standard-name">NBS Specification</span>
+          <span class="standard-desc">National Building Specification clause format for tender packages</span>
+        </li>
+        <li class="standard-item">
+          <span class="standard-name">SPAB</span>
+          <span class="standard-desc">Society for Protection of Ancient Buildings repair philosophy</span>
+        </li>
+        <li class="standard-item">
+          <span class="standard-name">BS 8221</span>
+          <span class="standard-desc">British Standard for stone masonry cleaning and repair</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER WAVE -->
+<div class="section-divider" style="margin-top:-2px;">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C360,60 720,0 1080,40 C1260,60 1380,15 1440,30 L1440,60 L0,60 Z" fill="#2a5c3a"/>
+  </svg>
+</div>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div id="footer-inner">
+    <div id="footer-brand">
+      <div id="footer-logo">Foliant</div>
+      <p id="footer-tagline">The archive that builds.</p>
+      <p id="footer-address">Foliant Archive Ltd<br>12 Clerkenwell Road, London EC1M 5PQ</p>
+    </div>
+    <nav id="footer-nav">
+      <div class="footer-col">
+        <p class="footer-col-heading">Archive</p>
+        <ul class="footer-links">
+          <li><a href="materials.html">Materials</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="methods.html">Methods</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html#team">Team</a></li>
+          <li><a href="about.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Standards</p>
+        <ul class="footer-links">
+          <li><a href="#">ICOMOS</a></li>
+          <li><a href="#">Historic England</a></li>
+          <li><a href="#">NBS Format</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div id="footer-bottom" class="footer-copyright">
+    <p id="footer-legal">&copy; 2024 Foliant Archive Ltd. All rights reserved.</p>
+    <p id="footer-legal-links"><a href="#">Privacy</a> · <a href="#">Terms</a></p>
+  </div>
+</footer>
+
+<script src="behaviors/nav.js"></script>
+<script>
+(function() {
+  'use strict';
+  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(time => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Page hero — vertical stagger
+  gsap.from('#page-hero-content > *', {
+    y: 30, autoAlpha: 0, duration: 0.65, stagger: 0.12, ease: 'expo.out', delay: 0.3
+  });
+
+  // Methods intro
+  gsap.from(['#methods-intro-heading', '#methods-intro-body'], {
+    scrollTrigger: { trigger: '#methods-intro', start: 'top 80%', once: true },
+    y: 30, autoAlpha: 0, duration: 0.65, stagger: 0.1, ease: 'expo.out'
+  });
+
+  // Method rows — stagger full-width reveals
+  document.querySelectorAll('.method-row').forEach((row, i) => {
+    gsap.from(row, {
+      scrollTrigger: { trigger: row, start: 'top 80%', once: true },
+      x: -60, autoAlpha: 0, duration: 0.65, delay: i * 0.05, ease: 'expo.out'
+    });
+  });
+
+  // Standards list — stagger from right
+  gsap.from('.standard-item', {
+    scrollTrigger: { trigger: '#standards-list', start: 'top 80%', once: true },
+    x: 50, autoAlpha: 0, duration: 0.65, stagger: 0.08, ease: 'expo.out'
+  });
+
+  // Footer iris bloom
+  ScrollTrigger.create({
+    trigger: '#footer', start: 'top 90%', once: true,
+    onEnter: () => {
+      gsap.fromTo('#footer',
+        { clipPath: 'ellipse(0% 0% at 50% 100%)' },
+        { clipPath: 'ellipse(150% 150% at 50% 100%)', duration: 0.91, ease: 'power3.inOut' }
+      );
+    }
+  });
+})();
+</script>
+</body>
+</html>

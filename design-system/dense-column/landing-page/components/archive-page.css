@@ -1,0 +1,138 @@
+/* ── Archive Page — dense-column ── */
+/* Distinct grid: full-width index table with 5-column layout */
+
+.ar-issue-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 2px solid #000000;
+}
+
+.ar-table-header {
+  display: grid;
+  grid-template-columns: 64px 1fr 140px 80px 60px;
+  gap: 16px;
+  padding: 8px 12px;
+  background-color: #1d1d1f;
+  color: #ffffff;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  align-items: center;
+}
+
+.ar-table-row {
+  display: grid;
+  grid-template-columns: 64px 1fr 140px 80px 60px;
+  gap: 16px;
+  padding: 12px 12px;
+  border-bottom: 1px solid #000000;
+  text-decoration: none;
+  color: inherit;
+  align-items: center;
+  transition: none;
+}
+
+.ar-table-row:last-child {
+  border-bottom: none;
+}
+
+.ar-table-row:hover {
+  background-color: #f5f5f7;
+  transition: none;
+}
+
+.ar-issue-num {
+  font-family: 'Anton', sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.0;
+  text-transform: uppercase;
+  color: #1d1d1f;
+}
+
+.ar-issue-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(18px, 1.7vw, 24px);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.0;
+  color: #1d1d1f;
+}
+
+.ar-issue-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: #6e6e73;
+}
+
+.ar-doc-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6e6e73;
+}
+
+.ar-link {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #0071e3;
+  transition: none;
+}
+
+.ar-table-row:hover .ar-link {
+  background-color: #0071e3;
+  color: #ffffff;
+  padding: 2px 6px;
+}
+
+@media (max-width: 768px) {
+  .ar-table-header {
+    display: none;
+  }
+  .ar-table-row {
+    grid-template-columns: 48px 1fr auto;
+    grid-template-rows: auto auto;
+  }
+  .ar-issue-num {
+    grid-row: span 2;
+    align-self: center;
+    font-size: 32px;
+  }
+  .ar-issue-title {
+    grid-column: 2;
+  }
+  .ar-issue-date {
+    grid-column: 2;
+    font-size: 11px;
+  }
+  .ar-doc-count {
+    display: none;
+  }
+  .ar-link {
+    grid-column: 3;
+    grid-row: span 2;
+    align-self: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ar-table-row {
+    grid-template-columns: 1fr auto;
+  }
+  .ar-issue-num {
+    display: none;
+  }
+  .ar-issue-title {
+    grid-column: 1;
+  }
+  .ar-issue-date {
+    grid-column: 1;
+  }
+}

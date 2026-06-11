@@ -1,0 +1,55 @@
+:root {
+  --motion-duration-instant: 100ms;
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 200ms;
+  --motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --motion-stagger: 40ms;
+}
+
+/* Standard transition for interactive elements */
+.motion-transition {
+  transition: all var(--motion-duration-fast) var(--motion-easing);
+}
+
+/* Button transitions */
+.btn {
+  transition: background-color var(--motion-duration-fast) var(--motion-easing),
+              color var(--motion-duration-fast) var(--motion-easing),
+              border-color var(--motion-duration-fast) var(--motion-easing),
+              box-shadow var(--motion-duration-fast) var(--motion-easing);
+}
+
+/* Card transitions */
+.card {
+  transition: border-color var(--motion-duration-fast) var(--motion-easing),
+              box-shadow var(--motion-duration-fast) var(--motion-easing);
+}
+
+/* Link transitions */
+a {
+  transition: color var(--motion-duration-fast) var(--motion-easing),
+              background-color var(--motion-duration-fast) var(--motion-easing);
+}
+
+/* Input transitions */
+input, textarea, select {
+  transition: border-color var(--motion-duration-instant) var(--motion-easing),
+              box-shadow var(--motion-duration-instant) var(--motion-easing);
+}
+
+/* Chart bar draw animation */
+@keyframes bar-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes line-draw {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+.chart-bar {
+  transform-origin: bottom;
+  animation: bar-grow 800ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}

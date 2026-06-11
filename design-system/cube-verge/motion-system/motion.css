@@ -1,0 +1,109 @@
+:root {
+  /* Duration scale */
+  --duration-instant: 0ms;
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-medium: 400ms;
+  --duration-slow: 600ms;
+  --duration-xslow: 800ms;
+
+  /* Easing */
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-iso-crisp: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-iso-linear: linear;
+  --easing-iso-float: ease-in-out;
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Isometric-specific timing */
+  --iso-duration-step-1: 200ms;
+  --iso-duration-step-2: 400ms;
+  --iso-duration-step-3: 600ms;
+  --iso-duration-bobble: 3600ms;
+  --iso-stagger-interval: 200ms;
+}
+
+/* ─── Isometric Keyframes ─── */
+
+@keyframes isoSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px) translateY(-15px) rotateX(5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes isoBobble {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotateX(1.5deg);
+  }
+}
+
+@keyframes isoAssemble {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes isoDepthPop {
+  from {
+    opacity: 0;
+    transform: scale(0.95) perspective(600px) translateZ(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) perspective(600px) translateZ(0px);
+  }
+}
+
+/* ─── Utility Classes ─── */
+
+.iso-slide-in {
+  animation: isoSlideIn var(--iso-duration-step-2) var(--easing-iso-crisp) both;
+}
+
+.iso-bobble {
+  animation: isoBobble var(--iso-duration-bobble) var(--easing-iso-float) infinite;
+}
+
+.iso-assemble {
+  animation: isoAssemble var(--iso-duration-step-1) var(--easing-iso-linear) both;
+}
+
+.iso-depth-pop {
+  animation: isoDepthPop var(--iso-duration-step-2) var(--easing-iso-crisp) both;
+}
+
+.iso-stagger-1 { animation-delay: 200ms; }
+.iso-stagger-2 { animation-delay: 400ms; }
+.iso-stagger-3 { animation-delay: 600ms; }
+.iso-stagger-4 { animation-delay: 800ms; }
+.iso-stagger-5 { animation-delay: 1000ms; }
+.iso-stagger-6 { animation-delay: 1200ms; }
+
+.iso-scene {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .iso-slide-in,
+  .iso-bobble,
+  .iso-assemble,
+  .iso-depth-pop {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+  }
+}

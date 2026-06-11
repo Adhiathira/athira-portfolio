@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pivot — Turn data into direction.</title>
+  <meta name="description" content="Pivot helps product teams understand user behavior, track key metrics, and act on data instantly." />
+
+  <!-- Design tokens -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+
+  <!-- Component styles -->
+  <link rel="stylesheet" href="components/nav.css" />
+  <link rel="stylesheet" href="components/hero.css" />
+  <link rel="stylesheet" href="components/features.css" />
+  <link rel="stylesheet" href="components/editorial-split.css" />
+  <link rel="stylesheet" href="components/stats.css" />
+  <link rel="stylesheet" href="components/cta.css" />
+  <link rel="stylesheet" href="components/footer.css" />
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAV
+       ============================================================ -->
+  <div class="nav-spacer" id="nav-spacer"></div>
+
+  <nav class="site-nav" id="site-nav">
+    <a href="index.html" class="nav-logo" aria-label="Home">Pivot</a>
+    <ul class="nav-links" role="list">
+      <li><a href="product.html" class="nav-link">Product</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="team.html" class="nav-link">Team</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="Site navigation">
+    <ul class="nav-overlay-links" role="list">
+      <li><a href="product.html" class="nav-link">Product</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="team.html" class="nav-link">Team</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-overlay-footer">Pivot &mdash; &copy; 2025</div>
+  </div>
+
+  <script>
+    (function () {
+      var nav     = document.getElementById('site-nav');
+      var toggle  = document.getElementById('nav-mobile-toggle');
+      var overlay = document.getElementById('nav-mobile-menu');
+      var lastScrollY = 0;
+      var scrollThreshold = 80;
+      function handleScroll() {
+        var currentY = window.scrollY || window.pageYOffset;
+        if (currentY > scrollThreshold) { nav.classList.add('isVisible'); }
+        else { nav.classList.remove('isVisible'); }
+        lastScrollY = currentY;
+      }
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+      function openMenu() {
+        nav.classList.add('nav-mobile-open');
+        overlay.classList.add('is-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeMenu() {
+        nav.classList.remove('nav-mobile-open');
+        overlay.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+      toggle.addEventListener('click', function () {
+        overlay.classList.contains('is-open') ? closeMenu() : openMenu();
+      });
+      overlay.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) { closeMenu(); toggle.focus(); } });
+      var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.nav-link').forEach(function (link) {
+        if (link.getAttribute('href') === currentPage) { link.classList.add('nav-link--active'); link.setAttribute('aria-current', 'page'); }
+      });
+    })();
+  </script>
+
+  <!-- ============================================================
+       SECTION 1: HERO
+       White background | 55/45 grid | flat geometric shapes
+       Animation: DOMContentLoaded entrance, no ScrollTrigger
+       ============================================================ -->
+  <section class="hero" id="hero" aria-label="Hero">
+
+    <!-- Background floating shapes (abstract decoration) -->
+    <div class="hero__bg-shape--bar" aria-hidden="true"></div>
+    <div class="hero__bg-shape--line" aria-hidden="true"></div>
+    <div class="hero__bg-shape--triangle" aria-hidden="true"></div>
+
+    <!-- Left column: headline + CTAs -->
+    <div class="hero__left" id="hero-left">
+      <h1 class="hero__h1">Turn data<br />into direction.</h1>
+      <p class="hero__subheading">
+        Pivot helps product teams understand user behavior, track key metrics,
+        and act on data instantly. No noise. Just signal.
+      </p>
+      <div class="hero__ctas">
+        <a href="product.html" class="hero__btn hero__btn--primary">Start for free</a>
+        <a href="product.html" class="hero__btn hero__btn--secondary">See how it works</a>
+      </div>
+    </div>
+
+    <!-- Right column: stacked geometric shapes -->
+    <div class="hero__right" id="hero-right" aria-hidden="true">
+      <div class="hero__shape--circle" id="hero-shape-circle"></div>
+      <div class="hero__shape--rect"   id="hero-shape-rect"></div>
+      <div class="hero__shape--square" id="hero-shape-square"></div>
+    </div>
+
+  </section>
+
+  <!-- ============================================================
+       SECTION 2: FEATURES
+       Navy background | 3-column card grid
+       Animation: ScrollTrigger, cards from y:50 stagger:0.12
+       ============================================================ -->
+  <section class="features" id="features" aria-label="Features">
+    <div class="features__header">
+      <h2 class="features__h2">Built for decisions,<br />not dashboards.</h2>
+    </div>
+    <div class="features__grid" id="features-grid">
+
+      <div class="features__card">
+        <div class="features__icon features__icon--teal" aria-hidden="true"></div>
+        <h3 class="features__card-title">Event Tracking</h3>
+        <p class="features__card-body">
+          Capture every user interaction the moment it happens. Filter, segment,
+          and drill into raw events without waiting on engineering.
+        </p>
+      </div>
+
+      <div class="features__card">
+        <div class="features__icon features__icon--purple" aria-hidden="true"></div>
+        <h3 class="features__card-title">Funnel Analysis</h3>
+        <p class="features__card-body">
+          Visualize where users drop off across any flow. Identify friction points
+          in minutes and test fixes without leaving the tool.
+        </p>
+      </div>
+
+      <div class="features__card">
+        <div class="features__icon features__icon--teal" aria-hidden="true"></div>
+        <h3 class="features__card-title">Retention Curves</h3>
+        <p class="features__card-body">
+          Understand which features drive users back. Cohort-based retention
+          charts that reveal the true stickiness of your product.
+        </p>
+      </div>
+
+      <div class="features__card">
+        <div class="features__icon features__icon--purple" aria-hidden="true"></div>
+        <h3 class="features__card-title">Live Dashboards</h3>
+        <p class="features__card-body">
+          Create dashboards that auto-refresh every 30 seconds. Share with
+          stakeholders without granting database access.
+        </p>
+      </div>
+
+      <div class="features__card">
+        <div class="features__icon features__icon--teal" aria-hidden="true"></div>
+        <h3 class="features__card-title">Instant Alerts</h3>
+        <p class="features__card-body">
+          Set threshold alerts on any metric. Get notified in Slack, email, or
+          webhook before a metric becomes a crisis.
+        </p>
+      </div>
+
+      <div class="features__card">
+        <div class="features__icon features__icon--purple" aria-hidden="true"></div>
+        <h3 class="features__card-title">Data Exports</h3>
+        <p class="features__card-body">
+          Push any Pivot dataset to your data warehouse, BI tool, or external
+          API. Your data, your pipeline, your control.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3: EDITORIAL SPLIT
+       Teal left / White right | 50/50 hard vertical seam
+       Animation: ScrollTrigger, left from x:-80, right from x:80, 0.35s linear
+       ============================================================ -->
+  <section class="editorial-split" id="editorial-split" aria-label="Product highlights">
+
+    <!-- Left: teal panel -->
+    <div class="editorial-split__left" id="editorial-left">
+      <div class="editorial-split__left-deco" aria-hidden="true"></div>
+      <h2 class="editorial-split__left-h2">Real-time insights.</h2>
+      <p class="editorial-split__left-body">
+        Every metric updates as events arrive. Watch your conversion rate move
+        as a campaign goes live. Spot anomalies before they compound.
+        No refresh required.
+      </p>
+      <a href="product.html" class="editorial-split__btn--navy">Explore live data</a>
+    </div>
+
+    <!-- Right: white panel -->
+    <div class="editorial-split__right" id="editorial-right">
+      <div class="editorial-split__right-deco" aria-hidden="true"></div>
+      <h2 class="editorial-split__right-h2">Built for scale.</h2>
+      <p class="editorial-split__right-body">
+        Pivot handles 12 million events per day without breaking a sweat.
+        Horizontal infrastructure auto-scales to your traffic peaks,
+        so performance is never a trade-off you have to make.
+      </p>
+      <a href="pricing.html" class="editorial-split__btn--outline">See pricing</a>
+    </div>
+
+  </section>
+
+  <!-- ============================================================
+       SECTION 4: STATS / METRICS
+       Light grey background | 4-column stat grid + tags
+       Animation: ScrollTrigger, y:30 stagger:0.08 + counter animation
+       ============================================================ -->
+  <section class="stats" id="stats" aria-label="Key metrics">
+    <div class="stats__header">
+      <h2 class="stats__h2">The numbers that matter.</h2>
+    </div>
+
+    <div class="stats__grid" id="stats-grid">
+      <div class="stats__item">
+        <p class="stats__number stats__number--teal" data-target="48" data-suffix="ms avg response" id="stat-0">0</p>
+        <p class="stats__label">48ms avg response</p>
+      </div>
+      <div class="stats__item">
+        <p class="stats__number stats__number--navy" data-target="99.9" data-suffix="% uptime" id="stat-1">0</p>
+        <p class="stats__label">99.9% uptime</p>
+      </div>
+      <div class="stats__item">
+        <p class="stats__number stats__number--teal" data-target="12" data-suffix="M events/day" id="stat-2">0</p>
+        <p class="stats__label">12M events/day</p>
+      </div>
+      <div class="stats__item">
+        <p class="stats__number stats__number--navy" data-target="300" data-suffix="+ integrations" id="stat-3">0</p>
+        <p class="stats__label">300+ integrations</p>
+      </div>
+    </div>
+
+    <hr class="stats__rule" />
+
+    <div class="stats__tags">
+      <span class="stats__tag">GDPR Compliant</span>
+      <span class="stats__tag">SOC 2 Type II</span>
+      <span class="stats__tag">99.9% SLA</span>
+      <span class="stats__tag">On-premise available</span>
+      <span class="stats__tag">SSO &amp; SAML</span>
+      <span class="stats__tag">Role-based access</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5: CTA
+       Navy background | centered single column | outline rect shapes
+       Animation: ScrollTrigger, h2 scale:0.95, sequential linear
+       ============================================================ -->
+  <section class="cta-section" id="cta-section" aria-label="Call to action">
+    <!-- Background geometric decoration -->
+    <div class="cta-section__bg-rect-large" aria-hidden="true"></div>
+    <div class="cta-section__bg-rect-small" aria-hidden="true"></div>
+
+    <div class="cta-section__content">
+      <h2 class="cta-section__h2" id="cta-h2">Start making decisions.</h2>
+      <p class="cta-section__subheading" id="cta-subheading">
+        Join thousands of product teams who use Pivot to cut through the noise
+        and ship with confidence. Free for 14 days, no credit card required.
+      </p>
+      <div class="cta-section__buttons" id="cta-buttons">
+        <a href="product.html" class="cta-section__btn cta-section__btn--primary">Get started free</a>
+        <a href="contact.html" class="cta-section__btn cta-section__btn--secondary">Talk to sales</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       Navy background | 4-column layout | bottom bar
+       ============================================================ -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="footer__grid">
+
+      <!-- Brand column -->
+      <div class="footer__brand">
+        <a href="index.html" class="footer__brand-logo">Pivot</a>
+        <p class="footer__brand-tagline">
+          Turn data into direction. Product analytics for teams who move fast
+          and think clearly.
+        </p>
+      </div>
+
+      <!-- Product links -->
+      <div class="footer__column">
+        <p class="footer__column-title">Product</p>
+        <ul class="footer__links">
+          <li><a href="product.html">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="product.html">Integrations</a></li>
+          <li><a href="product.html">Changelog</a></li>
+          <li><a href="product.html">Roadmap</a></li>
+        </ul>
+      </div>
+
+      <!-- Company links -->
+      <div class="footer__column">
+        <p class="footer__column-title">Company</p>
+        <ul class="footer__links">
+          <li><a href="team.html">About us</a></li>
+          <li><a href="team.html">Careers</a></li>
+          <li><a href="team.html">Press</a></li>
+          <li><a href="contact.html">Blog</a></li>
+          <li><a href="contact.html">Partners</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact column -->
+      <div class="footer__column">
+        <p class="footer__column-title">Contact</p>
+        <a href="mailto:hello@pivot.io" class="footer__contact-item">hello@pivot.io</a>
+        <a href="contact.html" class="footer__contact-item">Support center</a>
+        <a href="contact.html" class="footer__contact-item">Book a demo</a>
+        <a href="contact.html" class="footer__contact-item">+1 (415) 000-0000</a>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">&copy; 2025 Pivot Analytics, Inc. All rights reserved.</p>
+      <nav class="footer__legal" aria-label="Legal links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       GSAP ANIMATIONS
+       ============================================================ -->
+  <script>
+    (function () {
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* ──────────────────────────────────────────────────────────
+         SECTION 1 — HERO
+         DOMContentLoaded entrance (no ScrollTrigger)
+         Left col: x:-60 → 0, opacity:0 → 1
+         Right shapes: scale 0.7 → 1, stagger, power1.out 0.4s
+      ────────────────────────────────────────────────────────── */
+      var heroLeft   = document.getElementById('hero-left');
+      var heroShapes = [
+        document.getElementById('hero-shape-circle'),
+        document.getElementById('hero-shape-rect'),
+        document.getElementById('hero-shape-square')
+      ];
+
+      gsap.set(heroLeft, { x: -60, opacity: 0 });
+      gsap.set(heroShapes, { scale: 0.7, opacity: 0 });
+
+      var heroTl = gsap.timeline({ delay: 0.1 });
+      heroTl
+        .to(heroLeft, {
+          x: 0,
+          opacity: 1,
+          duration: 0.55,
+          ease: 'power1.out'
+        })
+        .to(heroShapes, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.4,
+          ease: 'power1.out',
+          stagger: 0.12
+        }, '-=0.25');
+
+      /* ──────────────────────────────────────────────────────────
+         SECTION 2 — FEATURES
+         ScrollTrigger: cards from y:50, opacity:0, stagger:0.12
+         Easing: linear | once: true
+      ────────────────────────────────────────────────────────── */
+      var featureCards = document.querySelectorAll('.features__card');
+      gsap.set(featureCards, { y: 50, opacity: 0 });
+
+      ScrollTrigger.create({
+        trigger: '#features-grid',
+        start: 'top 80%',
+        once: true,
+        onEnter: function () {
+          gsap.to(featureCards, {
+            y: 0,
+            opacity: 1,
+            duration: 0.45,
+            ease: 'linear',
+            stagger: 0.12
+          });
+        }
+      });
+
+      /* ──────────────────────────────────────────────────────────
+         SECTION 3 — EDITORIAL SPLIT
+         ScrollTrigger: left from x:-80, right from x:80
+         Duration: 0.35s linear | once: true
+      ────────────────────────────────────────────────────────── */
+      var editorialLeft  = document.getElementById('editorial-left');
+      var editorialRight = document.getElementById('editorial-right');
+
+      gsap.set(editorialLeft,  { x: -80, opacity: 0 });
+      gsap.set(editorialRight, { x: 80,  opacity: 0 });
+
+      ScrollTrigger.create({
+        trigger: '#editorial-split',
+        start: 'top 80%',
+        once: true,
+        onEnter: function () {
+          gsap.to(editorialLeft, {
+            x: 0,
+            opacity: 1,
+            duration: 0.35,
+            ease: 'linear'
+          });
+          gsap.to(editorialRight, {
+            x: 0,
+            opacity: 1,
+            duration: 0.35,
+            ease: 'linear'
+          });
+        }
+      });
+
+      /* ──────────────────────────────────────────────────────────
+         SECTION 4 — STATS
+         ScrollTrigger: stat items from y:30, opacity:0, stagger:0.08
+         Then counter animation via IntersectionObserver
+      ────────────────────────────────────────────────────────── */
+      var statItems = document.querySelectorAll('.stats__item');
+      gsap.set(statItems, { y: 30, opacity: 0 });
+
+      var statsAnimated = false;
+      ScrollTrigger.create({
+        trigger: '#stats-grid',
+        start: 'top 80%',
+        once: true,
+        onEnter: function () {
+          gsap.to(statItems, {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            ease: 'linear',
+            stagger: 0.08,
+            onComplete: function () {
+              if (!statsAnimated) {
+                statsAnimated = true;
+                runCounters();
+              }
+            }
+          });
+        }
+      });
+
+      function runCounters() {
+        var statEls = [
+          { el: document.getElementById('stat-0'), target: 48,   suffix: 'ms',  decimals: 0 },
+          { el: document.getElementById('stat-1'), target: 99.9, suffix: '%',   decimals: 1 },
+          { el: document.getElementById('stat-2'), target: 12,   suffix: 'M',   decimals: 0 },
+          { el: document.getElementById('stat-3'), target: 300,  suffix: '+',   decimals: 0 }
+        ];
+        statEls.forEach(function (item) {
+          if (!item.el) return;
+          var start = 0;
+          var duration = 900;
+          var startTime = null;
+          function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            var value = progress * item.target;
+            item.el.textContent = (item.decimals === 1)
+              ? value.toFixed(1) + item.suffix
+              : Math.floor(value) + item.suffix;
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            } else {
+              item.el.textContent = item.target + item.suffix;
+            }
+          }
+          requestAnimationFrame(step);
+        });
+      }
+
+      /* ──────────────────────────────────────────────────────────
+         SECTION 5 — CTA
+         ScrollTrigger: sequential, not stagger
+         h2: scale:0.95 → 1, opacity:0 → 1
+         subheading: y:20 → 0
+         buttons: y:20 → 0
+         Duration: 0.3s linear | once: true
+      ────────────────────────────────────────────────────────── */
+      var ctaH2        = document.getElementById('cta-h2');
+      var ctaSubhead   = document.getElementById('cta-subheading');
+      var ctaButtons   = document.getElementById('cta-buttons');
+
+      gsap.set(ctaH2,      { scale: 0.95, opacity: 0 });
+      gsap.set(ctaSubhead, { y: 20, opacity: 0 });
+      gsap.set(ctaButtons, { y: 20, opacity: 0 });
+
+      ScrollTrigger.create({
+        trigger: '#cta-section',
+        start: 'top 80%',
+        once: true,
+        onEnter: function () {
+          var ctaTl = gsap.timeline();
+          ctaTl
+            .to(ctaH2, {
+              scale: 1,
+              opacity: 1,
+              duration: 0.3,
+              ease: 'linear'
+            })
+            .to(ctaSubhead, {
+              y: 0,
+              opacity: 1,
+              duration: 0.3,
+              ease: 'linear'
+            }, '+=0.05')
+            .to(ctaButtons, {
+              y: 0,
+              opacity: 1,
+              duration: 0.3,
+              ease: 'linear'
+            }, '+=0.05');
+        }
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

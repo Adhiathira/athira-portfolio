@@ -1,0 +1,99 @@
+/*
+ * motion.css — quill-amber
+ * Source: caitlin-christinee | Twist: Duration ×2.2, overshoot easing, GSAP patterns
+ */
+
+:root {
+  --motion-duration-fast: 0.33s;
+  --motion-duration-base: 0.44s;
+  --motion-duration-enter: 0.66s;
+  --motion-duration-reveal: 0.88s;
+
+  --motion-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-in-out: ease-in-out;
+
+  --motion-system-performance-totalAnimatedElements: 18;
+  --motion-system-performance-simultaneousAnimations: 4;
+  --motion-system-performance-complexAnimations: 6;
+}
+
+@keyframes qa-slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes qa-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes qa-slideHorizontalNew {
+  from { transform: translate(110%) scaleX(0.92); }
+  to   { transform: translate(0) scaleX(1); }
+}
+
+@keyframes qa-slideHorizontalOld {
+  75% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-110%); }
+}
+
+@keyframes qa-slideVerticalNew {
+  from { transform: translateY(-110%) scaleY(0.94); }
+  to   { transform: translateY(0) scaleY(1); }
+}
+
+@keyframes qa-slideVerticalOld {
+  75% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(110%); }
+}
+
+@keyframes qa-changingBackground {
+  0%   { background-color: rgba(242, 239, 233, 0.15); }
+  50%  { background-color: rgba(242, 239, 233, 0.72); }
+  100% { background-color: rgba(242, 239, 233, 0.15); }
+}
+
+/* Utility classes */
+.motion-reveal {
+  animation: qa-slideInUp var(--motion-duration-reveal) var(--motion-ease-spring) both;
+}
+
+.motion-fade {
+  animation: qa-fadeIn var(--motion-duration-enter) var(--motion-ease-standard) both;
+}
+
+/* Hover transitions */
+button, .btn, [role="button"] {
+  transition:
+    transform var(--motion-duration-fast) var(--motion-ease-spring),
+    background-color var(--motion-duration-base) var(--motion-ease-in-out),
+    color var(--motion-duration-base) var(--motion-ease-in-out),
+    border-color var(--motion-duration-base) var(--motion-ease-in-out);
+}
+
+button:hover, .btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Input focus transitions */
+input, textarea, select {
+  transition:
+    border-color var(--motion-duration-fast) var(--motion-ease-in-out),
+    box-shadow var(--motion-duration-fast) var(--motion-ease-in-out);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

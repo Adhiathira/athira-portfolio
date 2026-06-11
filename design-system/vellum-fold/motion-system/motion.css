@@ -1,0 +1,85 @@
+/* Vellum Fold / motion-system
+ *
+ * Source: pale-engine
+ * Motion tokens: paper-drift easing, three languid durations
+ *
+ * TWIST: Duration scaling x2.5 (intensity 5) + easing curve swap
+ *   Original durations: 0.3s / 0.45s / 0.75s
+ *   Twisted durations:  0.75s / 1.125s / 1.875s
+ *   Easing: cubic-bezier(0.15, 0.85, 0.25, 1.0) — paper-drift curve
+ */
+
+:root {
+  --easing-standard: cubic-bezier(0.15, 0.85, 0.25, 1.0);
+
+  --duration-fast:     0.75s;
+  --duration-standard: 1.125s;
+  --duration-slow:     1.875s;
+
+  --transition-standard: all var(--duration-standard) var(--easing-standard);
+  --transition-fast:     all var(--duration-fast)     var(--easing-standard);
+  --transition-slow:     all var(--duration-slow)     var(--easing-standard);
+}
+
+.btn-ghost {
+  transition:
+    background-color var(--duration-standard) var(--easing-standard),
+    color            var(--duration-standard) var(--easing-standard),
+    border-color     var(--duration-standard) var(--easing-standard);
+}
+
+.nav-link,
+.icon-link {
+  opacity: 1;
+  transition: opacity var(--duration-standard) var(--easing-standard);
+}
+.nav-link:hover,
+.icon-link:hover {
+  opacity: 0.6;
+}
+
+.fixed,
+.mx-auto {
+  transition: var(--transition-standard);
+}
+
+.interactive-opacity,
+.text-button {
+  transition:
+    color            var(--duration-standard) var(--easing-standard),
+    background-color var(--duration-standard) var(--easing-standard),
+    border-color     var(--duration-standard) var(--easing-standard),
+    opacity          var(--duration-standard) var(--easing-standard),
+    box-shadow       var(--duration-standard) var(--easing-standard),
+    transform        var(--duration-standard) var(--easing-standard),
+    filter           var(--duration-standard) var(--easing-standard),
+    backdrop-filter  var(--duration-standard) var(--easing-standard);
+}
+
+.text-base {
+  transition:
+    color            var(--duration-fast) var(--easing-standard),
+    background-color var(--duration-fast) var(--easing-standard),
+    border-color     var(--duration-fast) var(--easing-standard),
+    opacity          var(--duration-fast) var(--easing-standard),
+    transform        var(--duration-fast) var(--easing-standard);
+}
+
+.s-full {
+  transition:
+    color            var(--duration-slow) var(--easing-standard),
+    background-color var(--duration-slow) var(--easing-standard),
+    border-color     var(--duration-slow) var(--easing-standard),
+    opacity          var(--duration-slow) var(--easing-standard),
+    transform        var(--duration-slow) var(--easing-standard),
+    filter           var(--duration-slow) var(--easing-standard),
+    backdrop-filter  var(--duration-slow) var(--easing-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast:     0s;
+    --duration-standard: 0s;
+    --duration-slow:     0s;
+  }
+}

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lōmen — Precision Acoustic Modeling Platform</title>
+  <meta name="description" content="Model the room before you build it. Lōmen is a precision acoustic analysis platform for recording engineers, studio designers, and architectural acousticians.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     NAV — fixed, transparent→cream on scroll
+══════════════════════════════════════════════════ -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo" aria-label="Lōmen home">
+    <span class="nav-logo-text">L<span class="logo-accent">ō</span>men</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="platform.html">Platform</a></li>
+    <li><a href="solutions.html">Solutions</a></li>
+    <li><a href="docs.html">Docs</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-cta-group">
+    <a href="about.html" class="nav-signin">Sign in</a>
+    <a href="#cta-section" class="nav-cta-btn">Get Early Access</a>
+  </div>
+  <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div id="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a href="platform.html">Platform</a>
+  <a href="solutions.html">Solutions</a>
+  <a href="docs.html">Docs</a>
+  <a href="about.html">About</a>
+  <a href="#cta-section" class="nav-mobile-cta">Get Early Access</a>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     HERO — full-viewport typographic, char scramble
+══════════════════════════════════════════════════ -->
+<section id="hero" aria-labelledby="hero-title">
+  <span id="hero-asterisk" aria-hidden="true">✳</span>
+  <div id="hero-inner">
+    <div id="hero-eyebrow">
+      <span id="hero-eyebrow-dot" aria-hidden="true"></span>
+      <span id="hero-eyebrow-text">Acoustic modeling platform</span>
+    </div>
+
+    <div id="hero-headline-group">
+      <h1 id="hero-title">Model the room.</h1>
+      <p id="hero-subtitle">Before you build it.</p>
+    </div>
+
+    <div id="hero-action-cluster">
+      <span class="hero-input-label">Width</span>
+      <input class="hero-input-field" type="number" placeholder="12.4" aria-label="Room width in metres" min="1" max="100" step="0.1">
+      <span class="hero-input-label">m</span>
+      <div class="hero-input-sep" aria-hidden="true"></div>
+      <span class="hero-input-label">Length</span>
+      <input class="hero-input-field" type="number" placeholder="8.6" aria-label="Room length in metres" min="1" max="100" step="0.1">
+      <span class="hero-input-label">m</span>
+      <div class="hero-input-sep" aria-hidden="true"></div>
+      <a href="#" id="hero-cta-btn" role="button">Run Analysis →</a>
+    </div>
+
+    <div id="hero-stats-row" aria-label="Platform statistics">
+      <div class="hero-stat">
+        <span class="hero-stat-value" id="stat-modes">2,400+</span>
+        <span class="hero-stat-label">Room modes modeled per run</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value" id="stat-accuracy">±0.4 dB</span>
+        <span class="hero-stat-label">Analysis accuracy</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value" id="stat-speed">&lt;8 sec</span>
+        <span class="hero-stat-label">Full RT60 prediction</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="hero-scroll-hint" aria-hidden="true">
+    <span id="hero-scroll-text">Scroll to explore</span>
+    <span id="hero-scroll-line"></span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     DIVIDER 1: Hero → Waveform (single slow arc)
+══════════════════════════════════════════════════ -->
+<div class="wave-divider" aria-hidden="true" style="background:var(--color-page-bg);">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,80 L0,40 Q360,0 720,40 Q1080,80 1440,40 L1440,80 Z" fill="#1a1a14"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 2: WAVEFORM VISUALIZER
+     Dark background, SVG path draw, counter stats
+══════════════════════════════════════════════════ -->
+<section id="waveform-section" aria-labelledby="waveform-headline">
+  <div id="waveform-eyebrow">
+    <span id="waveform-eyebrow-label">Core Analysis Engine</span>
+    <h2 id="waveform-headline">Frequency response,<br>made visible.</h2>
+  </div>
+
+  <div id="waveform-svg-container" aria-label="Animated frequency response waveform visualization">
+    <svg id="waveform-path-svg" viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Glow layer -->
+      <path id="waveform-glow"
+        d="M0,60 C30,60 50,20 80,20 S120,80 160,80 S220,10 270,10 S340,90 380,70 S440,30 490,30 S560,85 610,60 S670,15 720,15 S790,80 840,65 S900,20 960,20 S1030,75 1080,55 S1140,30 1200,60"
+      />
+      <!-- Main path -->
+      <path id="waveform-path"
+        d="M0,60 C30,60 50,20 80,20 S120,80 160,80 S220,10 270,10 S340,90 380,70 S440,30 490,30 S560,85 610,60 S670,15 720,15 S790,80 840,65 S900,20 960,20 S1030,75 1080,55 S1140,30 1200,60"
+      />
+    </svg>
+  </div>
+
+  <div id="waveform-stats-grid" role="list">
+    <div class="waveform-stat-card" role="listitem">
+      <span class="waveform-stat-num" data-counter="2400" data-suffix="+">0</span>
+      <span class="waveform-stat-label">Room modes per analysis</span>
+    </div>
+    <div class="waveform-stat-card" role="listitem">
+      <span class="waveform-stat-num" data-counter="99" data-suffix="%">0</span>
+      <span class="waveform-stat-label">Prediction accuracy rate</span>
+    </div>
+    <div class="waveform-stat-card" role="listitem">
+      <span class="waveform-stat-num" data-counter="450" data-suffix="ms">0</span>
+      <span class="waveform-stat-label">Surface calculations per second</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     DIVIDER 2: Waveform → Features (asymmetric double-peak)
+══════════════════════════════════════════════════ -->
+<div class="wave-divider" aria-hidden="true" style="background:#1a1a14;">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,90 L0,60 Q240,10 480,55 Q620,80 720,45 Q900,0 1100,50 Q1280,80 1440,55 L1440,90 Z" fill="#f2efe9"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 3: FEATURES
+     Alternating 60/40 rows + bento capstone
+══════════════════════════════════════════════════ -->
+<section id="features-section" aria-labelledby="features-title">
+  <div id="features-header">
+    <div id="features-text-col">
+      <p id="features-label">What Lōmen does</p>
+      <h2 id="features-title">Measure everything<br>before anything exists.</h2>
+    </div>
+    <p id="features-desc">Predict RT60, standing wave nodes, low-frequency buildup, and modal frequency maps for any room geometry — before a single acoustic panel is cut or hung.</p>
+  </div>
+
+  <!-- Row 1: RT60 Analysis — text left (60%), media right (40%) -->
+  <!-- Animation: clip-path wipe from right -->
+  <div class="feature-row" id="feature-row-1">
+    <div class="feature-text-group">
+      <span class="feature-tag">RT60 Analysis</span>
+      <h3 class="feature-heading">Reverberation time,<br>surface by surface.</h3>
+      <p class="feature-body">Upload your room's dimensions and material specs. Lōmen computes the reverberation time for each frequency band — 63 Hz through 8 kHz — with material absorption coefficients validated against ISO 354.</p>
+      <a href="platform.html" class="feature-link">Explore the platform <span class="feature-link-arrow">→</span></a>
+    </div>
+    <div class="feature-media" id="feature-media-1" aria-label="RT60 analysis visualization">
+      <img
+        src="assets/feature-rt60.jpeg"
+        alt="Frequency response curves showing RT60 reverberation time per octave band"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div class="feature-media-placeholder" style="display:none;align-items:center;justify-content:center;">→ assets/feature-rt60.jpeg</div>
+      <div class="wireframe-rt60" aria-hidden="true" style="width:100%;height:100%;min-height:280px;padding:2rem;background:linear-gradient(135deg,#f9f7f3 0%,#ede9e2 100%);display:flex;flex-direction:column;gap:8px;justify-content:center;">
+        <!-- CSS bar chart visualization -->
+        <div style="display:flex;align-items:flex-end;gap:8px;height:100px;">
+          <div style="flex:1;background:rgba(251,115,57,0.7);border-radius:4px 4px 0 0;height:45%;"></div>
+          <div style="flex:1;background:rgba(251,115,57,0.5);border-radius:4px 4px 0 0;height:70%;"></div>
+          <div style="flex:1;background:rgba(251,115,57,0.85);border-radius:4px 4px 0 0;height:90%;"></div>
+          <div style="flex:1;background:rgba(251,115,57,0.6);border-radius:4px 4px 0 0;height:75%;"></div>
+          <div style="flex:1;background:rgba(251,115,57,0.4);border-radius:4px 4px 0 0;height:55%;"></div>
+          <div style="flex:1;background:rgba(251,115,57,0.3);border-radius:4px 4px 0 0;height:40%;"></div>
+        </div>
+        <div style="display:flex;gap:8px;padding-top:4px;">
+          <span style="flex:1;text-align:center;font-size:0.625rem;color:#8a8472;font-family:var(--font-body);">63</span>
+          <span style="flex:1;text-align:center;font-size:0.625rem;color:#8a8472;font-family:var(--font-body);">125</span>
+          <span style="flex:1;text-align:center;font-size:0.625rem;color:#8a8472;font-family:var(--font-body);">250</span>
+          <span style="flex:1;text-align:center;font-size:0.625rem;color:#8a8472;font-family:var(--font-body);">500</span>
+          <span style="flex:1;text-align:center;font-size:0.625rem;color:#8a8472;font-family:var(--font-body);">1k</span>
+          <span style="flex:1;text-align:center;font-size:0.625rem;color:#8a8472;font-family:var(--font-body);">2k</span>
+        </div>
+        <div style="margin-top:0.5rem;font-size:0.75rem;color:#575349;font-family:var(--font-body);font-weight:500;letter-spacing:0.04em;">RT60 by octave band (seconds)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Modal Mapping — media left (wireframe), text right -->
+  <!-- Animation: element assembly from scattered positions -->
+  <div class="feature-row" id="feature-row-2">
+    <div class="feature-media" id="feature-media-2" aria-label="Modal frequency map wireframe">
+      <div class="feature-wireframe" aria-hidden="true">
+        <div style="color:rgba(242,239,233,0.5);font-family:var(--font-body);font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Modal map — 20–200 Hz</div>
+        <div class="wireframe-bar" style="width:100%;height:6px;"></div>
+        <div class="wireframe-bar" style="width:78%;"></div>
+        <div class="wireframe-bar" style="width:94%;"></div>
+        <div class="wireframe-bar" style="width:55%;background:rgba(251,115,57,0.9);height:10px;"></div>
+        <div class="wireframe-bar" style="width:82%;"></div>
+        <div class="wireframe-bar" style="width:67%;background:rgba(251,115,57,0.6);height:8px;"></div>
+        <div class="wireframe-bar" style="width:90%;"></div>
+        <div class="wireframe-grid">
+          <div class="wireframe-cell"></div>
+          <div class="wireframe-cell" style="background:rgba(251,115,57,0.5);"></div>
+          <div class="wireframe-cell"></div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-text-group" id="feature-text-2">
+      <span class="feature-tag">Modal Mapping</span>
+      <h3 class="feature-heading">Every standing wave,<br>plotted in 3D.</h3>
+      <p class="feature-body">Axial, tangential, and oblique modes computed for the full low-frequency range. Identify problematic modal clusters before they're baked into concrete and drywall.</p>
+      <a href="platform.html" class="feature-link">See modal analysis <span class="feature-link-arrow">→</span></a>
+    </div>
+  </div>
+
+  <!-- Row 3: Bento capabilities — 3 columns horizontal -->
+  <div id="feature-row-3" aria-label="Platform capabilities">
+    <div class="capability-card" id="capability-1">
+      <span class="capability-number">
+        <span data-counter-cap="0.4" id="cap-accuracy">0.4</span><span class="capability-unit">dB</span>
+      </span>
+      <span class="capability-label">Prediction accuracy across all material types</span>
+    </div>
+    <div class="capability-card" id="capability-2">
+      <span class="capability-number">
+        <span id="cap-surfaces">12</span><span class="capability-unit">surf</span>
+      </span>
+      <span class="capability-label">Simultaneous surface materials per room</span>
+    </div>
+    <div class="capability-card" id="capability-3">
+      <span class="capability-number">
+        <span data-counter-cap="8" id="cap-speed">8</span><span class="capability-unit">sec</span>
+      </span>
+      <span class="capability-label">Full-spectrum analysis turnaround time</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     DIVIDER 3: Features → Steps (S-curve)
+══════════════════════════════════════════════════ -->
+<div class="wave-divider" aria-hidden="true" style="background:var(--color-page-bg);">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,70 L0,45 Q200,70 420,35 Q600,5 720,30 Q850,55 1100,20 Q1280,0 1440,35 L1440,70 Z" fill="rgba(232,227,219,0.6)"/>
+    <path d="M0,70 L0,50 Q200,75 420,42 Q600,12 720,37 Q850,60 1100,28 Q1280,8 1440,42 L1440,70 Z" fill="rgba(232,227,219,0.3)"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 4: PROCESS STEPS
+     Numbered list, horizontal sweep animation, SVG connector
+══════════════════════════════════════════════════ -->
+<section id="steps-section" aria-labelledby="steps-title" style="background:rgba(232,227,219,0.4);">
+  <div id="steps-inner">
+    <div id="steps-header">
+      <p id="steps-label">How it works</p>
+      <h2 id="steps-title">From dimensions<br>to treatment plan.</h2>
+    </div>
+
+    <ol id="steps-list" role="list">
+      <li class="step-item" id="step-1">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <h3 class="step-heading">Enter your room geometry</h3>
+          <p class="step-body">Input width, length, height, and surface materials. Lōmen accepts rectangular rooms and irregular shapes via simple coordinate input. No CAD software required.</p>
+        </div>
+      </li>
+      <li class="step-item" id="step-2">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <h3 class="step-heading">Choose your material library</h3>
+          <p class="step-body">Select from 600+ validated material profiles — concrete, plywood, acoustic foam, glass, carpet, gypsum board — or upload custom absorption coefficient tables from your supplier's datasheets.</p>
+        </div>
+      </li>
+      <li class="step-item" id="step-3">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <h3 class="step-heading">Run the acoustic analysis</h3>
+          <p class="step-body">Lōmen computes RT60, early decay time, modal frequency density, SBIR predictions, and flutter echo probability across all octave bands in under 8 seconds.</p>
+        </div>
+      </li>
+      <li class="step-item" id="step-4">
+        <span class="step-num">04</span>
+        <div class="step-content">
+          <h3 class="step-heading">Receive your treatment recommendations</h3>
+          <p class="step-body">A prioritized list of acoustic treatment interventions — bass trap placement, diffuser positions, broadband absorber coverage — with projected results for each addition. Exportable as a PDF report for your contractor.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     DIVIDER 4: Steps → Testimonials (three-drip organic)
+══════════════════════════════════════════════════ -->
+<div class="wave-divider" aria-hidden="true" style="background:rgba(232,227,219,0.4);">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L1440,0 L1440,60
+      Q1300,60 1280,80 Q1260,100 1240,80 Q1220,60 1180,60
+      Q1050,60 1020,85 Q1000,100 980,85 Q960,60 920,60
+      Q760,60 720,90 Q700,105 680,90 Q660,60 600,60
+      Q400,60 380,80 Q360,100 340,80 Q320,60 200,60
+      L0,60 Z" fill="#a39b8b"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 5: TESTIMONIALS — warm taupe, parallax
+══════════════════════════════════════════════════ -->
+<section id="testimonials-section" aria-labelledby="testimonials-quote">
+  <div id="testimonials-inner">
+    <span id="testimonials-quote-mark" aria-hidden="true">"</span>
+    <blockquote id="testimonials-quote">
+      Lōmen caught a 73 Hz null at the mix position before we poured a single floor slab. That kind of foresight used to cost a decade of trial-and-error and a lot of concrete.
+    </blockquote>
+    <div id="testimonials-attribution">
+      <span id="testimonials-name">Marcus Tvedt</span>
+      <span id="testimonials-role">Principal Acoustician · Raumwerk Studio, Oslo</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     DIVIDER 5: Testimonials → CTA (ragged cliff edge)
+══════════════════════════════════════════════════ -->
+<div class="wave-divider" aria-hidden="true" style="background:#a39b8b;">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,80 L0,30 L120,50 L240,15 L360,45 L480,20 L560,40 L660,8 L760,35 L880,12 L980,38 L1080,18 L1200,42 L1320,22 L1440,48 L1440,80 Z" fill="#1a1a14"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 6: FINAL CTA — dark, assembly animation
+══════════════════════════════════════════════════ -->
+<section id="cta-section" aria-labelledby="cta-headline">
+  <div id="cta-inner">
+    <span id="cta-eyebrow">Early access open</span>
+    <h2 id="cta-headline">Precision has a new <span class="cta-word-accent">address.</span></h2>
+    <p id="cta-subtext">Join recording engineers, studio designers, and architectural acousticians who model first and build second.</p>
+    <div id="cta-btn-group">
+      <a href="#" class="cta-btn-primary">Start modeling free</a>
+      <a href="platform.html" class="cta-btn-ghost">See how it works</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     DIVIDER 6: CTA → Footer (liquid drip — animated)
+══════════════════════════════════════════════════ -->
+<div class="wave-divider" id="footer-drip-divider" aria-hidden="true" style="background:#1a1a14;">
+  <svg id="footer-drip-svg" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L1440,0 L1440,50
+      Q1350,50 1330,72 Q1310,95 1285,72 Q1260,50 1200,50
+      Q1100,50 1075,78 Q1055,100 1035,78 Q1010,50 940,50
+      Q820,50 795,80 Q775,105 750,80 Q730,50 660,50
+      Q540,50 520,75 Q500,98 478,75 Q456,50 380,50
+      Q260,50 240,72 Q220,95 198,72 Q175,50 80,50
+      L0,50 Z" fill="#f2efe9"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     FOOTER — cream card on dark
+══════════════════════════════════════════════════ -->
+<footer id="site-footer" aria-label="Site footer">
+  <div id="footer-card">
+    <nav id="footer-links-grid" aria-label="Footer navigation">
+      <div id="footer-brand">
+        <a href="index.html" id="footer-logo">L<span class="footer-logo-accent">ō</span>men</a>
+        <p id="footer-tagline">Model the room.<br>Before you build it.</p>
+      </div>
+
+      <div class="footer-col">
+        <p class="footer-col-heading">Product</p>
+        <ul class="footer-link-list" role="list">
+          <li><a href="platform.html">Platform</a></li>
+          <li><a href="platform.html">RT60 Analysis</a></li>
+          <li><a href="platform.html">Modal Mapping</a></li>
+          <li><a href="platform.html">Material Library</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <p class="footer-col-heading">Solutions</p>
+        <ul class="footer-link-list" role="list">
+          <li><a href="solutions.html">Recording Studios</a></li>
+          <li><a href="solutions.html">Home Theatres</a></li>
+          <li><a href="solutions.html">Architectural Firms</a></li>
+          <li><a href="solutions.html">Broadcast Rooms</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <p class="footer-col-heading">Resources</p>
+        <ul class="footer-link-list" role="list">
+          <li><a href="docs.html">Documentation</a></li>
+          <li><a href="docs.html">API Reference</a></li>
+          <li><a href="docs.html">Case Studies</a></li>
+          <li><a href="docs.html">Blog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-link-list" role="list">
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Team</a></li>
+          <li><a href="about.html">Careers</a></li>
+          <li><a href="about.html">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div id="footer-bottom">
+      <p id="footer-copyright">© 2026 Lōmen Technologies Ltd. All rights reserved.</p>
+      <nav id="footer-legal-links" aria-label="Legal links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Security</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  // ── Nav scroll behavior ──
+  const nav = document.getElementById('site-nav');
+  const mobileMenu = document.getElementById('nav-mobile-menu');
+  const toggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
+  }
+
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('is-open');
+      nav.classList.toggle('nav-mobile-open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('is-open');
+        nav.classList.remove('nav-mobile-open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+})();
+
+// ── GSAP Animations ──
+document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const EASE_SPRING = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+  // ────────────────────────────────
+  // HERO: Per-character scramble
+  // ────────────────────────────────
+  function splitAndScramble(el) {
+    if (!el) return;
+    const text = el.textContent;
+    el.textContent = '';
+    const chars = [];
+    text.split('').forEach(ch => {
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.textContent = ch;
+      el.appendChild(span);
+      chars.push(span);
+    });
+    return chars;
+  }
+
+  const titleChars = splitAndScramble(document.getElementById('hero-title'));
+  const subtitleChars = splitAndScramble(document.getElementById('hero-subtitle'));
+
+  const allChars = [...(titleChars || []), ...(subtitleChars || [])];
+  const tl = gsap.timeline({ delay: 0.1 });
+
+  if (allChars.length) {
+    allChars.forEach(span => {
+      gsap.set(span, {
+        x: (Math.random() - 0.5) * 180,
+        y: (Math.random() - 0.5) * 120,
+        rotation: (Math.random() - 0.5) * 30,
+        transformOrigin: 'center center'
+      });
+    });
+
+    tl.to(allChars, {
+      x: 0,
+      y: 0,
+      rotation: 0,
+      duration: 0.88,
+      ease: 'power3.out',
+      stagger: {
+        each: 0.035,
+        from: 'start'
+      }
+    });
+  }
+
+  // Hero eyebrow, action cluster, stats — staggered fade from below
+  tl.from('#hero-eyebrow', { y: 20, duration: 0.66, ease: EASE_SPRING }, '-=0.4')
+    .from('#hero-action-cluster', { y: 20, duration: 0.66, ease: EASE_SPRING }, '-=0.4')
+    .from('#hero-stats-row', { y: 20, duration: 0.66, ease: EASE_SPRING }, '-=0.3')
+    .from('#hero-scroll-hint', { y: 10, duration: 0.44, ease: EASE_SPRING }, '-=0.2');
+
+  // Hero scroll line animation
+  gsap.to('#hero-scroll-line', {
+    scaleX: 1,
+    duration: 0.88,
+    ease: EASE_SPRING,
+    delay: 1.5
+  });
+
+  // ────────────────────────────────
+  // WAVEFORM: SVG stroke-dashoffset path draw on scroll
+  // ────────────────────────────────
+  const waveformPath = document.getElementById('waveform-path');
+  const waveformGlow = document.getElementById('waveform-glow');
+
+  if (waveformPath) {
+    const pathLen = waveformPath.getTotalLength();
+    gsap.set(waveformPath, { strokeDasharray: pathLen, strokeDashoffset: pathLen });
+    gsap.set(waveformGlow, { strokeDasharray: pathLen, strokeDashoffset: pathLen });
+
+    ScrollTrigger.create({
+      trigger: '#waveform-section',
+      start: 'top 80%',
+      end: 'center 40%',
+      scrub: 1.2,
+      onUpdate: (self) => {
+        const offset = pathLen * (1 - self.progress);
+        waveformPath.style.strokeDashoffset = offset;
+        waveformGlow.style.strokeDashoffset = offset;
+      }
+    });
+  }
+
+  // WAVEFORM: Counter animations
+  document.querySelectorAll('[data-counter]').forEach(el => {
+    const target = parseInt(el.getAttribute('data-counter'), 10);
+    const suffix = el.getAttribute('data-suffix') || '';
+    let obj = { val: 0 };
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(obj, {
+          val: target,
+          duration: 1.8,
+          ease: 'power2.out',
+          onUpdate: () => {
+            el.textContent = Math.round(obj.val).toLocaleString() + suffix;
+          }
+        });
+      }
+    });
+  });
+
+  // WAVEFORM stat cards: scale+rise stagger
+  gsap.from('.waveform-stat-card', {
+    scrollTrigger: {
+      trigger: '#waveform-stats-grid',
+      start: 'top 85%'
+    },
+    y: 40,
+    scale: 0.96,
+    duration: 0.88,
+    stagger: 0.12,
+    ease: EASE_SPRING
+  });
+
+  // ────────────────────────────────
+  // FEATURES: Distinct per-row animations
+  // ────────────────────────────────
+
+  // Row 1: clip-path wipe from right on media
+  gsap.from('#feature-media-1', {
+    scrollTrigger: {
+      trigger: '#feature-row-1',
+      start: 'top 80%'
+    },
+    clipPath: 'inset(0 100% 0 0)',
+    duration: 1.1,
+    ease: 'power3.inOut'
+  });
+  gsap.set('#feature-media-1', { clipPath: 'inset(0 0% 0 0)' });
+
+  gsap.from('#feature-row-1 .feature-text-group > *', {
+    scrollTrigger: {
+      trigger: '#feature-row-1',
+      start: 'top 80%'
+    },
+    x: -50,
+    duration: 0.88,
+    stagger: 0.1,
+    ease: EASE_SPRING
+  });
+
+  // Row 2: Element assembly — scattered → assembled
+  const assemblyEls = document.querySelectorAll('#feature-row-2 .wireframe-bar, #feature-row-2 .wireframe-cell');
+  assemblyEls.forEach(el => {
+    gsap.set(el, {
+      x: (Math.random() - 0.5) * 120,
+      y: (Math.random() - 0.5) * 80,
+      rotation: (Math.random() - 0.5) * 20,
+      transformOrigin: 'center center'
+    });
+  });
+
+  gsap.to(assemblyEls, {
+    scrollTrigger: {
+      trigger: '#feature-row-2',
+      start: 'top 80%'
+    },
+    x: 0,
+    y: 0,
+    rotation: 0,
+    duration: 0.88,
+    stagger: 0.04,
+    ease: 'power3.out'
+  });
+
+  gsap.from('#feature-text-2 > *', {
+    scrollTrigger: {
+      trigger: '#feature-row-2',
+      start: 'top 80%'
+    },
+    x: 60,
+    duration: 0.88,
+    stagger: 0.1,
+    ease: EASE_SPRING
+  });
+
+  // Row 3 capability cards: rotate + rise with divergent paths
+  gsap.from('#capability-1', {
+    scrollTrigger: { trigger: '#feature-row-3', start: 'top 85%' },
+    x: -80, y: 30, rotation: -4, duration: 0.88, ease: EASE_SPRING
+  });
+  gsap.from('#capability-2', {
+    scrollTrigger: { trigger: '#feature-row-3', start: 'top 85%' },
+    y: 50, duration: 1.0, ease: EASE_SPRING
+  });
+  gsap.from('#capability-3', {
+    scrollTrigger: { trigger: '#feature-row-3', start: 'top 85%' },
+    x: 80, y: 30, rotation: 4, duration: 0.88, ease: EASE_SPRING
+  });
+
+  // ────────────────────────────────
+  // STEPS: Horizontal sweep from left, staggered
+  // ────────────────────────────────
+  document.querySelectorAll('.step-item').forEach((item, i) => {
+    gsap.from(item, {
+      scrollTrigger: {
+        trigger: item,
+        start: 'top 88%'
+      },
+      x: -70,
+      duration: 0.88,
+      delay: i * 0.06,
+      ease: EASE_SPRING
+    });
+  });
+
+  // ────────────────────────────────
+  // TESTIMONIALS: Parallax depth float
+  // ────────────────────────────────
+  gsap.to('#testimonials-inner', {
+    scrollTrigger: {
+      trigger: '#testimonials-section',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1.5
+    },
+    y: '-6%',
+    ease: 'none'
+  });
+
+  gsap.from('#testimonials-quote', {
+    scrollTrigger: {
+      trigger: '#testimonials-section',
+      start: 'top 80%'
+    },
+    y: 30,
+    duration: 1.1,
+    ease: EASE_SPRING
+  });
+
+  gsap.from('#testimonials-attribution', {
+    scrollTrigger: {
+      trigger: '#testimonials-section',
+      start: 'top 70%'
+    },
+    y: 20,
+    duration: 0.88,
+    delay: 0.2,
+    ease: EASE_SPRING
+  });
+
+  // ────────────────────────────────
+  // CTA SECTION: Assembly from scattered positions
+  // ────────────────────────────────
+  const ctaEls = ['#cta-eyebrow', '#cta-headline', '#cta-subtext', '#cta-btn-group'];
+  const ctaOffsets = [
+    { x: -60, y: -40, rotation: -3 },
+    { x: 40, y: 60, rotation: 2 },
+    { x: -30, y: 40, rotation: -1 },
+    { x: 50, y: -30, rotation: 3 }
+  ];
+
+  ctaEls.forEach((sel, i) => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    gsap.set(el, ctaOffsets[i]);
+    gsap.to(el, {
+      scrollTrigger: { trigger: '#cta-section', start: 'top 80%' },
+      x: 0, y: 0, rotation: 0,
+      duration: 0.88,
+      delay: i * 0.08,
+      ease: EASE_SPRING
+    });
+  });
+
+  // ────────────────────────────────
+  // FOOTER DRIP: Subtle parallax entrance
+  // ────────────────────────────────
+  gsap.from('#footer-card', {
+    scrollTrigger: {
+      trigger: '#site-footer',
+      start: 'top 90%'
+    },
+    y: 30,
+    duration: 1.0,
+    ease: EASE_SPRING
+  });
+
+  gsap.from('#footer-card > *', {
+    scrollTrigger: {
+      trigger: '#footer-card',
+      start: 'top 85%'
+    },
+    y: 20,
+    duration: 0.88,
+    stagger: 0.1,
+    ease: EASE_SPRING
+  });
+
+  // Header features reveal
+  gsap.from('#features-header > *', {
+    scrollTrigger: {
+      trigger: '#features-section',
+      start: 'top 80%'
+    },
+    y: 40,
+    duration: 0.88,
+    stagger: 0.15,
+    ease: EASE_SPRING
+  });
+
+  gsap.from('#steps-header > *', {
+    scrollTrigger: {
+      trigger: '#steps-section',
+      start: 'top 80%'
+    },
+    y: 30,
+    duration: 0.88,
+    stagger: 0.12,
+    ease: EASE_SPRING
+  });
+});
+</script>
+</body>
+</html>

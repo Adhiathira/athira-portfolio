@@ -1,0 +1,227 @@
+/* ============================================================
+   Science Teaser — SPECTRA
+   Asymmetric 3fr 2fr split
+   Background: dark navy #161d25
+   ============================================================ */
+
+#science-teaser {
+  background: linear-gradient(160deg, var(--color-page-bg) 0%, rgba(22, 29, 37, 0.97) 100%);
+  padding: var(--space-section-top) 0 var(--space-section-bottom);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ambient lime glow bottom-left */
+#science-teaser::before {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(226, 255, 101, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#science-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding-inline);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+#science-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-primary-action);
+  margin-bottom: 20px;
+}
+
+/* ── 3fr 2fr split grid ── */
+#science-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 64px;
+  align-items: start;
+  margin-top: 0;
+}
+
+/* Left column */
+#science-left {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+#science-headline {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h2);
+  font-weight: 800;
+  letter-spacing: var(--tracking-heading);
+  line-height: 1.1;
+  color: var(--color-heading);
+  margin: 0;
+}
+
+#science-body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: var(--line-height-body);
+  color: var(--color-muted-text);
+  margin: 0;
+}
+
+/* Lime pull-quote */
+#science-pullquote {
+  position: relative;
+  padding: 20px 24px;
+  border-left: 3px solid var(--color-primary-action);
+  background: rgba(226, 255, 101, 0.04);
+  border-radius: 0 8px 8px 0;
+}
+
+#science-pullquote-text {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  color: var(--color-primary-action);
+  margin: 0;
+}
+
+#science-body-2 {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: var(--line-height-body);
+  color: var(--color-muted-text);
+  margin: 0;
+}
+
+/* Right column — aurora spectrum display */
+#science-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-top: 60px; /* offset for headline alignment */
+}
+
+#science-spectrum-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 24px;
+}
+
+/* Master gradient bar */
+#science-spectrum-bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 100px;
+  background: linear-gradient(90deg,
+    #21f3b6 0%,    /* teal */
+    #9248e4 33%,   /* violet */
+    #e2ff65 66%,   /* lime */
+    #ffffff 100%   /* white */
+  );
+  margin-bottom: 32px;
+  box-shadow: 0 0 20px rgba(33, 243, 182, 0.25);
+}
+
+/* Spectrum wavelength rows */
+#science-spectrum-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.spectrum-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spectrum-bar-wrap {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.spectrum-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  /* GSAP animates width from 0% — no CSS opacity tricks */
+  width: 100%;
+}
+
+.spectrum-bar-fill--teal {
+  background: linear-gradient(90deg, var(--color-accent-teal), rgba(33, 243, 182, 0.4));
+  box-shadow: 0 0 6px rgba(33, 243, 182, 0.6);
+}
+
+.spectrum-bar-fill--violet {
+  background: linear-gradient(90deg, var(--color-accent-violet), rgba(146, 72, 228, 0.4));
+  box-shadow: 0 0 6px rgba(146, 72, 228, 0.6);
+}
+
+.spectrum-bar-fill--lime {
+  background: linear-gradient(90deg, var(--color-primary-action), rgba(226, 255, 101, 0.4));
+  box-shadow: 0 0 6px rgba(226, 255, 101, 0.5);
+}
+
+.spectrum-bar-fill--white {
+  background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+}
+
+.spectrum-row-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.spectrum-wavelength {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.spectrum-element {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.04em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #science-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  #science-right {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  #science-grid {
+    gap: 32px;
+  }
+}

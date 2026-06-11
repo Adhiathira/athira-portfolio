@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost — Zero-Knowledge Secrets Manager for Developer Teams</title>
+  <meta name="description" content="Ghost keeps your team's secrets secure, rotated, and audited. CLI-first. Zero-knowledge. Never commit credentials again.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Design tokens + component styles -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/features.css">
+  <link rel="stylesheet" href="components/how-it-works.css">
+  <link rel="stylesheet" href="components/testimonials.css">
+  <link rel="stylesheet" href="components/pricing.css">
+  <link rel="stylesheet" href="components/footer.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="site-nav" class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">&gt;_ GHOST</a>
+      <ul class="nav-links">
+        <li><a href="docs.html" class="nav-link">Docs</a></li>
+        <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li><a href="team.html" class="nav-link">Team</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta">Get access</a>
+      <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div id="mobile-menu" class="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
+    <a href="docs.html" class="nav-mobile-link">Docs</a>
+    <a href="pricing.html" class="nav-mobile-link">Pricing</a>
+    <a href="team.html" class="nav-mobile-link">Team</a>
+    <a href="contact.html" class="nav-mobile-link">Get access</a>
+  </div>
+
+  <!-- ============================================================
+       HERO — Terminal simulation with typewriter
+  ============================================================ -->
+  <section class="hero">
+    <div class="container">
+
+      <p class="hero-label">v2.4.1 — now in public beta</p>
+
+      <h1 class="hero-headline">
+        <span id="hero-typewriter-text" data-text="Secrets that stay secret."></span><span id="hero-cursor" class="cursor"></span>
+      </h1>
+
+      <p class="hero-description">Ghost is a zero-knowledge secrets manager for developer teams. CLI-first secret storage, rotation, and audit trail. Share credentials securely without `.env` files ever touching git.</p>
+
+      <div class="hero-actions">
+        <a href="docs.html" class="btn btn-primary">&gt; Get started</a>
+        <a href="pricing.html" class="btn btn-ghost">View pricing</a>
+      </div>
+
+      <!-- Animated terminal window -->
+      <div class="hero-terminal">
+        <div class="hero-terminal-titlebar">
+          <span class="terminal-dot dot-close"></span>
+          <span class="terminal-dot dot-min"></span>
+          <span class="terminal-dot dot-max"></span>
+          <span class="terminal-title">ghost — bash — 80x24</span>
+        </div>
+        <div class="hero-terminal-body">
+          <span class="terminal-line" style="display:none;" data-typed="true">
+            <span class="terminal-prompt">$ </span><span class="terminal-cmd" data-text="ghost init --project api-service">ghost init --project api-service</span>
+          </span>
+          <span class="terminal-sim-line terminal-line" style="display:none;">
+            <span class="terminal-output">Initializing Ghost vault...</span>
+          </span>
+          <span class="terminal-sim-line terminal-line" style="display:none;">
+            <span class="terminal-output success">✓ Vault created: api-service</span>
+          </span>
+          <span class="terminal-sim-line terminal-line" style="display:none;">
+            <span class="terminal-output success">✓ Zero-knowledge keys generated</span>
+          </span>
+          <span class="terminal-sim-line terminal-line" style="display:none;">
+            <span class="terminal-prompt">$ </span><span class="terminal-cmd" data-text="ghost set DATABASE_URL &quot;postgres://...&quot;" data-typed="true">ghost set DATABASE_URL "postgres://..."</span>
+          </span>
+          <span class="terminal-sim-line terminal-line" style="display:none;">
+            <span class="terminal-output success">✓ Secret stored. Encrypted client-side.</span>
+          </span>
+          <span class="terminal-sim-line terminal-line" style="display:none;">
+            <span class="terminal-prompt">$ </span><span class="terminal-output text-accent">_</span>
+          </span>
+          <div class="terminal-cursor-line">
+            <span class="terminal-cursor-block"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURES — 3-col terminal panels
+  ============================================================ -->
+  <section class="features section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Core capabilities</p>
+        <h2 class="section-title">Built for teams that ship close to the metal.</h2>
+        <p class="section-desc">Every feature designed for the developer workflow. Not the compliance dashboard.</p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-number">01</span>
+            <h3 class="feature-card-title">Zero-knowledge encryption</h3>
+          </div>
+          <p class="feature-card-body">Secrets are encrypted on your machine before they leave. Ghost's servers never see plaintext. Your keys, your data.</p>
+          <code class="feature-card-cmd">ghost encrypt --scope team</code>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-number">02</span>
+            <h3 class="feature-card-title">Automatic rotation</h3>
+          </div>
+          <p class="feature-card-body">Schedule secret rotation on any interval. Ghost rotates, notifies affected services, and logs the event — no manual intervention required.</p>
+          <code class="feature-card-cmd">ghost rotate --every 30d</code>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-number">03</span>
+            <h3 class="feature-card-title">Immutable audit trail</h3>
+          </div>
+          <p class="feature-card-body">Every access, rotation, and share event is logged with timestamp, actor, and context. Cryptographically signed. Tamper-evident.</p>
+          <code class="feature-card-cmd">ghost audit --tail 100</code>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-number">04</span>
+            <h3 class="feature-card-title">Team namespaces</h3>
+          </div>
+          <p class="feature-card-body">Isolated vaults per team, per environment. Production secrets are invisible to developers with staging access. Fine-grained RBAC.</p>
+          <code class="feature-card-cmd">ghost namespace prod --read-only</code>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-number">05</span>
+            <h3 class="feature-card-title">CI/CD integration</h3>
+          </div>
+          <p class="feature-card-body">Native GitHub Actions, GitLab CI, and CircleCI plugins. Inject secrets at build time. Zero env var leakage in logs.</p>
+          <code class="feature-card-cmd">ghost inject --env production</code>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-number">06</span>
+            <h3 class="feature-card-title">Local dev proxy</h3>
+          </div>
+          <p class="feature-card-body">Run `ghost run` to prefix any command with secrets injected as environment variables. No `.env` files. No accidental commits.</p>
+          <code class="feature-card-cmd">ghost run -- npm start</code>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW IT WORKS — numbered steps with commands
+  ============================================================ -->
+  <section class="how-it-works section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Getting started</p>
+        <h2 class="section-title">Up and running in four commands.</h2>
+        <p class="section-desc">No web UI required. No configuration files. Terminal-native from day one.</p>
+      </div>
+
+      <ol class="steps-list">
+        <li class="step-item">
+          <span class="step-number">01</span>
+          <div class="step-content">
+            <h3 class="step-title">Install Ghost CLI</h3>
+            <p class="step-desc">Install the Ghost CLI via npm or Homebrew. Available on Linux, macOS, and Windows (WSL).</p>
+            <code class="step-command">
+              <span class="cmd-prompt">$ </span><span class="cmd-text">npm install</span> <span class="cmd-arg">-g ghost-cli</span>
+            </code>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <span class="step-number">02</span>
+          <div class="step-content">
+            <h3 class="step-title">Initialize your vault</h3>
+            <p class="step-desc">Create a new project vault. Ghost generates a zero-knowledge key pair locally and stores the public key on our servers.</p>
+            <code class="step-command">
+              <span class="cmd-prompt">$ </span><span class="cmd-text">ghost init</span> <span class="cmd-flag">--project</span> <span class="cmd-arg">my-app</span>
+            </code>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <span class="step-number">03</span>
+          <div class="step-content">
+            <h3 class="step-title">Store your first secret</h3>
+            <p class="step-desc">Push any secret to your vault. Encrypted with your local key before the request leaves your machine.</p>
+            <code class="step-command">
+              <span class="cmd-prompt">$ </span><span class="cmd-text">ghost set</span> <span class="cmd-arg">STRIPE_KEY</span> <span class="cmd-flag">sk_live_...</span>
+            </code>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <span class="step-number">04</span>
+          <div class="step-content">
+            <h3 class="step-title">Run your app with secrets injected</h3>
+            <p class="step-desc">Prefix any command with `ghost run --`. Secrets are injected as env vars for the process lifetime only. Zero disk writes.</p>
+            <code class="step-command">
+              <span class="cmd-prompt">$ </span><span class="cmd-text">ghost run</span> <span class="cmd-flag">--</span> <span class="cmd-arg">node server.js</span>
+            </code>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TESTIMONIALS — terminal output blocks
+  ============================================================ -->
+  <section class="testimonials section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Engineer reports</p>
+        <h2 class="section-title">What the team is saying.</h2>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <div class="testimonial-block">
+          <div class="testimonial-header">
+            <span>ghost-audit.log</span>
+            <span class="testimonial-filename">READ</span>
+          </div>
+          <div class="testimonial-body">
+            <div class="testimonial-line">
+              <span class="output-prefix">&gt;</span>
+              <span class="output-text">We had three `.env` incidents last year. Two were accidental commits, one was a disgruntled contractor. Ghost made all three impossible.</span>
+            </div>
+            <div class="testimonial-attribution">
+              <span class="attribution-prefix">#</span>
+              <div>
+                <div class="attribution-name">Sarah Chen</div>
+                <div class="attribution-role">// Staff Engineer, Locus Health</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-block">
+          <div class="testimonial-header">
+            <span>team-feedback.log</span>
+            <span class="testimonial-filename">READ</span>
+          </div>
+          <div class="testimonial-body">
+            <div class="testimonial-line">
+              <span class="output-prefix">&gt;</span>
+              <span class="output-text">The CLI is the whole product. No Slack integrations, no dashboards, no SaaS pricing bullshit. You type commands, secrets get managed. That's it.</span>
+            </div>
+            <div class="testimonial-attribution">
+              <span class="attribution-prefix">#</span>
+              <div>
+                <div class="attribution-name">Marcus Webb</div>
+                <div class="attribution-role">// Platform Lead, Northfield Systems</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-block">
+          <div class="testimonial-header">
+            <span>security-review.log</span>
+            <span class="testimonial-filename">READ</span>
+          </div>
+          <div class="testimonial-body">
+            <div class="testimonial-line">
+              <span class="output-prefix">&gt;</span>
+              <span class="output-text">Passed our SOC 2 audit faster than any secrets tool we've used. The immutable audit trail is what closed it — every access logged, every rotation signed.</span>
+            </div>
+            <div class="testimonial-attribution">
+              <span class="attribution-prefix">#</span>
+              <div>
+                <div class="attribution-name">Priya Nair</div>
+                <div class="attribution-role">// Security Engineer, Dataform</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-block">
+          <div class="testimonial-header">
+            <span>onboarding-notes.log</span>
+            <span class="testimonial-filename">READ</span>
+          </div>
+          <div class="testimonial-body">
+            <div class="testimonial-line">
+              <span class="output-prefix">&gt;</span>
+              <span class="output-text">New engineers are productive in an hour. They `ghost init`, get invited to the team namespace, and `ghost run` their services. No env file hand-holding anymore.</span>
+            </div>
+            <div class="testimonial-attribution">
+              <span class="attribution-prefix">#</span>
+              <div>
+                <div class="attribution-name">Tomás Reyes</div>
+                <div class="attribution-role">// Engineering Manager, Carve Systems</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PRICING TEASER — 2/3 col summary
+  ============================================================ -->
+  <section class="pricing-section section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Pricing</p>
+        <h2 class="section-title">Simple, predictable pricing for every team size.</h2>
+        <p class="section-desc">No per-secret fees. No data egress charges. Pay for seats, not usage.</p>
+      </div>
+
+      <div class="pricing-grid">
+
+        <div class="pricing-card">
+          <span class="pricing-tier-label">Solo</span>
+          <div class="pricing-price">
+            <span class="pricing-amount">$0</span>
+            <span class="pricing-period">/ forever</span>
+          </div>
+          <p class="pricing-desc">For individual developers. Full CLI access, one vault, unlimited secrets.</p>
+          <ul class="pricing-features">
+            <li class="pricing-feature-item">1 project vault</li>
+            <li class="pricing-feature-item">Unlimited secrets</li>
+            <li class="pricing-feature-item">Local encryption</li>
+            <li class="pricing-feature-item disabled">Team namespaces</li>
+            <li class="pricing-feature-item disabled">Audit trail</li>
+          </ul>
+          <div class="pricing-cta">
+            <a href="docs.html" class="btn btn-ghost">Start free</a>
+          </div>
+        </div>
+
+        <div class="pricing-card pricing-card--featured">
+          <span class="pricing-badge">Popular</span>
+          <span class="pricing-tier-label">Team</span>
+          <div class="pricing-price">
+            <span class="pricing-amount">$12</span>
+            <span class="pricing-period">/ seat / mo</span>
+          </div>
+          <p class="pricing-desc">For engineering teams. Shared vaults, RBAC, rotation, and full audit trail.</p>
+          <ul class="pricing-features">
+            <li class="pricing-feature-item">Unlimited vaults</li>
+            <li class="pricing-feature-item">Team namespaces + RBAC</li>
+            <li class="pricing-feature-item">Automatic rotation</li>
+            <li class="pricing-feature-item">Immutable audit log</li>
+            <li class="pricing-feature-item">CI/CD plugins</li>
+          </ul>
+          <div class="pricing-cta">
+            <a href="contact.html" class="btn btn-primary">Get access</a>
+          </div>
+        </div>
+
+        <div class="pricing-card">
+          <span class="pricing-tier-label">Enterprise</span>
+          <div class="pricing-price">
+            <span class="pricing-amount">Custom</span>
+          </div>
+          <p class="pricing-desc">For organizations with compliance requirements, SSO needs, or on-premise deployments.</p>
+          <ul class="pricing-features">
+            <li class="pricing-feature-item">SSO / SAML</li>
+            <li class="pricing-feature-item">On-premise deploy</li>
+            <li class="pricing-feature-item">SOC 2 reports</li>
+            <li class="pricing-feature-item">SLA guarantee</li>
+            <li class="pricing-feature-item">Dedicated support</li>
+          </ul>
+          <div class="pricing-cta">
+            <a href="contact.html" class="btn btn-ghost">Contact us</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">&gt;_ GHOST</a>
+          <p class="footer-tagline">Zero-knowledge secrets manager for developer teams. CLI-first. Audit-ready.</p>
+          <div class="footer-status">
+            <span class="status-dot"></span>
+            All systems operational
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <span class="footer-col-title">Product</span>
+          <a href="docs.html" class="footer-link">Documentation</a>
+          <a href="pricing.html" class="footer-link">Pricing</a>
+          <a href="docs.html#changelog" class="footer-link">Changelog</a>
+          <a href="docs.html#cli-reference" class="footer-link">CLI Reference</a>
+        </div>
+
+        <div class="footer-col">
+          <span class="footer-col-title">Company</span>
+          <a href="team.html" class="footer-link">Team</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+          <a href="#" class="footer-link">Blog</a>
+          <a href="#" class="footer-link">Security</a>
+        </div>
+
+        <div class="footer-col">
+          <span class="footer-col-title">Developers</span>
+          <a href="docs.html" class="footer-link">Quick start</a>
+          <a href="docs.html#api" class="footer-link">API reference</a>
+          <a href="docs.html#integrations" class="footer-link">Integrations</a>
+          <a href="#" class="footer-link">GitHub</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 Ghost Systems, Inc.</span>
+        <div class="footer-legal">
+          <a href="#" class="footer-legal-link">Privacy</a>
+          <a href="#" class="footer-legal-link">Terms</a>
+          <a href="#" class="footer-legal-link">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Behaviors -->
+  <script src="behaviors/typewriter.js"></script>
+  <script src="behaviors/scroll-reveal.js"></script>
+  <script src="behaviors/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+/* ============================================================
+   HERO — bloom-drift / Solubl
+   Light-dominant hero with animated gradient background,
+   3 floating liquid blobs, buoyant entrance animations
+   HERO_TREATMENT: light
+   ============================================================ */
+
+/* ── Liquid morphing keyframes ── */
+@keyframes liquidMorph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50%       { border-radius: 55% 45% 65% 35% / 35% 65% 45% 55%; }
+  75%       { border-radius: 40% 60% 30% 70% / 70% 30% 60% 40%; }
+}
+
+@keyframes liquidMorphB {
+  0%, 100% { border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%; }
+  33%       { border-radius: 65% 35% 40% 60% / 45% 60% 40% 55%; }
+  66%       { border-radius: 30% 70% 60% 40% / 60% 35% 65% 40%; }
+}
+
+@keyframes liquidMorphC {
+  0%, 100% { border-radius: 70% 30% 40% 60% / 40% 65% 35% 60%; }
+  40%       { border-radius: 45% 55% 65% 35% / 55% 40% 60% 45%; }
+  80%       { border-radius: 35% 65% 45% 55% / 65% 35% 55% 45%; }
+}
+
+@keyframes floatA {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25%       { transform: translate(18px, -22px) rotate(5deg); }
+  50%       { transform: translate(-12px, -18px) rotate(-3deg); }
+  75%       { transform: translate(22px, 10px) rotate(4deg); }
+}
+
+@keyframes floatB {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33%       { transform: translate(-20px, 16px) rotate(-6deg); }
+  66%       { transform: translate(14px, -24px) rotate(4deg); }
+}
+
+@keyframes floatC {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50%       { transform: translate(-16px, 20px) rotate(-5deg); }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes slowZoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+
+/* ── Hero shell ── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: var(--nav-height);
+}
+
+/* Animated gradient background — conic with pastel liquid palette */
+#hero-bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(
+    from 0deg at 35% 60%,
+    var(--liquid-rose)    0deg,
+    var(--liquid-violet)  90deg,
+    var(--liquid-aquamarine) 180deg,
+    var(--liquid-gold)    270deg,
+    var(--liquid-rose)    360deg
+  );
+  background-size: 300% 300%;
+  animation: gradientShift 18s ease-in-out infinite;
+  opacity: 0.55;
+}
+
+/* Video background — hero fluid-gradient.mp4 */
+#hero-video-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+}
+
+/* Light overlay — keeps background bright, text readable */
+#hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(245, 240, 232, 0.65) 0%,
+    rgba(252, 247, 241, 0.40) 50%,
+    rgba(195, 175, 210, 0.25) 100%
+  );
+  z-index: 1;
+}
+
+/* ── Floating blob shapes ── */
+#hero-blob-a {
+  position: absolute;
+  top: 8%;
+  right: 12%;
+  width: 380px;
+  height: 340px;
+  background: radial-gradient(
+    ellipse at 40% 45%,
+    rgba(196, 175, 242, 0.55) 0%,
+    rgba(163, 228, 215, 0.30) 60%,
+    transparent 100%
+  );
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation:
+    liquidMorph 12s var(--ease-primary) infinite,
+    floatA 16s ease-in-out infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#hero-blob-b {
+  position: absolute;
+  bottom: 15%;
+  left: 8%;
+  width: 280px;
+  height: 260px;
+  background: radial-gradient(
+    ellipse at 55% 50%,
+    rgba(242, 196, 206, 0.60) 0%,
+    rgba(242, 221, 163, 0.35) 55%,
+    transparent 100%
+  );
+  border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+  animation:
+    liquidMorphB 14s var(--ease-primary) infinite,
+    floatB 18s ease-in-out infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#hero-blob-c {
+  position: absolute;
+  top: 40%;
+  right: 32%;
+  width: 200px;
+  height: 180px;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(163, 228, 215, 0.50) 0%,
+    rgba(242, 196, 206, 0.30) 65%,
+    transparent 100%
+  );
+  border-radius: 70% 30% 40% 60% / 40% 65% 35% 60%;
+  animation:
+    liquidMorphC 10s var(--ease-primary) infinite,
+    floatC 13s ease-in-out infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Hero content ── */
+#hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: var(--grid-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 80px var(--container-padding);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+}
+
+#hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+#hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+#hero-title {
+  font-family: var(--font-display);
+  font-size: var(--type-hero);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: #0a0a0a;
+  margin: 0;
+}
+
+#hero-title .word {
+  display: inline-block;
+  overflow: hidden;
+  margin-right: 0.18em;
+}
+
+#hero-title .word-inner {
+  display: inline-block;
+}
+
+#hero-tagline {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: var(--weight-light);
+  line-height: 1.6;
+  color: var(--color-body-text);
+  max-width: 440px;
+  margin: 0;
+  opacity: 0.8;
+}
+
+#hero-cta-group {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-family: var(--font-body);
+  font-size: var(--type-button);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-wide);
+  color: #ffffff;
+  background: #0a0a0a;
+  border: 1.5px solid #0a0a0a;
+  border-radius: 100px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--btn-transition);
+}
+
+.btn-primary:hover {
+  transform: var(--btn-hover-transform);
+  box-shadow: var(--btn-hover-shadow);
+  background: #1e3a6e;
+  border-color: #1e3a6e;
+}
+
+.btn-primary:active {
+  transform: var(--btn-active-transform);
+  box-shadow: var(--btn-active-shadow);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-family: var(--font-body);
+  font-size: var(--type-button);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-wide);
+  color: #0a0a0a;
+  background: transparent;
+  border: 1.5px solid rgba(10, 10, 10, 0.4);
+  border-radius: 100px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--btn-transition);
+}
+
+.btn-ghost:hover {
+  transform: var(--btn-hover-transform);
+  box-shadow: var(--btn-hover-shadow);
+  border-color: #0a0a0a;
+  background: rgba(10, 10, 10, 0.04);
+}
+
+.btn-ghost:active {
+  transform: var(--btn-active-transform);
+}
+
+/* ── Hero visual (right column) ── */
+#hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#hero-product-frame {
+  position: relative;
+  width: 420px;
+  height: 520px;
+  border-radius: 48% 52% 40% 60% / 50% 40% 60% 50%;
+  overflow: hidden;
+  animation: liquidMorphB 14s var(--ease-primary) infinite;
+  box-shadow:
+    0 32px 80px rgba(196, 175, 242, 0.35),
+    0 12px 32px rgba(242, 196, 206, 0.28),
+    0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+#hero-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#hero-product-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(196, 175, 242, 0.45) 0%,
+    rgba(163, 228, 215, 0.35) 50%,
+    rgba(242, 221, 163, 0.40) 100%
+  );
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: transparent;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Floating stats badge on hero visual */
+#hero-stat-badge {
+  position: absolute;
+  bottom: 32px;
+  left: -32px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 18px 24px;
+  box-shadow: 0 12px 48px rgba(196, 175, 242, 0.22), 0 4px 16px rgba(0,0,0,0.08);
+}
+
+#hero-stat-badge .stat-number {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0a0a0a;
+  line-height: 1;
+}
+
+#hero-stat-badge .stat-label {
+  font-size: 0.7rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+  margin-top: 4px;
+}
+
+/* Ghost letterform watermark */
+#hero-ghost-word {
+  position: absolute;
+  bottom: -40px;
+  right: -20px;
+  font-family: var(--font-display);
+  font-size: clamp(80px, 14vw, 160px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(30, 58, 110, 0.07);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+/* ── Hero scroll indicator ── */
+#hero-scroll-indicator {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+#hero-scroll-indicator span {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+}
+
+#hero-scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), transparent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  #hero-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 60px 40px;
+  }
+  #hero-visual {
+    display: none;
+  }
+  #hero-ghost-word {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero-content {
+    padding: 48px 20px;
+  }
+  #hero-blob-a {
+    width: 220px;
+    height: 200px;
+    top: 5%;
+    right: 5%;
+  }
+  #hero-blob-b {
+    width: 160px;
+    height: 150px;
+  }
+  #hero-blob-c {
+    display: none;
+  }
+  #hero-cta-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .btn-primary,
+  .btn-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,338 @@
+/* ============================================================
+   NAV — vivid-block / lumen-draft
+   Twist F: backgroundPill=true, hover duration 0.1s linear
+   Full-viewport slide-in overlay menu
+   ============================================================ */
+
+/* ── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=Inter:wght@500&display=swap');
+
+/* ── CSS Custom Properties ────────────────────────────────── */
+:root {
+  --nav-height: 64px;
+  --nav-bg: transparent;
+  --nav-text: #1b1b37;
+  --nav-overlay-bg: #63cabe;
+  --nav-overlay-text: #1b1b37;
+  --nav-accent-a: #63cabe;
+  --nav-accent-b: #b79cff;
+  --nav-font: 'Inter', sans-serif;
+  --nav-heading-font: 'Bricolage Grotesque', sans-serif;
+  --nav-font-size: 1.36719vw;
+  --nav-font-weight: 500;
+  --nav-letter-spacing: 0.08em;
+  --nav-transition-dur: 0.3s;
+  --nav-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --nav-link-hover-transition: background-color 0.1s linear;
+  --nav-z: 900;
+}
+
+/* ── Base nav bar ─────────────────────────────────────────── */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  z-index: var(--nav-z);
+  background: var(--nav-bg);
+  /* No backdrop-filter — backdropFilter is null */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: clamp(24px, 4.88281vw, 80px);
+  box-sizing: border-box;
+  /* No border-bottom, no box-shadow — all null in tokens */
+}
+
+/* scroll transition: transform + opacity via .isVisible class */
+/* Nav starts visible; on scroll-based logic, class is toggled */
+.site-nav {
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    transform var(--nav-transition-dur) var(--nav-transition-ease),
+    opacity var(--nav-transition-dur) var(--nav-transition-ease);
+}
+
+/* Color inversion on scroll (isVisible class handles the scroll trigger) */
+.site-nav.isVisible {
+  --nav-text: #ffffff;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Solid background when page is scrolled */
+.site-nav.scrolled {
+  background: #ffffff;
+  border-bottom: 2px solid #1b1b37;
+}
+
+/* ── Logo ─────────────────────────────────────────────────── */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--nav-text);
+  font-family: var(--nav-heading-font);
+  font-weight: 800;
+  font-size: clamp(18px, 1.5625vw, 28px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  transition: color var(--nav-transition-dur) var(--nav-transition-ease);
+  z-index: calc(var(--nav-z) + 10);
+  position: relative;
+}
+
+.nav-logo:hover {
+  opacity: 0.75;
+}
+
+/* ── Desktop nav links ────────────────────────────────────── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 3.90625vw, 64px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: var(--nav-font);
+  font-size: var(--nav-font-size);
+  font-weight: var(--nav-font-weight);
+  letter-spacing: var(--nav-letter-spacing);
+  line-height: 120%;
+  text-transform: none;
+  color: var(--nav-text);
+  text-decoration: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 0;
+  transition: var(--nav-link-hover-transition);
+}
+
+/* backgroundPill=true: fill background on hover */
+.nav-links a:hover {
+  background-color: var(--nav-accent-a);
+  color: #1b1b37;
+}
+
+/* Underline pseudo-element (scaleX from-left, 0.1s linear) */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background-color: var(--nav-text);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.1s linear;
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Active link */
+.nav-links a.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.nav-links a.nav-link--active::after {
+  display: none;
+}
+
+/* ── Hamburger button ─────────────────────────────────────── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: calc(var(--nav-z) + 20);
+  position: relative;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 28px;
+  height: 2px;
+  background-color: var(--nav-text);
+  border-radius: 0;
+  transition:
+    transform 0.3s var(--nav-transition-ease),
+    opacity 0.2s linear;
+  transform-origin: center;
+}
+
+/* Hamburger → X when menu open */
+.site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* When overlay is open, hamburger bars invert to overlay bg contrast */
+.site-nav.nav-mobile-open .nav-mobile-toggle span {
+  background-color: #1b1b37;
+}
+
+/* ── Full-viewport slide-in overlay ──────────────────────── */
+/*
+   geometry.height: 330 → full-viewport overlay menu panel
+   Slides in from the right as a teal (#63cabe) full-screen panel
+   Links displayed in large bold Bricolage Grotesque type
+*/
+.nav-mobile-menu {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--nav-overlay-bg);
+  z-index: calc(var(--nav-z) + 5);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(40px, 9.76562vw, 120px);
+  box-sizing: border-box;
+
+  /* Hidden: slid to the right */
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.1s linear;
+}
+
+.nav-mobile-menu.is-open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Overlay nav links — large, bold, architectural */
+.nav-mobile-menu .nav-overlay-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.nav-mobile-menu .nav-overlay-links li {
+  padding: clamp(8px, 1.36719vw, 20px) 0;
+  border-bottom: 1px solid rgba(27, 27, 55, 0.15);
+}
+
+.nav-mobile-menu .nav-overlay-links li:first-child {
+  border-top: 1px solid rgba(27, 27, 55, 0.15);
+}
+
+.nav-mobile-menu .nav-overlay-links a {
+  font-family: var(--nav-heading-font);
+  font-weight: 800;
+  font-size: clamp(32px, 5.85938vw, 80px);
+  line-height: 110%;
+  letter-spacing: -0.02em;
+  color: #1b1b37;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  padding: 4px 0;
+  transition: var(--nav-link-hover-transition);
+}
+
+/* backgroundPill=true in overlay: fill accent-b on hover */
+.nav-mobile-menu .nav-overlay-links a:hover {
+  background-color: #b79cff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.nav-mobile-menu .nav-overlay-links a.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Overlay footer — logo or tagline */
+.nav-overlay-footer {
+  position: absolute;
+  bottom: clamp(24px, 4.88281vw, 64px);
+  left: clamp(40px, 9.76562vw, 120px);
+  font-family: var(--nav-font);
+  font-size: clamp(12px, 0.97656vw, 16px);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(27, 27, 55, 0.5);
+}
+
+/* ── Responsive breakpoints ───────────────────────────────── */
+
+/* Tablet & below: show hamburger, hide desktop links */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+
+  .nav-links a {
+    font-size: clamp(13px, 1.71875vw, 18px);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .site-nav {
+    padding-inline: 20px;
+  }
+
+  .nav-mobile-menu {
+    padding: 32px 24px;
+  }
+
+  .nav-mobile-menu .nav-overlay-links a {
+    font-size: clamp(28px, 8vw, 48px);
+  }
+
+  .nav-overlay-footer {
+    left: 24px;
+    bottom: 24px;
+  }
+}
+
+/* ── Utility: nav spacer ──────────────────────────────────── */
+/* Sub-pages without a hero overlay use this to prevent content
+   from hiding under the fixed nav bar */
+.nav-spacer {
+  height: 0;
+  transition: height 0.2s ease;
+}
+
+.nav-spacer.active {
+  height: var(--nav-height);
+}

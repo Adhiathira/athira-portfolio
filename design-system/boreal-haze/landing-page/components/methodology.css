@@ -1,0 +1,461 @@
+/* ============================================================
+   Forecasting Methodology — SPECTRA / Boreal Haze
+   Dark #161d25, numbered steps with giant teal step numbers
+   ============================================================ */
+
+#methodology {
+  position: relative;
+  background:
+    radial-gradient(ellipse 80% 60% at 90% 20%, rgba(146, 72, 228, 0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 10% 80%, rgba(33, 243, 182, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #161d25 0%, #121820 60%, #161d25 100%);
+  padding: 120px 0 140px;
+  overflow: hidden;
+}
+
+#methodology-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+#methodology-header {
+  margin-bottom: 88px;
+}
+
+#methodology-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+  display: block;
+  margin: 0 0 16px 0;
+}
+
+#methodology-headline {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.5vw, 60px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0;
+  max-width: 720px;
+}
+
+/* ── Steps list (legacy selector) ── */
+#methodology-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Cards grid ── */
+#methodology-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* ── Individual card ── */
+.method-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 40px 36px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  transition: border-color 0.3s var(--ease-primary), box-shadow 0.3s var(--ease-primary), transform 0.3s var(--ease-primary);
+}
+
+.method-card:hover {
+  border-color: rgba(33, 243, 182, 0.22);
+  box-shadow: 0 0 40px rgba(33, 243, 182, 0.08), 0 8px 32px rgba(0, 0, 0, 0.35);
+  transform: translateY(-4px);
+}
+
+/* ── Teal indicator line ── */
+.method-card-indicator {
+  width: 32px;
+  height: 2px;
+  background: var(--color-accent-teal);
+  margin-bottom: 28px;
+  box-shadow: 0 0 10px rgba(33, 243, 182, 0.6);
+}
+
+/* ── Card number ── */
+.method-card-number {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+  margin: 0 0 16px 0;
+}
+
+/* ── Card title ── */
+.method-card-title {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.8vw, 22px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+/* ── Card subtitle ── */
+.method-card-subtitle {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(200, 205, 212, 0.5);
+  margin: 0 0 20px 0;
+}
+
+/* ── Card body ── */
+.method-card-body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--color-muted-text);
+  margin: 0;
+}
+
+/* ── Individual step (legacy) ── */
+.methodology-step {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 40px;
+  align-items: start;
+  padding: 48px 0;
+  border-bottom: 1px solid rgba(33, 243, 182, 0.08);
+  position: relative;
+}
+
+.methodology-step:first-child {
+  border-top: 1px solid rgba(33, 243, 182, 0.08);
+}
+
+/* ── Step number — giant teal ── */
+.step-number {
+  font-family: var(--font-display);
+  font-size: 120px;
+  font-weight: 800;
+  line-height: 0.85;
+  color: rgba(33, 243, 182, 0.18);
+  letter-spacing: -0.04em;
+  user-select: none;
+  position: relative;
+}
+
+/* ── Step content ── */
+.step-content {
+  padding-top: 16px;
+}
+
+.step-label {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0 0 14px 0;
+}
+
+.step-body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--color-muted-text);
+  margin: 0;
+  max-width: 620px;
+}
+
+/* ── Vertical connector accent line ── */
+.methodology-step::before {
+  content: '';
+  position: absolute;
+  left: 170px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(33, 243, 182, 0.07), transparent);
+  pointer-events: none;
+}
+
+.methodology-step:last-child::before {
+  display: none;
+}
+
+/* ── Footer CTA ── */
+#methodology-cta {
+  margin-top: 64px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+#methodology-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #161d25;
+  background: var(--color-accent-teal);
+  border: none;
+  border-radius: 6px;
+  padding: 14px 28px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.25s var(--ease-primary), box-shadow 0.25s var(--ease-primary);
+}
+
+#methodology-cta-btn:hover {
+  background: rgba(33, 243, 182, 0.88);
+  box-shadow: 0 0 28px rgba(33, 243, 182, 0.35), 0 0 60px rgba(33, 243, 182, 0.15);
+  color: #161d25;
+  text-decoration: none;
+}
+
+#methodology-cta-secondary {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(200, 205, 212, 0.6);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.25s;
+}
+
+#methodology-cta-secondary:hover {
+  color: var(--color-muted-text);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  #methodology-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .methodology-step {
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+  }
+
+  .step-number {
+    font-size: 80px;
+  }
+
+  .methodology-step::before {
+    left: 100px;
+  }
+}
+
+@media (max-width: 600px) {
+  #methodology {
+    padding: 80px 0 100px;
+  }
+
+  #methodology-inner {
+    padding: 0 20px;
+  }
+
+  #methodology-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .method-card {
+    padding: 28px 24px;
+  }
+
+  .methodology-step {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 36px 0;
+  }
+
+  .step-number {
+    font-size: 64px;
+    line-height: 1;
+  }
+
+  .methodology-step::before {
+    display: none;
+  }
+
+  #methodology-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  #methodology-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   Site Footer — SPECTRA / Boreal Haze
+   (Science page footer styles appended here)
+   ============================================================ */
+
+#site-footer {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 120%, rgba(33, 243, 182, 0.06) 0%, transparent 60%),
+    linear-gradient(180deg, #161d25 0%, #0d1219 100%);
+  border-top: 1px solid rgba(33, 243, 182, 0.10);
+  padding: 72px 0 40px;
+}
+
+#footer-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+#footer-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+}
+
+#footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-decoration: none;
+  line-height: 1;
+}
+
+#footer-logo:hover {
+  color: var(--color-accent-teal);
+}
+
+#footer-tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(200, 205, 212, 0.55);
+  margin: 0;
+  max-width: 340px;
+}
+
+#footer-nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 36px;
+  align-items: center;
+}
+
+.footer-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(200, 205, 212, 0.6);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.footer-link:hover {
+  color: rgba(200, 205, 212, 0.9);
+}
+
+#footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 28px;
+  flex-wrap: wrap;
+}
+
+#footer-copyright {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: rgba(200, 205, 212, 0.35);
+  margin: 0;
+}
+
+#footer-legal-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-legal-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: rgba(200, 205, 212, 0.35);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.footer-legal-link:hover {
+  color: rgba(200, 205, 212, 0.65);
+}
+
+/* Footer responsive */
+@media (max-width: 900px) {
+  #footer-top {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  #footer-nav-links {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  #site-footer {
+    padding: 56px 0 32px;
+  }
+
+  #footer-inner {
+    padding: 0 20px;
+  }
+
+  #footer-nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  #footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

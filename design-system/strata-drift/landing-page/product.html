@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — Strata Infrastructure Visualization</title>
+  <meta name="description" content="Strata's depth-first infrastructure visualization platform. Layer topology, depth signals, stack drilling, and change impact preview for cloud architects.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/footer.css">
+
+  <style>
+    .product-hero {
+      min-height: 70vh;
+    }
+
+    .product-visual {
+      margin-top: var(--space-15);
+      padding: var(--card-padding);
+      background: var(--color-layer-1);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      min-height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-visual-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .product-visual-label {
+      font-family: var(--font-body);
+      font-size: var(--type-label);
+      font-weight: var(--weight-medium);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+
+    .product-visual-title {
+      font-family: var(--font-display);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .depth-diagram {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      padding: var(--space-10);
+      pointer-events: none;
+    }
+
+    .depth-layer-band {
+      height: 48px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-6);
+      gap: var(--space-3);
+    }
+
+    .layer-band-1 {
+      background: rgba(26, 29, 46, 0.8);
+      border: 1px solid rgba(124, 108, 228, 0.1);
+      width: 100%;
+    }
+
+    .layer-band-2 {
+      background: rgba(30, 35, 64, 0.8);
+      border: 1px solid rgba(124, 108, 228, 0.2);
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .layer-band-3 {
+      background: rgba(37, 43, 74, 0.8);
+      border: 1px solid rgba(124, 108, 228, 0.35);
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .layer-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    .layer-dot-teal {
+      background: var(--color-secondary);
+    }
+
+    .layer-band-label {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: var(--weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+    }
+
+    .layer-band-nodes {
+      display: flex;
+      gap: var(--space-2);
+      margin-left: auto;
+    }
+
+    .layer-node {
+      width: 32px;
+      height: 20px;
+      border-radius: 4px;
+      background: rgba(124, 108, 228, 0.15);
+      border: 1px solid var(--color-border);
+    }
+
+    .layer-node-teal {
+      background: rgba(79, 184, 160, 0.15);
+      border-color: rgba(79, 184, 160, 0.25);
+    }
+
+    .product-feature-split {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--gap-xl);
+      align-items: center;
+      padding: var(--section-pad) 0;
+    }
+
+    .product-feature-split.reverse {
+      grid-template-columns: 1fr 1.2fr;
+    }
+
+    .product-feature-split.reverse .product-feature-text {
+      order: 2;
+    }
+
+    .product-feature-split.reverse .product-feature-visual {
+      order: 1;
+    }
+
+    .product-feature-text .label {
+      margin-bottom: var(--space-4);
+    }
+
+    .product-feature-text h2 {
+      margin-bottom: var(--space-5);
+    }
+
+    .product-feature-text p {
+      margin-bottom: var(--space-8);
+    }
+
+    .product-feature-visual {
+      background: var(--color-layer-1);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 12px;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-visual-deco {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124, 108, 228, 0.12) 0%, transparent 70%);
+      animation: float-slow 8s ease-in-out infinite;
+    }
+
+    .feature-visual-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: var(--space-8);
+    }
+
+    .feature-visual-text p {
+      font-family: var(--font-display);
+      font-size: var(--type-h4);
+      font-weight: var(--weight-semibold);
+      color: var(--color-accent);
+      letter-spacing: -0.01em;
+    }
+
+    .integrations-section {
+      background-color: var(--color-layer-1);
+      color: var(--color-text-primary);
+      padding: var(--section-pad) 0;
+    }
+
+    .integrations-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--gap-md);
+      margin-top: var(--space-15);
+    }
+
+    .integration-item {
+      background: var(--color-layer-2);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 10px;
+      padding: var(--space-8);
+      text-align: center;
+      transition: all var(--transition-fast);
+    }
+
+    .integration-item:hover {
+      border-color: var(--color-border);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .integration-name {
+      font-family: var(--font-display);
+      font-size: var(--type-h4);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+      letter-spacing: -0.01em;
+    }
+
+    .integration-desc {
+      font-size: var(--type-caption);
+      color: var(--color-text-muted);
+    }
+
+    .integration-dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      margin: 0 auto var(--space-4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 1024px) {
+      .product-feature-split {
+        grid-template-columns: 1fr;
+      }
+
+      .product-feature-split.reverse {
+        grid-template-columns: 1fr;
+      }
+
+      .product-feature-split.reverse .product-feature-text {
+        order: 1;
+      }
+
+      .product-feature-split.reverse .product-feature-visual {
+        order: 2;
+      }
+
+      .integrations-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .integrations-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">Strata</a>
+      <ul class="nav-links" role="list">
+        <li><a href="product.html" class="active">Product</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta">Request access</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PRODUCT HERO -->
+  <section class="hero product-hero" aria-label="Product overview">
+    <div class="hero-layer-bg parallax-bg" aria-hidden="true">
+      <div class="deco-circle-bg"></div>
+    </div>
+    <div class="hero-layer-mid parallax-mid" aria-hidden="true">
+      <div class="deco-blob-mid"></div>
+      <div class="deco-ring-mid"></div>
+    </div>
+    <div class="hero-layer-near parallax-near" aria-hidden="true">
+      <div class="deco-lines-near"></div>
+    </div>
+
+    <div class="hero-content-layer">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="hero-eyebrow-line" aria-hidden="true"></span>
+            <span class="hero-eyebrow-text">Platform</span>
+          </div>
+          <h1 class="hero-headline">
+            Built for depth.<br>
+            <span class="gradient-text">Not for diagrams.</span>
+          </h1>
+          <p class="hero-body">
+            Strata isn't a diagramming tool. It's a spatial engine that renders your real infrastructure as navigable depth layers — live, auto-updating, and built for the engineers who architect at scale.
+          </p>
+          <div class="hero-actions">
+            <a href="contact.html" class="btn btn-primary">Get early access</a>
+            <a href="pricing.html" class="btn btn-ghost">See pricing</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPTH DIAGRAM VISUAL -->
+  <section class="section" aria-labelledby="depth-diagram-heading">
+    <div class="container">
+      <div class="section-header centered">
+        <h2 id="depth-diagram-heading">The depth model</h2>
+        <p>Three planes. Every resource in its correct position. Your infrastructure rendered as physical space.</p>
+      </div>
+
+      <div class="product-visual">
+        <div class="depth-diagram" aria-hidden="true">
+          <div class="depth-layer-band layer-band-1">
+            <div class="layer-dot layer-dot-teal"></div>
+            <span class="layer-band-label">Compute layer — ground plane</span>
+            <div class="layer-band-nodes">
+              <div class="layer-node layer-node-teal"></div>
+              <div class="layer-node layer-node-teal"></div>
+              <div class="layer-node layer-node-teal"></div>
+            </div>
+          </div>
+          <div class="depth-layer-band layer-band-2">
+            <div class="layer-dot"></div>
+            <span class="layer-band-label">Network layer — mid-ground</span>
+            <div class="layer-band-nodes">
+              <div class="layer-node"></div>
+              <div class="layer-node"></div>
+            </div>
+          </div>
+          <div class="depth-layer-band layer-band-3">
+            <div class="layer-dot"></div>
+            <span class="layer-band-label">Application layer — foreground</span>
+            <div class="layer-band-nodes">
+              <div class="layer-node"></div>
+              <div class="layer-node"></div>
+              <div class="layer-node"></div>
+              <div class="layer-node"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-visual-inner">
+          <p class="product-visual-label">Interactive depth map</p>
+          <p class="product-visual-title">Your infrastructure, spatially rendered</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE SPLITS -->
+  <section class="section" aria-labelledby="layer-topology-heading">
+    <div class="container">
+      <div class="product-feature-split reveal-up">
+        <div class="product-feature-text">
+          <span class="label">Layer topology</span>
+          <h2 id="layer-topology-heading">Auto-discovered. Spatially accurate.</h2>
+          <p>Connect your cloud provider and Strata classifies every resource into its correct depth plane automatically. No manual labeling, no YAML schemas — the spatial model is derived from your actual resource graph and dependency data.</p>
+          <a href="contact.html" class="btn btn-primary">See it in action</a>
+        </div>
+        <div class="product-feature-visual">
+          <div class="feature-visual-deco"></div>
+          <div class="feature-visual-text">
+            <p>Auto-classification<br>engine</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-feature-split reverse reveal-up">
+        <div class="product-feature-text">
+          <span class="label">Change impact</span>
+          <h2>Preview before you touch.</h2>
+          <p>Propose any infrastructure change and Strata traces cascade paths across all depth planes — highlighting upstream providers and downstream dependents before a single API call is made. The closest thing to time-travel for infrastructure changes.</p>
+          <a href="contact.html" class="btn btn-ghost">Request demo</a>
+        </div>
+        <div class="product-feature-visual">
+          <div class="feature-visual-deco" style="background: radial-gradient(circle, rgba(79,184,160,0.12) 0%, transparent 70%);"></div>
+          <div class="feature-visual-text">
+            <p style="color:var(--color-secondary);">Change cascade<br>preview</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTEGRATIONS -->
+  <section class="integrations-section" id="integrations" aria-labelledby="integrations-heading">
+    <div class="container">
+      <div class="section-header centered">
+        <div class="section-label" aria-hidden="true">
+          <span class="section-label-line"></span>
+          <span class="section-label-text">Integrations</span>
+        </div>
+        <h2 id="integrations-heading">Works with your stack</h2>
+        <p>Strata connects to the platforms your infrastructure already lives on.</p>
+      </div>
+
+      <div class="integrations-grid">
+        <div class="integration-item">
+          <div class="integration-dot" style="background:rgba(255,153,0,0.1);">
+            <span style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:#ff9900;">AWS</span>
+          </div>
+          <div class="integration-name">Amazon Web Services</div>
+          <div class="integration-desc">Full resource graph integration</div>
+        </div>
+        <div class="integration-item">
+          <div class="integration-dot" style="background:rgba(66,133,244,0.1);">
+            <span style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:#4285f4;">GCP</span>
+          </div>
+          <div class="integration-name">Google Cloud</div>
+          <div class="integration-desc">Asset inventory + topology</div>
+        </div>
+        <div class="integration-item">
+          <div class="integration-dot" style="background:rgba(0,120,212,0.1);">
+            <span style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:#0078d4;">AZ</span>
+          </div>
+          <div class="integration-name">Azure</div>
+          <div class="integration-desc">Resource Manager integration</div>
+        </div>
+        <div class="integration-item">
+          <div class="integration-dot" style="background:rgba(124,108,228,0.1);">
+            <span style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:var(--color-accent);">TF</span>
+          </div>
+          <div class="integration-name">Terraform</div>
+          <div class="integration-desc">State file depth rendering</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band" aria-labelledby="product-cta-heading">
+    <div class="cta-band-deco" aria-hidden="true"></div>
+    <div class="container cta-band-inner">
+      <h2 id="product-cta-heading">Ready to map your depth?</h2>
+      <p>Early access teams get dedicated onboarding and direct access to the product team.</p>
+      <div class="cta-band-actions">
+        <a href="contact.html" class="btn btn-primary">Apply for early access</a>
+        <a href="pricing.html" class="btn btn-ghost">View pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-deco" aria-hidden="true"></div>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">Strata</a>
+          <p class="footer-tagline">Infrastructure visualization for cloud architects. See every layer before you touch it.</p>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Product</h4>
+          <ul class="footer-links">
+            <li><a href="product.html">Features</a></li>
+            <li><a href="product.html#integrations">Integrations</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Company</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Resources</h4>
+          <ul class="footer-links">
+            <li><a href="#">Docs</a></li>
+            <li><a href="#">Status</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&#169; 2025 Strata, Inc.</span>
+        <div class="footer-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="behaviors/nav.js"></script>
+  <script src="behaviors/parallax.js"></script>
+</body>
+</html>

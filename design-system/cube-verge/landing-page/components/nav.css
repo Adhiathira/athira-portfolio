@@ -1,0 +1,198 @@
+/* =============================================================
+   NAV — cube-verge / prism-drift design system
+   Technical blueprint nav: 56px, logo-left / links-right
+   Transparent at rest, instant white snap on scroll (step-end)
+   Link hover: instant iso-lift text-shadow (step-end)
+   ============================================================= */
+
+/* ── Root nav bar ─────────────────────────────────────────── */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 48px;
+  background: transparent;
+  border-bottom: 2px solid #000000;
+  backdrop-filter: none;
+  /* Step-end transition: when .scrolled class is toggled the
+     background snaps instantly — no fade */
+  transition: background 0ms step-end;
+  box-sizing: border-box;
+}
+
+/* ── Scrolled state (JS adds .scrolled on scroll > 0) ───────── */
+.site-nav.scrolled {
+  background: #ffffff;
+  border-bottom: 2px solid #000000;
+  backdrop-filter: none;
+}
+
+/* ── Logo ─────────────────────────────────────────────────── */
+.nav-logo {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000000;
+  text-decoration: none;
+  line-height: 1;
+  flex-shrink: 0;
+  /* No hover animation — wordmark is anchor, not a link with iso-lift */
+  transition: none;
+}
+
+.nav-logo:hover {
+  text-decoration: none;
+  color: #000000;
+}
+
+/* ── Desktop links container ──────────────────────────────── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Individual nav link ──────────────────────────────────── */
+.nav-link {
+  font-family: inherit;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #000000;
+  text-decoration: none;
+  line-height: 1;
+  /* Instant snap — no easing, no duration */
+  transition: text-shadow 0ms step-end;
+}
+
+/* iso-lift: instant mechanical 3D letter-lift on hover */
+.nav-link:hover {
+  text-shadow: 1px 1px 0 #000000;
+}
+
+/* ── Active nav link ──────────────────────────────────────── */
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+  text-shadow: none;
+}
+
+/* ── Mobile hamburger toggle ──────────────────────────────── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;
+  flex-shrink: 0;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #000000;
+  transform-origin: center;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hamburger → X animation when mobile menu is open */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Mobile menu overlay ──────────────────────────────────── */
+.nav-mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border: 2px solid #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  z-index: 1050;
+  /* Starts off-screen above viewport */
+  transform: translateY(-100%);
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.nav-mobile-menu.is-open {
+  transform: translateY(0);
+}
+
+/* Mobile menu links */
+.nav-mobile-menu .nav-mobile-link {
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #000000;
+  text-decoration: none;
+  transition: text-shadow 0ms step-end;
+}
+
+.nav-mobile-menu .nav-mobile-link:hover {
+  text-shadow: 1px 1px 0 #000000;
+}
+
+.nav-mobile-menu .nav-mobile-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+  text-shadow: none;
+}
+
+/* ── Responsive breakpoints ───────────────────────────────── */
+@media (max-width: 900px) {
+  .site-nav {
+    padding-inline: 24px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-nav {
+    padding-inline: 16px;
+  }
+}

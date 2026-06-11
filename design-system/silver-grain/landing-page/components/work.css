@@ -1,0 +1,167 @@
+/* ── Work / Papers page ── */
+/* Product showcase medium hero, catalog grid */
+
+#papers-header {
+  background: var(--color-parchment, #f5f0e8);
+  padding: 80px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+#papers-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(184, 92, 42, 0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+#papers-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-heading, #242424);
+  text-shadow: 0.5px 0.5px 0px rgba(184, 92, 42, 0.15);
+  margin: 0 0 0.75rem 0;
+}
+
+#papers-header p {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--color-muted-text, #616161);
+  max-width: 52ch;
+  margin: 0;
+}
+
+/* ── Papers grid ── */
+#papers-section {
+  background: var(--color-page-bg, #f5f5f0);
+  padding: 80px 0 120px;
+}
+
+#papers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+/* Bento-style: first paper card spans 2 rows */
+#papers-grid .paper-card:first-child {
+  grid-row: span 2;
+}
+
+.paper-card {
+  background: var(--color-surface, #ffffff);
+  border: 1.5px solid var(--color-border-default, rgba(36,36,36,0.12));
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow var(--duration-base) var(--ease-primary),
+              transform var(--duration-base) var(--ease-primary);
+}
+
+.paper-card:hover {
+  box-shadow: 0 8px 32px rgba(26, 24, 20, 0.1);
+  transform: translateY(-4px);
+}
+
+.paper-card-image-area {
+  width: 100%;
+  background: var(--color-parchment, #f5f0e8);
+  overflow: hidden;
+}
+
+.paper-card:first-child .paper-card-image-area {
+  aspect-ratio: 2/3;
+}
+
+.paper-card:not(:first-child) .paper-card-image-area {
+  aspect-ratio: 3/2;
+}
+
+.paper-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(0.1);
+  transition: transform var(--duration-slow) var(--ease-primary),
+              filter var(--duration-slow) var(--ease-primary);
+}
+
+.paper-card:hover img {
+  transform: scale(1.03);
+  filter: grayscale(0);
+}
+
+.paper-card-info {
+  padding: 1.5rem 1.5rem 1.75rem;
+}
+
+.paper-card-label {
+  font-family: var(--font-ui);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-amber-clay, #b85c2a);
+  margin: 0 0 0.5rem 0;
+}
+
+.paper-card-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--color-heading);
+  margin: 0 0 0.6rem 0;
+}
+
+.paper-card-desc {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--color-muted-text, #616161);
+  margin: 0;
+}
+
+/* Specifications table */
+.paper-card-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.375rem 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-subtle, rgba(36,36,36,0.07));
+}
+
+.spec-label {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+}
+
+.spec-value {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--color-body-text);
+  font-weight: 400;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #papers-grid {
+    grid-template-columns: 1fr;
+  }
+  #papers-grid .paper-card:first-child {
+    grid-row: span 1;
+  }
+}

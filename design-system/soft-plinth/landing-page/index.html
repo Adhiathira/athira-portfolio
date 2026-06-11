@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roundwork Studio — No corners. No compromises.</title>
+  <meta name="description" content="Hand-pressed kitchen tools and home objects made in Oaxaca. Every piece designed without sharp edges — thrown, pressed, or carved into rounded plump forms.">
+
+  <!-- GSAP CDN — loaded before any scripts that reference it -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens (first always) -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component styles -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/dividers.css">
+  <link rel="stylesheet" href="components/collection.css">
+  <link rel="stylesheet" href="components/features.css">
+  <link rel="stylesheet" href="components/video-feature.css">
+  <link rel="stylesheet" href="components/studio.css">
+  <link rel="stylesheet" href="components/footer.css">
+</head>
+<body>
+
+<!-- ============================================================
+     NAV — verbatim template
+     ============================================================ -->
+<nav id="site-nav" class="site-nav">
+  <a href="index.html" class="nav-logo">Roundwork Studio</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="collection.html" class="nav-link">Collection</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="studio.html" class="nav-link">Studio</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+  <button class="nav-mobile-close" aria-label="Close menu"><span></span><span></span></button>
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="collection.html" class="nav-link">Collection</a>
+  <a href="process.html" class="nav-link">Process</a>
+  <a href="studio.html" class="nav-link">Studio</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+</div>
+<script>
+  (function () {
+    var nav = document.getElementById('site-nav');
+    var mobileMenu = document.querySelector('.nav-mobile-menu');
+    var mobileToggle = document.querySelector('.nav-mobile-toggle');
+    var mobileClose = document.querySelector('.nav-mobile-close');
+    var scrollThreshold = 80;
+    function onScroll() {
+      if (window.scrollY > scrollThreshold) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    function openMenu() { nav.classList.add('nav-mobile-open'); mobileMenu.classList.add('is-open'); mobileToggle.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { nav.classList.remove('nav-mobile-open'); mobileMenu.classList.remove('is-open'); mobileToggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    mobileToggle.addEventListener('click', function () { if (mobileMenu.classList.contains('is-open')) { closeMenu(); } else { openMenu(); } });
+    if (mobileClose) { mobileClose.addEventListener('click', closeMenu); }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) { closeMenu(); } });
+    var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    var allLinks = document.querySelectorAll('.nav-link');
+    allLinks.forEach(function (link) { var href = link.getAttribute('href'); if (href === currentPage || (currentPage === '' && href === 'index.html')) { link.classList.add('nav-link--active'); } });
+  })();
+</script>
+
+
+<!-- ============================================================
+     SECTION 1: HERO (dark, #1e3a35)
+     ============================================================ -->
+<section id="hero" aria-label="Hero">
+
+  <!-- Floating blob shapes -->
+  <div id="blob-orange" aria-hidden="true"></div>
+  <div id="blob-teal" aria-hidden="true"></div>
+  <div id="blob-cream" aria-hidden="true"></div>
+
+  <!-- Video background — onerror hides it gracefully -->
+  <video id="hero-video" autoplay muted loop playsinline onerror="this.style.display='none'">
+    <source src="assets/hero-ambient.mp4" type="video/mp4">
+  </video>
+
+  <!-- Atmospheric overlay -->
+  <div id="hero-overlay" aria-hidden="true"></div>
+
+  <!-- Content -->
+  <div id="hero-content">
+    <div id="hero-eyebrow">Made in Oaxaca</div>
+
+    <!-- Hero headline: chars are injected by GSAP script below.
+         The data-text attribute holds the source text safely. -->
+    <h1 id="hero-headline" data-text="No corners. No compromises.">
+      <noscript>No corners. No compromises.</noscript>
+    </h1>
+
+    <p id="hero-subheadline">
+      Hand-pressed objects for modern life. Made in Oaxaca.
+    </p>
+
+    <div id="hero-cta-group">
+      <a id="hero-cta-primary" href="collection.html">Explore Collection</a>
+      <a id="hero-cta-ghost" href="process.html">Our Process</a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div id="hero-scroll-indicator" aria-hidden="true">
+    <span id="hero-scroll-label">Scroll</span>
+    <div id="hero-scroll-arrow"></div>
+  </div>
+
+</section>
+
+
+<!-- ============================================================
+     DIVIDER 1: Dark hero (#1e3a35) to White (#ffffff)
+     ============================================================ -->
+<div id="divider-hero-to-white" class="squiggle-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path class="divider-path" d="
+      M0,60
+      C60,20 140,80 220,50
+      C300,20 380,75 460,45
+      C540,15 620,70 700,48
+      C780,26 860,72 940,42
+      C1020,12 1100,68 1180,44
+      C1260,20 1360,62 1440,38
+      L1440,90 L0,90 Z
+    "/>
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     SECTION 3: FEATURED COLLECTION (white bg)
+     ============================================================ -->
+<section id="collection" aria-label="Featured Collection">
+  <div id="collection-inner">
+
+    <div id="collection-header">
+      <div id="collection-eyebrow">Crafted Objects</div>
+      <h2 id="collection-heading">Made for your hands</h2>
+      <p id="collection-body">
+        Each piece begins as raw stoneware clay, coaxed into form without moulds
+        or sharp tools. Rounded profiles, generous weights, surfaces that invite
+        touch. These are objects made to be used &mdash; daily, generously, for years.
+      </p>
+    </div>
+
+    <!-- Bento grid: 1.5fr 1fr -->
+    <div id="collection-bento">
+
+      <!-- Card 1 — large, spans 2 rows -->
+      <article id="card-bowl" class="product-card">
+        <div class="card-image-wrap">
+          <div class="card-image-placeholder">
+            <div class="card-placeholder-orb"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">The Round Bowl</h3>
+          <p class="card-material">Stoneware &middot; Forest Glaze</p>
+          <p class="card-price">From $68</p>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article id="card-mug" class="product-card">
+        <div class="card-image-wrap">
+          <div class="card-image-placeholder">
+            <div class="card-placeholder-orb"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Mug No. 7</h3>
+          <p class="card-material">Stoneware &middot; Sage Glaze</p>
+          <p class="card-price">From $48</p>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article id="card-butter" class="product-card">
+        <div class="card-image-wrap">
+          <div class="card-image-placeholder">
+            <div class="card-placeholder-orb"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Butter Keeper</h3>
+          <p class="card-material">Earthenware &middot; Cream Glaze</p>
+          <p class="card-price">From $54</p>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article id="card-vase" class="product-card">
+        <div class="card-image-wrap">
+          <div class="card-image-placeholder">
+            <div class="card-placeholder-orb"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Oval Vase</h3>
+          <p class="card-material">Stoneware &middot; Slate Glaze</p>
+          <p class="card-price">From $72</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div id="collection-cta-row">
+      <a id="collection-cta" href="collection.html">View Full Collection &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     DIVIDER 2: White (#ffffff) to Surface (#f0ede8)
+     ============================================================ -->
+<div id="divider-white-to-surface" class="squiggle-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path class="divider-path" d="
+      M0,50
+      C80,10 180,70 300,35
+      C420,0 520,60 640,30
+      C760,0 860,55 980,28
+      C1100,1 1240,52 1440,22
+      L1440,80 L0,80 Z
+    "/>
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     SECTION 5: CRAFT PROMISE (surface bg #f0ede8)
+     ============================================================ -->
+<section id="craft-promise" aria-label="Craft Promise">
+  <div id="craft-inner">
+
+    <div id="craft-header">
+      <div id="craft-eyebrow">Why Roundwork</div>
+      <h2 id="craft-heading">The promise in every curve</h2>
+      <p id="craft-subheading">
+        Three principles guide every object that leaves the workshop in San Marcos Tlapazola.
+      </p>
+    </div>
+
+    <div id="craft-grid">
+
+      <!-- Column 1 -->
+      <div id="promise-edges" class="promise-card">
+        <div class="promise-icon-circle" aria-hidden="true">&#9711;</div>
+        <h3 class="promise-title">No Sharp Edges</h3>
+        <p class="promise-body">
+          Every surface is curved, every edge rounded to a minimum radius of 16mm.
+          Not as a stylistic choice &mdash; as a material commitment. Clay remembers hands.
+        </p>
+        <span class="promise-number">01 / 03</span>
+      </div>
+
+      <!-- Column 2 -->
+      <div id="promise-fired" class="promise-card">
+        <div class="promise-icon-circle" aria-hidden="true">&#9830;</div>
+        <h3 class="promise-title">Fired Twice</h3>
+        <p class="promise-body">
+          Bisque fire, then glaze fire at 1260&deg;C. Stoneware that outlasts fashion
+          and resists the dishwasher, the freezer, and a lifetime of daily use.
+        </p>
+        <span class="promise-number">02 / 03</span>
+      </div>
+
+      <!-- Column 3 -->
+      <div id="promise-oaxaca" class="promise-card">
+        <div class="promise-icon-circle" aria-hidden="true">&#9679;</div>
+        <h3 class="promise-title">Made in Oaxaca</h3>
+        <p class="promise-body">
+          A family workshop, three artisans, and a 40-year tradition of Zapotec
+          ceramics. Each piece is signed. Each piece is singular.
+        </p>
+        <span class="promise-number">03 / 03</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     DIVIDER 3: Surface (#f0ede8) to Dark (#1e3a35)
+     ============================================================ -->
+<div id="divider-surface-to-dark" class="squiggle-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path class="divider-path" d="
+      M0,40
+      C100,80 220,10 360,55
+      C500,100 600,20 760,60
+      C920,100 1040,15 1200,58
+      C1320,88 1400,30 1440,50
+      L1440,100 L0,100 Z
+    "/>
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     SECTION 7: VIDEO FEATURE (dark #1e3a35)
+     ============================================================ -->
+<section id="video-feature" aria-label="Video Feature">
+
+  <!-- Video — onerror hides gracefully; section bg serves as backdrop -->
+  <video id="craft-video" autoplay muted loop playsinline onerror="this.style.display='none'">
+    <source src="assets/clay-craft.mp4" type="video/mp4">
+  </video>
+
+  <div id="video-overlay" aria-hidden="true"></div>
+
+  <div id="video-content">
+    <div id="video-eyebrow">Watch how it&rsquo;s made</div>
+    <h2 id="video-headline">From clay to table,<br>nothing is rushed.</h2>
+    <p id="video-body">
+      Every bowl, mug, and vessel takes between three and five days from raw clay to
+      finished glaze. Slow by design. Fast enough for a lifetime.
+    </p>
+    <a id="video-cta" href="process.html">See the Process &rarr;</a>
+  </div>
+
+  <!-- Decorative clay orb -->
+  <div id="video-clay-accent" aria-hidden="true"></div>
+
+</section>
+
+
+<!-- ============================================================
+     DIVIDER 4: Dark (#1e3a35) to White (#ffffff)
+     ============================================================ -->
+<div id="divider-dark-to-white" class="squiggle-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path class="divider-path" d="
+      M0,30
+      C120,70 240,5 400,45
+      C560,85 680,8 840,50
+      C1000,92 1120,12 1280,48
+      C1360,66 1410,28 1440,40
+      L1440,90 L0,90 Z
+    "/>
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     SECTION 9: STUDIO INTRO (white bg)
+     ============================================================ -->
+<section id="studio" aria-label="Studio Intro">
+  <div id="studio-inner">
+
+    <div id="studio-grid">
+
+      <!-- Text: 3fr -->
+      <div id="studio-text">
+        <div id="studio-eyebrow">The Workshop</div>
+        <h2 id="studio-heading">The workshop in San Marcos</h2>
+        <p class="studio-paragraph">
+          Nestled in the valley east of Oaxaca City, San Marcos Tlapazola has been a
+          centre of red clay pottery for centuries. The G&oacute;mez workshop &mdash; three
+          generations of the same family &mdash; still fires from a wood-kiln built by
+          the founders in the 1980s. Every form thrown there carries the geological
+          memory of Oaxacan earth.
+        </p>
+        <p class="studio-paragraph">
+          Roundwork partners exclusively with this single workshop. No outsourcing,
+          no factory lines &mdash; only pieces thrown, trimmed, bisqued, and glazed by
+          the same hands that shaped the studio&rsquo;s aesthetic from the beginning.
+          Clay sourced within 40 kilometres. Glazes mixed on site. Firing schedules
+          tied to weather, season, and instinct.
+        </p>
+
+        <div id="studio-detail-row">
+          <div class="studio-detail-item">
+            <span class="studio-detail-value">3</span>
+            <span class="studio-detail-label">Artisans</span>
+          </div>
+          <div class="studio-detail-item">
+            <span class="studio-detail-value">40yr</span>
+            <span class="studio-detail-label">Tradition</span>
+          </div>
+          <div class="studio-detail-item">
+            <span class="studio-detail-value">40km</span>
+            <span class="studio-detail-label">Clay radius</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual: 2fr — glaze swatch stack -->
+      <div id="studio-visual">
+        <div id="studio-swatches-wrap">
+
+          <div id="swatch-forest" class="glaze-swatch">
+            <div class="glaze-swatch-dot"></div>
+            <span class="glaze-swatch-label">Forest</span>
+          </div>
+
+          <div id="swatch-terracotta" class="glaze-swatch">
+            <div class="glaze-swatch-dot"></div>
+            <span class="glaze-swatch-label">Terracotta</span>
+          </div>
+
+          <div id="swatch-cream" class="glaze-swatch">
+            <div class="glaze-swatch-dot"></div>
+            <span class="glaze-swatch-label">Cream</span>
+          </div>
+
+          <div id="swatch-gold" class="glaze-swatch">
+            <div class="glaze-swatch-dot"></div>
+            <span class="glaze-swatch-label">Honey Gold</span>
+          </div>
+
+          <div id="swatch-slate" class="glaze-swatch">
+            <div class="glaze-swatch-dot"></div>
+            <span class="glaze-swatch-label">Deep Slate</span>
+          </div>
+
+        </div>
+        <p id="studio-glaze-caption">Current glaze palette &mdash; five colourways</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     DIVIDER 5: White (#ffffff) to Dark footer (#2b2918)
+     ============================================================ -->
+<div id="divider-white-to-footer" class="squiggle-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 88" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path class="divider-path" d="
+      M0,55
+      C90,15 200,75 340,38
+      C480,1 580,65 720,35
+      C860,5 960,62 1100,30
+      C1240,-2 1360,48 1440,24
+      L1440,88 L0,88 Z
+    "/>
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     SECTION 11: FOOTER (dark #2b2918)
+     ============================================================ -->
+<footer id="site-footer" role="contentinfo">
+  <div id="footer-inner">
+
+    <div id="footer-grid">
+
+      <!-- Col 1: Brand -->
+      <div id="footer-brand">
+        <a id="footer-logo" href="index.html">Roundwork Studio</a>
+        <p id="footer-tagline">
+          No corners. No compromises. Hand-pressed ceramics from
+          the workshops of Oaxaca.
+        </p>
+        <span id="footer-origin">&#9679; San Marcos Tlapazola, Oaxaca</span>
+      </div>
+
+      <!-- Col 2: Nav -->
+      <nav id="footer-nav" aria-label="Footer navigation">
+        <p id="footer-nav-heading">Navigate</p>
+        <a href="index.html" class="footer-nav-link">Home</a>
+        <a href="collection.html" class="footer-nav-link">Collection</a>
+        <a href="process.html" class="footer-nav-link">Process</a>
+        <a href="studio.html" class="footer-nav-link">Studio</a>
+        <a href="contact.html" class="footer-nav-link">Contact</a>
+      </nav>
+
+      <!-- Col 3: Newsletter -->
+      <div id="footer-newsletter">
+        <p id="footer-newsletter-heading">Stay in the loop</p>
+        <p id="footer-newsletter-body">
+          New pieces, workshop news, and seasonal glazes &mdash;
+          delivered quietly to your inbox.
+        </p>
+        <form id="newsletter-form" onsubmit="return false;">
+          <input
+            id="newsletter-email"
+            type="email"
+            placeholder="your@email.com"
+            autocomplete="email"
+            aria-label="Email address"
+          >
+          <button id="newsletter-submit" type="submit">Subscribe</button>
+        </form>
+      </div>
+
+    </div>
+
+    <div id="footer-bottom">
+      <p id="footer-copyright">&copy; 2025 Roundwork Studio. All rights reserved.</p>
+      <div id="footer-legal-links">
+        <a href="#" class="footer-legal-link">Privacy</a>
+        <a href="#" class="footer-legal-link">Terms</a>
+        <a href="#" class="footer-legal-link">Shipping</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     GSAP ANIMATIONS
+     ============================================================ -->
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ------------------------------------------------------------------
+  // HERO: Letter-by-letter inflate animation
+  // Split the hero headline into individual char spans using safe DOM methods
+  // ------------------------------------------------------------------
+  (function () {
+    var headline = document.getElementById('hero-headline');
+    if (!headline) return;
+
+    // Read raw text from the data-text attribute — never from untrusted input
+    var rawText = headline.getAttribute('data-text') || '';
+    if (!rawText) return;
+
+    // Remove the <noscript> fallback and any whitespace text nodes
+    while (headline.firstChild) {
+      headline.removeChild(headline.firstChild);
+    }
+
+    // Build one <span class="char"> per character using safe DOM creation
+    var chars = [];
+    for (var i = 0; i < rawText.length; i++) {
+      var ch = rawText[i];
+      var span = document.createElement('span');
+      span.className = 'char';
+      // Use textContent for safe text insertion (no HTML interpretation)
+      // Preserve spaces so the browser does not collapse them
+      span.style.whiteSpace = 'pre';
+      span.textContent = ch;
+      headline.appendChild(span);
+      chars.push(span);
+    }
+
+    // Set initial state via GSAP (not CSS opacity:0) so content is safe if GSAP fails
+    gsap.set(chars, { opacity: 0, scale: 0.3 });
+
+    // Inflate each character on page load — hero is already in viewport
+    gsap.to(chars, {
+      opacity: 1,
+      scale: 1,
+      ease: 'elastic.out(1, 0.4)',
+      stagger: 0.04,
+      delay: 0.3,
+      duration: 1.0
+    });
+  })();
+
+
+  // ------------------------------------------------------------------
+  // HERO: Eyebrow, subheadline, CTAs — spring entrance from below
+  // ------------------------------------------------------------------
+  (function () {
+    var items = ['#hero-eyebrow', '#hero-subheadline', '#hero-cta-group'];
+    gsap.set(items, { opacity: 0, y: 24 });
+    gsap.to(items, {
+      opacity: 1,
+      y: 0,
+      ease: 'elastic.out(1, 0.4)',
+      stagger: 0.12,
+      delay: 0.8,
+      duration: 0.9
+    });
+  })();
+
+
+  // ------------------------------------------------------------------
+  // COLLECTION HEADER: Clip-path wipe reveal (distinct from card inflate)
+  // ------------------------------------------------------------------
+  (function () {
+    var header = document.getElementById('collection-header');
+    if (!header) return;
+
+    gsap.fromTo(header,
+      { clipPath: 'inset(0 100% 0 0)' },
+      {
+        clipPath: 'inset(0 0% 0 0)',
+        scrollTrigger: {
+          trigger: header,
+          start: 'top 85%',
+          once: true
+        },
+        ease: 'power3.out',
+        duration: 0.85
+      }
+    );
+  })();
+
+
+  // ------------------------------------------------------------------
+  // COLLECTION CARDS: Elastic inflate on scroll (scale + y)
+  // ------------------------------------------------------------------
+  (function () {
+    var cards = document.querySelectorAll('.product-card');
+    if (!cards.length) return;
+
+    gsap.set(cards, { opacity: 0, scale: 0.88, y: 20 });
+
+    gsap.to(cards, {
+      scrollTrigger: {
+        trigger: '#collection-bento',
+        start: 'top 78%',
+        once: true
+      },
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      ease: 'elastic.out(1, 0.4)',
+      stagger: 0.1,
+      duration: 0.9
+    });
+  })();
+
+
+  // ------------------------------------------------------------------
+  // CRAFT PROMISE: Rotate + rise stagger (3deg tilt, y:40)
+  // Distinct animation type: rotation — not used elsewhere
+  // ------------------------------------------------------------------
+  (function () {
+    var cards = document.querySelectorAll('.promise-card');
+    if (!cards.length) return;
+
+    gsap.set(cards, { opacity: 0, rotation: 3, y: 40 });
+
+    gsap.to(cards, {
+      scrollTrigger: {
+        trigger: '#craft-grid',
+        start: 'top 80%',
+        once: true
+      },
+      opacity: 1,
+      rotation: 0,
+      y: 0,
+      ease: 'elastic.out(1, 0.4)',
+      stagger: 0.15,
+      duration: 1.0
+    });
+  })();
+
+
+  // ------------------------------------------------------------------
+  // VIDEO FEATURE: Horizontal slide from left
+  // Distinct: x-axis movement vs y-axis used elsewhere
+  // ------------------------------------------------------------------
+  (function () {
+    var content = document.getElementById('video-content');
+    if (!content) return;
+
+    gsap.set(content, { opacity: 0, x: -60 });
+
+    gsap.to(content, {
+      scrollTrigger: {
+        trigger: '#video-feature',
+        start: 'top 75%',
+        once: true
+      },
+      opacity: 1,
+      x: 0,
+      ease: 'elastic.out(1, 0.4)',
+      duration: 1.1
+    });
+  })();
+
+
+  // ------------------------------------------------------------------
+  // STUDIO SWATCHES: Horizontal scaleX expand from left
+  // Distinct: scaleX expand vs y-rise or rotation used elsewhere
+  // ------------------------------------------------------------------
+  (function () {
+    var swatches = document.querySelectorAll('.glaze-swatch');
+    if (!swatches.length) return;
+
+    gsap.set(swatches, { opacity: 0, scaleX: 0.3, transformOrigin: 'left center' });
+
+    gsap.to(swatches, {
+      scrollTrigger: {
+        trigger: '#studio-swatches-wrap',
+        start: 'top 80%',
+        once: true
+      },
+      opacity: 1,
+      scaleX: 1,
+      ease: 'elastic.out(1, 0.4)',
+      stagger: 0.12,
+      duration: 1.0
+    });
+  })();
+
+
+  // ------------------------------------------------------------------
+  // STUDIO TEXT: Parallax drift tied to scroll (scrub)
+  // Cross-segment vertical travel — text drifts up as user scrolls past
+  // ------------------------------------------------------------------
+  (function () {
+    var text = document.getElementById('studio-text');
+    if (!text) return;
+
+    gsap.to(text, {
+      scrollTrigger: {
+        trigger: '#studio',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.4
+      },
+      y: -30,
+      ease: 'none'
+    });
+  })();
+
+
+  // ------------------------------------------------------------------
+  // STUDIO STATS: Scale-from-center pop (low intensity, brief)
+  // ------------------------------------------------------------------
+  (function () {
+    var details = document.querySelectorAll('.studio-detail-item');
+    if (!details.length) return;
+
+    gsap.set(details, { opacity: 0, scale: 0.7 });
+
+    gsap.to(details, {
+      scrollTrigger: {
+        trigger: '#studio-detail-row',
+        start: 'top 88%',
+        once: true
+      },
+      opacity: 1,
+      scale: 1,
+      ease: 'back.out(2)',
+      stagger: 0.1,
+      duration: 0.6
+    });
+  })();
+
+
+  // ------------------------------------------------------------------
+  // FOOTER: Gentle fade-up (low intensity — visual rest)
+  // ------------------------------------------------------------------
+  (function () {
+    var footerGrid = document.getElementById('footer-grid');
+    if (!footerGrid) return;
+
+    gsap.set(footerGrid, { opacity: 0, y: 20 });
+
+    gsap.to(footerGrid, {
+      scrollTrigger: {
+        trigger: '#site-footer',
+        start: 'top 88%',
+        once: true
+      },
+      opacity: 1,
+      y: 0,
+      ease: 'power2.out',
+      duration: 0.75
+    });
+  })();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+/* ============================================================
+   Coverage Grid — SPECTRA
+   Full 6-col compact station cards + regional stat bands
+   ============================================================ */
+
+#coverage-grid {
+  position: relative;
+  background: var(--color-section-purple);
+  padding: var(--space-section-top) 0 var(--space-section-bottom);
+  overflow: hidden;
+}
+
+/* Depth layer — subtle inner radial */
+#coverage-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 50% at 50% 0%,
+    rgba(146, 72, 228, 0.07) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Section inner ── */
+#coverage-grid-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding-inline);
+}
+
+/* ── Section header ── */
+#coverage-grid-header {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 680px;
+}
+
+#coverage-grid-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+}
+
+#coverage-grid-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 60px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0;
+}
+
+#coverage-grid-sub {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--color-muted-text);
+  margin: 0;
+}
+
+/* ── Station indicator grid ── */
+#station-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 48px;
+  margin-top: 40px;
+}
+
+/* ── Compact station card ── */
+.station-mini-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 140px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.station-mini-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.station-mini-card:hover {
+  border-color: rgba(33, 243, 182, 0.45);
+  box-shadow:
+    0 0 16px rgba(33, 243, 182, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.mini-card-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mini-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-accent-teal);
+  flex-shrink: 0;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.mini-status-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+}
+
+.mini-card-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.mini-card-code {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(200, 205, 212, 0.4);
+  margin-top: auto;
+}
+
+.mini-card-lat {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(200, 205, 212, 0.5);
+  letter-spacing: 0.03em;
+}
+
+/* ── Regional stat bands ── */
+#coverage-stats-bands {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.region-stat-band {
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.02);
+  position: relative;
+  transition: background 0.25s ease;
+}
+
+.region-stat-band:last-child {
+  border-right: none;
+}
+
+.region-stat-band:hover {
+  background: rgba(33, 243, 182, 0.04);
+}
+
+.region-stat-count {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-accent-teal);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.region-stat-name {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(200, 205, 212, 0.6);
+}
+
+.region-stat-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(200, 205, 212, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  #station-cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  #coverage-stats-bands {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .region-stat-band:nth-child(3) {
+    border-right: none;
+  }
+
+  .region-stat-band:nth-child(4) {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+}
+
+@media (max-width: 900px) {
+  #station-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #coverage-stats-bands {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .region-stat-band:nth-child(2) {
+    border-right: none;
+  }
+
+  .region-stat-band:nth-child(3),
+  .region-stat-band:nth-child(5) {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .region-stat-band:nth-child(3) {
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+  }
+}
+
+@media (max-width: 600px) {
+  #station-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #coverage-stats-bands {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .station-mini-card {
+    min-height: 120px;
+    padding: 14px 12px;
+  }
+}

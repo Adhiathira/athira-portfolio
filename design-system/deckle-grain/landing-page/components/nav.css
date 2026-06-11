@@ -1,0 +1,282 @@
+/* ═══════════════════════════════════════════════════
+   NAV — Bookshelf bar
+   88px, warm linen bg
+   EB Garamond wordmark | Book-spine nav | ghost CTA
+   ═══════════════════════════════════════════════════ */
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-3xl);
+  background: var(--color-nav-bg);
+  border-bottom: 1px solid transparent;
+  transition: var(--transition-nav);
+}
+
+.site-nav.nav--scrolled {
+  background: var(--color-nav-bg-scrolled);
+  border-bottom-color: var(--color-nav-border-scrolled);
+}
+
+/* ── Wordmark ── */
+.nav-wordmark {
+  font-family: var(--font-edito);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: var(--color-nav-text);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-wordmark:hover {
+  opacity: 0.7;
+}
+
+/* ── Old nav-links: hidden on desktop, used in mobile menu ── */
+.nav-links {
+  display: none;
+}
+
+/* ─── Bookshelf container ─── */
+.nav-bookshelf {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  perspective: 800px;
+  padding-bottom: 6px;   /* books sit above shelf ledge */
+  position: relative;
+}
+
+/* Shelf ledge */
+.nav-bookshelf::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -12px;
+  right: -12px;
+  height: 4px;
+  background: linear-gradient(to bottom, #b8a898, #a09080);
+  border-radius: 1px;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.3) inset;
+}
+
+/* ─── Individual book spine ─── */
+.nav-book {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 60px;
+  border-radius: 2px 3px 1px 1px;
+  text-decoration: none;
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: bottom center;
+  transition: transform 0.3s var(--ease-nav), box-shadow 0.3s ease;
+  box-shadow: 1px 2px 4px rgba(0,0,0,0.12), -1px 0 2px rgba(0,0,0,0.06);
+  cursor: pointer;
+}
+
+/* Width variation per book for realism */
+.nav-book[data-spine="editions"]     { width: 36px; height: 62px; }
+.nav-book[data-spine="process"]      { width: 30px; height: 58px; }
+.nav-book[data-spine="commissions"]  { width: 40px; height: 64px; }
+.nav-book[data-spine="about"]        { width: 28px; height: 56px; }
+
+/* Spine colors */
+.nav-book[data-spine="editions"]     { background: var(--book-spine-editions); }
+.nav-book[data-spine="process"]      { background: var(--book-spine-process); }
+.nav-book[data-spine="commissions"]  { background: var(--book-spine-commissions); }
+.nav-book[data-spine="about"]        { background: var(--book-spine-about); }
+
+/* ─── Headband (colored strip at top) ─── */
+.nav-book-headband {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 2px 3px 0 0;
+}
+
+.nav-book[data-spine="editions"] .nav-book-headband     { background: var(--book-headband-editions); }
+.nav-book[data-spine="process"] .nav-book-headband      { background: var(--book-headband-process); }
+.nav-book[data-spine="commissions"] .nav-book-headband  { background: var(--book-headband-commissions); }
+.nav-book[data-spine="about"] .nav-book-headband        { background: var(--book-headband-about); }
+
+/* ─── Spine title text ─── */
+.nav-book-title {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  font-family: var(--font-edito);
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.nav-book[data-spine="editions"] .nav-book-title     { color: var(--book-spine-editions-text); }
+.nav-book[data-spine="process"] .nav-book-title      { color: var(--book-spine-process-text); }
+.nav-book[data-spine="commissions"] .nav-book-title  { color: var(--book-spine-commissions-text); }
+.nav-book[data-spine="about"] .nav-book-title        { color: var(--book-spine-about-text); }
+
+/* ─── Hover: subtle tilt ─── */
+.nav-book:hover {
+  transform: rotateX(-6deg) translateY(-2px);
+  box-shadow: 2px 4px 8px rgba(0,0,0,0.18), -1px 0 3px rgba(0,0,0,0.08);
+}
+
+/* ─── Active: current page book tilted forward ─── */
+.nav-book.is-active {
+  transform: rotateX(-12deg) translateY(-4px);
+  box-shadow: 2px 6px 12px rgba(0,0,0,0.22), -1px 0 4px rgba(0,0,0,0.1);
+}
+
+/* ── CTA ── */
+.nav-cta {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-nav);
+  text-transform: uppercase;
+  color: var(--color-btn-ghost-text);
+  border: 1px solid var(--color-border-light);
+  padding: var(--padding-btn-y) var(--padding-btn-x);
+  border-radius: var(--border-radius-btn);
+  text-decoration: none;
+  transition: var(--transition-btn);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-cta:hover {
+  background: var(--color-btn-ghost-hover-bg);
+}
+
+/* ── Mobile Toggle ── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  z-index: 1010;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-nav-text);
+  transition: transform 0.35s var(--ease-nav), opacity 0.25s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ── Mobile Menu Overlay ── */
+.nav-mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: var(--color-surface-warm);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.nav-mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-mobile-menu .nav-link {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-nav);
+  text-transform: uppercase;
+  color: var(--color-nav-text);
+  text-decoration: none;
+  line-height: 1;
+  padding: 4px 0;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1.5px;
+  transition: background-size 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-mobile-menu .nav-link:hover {
+  background-size: 100% 1.5px;
+}
+
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+  background-size: 100% 1.5px;
+}
+
+/* ── Nav Spacer ── */
+.nav-spacer {
+  height: 0;
+}
+.nav-spacer.active {
+  height: var(--nav-height);
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+
+/* ─── Hide bookshelf below 900px ─── */
+@media (max-width: 900px) {
+  .nav-bookshelf {
+    display: none;
+  }
+
+  .site-nav {
+    padding: 0 var(--space-lg);
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-nav {
+    padding: 0 var(--space-md);
+  }
+}

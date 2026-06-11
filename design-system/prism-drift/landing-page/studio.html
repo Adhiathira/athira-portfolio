@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio — IRID Structural Color</title>
+  <meta name="description" content="Meet the IRID studio — our story, philosophy, team, and process behind biomimetic thin-film structural color." />
+
+  <!-- GSAP (loaded in head for ScrollTrigger registration) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <!-- Nav component -->
+  <link rel="stylesheet" href="components/nav.css" />
+  <!-- Studio page styles -->
+  <link rel="stylesheet" href="components/studio.css" />
+</head>
+
+<body>
+
+  <!-- ── NAV ── -->
+  <nav id="site-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">IRID</a>
+    <ul class="nav-links" role="list">
+      <li><a href="technology.html" class="nav-link">Technology</a></li>
+      <li><a href="applications.html" class="nav-link">Applications</a></li>
+      <li><a href="studio.html" class="nav-link nav-link--active">Studio</a></li>
+      <li><a href="contact.html" class="nav-link nav-cta">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-menu" id="mobile-menu">
+    <a href="technology.html" class="nav-link">Technology</a>
+    <a href="applications.html" class="nav-link">Applications</a>
+    <a href="studio.html" class="nav-link">Studio</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </div>
+
+  <div class="nav-spacer" style="height:72px"></div>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 1 — IRIDESCENT BUBBLE VIDEO HERO
+       ══════════════════════════════════════════════════════ -->
+  <section id="studio-hero" aria-label="IRID Studio Hero">
+
+    <!-- Video background — onerror falls back to animated conic-gradient -->
+    <video
+      id="studio-hero-video"
+      class="hero-video"
+      autoplay
+      loop
+      muted
+      playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    >
+      <source src="assets/iridescent-bubble.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Fallback: animated conic-gradient placeholder -->
+    <div id="studio-hero-video-placeholder" aria-hidden="true">
+      → assets/iridescent-bubble.mp4
+    </div>
+
+    <!-- Edge vignette — preserves video while giving text context -->
+    <div id="studio-hero-vignette" aria-hidden="true"></div>
+
+    <!-- Hero copy -->
+    <div id="studio-hero-content">
+      <h1 id="studio-hero-title">IRID<br>Studio</h1>
+      <p id="studio-hero-subhead">The laboratory where light becomes material.</p>
+    </div>
+
+    <!-- Scroll hint -->
+    <div id="studio-hero-scroll-hint" aria-hidden="true">
+      <div id="studio-hero-scroll-line"></div>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 2 — OUR STORY
+       ══════════════════════════════════════════════════════ -->
+
+  <!-- SVG divider: compound irregular wave (black → white) -->
+  <div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,32 C180,68 360,6 560,42 C720,70 900,8 1100,46 C1260,68 1360,18 1440,34 L1440,72 L0,72 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <section id="studio-story" aria-label="Our Story">
+    <div class="studio-container">
+      <div id="studio-story-inner">
+
+        <div id="studio-story-left">
+          <div id="studio-story-rule" aria-hidden="true"></div>
+          <h2 id="studio-story-heading">Our<br>Story</h2>
+
+          <p id="studio-story-p1">
+            IRID was founded in 2019 by a group of materials scientists and optical engineers who refused to accept that color had to come from pigment. For centuries, color has been locked into molecules — dye, ink, paint — all systems that fade, wear, and pollute. We believed there was another way.
+          </p>
+          <p id="studio-story-p2">
+            Inspired by the wing scales of the Morpho butterfly and the surface structure of peacock feathers, we began building a new science: structural color through biomimetic thin-film deposition. Light doesn't pass through a dye. It interferes with itself across nano-scale film layers, and the result is spectral color of extraordinary purity — color that cannot wash out because it has no chemistry.
+          </p>
+          <p id="studio-story-p3">
+            Today, IRID operates the world's only commercial-scale structural color deposition facility. Our coatings have been applied to aerospace components, haute couture textiles, and architectural surfaces — anywhere the demand for permanent, vivid, sustainable color is non-negotiable.
+          </p>
+        </div>
+
+        <div id="studio-story-right">
+          <!-- Ghost year watermark -->
+          <div id="studio-story-year-watermark" aria-hidden="true">2019</div>
+
+          <!-- Pull-quote on orange background -->
+          <div id="studio-story-pullquote">
+            <blockquote>
+              "Color without chemistry. Structure without pigment."
+            </blockquote>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 3 — PHILOSOPHY
+       ══════════════════════════════════════════════════════ -->
+
+  <!-- SVG divider: scallop arches upward (white → surface) -->
+  <div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C60,46 120,0 180,0 C240,46 300,0 360,0 C420,46 480,0 540,0 C600,46 660,0 720,0 C780,46 840,0 900,0 C960,46 1020,0 1080,0 C1140,46 1200,0 1260,0 C1320,46 1380,0 1440,0 L1440,48 L0,48 Z" fill="#f0ede8"/>
+    </svg>
+  </div>
+
+  <section id="studio-philosophy" aria-label="Our Philosophy">
+    <!-- Decorative orbs -->
+    <div id="studio-philosophy-orb" aria-hidden="true"></div>
+    <div id="studio-philosophy-orb-inner" aria-hidden="true"></div>
+
+    <div class="studio-container">
+      <div id="studio-philosophy-inner">
+
+        <p id="studio-philosophy-label">Philosophy</p>
+        <h2 id="studio-philosophy-heading">What We<br>Believe</h2>
+
+        <div class="philosophy-block" id="philosophy-1">
+          <span class="philosophy-number">01 —</span>
+          <h3 class="philosophy-statement">Nature Already Solved Color</h3>
+          <p class="philosophy-body">
+            Every iridescent surface in the natural world — beetle carapace, soap film, dragonfly wing — demonstrates that the most vivid color requires no pigment at all. The engineering challenge is not inventing a new chemistry but decoding and replicating an architecture. We are translators, not inventors.
+          </p>
+        </div>
+
+        <div class="philosophy-block" id="philosophy-2">
+          <span class="philosophy-number">02 —</span>
+          <h3 class="philosophy-statement">Precision Is the Product</h3>
+          <p class="philosophy-body">
+            Film thickness is measured in nanometers. A deviation of 20nm shifts the color by tens of degrees on the color wheel. This is not a manufacturing tolerance — it is the product itself. Every deposition run is an act of precision engineering, and we hold that standard in every client engagement, at every scale.
+          </p>
+        </div>
+
+        <div class="philosophy-block" id="philosophy-3">
+          <span class="philosophy-number">03 —</span>
+          <h3 class="philosophy-statement">Permanence Is the Promise</h3>
+          <p class="philosophy-body">
+            Structural color does not fade because it has no absorbing molecule to degrade. It does not leach because it contains no soluble dye. We design for a 200-year surface lifetime. This is not a warranty claim — it is the physics of light interference, and physics does not expire.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 4 — TEAM
+       ══════════════════════════════════════════════════════ -->
+
+  <!-- SVG divider: diagonal blade (surface → dark teal) -->
+  <div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 L1440,48 L1440,60 L0,60 Z" fill="#1e3a35"/>
+    </svg>
+  </div>
+
+  <section id="studio-team" aria-label="Our Team">
+    <div class="studio-container">
+      <div id="studio-team-inner">
+
+        <div id="studio-team-left">
+          <p id="studio-team-intro-label">The People</p>
+          <h2 id="studio-team-heading">Built on<br>Deep Science</h2>
+          <p id="studio-team-body">
+            Our team combines expertise across thin-film physics, computational optics, industrial materials engineering, and real-world applications. Every person at IRID has one shared purpose: turning the precision of structural color into something deployable at scale.
+          </p>
+          <div id="studio-team-stat">
+            <span id="studio-team-stat-value">12+</span>
+            <span id="studio-team-stat-label">Years combined optical research</span>
+          </div>
+        </div>
+
+        <div id="studio-team-right">
+          <div id="studio-team-grid">
+
+            <div class="team-card" id="team-card-1">
+              <div class="team-portrait" aria-hidden="true"></div>
+              <h3 class="team-role">Lead Materials Scientist</h3>
+              <p class="team-bio">Doctoral research in biomimetic photonic structures at ETH Zürich. Holds three patents in thin-film deposition methodology and has published 22 peer-reviewed studies on structural coloration.</p>
+            </div>
+
+            <div class="team-card" id="team-card-2">
+              <div class="team-portrait" aria-hidden="true"></div>
+              <h3 class="team-role">Optical Engineer</h3>
+              <p class="team-bio">Former researcher at the Max Planck Institute for the Science of Light. Specializes in transfer-matrix modeling of multilayer interference stacks and custom spectroscopic QA systems.</p>
+            </div>
+
+            <div class="team-card" id="team-card-3">
+              <div class="team-portrait" aria-hidden="true"></div>
+              <h3 class="team-role">Applications Director</h3>
+              <p class="team-bio">Fifteen years delivering advanced surface treatments into aerospace and luxury product sectors. Leads every client engagement from substrate specification through final QA sign-off.</p>
+            </div>
+
+            <div class="team-card" id="team-card-4">
+              <div class="team-portrait" aria-hidden="true"></div>
+              <h3 class="team-role">Research Fellow</h3>
+              <p class="team-bio">Joined IRID following a postdoctoral fellowship at EPFL's Photonic Nanostructures group. Developing the next generation of angle-independent structural color architectures.</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       PROCESS TICKER (dark band between sections)
+       ══════════════════════════════════════════════════════ -->
+  <div id="studio-process-ticker" aria-hidden="true">
+    <div id="studio-process-ticker-track">
+      <span>BRIEF — SUBSTRATE ANALYSIS — FILM DESIGN — DEPOSITION RUN — QA SPECTROSCOPY — </span>
+      <span>BRIEF — SUBSTRATE ANALYSIS — FILM DESIGN — DEPOSITION RUN — QA SPECTROSCOPY — </span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 5 — PROCESS WALK-THROUGH
+       ══════════════════════════════════════════════════════ -->
+
+  <!-- SVG divider: zigzag / sawtooth (dark → white) -->
+  <div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,25 L130,6 L290,40 L420,8 L570,36 L720,10 L880,38 L1020,6 L1160,34 L1300,12 L1440,26 L1440,50 L0,50 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <section id="studio-process" aria-label="Our Process">
+    <div class="studio-container">
+
+      <div id="studio-process-heading-group">
+        <p id="studio-process-label">How We Work</p>
+        <h2 id="studio-process-heading">The Five-Step<br>Deposition Process</h2>
+      </div>
+
+      <div id="studio-process-timeline">
+
+        <!-- SVG connector drawn via GSAP scrub -->
+        <svg
+          id="studio-process-connector"
+          viewBox="0 0 1200 2"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <line
+            id="studio-process-connector-line"
+            x1="0" y1="1"
+            x2="1200" y2="1"
+          />
+        </svg>
+
+        <div id="studio-process-steps">
+
+          <div class="process-step" id="process-step-1">
+            <span class="process-step-number">01</span>
+            <div class="process-step-node" aria-hidden="true"></div>
+            <span class="process-step-label">Brief</span>
+            <p class="process-step-body">We define exact target color coordinates (CIE L*a*b*), substrate material, and performance specification — durability, angle-dependence, thermal range.</p>
+          </div>
+
+          <div class="process-step" id="process-step-2">
+            <span class="process-step-number">02</span>
+            <div class="process-step-node" aria-hidden="true"></div>
+            <span class="process-step-label">Substrate Analysis</span>
+            <p class="process-step-body">Surface chemistry, roughness, and thermal coefficient are measured. Adhesion interlayer selection follows from material compatibility modeling.</p>
+          </div>
+
+          <div class="process-step" id="process-step-3">
+            <span class="process-step-number">03</span>
+            <div class="process-step-node" aria-hidden="true"></div>
+            <span class="process-step-label">Film Design</span>
+            <p class="process-step-body">Transfer-matrix simulation models the full optical stack. Layer count, material selection, and thickness targets are optimized to achieve the specified spectral output.</p>
+          </div>
+
+          <div class="process-step" id="process-step-4">
+            <span class="process-step-number">04</span>
+            <div class="process-step-node" aria-hidden="true"></div>
+            <span class="process-step-label">Deposition Run</span>
+            <p class="process-step-body">Physical vapor deposition in a controlled vacuum environment. Each layer is deposited and measured in situ — real-time feedback adjusts deposition rate to nanometer precision.</p>
+          </div>
+
+          <div class="process-step" id="process-step-5">
+            <span class="process-step-number">05</span>
+            <div class="process-step-node" aria-hidden="true"></div>
+            <span class="process-step-label">QA Spectroscopy</span>
+            <p class="process-step-body">Full spectral analysis confirms reflectance peak against simulation. Environmental stress testing validates performance. Certified spectral data sheet delivered with every batch.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 6 — CTA
+       ══════════════════════════════════════════════════════ -->
+
+  <!-- SVG divider: simple sinusoidal (white → dark) -->
+  <div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,35 C360,0 720,70 1080,0 C1260,35 1440,0 1440,0 L1440,70 L0,70 Z" fill="#2b2918"/>
+    </svg>
+  </div>
+
+  <section id="studio-cta" aria-label="Contact CTA">
+    <div class="studio-container">
+      <div id="studio-cta-inner">
+        <span id="studio-cta-eyebrow">Start a Project</span>
+        <h2 id="studio-cta-heading">
+          Light is the material.<br>Color is the structure.
+        </h2>
+        <div id="studio-cta-actions">
+          <a href="contact.html" id="studio-cta-link">Begin a Brief</a>
+          <a href="technology.html" id="studio-cta-link-secondary">Explore Technology</a>
+        </div>
+        <p id="studio-cta-folio-line">IRID Structural Color Systems — Est. 2019 — Zürich, CH</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Nav JS ── -->
+  <script src="behaviors/scroll-nav.js"></script>
+  <script src="behaviors/nav.js"></script>
+
+  <!-- ── Page animations ── -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const EASE = 'power2.out';
+    const EASE_EXPRESSIVE = 'power3.inOut';
+    const REVEAL_DUR = 0.7;
+
+    /* ── HERO — prismaticReveal on title, fade-up on subhead ── */
+    (function () {
+      const tl = gsap.timeline({ delay: 0.2 });
+
+      /* prismaticReveal: clip-path wipe from left */
+      gsap.set('#studio-hero-title', { clipPath: 'inset(0 100% 0 0)' });
+      tl.to('#studio-hero-title', {
+        clipPath: 'inset(0 0% 0 0)',
+        duration: 0.9,
+        ease: EASE_EXPRESSIVE
+      });
+
+      /* Subhead fade + rise */
+      gsap.set('#studio-hero-subhead', { y: 24 });
+      tl.to('#studio-hero-subhead', {
+        y: 0,
+        duration: 0.7,
+        ease: EASE
+      }, '-=0.4');
+    })();
+
+    /* ── STORY — clip-path on heading, y-stagger on paragraphs ── */
+    (function () {
+      gsap.set('#studio-story-heading', { clipPath: 'inset(100% 0 0 0)' });
+      ScrollTrigger.create({
+        trigger: '#studio-story-heading',
+        start: 'top 82%',
+        once: true,
+        onEnter: () => gsap.to('#studio-story-heading', {
+          clipPath: 'inset(0% 0 0 0)',
+          duration: 0.8,
+          ease: EASE_EXPRESSIVE
+        })
+      });
+
+      gsap.utils.toArray('#studio-story-left p').forEach((p, i) => {
+        ScrollTrigger.create({
+          trigger: p,
+          start: 'top 88%',
+          once: true,
+          onEnter: () => gsap.from(p, {
+            y: 40,
+            duration: REVEAL_DUR,
+            ease: EASE,
+            delay: i * 0.12
+          })
+        });
+      });
+
+      ScrollTrigger.create({
+        trigger: '#studio-story-pullquote',
+        start: 'top 85%',
+        once: true,
+        onEnter: () => gsap.from('#studio-story-pullquote', {
+          y: 30,
+          duration: 0.7,
+          ease: EASE
+        })
+      });
+    })();
+
+    /* ── PHILOSOPHY — each block: clip-path inset from bottom ── */
+    (function () {
+      gsap.utils.toArray('.philosophy-block').forEach((block) => {
+        gsap.set(block, { clipPath: 'inset(100% 0 0 0)' });
+        ScrollTrigger.create({
+          trigger: block,
+          start: 'top 84%',
+          once: true,
+          onEnter: () => gsap.to(block, {
+            clipPath: 'inset(0% 0 0 0)',
+            duration: 0.75,
+            ease: EASE_EXPRESSIVE
+          })
+        });
+      });
+
+      gsap.set('#studio-philosophy-heading', { clipPath: 'inset(0 100% 0 0)' });
+      ScrollTrigger.create({
+        trigger: '#studio-philosophy-heading',
+        start: 'top 82%',
+        once: true,
+        onEnter: () => gsap.to('#studio-philosophy-heading', {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 0.8,
+          ease: EASE_EXPRESSIVE
+        })
+      });
+    })();
+
+    /* ── TEAM — rotate+rise stagger on cards ── */
+    (function () {
+      ScrollTrigger.create({
+        trigger: '#studio-team-grid',
+        start: 'top 80%',
+        once: true,
+        onEnter: () => gsap.from('.team-card', {
+          rotation: 2,
+          y: 40,
+          duration: 0.65,
+          stagger: 0.15,
+          ease: EASE
+        })
+      });
+
+      gsap.set('#studio-team-heading', { clipPath: 'inset(0 100% 0 0)' });
+      ScrollTrigger.create({
+        trigger: '#studio-team-heading',
+        start: 'top 84%',
+        once: true,
+        onEnter: () => gsap.to('#studio-team-heading', {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 0.8,
+          ease: EASE_EXPRESSIVE
+        })
+      });
+    })();
+
+    /* ── PROCESS — scale-rise on step cards, SVG line draw scrub ── */
+    (function () {
+      /* Step cards: scale-rise with stagger */
+      ScrollTrigger.create({
+        trigger: '#studio-process-steps',
+        start: 'top 78%',
+        once: true,
+        onEnter: () => gsap.from('.process-step', {
+          scale: 0.92,
+          y: 32,
+          duration: 0.6,
+          stagger: 0.12,
+          ease: 'back.out(1.4)'
+        })
+      });
+
+      /* SVG connector line drawn via scroll scrub */
+      const line = document.getElementById('studio-process-connector-line');
+      if (line) {
+        const length = 1200;
+        gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
+        gsap.to(line, {
+          strokeDashoffset: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#studio-process-timeline',
+            start: 'top 70%',
+            end: 'bottom 55%',
+            scrub: 1.2
+          }
+        });
+      }
+
+      gsap.set('#studio-process-heading', { clipPath: 'inset(0 100% 0 0)' });
+      ScrollTrigger.create({
+        trigger: '#studio-process-heading',
+        start: 'top 84%',
+        once: true,
+        onEnter: () => gsap.to('#studio-process-heading', {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 0.8,
+          ease: EASE_EXPRESSIVE
+        })
+      });
+    })();
+
+    /* ── CTA — scale-from-center entrance ── */
+    (function () {
+      ScrollTrigger.create({
+        trigger: '#studio-cta-inner',
+        start: 'top 82%',
+        once: true,
+        onEnter: () => {
+          gsap.from('#studio-cta-heading', {
+            scale: 0.96,
+            y: 24,
+            duration: 0.7,
+            ease: EASE
+          });
+          gsap.from('#studio-cta-actions', {
+            y: 20,
+            duration: 0.6,
+            ease: EASE,
+            delay: 0.18
+          });
+        }
+      });
+    })();
+
+    /* ── Scroll-hint — fade out on first scroll ── */
+    (function () {
+      const hint = document.getElementById('studio-hero-scroll-hint');
+      if (!hint) return;
+      ScrollTrigger.create({
+        trigger: '#studio-hero',
+        start: 'top top',
+        end: '15% top',
+        scrub: 0.5,
+        onUpdate: (self) => {
+          hint.style.opacity = 1 - self.progress * 4;
+        }
+      });
+    })();
+
+  </script>
+
+</body>
+</html>

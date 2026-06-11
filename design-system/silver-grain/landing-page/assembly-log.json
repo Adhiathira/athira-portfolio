@@ -1,0 +1,66 @@
+{
+  "designSystemPath": "/Users/delusionalmakubex/Documents/projects/design-system/design-system/silver-grain",
+  "slug": "silver-grain",
+  "productConcept": {
+    "name": "Loam & Silver",
+    "description": "Heritage silver-gelatin darkroom papers and chemistry produced by hand at a converted lighthouse keeper's station on the Galician coast since 1961 — fellowship-only access, no retail.",
+    "rationale": "The design system's parchment palette (#f5f0e8), Cormorant Garamond at 300-weight, amber-clay accent (#b85c2a), and explicit darkroom chemistry metaphors (safelight color, baryta paper, developer timing) demanded a photographic chemistry / paper-making product rather than a generic luxury or SaaS concept. The concept_by_image described the system's surface quality as 'silver-gelatin prints hanging to dry on a string' and 'the chemical center outward' — this product is the physical object behind those metaphors. The concept deliberately avoids the gravitational pull toward French atelier branding by grounding it in archival chemistry production rather than fashion or food."
+  },
+  "animationMode": "animated",
+  "animationDecision": "motion-tokens — non-trivial durations (0.572s, 0.761s, 1.901s), named easing cubic-bezier(0.25, 0.46, 0.45, 0.94) described as 'mechanical film advance', concept_by_video.md present with detailed scroll/animation specifications including Splitting.js char scatter, feTurbulence displacement, and DrawSVG tick marks",
+  "heroTreatment": "light",
+  "contentMode": "invented",
+  "pages": ["index.html", "about.html", "papers.html", "process.html", "contact.html"],
+  "sectionCount": {
+    "index": 6,
+    "about": 4,
+    "papers": 3,
+    "process": 4,
+    "contact": 3
+  },
+  "assetMode": "generated",
+  "assetGenerationStatus": "⛔ skipped — asset generation explicitly disabled by caller (skip Steps 7 and 8 per recommendations)",
+  "assetsReferenced": {
+    "index.html": {
+      "hero-video": "assets/darkroom-print-drying.mp4",
+      "chemistry-featured": "assets/instrument-enlarger.jpeg",
+      "catalog-cards": ["assets/catalog-linen-paper.jpeg", "assets/catalog-baryta-paper.jpeg", "assets/catalog-carta-paper.jpeg", "assets/catalog-developer-d76.jpeg", "assets/catalog-paper-developer.jpeg", "assets/catalog-fixer.jpeg", "assets/catalog-toner-sepia.jpeg", "assets/catalog-stop-bath.jpeg", "assets/catalog-wetting-agent.jpeg"]
+    },
+    "papers.html": {
+      "baryta": "assets/paper-baryta-detail.jpeg",
+      "linen": "assets/paper-linen-surface.jpeg",
+      "carta": "assets/paper-carta-texture.jpeg"
+    },
+    "process.html": {
+      "filmstrip-video": "assets/filmstrip-advance.mp4"
+    }
+  },
+  "imagePromptFiles": [],
+  "videoPromptFiles": [],
+  "imageCount": 0,
+  "videoCount": 0,
+  "mandatoryCreativeTechniques": {
+    "grainOverlay": "Implemented — SVG feTurbulence fractalNoise baseFrequency=0.65 numOctaves=3 as fixed body::after pseudo-element, mix-blend-mode:multiply, opacity:0.35. components/grain-overlay.css",
+    "squigglyBoundaries": "Implemented — 6 unique SVG dividers: compound irregular wave, torn-paper triangular points, irregular bezier arc, film sprocket band (dark), diagonal blade, quadratic sine wave. Each differs in geometry and fill color.",
+    "darkroomDevelopAnimation": "Implemented — hero title uses feTurbulence feDisplacementMap starting at 28px displacement, resolving to 0 over 1.4s. Editorial heading (process section) has identical treatment on scrollTrigger.",
+    "splittingJsCharScatter": "Implemented — hero title and catalog heading use Splitting.js data-splitting. Hero chars scatter radially from center (center arrives first, matching darkroom print developing from chemical center outward). Catalog chars scatter randomly then converge.",
+    "cardTumbleIn": "Implemented — film catalog cards and paper cards animate from random ±15° rotation and random x offset, settling to 0° on scroll. 'Prints dropped onto a light table.'",
+    "clipPathReveal": "Implemented — process section paragraphs use clipPath inset(0 100% 0 0) → inset(0 0% 0 0) wipe (developer wash). Contact CTA section uses clipPath inset(0 0 100% 0) → inset(0 0 0% 0) vertical reveal.",
+    "dropCaps": "Implemented — CSS ::first-letter on first paragraph of about.html and process section. Cormorant Garamond 4em, float left, line-height 0.8. ::first-line with letter-spacing +0.03em and font-weight 500.",
+    "pullQuote": "Implemented — blockquote floated right 38% width with amber-clay left border 3px. Cormorant Garamond italic 1.45rem.",
+    "textShadowAmberHalo": "Implemented — all h1/h2 headings have text-shadow: 0.5px 0.5px 0px rgba(184, 92, 42, 0.15)",
+    "ghostLetterformWatermark": "Implemented — hero section has absolute positioned 'SILVER' at 18vw opacity 0.04 behind heading. About page has 'ARCHIVE' as CSS ::after on header.",
+    "filmContactSheetGrid": "Implemented — 9 cards in 3-column grid with thin #2a2a2a borders and frame numbers (01-09) in corner. index.html #catalog-grid.",
+    "filmSprocketBorder": "Implemented — #film-divider-band uses repeating-linear-gradient on ::before/::after pseudo-elements to simulate 35mm sprocket holes on left/right edges.",
+    "tickMarkRuler": "Implemented — SVG ruler with 64 tick marks of irregular heights (major/minor/mid ticks) drawn left-to-right via GSAP scaleY animation on scroll. Amber-clay stroke.",
+    "filmTickerBand": "Implemented — dark #1a1814 strip between catalog and chemistry sections with auto-scrolling 'SILVER GELATIN — BARYTA — DARKROOM — ANALOG' text at 0.2em tracking.",
+    "footerStudioStamp": "Implemented — #footer-stamp: inline block with thin border, 0.15em tracking, uppercase, low-opacity. 'Est. 1961 — Punta Carreiro, Galicia'.",
+    "parallelDepthLayers": "Implemented — three parallax layers at different scrub rates (2.2, 1.6, 2.0) simulating 38%/19%/8% depth from concept_by_video.md.",
+    "colorUsage": "Correct — #f5efe6 hero-background, #f5f5f0 page-bg, #1a1814 charcoal (dark sections), #b85c2a amber-clay (accent only: CTAs, links, nav underline, focus ring, section labels, tick marks, pull quote border). No invented colors."
+  },
+  "notImplemented": {
+    "pretextLibrary": "Pretext (chenglou/pretext) — not implemented. The library requires a canvas-based rendering environment and is not compatible with standard DOM flow layouts at this build stage. The editorial text sections use standard CSS column layouts instead. The pull quote float achieves similar text-wrapping-around-obstacle effect.",
+    "gsapDrawSVG": "DrawSVG plugin requires GSAP Club membership license. Replaced with equivalent scaleY:0→1 stagger animation on individual SVG line elements, achieving the same visual effect (tick marks drawing in left-to-right) without requiring the paid plugin."
+  },
+  "generatedAt": "2026-04-04T00:00:00Z"
+}

@@ -1,0 +1,221 @@
+/* ── Nav — Gilded Frond / FLORA CARTA ── */
+/* Transparent on load, frosted white + gold hairline on scroll */
+/* Height: 76px | Font: Cormorant Garamond | Logo: Playfair Display italic */
+
+#site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+  transition: background 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#site-nav.scrolled {
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid rgba(176, 145, 91, 0.3);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+}
+
+.nav-inner {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #092222;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+.nav-logo:hover {
+  color: #b0915b;
+}
+
+/* Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #161616;
+  text-decoration: none;
+  background-image: linear-gradient(to right, #b0915b, #b0915b);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 0.3s ease;
+  padding-bottom: 2px;
+}
+
+.nav-links a:hover {
+  background-size: 100% 1px;
+  color: #092222;
+}
+
+.nav-links a.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* CTA Button */
+.nav-cta {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #b0915b;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.nav-cta:hover {
+  background: #92723d;
+  box-shadow: 0 4px 16px rgba(176, 145, 91, 0.35);
+  transform: translateY(-1px);
+}
+
+/* ── Mobile hamburger ── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 8px;
+  z-index: 1100;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #092222;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.25s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X */
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+#site-nav.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Mobile menu overlay ── */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 34, 34, 0.97);
+  z-index: 1050;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+  opacity: 1;
+}
+
+.nav-mobile-menu a {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 0.3s ease;
+}
+
+.nav-mobile-menu a:hover {
+  color: #b0915b;
+}
+
+.nav-mobile-menu .nav-cta {
+  margin-top: 16px;
+}
+
+/* ── Nav spacer for sub-pages ── */
+.nav-spacer {
+  height: 0;
+}
+.nav-spacer.active {
+  height: 76px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .nav-links {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-cta {
+    display: none;
+  }
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  #site-nav {
+    padding: 0 20px;
+  }
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+}

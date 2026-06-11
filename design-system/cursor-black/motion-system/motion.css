@@ -1,0 +1,58 @@
+/* Cursor Black — Motion System */
+/* Mechanical, instant, typewriter-driven. No smooth easing. */
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes glitch-shift {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-2px); }
+  40%  { transform: translateX(2px); }
+  60%  { transform: translateX(-1px); }
+  80%  { transform: translateX(1px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes rgb-split {
+  0%   { text-shadow: none; }
+  25%  { text-shadow: -2px 0 #39ff14, 2px 0 #00e5ff; }
+  50%  { text-shadow: 2px 0 #39ff14, -2px 0 #00e5ff; }
+  75%  { text-shadow: -1px 0 #39ff14, 1px 0 #00e5ff; }
+  100% { text-shadow: none; }
+}
+
+@keyframes scanline-drift {
+  0%   { background-position: 0 -100%; }
+  100% { background-position: 0 100%; }
+}
+
+@keyframes phosphor-pulse {
+  0%   { box-shadow: 0 0 4px rgba(57, 255, 20, 0.3); }
+  50%  { box-shadow: 0 0 12px rgba(57, 255, 20, 0.7), 0 0 24px rgba(57, 255, 20, 0.3); }
+  100% { box-shadow: 0 0 4px rgba(57, 255, 20, 0.3); }
+}
+
+@keyframes data-reveal {
+  0%   { clip-path: inset(0 100% 0 0); }
+  25%  { clip-path: inset(0 75% 0 0); }
+  50%  { clip-path: inset(0 50% 0 0); }
+  75%  { clip-path: inset(0 25% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
+}
+
+/* Utility classes */
+.animate-cursor-blink { animation: cursor-blink 1s step-end infinite; }
+.animate-glitch        { animation: glitch-shift 0.1s step-start both; }
+.animate-rgb-split     { animation: rgb-split 0.1s step-start both; }
+.animate-data-reveal   { animation: data-reveal 0.15s steps(4, start) both; }
+.animate-phosphor-pulse{ animation: phosphor-pulse 2s ease-in-out infinite; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-glitch,
+  .animate-rgb-split,
+  .animate-data-reveal { animation-duration: 0.01s; }
+  .animate-cursor-blink { animation: none; }
+}

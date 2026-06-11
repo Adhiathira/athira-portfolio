@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Forma Systems</title>
+  <meta name="description" content="Start a project with Forma Systems. Tell us about your program, timeline, and modular architecture goals." />
+
+  <!-- GSAP + ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens (includes Google Fonts @import) -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css" />
+  <link rel="stylesheet" href="components/contact-hero.css" />
+  <link rel="stylesheet" href="components/contact-form.css" />
+  <link rel="stylesheet" href="components/contact-offices.css" />
+  <link rel="stylesheet" href="components/footer.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════
+       NAV
+       ══════════════════════════════════════════════════════════ -->
+  <nav id="site-nav" class="site-nav">
+    <a href="index.html" class="nav-logo">FORMA</a>
+    <ul class="nav-links">
+      <li><a href="platform.html" class="nav-link">Platform</a></li>
+      <li><a href="solutions.html" class="nav-link">Solutions</a></li>
+      <li><a href="projects.html" class="nav-link">Projects</a></li>
+      <li><a href="contact.html" class="nav-link nav-link--active">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <a href="platform.html" class="nav-mobile-link">Platform</a>
+    <a href="solutions.html" class="nav-mobile-link">Solutions</a>
+    <a href="projects.html" class="nav-mobile-link">Projects</a>
+    <a href="contact.html" class="nav-mobile-link">Contact</a>
+  </div>
+  <script>
+    (function () {
+      var nav = document.getElementById('site-nav');
+      var toggle = nav.querySelector('.nav-mobile-toggle');
+      var mobileMenu = document.querySelector('.nav-mobile-menu');
+      function onScroll() {
+        if (window.scrollY > 0) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      toggle.addEventListener('click', function () {
+        var isOpen = mobileMenu.classList.contains('is-open');
+        if (isOpen) {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        } else {
+          mobileMenu.classList.add('is-open');
+          nav.classList.add('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+      mobileMenu.querySelectorAll('.nav-mobile-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    })();
+  </script>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 1: CONTACT HEADER (minimal, 15vh equivalent)
+       ══════════════════════════════════════════════════════════ -->
+  <section id="contact-hero" aria-labelledby="contact-hero-heading">
+    <span class="contact-hero__breadcrumb">Contact / Get in Touch</span>
+    <h1 id="contact-hero-heading" class="contact-hero__heading">Start a Project</h1>
+    <p class="contact-hero__subtext">Tell us about your program and timeline.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2: CONTACT FORM + INFO
+       ══════════════════════════════════════════════════════════ -->
+  <section id="contact-form-section" aria-labelledby="contact-form-heading">
+    <div class="contact-form-section__inner">
+
+      <!-- Left 60%: form -->
+      <div id="contact-form-col" class="contact-form-col">
+        <p id="contact-form-heading" class="contact-form-col__heading">Project Inquiry</p>
+
+        <form id="contact-form" action="#" method="post" novalidate>
+
+          <!-- Name + Email row -->
+          <div class="field-row">
+            <div class="field-group">
+              <label for="field-name" class="field-label">Name</label>
+              <input
+                id="field-name"
+                class="field-input"
+                type="text"
+                name="name"
+                autocomplete="name"
+                placeholder="Your full name"
+                required
+              />
+            </div>
+            <div class="field-group">
+              <label for="field-email" class="field-label">Email</label>
+              <input
+                id="field-email"
+                class="field-input"
+                type="email"
+                name="email"
+                autocomplete="email"
+                placeholder="you@organization.com"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Organization -->
+          <div class="field-group">
+            <label for="field-org" class="field-label">Organization</label>
+            <input
+              id="field-org"
+              class="field-input"
+              type="text"
+              name="organization"
+              autocomplete="organization"
+              placeholder="Studio, firm, or developer name"
+            />
+          </div>
+
+          <!-- Project type -->
+          <div class="field-group">
+            <label for="field-project-type" class="field-label">Project Type</label>
+            <select id="field-project-type" class="field-select" name="project_type" required>
+              <option value="" disabled selected>Select a category</option>
+              <option value="residential">Residential</option>
+              <option value="commercial">Commercial</option>
+              <option value="infrastructure">Infrastructure</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Program brief -->
+          <div class="field-group">
+            <label for="field-brief" class="field-label">Program Brief</label>
+            <textarea
+              id="field-brief"
+              class="field-textarea"
+              name="brief"
+              rows="4"
+              placeholder="Describe your project goals, site constraints, and any parametric requirements."
+            ></textarea>
+          </div>
+
+          <!-- Timeline -->
+          <div class="field-group">
+            <label for="field-timeline" class="field-label">Timeline</label>
+            <select id="field-timeline" class="field-select" name="timeline" required>
+              <option value="" disabled selected>Select a timeline</option>
+              <option value="under-6">Under 6 months</option>
+              <option value="6-12">6–12 months</option>
+              <option value="12-24">12–24 months</option>
+              <option value="long-range">Long-range planning</option>
+            </select>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="contact-submit-btn">Send Inquiry</button>
+
+          <p class="contact-form__privacy">
+            Your information is used solely to respond to this inquiry.
+            We do not sell or share contact data.
+          </p>
+
+        </form>
+      </div><!-- /contact-form-col -->
+
+      <!-- Right 40%: contact info -->
+      <aside id="contact-info-col" class="contact-info-col" aria-label="Contact information">
+
+        <p class="contact-info-col__heading">Reach Us Directly</p>
+
+        <div class="contact-info-entries">
+
+          <div class="contact-info-entry">
+            <span class="contact-info-entry__label">Direct</span>
+            <a href="tel:+14155550182" class="contact-info-entry__value">+1 415 555 0182</a>
+          </div>
+
+          <div class="contact-info-entry">
+            <span class="contact-info-entry__label">Email</span>
+            <a href="mailto:hello@formasystems.io" class="contact-info-entry__value">hello@formasystems.io</a>
+          </div>
+
+          <div class="contact-info-entry">
+            <span class="contact-info-entry__label">Press</span>
+            <a href="mailto:press@formasystems.io" class="contact-info-entry__value">press@formasystems.io</a>
+          </div>
+
+          <div class="contact-info-entry">
+            <span class="contact-info-entry__label">Offices</span>
+            <div class="contact-offices-inline">
+              <span>San Francisco</span>
+              <span>Amsterdam</span>
+              <span>Singapore</span>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="contact-info-response">
+          We respond to all project inquiries within one business day.
+          Complex briefs may require up to 48 hours for a substantive reply.
+        </p>
+
+      </aside><!-- /contact-info-col -->
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3: OFFICES (light grey #f5f5f5)
+       ══════════════════════════════════════════════════════════ -->
+  <section id="contact-offices" aria-labelledby="offices-heading">
+    <div class="contact-offices__inner">
+
+      <div class="contact-offices__heading-row">
+        <span class="contact-offices__label">Global Presence</span>
+        <h2 id="offices-heading" class="contact-offices__heading">Where We Work</h2>
+      </div>
+
+      <div class="contact-offices__grid">
+
+        <!-- San Francisco -->
+        <article id="office-sfo" class="office-card" aria-label="San Francisco office">
+          <p class="office-card__code">SFO</p>
+          <h3 class="office-card__city">San Francisco</h3>
+          <address class="office-card__address">
+            340 Pine Street, Suite 900<br />
+            San Francisco, CA 94104<br />
+            United States
+          </address>
+          <hr class="office-card__divider" />
+          <p class="office-card__timezone">UTC−7 / Pacific Time</p>
+        </article>
+
+        <!-- Amsterdam -->
+        <article id="office-ams" class="office-card" aria-label="Amsterdam office">
+          <p class="office-card__code">AMS</p>
+          <h3 class="office-card__city">Amsterdam</h3>
+          <address class="office-card__address">
+            Keizersgracht 482<br />
+            1017 EG Amsterdam<br />
+            Netherlands
+          </address>
+          <hr class="office-card__divider" />
+          <p class="office-card__timezone">UTC+2 / Central European Summer Time</p>
+        </article>
+
+        <!-- Singapore -->
+        <article id="office-sin" class="office-card" aria-label="Singapore office">
+          <p class="office-card__code">SIN</p>
+          <h3 class="office-card__city">Singapore</h3>
+          <address class="office-card__address">
+            1 Raffles Place, #20-61<br />
+            Singapore 048616<br />
+            Singapore
+          </address>
+          <hr class="office-card__divider" />
+          <p class="office-card__timezone">UTC+8 / Singapore Standard Time</p>
+        </article>
+
+      </div><!-- /contact-offices__grid -->
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       FOOTER (dark #1a1a1a)
+       color: rgba(255,255,255,0.88) explicitly set on all text
+       ══════════════════════════════════════════════════════════ -->
+  <footer id="site-footer" aria-label="Site footer" style="color: rgba(255,255,255,0.88);">
+    <div class="footer-inner">
+
+      <div class="footer-columns">
+
+        <!-- Brand column -->
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">FORMA</a>
+          <p class="footer-tagline">
+            Parametric design platform<br />
+            for modular prefab architecture.
+          </p>
+        </div>
+
+        <!-- Platform column -->
+        <div>
+          <span class="footer-col-label">Platform</span>
+          <ul class="footer-links">
+            <li><a href="platform.html">Overview</a></li>
+            <li><a href="platform.html#parametric">Parametric Engine</a></li>
+            <li><a href="platform.html#assembly">Assembly Logic</a></li>
+            <li><a href="platform.html#api">API</a></li>
+          </ul>
+        </div>
+
+        <!-- Solutions column -->
+        <div>
+          <span class="footer-col-label">Solutions</span>
+          <ul class="footer-links">
+            <li><a href="solutions.html">Residential</a></li>
+            <li><a href="solutions.html#commercial">Commercial</a></li>
+            <li><a href="solutions.html#infrastructure">Infrastructure</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact column -->
+        <div>
+          <span class="footer-col-label">Contact</span>
+          <ul class="footer-links">
+            <li><a href="contact.html">Get in Touch</a></li>
+            <li><a href="mailto:hello@formasystems.io">hello@formasystems.io</a></li>
+            <li><a href="mailto:press@formasystems.io">Press</a></li>
+          </ul>
+        </div>
+
+      </div><!-- /footer-columns -->
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2024 Forma Systems Inc. All rights reserved.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════════
+       GSAP ANIMATIONS
+       ══════════════════════════════════════════════════════════ -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── Section 1: Contact hero — DOMContentLoaded entry ──────
+    // heading + subtext: translateY(-10px) → 0, opacity 0→1, 0.4s
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var heroHeading = document.querySelector('.contact-hero__heading');
+      var heroSubtext = document.querySelector('.contact-hero__subtext');
+      var heroBreadcrumb = document.querySelector('.contact-hero__breadcrumb');
+
+      gsap.fromTo(
+        [heroBreadcrumb, heroHeading, heroSubtext],
+        { opacity: 0, y: -10 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          stagger: 0.06
+        }
+      );
+
+      // ── Section 2: Form + info — DOMContentLoaded, above fold ──
+      // Form col: from left (x: -30), info col: from right (x: 30)
+      var formCol = document.getElementById('contact-form-col');
+      var infoCol = document.getElementById('contact-info-col');
+
+      gsap.fromTo(
+        formCol,
+        { opacity: 0, x: -30 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.5,
+          ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          delay: 0.15
+        }
+      );
+
+      gsap.fromTo(
+        infoCol,
+        { opacity: 0, x: 30 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.5,
+          ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          delay: 0.25
+        }
+      );
+    });
+
+    // ── Section 3: Office cards — scroll-triggered isoDepthPop ──
+    // scale 0.95, perspective translateZ(-20px) → normal, stagger 0.15s
+    var officeCards = document.querySelectorAll('.office-card');
+
+    gsap.fromTo(
+      officeCards,
+      {
+        opacity: 0,
+        scale: 0.95,
+        z: -20,
+        transformPerspective: 600
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        z: 0,
+        duration: 0.55,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: '#contact-offices',
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+/* =============================================================
+   PROJECTS GRID — Forma Systems
+   Masonry-style with explicit row placement, hard shadows,
+   overlay-slide-up on hover
+   ============================================================= */
+
+/* ── Section wrapper ─────────────────────────────────────────── */
+#projects-grid-section {
+  position: relative;
+  background: var(--color-page-bg);
+  padding-top: 80px;
+  padding-bottom: 96px;
+  padding-inline: var(--grid-padding-inline);
+  /* Depth: subtle inset gradient from top to differentiate from hero clip */
+  background-image: linear-gradient(to bottom, #f8f8f8 0%, #ffffff 80px);
+  z-index: 0;
+}
+
+/* ── Section header ───────────────────────────────────────────── */
+#projects-grid-header {
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  margin-bottom: 56px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+#projects-grid-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  display: block;
+  margin-bottom: 12px;
+}
+
+#projects-grid-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, var(--type-h2-size));
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  color: var(--color-heading);
+  margin: 0;
+}
+
+#projects-filter-note {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+  align-self: flex-end;
+}
+
+/* ── Grid container ───────────────────────────────────────────── */
+#projects-masonry-grid {
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 340px 340px;
+  gap: 24px;
+}
+
+/* ── Card base ────────────────────────────────────────────────── */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--color-surface-light);
+  cursor: pointer;
+}
+
+.project-card:hover {
+  transform: translateY(-2px) translateX(1px);
+  box-shadow: 6px 6px 0px #000000;
+}
+
+/* ── Featured card — spans 2 rows ────────────────────────────── */
+#project-card-1 {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+/* ── Standard cards ───────────────────────────────────────────── */
+#project-card-2 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+#project-card-3 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+#project-card-4 {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+#project-card-5 {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+/* ── Wide card — spans 2 columns ─────────────────────────────── */
+#project-card-6 {
+  grid-column: 2 / span 2;
+  grid-row: 3;
+}
+
+/* Extend grid for row 3 */
+#projects-masonry-grid {
+  grid-template-rows: 340px 340px 260px;
+}
+
+/* ── Project image ────────────────────────────────────────────── */
+.project-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover .project-card-img {
+  transform: scale(1.03);
+}
+
+/* ── Image placeholder (onerror) ──────────────────────────────── */
+.project-card-img-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* ── Hover overlay — slides up from bottom ───────────────────── */
+.project-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 2px solid #000000;
+  padding: 20px 24px;
+  transform: translateY(100%);
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+
+.project-card:hover .project-card-overlay {
+  transform: translateY(0);
+}
+
+/* ── Overlay type ─────────────────────────────────────────────── */
+.project-overlay-category {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.project-overlay-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #000000;
+  margin: 0 0 4px 0;
+  line-height: 1.1;
+}
+
+.project-overlay-location {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.55);
+  margin: 0;
+}
+
+/* ── Card index badge (always visible, top-left corner) ──────── */
+.project-card-index {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 5;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(0, 0, 0, 0.55);
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ── Responsive: collapse to 2-col at 900px ──────────────────── */
+@media (max-width: 900px) {
+  #projects-grid-section {
+    padding-inline: 24px;
+    padding-top: 64px;
+    padding-bottom: 72px;
+  }
+
+  #projects-grid-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  #projects-masonry-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 280px 280px 280px;
+  }
+
+  /* Reset explicit placement to auto flow */
+  #project-card-1 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  #project-card-2,
+  #project-card-3,
+  #project-card-4,
+  #project-card-5,
+  #project-card-6 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+/* ── Single column at 600px ───────────────────────────────────── */
+@media (max-width: 600px) {
+  #projects-grid-section {
+    padding-inline: 20px;
+    padding-top: 48px;
+    padding-bottom: 56px;
+  }
+
+  #projects-masonry-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: unset;
+  }
+
+  .project-card {
+    height: 260px;
+  }
+}

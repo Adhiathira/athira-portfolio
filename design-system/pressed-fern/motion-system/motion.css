@@ -1,0 +1,109 @@
+/* ==========================================================================
+   Motion System / Organic Ink-Reveal Aesthetic
+   Source: ivory-ledge
+   Twist: Intensity 5 — Complete organic ink-reveal transformation
+   Base duration: 0.7-0.75s (slow deliberate absorption)
+   Easing: cubic-bezier(0.25, 0.1, 0.25, 1) — natural water absorption
+   ========================================================================== */
+
+:root {
+  --motion-duration-fast:   0.70s;
+  --motion-duration-base:   0.75s;
+  --motion-easing-organic:  cubic-bezier(0.25, 0.1, 0.25, 1);
+  --motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   KEYFRAMES — Organic Ink-Reveal Aesthetic
+   -------------------------------------------------------------------------- */
+
+/* Signature ink-reveal: left-to-right wipe via clip-path */
+@keyframes ink-reveal {
+  0%   { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
+}
+
+/* Organic blob expansion with subtle rotation — natural ink pooling */
+@keyframes ink-blot {
+  0%   { transform: scale(0) rotate(-5deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Gentle upward fade — ink rising and settling naturally */
+@keyframes ink-rise {
+  0%   { transform: translateY(24px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Warm dissolve entrance — editorial elements emerging from sepia fog */
+@keyframes parchment-fade {
+  0%   { opacity: 0; filter: blur(4px) sepia(40%); }
+  100% { opacity: 1; filter: blur(0) sepia(0); }
+}
+
+@keyframes fade-in {
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+
+@keyframes scale-in {
+  0%   { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   UTILITY CLASSES — Organic ink-reveal entrance animations
+   -------------------------------------------------------------------------- */
+
+.ink-reveal {
+  animation: ink-reveal var(--motion-duration-base) var(--motion-easing-organic) forwards;
+}
+
+.ink-blot {
+  animation: ink-blot var(--motion-duration-base) var(--motion-easing-organic) forwards;
+}
+
+.ink-rise {
+  animation: ink-rise 1.0s var(--motion-easing-organic) forwards;
+}
+
+.parchment-fade {
+  animation: parchment-fade 1.1s var(--motion-easing-organic) forwards;
+}
+
+/* --------------------------------------------------------------------------
+   TRANSITION RULES — Organic easing, extended durations
+   -------------------------------------------------------------------------- */
+
+button,
+a,
+.card,
+input,
+select {
+  transition: all var(--motion-duration-fast) var(--motion-easing-organic);
+}
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .ink-reveal,
+  .ink-blot,
+  .ink-rise,
+  .parchment-fade {
+    animation: none;
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+    filter: none;
+  }
+}

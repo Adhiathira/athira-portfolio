@@ -1,0 +1,362 @@
+/* ============================================================
+   PRISM-DRIFT — Grid System
+   Source: griting-formless
+   Twist: Typography-first editorial column grid — intensity 3
+   ============================================================
+   12-column newspaper/magazine editorial base grid.
+   Gutter: 18px (tight, type-forward — down from 24px).
+   Three editorial layout variants:
+     .layout-prose          — 680px centred reading column
+     .layout-display        — full-bleed, type to edges
+     .layout-two-col-editorial  — 2fr / 3fr magazine split
+   Holographic 16-col micro-grid overlay retained from prism-drift.
+   Mobile: single column, 28px side padding.
+   ============================================================ */
+
+:root {
+  /* Container */
+  --container-max-width: 1520px;
+  --container-padding-inline: 40px;
+
+  /* Base 12-column editorial grid */
+  --grid-columns: 12;
+  --grid-gutter: 18px;
+  --grid-column-gap: 18px;
+  --grid-row-gap: 18px;
+
+  /* Holographic micro-grid overlay */
+  --grid-micro-columns: 16;
+  --grid-micro-column-gap: 18px;
+
+  /* Typography layout variants */
+  --prose-max-width: 680px;
+  --prose-padding-inline: 0px;
+  --display-max-width: none;
+  --editorial-two-col: 2fr 3fr;
+  --editorial-two-col-alt: 1fr 2fr;
+
+  /* Inherited griting-formless tokens */
+  --grid-cols-features: 3;
+  --grid-cols-footer: 5;
+  --grid-blog-featured-columns: 60fr 40fr;
+  --grid-blog-list-columns: 1fr;
+  --grid-filter-bar-columns: 1fr auto;
+
+  /* Formless gap vocabulary */
+  --grid-formless-sticky-gap: 80px;
+  --grid-formless-2col-baseline-gap: 48px;
+  --grid-formless-4col-flex-gap: 32px;
+  --grid-formless-4col-bar-gap: 60px;
+  --grid-formless-section-large-gap: 164px;
+
+  /* Mobile */
+  --mobile-side-padding: 28px;
+}
+
+/* ============================================================
+   BASE CONTAINER
+   ============================================================ */
+
+.grid-container {
+  max-width: var(--container-max-width);
+  padding-inline: var(--container-padding-inline);
+  margin-inline: auto;
+  position: relative;
+}
+
+/* ============================================================
+   BASE 12-COLUMN EDITORIAL GRID
+   12-column newspaper/magazine standard.
+   Tight 18px gutters keep type in primary focus.
+   ============================================================ */
+
+.grid-primary {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: var(--grid-column-gap);
+  row-gap: var(--grid-row-gap);
+}
+
+/* ============================================================
+   TYPOGRAPHY-FIRST LAYOUT VARIANTS
+   ============================================================ */
+
+/* --- Prose: reading-optimised single column, 680px centred --- */
+/* Optimised for body text at 16-18px (~70-character line length). */
+/* No column subdivisions — pure reading rail. */
+.layout-prose {
+  display: block;
+  max-width: var(--prose-max-width);
+  padding-inline: var(--prose-padding-inline);
+  margin-inline: auto;
+}
+
+/* --- Display: full-bleed, type bleeds to edges, no max-width --- */
+/* For oversized display headlines, wordmark lockups, full-bleed heroes. */
+.layout-display {
+  display: block;
+  max-width: var(--display-max-width);
+  width: 100%;
+  overflow: hidden;
+}
+
+/* --- Two-column editorial: 2fr / 3fr magazine split --- */
+/* Left 2fr: caption, pull-quote, label, date.            */
+/* Right 3fr: body text, headline, narrative content.     */
+/* Derived from griting-formless gritme-feature 40/60fr   */
+/* pattern, recast as editorial fraction ratio.           */
+.layout-two-col-editorial {
+  display: grid;
+  grid-template-columns: var(--editorial-two-col); /* 2fr 3fr */
+  gap: var(--grid-column-gap);
+  align-items: start;
+}
+
+/* --- Two-column editorial alt: 1fr / 2fr index/listing split --- */
+/* Left 1fr: issue number, category label, byline, timestamp.     */
+/* Right 2fr: headline and teaser body.                           */
+/* For article index pages, blog rolls, numbered section headers. */
+.layout-two-col-editorial-alt {
+  display: grid;
+  grid-template-columns: var(--editorial-two-col-alt); /* 1fr 2fr */
+  gap: var(--grid-column-gap);
+  align-items: start;
+}
+
+/* ============================================================
+   FORMLESS-INHERITED LAYOUT VARIANTS
+   Extend vocabulary without replacing the 12-column base.
+   ============================================================ */
+
+/* Premium whitespace editorial column — 244px gutters */
+.formless-editorial {
+  margin-inline: 244px;
+  max-width: calc(100% - 488px);
+}
+
+/* Equal 1fr / 1fr baseline-aligned split */
+.formless-two-col-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-end;
+  gap: var(--grid-formless-2col-baseline-gap, 48px);
+}
+
+/* Three sequential sticky panels with thin vertical rule */
+.formless-sticky-scroll-container {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  gap: var(--grid-formless-sticky-gap, 80px);
+  border-right: 1px solid #1a1a1a;
+}
+
+/* Wrappable 4-column flex row */
+.formless-4col-flex-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--grid-formless-4col-flex-gap, 32px);
+}
+
+/* Bottom-aligned 4-item flex row */
+.formless-4col-bottom-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--grid-formless-4col-bar-gap, 60px);
+}
+
+/* Three-column overlapping staggered card grid */
+.formless-overlapping-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Full-viewport-width brand lockup — type to edges */
+.formless-full-width-lockup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ============================================================
+   NAMED SECTION GRIDS
+   ============================================================ */
+
+/* Hero — 12-column base */
+.grid-hero {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--grid-column-gap);
+}
+
+/* Ecosystem cards — 3-column equal */
+.grid-ecosystem-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-column-gap);
+}
+
+/* GritMe feature — editorial 2fr / 3fr */
+.grid-feature-split {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--grid-column-gap);
+}
+
+/* Blog featured post — 60 / 40 */
+.grid-featured-post {
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  gap: 40px;
+}
+
+/* Testimonials — 3-column equal */
+.grid-testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-column-gap);
+}
+
+/* Footer — 5-column equal */
+.grid-footer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--grid-column-gap);
+}
+
+/* Product section — 1fr nav list / 2fr content panel */
+.grid-product-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 64px;
+}
+
+/* Partner content — 2fr / 3fr editorial split */
+.grid-partner-content {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--grid-column-gap);
+}
+
+/* Mission centred — max-width 925px */
+.grid-mission-centered {
+  display: block;
+  max-width: 925px;
+  margin-inline: auto;
+}
+
+/* Body copy centred — max-width 785px */
+.grid-body-copy {
+  display: block;
+  max-width: 785px;
+  margin-inline: auto;
+}
+
+/* Filter bar — label / action */
+.grid-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ============================================================
+   HOLOGRAPHIC MICRO-GRID OVERLAY
+   16-column iridescent foil cell pattern.
+   Retained from prism-drift base identity.
+   ============================================================ */
+
+.grid-micro-overlay {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-micro-columns), 1fr);
+  column-gap: var(--grid-micro-column-gap);
+  max-width: var(--container-max-width);
+  padding-inline: var(--container-padding-inline);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+}
+
+.grid-micro-overlay__cell {
+  border-right: 1px solid currentColor;
+  height: 100%;
+}
+
+.grid-micro-overlay__cell:last-child {
+  border-right: none;
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   Desktop-first. Mobile collapses to single column.
+   ============================================================ */
+
+/* --- Tablet: 6-column grid, 8-column micro-grid --- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid-primary {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .grid-micro-overlay {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .layout-two-col-editorial,
+  .layout-two-col-editorial-alt {
+    grid-template-columns: 1fr 1fr;
+  }
+  .formless-editorial {
+    margin-inline: 80px;
+    max-width: calc(100% - 160px);
+  }
+}
+
+/* --- Mobile: single column, 28px side padding --- */
+/* All multi-column layouts collapse.                */
+/* Prose and display variants remain effective.      */
+@media (max-width: 767px) {
+  :root {
+    --container-padding-inline: var(--mobile-side-padding);
+  }
+
+  .grid-primary,
+  .grid-hero,
+  .grid-ecosystem-cards,
+  .grid-feature-split,
+  .grid-testimonials,
+  .grid-footer,
+  .grid-product-section,
+  .grid-partner-content,
+  .grid-featured-post,
+  .layout-two-col-editorial,
+  .layout-two-col-editorial-alt,
+  .formless-two-col-split,
+  .formless-overlapping-grid {
+    grid-template-columns: 1fr;
+    gap: var(--grid-column-gap);
+  }
+
+  .formless-4col-flex-wrap,
+  .formless-4col-bottom-bar {
+    flex-direction: column;
+  }
+
+  .formless-editorial {
+    margin-inline: 0;
+    max-width: 100%;
+  }
+
+  .grid-micro-overlay {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .layout-prose {
+    max-width: 100%;
+  }
+}

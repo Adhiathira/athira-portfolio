@@ -1,0 +1,56 @@
+/* plane-cut — Paper Strata Motion System */
+/* GSAP-driven: do not set opacity:0 here — use gsap.set() */
+
+:root {
+  --motion-duration-fast:   0.4s;
+  --motion-duration-base:   0.5s;
+  --motion-duration-slow:   0.6s;
+  --motion-ease:            cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-out:        ease-out;
+  --motion-hover-duration:  0.35s;
+  --motion-hover-ease:      ease-out;
+  --motion-stagger:         0.1s;
+}
+
+/* Hover float — cards lift like a sheet of paper */
+.paper-hover {
+  transition:
+    transform var(--motion-hover-duration) var(--motion-hover-ease),
+    box-shadow var(--motion-hover-duration) var(--motion-hover-ease);
+}
+
+.paper-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-layer-hover);
+}
+
+/* Gentle float breathing animation */
+@keyframes gentle-float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-3px); }
+  100% { transform: translateY(0px); }
+}
+
+.float-gentle {
+  animation: gentle-float 4s ease-in-out infinite;
+}
+
+/* Transition for interactive elements */
+.transition-base {
+  transition:
+    color var(--motion-hover-duration) var(--motion-hover-ease),
+    background-color var(--motion-hover-duration) var(--motion-hover-ease),
+    box-shadow var(--motion-hover-duration) var(--motion-hover-ease),
+    transform var(--motion-hover-duration) var(--motion-hover-ease),
+    border-color var(--motion-hover-duration) var(--motion-hover-ease);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .paper-hover,
+  .float-gentle,
+  .transition-base {
+    animation: none;
+    transition: none;
+  }
+}

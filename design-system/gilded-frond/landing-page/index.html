@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flora Carta — A Living Archive of Botanical Illustration</title>
+  <meta name="description" content="Flora Carta is a subscription archive of hand-painted botanical illustration folios. Twelve original plates per season, printed on Hahnemühle archival paper, delivered as bound specimen folios.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Flora Carta</a>
+    <ul class="nav-links">
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="editions.html">Editions</a></li>
+      <li><a href="process.html">Process</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="#subscribe" class="nav-cta">Subscribe</a>
+    <button class="nav-mobile-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="archive.html">Archive</a>
+  <a href="editions.html">Editions</a>
+  <a href="process.html">Process</a>
+  <a href="about.html">About</a>
+  <a href="#subscribe" class="nav-cta">Subscribe</a>
+</div>
+<script>
+(function() {
+  var nav = document.getElementById('site-nav');
+  var mobileMenu = document.getElementById('nav-mobile-menu');
+  var toggle = nav.querySelector('.nav-mobile-toggle');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 40) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
+  });
+  if (toggle) {
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+  }
+  mobileMenu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      nav.classList.remove('nav-mobile-open');
+      mobileMenu.classList.remove('is-open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <!-- Ghost letterform -->
+  <div class="hero__ghost-word" aria-hidden="true">Flora</div>
+
+  <!-- Video background: hand-dye process (Art Nouveau atelier atmosphere) -->
+  <div class="hero__video-wrap">
+    <video autoplay muted loop playsinline poster="" aria-hidden="true"
+      onerror="this.style.display='none'; this.parentNode.querySelector('.hero__video-onerror').style.display='flex'">
+      <source src="assets/hand-dye-process.mp4" type="video/mp4">
+    </video>
+    <div class="hero__video-onerror" style="display:none; background:#f9f6f1; color:transparent;"></div>
+  </div>
+  <div class="hero__overlay"></div>
+
+  <div class="hero__container">
+    <div id="hero-eyebrow" class="hero__eyebrow">
+      <span class="hero__eyebrow-line"></span>
+      <span class="hero__eyebrow-text">Twelve plates. One season.</span>
+    </div>
+
+    <h1 id="hero-headline" class="hero__headline">
+      The living archive of botanical illustration.
+    </h1>
+
+    <div id="hero-rule" class="hero__rule"></div>
+
+    <p id="hero-subheadline" class="hero__subheadline">
+      Each season, twelve hand-painted botanical plates rendered in period-accurate gouache and ink.
+      Printed on Hahnemühle archival paper. Bound as a specimen folio and delivered to your door.
+    </p>
+
+    <div id="hero-actions" class="hero__actions">
+      <a href="#subscribe" class="btn-primary">Begin Your Subscription</a>
+      <a href="editions.html" class="btn-ghost">Explore Editions</a>
+    </div>
+  </div>
+
+  <div id="hero-scroll-hint" class="hero__scroll-hint">
+    <span class="hero__scroll-hint-line"></span>
+    <span class="hero__scroll-hint-text">Scroll</span>
+  </div>
+</section>
+
+<!-- TICKER BAND -->
+<div class="ticker-band" aria-hidden="true">
+  <div class="ticker-track" id="ticker-track">
+    <span class="ticker-item">Flora Carta</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Botanical Archives</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Hand-Painted Folios</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Hahnemühle Paper</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Four Seasons</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Chelsea Physic Garden Archive</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Flora Carta</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Botanical Archives</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Hand-Painted Folios</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Hahnemühle Paper</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Four Seasons</span>
+    <span class="ticker-dot">✦</span>
+    <span class="ticker-item">Chelsea Physic Garden Archive</span>
+    <span class="ticker-dot">✦</span>
+  </div>
+</div>
+
+<!-- INTRO / STORY SECTION — Salon split 7:5 layout with gold divider -->
+<section class="intro-section" id="about-intro">
+  <!-- SVG botanical divider: wave from dark ticker to white section -->
+  <div class="section-divider" aria-hidden="true" style="margin-top:-2px;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:60px;">
+      <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,0 L0,0 Z" fill="#092222"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <div class="intro-grid" id="intro-grid">
+      <!-- Text column -->
+      <div class="intro-text" data-reveal="fade-up">
+        <span class="section-eyebrow" id="intro-eyebrow">The Archive</span>
+        <div class="gold-rule" id="intro-rule-svg"></div>
+        <h2 class="intro-heading">Where botanical science meets the painted page.</h2>
+        <p class="intro-body">
+          Flora Carta began as a private response to the loss of the illustrated botanical monograph —
+          a form of publication that flourished from 1750 to 1950 and nearly vanished with it.
+          Working from herbarium sources at the Chelsea Physic Garden and private collections across Britain,
+          our artists produce twelve illustrations per seasonal folio, each rendered in the governing style
+          of the source period: gouache, watercolour, copperplate, or lithographic ink.
+        </p>
+        <p class="intro-body">
+          Since 2019, we have produced twenty-two folios. 1,400 subscribers in 47 countries receive each edition.
+          No digital distribution. No reproduction prints. Every folio is a physical object —
+          the kind that rewards sustained looking.
+        </p>
+
+        <!-- Gold hairline divider between text and stats -->
+        <div class="intro-stats" id="intro-stats">
+          <div class="intro-stat">
+            <span class="intro-stat-value" data-counter="22">22</span>
+            <span class="intro-stat-label">Folios Published</span>
+          </div>
+          <div class="intro-stat">
+            <span class="intro-stat-value" data-counter="1400">1,400</span>
+            <span class="intro-stat-label">Active Subscribers</span>
+          </div>
+          <div class="intro-stat">
+            <span class="intro-stat-value" data-counter="47">47</span>
+            <span class="intro-stat-label">Countries</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image column — salon-framed specimen image -->
+      <div class="intro-image-frame" id="intro-image-frame">
+        <div class="salon-framed">
+          <div class="framed-inner">
+            <img
+              class="intro-image"
+              src="assets/atelier-studio-specimen.jpg"
+              alt="Hand-painted botanical specimen folio open on a weathered oak surface, watercolour pigments visible at margin"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="intro-image-onerror" style="display:none; background:#f2ede4; color:transparent;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDITIONS BENTO GRID — Bento 1.6fr 1fr 1fr, featured card spans 2 rows -->
+<section class="editions-section" id="editions">
+  <div class="container">
+    <span class="section-label" id="editions-label">Current &amp; Recent Editions</span>
+    <h2 class="section-heading" data-reveal="fade-up">Four seasons. Twelve plates each.</h2>
+
+    <div class="editions-grid" id="editions-grid">
+      <!-- Featured card — spans 2 rows, dark background -->
+      <div class="edition-card edition-card--featured" id="edition-featured">
+        <span class="edition-number">Edition XXII</span>
+        <span class="edition-season">Winter 2024–2025</span>
+        <h3 class="edition-title">Roots &amp; Dormancy: Underground Structures of the British Hedgerow</h3>
+        <p class="edition-body">
+          Twenty-two illustrators from our associate roster spent autumn 2024 excavating root systems along
+          three miles of Kentish hedgerow. The resulting twelve plates document rhizomes, taproots,
+          mycorrhizal networks, and bulb-forming species in cross-section — forms rarely painted because
+          they require the destruction of their subject. Printed in warm sepia tones on 300gsm cold-press.
+        </p>
+        <a href="editions.html" class="edition-link">View Edition →</a>
+      </div>
+
+      <!-- Card 2 — top right -->
+      <div class="edition-card" id="edition-2">
+        <span class="edition-number">Edition XXI</span>
+        <span class="edition-season">Autumn 2024</span>
+        <h3 class="edition-title">Fungal Architectures</h3>
+        <p class="edition-body">Twelve mycelium and fruiting body studies. Copperplate engraving technique, hand-finished.</p>
+        <a href="editions.html" class="edition-link">View Edition →</a>
+      </div>
+
+      <!-- Card 3 — bottom right top -->
+      <div class="edition-card" id="edition-3">
+        <span class="edition-number">Edition XX</span>
+        <span class="edition-season">Summer 2024</span>
+        <h3 class="edition-title">Coastal Seaweeds of the Outer Hebrides</h3>
+        <p class="edition-body">Survey of sublittoral and littoral algae. Gouache on Fabriano, six-colour process.</p>
+        <a href="editions.html" class="edition-link">View Edition →</a>
+      </div>
+
+      <!-- Card 4 — second row right top -->
+      <div class="edition-card" id="edition-4">
+        <span class="edition-number">Edition XIX</span>
+        <span class="edition-season">Spring 2024</span>
+        <h3 class="edition-title">Orchids of the British Limestone Pavement</h3>
+        <p class="edition-body">Rare habitat documentation in delicate transparent watercolour washes.</p>
+        <a href="editions.html" class="edition-link">View Edition →</a>
+      </div>
+
+      <!-- Card 5 — second row right bottom -->
+      <div class="edition-card" id="edition-5">
+        <span class="edition-number">Edition XVIII</span>
+        <span class="edition-season">Winter 2023–2024</span>
+        <h3 class="edition-title">Night-Blooming Species of the Chelsea Archive</h3>
+        <p class="edition-body">Moonflower, evening primrose, Cestrum nocturnum. Deep indigo ground with gold.</p>
+        <a href="editions.html" class="edition-link">View Edition →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SVG DIVIDER — wave transition to craft video section -->
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:80px;">
+    <path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,20 1440,40 L1440,80 L0,80 Z" fill="#f9f6f1"/>
+    <path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,20 1440,40 L1440,80 L0,80 Z" fill="none" stroke="rgba(176,145,91,0.12)" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- CRAFT / VIDEO SECTION — loom-weave-rhythm, salon asymmetric treatment -->
+<section class="craft-section" id="craft">
+  <div class="craft-video-wrap">
+    <video autoplay muted loop playsinline aria-hidden="true"
+      onerror="this.style.display='none'; this.parentNode.querySelector('.craft-video-onerror').style.display='block'">
+      <source src="assets/loom-weave-rhythm.mp4" type="video/mp4">
+    </video>
+    <div class="craft-video-onerror" style="display:none; background:#2a3d1f; color:transparent;"></div>
+  </div>
+  <div class="craft-overlay"></div>
+  <div class="craft-content">
+    <div class="craft-content-inner" id="craft-content">
+      <span class="section-label" style="color: rgba(176,145,91,0.8);">The Craft</span>
+      <div class="gold-rule" style="background:#b0915b;"></div>
+      <h2 class="craft-heading">Each plate takes between forty and ninety hours to complete.</h2>
+      <p class="craft-body">
+        Our illustrators work from pressed specimens, herbarium sheets, and field sketches.
+        No digital tools enter the process. Pigment is mixed by hand. Every stroke is an act of
+        sustained attention — the kind that produces knowledge, not just likeness.
+      </p>
+      <a href="process.html" class="btn-primary">See How We Work</a>
+    </div>
+  </div>
+</section>
+
+<!-- SVG DIVIDER — transition from dark craft to white specimens -->
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:80px;">
+    <path d="M0,0 C200,60 400,20 600,50 C800,80 1000,10 1200,45 C1320,65 1400,25 1440,40 L1440,80 L0,80 Z" fill="#ffffff"/>
+  </svg>
+</div>
+
+<!-- SPECIMENS — full-width horizontal rows, distinct from bento above -->
+<section class="specimens-section" id="specimens">
+  <div class="container">
+    <div class="specimens-heading-wrap" id="specimens-heading">
+      <div>
+        <span class="section-eyebrow">From the Archive</span>
+        <h2 class="section-heading">Selected botanical subjects.</h2>
+      </div>
+      <p class="section-subheading" style="margin:0; align-self: end;">
+        A working record of species documented across twenty-two editions.
+        Each entry links to the folio it appears in.
+      </p>
+    </div>
+
+    <ul class="specimens-list" id="specimens-list">
+      <li class="specimen-row">
+        <span class="specimen-num">i.</span>
+        <span class="specimen-name">Atropa belladonna</span>
+        <span class="specimen-family">Solanaceae</span>
+        <span class="specimen-edition">Edition XII</span>
+      </li>
+      <li class="specimen-row">
+        <span class="specimen-num">ii.</span>
+        <span class="specimen-name">Digitalis purpurea</span>
+        <span class="specimen-family">Plantaginaceae</span>
+        <span class="specimen-edition">Edition VIII</span>
+      </li>
+      <li class="specimen-row">
+        <span class="specimen-num">iii.</span>
+        <span class="specimen-name">Nymphaea alba</span>
+        <span class="specimen-family">Nymphaeaceae</span>
+        <span class="specimen-edition">Edition XV</span>
+      </li>
+      <li class="specimen-row">
+        <span class="specimen-num">iv.</span>
+        <span class="specimen-name">Paeonia officinalis</span>
+        <span class="specimen-family">Paeoniaceae</span>
+        <span class="specimen-edition">Edition VII</span>
+      </li>
+      <li class="specimen-row">
+        <span class="specimen-num">v.</span>
+        <span class="specimen-name">Clematis vitalba</span>
+        <span class="specimen-family">Ranunculaceae</span>
+        <span class="specimen-edition">Edition IV</span>
+      </li>
+      <li class="specimen-row">
+        <span class="specimen-num">vi.</span>
+        <span class="specimen-name">Taxus baccata</span>
+        <span class="specimen-family">Taxaceae</span>
+        <span class="specimen-edition">Edition XX</span>
+      </li>
+    </ul>
+
+    <div style="text-align: center; margin-top: 48px;" id="specimens-cta">
+      <a href="archive.html" class="btn-ghost">Browse the Full Archive</a>
+    </div>
+  </div>
+</section>
+
+<!-- SVG DIVIDER — irregular blade from white to sage -->
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:64px;">
+    <path d="M0,0 L400,40 L800,8 L1200,52 L1440,20 L1440,64 L0,64 Z" fill="#3f4d33"/>
+  </svg>
+</div>
+
+<!-- SUBSCRIBE SECTION — sage green, 2-column -->
+<section class="subscribe-section" id="subscribe">
+  <div class="container">
+    <div class="subscribe-inner">
+      <div class="subscribe-left" id="subscribe-left">
+        <span class="section-eyebrow section-eyebrow--on-dark">Begin Your Subscription</span>
+        <div class="gold-rule"></div>
+        <h2 class="subscribe-heading">Four folios per year. Delivered to any address in the world.</h2>
+        <p class="subscribe-body">
+          Annual subscribers receive the four seasonal editions — Winter, Spring, Summer, Autumn —
+          each comprising twelve hand-painted botanical plates on Hahnemühle 300gsm archival paper,
+          bound in a cloth-covered folio and housed in a slip case. Subscribers also receive access
+          to the digital reference library of all past editions.
+        </p>
+        <form class="subscribe-form" id="subscribe-form" onsubmit="return handleSubscribe(event);">
+          <input type="email" class="subscribe-input" placeholder="Your email address" required aria-label="Email address">
+          <button type="submit" class="subscribe-submit">Subscribe to Flora Carta</button>
+        </form>
+      </div>
+
+      <div class="subscribe-detail" id="subscribe-detail">
+        <div class="subscribe-feature">
+          <div class="subscribe-feature-icon" aria-hidden="true">✦</div>
+          <div class="subscribe-feature-text">
+            <strong>Twelve original plates</strong>
+            <p>Each folio contains twelve illustrations rendered in the governing technique of the documented period.</p>
+          </div>
+        </div>
+        <div class="subscribe-feature">
+          <div class="subscribe-feature-icon" aria-hidden="true">✦</div>
+          <div class="subscribe-feature-text">
+            <strong>Hahnemühle 300gsm archival paper</strong>
+            <p>Conservation-grade substrate. Each plate is printed to last three hundred years under standard archival conditions.</p>
+          </div>
+        </div>
+        <div class="subscribe-feature">
+          <div class="subscribe-feature-icon" aria-hidden="true">✦</div>
+          <div class="subscribe-feature-text">
+            <strong>Access to the complete digital archive</strong>
+            <p>All twenty-two past folios available as high-resolution reference files. Searchable by species, family, and technique.</p>
+          </div>
+        </div>
+        <div class="subscribe-feature">
+          <div class="subscribe-feature-icon" aria-hidden="true">✦</div>
+          <div class="subscribe-feature-text">
+            <strong>No automatic renewal</strong>
+            <p>Annual subscriptions are renewed by choice. No hidden charges, no locked-in terms.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer" id="site-footer">
+  <div class="container">
+    <div class="footer-inner" id="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Flora Carta</a>
+        <p class="footer-tagline">A subscription archive of hand-painted botanical illustration folios. Founded 2019, London.</p>
+        <div class="footer-seal" id="footer-seal">
+          <div class="footer-seal-text">Est.<br>2019</div>
+        </div>
+      </div>
+
+      <div>
+        <span class="footer-col-title">Archive</span>
+        <ul class="footer-links">
+          <li><a href="archive.html">Browse All Editions</a></li>
+          <li><a href="archive.html#species">Species Index</a></li>
+          <li><a href="archive.html#technique">By Technique</a></li>
+          <li><a href="archive.html#period">By Period</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <span class="footer-col-title">The Folio</span>
+        <ul class="footer-links">
+          <li><a href="editions.html">Current Edition</a></li>
+          <li><a href="editions.html#past">Past Editions</a></li>
+          <li><a href="process.html">How It Is Made</a></li>
+          <li><a href="process.html#materials">Materials &amp; Paper</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <span class="footer-col-title">Information</span>
+        <ul class="footer-links">
+          <li><a href="about.html">About Flora Carta</a></li>
+          <li><a href="about.html#illustrators">Our Illustrators</a></li>
+          <li><a href="#subscribe">Subscribe</a></li>
+          <li><a href="about.html#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copyright">© 2025 Flora Carta. All rights reserved.</span>
+      <span class="footer-botanical-credit">Source material: Chelsea Physic Garden &amp; private collections</span>
+    </div>
+  </div>
+</footer>
+
+<!-- GSAP CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── Hero entrance animations ── */
+var tl = gsap.timeline({ defaults: { ease: 'cubic-bezier(0.16, 1, 0.3, 1)' } });
+
+// Gold rule clip-path: revealSweep (left-to-right, mimics cloth unrolling)
+tl.set('#hero-rule', { clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)' })
+  .to('#hero-rule', { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 0.9, ease: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }, 0)
+  .to('#hero-eyebrow', { opacity: 1, y: 0, duration: 0.91 }, 0.1)
+  .fromTo('#hero-headline', { opacity: 0, y: 32 }, { opacity: 1, y: 0, duration: 1.0 }, 0.3)
+  .to('#hero-subheadline', { opacity: 1, y: 0, duration: 0.91 }, 0.55)
+  .to('#hero-actions', { opacity: 1, y: 0, duration: 0.75 }, 0.75)
+  .to('#hero-scroll-hint', { opacity: 0.8, duration: 0.6 }, 1.1);
+
+// Set initial states
+gsap.set('#hero-subheadline', { opacity: 0, y: 20 });
+gsap.set('#hero-actions', { opacity: 0, y: 16 });
+
+// Gold shimmer on wax seal (once visible in footer)
+ScrollTrigger.create({
+  trigger: '#footer-seal',
+  start: 'top 85%',
+  onEnter: function() {
+    gsap.to('#footer-seal', {
+      boxShadow: '0 0 16px rgba(176, 145, 91, 0.35)',
+      duration: 2.0,
+      ease: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+      repeat: -1,
+      yoyo: true
+    });
+  },
+  once: true
+});
+
+/* ── Intro section: SVG vine draw on gold rule ── */
+var introRuleSvg = document.getElementById('intro-rule-svg');
+if (introRuleSvg) {
+  ScrollTrigger.create({
+    trigger: '#intro-grid',
+    start: 'top 75%',
+    onEnter: function() {
+      gsap.fromTo(introRuleSvg,
+        { scaleX: 0, transformOrigin: 'left center' },
+        { scaleX: 1, duration: 0.85, ease: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }
+      );
+      // Text column: fadeSlideUp
+      gsap.fromTo('.intro-text', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.91, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+    },
+    once: true
+  });
+}
+
+// Intro image frame: scaleReveal (cinematic duration 1.43s)
+ScrollTrigger.create({
+  trigger: '#intro-image-frame',
+  start: 'top 70%',
+  onEnter: function() {
+    gsap.fromTo('#intro-image-frame',
+      { opacity: 0, scale: 0.92 },
+      { opacity: 1, scale: 1, duration: 1.43, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+    );
+  },
+  once: true
+});
+
+// Intro stats: counter animations (staggered)
+ScrollTrigger.create({
+  trigger: '#intro-stats',
+  start: 'top 80%',
+  onEnter: function() {
+    document.querySelectorAll('[data-counter]').forEach(function(el) {
+      var target = parseInt(el.getAttribute('data-counter'));
+      var proxy = { val: 0 };
+      gsap.to(proxy, {
+        val: target,
+        duration: 2.0,
+        ease: 'power2.out',
+        onUpdate: function() {
+          el.textContent = Math.round(proxy.val).toLocaleString();
+        }
+      });
+    });
+  },
+  once: true
+});
+
+/* ── Editions bento grid: rotate + rise stagger ── */
+ScrollTrigger.create({
+  trigger: '#editions-grid',
+  start: 'top 72%',
+  onEnter: function() {
+    // Featured card: scale reveal
+    gsap.fromTo('#edition-featured',
+      { opacity: 0, scale: 0.94, y: 24 },
+      { opacity: 1, scale: 1, y: 0, duration: 1.43, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+    );
+    // Other cards: rotate + rise stagger (petalUnfurl-inspired)
+    gsap.fromTo(['#edition-2', '#edition-3', '#edition-4', '#edition-5'],
+      { opacity: 0, y: 40, rotation: 1.5 },
+      { opacity: 1, y: 0, rotation: 0, duration: 0.91, stagger: 0.12, ease: 'cubic-bezier(0.34, 1.56, 0.64, 1)', delay: 0.2 }
+    );
+  },
+  once: true
+});
+
+// Editions label: revealSweep
+ScrollTrigger.create({
+  trigger: '#editions-label',
+  start: 'top 85%',
+  onEnter: function() {
+    gsap.fromTo('#editions-label',
+      { clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', opacity: 1 },
+      { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 0.9, ease: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }
+    );
+  },
+  once: true
+});
+
+/* ── Craft section: parallax + content entrance ── */
+ScrollTrigger.create({
+  trigger: '#craft',
+  start: 'top 80%',
+  onEnter: function() {
+    gsap.fromTo('#craft-content',
+      { opacity: 0, x: -60 },
+      { opacity: 1, x: 0, duration: 0.91, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+    );
+  },
+  once: true
+});
+
+/* ── Specimens: horizontal sweep from left (each row in sequence) ── */
+ScrollTrigger.create({
+  trigger: '#specimens-list',
+  start: 'top 72%',
+  onEnter: function() {
+    gsap.fromTo('.specimen-row',
+      { opacity: 0, x: -40 },
+      { opacity: 1, x: 0, duration: 0.75, stagger: 0.09, ease: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }
+    );
+  },
+  once: true
+});
+
+// Specimens heading: divergent x for heading vs body
+ScrollTrigger.create({
+  trigger: '#specimens-heading',
+  start: 'top 80%',
+  onEnter: function() {
+    gsap.fromTo('#specimens-heading > *:first-child',
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 0.85, ease: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }
+    );
+    gsap.fromTo('#specimens-heading > *:last-child',
+      { opacity: 0, x: 50 },
+      { opacity: 1, x: 0, duration: 0.85, ease: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', delay: 0.1 }
+    );
+  },
+  once: true
+});
+
+// Specimens CTA: tendrilRise
+ScrollTrigger.create({
+  trigger: '#specimens-cta',
+  start: 'top 88%',
+  onEnter: function() {
+    gsap.fromTo('#specimens-cta',
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }
+    );
+  },
+  once: true
+});
+
+/* ── Subscribe section: divergent entrance ── */
+ScrollTrigger.create({
+  trigger: '#subscribe',
+  start: 'top 70%',
+  onEnter: function() {
+    gsap.fromTo('#subscribe-left',
+      { opacity: 0, x: -70 },
+      { opacity: 1, x: 0, duration: 0.91, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+    );
+    gsap.fromTo('#subscribe-detail',
+      { opacity: 0, x: 70 },
+      { opacity: 1, x: 0, duration: 0.91, ease: 'cubic-bezier(0.16, 1, 0.3, 1)', delay: 0.15 }
+    );
+    // Subscribe features: petal stagger
+    gsap.fromTo('.subscribe-feature',
+      { opacity: 0, y: 24, scale: 0.96 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.75, stagger: 0.1, ease: 'cubic-bezier(0.34, 1.56, 0.64, 1)', delay: 0.4 }
+    );
+  },
+  once: true
+});
+
+/* ── Footer: revealSweep on footer background, fadeSlideUp on content ── */
+ScrollTrigger.create({
+  trigger: '#site-footer',
+  start: 'top 85%',
+  onEnter: function() {
+    gsap.fromTo('#footer-inner',
+      { opacity: 0, y: 32 },
+      { opacity: 1, y: 0, duration: 0.91, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+    );
+    // Copyright: clip-path horizontal reveal
+    gsap.fromTo('.footer-bottom',
+      { clipPath: 'inset(0 100% 0 0)', opacity: 1 },
+      { clipPath: 'inset(0 0% 0 0)', duration: 0.85, ease: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', delay: 0.45 }
+    );
+  },
+  once: true
+});
+
+/* ── Subscribe form handler ── */
+function handleSubscribe(e) {
+  e.preventDefault();
+  var btn = e.target.querySelector('.subscribe-submit');
+  btn.textContent = 'Subscribed — thank you.';
+  btn.style.background = '#3f4d33';
+  btn.disabled = true;
+  return false;
+}
+</script>
+
+</body>
+</html>

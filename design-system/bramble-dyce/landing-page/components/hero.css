@@ -1,0 +1,173 @@
+/* hero.css — Bramble & Dyce hero section */
+
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--color-surface-bone) 0%, var(--color-page-bg) 60%, var(--color-surface-warm) 100%);
+  padding-top: 64px; /* nav height */
+  overflow: hidden;
+}
+
+/* Background paper-grain texture layer — subtle */
+#hero-texture-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(196,184,163,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 80%, rgba(201,195,187,0.14) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-margin);
+  text-align: center;
+  width: 100%;
+}
+
+#hero-eyebrow {
+  font-family: var(--font-nav);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+  display: block;
+  margin-bottom: 28px;
+}
+
+#hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 5rem);
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -2.4px;
+  color: var(--color-heading);
+  margin: 0 0 24px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#hero-subheadline {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  color: var(--color-muted-text);
+  margin: 0 0 48px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#hero-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-primary {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-page-bg);
+  background: var(--color-cta);
+  border: 1px solid var(--color-cta);
+  border-radius: 2px;
+  padding: 13px 28px;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary:hover {
+  background: var(--color-cta-hover);
+  border-color: var(--color-cta-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(26,23,20,0.18);
+}
+
+.btn-ghost {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-cta);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  padding: 13px 28px;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-cta);
+  background: rgba(44,35,24,0.04);
+}
+
+/* Sinusoidal wave divider at base of hero */
+#hero-wave-divider {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  line-height: 0;
+}
+
+#hero-wave-divider svg {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+
+/* Hero floating bone line — decorative horizontal rule */
+#hero-rule {
+  width: 40px;
+  height: 1px;
+  background: var(--color-border);
+  margin: 0 auto 32px;
+}
+
+@media (max-width: 900px) {
+  #hero-inner {
+    padding: 0 var(--space-8);
+  }
+  #hero-headline {
+    letter-spacing: -1.6px;
+  }
+  #hero-cta-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero-inner {
+    padding: 0 20px;
+  }
+  #hero-cta-group .btn-primary,
+  #hero-cta-group .btn-ghost {
+    width: 100%;
+    text-align: center;
+  }
+}

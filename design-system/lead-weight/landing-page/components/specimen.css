@@ -1,0 +1,181 @@
+/* ============================================================
+   specimen.css — lead-weight / VERDURE
+   Section 3: Specimen Library Feature
+   Full-bleed dark surface (#1A1714). Reversed text (#F2EDE3).
+   Video panel at 60% width. clip-path print-reveal on h2.
+   ============================================================ */
+
+/* ── Section wrapper ──────────────────────────────────────── */
+#specimen-library {
+  background: #1a1714;
+  color: rgba(242, 237, 227, 0.88);
+  padding: var(--space-section-break) 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+#specimen-library-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--grid-gutter);
+  align-items: start;
+}
+
+/* ── Left column: caption + metadata ────────────────────────  */
+#specimen-left {
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+#specimen-caption-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: rgba(242, 237, 227, 0.55);
+  margin: 0;
+}
+
+#specimen-heading {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h2);
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--letter-spacing-h2);
+  color: #f2ede3;
+  margin: 0;
+}
+
+#specimen-body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
+  color: rgba(242, 237, 227, 0.78);
+  margin: 0;
+  max-width: 42ch;
+}
+
+#specimen-cta {
+  font-family: var(--font-body);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-button);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-button);
+  color: #f2ede3;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+#specimen-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 0.5px;
+  background: rgba(242, 237, 227, 0.55);
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: background 0.3s ease-out, transform 0.3s ease-out;
+}
+
+#specimen-cta:hover::after {
+  background: rgba(242, 237, 227, 0.9);
+}
+
+/* ── Right column: video panel ──────────────────────────────  */
+#specimen-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#specimen-video-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+  background: #0d0b09;
+}
+
+#specimen-video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#specimen-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #0d0b09;
+  color: rgba(242, 237, 227, 0.28);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  position: absolute;
+  inset: 0;
+}
+
+#specimen-video-caption {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: rgba(242, 237, 227, 0.38);
+  margin: 0;
+}
+
+/* Depth: hairline at top of dark section */
+#specimen-library::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0.5px;
+  background: rgba(242, 237, 227, 0.14);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  #specimen-library-inner {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+
+  #specimen-video-frame {
+    aspect-ratio: 16 / 7;
+  }
+}
+
+@media (max-width: 900px) {
+  #specimen-library {
+    padding: 80px 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  #specimen-library {
+    padding: 64px 20px;
+  }
+
+  #specimen-video-frame {
+    aspect-ratio: 4 / 3;
+  }
+}

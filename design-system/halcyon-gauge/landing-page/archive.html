@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Halcyon Gauge Archive — Search 847 precision hydrographic instruments by class, maker, date, and loan status.">
+  <title>Archive — Halcyon Gauge</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <style>
+    .container { max-width: var(--grid-max-width); margin-inline: auto; padding-inline: var(--grid-margin); }
+
+    /* Nav spacer — always active on sub-pages */
+    #nav-spacer { height: var(--space-nav-height); }
+
+    /* ── Page header (compact — not full viewport) ── */
+    #archive-header {
+      background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-page-bg) 100%);
+      padding: var(--space-5) 0 var(--space-5) 0;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    #archive-label {
+      font-family: var(--font-label);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin: 0 0 var(--space-2) 0;
+    }
+
+    #archive-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: var(--weight-light);
+      line-height: 1.1;
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-heading);
+      margin: 0 0 var(--space-3) 0;
+    }
+
+    #archive-subtitle {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      color: var(--color-text-secondary);
+      max-width: 520px;
+      line-height: var(--leading-body);
+      margin: 0;
+    }
+
+    /* ── Search + filter bar ── */
+    #search-section {
+      background: var(--color-page-bg);
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--color-border-light);
+      position: sticky;
+      top: 72px;
+      z-index: 100;
+    }
+
+    #search-bar {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    #search-input {
+      flex: 1;
+      min-width: 200px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--color-body-text);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--btn-radius);
+      padding: 10px 16px;
+      outline: none;
+      transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+    }
+
+    #search-input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(184, 92, 42, 0.12);
+    }
+
+    .filter-btn {
+      font-family: var(--font-label);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--btn-radius);
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: background var(--duration-fast) ease, color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--color-accent);
+      color: var(--color-page-bg);
+      border-color: var(--color-accent);
+    }
+
+    /* ── Catalogue table section ── */
+    #catalogue-section {
+      padding: var(--space-5) 0 var(--space-7) 0;
+      background: var(--color-page-bg);
+    }
+
+    #catalogue-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+    }
+
+    #catalogue-table thead th {
+      font-family: var(--font-label);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      text-align: left;
+      padding: var(--space-3) var(--space-4) var(--space-3) 0;
+      border-bottom: 2px solid var(--color-border);
+    }
+
+    #catalogue-table tbody tr {
+      border-bottom: 1px solid var(--color-border-light);
+      transition: background var(--duration-fast) ease;
+      cursor: pointer;
+    }
+
+    #catalogue-table tbody tr:hover {
+      background: rgba(184, 92, 42, 0.04);
+    }
+
+    #catalogue-table tbody td {
+      padding: var(--space-4) var(--space-4) var(--space-4) 0;
+      vertical-align: top;
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    .td-accession {
+      font-family: var(--font-label);
+      font-size: var(--type-caption) !important;
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-text-muted) !important;
+      white-space: nowrap;
+    }
+
+    .td-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem !important;
+      font-style: italic;
+      color: var(--color-heading) !important;
+    }
+
+    .td-status-tag {
+      display: inline-block;
+      font-family: var(--font-label);
+      font-size: 0.65rem !important;
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    .td-status-tag.available { background: rgba(184, 92, 42, 0.1); color: var(--color-accent); }
+    .td-status-tag.on-loan { background: rgba(26, 24, 20, 0.07); color: var(--color-text-muted); }
+
+    /* ── Footer ── */
+    #site-footer {
+      background: var(--color-dark-surface);
+      border-top: 1px solid rgba(245, 240, 232, 0.1);
+      padding: var(--space-5) 0;
+    }
+    #footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    #footer-copyright {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: rgba(245, 240, 232, 0.35);
+    }
+    #footer-nav-links {
+      display: flex;
+      gap: var(--space-4);
+    }
+    .footer-link {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: rgba(245, 240, 232, 0.5);
+      text-decoration: none;
+      transition: color var(--duration-fast) ease;
+    }
+    .footer-link:hover { color: var(--color-dark-text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      #catalogue-table thead th:nth-child(3),
+      #catalogue-table tbody td:nth-child(3) { display: none; }
+    }
+    @media (max-width: 600px) {
+      #catalogue-table thead th:nth-child(4),
+      #catalogue-table tbody td:nth-child(4) { display: none; }
+      .container { padding-inline: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-logo" aria-label="Halcyon Gauge — Home">Halcyon Gauge</a>
+    <ul class="nav-links" role="list">
+      <li><a href="archive.html" class="nav-link nav-link--active" aria-current="page">Archive</a></li>
+      <li><a href="collection.html" class="nav-link">Collection</a></li>
+      <li><a href="fellowship.html" class="nav-link">Fellowship</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+    <a href="archive.html" class="nav-mobile-link">Archive</a>
+    <a href="collection.html" class="nav-mobile-link">Collection</a>
+    <a href="fellowship.html" class="nav-mobile-link">Fellowship</a>
+    <a href="about.html" class="nav-mobile-link">About</a>
+  </div>
+
+  <div id="nav-spacer"></div>
+
+  <!-- Page header -->
+  <header id="archive-header">
+    <div class="container">
+      <p id="archive-label">Catalogue Search</p>
+      <h1 id="archive-title">The Archive</h1>
+      <p id="archive-subtitle">847 instruments catalogued by accession number, maker, date of manufacture, class, condition grade, and current loan status.</p>
+    </div>
+  </header>
+
+  <!-- Search + filter -->
+  <div id="search-section">
+    <div class="container">
+      <div id="search-bar">
+        <input id="search-input" type="text" placeholder="Search by instrument name, maker, or accession number…" aria-label="Search archive">
+        <button class="filter-btn active" id="filter-all">All Classes</button>
+        <button class="filter-btn" id="filter-angular">Angular</button>
+        <button class="filter-btn" id="filter-pressure">Pressure</button>
+        <button class="filter-btn" id="filter-thermal">Thermal</button>
+        <button class="filter-btn" id="filter-depth">Depth</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Catalogue table -->
+  <section id="catalogue-section">
+    <div class="container">
+      <table id="catalogue-table" aria-label="Instrument catalogue">
+        <thead>
+          <tr>
+            <th scope="col">Accession No.</th>
+            <th scope="col">Instrument</th>
+            <th scope="col">Maker / Date</th>
+            <th scope="col">Condition</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody id="catalogue-tbody">
+          <tr>
+            <td class="td-accession">HG-0001</td>
+            <td class="td-name">Surveying Sextant, Vernier Scale</td>
+            <td>Heath & Co., London, 1889</td>
+            <td>Grade A</td>
+            <td><span class="td-status-tag available">Available</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0012</td>
+            <td class="td-name">Kelvin Sextant Series, Complete</td>
+            <td>Kelvin & Hughes, London, 1891–1927</td>
+            <td>Grade A</td>
+            <td><span class="td-status-tag available">Available</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0089</td>
+            <td class="td-name">Mercurial Station Barometer</td>
+            <td>Negretti & Zambra, London, c. 1938</td>
+            <td>Grade B</td>
+            <td><span class="td-status-tag on-loan">On Loan</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0134</td>
+            <td class="td-name">Aneroid Barograph, Marine</td>
+            <td>R. Fuess, Berlin, 1921</td>
+            <td>Grade A</td>
+            <td><span class="td-status-tag available">Available</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0201</td>
+            <td class="td-name">Reversing Thermometer Set (12 units)</td>
+            <td>Negretti & Zambra, London, 1951</td>
+            <td>Grade A</td>
+            <td><span class="td-status-tag available">Available</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0267</td>
+            <td class="td-name">Lead Sounding Weight, 14-lb Calibrated</td>
+            <td>Kelvin Bottomley & Baird, 1909</td>
+            <td>Grade B</td>
+            <td><span class="td-status-tag on-loan">On Loan</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0441</td>
+            <td class="td-name">Kelvin Navigating Sextant, Brass</td>
+            <td>Kelvin & Hughes, Glasgow, c. 1903</td>
+            <td>Grade A</td>
+            <td><span class="td-status-tag available">Available</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0512</td>
+            <td class="td-name">Tide Gauge, Stilling Well Type</td>
+            <td>Spanish Hydrographic Institute, 1948</td>
+            <td>Grade C</td>
+            <td><span class="td-status-tag available">Available</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0618</td>
+            <td class="td-name">Deep-Sea Thermometer, Protected</td>
+            <td>Richter & Wiese, Berlin, 1933</td>
+            <td>Grade B</td>
+            <td><span class="td-status-tag available">Available</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0701</td>
+            <td class="td-name">Plotting Compass, Brass, Gimbal-Mounted</td>
+            <td>Dobbie McInnes, Glasgow, 1955</td>
+            <td>Grade A</td>
+            <td><span class="td-status-tag on-loan">On Loan</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0723</td>
+            <td class="td-name">Marine Chronometer, Two-Day</td>
+            <td>Hamilton Watch Co., Lancaster PA, 1944</td>
+            <td>Grade A</td>
+            <td><span class="td-status-tag available">Available</span></td>
+          </tr>
+          <tr>
+            <td class="td-accession">HG-0845</td>
+            <td class="td-name">Echo Sounder, Early Transistor</td>
+            <td>Kelvin Hughes, London, 1961</td>
+            <td>Grade B</td>
+            <td><span class="td-status-tag available">Available</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="site-footer">
+    <div class="container">
+      <div id="footer-bottom">
+        <span id="footer-copyright">© 1962–2026 Halcyon Gauge Archive, Punta Carreiro, Galicia.</span>
+        <nav id="footer-nav-links" aria-label="Footer navigation">
+          <a href="collection.html" class="footer-link">Collection</a>
+          <a href="fellowship.html" class="footer-link">Fellowship</a>
+          <a href="about.html" class="footer-link">About</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lenis smooth scroll
+    const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Nav scroll
+    const nav = document.getElementById('site-nav');
+    const toggle = nav.querySelector('.nav-mobile-toggle');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', open);
+      mobileMenu.classList.toggle('is-open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    // Header entrance
+    gsap.from('#archive-title', { y: 30, duration: 0.8, delay: 0.2, ease: 'power3.out' });
+    gsap.from('#archive-subtitle', { y: 20, duration: 0.6, delay: 0.5, ease: 'power3.out' });
+
+    // Table rows stagger in
+    gsap.from('#catalogue-tbody tr', {
+      x: -40,
+      stagger: 0.04,
+      duration: 0.6,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '#catalogue-table', start: 'top 85%', once: true }
+    });
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

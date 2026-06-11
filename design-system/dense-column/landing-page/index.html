@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIELDSET — Engineering as Written Practice</title>
+  <meta name="description" content="FIELDSET is an independent quarterly publication for working engineers. Post-mortems, RFC drafts, infrastructure notes, and architecture decisions published as structured documents.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+</head>
+<body>
+
+  <!-- NAV TEMPLATE -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Fieldset</a>
+      <ul class="nav-links">
+        <li><a href="issues.html" class="nav-link">Issues</a></li>
+        <li><a href="features.html" class="nav-link">Features</a></li>
+        <li><a href="archive.html" class="nav-link">Archive</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="subscribe.html" class="nav-link">Subscribe</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="issues.html" class="nav-link">Issues</a>
+    <a href="features.html" class="nav-link">Features</a>
+    <a href="archive.html" class="nav-link">Archive</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="subscribe.html" class="nav-link">Subscribe</a>
+  </div>
+  <script>
+    (function(){
+      var toggle = document.querySelector('.nav-mobile-toggle');
+      var menu = document.getElementById('nav-mobile-menu');
+      var nav = document.getElementById('site-nav');
+      if(toggle && menu) {
+        toggle.addEventListener('click', function(){
+          nav.classList.toggle('nav-mobile-open');
+          menu.classList.toggle('is-open');
+          document.body.style.overflow = menu.classList.contains('is-open') ? 'hidden' : '';
+        });
+        menu.querySelectorAll('.nav-link').forEach(function(link){
+          link.addEventListener('click', function(){
+            nav.classList.remove('nav-mobile-open');
+            menu.classList.remove('is-open');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+    })();
+  </script>
+
+  <!-- HERO: Typographic declaration — newspaper front page -->
+  <section class="hero" role="banner">
+    <div style="max-width:1440px;margin:0 auto;">
+      <span class="hero__overline">Vol. 4 — Q1 2026 — Independent Engineering Publication</span>
+      <h1 class="hero__headline">FIELD<br>SET</h1>
+      <p class="hero__tagline">Engineering as Written Practice. Post-mortems, RFC drafts, infrastructure notes, and architecture decisions published as structured documents for engineers who still think in writing.</p>
+      <div class="hero__meta-row">
+        <span class="hero__issue-badge">Issue 14 Available Now</span>
+        <a href="issues.html" class="hero__cta">Read Issue 14</a>
+        <a href="subscribe.html" class="hero__ghost-cta">Subscribe Free</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER: Rolling publication identifiers -->
+  <div class="ticker-wrapper" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">Post-Mortem</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">RFC Draft</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">Architecture Decision Record</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">Incident Report</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">Spec Review</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">System Design</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">Engineering Retro</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">Infrastructure Note</span><span class="ticker-sep">&#x25CF;</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">Post-Mortem</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">RFC Draft</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">Architecture Decision Record</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">Incident Report</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">Spec Review</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">System Design</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">Engineering Retro</span><span class="ticker-sep">&#x25CF;</span>
+      <span class="ticker-item">Infrastructure Note</span><span class="ticker-sep">&#x25CF;</span>
+    </div>
+  </div>
+
+  <!-- SECTION: Current Issue — Featured + Recent sidebar -->
+  <section class="section" aria-labelledby="current-issue-heading">
+    <div class="section__container">
+      <div class="section__header">
+        <h2 class="section__heading" id="current-issue-heading">Current Issue</h2>
+        <span class="section__label">Volume 4 — Q1 2026</span>
+        <a href="issues.html" class="section__header-link">All Issues →</a>
+      </div>
+      <div class="issues-grid">
+        <!-- Featured current issue -->
+        <div class="issue-card--featured">
+          <span class="issue-card__number">14</span>
+          <h3 class="issue-card__title">The Incident Record</h3>
+          <p class="issue-card__meta">7 Essays · 3 Post-Mortems · 2 RFC Commentaries · January 2026</p>
+          <p class="issue-card__body">When a system fails, the written record is the only artifact that survives. This issue collects seven first-person incident reports from engineers at scale: the cascade that erased three hours of Postgres WAL, the load-balancer configuration that took down a mobile payment network for 22 minutes, and the RFC that prevented a distributed deadlock pattern from reaching production. Each document is published as submitted — no editorial polish, no retrospective wisdom. The failure in its own words.</p>
+          <a href="issues.html" class="issue-card__cta">Read Issue 14</a>
+        </div>
+        <!-- Recent issues sidebar -->
+        <nav class="issues-sidebar" aria-label="Recent issues">
+          <a href="archive.html#issue-13" class="issue-item">
+            <span class="issue-item__num">13</span>
+            <div class="issue-item__info">
+              <span class="issue-item__title">The Specification</span>
+              <span class="issue-item__date">October 2025</span>
+            </div>
+          </a>
+          <a href="archive.html#issue-12" class="issue-item">
+            <span class="issue-item__num">12</span>
+            <div class="issue-item__info">
+              <span class="issue-item__title">Distributed Clocks</span>
+              <span class="issue-item__date">July 2025</span>
+            </div>
+          </a>
+          <a href="archive.html#issue-11" class="issue-item">
+            <span class="issue-item__num">11</span>
+            <div class="issue-item__info">
+              <span class="issue-item__title">On-Call Culture</span>
+              <span class="issue-item__date">April 2025</span>
+            </div>
+          </a>
+          <a href="archive.html#issue-10" class="issue-item">
+            <span class="issue-item__num">10</span>
+            <div class="issue-item__info">
+              <span class="issue-item__title">Memory & Ownership</span>
+              <span class="issue-item__date">January 2025</span>
+            </div>
+          </a>
+          <a href="archive.html" class="issue-item">
+            <span class="issue-item__num">→</span>
+            <div class="issue-item__info">
+              <span class="issue-item__title">Full Archive</span>
+              <span class="issue-item__date">Issues 1–13</span>
+            </div>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: Publication stats — numbers as aesthetic -->
+  <section class="section section--surface" aria-label="Publication statistics">
+    <div class="section__container">
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-value">14</span>
+          <span class="stat-label">Issues Published</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">312</span>
+          <span class="stat-label">Documents Archived</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">11k</span>
+          <span class="stat-label">Engineer Subscribers</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">4yr</span>
+          <span class="stat-label">In Publication</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: Features — newspaper column horizontal rows -->
+  <!-- Distinct grid from Current Issue: full-width horizontal rows -->
+  <section class="section" aria-labelledby="features-heading">
+    <div class="section__container">
+      <div class="section__header">
+        <h2 class="section__heading" id="features-heading">From This Issue</h2>
+        <span class="section__label">Issue 14 — January 2026</span>
+        <a href="features.html" class="section__header-link">All Features →</a>
+      </div>
+      <div class="features-grid">
+        <a href="features.html#postgres-wal" class="feature-row">
+          <h3 class="feature-row__title">Three Hours of Missing WAL</h3>
+          <p class="feature-row__body">A full timeline of the Postgres write-ahead log gap, the recovery procedure that almost made it worse, and what the monitoring didn't surface until it was too late.</p>
+          <span class="feature-row__tag">Post-Mortem</span>
+        </a>
+        <a href="features.html#rfc-deadlock" class="feature-row">
+          <h3 class="feature-row__title">RFC 0047: Preventing Distributed Deadlocks at the Service Boundary</h3>
+          <p class="feature-row__body">A commentary on an accepted internal RFC, examining the reasoning behind the lock-ordering protocol and the edge cases the proposal explicitly deferred.</p>
+          <span class="feature-row__tag">RFC Commentary</span>
+        </a>
+        <a href="features.html#on-writing" class="feature-row">
+          <h3 class="feature-row__title">The ADR as Institutional Memory</h3>
+          <p class="feature-row__body">Architecture Decision Records have a lifespan problem. Once the decision is old, the record becomes archaeology. This is a proposal for dating ADRs against their decay conditions, not their creation date.</p>
+          <span class="feature-row__tag">Essay</span>
+        </a>
+        <a href="features.html#load-balancer" class="feature-row">
+          <h3 class="feature-row__title">22 Minutes: A Payment Network Incident</h3>
+          <p class="feature-row__body">The load-balancer configuration change was reviewed, approved, and merged at 14:08. By 14:31 it had cascaded through three regions. Published as submitted, with the internal Slack thread preserved verbatim.</p>
+          <span class="feature-row__tag">Incident Report</span>
+        </a>
+        <a href="features.html#infra-note" class="feature-row">
+          <h3 class="feature-row__title">Notes on Capacity Planning Under Uncertainty</h3>
+          <p class="feature-row__body">A practitioner's inventory of the tools that don't work and the ones that do — covering spike forecasting, headroom calculation, and the organizational behavior that defeats both.</p>
+          <span class="feature-row__tag">Infrastructure Note</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: Editorial bento — distinct 2fr/1fr unequal grid -->
+  <section class="section section--surface" aria-labelledby="editorial-heading">
+    <div class="section__container">
+      <div class="section__header">
+        <h2 class="section__heading" id="editorial-heading">Editorial</h2>
+        <span class="section__label">Recurring Sections</span>
+      </div>
+      <div class="editorial-grid">
+        <!-- Tall left card spanning 2 rows -->
+        <a href="features.html#process-documentation" class="editorial-card editorial-card--span-2">
+          <span class="editorial-card__category">Process Documentation</span>
+          <h3 class="editorial-card__title">How We Document: The Editorial Process</h3>
+          <p class="editorial-card__body">Every document in FIELDSET passes through the same submission pipeline: raw text, structural review, inline annotation, and version-controlled publication. This is what that looks like from the inside — the markup, the corrections, the iteration.</p>
+          <div style="margin-top:24px;aspect-ratio:16/9;background:#000;border:1px solid #6e6e73;overflow:hidden;position:relative;">
+            <video src="assets/editorial-process.mp4" muted autoplay loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentNode.querySelector('.editorial-video-placeholder').style.color='transparent'">
+            </video>
+            <div class="editorial-video-placeholder" style="position:absolute;inset:0;background:#1d1d1f;display:flex;align-items:center;justify-content:center;color:transparent;"></div>
+          </div>
+        </a>
+        <!-- Right column: 2 stacked cards -->
+        <a href="archive.html" class="editorial-card editorial-card--dark">
+          <span class="editorial-card__category">Archive</span>
+          <h3 class="editorial-card__title">312 Documents, 14 Issues</h3>
+          <p class="editorial-card__body">The full document archive — searchable by document type, issue, and engineering domain.</p>
+        </a>
+        <a href="subscribe.html" class="editorial-card editorial-card--accent">
+          <span class="editorial-card__category">Free Access</span>
+          <h3 class="editorial-card__title">Subscribe — No Cost, No Tracking</h3>
+          <p class="editorial-card__body">Email delivery. Plain text. No analytics pixel. No third-party scripts. Just the document.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBSCRIBE SECTION -->
+  <section class="subscribe-section" aria-labelledby="subscribe-heading">
+    <div class="section__container">
+      <div>
+        <h2 class="subscribe-heading" id="subscribe-heading">Read Every Issue</h2>
+        <p class="subscribe-body">Quarterly delivery. HTML and plain-text editions. Permanent archive access. Engineers who write clearly think clearly.</p>
+      </div>
+      <form class="subscribe-form" action="#" method="POST" novalidate>
+        <label for="sub-email-home">Your email address</label>
+        <input type="email" id="sub-email-home" name="email" placeholder="name@company.com" autocomplete="email" required>
+        <button type="submit">Subscribe Free</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div>
+        <a href="index.html" class="footer-brand">Fieldset</a>
+        <p class="footer-tagline">Engineering as Written Practice.<br>Published quarterly since 2022.</p>
+      </div>
+      <nav aria-label="Publication">
+        <span class="footer-nav-heading">Publication</span>
+        <ul class="footer-nav-list">
+          <li><a href="issues.html">Issues</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="archive.html">Archive</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="About">
+        <span class="footer-nav-heading">About</span>
+        <ul class="footer-nav-list">
+          <li><a href="about.html">About FIELDSET</a></li>
+          <li><a href="about.html#submit">Submit a Document</a></li>
+          <li><a href="subscribe.html">Subscribe</a></li>
+        </ul>
+      </nav>
+      <div class="footer-copyright">
+        &copy; 2026 FIELDSET.<br>No rights reserved.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

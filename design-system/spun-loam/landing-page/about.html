@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Forma Calibration</title>
+  <meta name="description" content="Forma Calibration Services was founded in 2003 by metrologists from the University of Michigan. ISO 17025-accredited since 2004.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/footer.css">
+
+  <style>
+    /* ── About page compact header (max-height: 20vh archetype) ── */
+    #about-header {
+      padding-top: 72px; /* 32px nav + 40px space */
+      padding-bottom: 48px;
+      background: var(--color-page-bg);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    #about-header-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    #about-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin-bottom: 12px;
+    }
+
+    #about-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0;
+      line-height: 1.05;
+    }
+
+    #about-header-meta {
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    #about-founded {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+    }
+
+    #about-accred-tag {
+      display: block;
+      margin-top: 8px;
+      font-family: var(--font-body);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      border: 1px solid var(--color-border-subtle);
+      padding: 4px 10px;
+      border-radius: var(--space-btn-radius);
+      display: inline-block;
+    }
+
+    /* ── Mission section ── */
+    #mission-section {
+      background: var(--color-page-bg);
+      padding: var(--space-section-top) 0 var(--space-section-bottom);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    #mission-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: var(--space-container-col-gap);
+      align-items: start;
+    }
+
+    #mission-left {}
+
+    #mission-rule {
+      width: 32px;
+      height: 1px;
+      background: var(--color-heading);
+      margin-bottom: 20px;
+    }
+
+    #mission-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0;
+    }
+
+    #mission-right {}
+
+    #mission-statement {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 28px;
+      line-height: 1.15;
+    }
+
+    #mission-body {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: var(--color-body-text);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* ── Team section ── */
+    #team-section {
+      background: linear-gradient(180deg, var(--color-surface-soft) 0%, var(--color-page-bg) 100%);
+      padding: var(--space-section-top) 0 var(--space-section-bottom);
+    }
+
+    #team-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+    }
+
+    #team-header {
+      margin-bottom: 48px;
+    }
+
+    #team-rule {
+      width: 32px;
+      height: 1px;
+      background: var(--color-heading);
+      margin-bottom: 20px;
+    }
+
+    #team-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0;
+    }
+
+    /* Masonry-style team grid with explicit row placement */
+    #team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-border-subtle);
+    }
+
+    .team-card {
+      background: var(--color-page-bg);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Stagger heights via grid-row for masonry effect */
+    #team-card-1 { grid-row: span 1; }
+    #team-card-2 { grid-row: span 1; margin-top: 40px; }
+    #team-card-3 { grid-row: span 1; }
+
+    .team-card-image-wrap {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      position: relative;
+      background: var(--color-surface-soft);
+    }
+
+    .team-card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .team-card:hover .team-card-image-wrap img {
+      transform: scale(1.04);
+    }
+
+    .team-card-info {
+      padding: 24px 22px 28px;
+    }
+
+    .team-card-name {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 6px;
+    }
+
+    .team-card-title {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin: 0 0 14px;
+    }
+
+    .team-card-bio {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: var(--color-body-text);
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    /* ── History dark section ── */
+    #history-section {
+      background: var(--color-dark-surface);
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #history-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    #history-left {}
+
+    #history-left h2 {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-cta-primary-text);
+      margin: 0 0 24px;
+    }
+
+    #history-left p {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: rgba(245, 242, 238, 0.6);
+      margin: 0 0 16px;
+      line-height: 1.7;
+    }
+
+    #history-left p:last-child { margin-bottom: 0; }
+
+    #history-right {
+      padding-top: 8px;
+    }
+
+    #history-image-wrap {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      position: relative;
+      background: #2a2927;
+    }
+
+    #history-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── Certifications section ── */
+    #certifications-section {
+      background: var(--color-page-bg);
+      padding: var(--space-section-top) 0 var(--space-section-bottom);
+    }
+
+    #certifications-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+    }
+
+    #certifications-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 40px;
+    }
+
+    #certifications-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--color-border-subtle);
+    }
+
+    .cert-item {
+      background: var(--color-page-bg);
+      padding: 28px 24px;
+      transition: background-color var(--hover-transition);
+    }
+
+    .cert-item:hover {
+      background: var(--color-surface-soft);
+    }
+
+    .cert-code {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--color-heading);
+      margin-bottom: 10px;
+    }
+
+    .cert-name {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      line-height: 1.5;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      #about-header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      #about-header-meta {
+        text-align: left;
+      }
+      #mission-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      #team-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      #team-card-2 {
+        margin-top: 0;
+      }
+      #history-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      #history-right {
+        order: -1;
+      }
+      #certifications-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #team-grid {
+        grid-template-columns: 1fr;
+      }
+      #certifications-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .cert-item {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Forma</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="clients.html">Clients</a></li>
+        <li><a href="about.html" class="nav-link--active">About</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="process.html">Process</a>
+    <a href="clients.html">Clients</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <!-- Compact Header (About archetype: information page) -->
+  <header id="about-header">
+    <div id="about-header-inner">
+      <div id="about-header-left">
+        <div id="about-eyebrow">Company</div>
+        <h1 id="about-heading">About Forma</h1>
+      </div>
+      <div id="about-header-meta">
+        <span id="about-founded">Est. 2003 — Ann Arbor, MI</span>
+        <span id="about-accred-tag">ISO 17025 Accredited Since 2004</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mission Section -->
+  <section id="mission-section">
+    <div id="mission-inner">
+      <div id="mission-left">
+        <div id="mission-rule"></div>
+        <h2 id="mission-label">Mission</h2>
+      </div>
+      <div id="mission-right">
+        <p id="mission-statement">A measurement that cannot be traced is not a measurement. It is a reading.</p>
+        <p id="mission-body">Forma was founded on a single premise: that analytical laboratories deserve calibration services that hold themselves to the same standards they hold their instruments to. Every result is traceable to NIST. Every uncertainty is calculated, not assumed. Every certificate is signed by a metrologist, not a technician following a checklist. This is not our quality program — it is our operating assumption. It cannot be waived for a tighter turnaround or a lower price point. It is what Forma is.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team-section">
+    <div id="team-inner">
+      <div id="team-header">
+        <div id="team-rule"></div>
+        <h2 id="team-heading">The Forma Team</h2>
+      </div>
+
+      <div id="team-grid">
+        <div class="team-card" id="team-card-1">
+          <div class="team-card-image-wrap" id="team-img-wrap-1">
+            <img
+              id="team-img-1"
+              src="assets/team-kessler.jpeg"
+              alt="Dr. Miriam Kessler, Forma founder and director of metrology"
+              style="width:100%;height:100%;object-fit:cover;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-soft);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.85rem;">→ assets/team-kessler.jpeg</div>
+          </div>
+          <div class="team-card-info" id="team-info-1">
+            <h3 class="team-card-name">Dr. Miriam Kessler</h3>
+            <p class="team-card-title">Founder & Director of Metrology</p>
+            <p class="team-card-bio">PhD in Measurement Science, University of Michigan, 1998. Led instrument calibration programs at NIST's Physical Measurement Laboratory for six years before founding Forma in 2003. Lead assessor and authorized signatory for all accredited disciplines.</p>
+          </div>
+        </div>
+
+        <div class="team-card" id="team-card-2">
+          <div class="team-card-image-wrap" id="team-img-wrap-2">
+            <img
+              id="team-img-2"
+              src="assets/team-osei.jpeg"
+              alt="Thomas Osei, Forma laboratory manager"
+              style="width:100%;height:100%;object-fit:cover;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-soft);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.85rem;">→ assets/team-osei.jpeg</div>
+          </div>
+          <div class="team-card-info" id="team-info-2">
+            <h3 class="team-card-name">Thomas Osei</h3>
+            <p class="team-card-title">Laboratory Manager</p>
+            <p class="team-card-bio">MSc in Applied Metrology, 2006. Joined Forma in 2008 following five years in the automotive dimensional metrology industry. Oversees daily laboratory operations, instrument scheduling, and on-site service deployments.</p>
+          </div>
+        </div>
+
+        <div class="team-card" id="team-card-3">
+          <div class="team-card-image-wrap" id="team-img-wrap-3">
+            <img
+              id="team-img-3"
+              src="assets/team-larsen.jpeg"
+              alt="Ingrid Larsen, Forma quality systems manager"
+              style="width:100%;height:100%;object-fit:cover;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-surface-soft);color:var(--color-muted-text);font-family:var(--font-body);font-size:0.85rem;">→ assets/team-larsen.jpeg</div>
+          </div>
+          <div class="team-card-info" id="team-info-3">
+            <h3 class="team-card-name">Ingrid Larsen</h3>
+            <p class="team-card-title">Quality Systems Manager</p>
+            <p class="team-card-bio">Lead internal auditor and document control authority for Forma's ISO 17025 quality management system. Coordinates NVLAP surveillance assessments, manages nonconformance records, and oversees the calibration certificate issuance process.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- History Section (dark) -->
+  <section id="history-section">
+    <div id="history-inner">
+      <div id="history-left">
+        <h2>Twenty-One Years of Traceability</h2>
+        <p>Forma Calibration Services was incorporated in 2003 by Dr. Miriam Kessler, following six years as a staff metrologist at NIST's Physical Measurement Laboratory. The founding intention was narrow: build the calibration laboratory that analytical chemists actually want — technically rigorous, documentarily complete, and staffed by people who understand what a measurement uncertainty statement means in a regulatory context.</p>
+        <p>NVLAP accreditation was achieved in 2004, eleven months after incorporation. The scope has expanded through seventeen accreditation cycles without a single major nonconformance finding. The Ann Arbor facility was expanded in 2011 to accommodate CMM and thermal mapping services. A satellite on-site service program was established in 2016, now serving clients within a 200-mile radius.</p>
+        <p>Forma has not pursued acquisition, franchise, or franchise-adjacent growth models. The laboratory is privately held, debt-free, and operates at a scale that allows every calibration to receive the attention of an authorized metrologist before the certificate leaves the building.</p>
+      </div>
+      <div id="history-right">
+        <div id="history-image-wrap">
+          <img
+            id="history-img"
+            src="assets/history-lab.jpeg"
+            alt="Forma's original laboratory bench, 2004, showing the first NVLAP-accredited calibration setup"
+            style="width:100%;height:100%;object-fit:cover;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:#2a2927;color:rgba(245,242,238,0.3);font-family:var(--font-body);font-size:0.85rem;">→ assets/history-lab.jpeg</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section id="certifications-section">
+    <div id="certifications-inner">
+      <h2 id="certifications-heading">Standards &amp; Memberships</h2>
+      <div id="certifications-grid">
+        <div class="cert-item" id="cert-1">
+          <div class="cert-code">ISO/IEC 17025</div>
+          <div class="cert-name">General Requirements for the Competence of Testing and Calibration Laboratories — 2017</div>
+        </div>
+        <div class="cert-item" id="cert-2">
+          <div class="cert-code">NVLAP</div>
+          <div class="cert-name">National Voluntary Laboratory Accreditation Program — Lab Code 500812-0</div>
+        </div>
+        <div class="cert-item" id="cert-3">
+          <div class="cert-code">JCGM 100</div>
+          <div class="cert-name">Guide to the Expression of Uncertainty in Measurement (GUM) — applied to all uncertainty calculations</div>
+        </div>
+        <div class="cert-item" id="cert-4">
+          <div class="cert-code">NCSL Int'l</div>
+          <div class="cert-name">National Conference of Standards Laboratories International — organizational member since 2004</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <div id="footer-logo">Forma</div>
+        <p id="footer-tagline">Precision. Traceability. Confidence.</p>
+        <p id="footer-address">114 Industrial Parkway, Suite 8<br>Ann Arbor, MI 48108</p>
+      </div>
+      <div id="footer-nav-col-1" class="footer-nav-col">
+        <p class="footer-col-heading">Services</p>
+        <ul class="footer-nav-list">
+          <li><a href="services.html">Gravimetric</a></li>
+          <li><a href="services.html">Thermal</a></li>
+          <li><a href="services.html">Volumetric</a></li>
+          <li><a href="services.html">Pressure &amp; Electrical</a></li>
+          <li><a href="services.html">Dimensional</a></li>
+        </ul>
+      </div>
+      <div id="footer-nav-col-2" class="footer-nav-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-nav-list">
+          <li><a href="process.html">Process</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div id="footer-contact-col" class="footer-nav-col">
+        <p class="footer-col-heading">Contact</p>
+        <ul class="footer-nav-list">
+          <li><a href="mailto:intake@forma-cal.com">intake@forma-cal.com</a></li>
+          <li><a href="tel:+17342001847">+1 734 200 1847</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <div id="footer-bottom-inner">
+        <span id="footer-copyright">© 2024 Forma Calibration Services LLC</span>
+        <span id="footer-accred">ISO/IEC 17025:2017 Accredited · NVLAP Lab Code 500812-0</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="behaviors/nav.js"></script>
+  <script>
+    const lenis = new Lenis({ lerp: 0.08 });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // Header entrance
+    gsap.from('#about-heading', { y: 8, duration: 0.35, ease: 'power2.inOut', delay: 0.18 });
+    gsap.from('#about-header-meta', { y: 6, duration: 0.3, ease: 'power2.inOut', delay: 0.3 });
+
+    // Mission — section rule draw
+    gsap.from('#mission-rule', {
+      scaleX: 0, transformOrigin: 'left center', duration: 0.6, ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#mission-section', start: 'top 80%' }
+    });
+
+    // Mission statement: clip-path horizontal reveal
+    gsap.from('#mission-statement', {
+      clipPath: 'inset(0 100% 0 0)',
+      duration: 0.75,
+      ease: 'power3.inOut',
+      scrollTrigger: { trigger: '#mission-statement', start: 'top 82%' }
+    });
+    gsap.set('#mission-statement', { clipPath: 'inset(0 0% 0 0)' });
+
+    gsap.from('#mission-body', {
+      y: 12,
+      duration: 0.4,
+      ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#mission-body', start: 'top 85%' }
+    });
+
+    // Team cards — masonry stagger with rotation scatter
+    const teamCards = document.querySelectorAll('.team-card');
+    teamCards.forEach((card, i) => {
+      gsap.from(card, {
+        y: 24 + i * 8,
+        rotation: i === 1 ? 0.5 : 0,
+        duration: 0.45,
+        ease: 'power2.inOut',
+        delay: i * 0.1,
+        scrollTrigger: { trigger: '#team-grid', start: 'top 80%' }
+      });
+    });
+
+    // History: clip reveal image, slide text
+    gsap.from('#history-image-wrap', {
+      clipPath: 'inset(0 0 100% 0)',
+      duration: 0.8,
+      ease: 'power3.inOut',
+      scrollTrigger: { trigger: '#history-section', start: 'top 78%' }
+    });
+    gsap.set('#history-image-wrap', { clipPath: 'inset(0 0 0% 0)' });
+
+    gsap.from('#history-left', {
+      x: -50,
+      duration: 0.55,
+      ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#history-section', start: 'top 78%' }
+    });
+
+    // Certifications: scale + stagger
+    gsap.from('.cert-item', {
+      scale: 0.94,
+      y: 14,
+      duration: 0.35,
+      stagger: 0.09,
+      ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#certifications-grid', start: 'top 82%' }
+    });
+
+    // Footer magnetic hover
+    document.querySelectorAll('#intake-cta, .footer-cta').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) * 0.15;
+        const y = (e.clientY - rect.top - rect.height / 2) * 0.15;
+        gsap.to(el, { x, y, duration: 0.4, ease: 'power2.out' });
+      });
+      el.addEventListener('mouseleave', () => {
+        gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+      });
+    });
+  </script>
+</body>
+</html>

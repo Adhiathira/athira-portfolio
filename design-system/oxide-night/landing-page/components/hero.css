@@ -1,0 +1,300 @@
+/* hero.css — oxide-night / FORMFACTOR */
+/* NOIR DARK hero: venetian blind light shafts, massive Fraunces overflow headline,
+   asymmetric 80px left / 20px right layout, hard bg color cuts */
+
+/* ── Hero Section ── */
+#hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #0f0f10;
+  overflow: hidden;
+  padding-top: 32px; /* nav height compensation */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 80px;
+}
+
+/* Venetian blind light shaft effect */
+#hero-venetian {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    15deg,
+    rgba(253, 53, 110, 0.03) 0px,
+    rgba(253, 53, 110, 0.03) 1px,
+    transparent 1px,
+    transparent 80px,
+    rgba(232, 232, 234, 0.015) 80px,
+    rgba(232, 232, 234, 0.015) 160px,
+    transparent 160px,
+    transparent 240px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Condensation / rain texture overlay (feTurbulence via SVG) */
+#hero-texture-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.06;
+}
+
+/* Hero content — left wall anchor */
+#hero-content {
+  position: relative;
+  z-index: 10;
+  padding-left: 80px;
+  padding-right: 20px;
+  width: 100%;
+}
+
+/* Product object — absolute center-right, tilted, occluding headline */
+#hero-product-object {
+  position: absolute;
+  right: -40px;
+  bottom: 60px;
+  width: clamp(400px, 50vw, 720px);
+  height: clamp(400px, 55vh, 680px);
+  z-index: 15;
+  transform: rotate(16deg) perspective(900px) rotateX(6deg) rotateY(-8deg);
+  pointer-events: none;
+}
+
+#hero-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(-12px 20px 40px rgba(0, 0, 0, 0.7));
+}
+
+#hero-product-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(172, 172, 175, 0.3);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+/* Eyebrow label */
+#hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fd356e;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: #fd356e;
+  flex-shrink: 0;
+}
+
+/* Massive overflow headline */
+#hero-headline {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(4rem, 22vw, 26vw);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  color: #e8e8ea;
+  white-space: nowrap;
+  overflow: visible;
+  width: max-content;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 8; /* behind product object (z:15) */
+}
+
+/* Subheadline — lower left, separated by vertical gulf */
+#hero-subhead-group {
+  margin-top: clamp(32px, 5vh, 64px);
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+  max-width: 640px;
+  position: relative;
+  z-index: 10;
+}
+
+#hero-subheadline {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #acacaf;
+  letter-spacing: -0.02em;
+  max-width: 320px;
+  margin: 0;
+}
+
+/* CTA group — pill outlines only */
+#hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
+.btn-pill-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 0 20px;
+  border-radius: 99px;
+  border: 1.5px solid #fd356e;
+  background: transparent;
+  color: #e4e4e7;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.1s cubic-bezier(0.55, 0, 1, 0.45),
+              color 0.1s cubic-bezier(0.55, 0, 1, 0.45);
+  white-space: nowrap;
+}
+
+.btn-pill-primary:hover {
+  background: #fd356e;
+  color: #ffffff;
+}
+
+.btn-pill-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 0 20px;
+  border-radius: 99px;
+  border: 1.5px solid rgba(228, 228, 231, 0.35);
+  background: transparent;
+  color: #acacaf;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.1s cubic-bezier(0.55, 0, 1, 0.45),
+              color 0.1s cubic-bezier(0.55, 0, 1, 0.45);
+  white-space: nowrap;
+}
+
+.btn-pill-ghost:hover {
+  border-color: #e4e4e7;
+  color: #e4e4e7;
+}
+
+/* ── Utility bar — bottom strip ── */
+#utility-bar {
+  background: #0f0f10;
+  border-top: 1px solid rgba(60, 60, 65, 0.6);
+  padding: 16px 80px 16px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#utility-bar-copy {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #acacaf;
+}
+
+#utility-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Hero responsive ── */
+@media (max-width: 1024px) {
+  #hero-headline {
+    font-size: clamp(3.5rem, 18vw, 20vw);
+  }
+
+  #hero-product-object {
+    right: -20px;
+    width: clamp(300px, 42vw, 560px);
+    height: clamp(300px, 46vh, 520px);
+  }
+}
+
+@media (max-width: 768px) {
+  #hero {
+    padding-left: 0;
+    padding-bottom: 60px;
+  }
+
+  #hero-content {
+    padding-left: 40px;
+    padding-right: 20px;
+  }
+
+  #hero-headline {
+    font-size: clamp(3rem, 20vw, 18vw);
+  }
+
+  #hero-product-object {
+    right: -20px;
+    bottom: 40px;
+    width: clamp(220px, 50vw, 380px);
+    height: clamp(220px, 48vw, 380px);
+    transform: rotate(12deg);
+  }
+
+  #hero-subhead-group {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  #utility-bar {
+    padding: 14px 20px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  #hero-content {
+    padding-left: 20px;
+  }
+
+  #hero-headline {
+    font-size: clamp(2.5rem, 22vw, 16vw);
+  }
+
+  #hero-product-object {
+    width: 200px;
+    height: 200px;
+    right: -10px;
+    bottom: 20px;
+  }
+}

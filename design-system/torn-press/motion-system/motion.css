@@ -1,0 +1,79 @@
+:root {
+  --ds-duration-immediate: 0.05s;
+  --ds-duration-fast: 0.05s;
+  --ds-duration-base: 0.15s;
+  --ds-duration-slow: 0.3s;
+  --ds-duration-stagger: 0.04s;
+  --ds-easing-default: steps(1);
+  --ds-easing-typewriter: steps(6, start);
+  --ds-easing-linear: linear;
+}
+
+@keyframes typewriter {
+  0%   { width: 0; overflow: hidden; }
+  100% { width: 100%; overflow: visible; }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  10%  { opacity: 0.3; }
+  20%  { opacity: 1; }
+  30%  { opacity: 0.5; }
+  40%  { opacity: 1; }
+  50%  { opacity: 0.4; }
+  60%  { opacity: 1; }
+  70%  { opacity: 0.35; }
+  80%  { opacity: 1; }
+  90%  { opacity: 0.45; }
+}
+
+@keyframes xeroxReveal {
+  0%   { clip-path: inset(100% 0 0 0); }
+  20%  { clip-path: inset(80% 0 0 0); }
+  40%  { clip-path: inset(60% 0 0 0); }
+  60%  { clip-path: inset(40% 0 0 0); }
+  80%  { clip-path: inset(20% 0 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes bulge {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+@keyframes stampIn {
+  0%   { transform: scale(1.4); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Typewriter text reveal */
+.punk-typewriter {
+  animation: typewriter var(--ds-duration-base) var(--ds-easing-typewriter);
+  overflow: hidden;
+  border-right: 2px solid currentColor;
+  white-space: nowrap;
+}
+
+/* Xerox/scanner reveal on scroll entry */
+.punk-reveal {
+  animation: xeroxReveal var(--ds-duration-slow) steps(6) both;
+}
+
+/* Stamp press entrance */
+.punk-stamp {
+  animation: stampIn var(--ds-duration-fast) steps(1) both;
+}
+
+/* Staccato hover on buttons */
+button:hover, .btn:hover {
+  animation: flicker var(--ds-duration-base) steps(10);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

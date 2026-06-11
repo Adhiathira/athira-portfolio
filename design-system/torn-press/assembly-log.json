@@ -1,0 +1,74 @@
+{
+  "name": "Torn Press",
+  "slug": "torn-press",
+  "artisticStyle": "Punk / Zine / DIY Print Culture",
+  "generatedAt": "2026-04-04",
+  "colorRegisterActual": "light",
+  "themes": {
+    "color-system": {
+      "agentIndex": 1,
+      "sourceSystem": "quorum-press",
+      "intensity": 1,
+      "twistDescription": "Copied verbatim — no twist applied. Light register: pageBackground #ffffff, bodyText #000000, accent #ee7421 (DayGlo orange). Binary white/black field with single alarm-signal accent."
+    },
+    "type-system": {
+      "agentIndex": 2,
+      "sourceSystem": "studio-twofold",
+      "intensity": 5,
+      "twistDescription": "Punk typeface collision: Oswald 900 (400/700/900 weights, heading/display/environmental scales) against IBM Plex Mono 400/600 (body/label). Environmental text at 360px/900wt for background texture use. h1 at 72px uppercase, all headings negative-tracked. Both loaded via Google Fonts CDN @import."
+    },
+    "motion-system": {
+      "agentIndex": 3,
+      "sourceSystem": "teenage-engineering",
+      "intensity": 5,
+      "twistDescription": "All easing replaced with steps(1) — no interpolation anywhere. Base 0.15s, fast 0.05s, stagger 0.04s. Custom keyframes: typewriter (character-by-character xerox reveal), flicker (opacity strobe), xeroxReveal (6-step clip-path staircase), bulge (scale stamp-in), stampIn (full opacity snap). Anti-smooth philosophy throughout."
+    },
+    "grid-system": {
+      "agentIndex": 4,
+      "sourceSystem": "griting-formless",
+      "intensity": 4,
+      "twistDescription": "Zine collage grid: .zine-grid { grid-template-columns: 1fr 2fr 1fr } for asymmetric 3-column layout. Paste-up utility classes: .zine-overlap { margin-top: -24px } for stacking overlap, .zine-bleed { margin-left: -32px } for grid-edge breaks, .zine-rotated { transform: rotate(-1.5deg) } for hand-glued misalignment. Container 1440px/22px paddingInline."
+    },
+    "spacing-system": {
+      "agentIndex": 5,
+      "sourceSystem": "spun-vellum",
+      "intensity": 4,
+      "twistDescription": "3px base unit (vs standard 4px/8px grid) — all values snapped to 3px multiples. Creates deliberately off-kilter photocopied rhythm: section 105px/87px, footer 60px/99px, button gap 21px, CTA paddingInline 33px, container 96px. Precise but visually irregular."
+    },
+    "interaction-states": {
+      "agentIndex": 6,
+      "sourceSystem": "zillow",
+      "intensity": 4,
+      "twistDescription": "Instant snap punk: all transitions 0.05s steps(1) — no easing, states flip like a physical switch. Focus ring: 4px dashed outline (safety pin aesthetic). Primary button hover: black→DayGlo orange instant flip. Ghost button hover: transparent→black fill instant inversion. Accent button: DayGlo orange inverts to black/orange. Nothing eases."
+    },
+    "nav-system": {
+      "agentIndex": 7,
+      "sourceSystem": "dark-array",
+      "intensity": 4,
+      "twistDescription": "Ultra-compact 20px sticker nav: zero horizontal padding, Oswald 700 at 0.65rem with 0.12em letter-spacing — reads like a zine masthead stamp. No background, no scroll transition, no dropdown. Maximum compression. Item spacing 24px creates deliberate crowding.",
+      "checkCFix": "JetBrains Mono (from source dark-array) not present in assembled type system (Oswald + IBM Plex Mono). fontFamily changed to 'Oswald', sans-serif — Oswald IS present as ds-font-family-display/heading."
+    },
+    "concept-summary": {
+      "agentIndex": 8,
+      "sourceSystem": "spacex",
+      "intensity": 3,
+      "twistDescription": "Tone shift to underground music venue + DIY record label collective: Black Market Sessions. Pattern A (Full-Bleed Vinyl/Print Hero), Pattern B (Raw Material Immersion), Pattern C (Utilitarian Transaction Layer). Binary white/black field with DayGlo orange as single alarm-signal per section. Concept_by_video.md generated: 3 video placements — vinyl turntable hero (12s), live session documentation (45s), vinyl pressing operation (20s)."
+    }
+  },
+  "consistencyChecks": {
+    "A_colorContrast": {
+      "status": "PASS",
+      "notes": "navText #000000 (brightness 0) vs navBackground transparent (treated as #ffffff, brightness 255) — maximum contrast. bodyText #000000 vs pageBackground #ffffff — maximum contrast."
+    },
+    "B_motionInteractionCoherence": {
+      "status": "PASS",
+      "notes": "Hover transitions 0.05s vs motion base 0.15s — ratio 3×, well under 5× threshold. Both use steps(1) easing — stylistically unified."
+    },
+    "C_navFontAvailability": {
+      "status": "FIXED",
+      "originalValue": "'JetBrains Mono', monospace",
+      "fixedValue": "'Oswald', sans-serif",
+      "reason": "JetBrains Mono sourced from dark-array's nav.json but not present in torn-press's assembled type system. Oswald (ds-font-family-display) is present and matches the punk sticker aesthetic."
+    }
+  }
+}

@@ -1,0 +1,167 @@
+/* ============================================================
+   How It Works — SPECTRA
+   Section-purple background, numbered step rows
+   Background: #1e1a35
+   ============================================================ */
+
+#how-it-works {
+  background: linear-gradient(180deg, var(--color-section-purple) 0%, rgba(30, 26, 53, 0.95) 100%);
+  padding: var(--space-section-top) 0 var(--space-section-bottom);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Radial ambient behind section */
+#how-it-works::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 600px;
+  background: radial-gradient(ellipse at center, rgba(146, 72, 228, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#how-it-works-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding-inline);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Section header ── */
+#steps-header {
+  margin-bottom: 64px;
+  max-width: 640px;
+}
+
+#steps-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-accent-violet);
+  margin-bottom: 20px;
+}
+
+#steps-headline {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h2);
+  font-weight: 800;
+  letter-spacing: var(--tracking-heading);
+  line-height: 1.1;
+  color: var(--color-heading);
+  margin: 0;
+}
+
+/* ── Step list ── */
+#steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Each step row */
+.step-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 32px;
+  align-items: start;
+  padding: 40px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  /* GSAP sets initial clip-path via gsap.set — no CSS opacity */
+}
+
+.step-row:first-child {
+  padding-top: 0;
+}
+
+.step-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Step number */
+.step-number {
+  font-family: var(--font-display);
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-accent-teal);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 30px rgba(33, 243, 182, 0.3);
+  padding-top: 4px;
+  user-select: none;
+}
+
+/* Step content */
+.step-content {
+  padding-top: 8px;
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  color: var(--color-heading);
+  margin: 0 0 12px;
+}
+
+.step-body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: var(--line-height-body);
+  color: var(--color-muted-text);
+  margin: 0;
+  max-width: 660px;
+}
+
+/* Step accent tag */
+.step-tag {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 4px 12px;
+  background: rgba(146, 72, 228, 0.12);
+  border: 1px solid rgba(146, 72, 228, 0.25);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-accent-violet);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .step-row {
+    grid-template-columns: 72px 1fr;
+    gap: 24px;
+  }
+
+  .step-number {
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .step-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 32px 0;
+  }
+
+  .step-number {
+    font-size: 48px;
+    line-height: 1;
+  }
+}

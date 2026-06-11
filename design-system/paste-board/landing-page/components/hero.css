@@ -1,0 +1,288 @@
+/* paste-board — Hero Component */
+
+.hero {
+  min-height: 100vh;
+  padding-top: calc(var(--nav-height) + var(--space-xl));
+  padding-bottom: var(--space-section);
+  background-color: var(--color-page-bg);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Warm paper texture overlay — CSS radial noise */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(ellipse at 20% 60%, rgba(232, 93, 47, 0.04) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 20%, rgba(61, 107, 79, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+/* Left column — text */
+.hero__text {
+  position: relative;
+}
+
+.hero__eyebrow {
+  font-family: var(--font-hand);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.hero__eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 2px;
+  background-color: var(--color-accent);
+}
+
+.hero__headline {
+  font-family: var(--font-hand);
+  font-size: var(--size-h1);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-heading);
+  color: var(--color-text);
+  margin-bottom: var(--space-lg);
+}
+
+.hero__headline em {
+  color: var(--color-accent);
+  font-style: normal;
+}
+
+.hero__subline {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-body);
+  color: var(--color-text-muted);
+  max-width: 440px;
+  margin-bottom: var(--space-2xl);
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+/* Right column — pinboard */
+.hero__pinboard {
+  position: relative;
+  min-height: 520px;
+}
+
+/* Pinned cards */
+.hero__card {
+  position: absolute;
+  background-color: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-polaroid);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--spring),
+              box-shadow var(--dur-fast) ease;
+}
+
+.hero__card:hover {
+  transform: rotate(0deg) translateY(-6px) !important;
+  box-shadow: var(--shadow-hover);
+}
+
+/* Polaroid style — image card */
+.hero__card--polaroid {
+  padding: 10px 10px 36px 10px;
+  background-color: var(--color-white);
+}
+
+.hero__card--polaroid .card__img-placeholder {
+  width: 180px;
+  height: 140px;
+  background-color: var(--color-surface-mid);
+  border-radius: 1px;
+}
+
+.hero__card--polaroid .card__caption {
+  font-family: var(--font-hand);
+  font-size: var(--size-small);
+  font-weight: var(--weight-regular);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: var(--space-sm);
+}
+
+/* Sticky note card */
+.hero__card--sticky {
+  width: 160px;
+  height: 160px;
+  background-color: var(--color-sticky);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-sticky);
+}
+
+.hero__card--sticky p {
+  font-family: var(--font-hand);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  line-height: 1.45;
+}
+
+/* Text clip card */
+.hero__card--clip {
+  background-color: var(--color-surface-light);
+  padding: var(--space-lg);
+  max-width: 220px;
+}
+
+.hero__card--clip h3 {
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+
+/* Tape strip pseudo */
+.hero__card--tape::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-4deg);
+  width: 56px;
+  height: 18px;
+  background-color: rgba(255, 213, 79, 0.72);
+  border-radius: 2px;
+  z-index: 2;
+}
+
+/* Pushpin */
+.hero__card--pinned::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  z-index: 2;
+}
+
+/* Card positions on the pinboard */
+.hero__card--a {
+  top: 20px;
+  left: 10px;
+  transform: rotate(-3deg);
+}
+.hero__card--b {
+  top: 60px;
+  left: 200px;
+  transform: rotate(1.5deg);
+}
+.hero__card--c {
+  top: 240px;
+  left: 30px;
+  transform: rotate(2deg);
+}
+.hero__card--d {
+  top: 200px;
+  left: 240px;
+  transform: rotate(-1.5deg);
+}
+.hero__card--e {
+  top: 380px;
+  left: 140px;
+  transform: rotate(1deg);
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  color: var(--color-white);
+  background-color: var(--color-accent);
+  padding: 12px 28px;
+  border-radius: var(--radius-btn);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--spring),
+              transform var(--dur-fast) var(--spring),
+              box-shadow var(--dur-fast) ease;
+  box-shadow: var(--shadow-paper);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  transform: scale(1.03);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: var(--size-label);
+  font-weight: var(--weight-regular);
+  color: var(--color-text);
+  background-color: transparent;
+  border: 2px solid var(--color-border);
+  padding: 11px 24px;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) ease,
+              color var(--dur-fast) ease,
+              transform var(--dur-fast) var(--spring);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-text);
+  transform: scale(1.02);
+}
+
+@media (max-width: 1024px) {
+  .hero__pinboard {
+    min-height: 420px;
+  }
+  .hero__card--polaroid .card__img-placeholder {
+    width: 150px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+  }
+  .hero__pinboard {
+    min-height: 320px;
+    order: -1;
+  }
+}

@@ -1,0 +1,103 @@
+/* ============================================================
+   LEAD-WEIGHT — Motion System
+   Source: spun-vellum
+   Twist: Word-slide + weight-pulse keyframes; 0.7s reveal — intensity 3
+   ============================================================ */
+
+:root {
+  --motion-duration-instant: 100ms;
+  --motion-duration-fast: 200ms;
+  --motion-duration-base: 300ms;
+  --motion-duration-slow: 500ms;
+  --motion-duration-reveal: 700ms;
+
+  --motion-easing-default: cubic-bezier(0.25, 0.1, 0.25, 1.0);
+  --motion-easing-out: cubic-bezier(0.0, 0.0, 0.2, 1.0);
+  --motion-easing-in-out: cubic-bezier(0.4, 0.0, 0.2, 1.0);
+
+  --motion-stagger-1: 0s;
+  --motion-stagger-2: 0.12s;
+  --motion-stagger-3: 0.24s;
+  --motion-stagger-4: 0.36s;
+  --motion-stagger-5: 0.48s;
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+/* Editorial word/line slide-in — opacity resolves at 60% so
+   text is legible before the translate completes.
+   Reading rhythm is not held hostage to motion. */
+@keyframes word-slide {
+  0%   { transform: translateY(30px); opacity: 0; }
+  60%  { transform: translateY(0);    opacity: 1; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+/* Clip-path left-to-right reveal — content appears as if being printed */
+@keyframes weight-pulse {
+  0%   { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
+}
+
+/* Simple fade-up for secondary elements */
+@keyframes fade-up {
+  0%   { transform: translateY(16px); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+/* Apply word-slide reveal — triggered by JS adding .is-visible */
+.type-reveal {
+  animation: word-slide var(--motion-duration-reveal) var(--motion-easing-default) both;
+}
+
+/* Apply clip-path wipe reveal */
+.weight-pulse {
+  animation: weight-pulse var(--motion-duration-reveal) var(--motion-easing-default) both;
+}
+
+/* Stagger delay helpers */
+.stagger-1 { animation-delay: var(--motion-stagger-1); }
+.stagger-2 { animation-delay: var(--motion-stagger-2); }
+.stagger-3 { animation-delay: var(--motion-stagger-3); }
+.stagger-4 { animation-delay: var(--motion-stagger-4); }
+.stagger-5 { animation-delay: var(--motion-stagger-5); }
+
+/* ============================================================
+   HOVER TRANSITIONS
+   ============================================================ */
+
+/* All interactive elements inherit fast ease-out for hover */
+a,
+button,
+[role="button"] {
+  transition-duration: var(--motion-duration-fast);
+  transition-timing-function: var(--motion-easing-out);
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .type-reveal,
+  .weight-pulse {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

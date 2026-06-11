@@ -1,0 +1,175 @@
+/* ── GRUNDFORM Navigation — prime-grid Bauhaus structural bar ── */
+/* 56px height, 4px black bottom border, Barlow 700 uppercase, static (no scroll transition) */
+
+#site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 56px;
+  background: #ffffff;
+  border-bottom: 4px solid #000000;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  justify-content: space-between;
+  /* No transition — nav is a structural boundary, static */
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1d1d1f;
+  text-decoration: none;
+  line-height: 1;
+  /* Constructivist logo mark — Bebas Neue for maximum geometric mass */
+}
+
+.nav-logo:hover {
+  color: #0071e3;
+  transition: color 0.15s linear;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1d1d1f;
+  text-decoration: none;
+  line-height: 1.2;
+  transition: opacity 0.15s linear;
+}
+
+.nav-link:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+/* Active page link — dimmed + pointer-events:none to prevent re-navigation */
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+/* Spacer pushes content below the fixed nav bar */
+.nav-spacer {
+  height: 56px;
+  display: block;
+}
+
+/* ── Mobile hamburger ── */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #1d1d1f;
+  transition: transform 0.25s linear, opacity 0.15s linear;
+  transform-origin: center;
+}
+
+/* Hamburger → X when menu is open */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile menu overlay */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  border-top: 56px solid #000000;
+  z-index: 999;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 55px 34px;
+  gap: 34px;
+}
+
+.nav-mobile-menu.is-open {
+  display: flex;
+}
+
+.nav-mobile-menu .nav-link {
+  font-size: 2rem;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: #1d1d1f;
+  opacity: 1;
+}
+
+.nav-mobile-menu .nav-link:hover {
+  color: #0071e3;
+  opacity: 1;
+  text-decoration: none;
+}
+
+.nav-mobile-menu .nav-link--active {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ── Responsive breakpoints ── */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  #site-nav {
+    padding: 0 21px;
+  }
+
+  .nav-mobile-menu {
+    padding: 55px 21px;
+  }
+}

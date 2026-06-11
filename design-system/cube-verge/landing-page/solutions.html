@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solutions — Forma Systems</title>
+  <meta name="description" content="Forma Systems parametric design platform for modular prefab architecture — sector applications across residential, commercial, and infrastructure.">
+
+  <!-- GSAP + ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/solutions-hero.css">
+  <link rel="stylesheet" href="components/solutions-grid.css">
+  <link rel="stylesheet" href="components/solutions-industries.css">
+  <link rel="stylesheet" href="components/solutions-cta.css">
+</head>
+<body>
+
+  <!-- ── Nav (verbatim from briefing) ─────────────────────── -->
+  <nav id="site-nav" class="site-nav">
+    <a href="index.html" class="nav-logo">FORMA</a>
+    <ul class="nav-links">
+      <li><a href="platform.html" class="nav-link">Platform</a></li>
+      <li><a href="solutions.html" class="nav-link nav-link--active">Solutions</a></li>
+      <li><a href="projects.html" class="nav-link">Projects</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <a href="platform.html" class="nav-mobile-link">Platform</a>
+    <a href="solutions.html" class="nav-mobile-link">Solutions</a>
+    <a href="projects.html" class="nav-mobile-link">Projects</a>
+    <a href="contact.html" class="nav-mobile-link">Contact</a>
+  </div>
+  <script>
+    (function () {
+      var nav = document.getElementById('site-nav');
+      var toggle = nav.querySelector('.nav-mobile-toggle');
+      var mobileMenu = document.querySelector('.nav-mobile-menu');
+      function onScroll() {
+        if (window.scrollY > 0) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      toggle.addEventListener('click', function () {
+        var isOpen = mobileMenu.classList.contains('is-open');
+        if (isOpen) {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        } else {
+          mobileMenu.classList.add('is-open');
+          nav.classList.add('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+      mobileMenu.querySelectorAll('.nav-mobile-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    })();
+  </script>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 1: Solutions Header (55vh, white)             -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <header id="solutions-header" role="banner">
+    <div class="solutions-hero__grid-ref" aria-hidden="true"></div>
+    <div class="solutions-hero__callout" aria-hidden="true">By&nbsp;Sector&nbsp;/&nbsp;2024</div>
+
+    <p id="solutions-breadcrumb" class="solutions-hero__breadcrumb">Solutions / By Sector</p>
+
+    <h1 id="solutions-title" class="solutions-hero__heading">Every Scale.<br>Every Sector.</h1>
+
+    <p id="solutions-descriptor" class="solutions-hero__descriptor">
+      Forma's parametric engine adapts to the demands of any building typology — from
+      high-density housing to civil infrastructure. One platform. Unlimited configurations.
+    </p>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 2: Solutions Grid (light grey #f5f5f5)        -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="solutions-grid" aria-labelledby="solutions-grid-title">
+
+    <div id="solutions-grid-header">
+      <span class="solutions-grid__label">01 / Applications</span>
+      <h2 id="solutions-grid-title" class="solutions-grid__heading">Sector Applications</h2>
+    </div>
+
+    <div id="solutions-rows">
+
+      <!-- Row 1: Residential (text left / image right) -->
+      <article id="solution-row-residential" class="solution-row solution-row--odd" aria-labelledby="solution-name-residential">
+        <div id="solution-residential-text" class="solution-row__text">
+          <p class="solution-row__number">01 — Residential</p>
+          <h3 id="solution-name-residential" class="solution-row__name">Residential</h3>
+          <p class="solution-row__body">
+            Multi-family housing at every density tier. Volumetric modules stack, rotate,
+            and cantilever within structural constraints — generating buildable unit mixes
+            that satisfy zoning envelopes without custom engineering on every lot.
+          </p>
+          <a href="contact.html" class="solution-row__link" aria-label="Learn more about residential solutions">
+            Learn more &rarr;
+          </a>
+        </div>
+        <div id="solution-residential-image" class="solution-row__image">
+          <img
+            id="solution-img-residential"
+            src="assets/solution-residential.jpeg"
+            alt="Modular residential housing system — stacked volumetric units"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div id="solution-residential-placeholder" class="solution-row__image-placeholder">
+            &rarr; assets/solution-residential.jpeg
+          </div>
+        </div>
+      </article>
+
+      <!-- Row 2: Commercial (image left / text right — even) -->
+      <article id="solution-row-commercial" class="solution-row solution-row--even" aria-labelledby="solution-name-commercial">
+        <div id="solution-commercial-text" class="solution-row__text">
+          <p class="solution-row__number">02 — Commercial</p>
+          <h3 id="solution-name-commercial" class="solution-row__name">Commercial</h3>
+          <p class="solution-row__body">
+            Office and mixed-use programs at ground and podium scales. Custom structural
+            bays are parameterised against span tables, MEP clearance, and floor-to-floor
+            heights — delivering code-compliant documentation in hours, not weeks.
+          </p>
+          <a href="contact.html" class="solution-row__link" aria-label="Learn more about commercial solutions">
+            Learn more &rarr;
+          </a>
+        </div>
+        <div id="solution-commercial-image" class="solution-row__image">
+          <img
+            id="solution-img-commercial"
+            src="assets/solution-commercial.jpeg"
+            alt="Parametric commercial office structure with custom structural bays"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div id="solution-commercial-placeholder" class="solution-row__image-placeholder">
+            &rarr; assets/solution-commercial.jpeg
+          </div>
+        </div>
+      </article>
+
+      <!-- Row 3: Infrastructure (text left / image right — odd) -->
+      <article id="solution-row-infrastructure" class="solution-row solution-row--odd" aria-labelledby="solution-name-infrastructure">
+        <div id="solution-infrastructure-text" class="solution-row__text">
+          <p class="solution-row__number">03 — Infrastructure</p>
+          <h3 id="solution-name-infrastructure" class="solution-row__name">Infrastructure</h3>
+          <p class="solution-row__body">
+            Bridges, transit shelters, utility enclosures — modular systems operating at
+            civil scale. Forma's constraint engine ingests load data, site conditions, and
+            procurement parameters to produce fabrication-ready output directly.
+          </p>
+          <a href="contact.html" class="solution-row__link" aria-label="Learn more about infrastructure solutions">
+            Learn more &rarr;
+          </a>
+        </div>
+        <div id="solution-infrastructure-image" class="solution-row__image">
+          <img
+            id="solution-img-infrastructure"
+            src="assets/solution-infrastructure.jpeg"
+            alt="Civil-scale modular infrastructure — bridge and transit system components"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div id="solution-infrastructure-placeholder" class="solution-row__image-placeholder">
+            &rarr; assets/solution-infrastructure.jpeg
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /#solutions-rows -->
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 3: Industries (dark #1a1a1a)                  -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="solutions-industries" aria-labelledby="industries-title">
+
+    <div id="industries-header">
+      <p class="industries__label">02 / Deployment</p>
+      <h2 id="industries-title" class="industries__heading">Where Forma Deploys</h2>
+    </div>
+
+    <div id="industries-grid" role="list" aria-label="Industries served by Forma Systems">
+      <div class="industry-pill" role="listitem">Housing Authority</div>
+      <div class="industry-pill" role="listitem">Commercial Real Estate</div>
+      <div class="industry-pill" role="listitem">Healthcare</div>
+      <div class="industry-pill" role="listitem">Education</div>
+      <div class="industry-pill" role="listitem">Hospitality</div>
+      <div class="industry-pill" role="listitem">Emergency Response</div>
+      <div class="industry-pill" role="listitem">Defense</div>
+      <div class="industry-pill" role="listitem">Transit</div>
+      <div class="industry-pill" role="listitem">Energy</div>
+      <div class="industry-pill" role="listitem">Retail</div>
+      <div class="industry-pill" role="listitem">Workplace</div>
+      <div class="industry-pill" role="listitem">Industrial</div>
+    </div>
+
+    <div id="industries-count">
+      <span class="industries__count-number">12</span>
+      <p class="industries__count-label">Active deployment sectors as of 2024</p>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION 4: Solution CTA (white #ffffff)               -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="solutions-cta" aria-labelledby="cta-heading">
+
+    <div id="solutions-cta-inner">
+
+      <div id="solutions-cta-left">
+        <p class="solutions-cta__label">03 / Next Steps</p>
+        <h2 id="cta-heading" class="solutions-cta__heading">Start with your program.</h2>
+        <p class="solutions-cta__subtext">
+          Tell us your project type, scale, and timeline. We'll configure a Forma workspace
+          tailored to your program and connect you with a delivery engineer.
+        </p>
+      </div>
+
+      <div id="solutions-cta-right">
+        <div id="solutions-cta-buttons">
+          <a id="cta-btn-demo" href="contact.html" class="solutions-btn--primary">
+            Schedule a Demo
+          </a>
+          <a id="cta-btn-brief" href="contact.html" class="solutions-btn--outline">
+            Download Technical Brief
+          </a>
+        </div>
+        <p class="solutions-cta__note">Response within 1 business day. No commitments.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- FOOTER (dark #1a1a1a)                                 -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <footer id="solutions-footer" role="contentinfo">
+
+    <div id="solutions-footer-grid">
+
+      <div id="footer-col-brand" class="footer-col footer-col--brand">
+        <a href="index.html" class="footer-logo">FORMA</a>
+        <p class="footer-tagline">Design once.<br>Build everywhere.</p>
+      </div>
+
+      <div id="footer-col-platform" class="footer-col">
+        <p class="footer-col__heading">Platform</p>
+        <ul class="footer-col__links">
+          <li><a href="platform.html">Overview</a></li>
+          <li><a href="platform.html">Parametric Engine</a></li>
+          <li><a href="platform.html">Integrations</a></li>
+          <li><a href="platform.html">Documentation</a></li>
+        </ul>
+      </div>
+
+      <div id="footer-col-solutions" class="footer-col">
+        <p class="footer-col__heading">Solutions</p>
+        <ul class="footer-col__links">
+          <li><a href="solutions.html">Residential</a></li>
+          <li><a href="solutions.html">Commercial</a></li>
+          <li><a href="solutions.html">Infrastructure</a></li>
+          <li><a href="projects.html">Case Studies</a></li>
+        </ul>
+      </div>
+
+      <div id="footer-col-contact" class="footer-col">
+        <p class="footer-col__heading">Contact</p>
+        <ul class="footer-col__links">
+          <li><a href="contact.html">Schedule Demo</a></li>
+          <li><a href="contact.html">Technical Brief</a></li>
+          <li><a href="contact.html">Partnership</a></li>
+          <li><a href="contact.html">Press</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div id="solutions-footer-bottom">
+      <p class="footer-copyright">&copy; 2024 Forma Systems. All rights reserved.</p>
+      <p class="footer-copyright">Parametric Design Platform</p>
+    </div>
+
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- GSAP Animations                                        -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Read motion tokens from CSS custom properties
+    var BASE_DURATION = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue('--duration-base')
+    ) / 1000 || 0.2;
+
+    var EASE = getComputedStyle(document.documentElement)
+      .getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+    // Derive a comfortable animation duration from the base token
+    var DUR = Math.max(BASE_DURATION * 3, 0.6);
+
+    // ── HERO: breadcrumb + heading + descriptor entrance ─────
+    var heroTl = gsap.timeline({ defaults: { ease: EASE } });
+
+    gsap.set('#solutions-breadcrumb', { opacity: 0 });
+    gsap.set('#solutions-title', { opacity: 0 });
+    gsap.set('#solutions-descriptor', { opacity: 0 });
+
+    heroTl
+      .to('#solutions-breadcrumb', { opacity: 1, y: 0, duration: 0.4 }, 0.1)
+      .fromTo('#solutions-title',
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, ease: EASE },
+        0.2
+      )
+      .to('#solutions-descriptor', { opacity: 1, duration: 0.5 }, 0.55);
+
+    // ── SECTION 2: Alternating divergent x-animations ────────
+    // Odd rows: text from left, image from right
+    var oddRows = gsap.utils.toArray('.solution-row--odd');
+    oddRows.forEach(function (row) {
+      var textCol = row.querySelector('.solution-row__text');
+      var imgCol  = row.querySelector('.solution-row__image');
+
+      gsap.fromTo(textCol,
+        { x: -80 },
+        {
+          x: 0,
+          duration: DUR,
+          ease: EASE,
+          scrollTrigger: { trigger: row, start: 'top 80%', once: true }
+        }
+      );
+
+      gsap.fromTo(imgCol,
+        { x: 80 },
+        {
+          x: 0,
+          duration: DUR,
+          ease: EASE,
+          stagger: 0.1,
+          scrollTrigger: { trigger: row, start: 'top 80%', once: true }
+        }
+      );
+    });
+
+    // Even rows: image from left, text from right (directions reversed)
+    var evenRows = gsap.utils.toArray('.solution-row--even');
+    evenRows.forEach(function (row) {
+      var textCol = row.querySelector('.solution-row__text');
+      var imgCol  = row.querySelector('.solution-row__image');
+
+      // Even row: image is visually on the left (via direction:rtl), text on right
+      // So we animate image from x:-80 and text from x:80
+      gsap.fromTo(imgCol,
+        { x: -80 },
+        {
+          x: 0,
+          duration: DUR,
+          ease: EASE,
+          scrollTrigger: { trigger: row, start: 'top 80%', once: true }
+        }
+      );
+
+      gsap.fromTo(textCol,
+        { x: 80 },
+        {
+          x: 0,
+          duration: DUR,
+          ease: EASE,
+          stagger: 0.1,
+          scrollTrigger: { trigger: row, start: 'top 80%', once: true }
+        }
+      );
+    });
+
+    // ── SECTION 3: Industry pills scatter in from random y ───
+    gsap.set('.industry-pill', { opacity: 0 });
+
+    gsap.to('.industry-pill', {
+      opacity: 1,
+      y: 0,
+      duration: 0.45,
+      stagger: 0.04,
+      ease: EASE,
+      scrollTrigger: {
+        trigger: '#industries-grid',
+        start: 'top 80%',
+        once: true
+      },
+      onStart: function () {
+        gsap.from('.industry-pill', {
+          y: function () { return gsap.utils.random(40, 80); },
+          stagger: 0.04,
+          duration: 0.45,
+          ease: EASE
+        });
+      }
+    });
+
+    // Cleaner implementation: use fromTo for pills scatter
+    gsap.set('.industry-pill', { opacity: 0 });
+    ScrollTrigger.create({
+      trigger: '#industries-grid',
+      start: 'top 80%',
+      once: true,
+      onEnter: function () {
+        gsap.fromTo('.industry-pill',
+          {
+            opacity: 0,
+            y: function () { return gsap.utils.random(40, 80); }
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            stagger: 0.04,
+            ease: EASE
+          }
+        );
+      }
+    });
+
+    // Industries heading
+    gsap.fromTo('#industries-header',
+      { y: 30 },
+      {
+        y: 0,
+        duration: DUR * 0.8,
+        ease: EASE,
+        scrollTrigger: {
+          trigger: '#solutions-industries',
+          start: 'top 80%',
+          once: true
+        }
+      }
+    );
+
+    // ── SECTION 4: CTA scale from center ─────────────────────
+    gsap.fromTo('#solutions-cta',
+      { scale: 0.97 },
+      {
+        scale: 1,
+        duration: DUR,
+        ease: EASE,
+        scrollTrigger: {
+          trigger: '#solutions-cta',
+          start: 'top 80%',
+          once: true
+        }
+      }
+    );
+
+    gsap.set('#solutions-cta-left', { opacity: 0 });
+    gsap.set('#solutions-cta-right', { opacity: 0 });
+
+    gsap.to('#solutions-cta-left', {
+      opacity: 1,
+      x: 0,
+      duration: DUR,
+      ease: EASE,
+      scrollTrigger: {
+        trigger: '#solutions-cta',
+        start: 'top 80%',
+        once: true
+      }
+    });
+
+    gsap.fromTo('#solutions-cta-right',
+      { opacity: 0, x: 30 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: DUR,
+        ease: EASE,
+        delay: 0.1,
+        scrollTrigger: {
+          trigger: '#solutions-cta',
+          start: 'top 80%',
+          once: true
+        }
+      }
+    );
+
+    // ── Footer: simple y reveal ───────────────────────────────
+    gsap.fromTo('#solutions-footer-grid',
+      { y: 24 },
+      {
+        y: 0,
+        duration: DUR,
+        ease: EASE,
+        scrollTrigger: {
+          trigger: '#solutions-footer',
+          start: 'top 85%',
+          once: true
+        }
+      }
+    );
+
+  </script>
+
+</body>
+</html>

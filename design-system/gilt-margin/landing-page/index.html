@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oro Matto — Sardinian Wild Honey &amp; Beeswax Studio</title>
+  <meta name="description" content="Raw honey, beeswax candles, propolis tinctures, and honeycomb in commission from the hills of Sardinia. From the hive, unchanged.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/index.css">
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Splitting.js for character scatter -->
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+  <!-- Lenis smooth scroll -->
+  <script src="https://unpkg.com/@studio-freight/lenis/dist/lenis.min.js"></script>
+</head>
+<body data-page="index">
+
+<!-- ── NAV ─────────────────────────────────────────────────────────────────── -->
+<nav id="site-nav" class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Oro Matto</a>
+    <ul class="nav-links">
+      <li><a href="products.html" class="nav-link" data-slug="products">Products</a></li>
+      <li><a href="about.html" class="nav-link" data-slug="about">About</a></li>
+      <li><a href="contact.html" class="nav-link" data-slug="contact">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-spacer" id="nav-spacer"></div>
+<div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-label="Navigation">
+  <a href="index.html" class="nav-mobile-link" data-slug="index">Home</a>
+  <a href="products.html" class="nav-mobile-link" data-slug="products">Products</a>
+  <a href="about.html" class="nav-mobile-link" data-slug="about">About</a>
+  <a href="contact.html" class="nav-mobile-link" data-slug="contact">Contact</a>
+</div>
+
+<!-- ── HERO ─────────────────────────────────────────────────────────────────── -->
+<section id="hero">
+  <div id="hero-video-container">
+    <video
+      id="hero-bg-video"
+      src="assets/hero-bg.mp4"
+      autoplay muted loop playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="hero-bg-placeholder">→ assets/hero-bg.mp4</div>
+    <div id="hero-video-overlay"></div>
+  </div>
+  <div id="hero-content">
+    <p id="hero-eyebrow">Sardinia, since 1994</p>
+    <h1 id="hero-title" data-splitting>From the hive,<br>unchanged.</h1>
+    <p id="hero-body">Raw wildflower honey and beeswax goods sourced from the macchia hills above Nuoro. No filtering, no processing — only what the bees made.</p>
+    <div id="hero-cta-group">
+      <a href="products.html" id="hero-cta-primary" class="btn-primary">Explore the Collection</a>
+      <a href="about.html" id="hero-cta-secondary" class="btn-ghost-light">Our Story</a>
+    </div>
+  </div>
+  <!-- Organic wave divider at bottom of hero -->
+  <div id="hero-wave-divider">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,40 C180,80 360,0 540,40 C720,80 900,0 1080,40 C1260,80 1380,20 1440,40 L1440,80 L0,80 Z" fill="#f0ece0"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ── PROVENANCE STRIP ─────────────────────────────────────────────────────── -->
+<section id="provenance">
+  <div id="provenance-inner">
+    <div id="provenance-stat" class="stat-item">
+      <span class="stat-number" data-target="30">0</span>
+      <span class="stat-unit">years</span>
+      <span class="stat-label">tending hives</span>
+    </div>
+    <div id="provenance-divider-1" class="stat-divider"></div>
+    <div id="provenance-stat-2" class="stat-item">
+      <span class="stat-number" data-target="48">0</span>
+      <span class="stat-unit">hives</span>
+      <span class="stat-label">across the macchia</span>
+    </div>
+    <div id="provenance-divider-2" class="stat-divider"></div>
+    <div id="provenance-stat-3" class="stat-item">
+      <span class="stat-number" data-target="0">0</span>
+      <span class="stat-unit">additives</span>
+      <span class="stat-label">ever used</span>
+    </div>
+    <div id="provenance-divider-3" class="stat-divider"></div>
+    <div id="provenance-stat-4" class="stat-item">
+      <span class="stat-number" data-target="4">0</span>
+      <span class="stat-unit">varietals</span>
+      <span class="stat-label">in this season's run</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── MISSION / VALUES — ambient video section ──────────────────────────────── -->
+<section id="mission">
+  <div id="mission-video-container">
+    <video
+      id="mission-bg-video"
+      src="assets/mission-surface.mp4"
+      autoplay muted loop playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="mission-bg-placeholder">→ assets/mission-surface.mp4</div>
+    <div id="mission-overlay"></div>
+  </div>
+  <div id="mission-content">
+    <p id="mission-kicker">What we believe</p>
+    <h2 id="mission-heading">Honey doesn't need help.</h2>
+    <p id="mission-body">Industrial production filters out everything that makes wildflower honey distinct — the pollen, the wax particles, the particular bitterness of corbezzolo blossom. We leave it in. The texture is coarser. The color varies year to year. That's the point.</p>
+    <div id="mission-cards-grid">
+      <article id="mission-card-1" class="mission-card">
+        <h3 class="mission-card-title">Unfiltered</h3>
+        <p class="mission-card-body">Cold-extracted directly from the comb. No heat treatment above 38°C — the temperature of the hive itself.</p>
+      </article>
+      <article id="mission-card-2" class="mission-card">
+        <h3 class="mission-card-title">Unblended</h3>
+        <p class="mission-card-body">Each harvest is bottled by hive location. The taste of the east-facing slope differs from the valley floor. We bottle them separately.</p>
+      </article>
+      <article id="mission-card-3" class="mission-card">
+        <h3 class="mission-card-title">Unhurried</h3>
+        <p class="mission-card-body">We produce one annual harvest per hive. When a varietal runs out, it is gone until the following spring.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRODUCT SHOWCASE ──────────────────────────────────────────────────────── -->
+<section id="showcase">
+  <div id="showcase-inner">
+    <div id="showcase-header">
+      <h2 id="showcase-heading">This season's collection</h2>
+      <a href="products.html" id="showcase-link" class="text-link">View all products →</a>
+    </div>
+    <div id="showcase-grid">
+      <article id="product-card-1" class="product-card">
+        <div class="product-card-image-wrap">
+          <img
+            src="assets/product-corbezzolo.jpeg"
+            alt="Corbezzolo wildflower honey — dark amber, bitter finish"
+            class="product-card-img"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="product-card-img-placeholder">→ assets/product-corbezzolo.jpeg</div>
+        </div>
+        <div class="product-card-body">
+          <p class="product-card-varietal">Corbezzolo</p>
+          <h3 class="product-card-name">Wildflower, Nuoro Hills</h3>
+          <p class="product-card-note">Dark amber. Bitter finish. Produced in very small quantities — the corbezzolo blossom flowers for only two weeks each autumn.</p>
+          <a href="products.html" class="btn-product">Learn more</a>
+        </div>
+      </article>
+      <article id="product-card-2" class="product-card">
+        <div class="product-card-image-wrap">
+          <img
+            src="assets/product-thyme.jpeg"
+            alt="Thyme honey — golden, intensely aromatic"
+            class="product-card-img"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="product-card-img-placeholder">→ assets/product-thyme.jpeg</div>
+        </div>
+        <div class="product-card-body">
+          <p class="product-card-varietal">Thyme</p>
+          <h3 class="product-card-name">Macchia alta, above 600m</h3>
+          <p class="product-card-note">Golden. Intensely aromatic — the thyme scrub at altitude produces a honey that crystallises within weeks and keeps for years.</p>
+          <a href="products.html" class="btn-product">Learn more</a>
+        </div>
+      </article>
+      <article id="product-card-3" class="product-card">
+        <div class="product-card-image-wrap">
+          <img
+            src="assets/product-beeswax.jpeg"
+            alt="Raw beeswax blocks — pale yellow, unrefined"
+            class="product-card-img"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div class="product-card-img-placeholder">→ assets/product-beeswax.jpeg</div>
+        </div>
+        <div class="product-card-body">
+          <p class="product-card-varietal">Beeswax</p>
+          <h3 class="product-card-name">Raw blocks &amp; candles</h3>
+          <p class="product-card-note">Melted and poured once — no bleaching, no deodorising. The pale yellow colour and faint honey scent are the wax's own.</p>
+          <a href="products.html" class="btn-product">Learn more</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS / HOW IT'S MADE ──────────────────────────────────────────────── -->
+<section id="process">
+  <div id="process-inner">
+    <div id="process-header">
+      <h2 id="process-heading">How it's made</h2>
+    </div>
+    <!-- SVG thread line — scrubbed path draw -->
+    <svg id="process-thread" viewBox="0 0 4 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path id="process-path" d="M2,0 C2,100 2,200 2,300 C2,350 2,380 2,400" stroke="#f4b30c" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <ol id="process-steps">
+      <li id="step-1" class="process-step">
+        <span class="step-number">01</span>
+        <div class="step-content">
+          <h3 class="step-title">Spring survey</h3>
+          <p class="step-body">In March we walk each hive site and assess forage — which plants are flowering, in what density. This determines which hives will produce which varietal that year.</p>
+        </div>
+      </li>
+      <li id="step-2" class="process-step">
+        <span class="step-number">02</span>
+        <div class="step-content">
+          <h3 class="step-title">Single harvest</h3>
+          <p class="step-body">One extraction per hive per year, in late summer. We leave enough honey in the hive for the colony to winter on — we take only the surplus.</p>
+        </div>
+      </li>
+      <li id="step-3" class="process-step">
+        <span class="step-number">03</span>
+        <div class="step-content">
+          <h3 class="step-title">Cold extraction</h3>
+          <p class="step-body">Frames are uncapped by hand and spun in a radial extractor at ambient temperature. No warming, no pressing — the honey falls by centrifugal force.</p>
+        </div>
+      </li>
+      <li id="step-4" class="process-step">
+        <span class="step-number">04</span>
+        <div class="step-content">
+          <h3 class="step-title">Settle and jar</h3>
+          <p class="step-body">The extracted honey rests in tanks for 72 hours — long enough for wax particles to rise but not long enough for micro-filtration to become necessary. Then straight to glass.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ── MAGNETIC HOVER CTA CARDS — pre-footer ─────────────────────────────────── -->
+<section id="cta-cards">
+  <div id="cta-cards-video-container">
+    <video
+      id="cta-bg-video"
+      src="assets/cta-ambient.mp4"
+      autoplay muted loop playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="cta-bg-placeholder">→ assets/cta-ambient.mp4</div>
+    <div id="cta-bg-overlay"></div>
+  </div>
+  <div id="cta-cards-inner">
+    <div id="cta-card-1" class="cta-card magnetic-card">
+      <h2 class="cta-card-title">The Collection</h2>
+      <p class="cta-card-body">Four varietal honeys, raw beeswax blocks, hand-poured candles, and propolis tinctures. Available while the season lasts.</p>
+      <a href="products.html" class="btn-cta">Browse products</a>
+    </div>
+    <div id="cta-card-2" class="cta-card magnetic-card">
+      <h2 class="cta-card-title">Commission a Honeycomb</h2>
+      <p class="cta-card-body">We take a small number of commissions each season for full uncut comb sections. Three to six months from order to delivery.</p>
+      <a href="contact.html" class="btn-cta">Enquire</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────────────── -->
+<footer id="site-footer">
+  <div id="footer-inner">
+    <div id="footer-brand">
+      <span id="footer-wordmark">Oro Matto</span>
+      <p id="footer-tagline">From the hive, unchanged.</p>
+    </div>
+    <nav id="footer-nav" aria-label="Footer navigation">
+      <a href="products.html" class="footer-link">Products</a>
+      <a href="about.html" class="footer-link">About</a>
+      <a href="contact.html" class="footer-link">Contact</a>
+      <a href="#" class="footer-link">Instagram</a>
+    </nav>
+    <p id="footer-legal">© 2026 Oro Matto. Nuoro, Sardinia. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// ── Lenis smooth scroll ────────────────────────────────────────────────────────
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  orientation: 'vertical',
+  smoothWheel: true
+});
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+// Sync GSAP ScrollTrigger with Lenis
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+
+// ── GSAP setup ─────────────────────────────────────────────────────────────────
+gsap.registerPlugin(ScrollTrigger);
+
+const BASE_DURATION = 0.45;
+const SPRING_EASE   = 'cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+const EASE_OUT      = 'power3.out';
+
+// ── Splitting.js hero title character scatter ──────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.Splitting) {
+    Splitting({ target: '[data-splitting]', by: 'chars' });
+
+    const chars = document.querySelectorAll('#hero-title .char');
+    if (chars.length) {
+      gsap.from(chars, {
+        x: () => gsap.utils.random(-200, 200),
+        y: () => gsap.utils.random(-100, 100),
+        rotation: () => gsap.utils.random(-45, 45),
+        scale: 0,
+        duration: 0.8,
+        stagger: 0.03,
+        ease: 'back.out(1.7)',
+        delay: 0.3
+      });
+    }
+  }
+
+  // Hero eyebrow and body fade-up on load (pure entrance, not scroll)
+  gsap.from('#hero-eyebrow', { y: 20, duration: BASE_DURATION, ease: SPRING_EASE, delay: 0.1 });
+  gsap.from('#hero-body',    { y: 24, duration: BASE_DURATION, ease: SPRING_EASE, delay: 1.1 });
+  gsap.from('#hero-cta-group', { y: 20, duration: BASE_DURATION, ease: SPRING_EASE, delay: 1.3 });
+
+  // ── Number counters — provenance stats ──────────────────────────────────────
+  document.querySelectorAll('.stat-number').forEach(function(el) {
+    const target = parseInt(el.dataset.target, 10);
+    if (target === 0) {
+      // "0 additives" — stay at 0 but trigger the animation
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+        scale: 0.8,
+        duration: BASE_DURATION,
+        ease: SPRING_EASE
+      });
+      return;
+    }
+    const obj = { val: 0 };
+    gsap.to(obj, {
+      scrollTrigger: { trigger: el, start: 'top 85%' },
+      val: target,
+      duration: 2,
+      ease: 'power2.out',
+      onUpdate: function() {
+        el.textContent = Math.round(obj.val).toLocaleString();
+      }
+    });
+  });
+
+  // ── Mission cards — iris bloom via ScrollTrigger onEnter (set initial state only when trigger fires)
+  ScrollTrigger.create({
+    trigger: '#mission-cards-grid',
+    start: 'top 80%',
+    onEnter: function() {
+      document.querySelectorAll('.mission-card').forEach(function(card, i) {
+        gsap.fromTo(card,
+          { clipPath: 'ellipse(0% 0% at 50% 50%)' },
+          {
+            clipPath: 'ellipse(150% 150% at 50% 50%)',
+            duration: 1.2,
+            ease: 'power3.inOut',
+            delay: i * 0.15
+          }
+        );
+      });
+    },
+    once: true
+  });
+
+  // ── Mission heading — y-rise on enter ───────────────────────────────────────
+  gsap.from('#mission-heading', {
+    scrollTrigger: { trigger: '#mission', start: 'top 75%' },
+    y: 40,
+    duration: BASE_DURATION,
+    ease: SPRING_EASE
+  });
+
+  gsap.from('#mission-kicker', {
+    scrollTrigger: { trigger: '#mission', start: 'top 78%' },
+    y: 20,
+    duration: BASE_DURATION,
+    ease: SPRING_EASE,
+    delay: 0.1
+  });
+
+  // ── Product cards — scattered assembly ──────────────────────────────────────
+  gsap.from('.product-card', {
+    scrollTrigger: { trigger: '#showcase-grid', start: 'top 75%' },
+    x: () => gsap.utils.random(-window.innerWidth / 2, window.innerWidth / 2),
+    y: () => gsap.utils.random(-300, 300),
+    rotation: () => gsap.utils.random(-20, 20),
+    duration: 1.0,
+    stagger: 0.08,
+    ease: EASE_OUT
+  });
+
+  // ── Showcase header ──────────────────────────────────────────────────────────
+  gsap.from('#showcase-heading', {
+    scrollTrigger: { trigger: '#showcase', start: 'top 80%' },
+    y: 30,
+    duration: BASE_DURATION,
+    ease: SPRING_EASE
+  });
+
+  // ── SVG process thread — scrubbed path draw ──────────────────────────────────
+  const processPath = document.getElementById('process-path');
+  if (processPath) {
+    const len = processPath.getTotalLength();
+    gsap.set(processPath, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.to(processPath, {
+      scrollTrigger: {
+        trigger: '#process',
+        start: 'top 70%',
+        end: 'bottom 30%',
+        scrub: 1
+      },
+      strokeDashoffset: 0
+    });
+  }
+
+  // Process steps — horizontal sweep from left
+  gsap.from('.process-step', {
+    scrollTrigger: { trigger: '#process-steps', start: 'top 80%' },
+    x: -70,
+    duration: BASE_DURATION,
+    stagger: 0.13,
+    ease: SPRING_EASE
+  });
+
+  // ── Multi-layer parallax — showcase section ──────────────────────────────────
+  gsap.to('#hero-bg-video', {
+    scrollTrigger: { trigger: '#hero', scrub: 1 },
+    y: '-15%',
+    ease: 'none'
+  });
+
+  // ── CTA cards — scale entrance ───────────────────────────────────────────────
+  gsap.from('.cta-card', {
+    scrollTrigger: { trigger: '#cta-cards', start: 'top 80%' },
+    scale: 0.94,
+    y: 30,
+    duration: BASE_DURATION,
+    stagger: 0.15,
+    ease: SPRING_EASE
+  });
+
+  // ── Magnetic hover effect on CTA cards ──────────────────────────────────────
+  document.querySelectorAll('.magnetic-card').forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      const rect = card.getBoundingClientRect();
+      const mx = e.clientX - rect.left - rect.width  / 2;
+      const my = e.clientY - rect.top  - rect.height / 2;
+      gsap.to(card, {
+        x: mx * 0.12,
+        y: my * 0.08,
+        duration: 0.6,
+        ease: 'elastic.out(1, 0.3)'
+      });
+    });
+    card.addEventListener('mouseleave', function() {
+      gsap.to(card, {
+        x: 0, y: 0,
+        duration: 0.6,
+        ease: 'elastic.out(1, 0.3)'
+      });
+    });
+  });
+
+  // ── Footer links — elastic hover ────────────────────────────────────────────
+  document.querySelectorAll('.footer-link').forEach(function(link) {
+    link.addEventListener('mouseenter', function() {
+      gsap.to(link, { y: -2, duration: 0.45, ease: 'elastic.out(1, 0.3)' });
+    });
+    link.addEventListener('mouseleave', function() {
+      gsap.to(link, { y: 0, duration: 0.6, ease: 'elastic.out(1, 0.3)' });
+    });
+  });
+
+});
+
+// ── Nav scroll behavior ────────────────────────────────────────────────────────
+(function() {
+  var nav    = document.getElementById('site-nav');
+  var spacer = document.getElementById('nav-spacer');
+  var mobileMenu   = document.getElementById('nav-mobile-menu');
+  var mobileToggle = nav.querySelector('.nav-mobile-toggle');
+
+  function onScroll() {
+    if (window.scrollY > 10) {
+      nav.classList.add('scrolled');
+      spacer.classList.add('active');
+    } else {
+      nav.classList.remove('scrolled');
+      spacer.classList.remove('active');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', function() {
+      var isOpen = nav.classList.toggle('nav-mobile-open');
+      mobileToggle.setAttribute('aria-expanded', isOpen);
+      if (isOpen) { mobileMenu.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
+      else         { mobileMenu.classList.remove('is-open'); document.body.style.overflow = ''; }
+    });
+  }
+
+  // Active link detection
+  var slug = document.body.dataset.page || '';
+  document.querySelectorAll('.nav-link[data-slug]').forEach(function(l) {
+    if (l.dataset.slug === slug) l.classList.add('nav-link--active');
+  });
+  document.querySelectorAll('.nav-mobile-link[data-slug]').forEach(function(l) {
+    if (l.dataset.slug === slug) l.classList.add('nav-mobile-link--active');
+  });
+})();
+</script>
+
+</body>
+</html>

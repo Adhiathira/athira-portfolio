@@ -1,0 +1,88 @@
+/* strata-drift — depth parallax motion system */
+
+/* Float animations for decorative layer elements */
+@keyframes float {
+  0%, 100% { transform: translateY(-6px); }
+  50%       { transform: translateY(6px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(-10px) rotate(0deg); }
+  50%       { transform: translateY(10px) rotate(2deg); }
+}
+
+@keyframes float-drift {
+  0%, 100% { transform: translateY(-8px) translateX(-4px); }
+  33%       { transform: translateY(4px) translateX(6px); }
+  66%       { transform: translateY(8px) translateX(-2px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(124, 108, 228, 0.2); }
+  50%       { box-shadow: 0 0 50px rgba(124, 108, 228, 0.5), 0 0 80px rgba(124, 108, 228, 0.2); }
+}
+
+@keyframes pulse-teal {
+  0%, 100% { box-shadow: 0 0 15px rgba(79, 184, 160, 0.2); }
+  50%       { box-shadow: 0 0 40px rgba(79, 184, 160, 0.45); }
+}
+
+@keyframes line-draw {
+  0%   { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
+}
+
+/* Utility animation classes */
+.anim-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.anim-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.anim-float-drift {
+  animation: float-drift 10s ease-in-out infinite;
+}
+
+.anim-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Parallax layer hardware acceleration */
+.parallax-bg,
+.parallax-mid,
+.parallax-near {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Scroll reveal base states — GSAP sets opacity:0 via gsap.set() */
+.reveal-up,
+.reveal-fade {
+  /* intentionally empty — GSAP initializes state via gsap.set() */
+}
+
+/* Transition tokens */
+:root {
+  --transition-fast: 0.3s ease-out;
+  --transition-medium: 0.4s ease-out;
+  --transition-slow: 0.6s ease-out;
+  --transition-smooth: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .anim-float,
+  .anim-float-slow,
+  .anim-float-drift,
+  .anim-pulse-glow {
+    animation: none;
+  }
+
+  .parallax-bg,
+  .parallax-mid,
+  .parallax-near {
+    transform: none !important;
+  }
+}

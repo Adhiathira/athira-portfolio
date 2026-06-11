@@ -1,0 +1,112 @@
+/* ink-burst — Comic/Pop-Art Grid System
+   Source: ember-round (structure)
+   Twist: Panel-based layout with thin gutters, thick borders, asymmetric spans
+*/
+
+:root {
+  --grid-container:     1280px;
+  --grid-padding:       32px;
+  --grid-gap-panel:     4px;
+  --grid-gap-loose:     8px;
+  --panel-border:       3px solid #000000;
+  --panel-radius:       0px;
+}
+
+/* Container */
+.container {
+  max-width: var(--grid-container);
+  padding-inline: var(--grid-padding);
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* Comic panel base */
+.panel {
+  border: var(--panel-border);
+  border-radius: var(--panel-radius);
+  overflow: hidden;
+}
+
+/* Comic strip — 4 equal panels */
+.grid-comic-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--grid-gap-panel);
+}
+
+/* Feature panel — 2fr + 1fr */
+.grid-feature-panel {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--grid-gap-panel);
+}
+
+/* Asymmetric 3-col */
+.grid-asymmetric {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap-loose);
+}
+
+.grid-asymmetric .panel-featured {
+  grid-column: span 2;
+}
+
+/* Stats — 4 equal panels */
+.grid-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--grid-gap-panel);
+}
+
+/* Two column */
+.grid-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--grid-gap-loose);
+}
+
+/* Three column */
+.grid-three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap-loose);
+}
+
+/* Responsive — tablet */
+@media (max-width: 1023px) {
+  .grid-comic-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-feature-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive — mobile */
+@media (max-width: 767px) {
+  .grid-comic-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+  .grid-asymmetric {
+    grid-template-columns: 1fr;
+  }
+  .grid-asymmetric .panel-featured {
+    grid-column: span 1;
+  }
+  .grid-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .grid-three-col {
+    grid-template-columns: 1fr;
+  }
+  .grid-two-col {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    padding-inline: 16px;
+  }
+}

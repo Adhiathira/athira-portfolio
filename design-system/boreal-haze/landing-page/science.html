@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science — SPECTRA Aurora Forecasting</title>
+  <meta name="description" content="The physics behind aurora forecasting — solar wind, geomagnetics, and emission spectra explained by SPECTRA.">
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design tokens + component styles -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/science-hero.css">
+  <link rel="stylesheet" href="components/solar-wind.css">
+  <link rel="stylesheet" href="components/geomagnetics.css">
+  <link rel="stylesheet" href="components/aurora-colors.css">
+  <link rel="stylesheet" href="components/methodology.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════════════ -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">SPECTRA</a>
+    <ul class="nav-links">
+      <li><a href="forecast.html" class="nav-link">Forecast</a></li>
+      <li><a href="stations.html" class="nav-link">Stations</a></li>
+      <li><a href="science.html" class="nav-link nav-link--active">Science</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="forecast.html" class="nav-cta">Track Aurora</a>
+      <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile-scrim" id="nav-scrim"></div>
+<nav class="nav-mobile-menu" id="nav-mobile-menu" aria-hidden="true">
+  <ul class="nav-mobile-links">
+    <li><a href="forecast.html" class="nav-mobile-link">Forecast</a></li>
+    <li><a href="stations.html" class="nav-mobile-link">Stations</a></li>
+    <li><a href="science.html" class="nav-mobile-link nav-link--active">Science</a></li>
+  </ul>
+  <a href="forecast.html" class="nav-cta-mobile">Track Aurora</a>
+</nav>
+<div class="nav-spacer active" id="nav-spacer"></div>
+<script>
+(function(){var nav=document.getElementById('site-nav'),scrim=document.getElementById('nav-scrim'),mobileMenu=document.getElementById('nav-mobile-menu'),toggle=nav.querySelector('.nav-mobile-toggle');function onScroll(){window.scrollY>20?nav.classList.add('scrolled'):nav.classList.remove('scrolled');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();function open(){nav.classList.add('nav-mobile-open');mobileMenu.classList.add('is-open');scrim.classList.add('is-open');toggle.setAttribute('aria-expanded','true');mobileMenu.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}function close(){nav.classList.remove('nav-mobile-open');mobileMenu.classList.remove('is-open');scrim.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');mobileMenu.setAttribute('aria-hidden','true');document.body.style.overflow='';}toggle.addEventListener('click',function(){nav.classList.contains('nav-mobile-open')?close():open();});scrim.addEventListener('click',close);mobileMenu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});})();
+</script>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     1. PAGE HERO
+════════════════════════════════════════════════════════════ -->
+<section id="science-hero" aria-labelledby="science-hero-headline">
+
+  <!-- Aurora gradient base -->
+  <div id="science-hero-aurora-base"></div>
+
+  <!-- Morphing blobs -->
+  <div id="science-blob-1" aria-hidden="true"></div>
+  <div id="science-blob-2" aria-hidden="true"></div>
+  <div id="science-blob-3" aria-hidden="true"></div>
+
+  <!-- Star-field noise -->
+  <div id="science-hero-noise" aria-hidden="true"></div>
+
+  <!-- Hero content -->
+  <div id="science-hero-content">
+    <span id="science-hero-eyebrow">Aurora Geophysics</span>
+    <h1 id="science-hero-headline">The Physics of Light From Space</h1>
+    <p id="science-hero-subheadline">
+      How charged particles from the Sun paint the sky in
+      <span class="word-teal">teal</span>,
+      <span class="word-violet">violet</span>, and
+      <span class="word-lime">lime</span>.
+    </p>
+  </div>
+
+  <!-- Bottom vignette -->
+  <div id="science-hero-vignette" aria-hidden="true"></div>
+
+  <!-- Wave divider to Solar Wind section -->
+  <svg id="science-hero-wave" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="#1e1a35"/>
+    <path d="M0,55 C360,10 720,80 1080,30 C1260,10 1380,50 1440,55" stroke="rgba(33,243,182,0.18)" stroke-width="1.5" fill="none" stroke-dasharray="2000" stroke-dashoffset="2000" id="hero-wave-stroke"/>
+  </svg>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     2. SOLAR WIND
+════════════════════════════════════════════════════════════ -->
+<section id="solar-wind" aria-labelledby="solar-wind-headline">
+
+  <div id="solar-wind-inner">
+
+    <!-- Left: editorial text -->
+    <div id="solar-wind-editorial">
+      <p id="solar-wind-eyebrow">Solar Wind</p>
+
+      <h2 id="solar-wind-headline">
+        <span id="solar-wind-velocity-num">400 km/s</span> — The Trigger Velocity
+      </h2>
+
+      <p id="solar-wind-body">
+        The Sun constantly exhales a stream of charged particles — electrons and protons
+        accelerated to hundreds of kilometres per second. This solar wind takes 1–3 days
+        to travel from Sun to Earth, but in moments of intense activity — coronal mass
+        ejections — dense plasma clouds reach Earth in as little as 18 hours.
+      </p>
+
+      <blockquote id="solar-wind-pull-quote">
+        "When the IMF Bz turns southward, Earth's magnetosphere tears open. Auroras follow within 30 minutes."
+      </blockquote>
+
+      <p id="solar-wind-body-2">
+        The critical variable is the Interplanetary Magnetic Field (IMF) Bz component.
+        When Bz points northward, Earth's field deflects the solar wind. When Bz flips
+        southward, magnetic reconnection occurs at the dayside magnetopause — field lines
+        break and reconnect, allowing energetic particles to funnel into the polar cusps
+        and cascade down into the upper atmosphere where aurora ignites.
+      </p>
+    </div>
+
+    <!-- Right: CSS diagram -->
+    <div id="solar-wind-diagram" aria-label="Diagram: Solar wind flowing from the Sun to Earth's magnetosphere">
+
+      <span id="solar-wind-diagram-label">Schematic: CME Impact Path</span>
+
+      <div id="solar-wind-diagram-scene">
+
+        <!-- Sun -->
+        <div id="diagram-sun" aria-hidden="true"></div>
+        <span id="diagram-label-sun">Sun</span>
+
+        <!-- Solar wind flow lines -->
+        <div id="diagram-wind-track" aria-hidden="true">
+          <div class="wind-line"></div>
+          <div class="wind-line"></div>
+          <div class="wind-line"></div>
+          <div class="wind-line"></div>
+          <div class="wind-line"></div>
+        </div>
+
+        <!-- Magnetosphere + Earth -->
+        <div id="diagram-magnetosphere-group" aria-hidden="true">
+          <div class="magnetosphere-ring"></div>
+          <div class="magnetosphere-ring"></div>
+          <div class="magnetosphere-ring"></div>
+          <div id="diagram-earth"></div>
+        </div>
+        <span id="diagram-label-earth">Earth</span>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Wave divider to Geomagnetics -->
+  <svg id="solar-wind-wave" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,35 C360,70 720,0 1080,35 C1260,52 1380,20 1440,35 L1440,70 L0,70 Z" fill="#161d25"/>
+    <path d="M0,20 C480,65 960,5 1440,45" stroke="rgba(226,255,101,0.12)" stroke-width="1.5" fill="none" stroke-dasharray="2000" stroke-dashoffset="2000" id="solar-wave-stroke"/>
+  </svg>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     3. GEOMAGNETICS / KP INDEX
+════════════════════════════════════════════════════════════ -->
+<section id="geomagnetics" aria-labelledby="geomagnetics-headline">
+
+  <div id="geomagnetics-inner">
+
+    <!-- Header -->
+    <div id="geomagnetics-header">
+      <span id="geomagnetics-eyebrow">The Kp Index</span>
+      <h2 id="geomagnetics-headline">Measuring Magnetic Disturbance</h2>
+      <p id="geomagnetics-intro">
+        A global index averaging geomagnetic activity across 13 sub-auroral stations worldwide.
+        Updated every 3 hours, it is the primary indicator of aurora visibility potential.
+      </p>
+    </div>
+
+    <!-- Kp scale visualization -->
+    <div id="kp-scale" role="list" aria-label="Kp index scale from 0 to 9">
+
+      <div class="kp-column" data-kp="0" role="listitem">
+        <div class="kp-bar"></div>
+        <div class="kp-label">0</div>
+        <div class="kp-storm-badge">Quiet</div>
+      </div>
+
+      <div class="kp-column" data-kp="1" role="listitem">
+        <div class="kp-bar"></div>
+        <div class="kp-label">1</div>
+        <div class="kp-storm-badge">Quiet</div>
+      </div>
+
+      <div class="kp-column" data-kp="2" role="listitem">
+        <div class="kp-bar"></div>
+        <div class="kp-label">2</div>
+        <div class="kp-storm-badge">Unsettled</div>
+      </div>
+
+      <div class="kp-column" data-kp="3" role="listitem">
+        <div class="kp-bar"></div>
+        <div class="kp-label">3</div>
+        <div class="kp-storm-badge">Active</div>
+      </div>
+
+      <div class="kp-column" data-kp="4" role="listitem">
+        <div class="kp-bar"></div>
+        <div class="kp-label">4</div>
+        <div class="kp-storm-badge">Active</div>
+      </div>
+
+      <div class="kp-column" data-kp="5" role="listitem">
+        <div class="kp-bar"></div>
+        <div class="kp-label">5</div>
+        <div class="kp-storm-badge">G1 Storm</div>
+      </div>
+
+      <div class="kp-column" data-kp="6" role="listitem">
+        <div class="kp-bar"></div>
+        <div class="kp-label">6</div>
+        <div class="kp-storm-badge">G2 Storm</div>
+      </div>
+
+      <div class="kp-column" data-kp="7" role="listitem">
+        <div class="kp-bar"></div>
+        <div class="kp-label">7</div>
+        <div class="kp-storm-badge">G3 Storm</div>
+      </div>
+
+      <div class="kp-column" data-kp="8" role="listitem">
+        <div class="kp-bar"></div>
+        <div class="kp-label">8</div>
+        <div class="kp-storm-badge">G4 Storm</div>
+      </div>
+
+      <div class="kp-column" data-kp="9" role="listitem">
+        <div class="kp-bar"></div>
+        <div class="kp-label">9</div>
+        <div class="kp-storm-badge">G5 Extreme</div>
+      </div>
+
+    </div>
+
+    <!-- Explainer cards -->
+    <div id="kp-explainer-grid">
+
+      <div class="kp-explainer-card">
+        <span class="kp-card-label">Measured By</span>
+        <p class="kp-card-body">
+          13 sub-auroral stations worldwide, averaging geomagnetic fluctuations
+          over 3-hour windows. Stations span both hemispheres to capture global disturbance.
+        </p>
+      </div>
+
+      <div class="kp-explainer-card">
+        <span class="kp-card-label">Range</span>
+        <p class="kp-card-body">
+          Kp 0 (magnetically quiet, aurora limited to high-latitude polar cap) to
+          Kp 9 (extreme geomagnetic storm, aurora visible at mid-latitudes and below).
+        </p>
+      </div>
+
+      <div class="kp-explainer-card">
+        <span class="kp-card-label">Spectra Lead Time</span>
+        <p class="kp-card-body">
+          Spectra predicts Kp changes 1–3 hours ahead using satellite solar wind data
+          and real-time magnetometer feeds, giving you a meaningful observing window.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Wave divider to Aurora Colors section -->
+  <svg id="geomagnetics-wave" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,70 L0,30 C180,60 360,10 540,35 C720,60 900,5 1080,30 C1260,55 1380,15 1440,35 L1440,70 Z" fill="#0d3330"/>
+    <path d="M0,45 C360,5 720,65 1080,20 C1260,5 1380,50 1440,30" stroke="rgba(33,243,182,0.15)" stroke-width="1.5" fill="none" stroke-dasharray="2000" stroke-dashoffset="2000" id="geo-wave-stroke"/>
+  </svg>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     4. AURORA COLORS / EMISSION SPECTRA
+════════════════════════════════════════════════════════════ -->
+<section id="aurora-colors" aria-labelledby="aurora-colors-headline">
+
+  <div id="aurora-colors-inner">
+
+    <!-- Header -->
+    <div id="aurora-colors-header">
+      <span id="aurora-colors-eyebrow">Emission Spectra</span>
+      <h2 id="aurora-colors-headline">Why Aurora Is These Colors</h2>
+    </div>
+
+    <!-- Card grid -->
+    <div id="aurora-cards-grid">
+
+      <!-- Card 1 — full width, oxygen green 558nm -->
+      <article id="aurora-card-1" class="aurora-color-card">
+        <div class="aurora-swatch" aria-hidden="true"></div>
+        <span class="aurora-card-wavelength">Oxygen at 558 nm — Green</span>
+        <h3 class="aurora-card-headline">Oxygen at 558nm — The Green of the Aurora Oval</h3>
+        <p class="aurora-card-body">
+          Oxygen atoms at 100–150 km altitude emit the characteristic green that defines
+          the aurora oval band. This is the most common aurora color and the one most
+          visible to dark-adapted eyes. When an oxygen atom absorbs a high-energy
+          electron from the solar wind cascade, it enters an excited state. As it
+          relaxes back to ground state, it releases a photon at precisely 557.7
+          nanometres — a vivid green-teal that fills the lower aurora bands.
+          This altitude range is prime because the atmosphere is dense enough for
+          frequent electron-oxygen collisions yet thin enough that emitted photons
+          escape upward before being reabsorbed.
+        </p>
+      </article>
+
+      <!-- Card 2 — oxygen red 630nm -->
+      <article id="aurora-card-2" class="aurora-color-card">
+        <div class="aurora-swatch" aria-hidden="true"></div>
+        <span class="aurora-card-wavelength">Oxygen at 630 nm — Red</span>
+        <h3 class="aurora-card-headline">Oxygen at 630nm — The Red Crown</h3>
+        <p class="aurora-card-body">
+          At 200–300 km altitude, lower-density oxygen produces deep red above the
+          green bands. The excited oxygen atoms at this height take much longer to
+          emit — up to two minutes between excitation and photon release. Only
+          during intense G3+ storms does sufficient particle energy reach this
+          altitude to produce visible red aurora. The red crown appears above the
+          green oval like a faint crimson halo — a reliable indicator that a
+          major event is underway.
+        </p>
+      </article>
+
+      <!-- Card 3 — nitrogen violet 391nm -->
+      <article id="aurora-card-3" class="aurora-color-card">
+        <div class="aurora-swatch" aria-hidden="true"></div>
+        <span class="aurora-card-wavelength">Nitrogen at 391 nm — Violet</span>
+        <h3 class="aurora-card-headline">Nitrogen at 391nm — The Violet Fringe</h3>
+        <p class="aurora-card-body">
+          Ionized molecular nitrogen creates the blue-violet edge colors along the
+          lower border of aurora curtains. Most intense during major CME events,
+          nitrogen emission at 391.4 nm gives aurora its distinctive purple-blue
+          fringe. Unlike oxygen, nitrogen molecules emit when directly ionized —
+          they do not need to relax through a metastable state — so the response
+          is nearly instantaneous with particle flux.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+
+  <!-- Wave divider to Methodology -->
+  <svg id="aurora-colors-wave" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,70 L0,40 C240,5 480,65 720,35 C960,5 1200,55 1440,25 L1440,70 Z" fill="#161d25"/>
+    <path d="M0,50 C360,10 720,70 1080,25 C1260,8 1380,55 1440,35" stroke="rgba(146,72,228,0.15)" stroke-width="1.5" fill="none" stroke-dasharray="2000" stroke-dashoffset="2000" id="aurora-wave-stroke"/>
+  </svg>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     5. FORECASTING METHODOLOGY
+════════════════════════════════════════════════════════════ -->
+<section id="methodology" aria-labelledby="methodology-headline">
+
+  <div id="methodology-inner">
+
+    <!-- Header -->
+    <div id="methodology-header">
+      <span id="methodology-eyebrow">How Spectra Forecasts</span>
+      <h2 id="methodology-headline">From Sun to Prediction in Under 3 Hours</h2>
+    </div>
+
+    <!-- Steps -->
+    <div id="methodology-steps">
+
+      <div id="methodology-step-1" class="methodology-step">
+        <div class="step-number" id="step-num-1">01</div>
+        <div class="step-content">
+          <h3 class="step-label">Solar Event Detection</h3>
+          <p class="step-body">
+            ACE and DSCOVR satellites at the L1 Lagrange point — 1.5 million km
+            sunward from Earth — detect incoming CMEs 30–60 minutes before Earth
+            impact. Real-time solar wind speed, density, and magnetic field orientation
+            data arrive at NOAA's Space Weather Prediction Center within seconds of
+            measurement.
+          </p>
+        </div>
+      </div>
+
+      <div id="methodology-step-2" class="methodology-step">
+        <div class="step-number" id="step-num-2">02</div>
+        <div class="step-content">
+          <h3 class="step-label">Real-time Solar Wind Ingest</h3>
+          <p class="step-body">
+            NOAA SWPC feeds velocity, density, and IMF Bz data to Spectra servers
+            at 1-minute cadence. The Bz component is the critical variable — southward
+            orientation triggers reconnection events. Spectra processes each feed
+            update through its ensemble model pipeline within 4 seconds of receipt.
+          </p>
+        </div>
+      </div>
+
+      <div id="methodology-step-3" class="methodology-step">
+        <div class="step-number" id="step-num-3">03</div>
+        <div class="step-content">
+          <h3 class="step-label">Magnetometer Analysis</h3>
+          <p class="step-body">
+            48 ground stations capture the onset of geomagnetic disturbance and
+            validate satellite predictions with real-world measurements. When
+            magnetometers detect sudden commencement — the sharp initial pulse
+            of a geomagnetic storm — Spectra's alert tier escalates immediately,
+            independent of satellite prediction lead time.
+          </p>
+        </div>
+      </div>
+
+      <div id="methodology-step-4" class="methodology-step">
+        <div class="step-number" id="step-num-4">04</div>
+        <div class="step-content">
+          <h3 class="step-label">Kp Forecast Output</h3>
+          <p class="step-body">
+            Spectra's ensemble model outputs Kp forecasts at 15-minute intervals
+            with probability distributions over G1–G5 storm classes. Each forecast
+            includes a confidence band, peak Kp estimate, and aurora visibility map
+            showing the geomagnetic latitude boundary where aurora is likely to be
+            seen given current conditions.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div id="methodology-cta">
+      <a href="forecast.html" id="methodology-cta-btn">View Live Forecast</a>
+      <a href="stations.html" id="methodology-cta-secondary">Explore Station Network</a>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer id="site-footer">
+  <div id="footer-inner">
+
+    <div id="footer-top">
+      <div id="footer-brand">
+        <a href="index.html" id="footer-logo">SPECTRA</a>
+        <p id="footer-tagline">Geomagnetic monitoring for aurora observers worldwide.</p>
+      </div>
+
+      <nav id="footer-nav" aria-label="Footer navigation">
+        <ul id="footer-nav-links">
+          <li><a href="forecast.html" class="footer-link">Forecast</a></li>
+          <li><a href="stations.html" class="footer-link">Stations</a></li>
+          <li><a href="science.html" class="footer-link">Science</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div id="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 Spectra. All rights reserved.</p>
+      <div id="footer-legal-links">
+        <a href="#" class="footer-legal-link">Privacy</a>
+        <a href="#" class="footer-legal-link">Terms</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     GSAP ANIMATIONS
+════════════════════════════════════════════════════════════ -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const BASE_DURATION = parseFloat(
+  getComputedStyle(document.documentElement).getPropertyValue('--duration-sm')
+) || 0.4;
+const EASE = getComputedStyle(document.documentElement)
+  .getPropertyValue('--ease-primary').trim() || 'power2.out';
+
+// ── Hero: eyebrow + headline word stagger clip-in ──────────────────────────
+(function initHero() {
+  var tl = gsap.timeline({ delay: 0.2 });
+
+  // Set initial states — GSAP owns opacity
+  gsap.set('#science-hero-eyebrow', { opacity: 0, y: 20 });
+  gsap.set('#science-hero-headline', { opacity: 0, clipPath: 'inset(0 100% 0 0)' });
+  gsap.set('#science-hero-subheadline', { opacity: 0, y: 24 });
+
+  tl.to('#science-hero-eyebrow', {
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    ease: EASE
+  })
+  .to('#science-hero-headline', {
+    opacity: 1,
+    clipPath: 'inset(0 0% 0 0)',
+    duration: 1.1,
+    ease: 'power3.out'
+  }, '-=0.3')
+  .to('#science-hero-subheadline', {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    ease: EASE
+  }, '-=0.5');
+
+  // Hero wave stroke draw
+  gsap.to('#hero-wave-stroke', {
+    strokeDashoffset: 0,
+    duration: 2.4,
+    delay: 0.8,
+    ease: 'power2.out'
+  });
+})();
+
+// ── Solar Wind: editorial divergent reveal ─────────────────────────────────
+(function initSolarWind() {
+  var trigger = { trigger: '#solar-wind', start: 'top 78%', once: true };
+
+  gsap.set('#solar-wind-eyebrow', { opacity: 0, x: -40 });
+  gsap.set('#solar-wind-headline', { opacity: 0, x: -60 });
+  gsap.set('#solar-wind-body', { opacity: 0, x: -40 });
+  gsap.set('#solar-wind-pull-quote', { opacity: 0, x: -30 });
+  gsap.set('#solar-wind-body-2', { opacity: 0, x: -30 });
+
+  gsap.to(['#solar-wind-eyebrow', '#solar-wind-headline', '#solar-wind-body', '#solar-wind-pull-quote', '#solar-wind-body-2'], {
+    scrollTrigger: trigger,
+    opacity: 1,
+    x: 0,
+    duration: 0.9,
+    ease: EASE,
+    stagger: 0.14
+  });
+
+  // Diagram elements — scale from center, staggered
+  gsap.set('#diagram-sun', { opacity: 0, scale: 0 });
+  gsap.set('.magnetosphere-ring', { opacity: 0, scale: 0 });
+  gsap.set('#diagram-earth', { opacity: 0, scale: 0 });
+
+  gsap.to('#diagram-sun', {
+    scrollTrigger: { trigger: '#solar-wind-diagram', start: 'top 82%', once: true },
+    opacity: 1,
+    scale: 1,
+    duration: 0.7,
+    ease: 'back.out(1.5)',
+    delay: 0.3
+  });
+
+  gsap.to('.magnetosphere-ring', {
+    scrollTrigger: { trigger: '#solar-wind-diagram', start: 'top 82%', once: true },
+    opacity: 1,
+    scale: 1,
+    duration: 0.7,
+    ease: 'back.out(1.3)',
+    stagger: 0.14,
+    delay: 0.6
+  });
+
+  gsap.to('#diagram-earth', {
+    scrollTrigger: { trigger: '#solar-wind-diagram', start: 'top 82%', once: true },
+    opacity: 1,
+    scale: 1,
+    duration: 0.6,
+    ease: 'back.out(1.8)',
+    delay: 1.1
+  });
+
+  // Solar wave stroke draw
+  gsap.to('#solar-wave-stroke', {
+    scrollTrigger: { trigger: '#solar-wind-wave', start: 'top 95%', once: true },
+    strokeDashoffset: 0,
+    duration: 2.2,
+    ease: 'power2.out'
+  });
+})();
+
+// ── Geomagnetics: Kp columns elastic height reveal ─────────────────────────
+(function initGeomagnetics() {
+  var bars = document.querySelectorAll('.kp-column .kp-bar');
+
+  bars.forEach(function(bar) {
+    bar.dataset.targetHeight = bar.offsetHeight + 'px';
+    bar.style.height = '0px';
+  });
+
+  gsap.to(bars, {
+    scrollTrigger: {
+      trigger: '#kp-scale',
+      start: 'top 80%',
+      once: true
+    },
+    height: function(i, el) { return el.dataset.targetHeight; },
+    duration: 1.1,
+    stagger: 0.04,
+    ease: 'elastic.out(1, 0.5)'
+  });
+
+  // Headline cosmicReveal
+  gsap.set('#geomagnetics-eyebrow', { opacity: 0, y: 16 });
+  gsap.set('#geomagnetics-headline', { opacity: 0, clipPath: 'inset(0 100% 0 0)' });
+  gsap.set('#geomagnetics-intro', { opacity: 0, y: 20 });
+
+  gsap.to(['#geomagnetics-eyebrow', '#geomagnetics-headline', '#geomagnetics-intro'], {
+    scrollTrigger: { trigger: '#geomagnetics-header', start: 'top 82%', once: true },
+    opacity: 1,
+    y: 0,
+    clipPath: 'inset(0 0% 0 0)',
+    duration: 0.85,
+    ease: EASE,
+    stagger: 0.12
+  });
+
+  // Explainer cards
+  gsap.set('.kp-explainer-card', { opacity: 0, y: 32 });
+  gsap.to('.kp-explainer-card', {
+    scrollTrigger: { trigger: '#kp-explainer-grid', start: 'top 82%', once: true },
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    ease: EASE,
+    stagger: 0.1
+  });
+
+  // Wave stroke
+  gsap.to('#geo-wave-stroke', {
+    scrollTrigger: { trigger: '#geomagnetics-wave', start: 'top 95%', once: true },
+    strokeDashoffset: 0,
+    duration: 2.2,
+    ease: 'power2.out'
+  });
+})();
+
+// ── Aurora Colors: rotation+rise card stagger ─────────────────────────────
+(function initAuroraColors() {
+  gsap.set('#aurora-colors-eyebrow', { opacity: 0, y: 16 });
+  gsap.set('#aurora-colors-headline', { opacity: 0, y: 24 });
+  gsap.set('.aurora-color-card', { opacity: 0, y: 40, rotation: 1.5 });
+
+  gsap.to(['#aurora-colors-eyebrow', '#aurora-colors-headline'], {
+    scrollTrigger: { trigger: '#aurora-colors-header', start: 'top 82%', once: true },
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    ease: EASE,
+    stagger: 0.1
+  });
+
+  gsap.to('.aurora-color-card', {
+    scrollTrigger: { trigger: '#aurora-cards-grid', start: 'top 82%', once: true },
+    opacity: 1,
+    y: 0,
+    rotation: 0,
+    duration: 0.85,
+    ease: 'power2.out',
+    stagger: 0.12
+  });
+
+  // Swatch bars draw left-to-right via clip-path
+  gsap.set('.aurora-swatch', { clipPath: 'inset(0 100% 0 0)' });
+  gsap.to('.aurora-swatch', {
+    scrollTrigger: { trigger: '#aurora-cards-grid', start: 'top 80%', once: true },
+    clipPath: 'inset(0 0% 0 0)',
+    duration: 0.9,
+    ease: 'power3.out',
+    stagger: 0.18,
+    delay: 0.2
+  });
+
+  // Wave stroke
+  gsap.to('#aurora-wave-stroke', {
+    scrollTrigger: { trigger: '#aurora-colors-wave', start: 'top 95%', once: true },
+    strokeDashoffset: 0,
+    duration: 2.2,
+    ease: 'power2.out'
+  });
+})();
+
+// ── Methodology: cosmicReveal on number + fadeUp on content ───────────────
+(function initMethodology() {
+  gsap.set('#methodology-eyebrow', { opacity: 0, y: 16 });
+  gsap.set('#methodology-headline', { opacity: 0, clipPath: 'inset(0 100% 0 0)' });
+
+  gsap.to(['#methodology-eyebrow', '#methodology-headline'], {
+    scrollTrigger: { trigger: '#methodology-header', start: 'top 82%', once: true },
+    opacity: 1,
+    y: 0,
+    clipPath: 'inset(0 0% 0 0)',
+    duration: 0.85,
+    ease: EASE,
+    stagger: 0.12
+  });
+
+  // Each step: number clips in, content fades up 200ms after
+  var steps = document.querySelectorAll('.methodology-step');
+  steps.forEach(function(step, i) {
+    var num = step.querySelector('.step-number');
+    var content = step.querySelector('.step-content');
+
+    gsap.set(num, { opacity: 0, clipPath: 'inset(0 100% 0 0)' });
+    gsap.set(content, { opacity: 0, y: 28 });
+
+    var offset = i * 0.2;
+
+    gsap.to(num, {
+      scrollTrigger: { trigger: step, start: 'top 82%', once: true },
+      opacity: 1,
+      clipPath: 'inset(0 0% 0 0)',
+      duration: 0.8,
+      ease: 'power3.out',
+      delay: offset
+    });
+
+    gsap.to(content, {
+      scrollTrigger: { trigger: step, start: 'top 82%', once: true },
+      opacity: 1,
+      y: 0,
+      duration: 0.75,
+      ease: EASE,
+      delay: offset + 0.18
+    });
+  });
+
+  // CTA
+  gsap.set('#methodology-cta', { opacity: 0, y: 24 });
+  gsap.to('#methodology-cta', {
+    scrollTrigger: { trigger: '#methodology-cta', start: 'top 90%', once: true },
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    ease: EASE
+  });
+})();
+</script>
+
+
+
+</body>
+</html>

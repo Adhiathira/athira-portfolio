@@ -1,0 +1,280 @@
+/* plane-cut — Hero Component */
+/* Paper layers assembled in z-axis — depth through stacking */
+
+.hero {
+  position: relative;
+  padding-top: calc(var(--nav-height) + var(--space-4xl));
+  padding-bottom: var(--section-padding);
+  background: var(--color-page-bg);
+  overflow: hidden;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+/* Background paper layers — CSS shapes stacked at z-axis */
+.hero-layers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Each layer is a flat colored paper sheet at a different z-depth */
+.hero-layer {
+  position: absolute;
+  border-radius: 2px;
+}
+
+/* Deep background layer — largest, furthest back */
+.hero-layer--1 {
+  width: 520px;
+  height: 520px;
+  background: var(--color-layer-3);
+  box-shadow: var(--shadow-layer-sm);
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 92% 100%, 8% 100%, 0 85%);
+  bottom: -60px;
+  right: -40px;
+  z-index: 1;
+}
+
+/* Mid layer */
+.hero-layer--2 {
+  width: 420px;
+  height: 400px;
+  background: var(--color-layer-2);
+  box-shadow: var(--shadow-layer-md);
+  clip-path: polygon(8% 0, 92% 0, 100% 8%, 100% 100%, 0 100%, 0 8%);
+  bottom: 20px;
+  right: 40px;
+  z-index: 2;
+}
+
+/* Upper layer */
+.hero-layer--3 {
+  width: 320px;
+  height: 300px;
+  background: var(--color-layer-1-alt);
+  box-shadow: var(--shadow-layer-lg);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  bottom: 80px;
+  right: 100px;
+  z-index: 3;
+}
+
+/* Accent cut shape — terracotta geometric silhouette */
+.hero-layer--accent {
+  width: 120px;
+  height: 120px;
+  background: var(--color-accent);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  bottom: 200px;
+  right: 220px;
+  z-index: 4;
+}
+
+/* Left side floating layer */
+.hero-layer--left-1 {
+  width: 200px;
+  height: 280px;
+  background: var(--color-layer-2);
+  box-shadow: var(--shadow-layer-sm);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
+  top: 120px;
+  left: -20px;
+  z-index: 1;
+}
+
+.hero-layer--left-2 {
+  width: 80px;
+  height: 80px;
+  background: var(--color-accent-teal);
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  top: 180px;
+  left: 60px;
+  z-index: 2;
+}
+
+/* Hero content */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--type-label-size);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-lg);
+  display: block;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: var(--type-h1-size);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.hero-headline em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.hero-subhead {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+  max-width: 540px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  border: 1.5px solid transparent;
+  transition:
+    background-color var(--hover-duration) var(--hover-ease),
+    color var(--hover-duration) var(--hover-ease),
+    transform var(--hover-duration) var(--hover-ease),
+    box-shadow var(--hover-duration) var(--hover-ease),
+    border-color var(--hover-duration) var(--hover-ease);
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-layer-1);
+  border-color: var(--color-accent);
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-deep);
+  border-color: var(--color-accent-deep);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-layer-md);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text-primary);
+  border-color: var(--color-border-medium);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-text-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-layer-sm);
+}
+
+.btn-reversed {
+  background: var(--color-layer-1-alt);
+  color: var(--color-text-primary);
+  border-color: var(--color-layer-1-alt);
+}
+
+.btn-reversed:hover {
+  background: var(--color-layer-1);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-layer-md);
+}
+
+/* Focus states */
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Hero trust bar */
+.hero-trust {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.hero-trust-label {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.hero-trust-clients {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.trust-client-name {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: calc(var(--nav-height) + var(--space-2xl));
+    min-height: auto;
+  }
+
+  .hero-layer--1,
+  .hero-layer--2,
+  .hero-layer--3,
+  .hero-layer--left-1,
+  .hero-layer--left-2 {
+    display: none;
+  }
+
+  .hero-layer--accent {
+    width: 80px;
+    height: 80px;
+    bottom: 40px;
+    right: 20px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

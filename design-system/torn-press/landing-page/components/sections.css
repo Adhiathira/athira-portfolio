@@ -1,0 +1,841 @@
+/* ── SECTIONS — Torn Press — all section components ── */
+
+/* ─── SHARED SECTION UTILITIES ─── */
+
+.section-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-inline: 87px;
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.45);
+  margin-bottom: 24px;
+}
+
+.section-heading {
+  font-family: 'Oswald', Impact, sans-serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #1c1d21;
+  margin: 0 0 24px;
+}
+
+.section-body {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: rgba(0,0,0,0.7);
+  max-width: 520px;
+  margin: 0 0 33px;
+}
+
+/* Squiggly SVG divider between sections */
+.section-divider {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  line-height: 0;
+}
+
+/* Torn paper cut divider */
+.torn-divider {
+  display: block;
+  width: 100%;
+  line-height: 0;
+  pointer-events: none;
+}
+
+
+/* ─── TICKER TAPE SECTION ─── */
+
+.ticker-section {
+  background: #000000;
+  overflow: hidden;
+  padding: 9px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  animation: tickerScroll 18s linear infinite;
+  width: max-content;
+}
+
+.ticker-item {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+  padding-right: 48px;
+  opacity: 0.85;
+}
+
+.ticker-item .ticker-dot {
+  color: #ee7421;
+  margin-left: 48px;
+}
+
+
+/* ─── RELEASES SECTION ─── */
+
+.releases-section {
+  background: #ffffff;
+  padding: 105px 87px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Environmental watermark "PRESS" */
+.releases-env {
+  position: absolute;
+  bottom: -80px;
+  right: -40px;
+  font-family: 'Oswald', Impact, sans-serif;
+  font-size: 280px;
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  color: #000000;
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  line-height: 1;
+}
+
+.releases-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Zine collage grid — 1fr 2fr 1fr for releases */
+.releases-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.release-card {
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 15px;
+  background: #ffffff;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.05s steps(1);
+}
+
+.release-card:hover {
+  border-color: #000000;
+}
+
+/* Featured center card — bigger */
+.release-card--featured {
+  grid-column: 2;
+  border: 2px solid #000000;
+}
+
+.release-card--left {
+  grid-column: 1;
+  margin-top: 48px; /* zine overlap stagger */
+}
+
+.release-card--right {
+  grid-column: 3;
+  margin-top: -24px; /* zine overlap negative */
+  transform: rotate(-1.5deg);
+}
+
+.release-cover {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #e8e8e6;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.release-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.release-cover .cover-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8e8e6;
+}
+
+.release-cover .cover-placeholder::after {
+  content: 'RECORD SLEEVE';
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(0,0,0,0.25);
+}
+
+.release-catalog {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ee7421;
+  margin-bottom: 6px;
+}
+
+.release-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #1c1d21;
+  line-height: 1.1;
+  margin: 0 0 6px;
+}
+
+.release-title--featured {
+  font-size: 26px;
+}
+
+.release-artist {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(0,0,0,0.6);
+  margin: 0 0 9px;
+}
+
+.release-meta {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.release-format {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: #000000;
+  color: #ffffff;
+  padding: 2px 6px;
+}
+
+.release-edition {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 400;
+  color: rgba(0,0,0,0.5);
+  letter-spacing: 0.05em;
+}
+
+/* Orange sticker on featured card */
+.release-sticker {
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  background: #ee7421;
+  color: #000000;
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 2px;
+  transform: rotate(1.5deg);
+  z-index: 2;
+}
+
+
+/* ─── SHOWS SECTION ─── */
+
+.shows-section {
+  background: #000000;
+  padding: 105px 87px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Environmental text on dark bg */
+.shows-env {
+  position: absolute;
+  top: -80px;
+  left: -20px;
+  font-family: 'Oswald', Impact, sans-serif;
+  font-size: 280px;
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  opacity: 0.03;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+.shows-section .section-heading {
+  color: #ffffff;
+}
+
+.shows-section .section-label {
+  color: rgba(255,255,255,0.4);
+}
+
+.shows-section .section-body {
+  color: rgba(255,255,255,0.7);
+}
+
+/* Shows list — numbered rows */
+.shows-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 48px;
+}
+
+.show-row {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: background 0.05s steps(1);
+}
+
+.show-row:first-child {
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.show-row:hover {
+  background: rgba(238, 116, 33, 0.08);
+}
+
+.show-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.08em;
+}
+
+.show-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.show-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: #ee7421;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.show-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.show-venue {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+}
+
+.show-action {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.show-tickets-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+
+.show-tickets-label.sold-out {
+  color: rgba(238,116,33,0.6);
+  text-decoration: line-through;
+}
+
+
+/* ─── PRESSING SECTION ─── */
+
+.pressing-section {
+  background: #f5f5f4;
+  padding: 105px 87px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Asymmetric two-column split */
+.pressing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: flex-end;
+}
+
+.pressing-left {
+  position: relative;
+}
+
+.pressing-right {
+  position: relative;
+}
+
+/* Process steps — numbered step rows */
+.pressing-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 36px;
+}
+
+.press-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.press-step:first-child {
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.press-step-num {
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: rgba(0,0,0,0.1);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.press-step-content h4 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #1c1d21;
+  margin: 0 0 6px;
+}
+
+.press-step-content p {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.6);
+  margin: 0;
+}
+
+/* Vinyl press image panel */
+.pressing-image-panel {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: #000000;
+  position: relative;
+  overflow: hidden;
+}
+
+.pressing-image-panel img,
+.pressing-image-panel video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.pressing-image-panel .img-placeholder {
+  position: absolute;
+  inset: 0;
+  background: #1c1d21;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pressing-image-panel .img-placeholder::after {
+  content: 'VINYL PRESS OPERATION';
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.2);
+  text-align: center;
+}
+
+/* Orange sticker on pressing panel */
+.pressing-sticker {
+  position: absolute;
+  bottom: 18px;
+  left: -12px;
+  background: #ee7421;
+  color: #000000;
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 15px;
+  transform: rotate(-1.5deg);
+  z-index: 2;
+}
+
+
+/* ─── ZINE SECTION ─── */
+
+.zine-section {
+  background: #ffffff;
+  padding: 105px 87px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Collage-paste bento cards — irregular heights */
+.zine-bento {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.zine-card {
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 18px;
+  background: #ffffff;
+  position: relative;
+  transition: border-color 0.05s steps(1);
+}
+
+.zine-card:hover {
+  border-color: #000000;
+}
+
+.zine-card--span2 {
+  grid-column: span 2;
+}
+
+.zine-card--tall {
+  grid-row: span 2;
+}
+
+.zine-card--rotated {
+  transform: rotate(-1.5deg);
+  margin-top: -12px;
+}
+
+.zine-card--bleed {
+  margin-left: -32px;
+  padding-left: 50px;
+}
+
+.zine-card-issue {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ee7421;
+  margin-bottom: 6px;
+}
+
+.zine-card-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #1c1d21;
+  line-height: 1.05;
+  margin: 0 0 9px;
+}
+
+.zine-card-body {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.6);
+  margin: 0 0 12px;
+}
+
+.zine-cover-image {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: #e8e8e6;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.zine-cover-image::after {
+  content: 'ZINE COVER';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+
+/* ─── CTA SECTION ─── */
+
+.cta-section {
+  background: #000000;
+  padding: 105px 87px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.cta-env {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Oswald', Impact, sans-serif;
+  font-size: 360px;
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  opacity: 0.025;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.cta-section .section-label {
+  color: rgba(255,255,255,0.4);
+}
+
+.cta-section .section-heading {
+  color: #ffffff;
+}
+
+.cta-section .section-body {
+  color: rgba(255,255,255,0.65);
+  margin-inline: auto;
+  max-width: 560px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 33px;
+}
+
+/* Xerox scan line — decorative detail */
+.cta-scan {
+  position: absolute;
+  left: 87px;
+  right: 87px;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  top: 50%;
+  pointer-events: none;
+}
+
+
+/* ─── FOOTER ─── */
+
+.site-footer {
+  background: #000000;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 60px 99px;
+}
+
+.footer-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 48px;
+  align-items: start;
+}
+
+.footer-logo {
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer-links {
+  display: flex;
+  gap: 33px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.05s steps(1);
+}
+
+.footer-links a:hover {
+  color: #ee7421;
+}
+
+.footer-copy {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  text-align: right;
+}
+
+.footer-copy .copyleft {
+  color: #ee7421;
+}
+
+/* ── Responsive sections ── */
+@media (max-width: 1100px) {
+  .section-container,
+  .releases-section,
+  .shows-section,
+  .pressing-section,
+  .zine-section,
+  .cta-section {
+    padding-inline: 48px;
+  }
+  .site-footer {
+    padding: 48px;
+  }
+  .releases-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .release-card--featured {
+    grid-column: 1 / -1;
+  }
+  .release-card--right {
+    grid-column: 2;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-container,
+  .releases-section,
+  .shows-section,
+  .pressing-section,
+  .zine-section,
+  .cta-section {
+    padding-inline: 18px;
+  }
+  .site-footer {
+    padding: 36px 18px;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .footer-copy {
+    text-align: left;
+  }
+  .releases-grid {
+    grid-template-columns: 1fr;
+  }
+  .release-card--right {
+    transform: none;
+    grid-column: 1;
+    margin-top: 0;
+  }
+  .pressing-grid {
+    grid-template-columns: 1fr;
+  }
+  .zine-bento {
+    grid-template-columns: 1fr;
+  }
+  .zine-card--span2,
+  .zine-card--tall {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .zine-card--bleed {
+    margin-left: 0;
+    padding-left: 18px;
+  }
+  .show-row {
+    grid-template-columns: 36px 1fr;
+  }
+  .show-action {
+    display: none;
+  }
+  .releases-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

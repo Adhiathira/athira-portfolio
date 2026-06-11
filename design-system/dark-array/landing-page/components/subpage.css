@@ -1,0 +1,284 @@
+/* ─── SUBPAGE — compact headers and sub-page specific styles ─────────────── */
+
+/* ─── Compact page header (sub-pages) ─────────────────────────────────── */
+.page-header {
+  min-height: 22vh;
+  max-height: 280px;
+  background: var(--color-hero-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-12) var(--grid-padding-left);
+  padding-top: calc(44px + var(--space-12)); /* nav height + spacing */
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(44, 44, 48, 0.6);
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, #fd356e, transparent 70%);
+}
+
+.page-header-ghost {
+  position: absolute;
+  bottom: -0.1em;
+  right: -0.02em;
+  font-family: var(--font-display);
+  font-size: min(18vw, 220px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(253, 53, 110, 0.06);
+  line-height: 0.85;
+  pointer-events: none;
+  user-select: none;
+}
+
+.page-header-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fd356e;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-header-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 1px;
+  background: #fd356e;
+}
+
+.page-header-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0 0 8px;
+  line-height: var(--lh-heading);
+  position: relative;
+  z-index: 2;
+}
+
+.page-header-sub {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-muted-text);
+  position: relative;
+  z-index: 2;
+}
+
+/* ─── Content blocks ─────────────────────────────────── */
+.content-block {
+  padding-block: var(--space-section-pad);
+  padding-inline: var(--grid-padding-left);
+}
+
+.content-block--dark {
+  background: var(--color-hero-bg);
+}
+
+.content-block--surface {
+  background: var(--color-page-bg);
+}
+
+/* ─── Two-column content split ─────────────────────────────────── */
+.split-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: var(--space-16);
+  align-items: start;
+}
+
+.split-layout.reverse {
+  direction: rtl;
+}
+.split-layout.reverse > * {
+  direction: ltr;
+}
+
+.split-left-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fd356e;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  align-self: center;
+  opacity: 0.6;
+}
+
+/* ─── Detail grid (bento) ─────────────────────────────────── */
+.detail-bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 1px;
+  background: rgba(44, 44, 48, 0.5);
+}
+
+.detail-bento .bento-cell {
+  background: var(--color-hero-bg);
+  padding: var(--space-12) var(--space-10);
+  position: relative;
+}
+
+.bento-cell.span-2 {
+  grid-column: span 2;
+}
+
+.bento-cell-num {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(253, 53, 110, 0.4);
+  margin-bottom: 16px;
+}
+
+.bento-cell-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e8e8ea;
+  margin-bottom: 10px;
+}
+
+.bento-cell-body {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: #acacaf;
+}
+
+/* ─── Spec table ─────────────────────────────────── */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.spec-table tr {
+  border-bottom: 1px solid rgba(44, 44, 48, 0.6);
+  transition: background 0.07s;
+}
+
+.spec-table tr:hover {
+  background: rgba(44, 44, 48, 0.3);
+}
+
+.spec-table td {
+  padding: 14px 0;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  vertical-align: top;
+}
+
+.spec-table td:first-child {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(172, 172, 175, 0.6);
+  width: 40%;
+  padding-right: 20px;
+}
+
+.spec-table td:last-child {
+  color: #e4e4e7;
+}
+
+/* ─── Contact form ─────────────────────────────────── */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(172, 172, 175, 0.7);
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  color: var(--color-input-text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.11s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.06s linear;
+  width: 100%;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  border-color: var(--color-input-border-focus);
+  box-shadow: 0 0 0 1px #fd356e, 0 0 8px rgba(253, 53, 110, 0.3);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .split-layout {
+    grid-template-columns: 1fr;
+  }
+  .detail-bento {
+    grid-template-columns: 1fr;
+  }
+  .bento-cell.span-2 {
+    grid-column: span 1;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

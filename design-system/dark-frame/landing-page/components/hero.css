@@ -1,0 +1,138 @@
+/* ============================================================
+   HERO — Dark Frame
+   Full-viewport, transparent nav overlay, photo simulation
+   ============================================================ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 640px;
+  overflow: hidden;
+  background-color: var(--color-page-bg);
+}
+
+/* Photo simulation — directional gradient suggesting depth and light */
+.hero__photo {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      135deg,
+      #1a1410 0%,
+      #0e0c0a 30%,
+      #0a0a0a 60%,
+      #111214 100%
+    );
+  will-change: transform;
+}
+
+/* Dark overlay for legibility */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.3) 0%,
+    rgba(10, 10, 10, 0.5) 50%,
+    rgba(10, 10, 10, 0.8) 100%
+  );
+  z-index: 1;
+}
+
+/* Content area */
+.hero__content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 80px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+.hero__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--type-caption);
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 24px;
+}
+
+.hero__headline {
+  font-family: var(--font-display);
+  font-size: var(--type-h1);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  max-width: 900px;
+  margin-bottom: 32px;
+}
+
+.hero__caption {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--color-text-body);
+  max-width: 520px;
+  margin-bottom: 48px;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Scroll indicator */
+.hero__scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  right: var(--container-padding);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-caption);
+}
+
+.hero__scroll-indicator span {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--color-hairline), transparent);
+}
+
+@media (max-width: 768px) {
+  .hero__content {
+    padding-bottom: 60px;
+  }
+
+  .hero__headline {
+    max-width: 100%;
+  }
+
+  .hero__caption {
+    max-width: 100%;
+  }
+
+  .hero__scroll-indicator {
+    display: none;
+  }
+}

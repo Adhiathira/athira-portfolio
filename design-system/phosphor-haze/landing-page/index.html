@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Reverie — Enter the Stream</title>
+  <meta name="description" content="Neon Reverie is the vaporwave and synthwave streaming platform — lo-fi beats, neon dreamscapes, and curated ambience for those who listen in a different frequency.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+</head>
+<body>
+
+<!-- NAV TEMPLATE — canonical for all pages -->
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo">Neon<span class="logo-accent">Reverie</span></a>
+  <ul class="nav-links">
+    <li><a href="discover.html" class="nav-link">Discover</a></li>
+    <li><a href="artists.html" class="nav-link">Artists</a></li>
+    <li><a href="playlists.html" class="nav-link">Playlists</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+  </ul>
+  <a href="discover.html" class="nav-cta">Listen Free</a>
+  <button class="nav-mobile-toggle" aria-label="Open navigation">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" aria-hidden="true">
+  <a href="discover.html" class="nav-link">Discover</a>
+  <a href="artists.html" class="nav-link">Artists</a>
+  <a href="playlists.html" class="nav-link">Playlists</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="discover.html" class="nav-cta">Listen Free</a>
+</div>
+<script>
+  (function() {
+    const nav = document.getElementById('site-nav');
+    const mobileMenu = document.querySelector('.nav-mobile-menu');
+    const toggle = document.querySelector('.nav-mobile-toggle');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 20) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    }, { passive: true });
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        const open = mobileMenu.classList.toggle('is-open');
+        nav.classList.toggle('nav-mobile-open', open);
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('is-open');
+          nav.classList.remove('nav-mobile-open');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+  })();
+</script>
+<!-- END NAV -->
+
+<!-- ═══════════════════════════════════════════════
+     HERO — Dual field: control zone + dreamscape
+     ═══════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <!-- Ghost watermark -->
+  <span class="ghost-word" style="top: 15%; left: -5%; z-index: 1; pointer-events: none;">REVERIE</span>
+
+  <!-- Control zone -->
+  <div class="hero-control-zone">
+    <p class="hero-eyebrow" data-reveal="fade-up">Lo-Fi · Vaporwave · Synthwave</p>
+    <h1 class="hero-headline" id="hero-title">
+      Enter<br>
+      <span class="word-accent">The</span><br>
+      Stream.
+    </h1>
+    <p class="hero-subheadline" data-reveal="fade-up">
+      A streaming platform for those who listen<br>
+      in a different frequency. Neon beats.<br>
+      Infinite drift. Your dreamscape awaits.
+    </p>
+    <div class="hero-cta-group" data-reveal="fade-up">
+      <a href="discover.html" class="btn-primary">Start Listening</a>
+      <a href="about.html" class="btn-ghost">Learn More</a>
+    </div>
+  </div>
+
+  <!-- Dreamscape media field -->
+  <div class="hero-dreamscape" id="hero-dreamscape">
+    <video
+      src="assets/neon-descent-loop.mp4"
+      autoplay muted loop playsinline
+      aria-hidden="true"
+      onerror="this.nextElementSibling.style.color='transparent'"
+    ></video>
+    <div class="hero-dreamscape-placeholder" aria-hidden="true">
+      assets/neon-descent-loop.mp4
+    </div>
+
+    <!-- CSS perspective grid floor (always present, behind video) -->
+    <div class="hero-grid-floor" aria-hidden="true">
+      <svg viewBox="0 0 1400 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+        <defs>
+          <linearGradient id="gridFadeV" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#63cabe" stop-opacity="0"/>
+            <stop offset="40%" stop-color="#63cabe" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#63cabe" stop-opacity="0.4"/>
+          </linearGradient>
+          <linearGradient id="gridFadePurple" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#b79cff" stop-opacity="0"/>
+            <stop offset="50%" stop-color="#b79cff" stop-opacity="0.5"/>
+          </linearGradient>
+        </defs>
+        <!-- Vanishing point perspective grid -->
+        <!-- Horizontal lines -->
+        <line x1="0" y1="600" x2="1400" y2="600" stroke="url(#gridFadeV)" stroke-width="1"/>
+        <line x1="100" y1="520" x2="1300" y2="520" stroke="url(#gridFadeV)" stroke-width="0.8"/>
+        <line x1="220" y1="450" x2="1180" y2="450" stroke="url(#gridFadeV)" stroke-width="0.7"/>
+        <line x1="330" y1="390" x2="1070" y2="390" stroke="url(#gridFadeV)" stroke-width="0.6"/>
+        <line x1="430" y1="340" x2="970" y2="340" stroke="url(#gridFadeV)" stroke-width="0.5"/>
+        <line x1="520" y1="298" x2="880" y2="298" stroke="url(#gridFadeV)" stroke-width="0.4"/>
+        <line x1="600" y1="265" x2="800" y2="265" stroke="url(#gridFadeV)" stroke-width="0.3"/>
+        <line x1="660" y1="240" x2="740" y2="240" stroke="url(#gridFadeV)" stroke-width="0.2"/>
+        <!-- Vertical lines receding to vanishing point (700, 200) -->
+        <line x1="700" y1="200" x2="0" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.8"/>
+        <line x1="700" y1="200" x2="140" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.7"/>
+        <line x1="700" y1="200" x2="280" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.7"/>
+        <line x1="700" y1="200" x2="420" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.6"/>
+        <line x1="700" y1="200" x2="560" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.6"/>
+        <line x1="700" y1="200" x2="700" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.8"/>
+        <line x1="700" y1="200" x2="840" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.6"/>
+        <line x1="700" y1="200" x2="980" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.6"/>
+        <line x1="700" y1="200" x2="1120" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.7"/>
+        <line x1="700" y1="200" x2="1260" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.7"/>
+        <line x1="700" y1="200" x2="1400" y2="600" stroke="url(#gridFadePurple)" stroke-width="0.8"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Ticker band -->
+<div class="ticker-band" aria-hidden="true">
+  <div class="ticker-track" id="ticker-track">
+    <span class="ticker-item">Lo-Fi Beats<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Vaporwave<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Synthwave<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Ambient<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Chillhop<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Dream Pop<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Retrowave<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Electro Funk<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Lo-Fi Beats<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Vaporwave<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Synthwave<span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Ambient<span class="ticker-dot">◆</span></span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 1 — FEATURED GENRES (white surface)
+     Grid: bento asymmetric — 1.5fr 1fr 1fr
+     Animation: scale-rise stagger
+     ═══════════════════════════════════════════════ -->
+<section class="section section--white" id="section-genres">
+  <div class="section-inner">
+    <p class="section-label" data-reveal="fade-up">Sound Worlds</p>
+    <h2 class="section-heading" data-reveal="fade-up">Enter Your<br>Frequency.</h2>
+    <p class="section-subheading" data-reveal="fade-up">Four sound worlds, infinite depth. Each genre is a room you inhabit — not a playlist you click past.</p>
+
+    <div class="genre-bento" data-stagger-group="scale">
+      <div class="genre-card genre-card--lo-fi stagger-item" data-genre="lo-fi">
+        <span class="card-eyebrow">01</span>
+        <h3 class="card-title">Lo-Fi Hip Hop</h3>
+        <p class="card-body">Dusty samples. Muffled kicks. The sound of 2am in a room where the lamp is the only company.</p>
+        <a href="discover.html" class="tag" style="margin-top:auto; display:inline-block;">Explore →</a>
+      </div>
+      <div class="genre-card genre-card--vapor stagger-item" data-genre="vaporwave">
+        <span class="card-eyebrow">02</span>
+        <h3 class="card-title">Vaporwave</h3>
+        <p class="card-body">Slowed-down 80s R&B, Japanese city pop, and mall music dreaming in a server room.</p>
+        <a href="discover.html" class="tag tag--purple" style="margin-top:auto; display:inline-block;">Explore →</a>
+      </div>
+      <div class="genre-card genre-card--synth stagger-item" data-genre="synthwave">
+        <span class="card-eyebrow">03</span>
+        <h3 class="card-title">Synthwave</h3>
+        <p class="card-body">Arpeggiated analog keys. Pounding 4-on-the-floor. Neon highways at 3am, forever.</p>
+        <a href="discover.html" class="tag" style="margin-top:auto; display:inline-block;">Explore →</a>
+      </div>
+      <div class="genre-card genre-card--ambient stagger-item" data-genre="ambient">
+        <span class="card-eyebrow">04</span>
+        <h3 class="card-title">Ambient</h3>
+        <p class="card-body">Texture and tone. Sustained pads. The sound of space between objects in a silent room.</p>
+        <a href="discover.html" class="tag tag--purple" style="margin-top:auto; display:inline-block;">Explore →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="neon-rule">
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 2 — STUDIO / GENRE ROOMS VIDEO
+     Video: lo-fi-studio-ambient.mp4
+     Dark section, full-width video with overlay content
+     Animation: divergent x±60 on text elements
+     ═══════════════════════════════════════════════ -->
+<section class="section section--dark" id="section-studio" style="position:relative; overflow:hidden;">
+  <div style="position:relative; width:100%; height:70vh; overflow:hidden;">
+    <video
+      src="assets/lo-fi-studio-ambient.mp4"
+      autoplay muted loop playsinline
+      style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.45;"
+      aria-hidden="true"
+      onerror="this.nextElementSibling.style.color='transparent'"
+    ></video>
+    <div style="position:absolute; inset:0; background:linear-gradient(135deg, #0e0e22 0%, rgba(27,27,55,0.7) 100%); display:flex; align-items:center; justify-content:center; color:transparent;" aria-hidden="true">
+      assets/lo-fi-studio-ambient.mp4
+    </div>
+    <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(14,14,34,0.85) 0%, rgba(27,27,55,0.6) 60%, transparent 100%); z-index:2; display:flex; align-items:center; padding: 0 48px;">
+      <div style="max-width:var(--grid-max-width); margin:0 auto; width:100%;">
+        <p class="section-label" data-reveal="fade-right" style="color: var(--color-accent-cyan);">Craft &amp; Curation</p>
+        <h2 class="section-heading" data-reveal="fade-right" style="color:#fff; max-width:600px;">
+          Music As<br>A Practice.
+        </h2>
+        <p style="font-family:var(--font-mono); font-size:13px; line-height:2; color:rgba(255,255,255,0.55); max-width:440px; margin:0 0 40px;" data-reveal="fade-right">
+          Every track on Neon Reverie is selected by human ears. No algorithm. No optimization. Only music that earns its place in the dreamscape.
+        </p>
+        <a href="artists.html" class="btn-primary" data-reveal="fade-up">Meet the Artists</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 3 — FEATURED PLAYLISTS (surface bg)
+     Grid: numbered step rows (mono counter pattern)
+     Animation: horizontal sweep x:-70 stagger
+     ═══════════════════════════════════════════════ -->
+<section class="section section--surface" id="section-playlists">
+  <div class="section-inner">
+    <p class="section-label" data-reveal="fade-up">Now Playing</p>
+    <h2 class="section-heading" data-reveal="fade-up">Curated<br>Playlists.</h2>
+
+    <div data-stagger-group="sweep-left" style="margin-top: 48px;">
+      <div class="numbered-row stagger-item">
+        <span class="numbered-row__num">001</span>
+        <div>
+          <h3 class="numbered-row__title">Midnight Grid</h3>
+          <p class="numbered-row__body">3.2 hours of synthwave designed for late-night code sessions. Analog leads, punchy kicks.</p>
+        </div>
+        <a href="playlists.html" class="tag">Play</a>
+      </div>
+      <div class="numbered-row stagger-item">
+        <span class="numbered-row__num">002</span>
+        <div>
+          <h3 class="numbered-row__title">Slow Dissolve</h3>
+          <p class="numbered-row__body">Lo-fi hip hop in the key of forgetting. Reverb-soaked, tempo-dragged, endlessly warm.</p>
+        </div>
+        <a href="playlists.html" class="tag tag--purple">Play</a>
+      </div>
+      <div class="numbered-row stagger-item">
+        <span class="numbered-row__num">003</span>
+        <div>
+          <h3 class="numbered-row__title">Æsthetic Mall</h3>
+          <p class="numbered-row__body">Vaporwave classics and deep cuts. Slowed city pop. Fountains nobody remembers. 90s digital dreams.</p>
+        </div>
+        <a href="playlists.html" class="tag">Play</a>
+      </div>
+      <div class="numbered-row stagger-item">
+        <span class="numbered-row__num">004</span>
+        <div>
+          <h3 class="numbered-row__title">Signal Drift</h3>
+          <p class="numbered-row__body">Ambient textures that dissolve into each other. Field recordings processed until unrecognizable as sound.</p>
+        </div>
+        <a href="playlists.html" class="tag tag--purple">Play</a>
+      </div>
+      <div class="numbered-row stagger-item">
+        <span class="numbered-row__num">005</span>
+        <div>
+          <h3 class="numbered-row__title">Neon Highway</h3>
+          <p class="numbered-row__body">Retro-futuristic driving music. 80s FM at 120bpm. Rain on windshields. Impossible destinations.</p>
+        </div>
+        <a href="playlists.html" class="tag">Play</a>
+      </div>
+    </div>
+
+    <div style="margin-top:48px; text-align:center;">
+      <a href="playlists.html" class="btn-ghost">View All Playlists</a>
+    </div>
+  </div>
+</section>
+
+<hr class="neon-rule">
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 4 — ABSTRACT SYNTHWAVE VIDEO / TRENDING
+     Video: chromatic-abstract-loop.mp4
+     Grid: 3-col artist cards (dark, glow hover)
+     Animation: rotate+rise stagger 0.12
+     ═══════════════════════════════════════════════ -->
+<section class="section section--dark" id="section-trending" style="position:relative; overflow:hidden;">
+  <!-- Abstract video as section background -->
+  <div style="position:absolute; inset:0; overflow:hidden; z-index:0;">
+    <video
+      src="assets/chromatic-abstract-loop.mp4"
+      autoplay muted loop playsinline
+      style="width:100%; height:100%; object-fit:cover; opacity:0.18;"
+      aria-hidden="true"
+      onerror="this.nextElementSibling.style.color='transparent'"
+    ></video>
+    <div style="position:absolute; inset:0; background:var(--color-dark-bg); opacity:0.82; color:transparent;" aria-hidden="true">
+      assets/chromatic-abstract-loop.mp4
+    </div>
+  </div>
+  <div class="section-inner" style="position:relative; z-index:1;">
+    <p class="section-label" data-reveal="fade-up">Featured Artists</p>
+    <h2 class="section-heading" data-reveal="fade-up" style="color:#ffffff;">Now<br>Trending.</h2>
+    <p class="section-subheading" data-reveal="fade-up">Artists who define the sound of the dreamscape — handpicked, human-heard.</p>
+
+    <div class="grid-3" data-stagger-group="rotate" style="margin-top: 48px;">
+      <div class="card card--glass stagger-item">
+        <span class="card-eyebrow">Vaporwave</span>
+        <h3 class="card-title">Macintosh Plus</h3>
+        <p class="card-body">The original voice of the void. Slowed mall music elevated to high art. Floral Shoppe lives forever.</p>
+        <a href="artists.html" class="tag tag--purple" style="margin-top:20px; display:inline-block;">Listen →</a>
+      </div>
+      <div class="card card--glass stagger-item">
+        <span class="card-eyebrow">Lo-Fi</span>
+        <h3 class="card-title">Nujabes</h3>
+        <p class="card-body">Jazz-inflected hip hop of impossible warmth. Each track a shrine to the moment between moments.</p>
+        <a href="artists.html" class="tag" style="margin-top:20px; display:inline-block;">Listen →</a>
+      </div>
+      <div class="card card--glass stagger-item">
+        <span class="card-eyebrow">Synthwave</span>
+        <h3 class="card-title">Kavinsky</h3>
+        <p class="card-body">A voice out of the dark. Film-scoring sensibility. The sound of a midnight city that never actually existed.</p>
+        <a href="artists.html" class="tag tag--purple" style="margin-top:20px; display:inline-block;">Listen →</a>
+      </div>
+    </div>
+
+    <div style="margin-top:48px; text-align:center;">
+      <a href="artists.html" class="btn-primary">All Artists</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CTA — Enter the stream
+     ═══════════════════════════════════════════════ -->
+<section class="cta-section" id="section-cta">
+  <div class="cta-inner">
+    <p class="section-label" data-reveal="fade-up" style="justify-content:center; color:var(--color-accent-cyan);">Free to Stream</p>
+    <h2 class="cta-heading" data-reveal="fade-up">
+      The Dreamscape<br>Is Open.
+    </h2>
+    <p class="cta-subheading" data-reveal="fade-up">
+      No algorithm. No premium tier. No curated-for-you nonsense. Just music, curated by ears that care.
+    </p>
+    <div class="cta-btn-group" data-reveal="fade-up">
+      <a href="discover.html" class="btn-primary">Start Listening Free</a>
+      <a href="about.html" class="btn-ghost" style="color:rgba(255,255,255,0.7); border-color:rgba(255,255,255,0.3);">Our Manifesto</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Neon<span>Reverie</span></a>
+        <p class="footer-tagline">A streaming platform for those who listen in a different frequency. Lo-fi, vaporwave, and synthwave — curated by humans, for humans.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Explore</p>
+        <ul class="footer-links">
+          <li><a href="discover.html">Discover</a></li>
+          <li><a href="artists.html">Artists</a></li>
+          <li><a href="playlists.html">Playlists</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Platform</p>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Manifesto</a></li>
+          <li><a href="about.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Frequencies</p>
+        <ul class="footer-links">
+          <li><a href="discover.html">Lo-Fi Hip Hop</a></li>
+          <li><a href="discover.html">Vaporwave</a></li>
+          <li><a href="discover.html">Synthwave</a></li>
+          <li><a href="discover.html">Ambient</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copyright">© 2026 Neon Reverie. All frequencies reserved.</span>
+      <span class="footer-copyright">Enter the stream.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+  // ── CRT warmup page load sequence ──
+  const heroTitle = document.getElementById('hero-title');
+  const controlZone = document.querySelector('.hero-control-zone');
+  const dreamscape = document.getElementById('hero-dreamscape');
+  const navEl = document.getElementById('site-nav');
+
+  // Set initial states
+  gsap.set(heroTitle, { opacity: 0, y: 24 });
+  gsap.set('.hero-eyebrow', { opacity: 0, y: 16 });
+  gsap.set('.hero-subheadline', { opacity: 0, y: 16 });
+  gsap.set('.hero-cta-group', { opacity: 0, y: 16 });
+  gsap.set(navEl, { opacity: 0, y: -10 });
+  gsap.set(dreamscape, { opacity: 0 });
+  gsap.set('.hero-grid-floor', { opacity: 0 });
+
+  const loadTl = gsap.timeline({ delay: 0.1 });
+  loadTl
+    .to(navEl, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
+    .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.2')
+    .to(heroTitle, { opacity: 1, y: 0, duration: 1.0, ease: 'cubic-bezier(0.25,0.46,0.45,0.94)' }, '-=0.4')
+    .to('.hero-subheadline', { opacity: 0.7, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.5')
+    .to('.hero-cta-group', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.4')
+    .to('.hero-grid-floor', { opacity: 1, duration: 1.2, ease: 'power1.out' }, 0.4)
+    .to(dreamscape, { opacity: 1, duration: 1.4, ease: 'power1.out' }, 0.6);
+
+  // ── Ticker tape ──
+  const ticker = document.getElementById('ticker-track');
+  if (ticker) {
+    // Clone for infinite loop
+    const clone = ticker.cloneNode(true);
+    ticker.parentNode.appendChild(clone);
+    gsap.to([ticker, clone], {
+      x: '-50%',
+      duration: 20,
+      ease: 'none',
+      repeat: -1,
+      modifiers: {
+        x: gsap.utils.unitize(x => parseFloat(x) % 50 + '%')
+      }
+    });
+    // Simpler approach
+    const trackWidth = ticker.scrollWidth;
+    gsap.set(clone, { x: trackWidth });
+    function animateTicker() {
+      const tl = gsap.timeline({ repeat: -1 });
+      tl.to([ticker, clone], {
+        x: '-=' + trackWidth,
+        duration: trackWidth / 50,
+        ease: 'none',
+        onRepeat: function() {
+          gsap.set([ticker, clone], { x: 0 });
+        }
+      });
+    }
+    // Simple single ticker animation
+    gsap.to(ticker, {
+      x: -trackWidth / 2,
+      duration: 18,
+      ease: 'none',
+      repeat: -1
+    });
+  }
+
+  // ── ScrollTrigger reveals ──
+  // Single element reveals: [data-reveal]
+  document.querySelectorAll('[data-reveal]').forEach(function(el) {
+    const type = el.dataset.reveal || 'fade-up';
+    const from = { opacity: 0 };
+    if (type === 'fade-up') { from.y = 30; }
+    else if (type === 'fade-right') { from.x = -50; }
+    else if (type === 'fade-left') { from.x = 50; }
+
+    gsap.from(el, Object.assign(from, {
+      duration: 0.8,
+      ease: 'cubic-bezier(0.25,0.46,0.45,0.94)',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none'
+      }
+    }));
+  });
+
+  // ── Genre bento cards — scale-rise stagger ──
+  const genreBento = document.querySelector('[data-stagger-group="scale"]');
+  if (genreBento) {
+    gsap.from(genreBento.querySelectorAll('.stagger-item'), {
+      opacity: 0,
+      scale: 0.93,
+      y: 24,
+      duration: 0.9,
+      ease: 'cubic-bezier(0.25,0.46,0.45,0.94)',
+      stagger: 0.12,
+      scrollTrigger: {
+        trigger: genreBento,
+        start: 'top 82%',
+        toggleActions: 'play none none none'
+      }
+    });
+  }
+
+  // ── Playlist rows — horizontal sweep x:-70 ──
+  const sweepGroup = document.querySelector('[data-stagger-group="sweep-left"]');
+  if (sweepGroup) {
+    gsap.from(sweepGroup.querySelectorAll('.stagger-item'), {
+      opacity: 0,
+      x: -70,
+      duration: 0.85,
+      ease: 'power3.out',
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: sweepGroup,
+        start: 'top 84%',
+        toggleActions: 'play none none none'
+      }
+    });
+  }
+
+  // ── Artist cards — rotate+rise stagger ──
+  const rotateGroup = document.querySelector('[data-stagger-group="rotate"]');
+  if (rotateGroup) {
+    gsap.from(rotateGroup.querySelectorAll('.stagger-item'), {
+      opacity: 0,
+      rotation: 2.5,
+      y: 40,
+      duration: 1.0,
+      ease: 'cubic-bezier(0.25,0.46,0.45,0.94)',
+      stagger: 0.14,
+      scrollTrigger: {
+        trigger: rotateGroup,
+        start: 'top 82%',
+        toggleActions: 'play none none none'
+      }
+    });
+  }
+
+  // ── CTA divergent reveal ──
+  const ctaBtns = document.querySelectorAll('.cta-btn-group .btn-primary, .cta-btn-group .btn-ghost');
+  if (ctaBtns.length >= 2) {
+    gsap.from(ctaBtns[0], {
+      opacity: 0,
+      x: -50,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.cta-btn-group',
+        start: 'top 88%',
+        toggleActions: 'play none none none'
+      }
+    });
+    gsap.from(ctaBtns[1], {
+      opacity: 0,
+      x: 50,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.cta-btn-group',
+        start: 'top 88%',
+        toggleActions: 'play none none none'
+      }
+    });
+  }
+
+  // ── Neon glow pulse on hero accent word ──
+  gsap.to('.word-accent', {
+    textShadow: '0 0 30px rgba(99,202,190,0.8)',
+    duration: 2,
+    ease: 'sine.inOut',
+    repeat: -1,
+    yoyo: true,
+    delay: 2
+  });
+
+  // ── Footer clip-path reveal ──
+  gsap.from('.site-footer', {
+    clipPath: 'inset(0 0 100% 0)',
+    duration: 1.0,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.site-footer',
+      start: 'top 92%',
+      toggleActions: 'play none none none'
+    }
+  });
+
+})();
+</script>
+
+<style>
+/* Genre bento layout — distinct from other grids */
+.genre-bento {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.genre-card {
+  border-radius: 6px;
+  padding: 36px 28px;
+  border: 1px solid var(--color-border);
+  background: var(--color-page-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.5s var(--ease-primary), box-shadow 0.5s var(--ease-primary), transform 0.5s var(--ease-primary);
+  cursor: pointer;
+  min-height: 280px;
+}
+
+.genre-card .card-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent-cyan);
+  margin: 0;
+}
+
+.genre-card .card-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0;
+}
+
+.genre-card .card-body {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--color-body-text);
+  opacity: 0.65;
+  margin: 0;
+  flex: 1;
+}
+
+.genre-card:hover {
+  border-color: var(--color-accent-purple);
+  box-shadow: 0 0 20px rgba(183, 156, 255, 0.25);
+  transform: translateY(-3px);
+}
+
+.genre-card--vapor:hover {
+  border-color: var(--color-accent-cyan);
+  box-shadow: 0 0 20px rgba(99, 202, 190, 0.25);
+}
+
+@media (max-width: 1200px) {
+  .genre-bento {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .genre-bento {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+</body>
+</html>

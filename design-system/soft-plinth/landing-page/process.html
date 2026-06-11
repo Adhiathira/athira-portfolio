@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process — Roundwork Studio</title>
+  <meta name="description" content="How we make every piece — five steps, no shortcuts. Hand-pressed kitchen tools and home objects made in Oaxaca.">
+
+  <!-- GSAP CDN — must be in <head> for ScrollTrigger availability on DOMContentLoaded -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design system tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component CSS -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/dividers.css">
+  <link rel="stylesheet" href="components/process-page.css">
+</head>
+<body>
+
+  <!-- ====================================================================
+       NAV — verbatim canonical template (process is active)
+       ==================================================================== -->
+  <nav id="site-nav" class="site-nav">
+    <a href="index.html" class="nav-logo">Roundwork Studio</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="collection.html" class="nav-link">Collection</a></li>
+      <li><a href="process.html" class="nav-link nav-link--active">Process</a></li>
+      <li><a href="studio.html" class="nav-link">Studio</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+    <button class="nav-mobile-close" aria-label="Close menu"><span></span><span></span></button>
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="collection.html" class="nav-link">Collection</a>
+    <a href="process.html" class="nav-link nav-link--active">Process</a>
+    <a href="studio.html" class="nav-link">Studio</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </div>
+  <script>
+    (function () {
+      var nav = document.getElementById('site-nav'); var mobileMenu = document.querySelector('.nav-mobile-menu'); var mobileToggle = document.querySelector('.nav-mobile-toggle'); var mobileClose = document.querySelector('.nav-mobile-close');
+      function onScroll() { if (window.scrollY > 80) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); } } window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+      function openMenu() { nav.classList.add('nav-mobile-open'); mobileMenu.classList.add('is-open'); mobileToggle.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; }
+      function closeMenu() { nav.classList.remove('nav-mobile-open'); mobileMenu.classList.remove('is-open'); mobileToggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+      mobileToggle.addEventListener('click', function () { if (mobileMenu.classList.contains('is-open')) { closeMenu(); } else { openMenu(); } });
+      if (mobileClose) { mobileClose.addEventListener('click', closeMenu); }
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) { closeMenu(); } });
+    })();
+  </script>
+
+  <!-- Nav spacer -->
+  <div style="height: 64px;"></div>
+
+  <!-- ====================================================================
+       SECTION 1 — PAGE HERO (dark #1e3a35)
+       ==================================================================== -->
+  <section id="process-hero" aria-labelledby="process-hero-headline">
+    <!-- Decorative floating blobs -->
+    <div id="process-hero-blob-a" aria-hidden="true"></div>
+    <div id="process-hero-blob-b" aria-hidden="true"></div>
+    <div id="process-hero-blob-c" aria-hidden="true"></div>
+
+    <div id="process-hero-content">
+      <span id="process-hero-eyebrow">The Making</span>
+      <h1 id="process-hero-headline">Slow by design.</h1>
+      <p id="process-hero-body">We don't rush. The clay tells us when it's ready.</p>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       DIVIDER 1 — dark #1e3a35 → white
+       ==================================================================== -->
+  <div id="process-divider-hero-to-white" class="squiggle-divider" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 72" preserveAspectRatio="none" height="72">
+      <path class="divider-path" d="M0,72 L0,36 C120,60 240,12 360,28 C480,44 600,8 720,20 C840,32 960,56 1080,44 C1200,32 1320,8 1440,24 L1440,72 Z"/>
+    </svg>
+  </div>
+
+  <!-- ====================================================================
+       SECTION 3 — PROCESS STEPS (white bg)
+       ==================================================================== -->
+  <section id="process-steps" aria-labelledby="process-steps-heading">
+    <div id="process-steps-inner">
+      <div id="process-steps-header">
+        <span id="process-steps-eyebrow">How We Work</span>
+        <h2 id="process-steps-heading">Five steps. No shortcuts.</h2>
+      </div>
+
+      <ol id="process-steps-list">
+
+        <!-- Step 1 -->
+        <li class="process-step-row" id="step-row-1">
+          <span class="process-step-number" aria-hidden="true">1</span>
+          <div class="process-step-content" id="step-content-1">
+            <h3 class="process-step-name">Clay Selection</h3>
+            <p class="process-step-desc">Sourced from Oaxacan highlands cooperatives, our clay carries natural mineral deposits — iron oxides and silicates unique to the Sierra Norte. We select by hand, rejecting any batch that doesn't feel right between the fingers.</p>
+          </div>
+          <div class="process-step-visual" id="step-visual-1" aria-hidden="true"></div>
+        </li>
+
+        <!-- Step 2 -->
+        <li class="process-step-row" id="step-row-2">
+          <span class="process-step-number" aria-hidden="true">2</span>
+          <div class="process-step-content" id="step-content-2">
+            <h3 class="process-step-name">Wedging &amp; Centering</h3>
+            <p class="process-step-desc">Twenty minutes per piece, minimum. Wedging removes air pockets and aligns the clay's particle structure. Centering on the wheel brings the mass into perfect rotational balance — without this, nothing that follows will hold.</p>
+          </div>
+          <div class="process-step-visual" id="step-visual-2" aria-hidden="true"></div>
+        </li>
+
+        <!-- Step 3 -->
+        <li class="process-step-row" id="step-row-3">
+          <span class="process-step-number" aria-hidden="true">3</span>
+          <div class="process-step-content" id="step-content-3">
+            <h3 class="process-step-name">Throwing</h3>
+            <p class="process-step-desc">Wheel-thrown at 180 RPM, walls thinned to 5mm. Every Roundwork piece is opened from the center out — no moulds, no templates. The hands are the only tools that touch the form at this stage. Slight variations between pieces are proof of presence.</p>
+          </div>
+          <div class="process-step-visual" id="step-visual-3" aria-hidden="true"></div>
+        </li>
+
+        <!-- Step 4 -->
+        <li class="process-step-row" id="step-row-4">
+          <span class="process-step-number" aria-hidden="true">4</span>
+          <div class="process-step-content" id="step-content-4">
+            <h3 class="process-step-name">Bisque Firing</h3>
+            <p class="process-step-desc">980°C over 8 hours — a slow, deliberate climb. The kiln is loaded piece by piece, spacing calculated so heat can circulate evenly. We never rush the cool-down. Opening a kiln too early has broken more beautiful work than any mistake at the wheel.</p>
+          </div>
+          <div class="process-step-visual" id="step-visual-4" aria-hidden="true"></div>
+        </li>
+
+        <!-- Step 5 -->
+        <li class="process-step-row" id="step-row-5">
+          <span class="process-step-number" aria-hidden="true">5</span>
+          <div class="process-step-content" id="step-content-5">
+            <h3 class="process-step-name">Glaze &amp; Final Fire</h3>
+            <p class="process-step-desc">1260°C, twice-fired stoneware. Each piece is hand-dipped, brushed, or poured depending on the form. The final firing vitrifies the clay body completely — the result is dense, non-porous, and designed to last a lifetime of daily use.</p>
+          </div>
+          <div class="process-step-visual" id="step-visual-5" aria-hidden="true"></div>
+        </li>
+
+      </ol>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       DIVIDER 2 — white → surface #f0ede8
+       ==================================================================== -->
+  <div id="process-divider-white-to-surface" class="squiggle-divider" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 72" preserveAspectRatio="none" height="72">
+      <path class="divider-path" d="M0,72 L0,48 C180,20 360,64 540,40 C720,16 900,60 1080,36 C1260,12 1350,52 1440,32 L1440,72 Z"/>
+    </svg>
+  </div>
+
+  <!-- ====================================================================
+       SECTION 5 — VIDEO SECTION (surface bg)
+       ==================================================================== -->
+  <section id="process-video-section" aria-label="Craft video">
+    <div id="process-video-inner">
+      <div id="process-video-container">
+        <video
+          id="process-video-bg"
+          autoplay
+          muted
+          loop
+          playsinline
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+          <source src="assets/clay-craft.mp4" type="video/mp4">
+        </video>
+        <div
+          id="process-video-placeholder"
+          aria-hidden="true"
+        >
+          → assets/clay-craft.mp4
+        </div>
+        <div id="process-video-overlay" aria-hidden="true"></div>
+        <div id="process-video-text">
+          <span id="process-video-eyebrow">Watch</span>
+          <p id="process-video-caption">From raw clay to finished piece — 6 hours, 60 seconds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       DIVIDER 3 — surface #f0ede8 → dark #1e3a35
+       ==================================================================== -->
+  <div id="process-divider-surface-to-dark" class="squiggle-divider" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 72" preserveAspectRatio="none" height="72">
+      <path class="divider-path" d="M0,72 L0,28 C200,52 400,8 600,32 C800,56 1000,16 1200,40 C1300,52 1380,24 1440,36 L1440,72 Z"/>
+    </svg>
+  </div>
+
+  <!-- ====================================================================
+       SECTION 7 — KILN STATS (dark #1e3a35)
+       ==================================================================== -->
+  <section id="kiln-stats" aria-labelledby="kiln-stats-heading">
+    <div id="kiln-stats-blob" aria-hidden="true"></div>
+    <div id="kiln-stats-inner">
+      <div id="kiln-stats-header">
+        <span id="kiln-stats-eyebrow">The Numbers</span>
+        <h2 id="kiln-stats-heading">What goes into every piece.</h2>
+      </div>
+
+      <div id="kiln-stats-grid">
+
+        <article class="kiln-stat-card" id="stat-card-hours">
+          <p class="kiln-stat-value">8 Hours</p>
+          <p class="kiln-stat-label">Bisque Kiln Time</p>
+          <p class="kiln-stat-sub">Each piece individually loaded, spaced for even heat distribution. We never pack the kiln tight.</p>
+        </article>
+
+        <article class="kiln-stat-card" id="stat-card-temp">
+          <p class="kiln-stat-value">1260°C</p>
+          <p class="kiln-stat-label">Final Firing Temperature</p>
+          <p class="kiln-stat-sub">Stoneware standard. At this temperature the clay body fully vitrifies — dense, non-porous, built to last.</p>
+        </article>
+
+        <article class="kiln-stat-card" id="stat-card-twice">
+          <p class="kiln-stat-value">2×</p>
+          <p class="kiln-stat-label">Twice Fired</p>
+          <p class="kiln-stat-sub">Bisque then glaze, no exceptions. Two firings give us control at each stage. No shortcuts past the kiln.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       DIVIDER 4 — dark #1e3a35 → white
+       ==================================================================== -->
+  <div id="process-divider-dark-to-white" class="squiggle-divider" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 72" preserveAspectRatio="none" height="72">
+      <path class="divider-path" d="M0,72 L0,44 C160,16 320,60 480,36 C640,12 800,56 960,32 C1120,8 1280,52 1440,28 L1440,72 Z"/>
+    </svg>
+  </div>
+
+  <!-- ====================================================================
+       SECTION 9 — MATERIALS (white bg, asymmetric)
+       ==================================================================== -->
+  <section id="materials" aria-labelledby="materials-heading">
+    <div id="materials-inner">
+
+      <div id="materials-text-col">
+        <span id="materials-eyebrow">The Clay</span>
+        <h2 id="materials-heading">The clay chooses the form</h2>
+        <div id="materials-body">
+          <p>Every Roundwork piece begins with earth from the Oaxacan highlands — a clay body rich in iron oxides, manganese, and naturally occurring silicates. This mineral composition gives our work its distinctive colour range: deep terracotta in the raw, shifting toward warm blacks and earth tones after high-fire reduction.</p>
+          <p>The physics of the material drive every design decision. Our clay body shrinks approximately 13% through the full firing cycle — so a bowl thrown at 28cm will finish at just under 25cm. We account for this from the first touch on the wheel. There is no correcting for shrinkage after throwing; the form must be designed with its final dimensions in mind from the start.</p>
+          <p>We source exclusively from cooperative producers in the Sierra Norte. The clay is extracted by hand, dried in open air, and slaked down slowly before it reaches us. None of it is bagged, blended, or pre-processed. We receive it rough and do the preparation ourselves — it takes longer, but the result behaves differently under the hands than commercial clay bodies. More responsive. More honest.</p>
+        </div>
+        <span id="materials-detail">Highland cooperative sourcing, Oaxaca</span>
+      </div>
+
+      <div id="materials-swatches-col">
+        <div id="materials-swatches-grid">
+
+          <div class="clay-swatch clay-swatch--terracotta" id="swatch-terracotta">
+            <div class="clay-swatch-circle" aria-hidden="true"></div>
+            <span class="clay-swatch-label">Terracotta</span>
+          </div>
+
+          <div class="clay-swatch clay-swatch--natural" id="swatch-natural">
+            <div class="clay-swatch-circle" aria-hidden="true"></div>
+            <span class="clay-swatch-label">Natural</span>
+          </div>
+
+          <div class="clay-swatch clay-swatch--iron" id="swatch-iron">
+            <div class="clay-swatch-circle" aria-hidden="true"></div>
+            <span class="clay-swatch-label">Iron Black</span>
+          </div>
+
+          <div class="clay-swatch clay-swatch--ash" id="swatch-ash">
+            <div class="clay-swatch-circle" aria-hidden="true"></div>
+            <span class="clay-swatch-label">Ash</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       DIVIDER 5 — white → footer dark #2b2918
+       ==================================================================== -->
+  <div id="process-divider-white-to-footer" class="squiggle-divider" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none" height="80">
+      <path class="divider-path" d="M0,80 L0,52 C240,20 480,72 720,40 C960,8 1200,60 1440,36 L1440,80 Z"/>
+    </svg>
+  </div>
+
+  <!-- ====================================================================
+       SECTION 11 — FOOTER (dark #2b2918)
+       ==================================================================== -->
+  <footer id="process-footer" role="contentinfo">
+    <div id="process-footer-inner">
+
+      <!-- Col 1: brand -->
+      <div id="footer-brand-col">
+        <a href="index.html" id="footer-logo">Roundwork Studio</a>
+        <p id="footer-tagline">Hand-pressed kitchen tools and home objects. Made slowly, made to last. Born in Oaxaca.</p>
+        <span id="footer-provenance">Oaxaca de Juárez, México</span>
+      </div>
+
+      <!-- Col 2: navigation -->
+      <div id="footer-links-col">
+        <p id="footer-links-heading">Navigate</p>
+        <ul id="footer-nav-list">
+          <li><a href="index.html" class="footer-nav-link">Home</a></li>
+          <li><a href="collection.html" class="footer-nav-link">Collection</a></li>
+          <li><a href="process.html" class="footer-nav-link">Process</a></li>
+          <li><a href="studio.html" class="footer-nav-link">Studio</a></li>
+          <li><a href="contact.html" class="footer-nav-link">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: newsletter -->
+      <div id="footer-newsletter-col">
+        <p id="footer-newsletter-heading">Stay close</p>
+        <p id="footer-newsletter-copy">New work, studio notes, and occasional essays on slow making — direct to your inbox.</p>
+        <form id="footer-newsletter-form" action="#" method="post" onsubmit="return false;">
+          <input
+            id="footer-email-input"
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            autocomplete="email"
+            aria-label="Email address"
+          >
+          <button id="footer-newsletter-btn" type="submit">Join</button>
+        </form>
+      </div>
+
+    </div>
+
+    <div id="footer-base-bar">
+      <p id="footer-copyright">&copy; 2025 Roundwork Studio. All rights reserved.</p>
+      <ul id="footer-legal-links">
+        <li><a href="#" class="footer-legal-link">Privacy</a></li>
+        <li><a href="#" class="footer-legal-link">Terms</a></li>
+        <li><a href="#" class="footer-legal-link">Stockists</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ====================================================================
+       GSAP ANIMATIONS
+       ==================================================================== -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Read spring ease from tokens
+    const SPRING = 'elastic.out(1, 0.4)';
+    const SPRING_FAST = 'elastic.out(1, 0.5)';
+    const BASE_DUR = 0.75;
+
+    // -----------------------------------------------------------------------
+    // HERO — clip-path reveal from top-to-bottom on load
+    // -----------------------------------------------------------------------
+    gsap.set('#process-hero-content', { clipPath: 'inset(0% 0% 100% 0%)' });
+
+    gsap.to('#process-hero-content', {
+      clipPath: 'inset(0% 0% 0% 0%)',
+      duration: 1.0,
+      ease: 'power3.out',
+      delay: 0.1,
+    });
+
+    // Hero eyebrow + headline stagger — after clip reveals
+    gsap.from('#process-hero-eyebrow', {
+      y: 20,
+      duration: 0.7,
+      ease: SPRING_FAST,
+      delay: 0.55,
+    });
+
+    gsap.from('#process-hero-headline', {
+      y: 32,
+      duration: 0.85,
+      ease: SPRING,
+      delay: 0.70,
+    });
+
+    gsap.from('#process-hero-body', {
+      y: 20,
+      duration: 0.7,
+      ease: SPRING_FAST,
+      delay: 0.88,
+    });
+
+    // -----------------------------------------------------------------------
+    // PROCESS STEPS — clip-path from left side, stagger 0.15s, elastic.out
+    // -----------------------------------------------------------------------
+    const stepRows = gsap.utils.toArray('.process-step-row');
+
+    stepRows.forEach(function (row, i) {
+      gsap.set(row, { clipPath: 'inset(0% 100% 0% 0% round 28px)' });
+
+      gsap.to(row, {
+        clipPath: 'inset(0% 0% 0% 0% round 28px)',
+        duration: 0.9,
+        ease: SPRING,
+        delay: i * 0.15,
+        scrollTrigger: {
+          trigger: '#process-steps-list',
+          start: 'top 75%',
+          once: true,
+        },
+      });
+    });
+
+    // Steps header
+    gsap.from('#process-steps-header', {
+      y: 30,
+      duration: BASE_DUR,
+      ease: SPRING_FAST,
+      scrollTrigger: {
+        trigger: '#process-steps-header',
+        start: 'top 82%',
+        once: true,
+      },
+    });
+
+    // -----------------------------------------------------------------------
+    // VIDEO SECTION — scale from 0.92 with tinted blur bloom
+    // -----------------------------------------------------------------------
+    gsap.from('#process-video-container', {
+      scale: 0.92,
+      duration: 1.0,
+      ease: SPRING,
+      scrollTrigger: {
+        trigger: '#process-video-section',
+        start: 'top 70%',
+        once: true,
+      },
+    });
+
+    gsap.from('#process-video-text', {
+      y: 24,
+      duration: 0.7,
+      ease: SPRING_FAST,
+      scrollTrigger: {
+        trigger: '#process-video-container',
+        start: 'top 60%',
+        once: true,
+      },
+    });
+
+    // -----------------------------------------------------------------------
+    // KILN STATS — scale from 0.88, elastic.out, stagger 0.12s
+    // -----------------------------------------------------------------------
+    gsap.from('#kiln-stats-header', {
+      y: 28,
+      duration: BASE_DUR,
+      ease: SPRING_FAST,
+      scrollTrigger: {
+        trigger: '#kiln-stats',
+        start: 'top 78%',
+        once: true,
+      },
+    });
+
+    gsap.from('#kiln-stats-grid', {
+      scale: 0.88,
+      y: 32,
+      duration: 1.0,
+      ease: SPRING,
+      stagger: 0.12,
+      scrollTrigger: {
+        trigger: '#kiln-stats-grid',
+        start: 'top 75%',
+        once: true,
+      },
+    });
+
+    // Individual stat cards stagger
+    gsap.utils.toArray('.kiln-stat-card').forEach(function (card, i) {
+      gsap.from(card, {
+        scale: 0.88,
+        y: 20,
+        duration: 0.85,
+        ease: SPRING,
+        delay: i * 0.12,
+        scrollTrigger: {
+          trigger: '#kiln-stats-grid',
+          start: 'top 72%',
+          once: true,
+        },
+      });
+    });
+
+    // -----------------------------------------------------------------------
+    // MATERIALS — divergent x:±60 for text vs swatches
+    // -----------------------------------------------------------------------
+    gsap.from('#materials-text-col', {
+      x: -60,
+      duration: 0.95,
+      ease: SPRING,
+      scrollTrigger: {
+        trigger: '#materials',
+        start: 'top 72%',
+        once: true,
+      },
+    });
+
+    gsap.from('#materials-swatches-col', {
+      x: 60,
+      duration: 0.95,
+      ease: SPRING,
+      scrollTrigger: {
+        trigger: '#materials',
+        start: 'top 72%',
+        once: true,
+      },
+    });
+
+    // Clay swatch circles — stagger inflate from center
+    gsap.utils.toArray('.clay-swatch-circle').forEach(function (circle, i) {
+      gsap.from(circle, {
+        scale: 0,
+        duration: 0.75,
+        ease: SPRING,
+        delay: i * 0.10,
+        scrollTrigger: {
+          trigger: '#materials-swatches-grid',
+          start: 'top 78%',
+          once: true,
+        },
+      });
+    });
+
+    // -----------------------------------------------------------------------
+    // FOOTER — spring in like a clay slab rising from below
+    // -----------------------------------------------------------------------
+    gsap.from('#process-footer-inner', {
+      y: 48,
+      duration: 0.90,
+      ease: SPRING,
+      stagger: 0.08,
+      scrollTrigger: {
+        trigger: '#process-footer',
+        start: 'top 85%',
+        once: true,
+      },
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+{
+  "cssAnimations": {
+    "keyframes": [],
+    "transitionElements": [
+      {
+        "selector": ".fixed",
+        "transition": {
+          "property": "all",
+          "duration": "1.125s",
+          "timingFunction": "cubic-bezier(0.15, 0.85, 0.25, 1.0)"
+        },
+        "_source": "pale-engine"
+      },
+      {
+        "selector": ".interactive-opacity",
+        "transition": {
+          "property": "color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter",
+          "duration": "1.125s",
+          "timingFunction": "cubic-bezier(0.15, 0.85, 0.25, 1.0)"
+        },
+        "_source": "pale-engine"
+      },
+      {
+        "selector": ".text-button",
+        "transition": {
+          "property": "color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter",
+          "duration": "1.125s",
+          "timingFunction": "cubic-bezier(0.15, 0.85, 0.25, 1.0)"
+        },
+        "_source": "pale-engine"
+      },
+      {
+        "selector": ".text-base",
+        "transition": {
+          "property": "color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter",
+          "duration": "0.75s",
+          "timingFunction": "cubic-bezier(0.15, 0.85, 0.25, 1.0)"
+        },
+        "_source": "pale-engine"
+      },
+      {
+        "selector": ".s-full",
+        "transition": {
+          "property": "color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter",
+          "duration": "1.875s",
+          "timingFunction": "cubic-bezier(0.15, 0.85, 0.25, 1.0)"
+        },
+        "_source": "pale-engine"
+      }
+    ],
+    "timingTokens": {
+      "durations": ["0.75s", "1.125s", "1.875s"],
+      "easings": ["cubic-bezier(0.15, 0.85, 0.25, 1.0)"]
+    }
+  },
+  "scrollAnimations": {
+    "patterns": [
+      {
+        "type": "scroll-reveal-page-turn",
+        "description": "Scroll-triggered reveals evoking slow page turns. Content drifts upward like a page being lifted, then settles with paper-weight momentum.",
+        "trigger": "element enters viewport",
+        "targets": ["section headlines", "media panels", "CTA buttons", "supporting copy"],
+        "motionOrder": [
+          "large headline or chapter heading",
+          "major media surface or full-page illustration",
+          "primary CTA or marginalia callout",
+          "secondary supporting body text"
+        ],
+        "gsapPattern": "gsap.from(el, { y: 60, duration: 2.25, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%' } })",
+        "easing": "cubic-bezier(0.15, 0.85, 0.25, 1.0)",
+        "duration": "1.875s",
+        "_source": "pale-engine"
+      }
+    ]
+  },
+  "microInteractions": {
+    "buttonTransitions": [
+      {
+        "type": "ghost-to-fill-inversion",
+        "description": "Outline/ghost CTA transitions to solid fill on hover with the weighted patience of a bookmark sliding into place.",
+        "trigger": "hover",
+        "transition": "background-color 1.125s cubic-bezier(0.15, 0.85, 0.25, 1.0), color 1.125s cubic-bezier(0.15, 0.85, 0.25, 1.0), border-color 1.125s cubic-bezier(0.15, 0.85, 0.25, 1.0)",
+        "_source": "pale-engine"
+      }
+    ],
+    "opacityLinkInteraction": {
+      "type": "opacity-based-hover",
+      "description": "Nav links fade like ink drying — slow, inevitable dimming on hover.",
+      "defaultOpacity": 1,
+      "hoverOpacity": 0.6,
+      "transition": "opacity 1.125s cubic-bezier(0.15, 0.85, 0.25, 1.0)",
+      "_source": "pale-engine"
+    },
+    "customCursor": false,
+    "hasSkeletonScreens": false,
+    "loadingStates": [],
+    "inputFocusAnimations": [],
+    "iconAnimations": []
+  },
+  "gsapRules": {
+    "safeInitialState": "transform-only — use y/x/scale only. NEVER opacity:0 in from(). Opacity:0 hides content before ScrollTrigger fires, causing blank sections on load and during screenshots.",
+    "safeExample": "gsap.from(el, { y: 60, duration: 2.25, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%' } })",
+    "unsafeExample": "gsap.from(el, { opacity: 0, y: 40 }) — DO NOT USE",
+    "screenshotMode": "gsap.set('*', { clearProps: 'all' }); ScrollTrigger.killAll();"
+  },
+  "performance": {
+    "totalAnimatedElements": 17,
+    "simultaneousAnimations": 0,
+    "videoLoad": "none",
+    "complexAnimations": 0,
+    "reducedMotionSupport": null,
+    "usesHardwareAcceleration": false,
+    "recommendations": [
+      "Use transform and opacity for scroll-reveal animations to enable hardware acceleration",
+      "Apply will-change: transform on sticky scroll panels during scroll phase only, remove after",
+      "At 1.875s max duration, consider prefers-reduced-motion media query to skip long transitions for accessibility"
+    ]
+  }
+}

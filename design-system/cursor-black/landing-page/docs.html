@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost Docs — CLI Reference & Documentation</title>
+  <meta name="description" content="Ghost CLI documentation. Installation, quick start, secret management, team workflows, and full CLI reference.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/docs.css">
+  <link rel="stylesheet" href="components/footer.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="site-nav" class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">&gt;_ GHOST</a>
+      <ul class="nav-links">
+        <li><a href="docs.html" class="nav-link active">Docs</a></li>
+        <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li><a href="team.html" class="nav-link">Team</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta">Get access</a>
+      <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div id="mobile-menu" class="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
+    <a href="docs.html" class="nav-mobile-link">Docs</a>
+    <a href="pricing.html" class="nav-mobile-link">Pricing</a>
+    <a href="team.html" class="nav-mobile-link">Team</a>
+    <a href="contact.html" class="nav-mobile-link">Get access</a>
+  </div>
+
+  <div class="docs-layout">
+
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+
+      <div class="docs-sidebar-section">
+        <div class="docs-sidebar-title">Getting started</div>
+        <a href="#installation" class="docs-sidebar-link active">Installation</a>
+        <a href="#quickstart" class="docs-sidebar-link">Quick start</a>
+        <a href="#authentication" class="docs-sidebar-link">Authentication</a>
+      </div>
+
+      <div class="docs-sidebar-section">
+        <div class="docs-sidebar-title">Core concepts</div>
+        <a href="#vaults" class="docs-sidebar-link">Vaults</a>
+        <a href="#secrets" class="docs-sidebar-link">Secrets</a>
+        <a href="#namespaces" class="docs-sidebar-link">Namespaces</a>
+        <a href="#zero-knowledge" class="docs-sidebar-link">Zero-knowledge</a>
+      </div>
+
+      <div class="docs-sidebar-section">
+        <div class="docs-sidebar-title">CLI Reference</div>
+        <a href="#cli-reference" class="docs-sidebar-link">ghost init</a>
+        <a href="#cli-set" class="docs-sidebar-link">ghost set</a>
+        <a href="#cli-get" class="docs-sidebar-link">ghost get</a>
+        <a href="#cli-run" class="docs-sidebar-link">ghost run</a>
+        <a href="#cli-rotate" class="docs-sidebar-link">ghost rotate</a>
+        <a href="#cli-audit" class="docs-sidebar-link">ghost audit</a>
+      </div>
+
+      <div class="docs-sidebar-section">
+        <div class="docs-sidebar-title">Integrations</div>
+        <a href="#integrations" class="docs-sidebar-link">GitHub Actions</a>
+        <a href="#integrations" class="docs-sidebar-link">GitLab CI</a>
+        <a href="#integrations" class="docs-sidebar-link">CircleCI</a>
+        <a href="#api" class="docs-sidebar-link">REST API</a>
+      </div>
+
+      <div class="docs-sidebar-section">
+        <div class="docs-sidebar-title">Resources</div>
+        <a href="#changelog" class="docs-sidebar-link">Changelog</a>
+        <a href="#" class="docs-sidebar-link">Security policy</a>
+        <a href="#" class="docs-sidebar-link">GitHub</a>
+      </div>
+
+    </aside>
+
+    <!-- Main content -->
+    <main class="docs-main">
+
+      <header class="docs-article-header" id="installation">
+        <div class="docs-breadcrumb">
+          <a href="docs.html">Docs</a>
+          <span class="sep">/</span>
+          <span>Getting started</span>
+          <span class="sep">/</span>
+          <span>Installation</span>
+        </div>
+        <h1 class="docs-title">Installation</h1>
+        <p class="docs-subtitle">Install the Ghost CLI on your machine. Available on Linux, macOS, and Windows via WSL.</p>
+      </header>
+
+      <div class="docs-section">
+        <h2 class="docs-h2">Requirements</h2>
+        <p class="docs-p">Ghost CLI requires Node.js 18+ or can be installed as a standalone binary with no runtime dependency.</p>
+
+        <div class="docs-callout">
+          <div class="docs-callout-title">Note</div>
+          <div class="docs-callout-body">For production environments, the standalone binary is recommended. It has no Node.js dependency and starts faster.</div>
+        </div>
+      </div>
+
+      <div class="docs-section">
+        <h2 class="docs-h2">Install via npm</h2>
+
+        <div class="docs-code-block">
+          <div class="docs-code-header">
+            <span>terminal</span>
+            <span class="docs-code-lang">bash</span>
+          </div>
+          <pre class="docs-code-content"><span class="text-accent">$</span> npm install -g ghost-cli</pre>
+        </div>
+
+        <p class="docs-p">Verify the installation:</p>
+
+        <div class="docs-code-block">
+          <div class="docs-code-header">
+            <span>terminal</span>
+            <span class="docs-code-lang">bash</span>
+          </div>
+          <pre class="docs-code-content"><span class="text-accent">$</span> ghost --version
+<span class="text-muted">ghost-cli/2.4.1 darwin-arm64 node-v20.11.0</span></pre>
+        </div>
+      </div>
+
+      <div class="docs-section">
+        <h2 class="docs-h2">Install via Homebrew</h2>
+
+        <div class="docs-code-block">
+          <div class="docs-code-header">
+            <span>terminal</span>
+            <span class="docs-code-lang">bash</span>
+          </div>
+          <pre class="docs-code-content"><span class="text-accent">$</span> brew tap ghost-systems/ghost
+<span class="text-accent">$</span> brew install ghost-cli</pre>
+        </div>
+      </div>
+
+      <div class="docs-section" id="quickstart">
+        <h2 class="docs-h2">Quick start</h2>
+        <p class="docs-p">Get a project vault set up in under two minutes.</p>
+
+        <div class="docs-code-block">
+          <div class="docs-code-header">
+            <span>terminal — getting started sequence</span>
+            <span class="docs-code-lang">bash</span>
+          </div>
+          <pre class="docs-code-content"><span class="text-muted"># 1. Authenticate (creates a device keypair)</span>
+<span class="text-accent">$</span> ghost auth login
+
+<span class="text-muted"># 2. Initialize a project vault</span>
+<span class="text-accent">$</span> ghost init --project my-app
+
+<span class="text-muted"># 3. Store a secret (encrypted locally before upload)</span>
+<span class="text-accent">$</span> ghost set DATABASE_URL "postgres://user:pass@host/db"
+
+<span class="text-muted"># 4. Run your app with secrets injected</span>
+<span class="text-accent">$</span> ghost run -- node server.js</pre>
+        </div>
+      </div>
+
+      <div class="docs-section" id="zero-knowledge">
+        <h2 class="docs-h2">How zero-knowledge encryption works</h2>
+
+        <p class="docs-p">Ghost uses a hybrid encryption scheme. When you store a secret:</p>
+
+        <ol class="docs-p" style="padding-left: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <li>A symmetric data key (AES-256-GCM) is generated locally.</li>
+          <li>Your secret is encrypted with this data key.</li>
+          <li>The data key is encrypted with your device's public key (X25519).</li>
+          <li>Only the double-encrypted blob is sent to Ghost's servers.</li>
+        </ol>
+
+        <div class="docs-callout">
+          <div class="docs-callout-title">Security guarantee</div>
+          <div class="docs-callout-body">Ghost's infrastructure has cryptographic access to zero secrets. Even a full database breach exposes only ciphertext that cannot be decrypted without your private keys, which never leave your device.</div>
+        </div>
+      </div>
+
+      <div class="docs-section" id="cli-reference">
+        <h2 class="docs-h2">CLI Reference — ghost init</h2>
+
+        <p class="docs-p">Initialize a new project vault in the current directory.</p>
+
+        <div class="docs-code-block">
+          <div class="docs-code-header">
+            <span>usage</span>
+            <span class="docs-code-lang">bash</span>
+          </div>
+          <pre class="docs-code-content">ghost init [flags]
+
+<span class="text-muted">Flags:</span>
+  --project &lt;name&gt;     Project vault name (required)
+  --team &lt;slug&gt;        Associate with a team namespace
+  --env &lt;name&gt;         Environment tag (default: development)
+  --no-gitignore       Skip .ghost gitignore entry</pre>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">&gt;_ GHOST</a>
+          <p class="footer-tagline">Zero-knowledge secrets manager for developer teams.</p>
+          <div class="footer-status">
+            <span class="status-dot"></span>
+            All systems operational
+          </div>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Product</span>
+          <a href="docs.html" class="footer-link">Documentation</a>
+          <a href="pricing.html" class="footer-link">Pricing</a>
+          <a href="docs.html#changelog" class="footer-link">Changelog</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Company</span>
+          <a href="team.html" class="footer-link">Team</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Developers</span>
+          <a href="docs.html" class="footer-link">Quick start</a>
+          <a href="docs.html#api" class="footer-link">API reference</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 Ghost Systems, Inc.</span>
+        <div class="footer-legal">
+          <a href="#" class="footer-legal-link">Privacy</a>
+          <a href="#" class="footer-legal-link">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="behaviors/scroll-reveal.js"></script>
+  <script src="behaviors/nav.js"></script>
+</body>
+</html>

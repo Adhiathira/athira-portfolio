@@ -1,0 +1,299 @@
+/* strata-drift — hero component */
+/* Full-viewport depth stage with 3 parallax layers */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  overflow: hidden;
+}
+
+/* -------- DEPTH LAYER SYSTEM -------- */
+
+/* Layer 1 — background (slowest parallax, deepest) */
+.hero-layer-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Layer 2 — mid-ground */
+.hero-layer-mid {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Layer 3 — foreground decorative (fastest parallax, nearest) */
+.hero-layer-near {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Content layer — no parallax, stationary */
+.hero-content-layer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding-top: var(--nav-height);
+}
+
+/* -------- DECORATIVE GEOMETRIC ELEMENTS -------- */
+
+/* Large background circle — ground plane indicator */
+.deco-circle-bg {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-layer-1) 0%, transparent 70%);
+  right: -200px;
+  top: -100px;
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+/* Mid layer blob — atmosphere indicator */
+.deco-blob-mid {
+  position: absolute;
+  width: 500px;
+  height: 420px;
+  background: var(--color-layer-2);
+  border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+  right: 80px;
+  top: 15%;
+  animation: float-drift 10s ease-in-out infinite;
+}
+
+/* Mid layer second element */
+.deco-ring-mid {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(124, 108, 228, 0.2);
+  left: 8%;
+  bottom: 15%;
+  animation: float-slow 12s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+/* Foreground geometric lines — near-plane indicator */
+.deco-lines-near {
+  position: absolute;
+  right: 10%;
+  top: 25%;
+  width: 200px;
+  height: 200px;
+  animation: float 4s ease-in-out infinite;
+}
+
+.deco-lines-near::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  top: 30%;
+}
+
+.deco-lines-near::after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-secondary), transparent);
+  top: 60%;
+  left: 20%;
+}
+
+/* Near layer accent dot cluster */
+.deco-dots-near {
+  position: absolute;
+  left: 5%;
+  top: 30%;
+  display: grid;
+  grid-template-columns: repeat(4, 6px);
+  gap: 12px;
+  animation: float 5s ease-in-out infinite;
+  animation-delay: -1s;
+}
+
+.deco-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.deco-dot:nth-child(even) {
+  background: var(--color-secondary);
+}
+
+.deco-dot:nth-child(3n) {
+  background: rgba(124, 108, 228, 0.4);
+}
+
+/* Large teal circle near layer */
+.deco-circle-teal {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 1px solid rgba(79, 184, 160, 0.15);
+  left: -80px;
+  top: 20%;
+  animation: float-drift 14s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+/* Accent glow orb */
+.deco-orb {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 108, 228, 0.15) 0%, transparent 70%);
+  right: 25%;
+  bottom: 20%;
+  animation: float 6s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+/* -------- HERO CONTENT -------- */
+.hero-content {
+  max-width: 800px;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.hero-eyebrow-text {
+  font-family: var(--font-body);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-secondary);
+}
+
+.hero-eyebrow-line {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--color-secondary);
+}
+
+/* Gradient text — hero headline only */
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: var(--type-h1);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-8);
+}
+
+.hero-headline .gradient-text {
+  background: linear-gradient(135deg, #7c6ce4, #4fb8a0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-body {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  color: var(--color-text-body);
+  max-width: 520px;
+  margin-bottom: var(--space-10);
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: var(--space-10);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hero-scroll-hint span {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+}
+
+.hero-scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-accent), transparent);
+  animation: float 2s ease-in-out infinite;
+}
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 768px) {
+  .deco-circle-bg {
+    width: 500px;
+    height: 500px;
+    right: -150px;
+  }
+
+  .deco-blob-mid {
+    width: 300px;
+    height: 250px;
+    right: -60px;
+    top: 10%;
+  }
+
+  .deco-ring-mid {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 375px) {
+  .deco-circle-bg {
+    width: 320px;
+    height: 320px;
+  }
+
+  .deco-blob-mid {
+    display: none;
+  }
+}

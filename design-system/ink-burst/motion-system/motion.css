@@ -1,0 +1,58 @@
+/* ink-burst — Comic/Pop-Art Motion System
+   Source: ember-round (structure)
+   Twist: Spring/bounce easing, ZAP, panel-slam, energetic transitions
+*/
+
+:root {
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-snap:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --duration-fast:     0.2s;
+  --duration-standard: 0.3s;
+  --duration-emphasis: 0.4s;
+}
+
+/* Bounce animation — comic impact */
+@keyframes comicBounce {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.15); }
+  50%  { transform: scale(0.95); }
+  75%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* ZAP in — snap from scale 0 */
+@keyframes zapIn {
+  0%   { transform: scale(0) rotate(5deg); }
+  70%  { transform: scale(1.08) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Panel slam from left */
+@keyframes panelSlam {
+  0%   { transform: translateX(-80px) scale(0.9); }
+  70%  { transform: translateX(8px) scale(1.01); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+/* Pulse outline for focus */
+@keyframes outlinePulse {
+  0%, 100% { outline-offset: 2px; }
+  50%       { outline-offset: 5px; }
+}
+
+/* Utility classes */
+.anim-bounce    { animation: comicBounce 0.4s var(--ease-spring); }
+.anim-zap-in    { animation: zapIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.anim-panel-slam{ animation: panelSlam 0.4s var(--ease-spring) both; }
+
+/* Hover spring transition base */
+.spring-hover {
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-spring);
+}
+.spring-hover:hover {
+  transform: scale(1.04);
+}
+.spring-hover:active {
+  transform: scale(0.96);
+}

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solubl — Where Formula Meets Water</title>
+  <meta name="description" content="Solubl crafts cold-process soluble bath and skincare concentrates in Copenhagen. Plant-derived, effervescent, ingredient-first. 18 SKUs across four collections.">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     NAV
+══════════════════════════════════════════ -->
+<nav id="site-nav" class="site-nav">
+  <a href="index.html" class="nav-logo">solubl</a>
+  <ul class="nav-links">
+    <li><a href="collections.html" class="nav-link">Collections</a></li>
+    <li><a href="process.html" class="nav-link">Process</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu">
+  <a href="index.html" class="nav-mobile-link">Home</a>
+  <a href="collections.html" class="nav-mobile-link">Collections</a>
+  <a href="process.html" class="nav-mobile-link">Process</a>
+  <a href="about.html" class="nav-mobile-link">About</a>
+  <a href="contact.html" class="nav-mobile-link">Contact</a>
+</div>
+<script>
+(function(){
+  const nav = document.getElementById('site-nav');
+  const toggle = document.querySelector('.nav-mobile-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile-menu');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 20){ nav.classList.add('scrolled'); }
+    else { nav.classList.remove('scrolled'); }
+  }, {passive:true});
+  if(toggle && mobileMenu){
+    toggle.addEventListener('click', function(){
+      nav.classList.toggle('nav-mobile-open');
+      mobileMenu.classList.toggle('is-open');
+      document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+  }
+})();
+</script>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — HERO
+     Full viewport | animated gradient bg | 3 blobs | GSAP word-rise entrance
+     HERO_TREATMENT: light — cream/violet/aquamarine pastel field
+══════════════════════════════════════════ -->
+<section id="hero">
+  <!-- Animated conic gradient background -->
+  <div id="hero-bg-gradient"></div>
+
+  <!-- Video background — fluid-gradient.mp4 (onerror → placeholder) -->
+  <div id="hero-video-wrapper">
+    <video
+      id="hero-video"
+      src="assets/fluid-gradient.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+    ></video>
+    <div id="hero-video-placeholder" style="display:none;position:absolute;inset:0;background:transparent;color:transparent;">→ assets/fluid-gradient.mp4</div>
+  </div>
+
+  <!-- Light overlay -->
+  <div id="hero-overlay"></div>
+
+  <!-- Floating blob shapes -->
+  <div id="hero-blob-a"></div>
+  <div id="hero-blob-b"></div>
+  <div id="hero-blob-c"></div>
+
+  <!-- Hero content -->
+  <div id="hero-content">
+    <div id="hero-text">
+      <p id="hero-eyebrow">Copenhagen, Denmark</p>
+
+      <h1 id="hero-title">
+        <span class="word"><span class="word-inner">Where</span></span>
+        <span class="word"><span class="word-inner">formula</span></span>
+        <span class="word"><span class="word-inner">meets</span></span>
+        <span class="word"><span class="word-inner">water.</span></span>
+      </h1>
+
+      <p id="hero-tagline">Cold-process soluble concentrates for bath and skin. Plant-derived, effervescent, ingredient-first — made to dissolve into something extraordinary.</p>
+
+      <div id="hero-cta-group">
+        <a href="collections.html" class="btn-primary">Explore Collections</a>
+        <a href="process.html" class="btn-ghost">Our Process</a>
+      </div>
+    </div>
+
+    <!-- Right column: product visual -->
+    <div id="hero-visual">
+      <div id="hero-product-frame">
+        <img
+          id="hero-product-img"
+          src="assets/hero-product.jpeg"
+          alt="Solubl Mineral Drift concentrate tablet dissolving in warm water, violet and aquamarine diffusion"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <div id="hero-product-placeholder" style="display:none;min-height:520px;background:linear-gradient(135deg,rgba(196,175,242,0.45),rgba(163,228,215,0.35),rgba(242,221,163,0.40));color:transparent;">→ assets/hero-product.jpeg</div>
+      </div>
+
+      <!-- Floating stat badge -->
+      <div id="hero-stat-badge">
+        <div class="stat-number" data-count="18">18</div>
+        <div class="stat-label">SKUs available</div>
+      </div>
+
+      <!-- Ghost watermark -->
+      <div id="hero-ghost-word">SOLUBL</div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div id="hero-scroll-indicator">
+    <span>Scroll</span>
+    <div id="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- SVG DIVIDER 1 — sinusoidal wave from hero to intro -->
+<div class="svg-divider" id="divider-hero-intro" style="background:linear-gradient(180deg,rgba(240,235,255,0.5) 0%,transparent 100%);">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"
+          fill="rgba(245,240,232,0.95)" />
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — INTRO PHILOSOPHY
+     Split 1.3fr / 1fr | text left + stats right
+     Animation: divergent x:-60 (text) / x:60 (stats) on scroll entry
+══════════════════════════════════════════ -->
+<section id="intro" class="section">
+  <div class="container">
+    <div id="intro-inner">
+      <div id="intro-text-col">
+        <p class="section-eyebrow">The philosophy</p>
+        <h2 id="intro-heading">A concentrate, not a compromise.</h2>
+        <p id="intro-body">Every Solubl formula begins as a single question: what does water do when it meets this ingredient? We reverse-engineer the answer into a precise, stable concentrate. No preservatives needed. No diluted promises. Just the active moment of dissolution — captured in every tablet.</p>
+        <a href="process.html" id="intro-link">Explore our process →</a>
+      </div>
+      <div id="intro-stats-col">
+        <div class="intro-stat">
+          <div class="stat-number"><span data-count="18">18</span></div>
+          <div class="stat-desc">SKUs across four curated collections</div>
+        </div>
+        <div class="intro-stat">
+          <div class="stat-number"><span data-count="100">100</span><span class="stat-unit">%</span></div>
+          <div class="stat-desc">Plant-derived, certified zero-waste production</div>
+        </div>
+        <div class="intro-stat">
+          <div class="stat-number"><span data-count="4">4</span></div>
+          <div class="stat-desc">Collections: Mineral Drift, Citrus Float, Bloom Field, Deep Tide</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SVG DIVIDER 2 — asymmetric double wave to collections -->
+<div class="svg-divider" id="divider-intro-collections" style="background:rgba(245,240,232,0.95);">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 C200,70 400,10 600,45 C800,80 1000,15 1200,50 C1320,70 1400,40 1440,55 L1440,100 L0,100 Z"
+          fill="rgba(240,235,255,0.35)" />
+    <path d="M0,60 C300,20 600,80 900,40 C1100,20 1280,70 1440,45 L1440,100 L0,100 Z"
+          fill="rgba(230,248,244,0.45)" />
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — COLLECTIONS PREVIEW
+     Bento: 1.65fr / 1fr / 1fr, first card spans 2 rows
+     Animation: iris bloom ellipse(0% 0%)→ellipse(150% 150%) per card
+══════════════════════════════════════════ -->
+<section id="collections-preview" class="section">
+  <div class="container">
+    <div id="collections-header">
+      <h2 id="collections-heading">Four collections,<br>one medium.</h2>
+      <a href="collections.html" id="collections-link-all">View all 18 SKUs →</a>
+    </div>
+
+    <div id="collections-bento">
+
+      <!-- Card 1 — Mineral Drift (featured, spans 2 rows) -->
+      <article class="product-card product-card--featured product-card--mineral">
+        <div class="product-card-inner">
+          <div class="product-card-image-area">
+            <img
+              class="product-card-img"
+              src="assets/collection-mineral.jpeg"
+              alt="Mineral Drift concentrate — deep ocean mineral complex dissolving in teal water"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="product-card-placeholder">→ assets/collection-mineral.jpeg</div>
+          </div>
+          <p class="product-card-label">Mineral Drift</p>
+          <h3 class="product-card-name">Ocean mineral complex, cold-crystallised</h3>
+          <p class="product-card-desc">Magnesium-rich deep-sea mineral extract. Dissolves in 90 seconds, diffusing through the water in slow violet-teal bloom.</p>
+        </div>
+      </article>
+
+      <!-- Card 2 — Citrus Float -->
+      <article class="product-card product-card--standard product-card--citrus">
+        <div class="product-card-inner">
+          <div class="product-card-image-area" style="min-height:120px;">
+            <img
+              class="product-card-img"
+              src="assets/collection-citrus.jpeg"
+              alt="Citrus Float — bergamot and lemon peel effervescent dissolving in warm water"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="product-card-placeholder">→ assets/collection-citrus.jpeg</div>
+          </div>
+          <p class="product-card-label">Citrus Float</p>
+          <h3 class="product-card-name">Bergamot &amp; lemon peel</h3>
+          <p class="product-card-desc">Cold-pressed citrus oils, effervescent base. Bright gold diffusion.</p>
+        </div>
+      </article>
+
+      <!-- Card 3 — Bloom Field -->
+      <article class="product-card product-card--standard product-card--bloom">
+        <div class="product-card-inner">
+          <div class="product-card-image-area" style="min-height:120px;">
+            <img
+              class="product-card-img"
+              src="assets/collection-bloom.jpeg"
+              alt="Bloom Field — rose and calendula concentrate creating rose-pink diffusion"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="product-card-placeholder">→ assets/collection-bloom.jpeg</div>
+          </div>
+          <p class="product-card-label">Bloom Field</p>
+          <h3 class="product-card-name">Rose &amp; calendula extract</h3>
+          <p class="product-card-desc">Botanical floral complex. Soft rose-pink bloom on contact with water.</p>
+        </div>
+      </article>
+
+      <!-- Card 4 — Deep Tide -->
+      <article class="product-card product-card--standard product-card--tide">
+        <div class="product-card-inner">
+          <div class="product-card-image-area" style="min-height:120px;">
+            <img
+              class="product-card-img"
+              src="assets/collection-tide.jpeg"
+              alt="Deep Tide — kelp and black clay concentrate in dark indigo water"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <div class="product-card-placeholder">→ assets/collection-tide.jpeg</div>
+          </div>
+          <p class="product-card-label">Deep Tide</p>
+          <h3 class="product-card-name">Nordic kelp &amp; black clay</h3>
+          <p class="product-card-desc">Atlantic seaweed blend with volcanic black clay. Indigo-charcoal dissolution.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- SVG DIVIDER 3 — organic blob edge wave into dark section -->
+<div class="svg-divider" style="background:rgba(240,235,255,0.35);">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,45 C180,10 360,80 600,35 C780,0 900,70 1100,40 C1260,18 1380,60 1440,35 L1440,90 L0,90 Z"
+          fill="#0d0d14" />
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — HOW IT WORKS
+     Numbered step rows | dark contrast beat
+     Animation: clip-path inset(0 100% 0 0)→inset(0 0% 0 0) per row
+══════════════════════════════════════════ -->
+<section id="how-it-works" class="section">
+  <div class="container">
+    <div id="hiw-header">
+      <p class="section-eyebrow" style="color:rgba(163,228,215,0.9);">The dissolution</p>
+      <h2 id="hiw-heading">Three moments. One transformation.</h2>
+    </div>
+
+    <div id="hiw-steps">
+      <div class="hiw-step">
+        <div class="hiw-step-number">01</div>
+        <div class="hiw-step-content">
+          <h3 class="hiw-step-title">Contact</h3>
+          <p class="hiw-step-body">The concentrate meets water. The effervescent matrix activates — releasing a controlled burst of carbon dioxide that begins breaking the tablet's crystalline structure from the outside in, while pulling active ingredients toward the surface.</p>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-step-number">02</div>
+        <div class="hiw-step-content">
+          <h3 class="hiw-step-title">Diffusion</h3>
+          <p class="hiw-step-body">Active compounds enter the medium. They don't mix — they diffuse, following concentration gradients through the water in organic bloom patterns. This is the moment the formula becomes visible: colour, scent, mineral haze radiating outward from the dissolution point.</p>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-step-number">03</div>
+        <div class="hiw-step-content">
+          <h3 class="hiw-step-title">Equilibrium</h3>
+          <p class="hiw-step-body">The formula reaches full dissolution. Every molecule is now evenly distributed through the bath water — pH balanced, osmotically calibrated, isotonically matched to skin. What was solid is now everywhere, invisible, and working.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SVG DIVIDER 4 — from dark how-it-works back toward atmospheric -->
+<div class="svg-divider" style="background:#0d0d14;">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,35 C360,70 720,0 1080,35 C1260,52 1380,20 1440,35 L1440,70 L0,70 Z"
+          fill="#0a1520" />
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — ATMOSPHERIC (liquid-surface.mp4 / ink-diffuse.mp4)
+     Full-bleed video | dark interstitial editorial
+     Animation: clip-path ellipse bloom on quote entry
+══════════════════════════════════════════ -->
+<section id="atmospheric" class="section">
+  <div id="atmospheric-video-wrapper">
+    <video
+      id="atmospheric-video"
+      src="assets/liquid-surface.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    ></video>
+    <div id="atmospheric-video-placeholder" style="display:none;color:transparent;background:linear-gradient(135deg,#0a1420,#1e3a6e);">→ assets/liquid-surface.mp4</div>
+  </div>
+  <div id="atmospheric-overlay"></div>
+
+  <div id="atmospheric-content">
+    <div id="atmospheric-quote">
+      <blockquote id="atmospheric-quote-text">
+        "The surface holds everything in tension — until it doesn't. That's the moment we design for."
+      </blockquote>
+      <p id="atmospheric-quote-attr">Solubl Lab Notes, Copenhagen</p>
+    </div>
+  </div>
+</section>
+
+<!-- SVG DIVIDER 5 — from dark atmospheric to light ingredients -->
+<div class="svg-divider" style="background:#0a1520;">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C180,60 360,0 580,40 C760,72 900,10 1100,45 C1260,70 1380,25 1440,50 L1440,80 L0,80 Z"
+          fill="rgba(230,248,244,0.45)" />
+    <path d="M0,50 C240,20 480,75 720,45 C900,22 1100,65 1440,30 L1440,80 L0,80 Z"
+          fill="rgba(245,240,232,0.95)" />
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 6 — INGREDIENTS SHOWCASE
+     Asymmetric 3fr/2fr split | scale-from-center orb | x:-60 sweep text
+══════════════════════════════════════════ -->
+<section id="ingredients" class="section">
+  <div class="container">
+    <div id="ingredients-inner">
+      <div id="ingredients-text">
+        <p class="section-eyebrow">Inside the formula</p>
+        <h2 id="ingredients-heading">We begin with the ingredient, not the brief.</h2>
+        <p id="ingredients-body">Every source material enters our Copenhagen lab as a botanical extract, mineral concentrate, or cold-pressed oil. We test its behaviour in water — solubility, diffusion velocity, pH impact — before designing the carrier matrix that will hold it in suspension until the moment of use.</p>
+        <ul id="ingredients-list">
+          <li class="ingredient-item">
+            <div class="ingredient-dot"></div>
+            <div class="ingredient-text">
+              <strong>Nordvest Atlantic kelp</strong>
+              <span>Wild-harvested from the Faroe plateau, dried at 28°C, cold-extracted in reverse osmosis water</span>
+            </div>
+          </li>
+          <li class="ingredient-item">
+            <div class="ingredient-dot"></div>
+            <div class="ingredient-text">
+              <strong>Deep-sea magnesium complex</strong>
+              <span>Crystallised from 800m Atlantic brine — no heat, no chemical precipitation</span>
+            </div>
+          </li>
+          <li class="ingredient-item">
+            <div class="ingredient-dot"></div>
+            <div class="ingredient-text">
+              <strong>Rosa damascena extract</strong>
+              <span>Steam-distilled in Isparta, Turkey — each gram requires 3,000 petals</span>
+            </div>
+          </li>
+          <li class="ingredient-item">
+            <div class="ingredient-dot"></div>
+            <div class="ingredient-text">
+              <strong>Cold-pressed bergamot peel oil</strong>
+              <span>Calabrian harvest, unrefined — the phototoxic furanocoumarin fraction retained intact for bath use</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div id="ingredients-visual">
+        <div id="ingredients-orb">
+          <div id="ingredients-orb-label">active<br>ingredient</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SVG DIVIDER 6 — blade diagonal from light ingredients to dark CTA -->
+<div class="svg-divider" style="background:rgba(245,240,232,0.95);">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 L1440,60 L1440,60 L0,60 Z"
+          fill="rgba(30,58,110,0.95)" />
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 7 — CTA BAND (dark contrast beat)
+     Centered text | divergent x:±80 button entrance
+══════════════════════════════════════════ -->
+<section id="cta-band" class="section">
+  <div id="cta-blob"></div>
+  <div class="container">
+    <div id="cta-content">
+      <p class="section-eyebrow" style="color:rgba(163,228,215,0.8);">Begin dissolving</p>
+      <h2 id="cta-heading">18 concentrates. Zero compromises.</h2>
+      <p id="cta-subheading">Each Solubl formula is available individually or as a curated collection box. Free shipping to the EU on orders over €60.</p>
+      <div id="cta-buttons">
+        <a href="collections.html" class="btn-light">Shop Collections</a>
+        <a href="contact.html" class="btn-outline-light">Wholesale enquiry</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer id="site-footer">
+  <div class="container">
+    <div id="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo-text">solubl</a>
+        <p class="footer-tagline">Cold-process soluble concentrates for bath and skin. Made in Copenhagen.</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-heading">Collections</h4>
+        <ul class="footer-links">
+          <li><a href="collections.html#mineral-drift">Mineral Drift</a></li>
+          <li><a href="collections.html#citrus-float">Citrus Float</a></li>
+          <li><a href="collections.html#bloom-field">Bloom Field</a></li>
+          <li><a href="collections.html#deep-tide">Deep Tide</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-heading">Company</h4>
+        <ul class="footer-links">
+          <li><a href="process.html">Our Process</a></li>
+          <li><a href="about.html">About Solubl</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Wholesale</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-heading">Elsewhere</h4>
+        <ul class="footer-links">
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Lab Notes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <p class="footer-legal">© 2026 Solubl ApS, Copenhagen
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </p>
+      <p class="footer-legal">Zero-waste certified production</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     GSAP ANIMATIONS — index.html
+══════════════════════════════════════════ -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const FLUID_EASE = 'power2.out';
+const FLUID_EASE_STR = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+// ── Hero entrance — word-by-word buoyant rise from below ──
+// Each word-inner animates independently: surfaces from depth
+(function initHeroEntrance() {
+  const wordInners = document.querySelectorAll('#hero-title .word-inner');
+  if (!wordInners.length) return;
+
+  // Set initial state with gsap.set (owns opacity — safe pattern)
+  gsap.set(wordInners, { opacity: 0 });
+
+  const heroTl = gsap.timeline({ delay: 0.2 });
+  heroTl.to(wordInners, {
+    opacity: 1,
+    y: 0,
+    duration: 1.08,
+    ease: 'power2.out',
+    stagger: 0.12
+  });
+
+  // Also animate from y:60 (buoyant rise, not just fade)
+  gsap.set(wordInners, { y: 60 });
+  gsap.to(wordInners, {
+    y: 0,
+    duration: 1.08,
+    ease: FLUID_EASE,
+    stagger: 0.12,
+    delay: 0.2
+  });
+})();
+
+// Hero eyebrow and tagline entrance
+(function initHeroSupporting() {
+  gsap.set(['#hero-eyebrow', '#hero-tagline', '#hero-cta-group', '#hero-stat-badge', '#hero-scroll-indicator'], { opacity: 0 });
+  gsap.to(['#hero-eyebrow', '#hero-tagline', '#hero-cta-group'], {
+    opacity: 1,
+    y: 0,
+    duration: 0.9,
+    ease: FLUID_EASE,
+    stagger: 0.14,
+    delay: 0.9
+  });
+  gsap.set(['#hero-eyebrow', '#hero-tagline', '#hero-cta-group'], { y: 30 });
+  gsap.to(['#hero-eyebrow', '#hero-tagline', '#hero-cta-group'], {
+    y: 0,
+    duration: 0.9,
+    ease: FLUID_EASE,
+    stagger: 0.14,
+    delay: 0.9
+  });
+  gsap.to('#hero-stat-badge', {
+    opacity: 1,
+    scale: 1,
+    duration: 0.8,
+    ease: 'back.out(1.4)',
+    delay: 1.4
+  });
+  gsap.set('#hero-stat-badge', { scale: 0.85 });
+  gsap.to('#hero-scroll-indicator', {
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    ease: FLUID_EASE,
+    delay: 1.8
+  });
+  gsap.set('#hero-scroll-indicator', { y: 15 });
+})();
+
+// ── Section 2 — Intro: divergent x:-60 (text) / x:60 (stats) ──
+gsap.from('#intro-text-col', {
+  scrollTrigger: { trigger: '#intro', start: 'top 78%', once: true },
+  x: -60,
+  duration: 1.08,
+  ease: FLUID_EASE
+});
+gsap.from('#intro-stats-col', {
+  scrollTrigger: { trigger: '#intro', start: 'top 78%', once: true },
+  x: 60,
+  duration: 1.08,
+  ease: FLUID_EASE
+});
+// Counter animations for intro stats
+document.querySelectorAll('.intro-stat [data-count]').forEach(function(el) {
+  const target = parseInt(el.getAttribute('data-count'), 10);
+  if (isNaN(target)) return;
+  const proxy = { val: 0 };
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 85%',
+    once: true,
+    onEnter: function() {
+      gsap.to(proxy, {
+        val: target,
+        duration: 2.0,
+        ease: 'power2.out',
+        onUpdate: function() {
+          el.textContent = Math.round(proxy.val);
+        }
+      });
+    }
+  });
+});
+
+// ── Section 3 — Collections: iris bloom reveal per card ──
+document.querySelectorAll('#collections-bento .product-card').forEach(function(card, i) {
+  gsap.fromTo(card,
+    { clipPath: 'ellipse(0% 0% at 50% 50%)', scale: 0.95 },
+    {
+      clipPath: 'ellipse(150% 150% at 50% 50%)',
+      scale: 1,
+      scrollTrigger: { trigger: card, start: 'top 82%', once: true },
+      duration: 1.08,
+      ease: 'power2.inOut',
+      delay: i * 0.12
+    }
+  );
+});
+
+// ── Section 4 — How It Works: clip-path wipe left-to-right per row ──
+document.querySelectorAll('.hiw-step').forEach(function(step, i) {
+  gsap.fromTo(step,
+    { clipPath: 'inset(0 100% 0 0)' },
+    {
+      clipPath: 'inset(0 0% 0 0)',
+      scrollTrigger: { trigger: step, start: 'top 82%', once: true },
+      duration: 0.9,
+      ease: FLUID_EASE,
+      delay: i * 0.1
+    }
+  );
+});
+
+// ── Section 5 — Atmospheric quote: clip-path ellipse bloom ──
+gsap.fromTo('#atmospheric-quote',
+  { clipPath: 'ellipse(0% 0% at 30% 80%)', opacity: 0.3 },
+  {
+    clipPath: 'ellipse(150% 150% at 30% 80%)',
+    opacity: 1,
+    scrollTrigger: { trigger: '#atmospheric', start: 'top 65%', once: true },
+    duration: 1.4,
+    ease: 'power2.inOut'
+  }
+);
+
+// ── Section 6 — Ingredients: x:-60 sweep text + scale orb ──
+gsap.from('#ingredients-text', {
+  scrollTrigger: { trigger: '#ingredients', start: 'top 78%', once: true },
+  x: -60,
+  duration: 1.08,
+  ease: FLUID_EASE
+});
+gsap.fromTo('#ingredients-orb',
+  { scale: 0.7, clipPath: 'ellipse(0% 0% at 50% 50%)' },
+  {
+    scale: 1,
+    clipPath: 'ellipse(150% 150% at 50% 50%)',
+    scrollTrigger: { trigger: '#ingredients-visual', start: 'top 78%', once: true },
+    duration: 1.2,
+    ease: 'power3.inOut'
+  }
+);
+// Ingredient list items — y stagger rise
+document.querySelectorAll('.ingredient-item').forEach(function(item, i) {
+  gsap.from(item, {
+    scrollTrigger: { trigger: item, start: 'top 88%', once: true },
+    y: 30,
+    duration: 0.7,
+    ease: FLUID_EASE,
+    delay: i * 0.08
+  });
+});
+
+// ── Section 7 — CTA: divergent x:±80 button entrance ──
+gsap.from('#cta-heading', {
+  scrollTrigger: { trigger: '#cta-band', start: 'top 75%', once: true },
+  y: 50,
+  duration: 1.08,
+  ease: FLUID_EASE
+});
+gsap.fromTo('#cta-buttons .btn-light',
+  { x: -80 },
+  {
+    x: 0,
+    scrollTrigger: { trigger: '#cta-buttons', start: 'top 82%', once: true },
+    duration: 0.9,
+    ease: FLUID_EASE
+  }
+);
+gsap.fromTo('#cta-buttons .btn-outline-light',
+  { x: 80 },
+  {
+    x: 0,
+    scrollTrigger: { trigger: '#cta-buttons', start: 'top 82%', once: true },
+    duration: 0.9,
+    ease: FLUID_EASE
+  }
+);
+
+// ── Footer — clip-path top-to-bottom reveal ──
+gsap.fromTo('#site-footer',
+  { clipPath: 'inset(0 0 100% 0)' },
+  {
+    clipPath: 'inset(0 0 0% 0)',
+    scrollTrigger: { trigger: '#site-footer', start: 'top 90%', once: true },
+    duration: 1.0,
+    ease: FLUID_EASE
+  }
+);
+
+// ── Mouse parallax on hero blobs ──
+(function initBlobParallax() {
+  const blobA = document.getElementById('hero-blob-a');
+  const blobB = document.getElementById('hero-blob-b');
+  const blobC = document.getElementById('hero-blob-c');
+  if (!blobA || !blobB || !blobC) return;
+
+  let mouseX = 0, mouseY = 0;
+  let rafId;
+
+  document.getElementById('hero').addEventListener('mousemove', function(e) {
+    const rect = this.getBoundingClientRect();
+    mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+    mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(function() {
+      gsap.to(blobA, {
+        x: mouseX * 30,
+        y: mouseY * 20,
+        duration: 1.5,
+        ease: 'power1.out',
+        overwrite: 'auto'
+      });
+      gsap.to(blobB, {
+        x: -mouseX * 20,
+        y: -mouseY * 25,
+        duration: 1.8,
+        ease: 'power1.out',
+        overwrite: 'auto'
+      });
+      gsap.to(blobC, {
+        x: mouseX * 15,
+        y: mouseY * 30,
+        duration: 1.2,
+        ease: 'power1.out',
+        overwrite: 'auto'
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

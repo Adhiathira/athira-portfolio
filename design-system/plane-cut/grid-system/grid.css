@@ -1,0 +1,99 @@
+/* plane-cut — Paper Strata Grid System */
+
+:root {
+  --grid-container:    1280px;
+  --grid-padding:      40px;
+  --grid-columns:      12;
+  --grid-gutter:       32px;
+  --section-overlap:   -40px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--grid-container);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding);
+}
+
+/* Paper stack: sections overlap for layered depth */
+.section-stack {
+  position: relative;
+  margin-bottom: var(--section-overlap);
+}
+
+/* 12-col grid */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--grid-gutter);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gutter);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--grid-gutter);
+}
+
+/* Feature alternating layout */
+.grid-feature {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: var(--grid-gutter);
+  align-items: center;
+}
+
+.grid-feature.reversed {
+  grid-template-columns: 5fr 7fr;
+}
+
+/* Hero: centered single column */
+.hero-col {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  :root {
+    --grid-padding: 24px;
+    --grid-gutter:  24px;
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-feature,
+  .grid-feature.reversed {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --grid-padding: 20px;
+    --grid-gutter:  20px;
+    --section-overlap: -24px;
+  }
+
+  .grid-3,
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 375px) {
+  :root {
+    --grid-padding: 16px;
+    --grid-gutter:  16px;
+  }
+}

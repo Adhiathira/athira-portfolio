@@ -1,0 +1,41 @@
+/* lens-noir — Cinematic Motion System */
+
+:root {
+  --duration-fast: 400ms;
+  --duration-base: 800ms;
+  --duration-slow: 1200ms;
+  --ease-cinema: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-letterbox: cubic-bezier(0.45, 0, 0.55, 1);
+  --transition-default: var(--duration-base) var(--ease-cinema);
+}
+
+/* Film grain noise overlay */
+@keyframes film-grain {
+  0%, 100% { background-position: 0 0; }
+  10%       { background-position: -5% -10%; }
+  20%       { background-position: -15% 5%; }
+  30%       { background-position: 7% -25%; }
+  40%       { background-position: 20% 25%; }
+  50%       { background-position: -25% 10%; }
+  60%       { background-position: 15% 5%; }
+  70%       { background-position: 0% 15%; }
+  80%       { background-position: 25% 35%; }
+  90%       { background-position: -10% 10%; }
+}
+
+/* Iris wipe keyframes */
+@keyframes iris-in {
+  from { clip-path: circle(0% at 50% 50%); }
+  to   { clip-path: circle(75% at 50% 50%); }
+}
+
+/* Letterbox height reveal */
+@keyframes letterbox-open {
+  from { clip-path: inset(50% 0 50% 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Base transition utility */
+.transition-base {
+  transition: all var(--duration-base) var(--ease-cinema);
+}

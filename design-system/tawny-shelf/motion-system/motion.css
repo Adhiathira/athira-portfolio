@@ -1,0 +1,41 @@
+/* ==========================================================================
+   tawny-shelf / motion-system / motion.css
+   Source: quill-meridian
+   Twist B: Duration scaling ×0.65 (faster) — all durations compressed
+   ========================================================================== */
+
+:root {
+  --motion-duration-fast: 0.195s;
+  --motion-duration-base: 0.26s;
+  --motion-duration-medium: 0.325s;
+  --motion-duration-slow: 0.423s;
+  --motion-duration-xslow: 0.65s;
+  --motion-duration-grand: 0.91s;
+
+  --motion-ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-in: cubic-bezier(0.4, 0, 0.6, 1);
+  --motion-ease-standard: ease-in-out;
+}
+
+@keyframes ts-slide-up {
+  from { transform: translateY(28px); opacity: 0; }
+  to   { transform: translateY(0px);  opacity: 1; }
+}
+
+@keyframes ts-draw-rule {
+  from { transform: scaleX(0); transform-origin: left center; }
+  to   { transform: scaleX(1); transform-origin: left center; }
+}
+
+@keyframes ts-ticker {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

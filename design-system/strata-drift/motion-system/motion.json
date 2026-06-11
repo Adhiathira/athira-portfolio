@@ -1,0 +1,176 @@
+{
+  "videos": {
+    "count": 0,
+    "hasHeroVideo": false,
+    "items": [],
+    "animatedGifs": 0,
+    "libraries": ["GSAP", "ScrollTrigger"]
+  },
+  "cssAnimations": {
+    "keyframes": [
+      {
+        "name": "float",
+        "description": "Ambient depth float for decorative geometric elements",
+        "steps": [
+          {
+            "offset": "0%",
+            "properties": { "transform": "translateY(-6px)" }
+          },
+          {
+            "offset": "50%",
+            "properties": { "transform": "translateY(6px)" }
+          },
+          {
+            "offset": "100%",
+            "properties": { "transform": "translateY(-6px)" }
+          }
+        ],
+        "duration": "4s",
+        "timingFunction": "ease-in-out",
+        "iterationCount": "infinite"
+      },
+      {
+        "name": "float-slow",
+        "description": "Slower ambient float for deeper layer elements",
+        "steps": [
+          {
+            "offset": "0%",
+            "properties": { "transform": "translateY(-10px) rotate(0deg)" }
+          },
+          {
+            "offset": "50%",
+            "properties": { "transform": "translateY(10px) rotate(2deg)" }
+          },
+          {
+            "offset": "100%",
+            "properties": { "transform": "translateY(-10px) rotate(0deg)" }
+          }
+        ],
+        "duration": "8s",
+        "timingFunction": "ease-in-out",
+        "iterationCount": "infinite"
+      },
+      {
+        "name": "pulse-glow",
+        "description": "Soft glow pulse on accent elements",
+        "steps": [
+          {
+            "offset": "0%",
+            "properties": { "box-shadow": "0 0 20px rgba(124,108,228,0.2)" }
+          },
+          {
+            "offset": "50%",
+            "properties": { "box-shadow": "0 0 50px rgba(124,108,228,0.5), 0 0 80px rgba(124,108,228,0.2)" }
+          },
+          {
+            "offset": "100%",
+            "properties": { "box-shadow": "0 0 20px rgba(124,108,228,0.2)" }
+          }
+        ],
+        "duration": "3s",
+        "timingFunction": "ease-in-out",
+        "iterationCount": "infinite"
+      }
+    ],
+    "transitionElements": [
+      {
+        "selector": ".nav",
+        "transition": {
+          "property": "background, backdrop-filter",
+          "duration": "0.4s",
+          "timingFunction": "ease-out"
+        }
+      },
+      {
+        "selector": ".btn",
+        "transition": {
+          "property": "all",
+          "duration": "0.3s",
+          "timingFunction": "ease-out"
+        }
+      },
+      {
+        "selector": ".feature-card",
+        "transition": {
+          "property": "transform, box-shadow",
+          "duration": "0.3s",
+          "timingFunction": "ease-out"
+        }
+      }
+    ],
+    "timingTokens": {
+      "durations": ["0.3s", "0.4s", "0.6s", "0.8s", "1s"],
+      "easings": ["ease-out", "ease-in-out", "cubic-bezier(0.25, 0.46, 0.45, 0.94)"]
+    }
+  },
+  "scrollAnimations": {
+    "libraries": ["GSAP 3.12.5", "ScrollTrigger"],
+    "parallaxLayers": [
+      {
+        "selector": ".parallax-bg",
+        "label": "background layer",
+        "yPercent": "-20%",
+        "scrub": 1.5,
+        "description": "Deepest layer — slowest movement, creates the ground plane of depth"
+      },
+      {
+        "selector": ".parallax-mid",
+        "label": "midground layer",
+        "yPercent": "-10%",
+        "scrub": 1,
+        "description": "Mid-depth elements — moderate parallax speed"
+      },
+      {
+        "selector": ".parallax-near",
+        "label": "foreground layer",
+        "yPercent": "-3%",
+        "scrub": 0.5,
+        "description": "Nearest layer — least movement (viewer travels with it)"
+      }
+    ],
+    "scrollRevealElements": [
+      {
+        "selector": ".reveal-up",
+        "fromY": 40,
+        "fromOpacity": 0,
+        "duration": 0.8,
+        "stagger": 0.15,
+        "trigger": "once:true"
+      },
+      {
+        "selector": ".reveal-fade",
+        "fromOpacity": 0,
+        "duration": 0.6,
+        "trigger": "once:true"
+      }
+    ],
+    "patterns": ["scrub-parallax", "scroll-reveal-stagger", "ambient-float"]
+  },
+  "microInteractions": {
+    "buttonTransitions": [
+      {
+        "selector": ".btn-primary",
+        "hoverTransform": "translateY(-2px)",
+        "hoverShadow": "0 20px 60px rgba(124,108,228,0.4)",
+        "transition": "all 0.3s ease-out"
+      }
+    ],
+    "cardHover": {
+      "transform": "scale(1.04) translateY(-4px)",
+      "boxShadow": "0 20px 60px rgba(124,108,228,0.25)",
+      "transition": "all 0.3s ease-out"
+    },
+    "customCursor": false,
+    "hasSkeletonScreens": false
+  },
+  "performance": {
+    "totalAnimatedElements": 12,
+    "simultaneousAnimations": 4,
+    "videoLoad": "none",
+    "usesHardwareAcceleration": true,
+    "reducedMotionSupport": true,
+    "recommendations": ["Use will-change: transform on parallax layers", "Use transform3d to force GPU compositing"]
+  },
+  "_source": "custom motion system for strata-drift parallax depth aesthetic",
+  "_twist": "Deep parallax via GSAP scrub (position-based not time-based). Three distinct scroll speeds create physical z-depth illusion. CSS float keyframes for ambient atmospheric motion on decorative elements."
+}

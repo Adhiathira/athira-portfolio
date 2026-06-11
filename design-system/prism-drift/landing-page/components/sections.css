@@ -1,0 +1,829 @@
+/* ============================================================
+   SECTIONS COMPONENT — prism-drift / IRID
+   Covers: SVG dividers, intro, applications grid, process, CTA strip
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   Shared keyframes
+   ---------------------------------------------------------- */
+@keyframes holo-border-shift {
+  0%   { filter: hue-rotate(0deg) saturate(1.2); }
+  50%  { filter: hue-rotate(180deg) saturate(1.8); }
+  100% { filter: hue-rotate(360deg) saturate(1.2); }
+}
+
+@keyframes holo-wave-drift {
+  0%   { transform: translateX(0) scaleY(1); }
+  33%  { transform: translateX(-20px) scaleY(1.06); }
+  66%  { transform: translateX(10px) scaleY(0.96); }
+  100% { transform: translateX(0) scaleY(1); }
+}
+
+@keyframes holo-ripple {
+  0%   { transform: translateX(-30px) scaleX(0.98); opacity: 0.9; }
+  50%  { transform: translateX(15px) scaleX(1.02); opacity: 1; }
+  100% { transform: translateX(-30px) scaleX(0.98); opacity: 0.9; }
+}
+
+@keyframes shimmerSweep {
+  0%   { background-position: -200% center; }
+  100% { background-position: 300% center; }
+}
+
+@keyframes holoShift {
+  from { filter: hue-rotate(0deg); }
+  to   { filter: hue-rotate(360deg); }
+}
+
+@keyframes chromaFlicker {
+  0%, 100% { filter: saturate(1) brightness(1); }
+  20%       { filter: saturate(1.6) brightness(1.04); }
+  50%       { filter: saturate(0.8) brightness(0.98); }
+  75%       { filter: saturate(1.4) brightness(1.02); }
+}
+
+/* ----------------------------------------------------------
+   Container utility
+   ---------------------------------------------------------- */
+.section-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding-inline: var(--grid-padding-inline);
+}
+
+/* ----------------------------------------------------------
+   Eyebrow label — shared across sections
+   ---------------------------------------------------------- */
+.section-eyebrow {
+  display: block;
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+/* ----------------------------------------------------------
+   SVG DIVIDER WRAPPERS
+   ---------------------------------------------------------- */
+.svg-divider {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  line-height: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Each divider SVG path group gets holo animation */
+.svg-divider svg {
+  display: block;
+  width: 100%;
+}
+
+.divider-wave {
+  animation: holo-wave-drift 6s ease-in-out infinite, holo-border-shift 4s linear infinite;
+}
+
+.divider-blob {
+  animation: holo-ripple 7s ease-in-out infinite, holo-border-shift 4s linear infinite;
+  animation-delay: -1.5s, 0s;
+}
+
+.divider-arc {
+  animation: holo-wave-drift 8s ease-in-out infinite, holo-border-shift 4s linear infinite;
+  animation-delay: -2s, -1s;
+}
+
+.divider-crest {
+  animation: holo-ripple 5s ease-in-out infinite, holo-border-shift 4s linear infinite;
+  animation-delay: -3s, -2s;
+}
+
+/* ===========================================================
+   SECTION 2: INTRO — "The Physics of Color"
+   Background: #ffffff
+   Layout: asymmetric 3fr:2fr
+   =========================================================== */
+#section-intro {
+  background: linear-gradient(180deg, var(--color-page-bg) 0%, var(--color-surface-bg) 100%);
+  padding-top: 120px;
+  padding-bottom: 120px;
+  position: relative;
+}
+
+#section-intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(163, 196, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+#intro-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* Left column */
+#intro-left {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+#intro-stat-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#intro-stat-number {
+  font-family: var(--font-heading);
+  font-size: clamp(56px, 7vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+#intro-stat-label {
+  font-family: var(--font-condensed);
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0;
+}
+
+#intro-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0;
+  line-height: 1.05;
+}
+
+#intro-body-1,
+#intro-body-2 {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: 300;
+  letter-spacing: var(--type-body-letter-spacing);
+  line-height: var(--type-body-line-height);
+  color: var(--color-body-text);
+  margin: 0;
+}
+
+/* Right column — CSS 3D prism depth piece */
+#intro-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#intro-prism-visual {
+  width: 280px;
+  height: 280px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+#intro-prism-core {
+  position: absolute;
+  inset: 24px;
+  background: linear-gradient(135deg, rgba(163, 196, 255, 0.25) 0%, rgba(111, 200, 180, 0.18) 50%, rgba(223, 94, 18, 0.12) 100%);
+  border-radius: var(--radius-container);
+  box-shadow:
+    0 0 0 1px rgba(111, 200, 180, 0.3),
+    6px 6px 0 0 rgba(201, 184, 76, 0.2),
+    12px 12px 0 0 rgba(223, 94, 18, 0.12),
+    18px 18px 0 0 rgba(163, 196, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  animation: chromaFlicker 3000ms ease-in-out infinite;
+}
+
+#intro-prism-outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(white, white) padding-box,
+    linear-gradient(120deg, #df5e12, #6fc8b4, #a3c4ff, #c9b84c) border-box;
+  box-shadow:
+    0 20px 60px rgba(30, 58, 53, 0.12),
+    0 4px 12px rgba(30, 58, 53, 0.06);
+  animation: holoShift 8000ms linear infinite;
+}
+
+#intro-prism-refraction {
+  position: absolute;
+  bottom: -20px;
+  left: 40px;
+  right: 40px;
+  height: 40px;
+  background: linear-gradient(
+    90deg,
+    rgba(223, 94, 18, 0) 0%,
+    rgba(223, 94, 18, 0.3) 20%,
+    rgba(201, 184, 76, 0.3) 40%,
+    rgba(111, 200, 180, 0.3) 60%,
+    rgba(163, 196, 255, 0.3) 80%,
+    rgba(163, 196, 255, 0) 100%
+  );
+  filter: blur(8px);
+  border-radius: 50%;
+}
+
+/* ----------------------------------------------------------
+   Intro — responsive
+   ---------------------------------------------------------- */
+@media (max-width: 900px) {
+  #intro-grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  #intro-right {
+    justify-content: flex-start;
+  }
+
+  #intro-prism-visual {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  #section-intro {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+
+/* ===========================================================
+   SECTION 3: APPLICATIONS GRID
+   Background: #f0ede8 (warm surface)
+   Layout: bento 1.6fr 1fr 1fr with top card spanning 2 rows
+   =========================================================== */
+#section-applications {
+  background: var(--color-surface-bg);
+  padding-top: 120px;
+  padding-bottom: 120px;
+  position: relative;
+}
+
+#section-applications::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(180deg, rgba(240, 237, 232, 0) 0%, var(--color-surface-bg) 100%);
+  pointer-events: none;
+}
+
+#applications-header {
+  margin-bottom: 56px;
+}
+
+#applications-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0 0 16px;
+  line-height: 1.0;
+}
+
+#applications-subtext {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: 300;
+  letter-spacing: var(--type-body-letter-spacing);
+  line-height: var(--type-body-line-height);
+  color: var(--color-body-text);
+  margin: 0;
+  max-width: 560px;
+}
+
+/* Bento grid */
+#applications-bento {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--space-card-gap);
+}
+
+/* ----------------------------------------------------------
+   Application cards — shared
+   ---------------------------------------------------------- */
+.app-card {
+  background: var(--color-page-bg);
+  border-radius: var(--radius-container);
+  padding: var(--space-card-padding);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  /* Iridescent border trick */
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--color-page-bg), var(--color-page-bg)) padding-box,
+    linear-gradient(120deg, #df5e12, #6fc8b4, #a3c4ff) border-box;
+  box-shadow:
+    0 4px 20px rgba(30, 58, 53, 0.06),
+    0 1px 4px rgba(30, 58, 53, 0.04);
+  transition:
+    transform var(--duration-base) var(--ease-primary),
+    filter var(--duration-base) var(--ease-primary),
+    box-shadow var(--duration-base) var(--ease-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.app-card:hover {
+  transform: var(--card-hover-transform);
+  filter: hue-rotate(15deg);
+  box-shadow:
+    0 12px 40px rgba(30, 58, 53, 0.12),
+    0 2px 8px rgba(30, 58, 53, 0.08);
+}
+
+/* Span card — occupies left column, both rows */
+#app-card-automotive {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  background:
+    linear-gradient(var(--color-review-card-surface), var(--color-review-card-surface)) padding-box,
+    linear-gradient(120deg, #df5e12, #6fc8b4, #a3c4ff) border-box;
+  color: #ffffff;
+  justify-content: flex-end;
+  min-height: 380px;
+}
+
+#app-card-automotive .app-card-domain {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+#app-card-automotive .app-card-heading {
+  color: #ffffff;
+}
+
+#app-card-automotive .app-card-body {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+#app-card-automotive .app-card-tag {
+  color: var(--color-teal-accent);
+  border-color: rgba(111, 200, 180, 0.35);
+}
+
+/* Decorative element inside span card */
+#app-card-automotive::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 184, 76, 0.25) 0%, rgba(111, 200, 180, 0.12) 60%, transparent 100%);
+  animation: holoShift 8000ms linear infinite;
+}
+
+.app-card-domain {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-body-text-alt);
+  margin: 0;
+  line-height: 1;
+}
+
+.app-card-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0;
+  line-height: 1.05;
+}
+
+.app-card-body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  line-height: 1.7;
+  color: var(--color-body-text);
+  margin: 0;
+}
+
+.app-card-tag {
+  display: inline-block;
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  border: 1px solid rgba(223, 94, 18, 0.3);
+  padding: 4px 10px;
+  border-radius: 2px;
+  width: fit-content;
+  margin-top: auto;
+}
+
+/* ----------------------------------------------------------
+   Applications grid — responsive
+   ---------------------------------------------------------- */
+@media (max-width: 900px) {
+  #applications-bento {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+
+  #app-card-automotive {
+    grid-column: 1 / 3;
+    grid-row: auto;
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  #section-applications {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  #applications-bento {
+    grid-template-columns: 1fr;
+  }
+
+  #app-card-automotive {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+/* ===========================================================
+   SECTION 4: PROCESS — "How Thin-Film Coating Works"
+   Background: #1e3a35 (dark teal)
+   Layout: numbered step rows
+   =========================================================== */
+#section-process {
+  background: var(--color-hero-bg);
+  padding-top: 120px;
+  padding-bottom: 120px;
+  position: relative;
+  overflow: hidden;
+  /* explicit color override — dark bg, not relying on inherited tokens */
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Atmospheric overlay */
+#section-process::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 90% 10%, rgba(163, 196, 255, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 90%, rgba(111, 200, 180, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+#process-header {
+  margin-bottom: 72px;
+}
+
+#process-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 16px;
+  line-height: 1.05;
+}
+
+#process-subtext {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: 300;
+  letter-spacing: var(--type-body-letter-spacing);
+  line-height: var(--type-body-line-height);
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  max-width: 480px;
+}
+
+/* Steps list */
+#process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Individual step row */
+.process-step {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 40px;
+  align-items: start;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.process-step:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Orange hairline accent before step number */
+.process-step-number-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.process-step-hairline {
+  width: 2px;
+  height: 20px;
+  background: var(--color-accent);
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.process-step-num {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  line-height: 1;
+  margin: 0;
+}
+
+/* Step content */
+.process-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.process-step-title {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.process-step-body {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: 300;
+  letter-spacing: var(--type-body-letter-spacing);
+  line-height: var(--type-body-line-height);
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  max-width: 600px;
+}
+
+/* Decorative label pill */
+.process-step-tag {
+  display: inline-block;
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-teal-accent);
+  border: 1px solid rgba(111, 200, 180, 0.3);
+  padding: 3px 10px;
+  border-radius: 2px;
+  width: fit-content;
+}
+
+/* ----------------------------------------------------------
+   Process — responsive
+   ---------------------------------------------------------- */
+@media (max-width: 900px) {
+  .process-step {
+    grid-template-columns: 40px 1fr;
+    gap: 24px;
+  }
+
+  .process-step-num {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 600px) {
+  #section-process {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .process-step {
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  .process-step-hairline {
+    height: 14px;
+  }
+
+  .process-step-num {
+    font-size: 18px;
+  }
+}
+
+/* ===========================================================
+   SECTION 5: CTA STRIP
+   Background: #2b2918 (dark footer bg)
+   Layout: full-width centered
+   =========================================================== */
+#section-cta {
+  background: var(--color-footer-bg);
+  padding-top: 120px;
+  padding-bottom: 120px;
+  position: relative;
+  overflow: hidden;
+  /* explicit color override for dark section */
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* shimmerSweep background gradient */
+#cta-shimmer-layer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(223, 94, 18, 0.06) 20%,
+    rgba(111, 200, 180, 0.08) 40%,
+    rgba(163, 196, 255, 0.06) 60%,
+    rgba(201, 184, 76, 0.05) 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerSweep 6s linear infinite;
+  pointer-events: none;
+}
+
+/* Atmospheric radial depth */
+#section-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(111, 200, 180, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#cta-inner {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+#cta-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 4.5vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 24px;
+  line-height: 1.0;
+}
+
+#cta-subtext {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0.48px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.60);
+  margin: 0 auto 48px;
+  max-width: 480px;
+}
+
+#cta-button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.cta-btn-primary {
+  display: inline-block;
+  font-family: var(--font-condensed);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  background: var(--color-accent);
+  padding: 16px 40px;
+  border-radius: 2px;
+  transition:
+    transform var(--duration-hover) var(--ease-primary),
+    filter var(--duration-hover) var(--ease-primary);
+}
+
+.cta-btn-primary:hover {
+  transform: var(--button-hover-transform);
+  filter: var(--button-hover-filter);
+}
+
+.cta-btn-primary:active {
+  transform: var(--button-active-transform);
+  filter: var(--button-active-filter);
+}
+
+.cta-btn-secondary {
+  display: inline-block;
+  font-family: var(--font-condensed);
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  transition:
+    color var(--duration-hover) var(--ease-primary),
+    border-color var(--duration-hover) var(--ease-primary);
+}
+
+.cta-btn-secondary:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+/* Foil hairline above CTA — spectral edge flash */
+#cta-foil-hairline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--space-foil-gap);
+  background: linear-gradient(90deg, #df5e12, #6fc8b4, #a3c4ff, #c9b84c, #df5e12);
+  background-size: 200% 100%;
+  animation: shimmerSweep 4s linear infinite;
+}
+
+/* ----------------------------------------------------------
+   CTA — responsive
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  #section-cta {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  #cta-button-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .cta-btn-primary {
+    width: 100%;
+    text-align: center;
+  }
+}

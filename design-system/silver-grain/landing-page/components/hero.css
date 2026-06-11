@@ -1,0 +1,270 @@
+/* ── Hero — Loam & Silver ── */
+/* Light treatment: parchment ground, ghost letterforms, darkroom grain */
+
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 46.59px; /* nav height */
+  background: var(--color-hero-background, #f5efe6);
+  overflow: hidden;
+}
+
+/* Ghost watermark letterform — title at 18vw, opacity 0.04, behind content */
+#hero-ghost-letterform {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+#hero-ghost-text {
+  font-family: var(--font-display);
+  font-size: 18vw;
+  font-weight: 300;
+  color: var(--color-charcoal, #1a1814);
+  opacity: 0.04;
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: -0.03em;
+  user-select: none;
+  text-align: center;
+}
+
+/* Darkroom grain overlay — SVG feTurbulence on body::after (see grain-overlay.css) */
+
+/* Parallax depth layers */
+#hero-depth-layer-far {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.03;
+  background: radial-gradient(ellipse at 30% 60%, var(--color-amber-clay, #b85c2a) 0%, transparent 65%);
+}
+
+#hero-depth-layer-near {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.06;
+  background: radial-gradient(ellipse at 70% 35%, var(--color-gradient-warm, #e8d5d0) 0%, transparent 55%);
+}
+
+/* Hero video container (placeholder pattern) */
+#hero-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+#hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.55) brightness(0.92);
+}
+
+#hero-bg-video-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--color-hero-background, #f5efe6);
+  color: var(--color-muted-text, #616161);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+/* Light overlay on video — HERO_TREATMENT=light means subtle overlay */
+#hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 239, 230, 0.22) 0%,
+    rgba(245, 239, 230, 0.10) 50%,
+    rgba(245, 239, 230, 0.30) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Hero content area — positioned over depth layers */
+#hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 843px;
+  padding: 0 var(--grid-padding-right, 80px) 0 var(--grid-padding-left, 40px);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Pre-heading label */
+#hero-label {
+  font-family: var(--font-ui);
+  font-size: var(--type-h3-size, 0.8125rem);
+  font-weight: var(--type-h3-weight, 600);
+  letter-spacing: var(--type-h3-letter-spacing, 0.1em);
+  text-transform: uppercase;
+  color: var(--color-amber-clay, #b85c2a);
+  margin-bottom: 1.5rem;
+  display: block;
+  opacity: 0;
+}
+
+/* Hero heading — Cormorant Garamond 300 */
+#hero-title {
+  font-family: var(--font-display);
+  font-size: var(--type-hero, clamp(3.5rem, 9vw, 7.5rem));
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--color-heading, #242424);
+  margin: 0 0 1.5rem 0;
+  /* Darkroom text-shadow — faint amber halo of letterpress ink */
+  text-shadow: 0.5px 0.5px 0px rgba(184, 92, 42, 0.15);
+  /* SVG feTurbulence displacement animation fires in JS on load */
+}
+
+/* Hero sub-heading */
+#hero-subheading {
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--color-body-text, #262626);
+  max-width: 520px;
+  margin: 0 0 2.75rem 0;
+  opacity: 0;
+}
+
+/* CTA group */
+#hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  opacity: 0;
+}
+
+.btn-primary {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: var(--type-button-size, 0.875rem);
+  font-weight: var(--type-button-weight, 600);
+  letter-spacing: var(--type-button-letter-spacing, 0.04em);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-page-bg, #f5f5f0);
+  background: var(--color-amber-clay, #b85c2a);
+  padding: 13px 32px;
+  border: 1.5px solid var(--color-amber-clay, #b85c2a);
+  transition: background var(--duration-base) var(--ease-primary),
+              color var(--duration-base) var(--ease-primary);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--color-amber-clay-hover, #d06830);
+  border-color: var(--color-amber-clay-hover, #d06830);
+}
+
+.btn-primary:focus {
+  outline: var(--focus-outline);
+  outline-offset: 3px;
+}
+
+.btn-ghost {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: var(--type-button-size, 0.875rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-charcoal, #1a1814);
+  border-bottom: 1px solid var(--color-charcoal, #1a1814);
+  padding-bottom: 2px;
+  transition: color var(--duration-fast) var(--ease-primary),
+              border-color var(--duration-fast) var(--ease-primary);
+}
+
+.btn-ghost:hover {
+  color: var(--color-amber-clay, #b85c2a);
+  border-color: var(--color-amber-clay, #b85c2a);
+}
+
+/* Hero scroll cue — thin amber line */
+#hero-scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: var(--grid-padding-left, 40px);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 3;
+  opacity: 0;
+}
+
+#hero-scroll-cue span {
+  font-family: var(--font-ui);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-muted-text, #616161);
+}
+
+#hero-scroll-line {
+  width: 40px;
+  height: 1px;
+  background: var(--color-amber-clay, #b85c2a);
+  transform-origin: left;
+}
+
+/* SVG feTurbulence filter for hero heading displacement */
+#hero-turbulence-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #hero-content {
+    padding: 0 40px;
+  }
+  #hero-ghost-text {
+    font-size: 24vw;
+    opacity: 0.03;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero-content {
+    padding: 0 24px;
+  }
+  #hero-cta-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+  .btn-primary {
+    width: 100%;
+    text-align: center;
+  }
+  #hero-ghost-text {
+    font-size: 36vw;
+    opacity: 0.025;
+  }
+}

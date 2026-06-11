@@ -1,0 +1,202 @@
+/* ============================================================
+   NAV — bloom-drift / Solubl
+   Liquid-state nav shell: near-invisible at rest, frosted blur on scroll
+   Height: 52px | Logo left | Sticky | fluidEase throughout
+   ============================================================ */
+
+:root {
+  --nav-height: 52px;
+  --fluid-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --nav-font: 'DM Sans', sans-serif;
+  --nav-font-size: 0.75rem;
+  --nav-font-weight: 500;
+  --nav-letter-spacing: 0.04em;
+  --nav-item-spacing: 32px;
+}
+
+/* Base nav */
+.site-nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--nav-height);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 80px;
+  background: transparent;
+  transition:
+    background 450ms var(--fluid-ease),
+    backdrop-filter 450ms var(--fluid-ease),
+    box-shadow 450ms var(--fluid-ease);
+  box-sizing: border-box;
+}
+
+/* Scrolled state — frosted organic blur */
+.site-nav.scrolled {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Logo */
+.nav-logo {
+  font-family: var(--nav-font);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: #000000;
+  text-decoration: none;
+  transition: opacity 250ms var(--fluid-ease);
+  flex-shrink: 0;
+}
+
+.nav-logo:hover {
+  opacity: 0.72;
+}
+
+/* Desktop links container */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--nav-item-spacing);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Individual nav links */
+.nav-link {
+  font-family: var(--nav-font);
+  font-size: var(--nav-font-size);
+  font-weight: var(--nav-font-weight);
+  letter-spacing: var(--nav-letter-spacing);
+  color: #000000;
+  text-decoration: none;
+  transition:
+    opacity 250ms var(--fluid-ease),
+    transform 450ms var(--fluid-ease),
+    letter-spacing 250ms var(--fluid-ease);
+  display: inline-block;
+}
+
+.nav-link:hover {
+  opacity: 0.72;
+  transform: translateY(-1px);
+  letter-spacing: calc(var(--nav-letter-spacing) + 0.03em);
+}
+
+/* Active state — dim + non-interactive */
+.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Mobile toggle button (hamburger) */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1002;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: #000000;
+  transition: transform 350ms var(--fluid-ease), opacity 250ms var(--fluid-ease);
+  transform-origin: center;
+}
+
+/* Hamburger → X animation when menu is open */
+.nav-mobile-open .nav-mobile-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-mobile-open .nav-mobile-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile menu overlay */
+.nav-mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition:
+    opacity 450ms var(--fluid-ease),
+    transform 450ms var(--fluid-ease);
+}
+
+.nav-mobile-menu.is-open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.nav-mobile-menu .nav-mobile-link {
+  font-family: var(--nav-font);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #000000;
+  text-decoration: none;
+  transition: opacity 250ms var(--fluid-ease);
+}
+
+.nav-mobile-menu .nav-mobile-link:hover {
+  opacity: 0.55;
+}
+
+.nav-mobile-menu .nav-mobile-link.nav-link--active {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 900px) {
+  .site-nav {
+    padding: 0 32px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-nav {
+    padding: 0 20px;
+  }
+}

@@ -1,0 +1,51 @@
+# Prism Drift — Concept by Video
+
+## Scroll Opening
+
+The page does not pre-animate. On load, the masthead is fully rendered: logotype in 900 Black uppercase at the left margin, light-weight navigation links tracked at +0.20em across the top. The first visible body content — a section label in small uppercase, a hairline rule, the opening display headline — is present and set. When the visitor begins to scroll, the display headline does not appear from below the fold through a reveal animation; it was already there, waiting to be read. The scroll opening is an act of arrival, not performance. The only motion that marks the initial render is a 400ms opacity fade of the entire above-fold zone from 0 to 1 — imperceptibly slow, functioning as a page-is-ready signal rather than a theatrical entrance. The typographic mass of the display line is the first thing the visitor sees; everything else on the page is organized around that fact.
+
+## Hero Experience
+
+Type is the hero. The above-fold zone is not occupied by a photograph, a video background, or a geometric illustration — it is occupied by a display headline set in 900 Black at approximately 96–120px, negatively tracked at −0.04em, warm near-black on warm paper. Nothing else holds visual authority in this zone. Below the headline, a single line in 300 Light at 18px carries the editorial subtext. Below that, a hairline rule at 0.5px separates the hero from the first body section. The hero section does carry an ambient video element, but it does not background the headline — it appears in a contained editorial panel below the fold, functioning as a contextual visual statement rather than an atmospheric backdrop. The headline requires no backing material; its typographic mass is the visual centerpiece and needs no amplification. The video in the hero zone (described in Video Placements below) is present to give temporal dimension to the typographic argument, not to replace it.
+
+## Section Transitions
+
+Reading rhythm does not pause between sections. As the visitor scrolls from the display-headline hero into the first editorial prose section, the transition is managed entirely by the interplay of vertical rhythm and hairline rules. A 0.5px rule marks the section boundary; above it, display weight; below it, body weight. There is no scroll-triggered animation, no cross-fade, no parallax shift of background layers. The section transition is a reading event — the eye moves from one weight register to another, from display mass to reading texture — and any animation at the section boundary would interrupt rather than assist that transition. Where scroll-reveal animations are used, they operate at the element level within sections rather than at the section boundary: body paragraphs enter with a 300ms upward translate of 16px and an opacity rise from 0 to 1, on a ease-out curve. The translate distance is intentionally short — 16px, approximately one baseline unit — to suggest the text rising into its reading position rather than flying in from off-screen.
+
+## Content Rhythm
+
+Body text reveals operate line-group by line-group rather than word by word. A paragraph enters as a unit: it translates up 16px and resolves to full opacity over 300ms as it crosses the scroll trigger threshold. Stagger between consecutive paragraphs within a section is 80ms — perceptible but not dramatized, creating a reading sequence without imposing a performance timeline on the content. In the two-column editorial layout, the annotation column and the prose column reveal simultaneously, not in sequence; their relationship to each other is spatial and typographic, and staggering their appearance would temporarily break the column relationship. Pull-quotes — set in 900 Black at a reduced display size, approximately 42–48px — enter with a slightly longer translate distance of 24px and a 400ms duration, marking them as distinct within the body rhythm without introducing a different motion language. The governing constraint on all content reveals is that no individual element's entrance animation may run longer than 400ms; the reading pace must not be held hostage to motion.
+
+## Footer Approach
+
+The footer arrives as the darkest surface in the system — near-black at #1A1714, reversing the warm paper ground to its thermal maximum. The transition from body to footer is a hard surface change registered by a 0.5px hairline rule at the top of the footer zone. No entrance animation marks the footer; the surface shift is the announcement. Within the footer, all text is reversed to a near-white at #F2EDE3, maintaining the warm-cool temperature relationship in reverse. Navigation links in the footer sit in Light weight uppercase tracked at +0.20em, consistent with the masthead label register. The logotype repeats in Black weight at reduced scale. No scroll-triggered animation appears in the footer; it is a terminal surface, resolved and still. The scroll journey ends in typographic weight contrast — near-black ground, Light-weight text — which mirrors the warm paper ground and near-black text of the body, inverted. The system completes itself.
+
+## Motion Principles
+
+The motion vocabulary of this system is defined by what it refuses. No spring physics. No kinetic typography that spins, scrambles, or reassembles letterforms. No parallax scrolling that creates false depth behind the type. No ambient background animation. No scale transforms on hover. Motion in this system serves reading: it marks a section entering the viewport, it signals that a link is interactive, it confirms that a form submission was received. Motion does not perform brand character. The typographic forms are stable — they do not animate except to appear — because the reading experience depends on the stability of the text field. A letter that morphs, bounces, or drifts while the visitor is trying to read it is a letter that has failed its function. All scroll-triggered animations use ease-out timing; linear timing reads as mechanical in the context of type and would introduce an inappropriate coldness. Maximum animation duration is 400ms. No ambient loop animations run on the page surface. Motion is editorial restraint applied temporally: use exactly as much as reading requires, and nothing more.
+
+## Video Placements
+
+### 1. Hero — Ambient Type-in-Motion (hero-type-motion.mp4)
+
+- **Section role:** Contained editorial panel in the hero zone, below the display headline, occupying a full-width horizontal band approximately 40vh tall
+- **Subject:** An ambient documentary of letterforms in motion — not digital animation but physical typography captured on film. Ink spreading across dampened paper through capillary action, the letters of a large-scale display word appearing as the ink travels. Intercut with close-up footage of a printing press feeding paper through the impression bed: the type form pressing into the sheet, the paper lifting to reveal the inked letterforms. The color palette is monochrome — near-black ink on warm ivory paper — matching the system's surface colors precisely. No color grading introduces chromatic values outside the design system's palette.
+- **Motion quality:** Slow and observational. The ink spread moves at real-time speed — neither accelerated nor retarded. The printing press footage plays at approximately 0.6x speed to make the impression moment legible. No jump cuts; each shot holds for 4–6 seconds.
+- **Duration:** 24s loop, seamless
+- **Asset filename:** `hero-type-motion.mp4`
+
+### 2. Editorial Showcase — Slow-Pan of Printed Pages (editorial-pages.mp4)
+
+- **Section role:** Full-width editorial panel mid-page, accompanying a long-form editorial text section or a pull-quote zone. The video occupies a contained frame of approximately 60% viewport width, positioned in the annotation column zone of the two-column layout.
+- **Subject:** A slow documentary pan across the open spread of a well-set book or printed editorial piece. The camera moves at approximately 3cm per second — slow enough to allow individual letterforms and leading values to be read — across consecutive spreads: a spread with a display headline and ragged-right body columns; a spread with a full-page display initial cap; a spread with a tight two-column layout and marginal annotations in small uppercase. The type in the film is printed at the same weight contrast as the design system — heavy display, light body — which creates a direct visual rhyme between the video content and the page it inhabits.
+- **Motion quality:** Continuous, unhurried lateral pan. No zoom, no cuts, no rotation. The camera motion is linear and slow — observational rather than cinematic. The effect is of a reader turning through the book at a thoughtful pace.
+- **Duration:** 18s loop, seamless (the pan reverses direction at the end to avoid a hard jump cut)
+- **Asset filename:** `editorial-pages.mp4`
+
+### 3. Process/Craft — Letterpress Setting (letterpress-craft.mp4)
+
+- **Section role:** Process section near the bottom of the page, accompanying a section about the typographic methodology or editorial craft values of the system. The video occupies a contained frame in the prose column of the two-column layout, approximately 50vh tall.
+- **Subject:** Close documentary footage of a compositor's hands setting moveable type in a letterpress composing stick: individual lead type pieces being selected from a California job case, placed in sequence in the stick, spaced with lead slugs and furniture. The camera is positioned overhead, looking straight down at the composing stick surface. The type pieces are large — 72pt or above — so the individual letterforms are fully legible as they are assembled. The sequence sets a recognizable word related to the design system's editorial argument. The last shot shows the completed line of type being pressed against paper, revealing the printed impression.
+- **Motion quality:** Observational, real-time or slightly slowed (0.8x). The hands move at a craftsperson's pace — deliberate, unhurried, knowledgeable. No jump cuts within the setting sequence. The final impression shot holds for 3 seconds on the reveal.
+- **Duration:** 20s loop (the sequence resets after the impression reveal)
+- **Asset filename:** `letterpress-craft.mp4`

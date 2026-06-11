@@ -1,0 +1,219 @@
+/* ============================================================
+   footer.css — lead-weight / VERDURE
+   Section 7: Footer
+   Near-black #1A1714 surface. Reversed text #F2EDE3.
+   No entrance animation. 0.5px hairline at top.
+   ============================================================ */
+
+/* ── Footer wrapper ───────────────────────────────────────── */
+#site-footer {
+  background: #1a1714;
+  color: #f2ede3;
+  padding: var(--space-footer-top) 40px var(--space-footer-bottom);
+  border-top: 0.5px solid rgba(242, 237, 227, 0.18);
+  position: relative;
+}
+
+#footer-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--grid-gutter);
+  align-items: start;
+}
+
+/* ── Logo + description column ────────────────────────────── */
+#footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-right: 40px;
+}
+
+#footer-logo {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #f2ede3;
+  text-decoration: none;
+  display: block;
+}
+
+#footer-brand-descriptor {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  color: rgba(242, 237, 227, 0.55);
+  margin: 0;
+  max-width: 28ch;
+}
+
+/* ── Nav columns ──────────────────────────────────────────── */
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-nav-heading {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: rgba(242, 237, 227, 0.4);
+  margin: 0 0 4px;
+}
+
+.footer-nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-nav-link {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(242, 237, 227, 0.72);
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  transition: color 0.2s ease-out;
+}
+
+.footer-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 0.5px;
+  background: rgba(242, 237, 227, 0.55);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease-out;
+}
+
+.footer-nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── Bottom bar ───────────────────────────────────────────── */
+#footer-bottom-bar {
+  max-width: var(--grid-max-width);
+  margin: 64px auto 0;
+  padding-top: 28px;
+  border-top: 0.5px solid rgba(242, 237, 227, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+#footer-copyright {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: rgba(242, 237, 227, 0.32);
+  margin: 0;
+}
+
+#footer-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-legal-link {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 227, 0.32);
+  text-decoration: none;
+}
+
+.footer-legal-link:hover {
+  color: rgba(242, 237, 227, 0.65);
+}
+
+/* ── Focus styles ─────────────────────────────────────────── */
+.footer-nav-link:focus-visible,
+.footer-logo:focus-visible,
+.footer-legal-link:focus-visible {
+  outline: 1px solid rgba(242, 237, 227, 0.6);
+  outline-offset: 3px;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  #footer-inner {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  #footer-brand-col {
+    grid-column: 1 / -1;
+    padding-right: 0;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+    padding-bottom: 48px;
+    border-bottom: 0.5px solid rgba(242, 237, 227, 0.1);
+  }
+}
+
+@media (max-width: 900px) {
+  #site-footer {
+    padding: 80px 28px 48px;
+  }
+
+  #footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  #footer-brand-col {
+    grid-column: 1 / -1;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  #footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  #site-footer {
+    padding: 64px 20px 40px;
+  }
+
+  #footer-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  #footer-legal-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

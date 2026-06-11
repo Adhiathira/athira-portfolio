@@ -1,0 +1,198 @@
+/* lens-noir — Hero Component */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Letterbox bars — pure black, 80px each */
+.hero::before,
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--spacing-letterbox);
+  background: var(--color-pure-black);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero::before {
+  top: 0;
+}
+
+.hero::after {
+  bottom: 0;
+}
+
+/* Subtle dark vignette at edges */
+.hero__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding-inline: var(--container-pad);
+  padding-top: var(--spacing-letterbox);
+  padding-bottom: var(--spacing-letterbox);
+  max-width: var(--container-max);
+  width: 100%;
+  margin-inline: auto;
+}
+
+.hero__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-label);
+  font-weight: 400;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  margin-bottom: var(--space-8);
+  display: block;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h1);
+  font-weight: 400;
+  line-height: var(--line-height-display);
+  letter-spacing: var(--letter-spacing-display);
+  text-transform: uppercase;
+  color: var(--color-primary-text);
+  margin-bottom: var(--space-12);
+}
+
+.hero__title .accent {
+  color: var(--color-accent);
+}
+
+.hero__subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  color: var(--color-body-text);
+  line-height: var(--line-height-body);
+  max-width: 560px;
+  margin-inline: auto;
+  margin-bottom: var(--space-12);
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  color: var(--color-primary-text);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-nav);
+  background: var(--color-accent);
+  padding: 14px 36px;
+  border-radius: 0;
+  text-decoration: none;
+  transition: background-color var(--transition-interaction);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+}
+
+.btn-primary:active {
+  opacity: 0.75;
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.btn-ghost {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  color: var(--color-primary-text);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-nav);
+  background: transparent;
+  padding: 13px 36px;
+  border-radius: 0;
+  border: 1px solid var(--color-border-strong);
+  text-decoration: none;
+  transition: background-color var(--transition-interaction), border-color var(--transition-interaction);
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-ghost:active {
+  opacity: 0.75;
+}
+
+.btn-ghost:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Film reel decoration */
+.hero__scroll-indicator {
+  position: absolute;
+  bottom: calc(var(--spacing-letterbox) + 24px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-accent), transparent);
+}
+
+.hero__scroll-label {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-muted-text);
+}
+
+@media (max-width: 768px) {
+  .hero__content {
+    padding-inline: var(--container-pad-mobile);
+  }
+
+  .hero::before,
+  .hero::after {
+    height: 48px;
+  }
+}

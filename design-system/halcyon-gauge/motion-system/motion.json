@@ -1,0 +1,164 @@
+{
+  "_source": "pale-draft",
+  "_agent": "motion-system",
+  "_twist": "Replaced the generic fadeInUp (opacity + translateY) with a clip-path curtain reveal: clip-path from inset(100% 0 0 0) to inset(0% 0 0 0). This 'draw-down' wipe replaces fade-from-below as the primary reveal mechanic, giving the system a precise, instrument-panel character — as if calibration covers are being removed from measurement gauges.",
+  "videos": {
+    "count": 0,
+    "hasHeroVideo": false,
+    "items": [],
+    "animatedGifs": 0,
+    "libraries": ["gsap", "ScrollTrigger"]
+  },
+  "cssAnimations": {
+    "keyframes": [
+      {
+        "name": "fadeIn",
+        "description": "Simple opacity fade — used for ambient background elements and overlays",
+        "from": { "opacity": "0" },
+        "to": { "opacity": "1" },
+        "easing": "ease",
+        "duration": "0.6s"
+      },
+      {
+        "name": "curtainReveal",
+        "description": "TWIST: Clip-path wipe from top — content is revealed as if an instrument cover slides away downward. Primary entrance mechanic replacing fadeInUp.",
+        "from": { "clipPath": "inset(100% 0 0 0)", "opacity": "0" },
+        "to": { "clipPath": "inset(0% 0 0 0)", "opacity": "1" },
+        "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "duration": "0.8s"
+      },
+      {
+        "name": "fadeInLeft",
+        "description": "Element enters from left — used for sidebar and rule elements",
+        "from": { "opacity": "0", "transform": "translate3d(-20px, 0px, 0px)" },
+        "to": { "opacity": "1", "transform": "translate3d(0px, 0px, 0px)" },
+        "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "duration": "0.5s"
+      },
+      {
+        "name": "scaleIn",
+        "description": "Scale from 94% with deceleration — used for cards and featured instrument tiles",
+        "from": { "opacity": "0", "transform": "scale(0.94)" },
+        "to": { "opacity": "1", "transform": "scale(1)" },
+        "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "duration": "0.9s"
+      },
+      {
+        "name": "loading",
+        "description": "Rotation loop — used for loading spinners",
+        "from": { "transform": "rotate(0deg)" },
+        "to": { "transform": "rotate(360deg)" },
+        "easing": "linear",
+        "duration": "0.8s"
+      }
+    ],
+    "transitionElements": [
+      {
+        "selector": ".nav-link",
+        "transition": { "property": "color, opacity", "duration": "0.2s", "timingFunction": "ease" }
+      },
+      {
+        "selector": ".card",
+        "transition": { "property": "transform, box-shadow", "duration": "0.3s", "timingFunction": "cubic-bezier(0.16, 1, 0.3, 1)" }
+      },
+      {
+        "selector": "button",
+        "transition": { "property": "background-color, color, border-color", "duration": "0.2s", "timingFunction": "ease" }
+      }
+    ],
+    "timingTokens": {
+      "durations": ["0.1s", "0.2s", "0.3s", "0.5s", "0.8s", "0.9s"],
+      "durationScale": {
+        "micro": "0.1s",
+        "quick": "0.2s",
+        "standard": "0.3s",
+        "expressive": "0.8s",
+        "cinematic": "0.9s"
+      },
+      "easings": [
+        "ease",
+        "ease-out",
+        "cubic-bezier(0.16, 1, 0.3, 1)",
+        "cubic-bezier(0.4, 0, 0.2, 1)"
+      ],
+      "easingScale": {
+        "standard": "ease",
+        "decelerate": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "material": "cubic-bezier(0.4, 0, 0.2, 1)"
+      }
+    }
+  },
+  "scrollAnimations": {
+    "libraries": ["gsap", "ScrollTrigger"],
+    "elements": [
+      {
+        "selector": ".reveal-curtain",
+        "trigger": "self",
+        "start": "top 82%",
+        "animation": "curtainReveal",
+        "scrub": false
+      },
+      {
+        "selector": ".reveal-scale",
+        "trigger": "self",
+        "start": "top 85%",
+        "animation": "scaleIn",
+        "scrub": false
+      }
+    ],
+    "parallaxElements": [
+      {
+        "selector": ".parallax-layer-far",
+        "speed": -0.4,
+        "scrub": 2
+      },
+      {
+        "selector": ".parallax-layer-mid",
+        "speed": -0.2,
+        "scrub": 1.5
+      },
+      {
+        "selector": ".parallax-layer-near",
+        "speed": -0.08,
+        "scrub": 1
+      }
+    ],
+    "patterns": ["curtain-reveal", "scale-in", "parallax-depth"]
+  },
+  "microInteractions": {
+    "buttonTransitions": [
+      {
+        "selector": "button",
+        "transition": "background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease",
+        "transitionDuration": "0.2s"
+      },
+      {
+        "selector": "a",
+        "transition": "color 0.2s ease, opacity 0.2s ease",
+        "transitionDuration": "0.2s"
+      }
+    ],
+    "loadingStates": [
+      { "selector": ".loading", "animation": "loading 0.8s linear infinite" }
+    ],
+    "inputFocusAnimations": [
+      {
+        "selector": "input",
+        "transition": "border-color 0.2s ease, box-shadow 0.2s ease"
+      }
+    ],
+    "hasSkeletonScreens": false,
+    "customCursor": false
+  },
+  "performance": {
+    "totalAnimatedElements": 10,
+    "simultaneousAnimations": 3,
+    "reducedMotionSupport": true,
+    "usesHardwareAcceleration": true,
+    "recommendations": [
+      "Use clip-path and opacity for curtainReveal — GPU composited",
+      "Implement prefers-reduced-motion: replace curtainReveal with simple opacity fade",
+      "Keep button transitions under 250ms for interactive feel"
+    ]
+  }
+}

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clients — Forma Calibration</title>
+  <meta name="description" content="Forma serves pharmaceutical, research, manufacturing, and government laboratory clients across the Midwest. Schedule a calibration intake or request a traceability review.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/footer.css">
+
+  <style>
+    /* ── Clients Hero (medium, 40–60vh) ── */
+    #clients-hero {
+      min-height: 48vh;
+      display: flex;
+      align-items: flex-end;
+      padding-top: 32px;
+      padding-bottom: 52px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #clients-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    #clients-hero-bg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+
+    #clients-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(34, 33, 31, 0.85) 0%,
+        rgba(34, 33, 31, 0.5) 50%,
+        rgba(34, 33, 31, 0.35) 100%
+      );
+      pointer-events: none;
+    }
+
+    #clients-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      width: 100%;
+    }
+
+    #clients-hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245, 242, 238, 0.5);
+      margin-bottom: 16px;
+    }
+
+    #clients-hero-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-cta-primary-text);
+      margin: 0 0 16px;
+      line-height: 1.05;
+      max-width: 500px;
+    }
+
+    #clients-hero-sub {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: rgba(245, 242, 238, 0.55);
+      margin: 0;
+      max-width: 440px;
+      line-height: 1.65;
+    }
+
+    /* ── Industries section ── */
+    #industries-section {
+      background: var(--color-page-bg);
+      padding: var(--space-section-top) 0 var(--space-section-bottom);
+    }
+
+    #industries-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+    }
+
+    #industries-rule {
+      width: 32px;
+      height: 1px;
+      background: var(--color-heading);
+      margin-bottom: 20px;
+    }
+
+    #industries-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 48px;
+    }
+
+    /* Bento grid: asymmetric, mixed sizes */
+    #industries-bento {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 220px 160px;
+      gap: 1px;
+      background: var(--color-border-subtle);
+    }
+
+    .industry-tile {
+      background: var(--color-page-bg);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      transition: background-color var(--hover-transition);
+    }
+
+    .industry-tile:hover {
+      background: var(--color-surface-soft);
+    }
+
+    /* Featured tiles span multiple columns/rows */
+    #tile-pharma {
+      grid-column: span 2;
+      background: var(--color-dark-surface);
+    }
+    #tile-pharma:hover { background: #2e2d2a; }
+
+    #tile-research {
+      grid-row: span 2;
+    }
+
+    #tile-manufacturing {
+      grid-column: span 2;
+    }
+
+    .industry-tile-icon {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--color-border-subtle);
+      margin-bottom: auto;
+      line-height: 1;
+    }
+
+    #tile-pharma .industry-tile-icon { color: rgba(245, 242, 238, 0.2); }
+
+    .industry-tile-name {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 8px;
+    }
+
+    #tile-pharma .industry-tile-name { color: var(--color-cta-primary-text); }
+
+    .industry-tile-desc {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    #tile-pharma .industry-tile-desc { color: rgba(245, 242, 238, 0.45); }
+
+    /* ── Intake form section ── */
+    #intake-section {
+      background: linear-gradient(180deg, var(--color-surface-soft) 0%, var(--color-page-bg) 100%);
+      padding: var(--space-section-top) 0 var(--space-section-bottom);
+    }
+
+    #intake-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    #intake-copy {}
+
+    #intake-copy-rule {
+      width: 32px;
+      height: 1px;
+      background: var(--color-heading);
+      margin-bottom: 20px;
+    }
+
+    #intake-copy h2 {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 20px;
+      line-height: 1.08;
+    }
+
+    #intake-copy p {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: var(--color-body-text);
+      margin: 0 0 12px;
+      line-height: 1.65;
+    }
+
+    #intake-contact-list {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .intake-contact-item {
+      display: flex;
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    .intake-contact-label {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      min-width: 64px;
+    }
+
+    .intake-contact-value {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      text-decoration: none;
+      transition: opacity var(--hover-transition);
+    }
+
+    .intake-contact-value:hover {
+      opacity: var(--hover-opacity);
+    }
+
+    /* Intake form */
+    #intake-form-wrap {}
+
+    #intake-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      background: var(--color-page-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--space-input-radius);
+      padding: 10px 12px;
+      width: 100%;
+      box-sizing: border-box;
+      transition: border-color var(--hover-transition);
+      appearance: none;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--color-heading);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    #form-submit {
+      margin-top: 8px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      #industries-bento {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      #tile-pharma { grid-column: span 2; }
+      #tile-research { grid-row: span 1; }
+      #tile-manufacturing { grid-column: span 2; }
+      #intake-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #industries-bento {
+        grid-template-columns: 1fr;
+      }
+      #tile-pharma, #tile-manufacturing { grid-column: span 1; }
+      .industry-tile { min-height: 140px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Forma</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="clients.html" class="nav-link--active">Clients</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="process.html">Process</a>
+    <a href="clients.html">Clients</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <!-- Hero -->
+  <section id="clients-hero">
+    <div id="clients-hero-bg">
+      <img
+        id="clients-hero-bg-img"
+        src="assets/clients-hero.jpeg"
+        alt="Laboratory environment with precision instruments and accreditation documentation"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div
+        id="clients-hero-bg-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-dark-surface);color:rgba(245,242,238,0.3);font-family:var(--font-body);font-size:0.85rem;"
+      >→ assets/clients-hero.jpeg</div>
+      <div id="clients-hero-overlay"></div>
+    </div>
+    <div id="clients-hero-content">
+      <div id="clients-hero-eyebrow">Client Industries</div>
+      <h1 id="clients-hero-heading">340 Laboratories.<br>One Standard.</h1>
+      <p id="clients-hero-sub">Forma serves pharmaceutical, academic, industrial, and government laboratory environments throughout the Midwest. Accreditation is the common language.</p>
+    </div>
+  </section>
+
+  <!-- Industries Bento -->
+  <section id="industries-section">
+    <div id="industries-inner">
+      <div id="industries-rule"></div>
+      <h2 id="industries-heading">Industry Experience</h2>
+      <div id="industries-bento">
+        <div class="industry-tile" id="tile-pharma">
+          <div class="industry-tile-icon">Rx</div>
+          <h3 class="industry-tile-name">Pharmaceutical</h3>
+          <p class="industry-tile-desc">21 CFR Part 211 compliance for analytical instruments in QC and manufacturing environments. IQ/OQ/PQ documentation available.</p>
+        </div>
+        <div class="industry-tile" id="tile-research">
+          <div class="industry-tile-icon">∑</div>
+          <h3 class="industry-tile-name">Academic Research</h3>
+          <p class="industry-tile-desc">University and government research laboratory support. Grant-traceable calibration documentation accepted by NSF, NIH, and DOE program requirements.</p>
+        </div>
+        <div class="industry-tile" id="tile-food">
+          <div class="industry-tile-icon">℃</div>
+          <h3 class="industry-tile-name">Food &amp; Beverage</h3>
+          <p class="industry-tile-desc">FSMA-aligned calibration programs for thermal, volumetric, and gravimetric instruments in production and QC environments.</p>
+        </div>
+        <div class="industry-tile" id="tile-manufacturing">
+          <div class="industry-tile-icon">±</div>
+          <h3 class="industry-tile-name">Manufacturing &amp; Aerospace</h3>
+          <p class="industry-tile-desc">AS9100 and ISO 9001 compatible calibration records. Dimensional and electrical instrument programs for precision component manufacturers.</p>
+        </div>
+        <div class="industry-tile" id="tile-med">
+          <div class="industry-tile-icon">Ω</div>
+          <h3 class="industry-tile-name">Medical Device</h3>
+          <p class="industry-tile-desc">21 CFR Part 820 and ISO 13485 calibration documentation for device development and manufacturing environments.</p>
+        </div>
+        <div class="industry-tile" id="tile-env">
+          <div class="industry-tile-icon">⚗</div>
+          <h3 class="industry-tile-name">Environmental</h3>
+          <p class="industry-tile-desc">State-certifiable calibration programs for environmental monitoring equipment. EPA SW-846 method-compatible documentation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intake Request Section -->
+  <section id="intake-section">
+    <div id="intake-inner">
+      <div id="intake-copy">
+        <div id="intake-copy-rule"></div>
+        <h2>Schedule a Calibration Intake</h2>
+        <p>Complete the intake form or contact Forma directly. Standard turnaround requests are confirmed within one business day. Expedited requests are reviewed same-day.</p>
+        <p>For on-site service requests or multi-instrument program pricing, use the message field to describe your instrument inventory and facility location.</p>
+        <div id="intake-contact-list">
+          <div class="intake-contact-item" id="contact-email">
+            <span class="intake-contact-label">Email</span>
+            <a href="mailto:intake@forma-cal.com" class="intake-contact-value">intake@forma-cal.com</a>
+          </div>
+          <div class="intake-contact-item" id="contact-phone">
+            <span class="intake-contact-label">Phone</span>
+            <a href="tel:+17342001847" class="intake-contact-value">+1 734 200 1847</a>
+          </div>
+          <div class="intake-contact-item" id="contact-hours">
+            <span class="intake-contact-label">Hours</span>
+            <span class="intake-contact-value">Mon–Fri, 7:30 AM – 5:30 PM ET</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="intake-form-wrap">
+        <form id="intake-form" action="#" method="post" novalidate>
+          <div class="form-row" id="form-row-name">
+            <div class="form-field" id="field-firstname">
+              <label class="form-label" for="input-firstname">First Name</label>
+              <input class="form-input" type="text" id="input-firstname" name="firstname" placeholder="Jane" autocomplete="given-name">
+            </div>
+            <div class="form-field" id="field-lastname">
+              <label class="form-label" for="input-lastname">Last Name</label>
+              <input class="form-input" type="text" id="input-lastname" name="lastname" placeholder="Donovan" autocomplete="family-name">
+            </div>
+          </div>
+          <div class="form-field" id="field-org">
+            <label class="form-label" for="input-org">Organization</label>
+            <input class="form-input" type="text" id="input-org" name="organization" placeholder="Research Institute of Michigan" autocomplete="organization">
+          </div>
+          <div class="form-field" id="field-email">
+            <label class="form-label" for="input-email">Email</label>
+            <input class="form-input" type="email" id="input-email" name="email" placeholder="j.donovan@rim.edu" autocomplete="email">
+          </div>
+          <div class="form-row" id="form-row-service">
+            <div class="form-field" id="field-discipline">
+              <label class="form-label" for="select-discipline">Discipline</label>
+              <select class="form-select" id="select-discipline" name="discipline">
+                <option value="">Select discipline</option>
+                <option>Gravimetric</option>
+                <option>Thermal</option>
+                <option>Volumetric</option>
+                <option>Pressure</option>
+                <option>Electrical</option>
+                <option>Dimensional</option>
+                <option>Multiple</option>
+              </select>
+            </div>
+            <div class="form-field" id="field-turnaround">
+              <label class="form-label" for="select-turnaround">Turnaround</label>
+              <select class="form-select" id="select-turnaround" name="turnaround">
+                <option value="">Select turnaround</option>
+                <option>Standard</option>
+                <option>Expedited</option>
+                <option>On-Site</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-field" id="field-message">
+            <label class="form-label" for="input-message">Message (optional)</label>
+            <textarea class="form-textarea" id="input-message" name="message" placeholder="Instrument model, quantity, or special requirements..."></textarea>
+          </div>
+          <div id="form-submit">
+            <button type="submit" class="btn-primary">Submit Intake Request</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <div id="footer-logo">Forma</div>
+        <p id="footer-tagline">Precision. Traceability. Confidence.</p>
+        <p id="footer-address">114 Industrial Parkway, Suite 8<br>Ann Arbor, MI 48108</p>
+      </div>
+      <div id="footer-nav-col-1" class="footer-nav-col">
+        <p class="footer-col-heading">Services</p>
+        <ul class="footer-nav-list">
+          <li><a href="services.html">Gravimetric</a></li>
+          <li><a href="services.html">Thermal</a></li>
+          <li><a href="services.html">Volumetric</a></li>
+          <li><a href="services.html">Pressure &amp; Electrical</a></li>
+          <li><a href="services.html">Dimensional</a></li>
+        </ul>
+      </div>
+      <div id="footer-nav-col-2" class="footer-nav-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-nav-list">
+          <li><a href="process.html">Process</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div id="footer-contact-col" class="footer-nav-col">
+        <p class="footer-col-heading">Contact</p>
+        <ul class="footer-nav-list">
+          <li><a href="mailto:intake@forma-cal.com">intake@forma-cal.com</a></li>
+          <li><a href="tel:+17342001847">+1 734 200 1847</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <div id="footer-bottom-inner">
+        <span id="footer-copyright">© 2024 Forma Calibration Services LLC</span>
+        <span id="footer-accred">ISO/IEC 17025:2017 Accredited · NVLAP Lab Code 500812-0</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="behaviors/nav.js"></script>
+  <script>
+    const lenis = new Lenis({ lerp: 0.08 });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // Hero entrance
+    gsap.from('#clients-hero-eyebrow', { y: 6, duration: 0.3, ease: 'power2.inOut', delay: 0.2 });
+    gsap.from('#clients-hero-heading', { y: 10, duration: 0.4, ease: 'power2.inOut', delay: 0.32 });
+    gsap.from('#clients-hero-sub', { y: 8, duration: 0.35, ease: 'power2.inOut', delay: 0.5 });
+
+    // Industries section rule
+    gsap.from('#industries-rule', {
+      scaleX: 0, transformOrigin: 'left center', duration: 0.6, ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#industries-section', start: 'top 80%' }
+    });
+
+    // Bento tiles — scale + rise, column-by-column stagger
+    const tiles = document.querySelectorAll('.industry-tile');
+    tiles.forEach((tile, i) => {
+      const col = i % 4; // column position
+      gsap.from(tile, {
+        scale: 0.94,
+        y: 20,
+        duration: 0.4,
+        ease: 'power2.inOut',
+        delay: col * 0.07,
+        scrollTrigger: { trigger: '#industries-bento', start: 'top 80%' }
+      });
+    });
+
+    // Intake section — divergent entry
+    gsap.from('#intake-copy', {
+      x: -60, duration: 0.5, ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#intake-section', start: 'top 78%' }
+    });
+    gsap.from('#intake-form-wrap', {
+      x: 60, duration: 0.5, ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#intake-section', start: 'top 78%' }
+    });
+
+    // Form fields arrive sequentially
+    const formFields = document.querySelectorAll('.form-field, .form-row, #form-submit');
+    gsap.from(formFields, {
+      y: 10,
+      duration: 0.35,
+      stagger: 0.07,
+      ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#intake-form', start: 'top 85%' }
+    });
+  </script>
+</body>
+</html>

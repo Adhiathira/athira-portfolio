@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SPECTRA — Real-time aurora forecasting and geomagnetic storm monitoring powered by 48 magnetometer stations across the auroral zone and live NOAA satellite integration.">
+  <title>SPECTRA — See the Sky Before It Shifts</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Design System Tokens -->
+  <link rel="stylesheet" href="styles/tokens.css">
+
+  <!-- Component Styles -->
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/stats.css">
+  <link rel="stylesheet" href="components/steps.css">
+  <link rel="stylesheet" href="components/stations.css">
+  <link rel="stylesheet" href="components/science.css">
+  <link rel="stylesheet" href="components/cta-band.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <link rel="stylesheet" href="components/dividers.css">
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">SPECTRA</a>
+    <ul class="nav-links">
+      <li><a href="forecast.html" class="nav-link">Forecast</a></li>
+      <li><a href="stations.html" class="nav-link">Stations</a></li>
+      <li><a href="science.html" class="nav-link">Science</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="forecast.html" class="nav-cta">Track Aurora</a>
+      <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile-scrim" id="nav-scrim"></div>
+<nav class="nav-mobile-menu" id="nav-mobile-menu" aria-hidden="true">
+  <ul class="nav-mobile-links">
+    <li><a href="forecast.html" class="nav-mobile-link">Forecast</a></li>
+    <li><a href="stations.html" class="nav-mobile-link">Stations</a></li>
+    <li><a href="science.html" class="nav-mobile-link">Science</a></li>
+  </ul>
+  <a href="forecast.html" class="nav-cta-mobile">Track Aurora</a>
+</nav>
+<div class="nav-spacer" id="nav-spacer"></div>
+<script>
+(function(){var nav=document.getElementById('site-nav'),scrim=document.getElementById('nav-scrim'),mobileMenu=document.getElementById('nav-mobile-menu'),toggle=nav.querySelector('.nav-mobile-toggle');function onScroll(){window.scrollY>20?nav.classList.add('scrolled'):nav.classList.remove('scrolled');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();function open(){nav.classList.add('nav-mobile-open');mobileMenu.classList.add('is-open');scrim.classList.add('is-open');toggle.setAttribute('aria-expanded','true');mobileMenu.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}function close(){nav.classList.remove('nav-mobile-open');mobileMenu.classList.remove('is-open');scrim.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');mobileMenu.setAttribute('aria-hidden','true');document.body.style.overflow='';}toggle.addEventListener('click',function(){nav.classList.contains('nav-mobile-open')?close():open();});scrim.addEventListener('click',close);mobileMenu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});})();
+</script>
+
+
+<!-- ============================================================
+     SECTION 1: HERO
+     ============================================================ -->
+<section id="hero" aria-label="Hero">
+
+  <!-- Aurora gradient blob mesh -->
+  <div id="hero-aurora-mesh" aria-hidden="true">
+    <div class="aurora-blob aurora-blob--teal"></div>
+    <div class="aurora-blob aurora-blob--violet"></div>
+    <div class="aurora-blob aurora-blob--lime"></div>
+  </div>
+
+  <!-- Radial vignette -->
+  <div id="hero-vignette" aria-hidden="true"></div>
+
+  <div id="hero-content">
+
+    <!-- Live Kp badge -->
+    <div id="hero-kp-badge" role="status" aria-live="polite">
+      <span id="hero-kp-badge-dot" aria-hidden="true"></span>
+      <span id="hero-kp-badge-text">Kp 3.2 — ACTIVE</span>
+    </div>
+
+    <!-- Headline group -->
+    <div id="hero-headline-group">
+      <h1 id="hero-title">
+        <span class="hero-word">See</span>
+        <span class="hero-word">the</span>
+        <span class="hero-word">Sky</span>
+        <span class="hero-word">Before</span>
+        <span class="hero-word">It</span>
+        <span class="hero-word">Shifts.</span>
+      </h1>
+      <p id="hero-sub">
+        Real-time geomagnetic storm forecasting powered by 48 aurora-zone stations.
+      </p>
+    </div>
+
+    <!-- CTA row -->
+    <div id="hero-cta-row">
+      <a href="forecast.html" class="btn-primary-lime">Track the Storm</a>
+      <a href="stations.html" class="btn-ghost-teal">Our Stations</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     DIVIDER 1: hero → live stats
+     Wave shape: gentle long sine, teal
+     ============================================================ -->
+<div id="divider-1" class="section-divider" aria-hidden="true">
+  <svg class="divider-wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="divider-path-1" class="divider-path"
+      d="M0,20 C180,8 360,32 540,20 C720,8 900,32 1080,20 C1260,8 1380,28 1440,20"
+    />
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     SECTION 2: LIVE STATS
+     Bento grid: 3fr 1fr 1fr + full-width ticker strip
+     ============================================================ -->
+<section id="live-stats" aria-label="Live Monitoring">
+  <div id="live-stats-inner">
+
+    <!-- Section header -->
+    <header id="stats-header">
+      <span id="stats-eyebrow">Live Monitoring</span>
+    </header>
+
+    <!-- Bento grid -->
+    <div id="stats-bento">
+
+      <!-- Large Kp index card -->
+      <div id="stats-card-kp" class="bento-card" role="region" aria-label="Current Kp Index">
+        <div id="stats-kp-title">Current Kp Index</div>
+        <div id="stats-kp-number">3.2</div>
+        <div id="stats-kp-label">Moderate Geomagnetic Activity</div>
+      </div>
+
+      <!-- Stations count card -->
+      <div id="stats-card-stations" class="bento-card" role="region" aria-label="Active Stations">
+        <div id="stats-stations-number">48</div>
+        <div id="stats-stations-label">Active Stations</div>
+      </div>
+
+      <!-- Storm class card -->
+      <div id="stats-card-storm" class="bento-card" role="region" aria-label="Storm Class">
+        <div id="stats-storm-badge">G2 Alert</div>
+        <div id="stats-storm-label">Storm Class</div>
+      </div>
+
+      <!-- Aurora data ticker strip -->
+      <div id="stats-ticker-strip" role="marquee" aria-label="Live data feed">
+        <div id="stats-ticker-inner">
+          <!-- First pass -->
+          <div class="ticker-segment">
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Tromsø NO
+              <span class="ticker-value">Kp 3.2</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Fairbanks AK
+              <span class="ticker-value">Kp 3.1</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Reykjavik IS
+              <span class="ticker-value">Kp 3.4</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Yellowknife CA
+              <span class="ticker-value">Kp 3.0</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              McMurdo AQ
+              <span class="ticker-value">Kp 2.9</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Abisko SE
+              <span class="ticker-value">Kp 3.3</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Alert NU
+              <span class="ticker-value">Kp 3.5</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Longyearbyen SV
+              <span class="ticker-value">Kp 3.2</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Solar Wind
+              <span class="ticker-value">412 km/s</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              IMF Bz
+              <span class="ticker-value">−4.2 nT</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Proton Density
+              <span class="ticker-value">8.4 p/cc</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div class="ticker-segment" aria-hidden="true">
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Tromsø NO
+              <span class="ticker-value">Kp 3.2</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Fairbanks AK
+              <span class="ticker-value">Kp 3.1</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Reykjavik IS
+              <span class="ticker-value">Kp 3.4</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Yellowknife CA
+              <span class="ticker-value">Kp 3.0</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              McMurdo AQ
+              <span class="ticker-value">Kp 2.9</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Abisko SE
+              <span class="ticker-value">Kp 3.3</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Alert NU
+              <span class="ticker-value">Kp 3.5</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Longyearbyen SV
+              <span class="ticker-value">Kp 3.2</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Solar Wind
+              <span class="ticker-value">412 km/s</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              IMF Bz
+              <span class="ticker-value">−4.2 nT</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+            <span class="ticker-point">
+              <span class="ticker-dot" aria-hidden="true"></span>
+              Proton Density
+              <span class="ticker-value">8.4 p/cc</span>
+            </span>
+            <span class="ticker-sep" aria-hidden="true">—</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /stats-bento -->
+  </div><!-- /live-stats-inner -->
+</section>
+
+
+<!-- ============================================================
+     DIVIDER 2: live stats → how it works
+     Wave shape: short steep ripple, violet
+     ============================================================ -->
+<div id="divider-2" class="section-divider" aria-hidden="true">
+  <svg class="divider-wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="divider-path-2" class="divider-path"
+      d="M0,28 C80,8 160,36 240,20 C320,4 400,36 480,20 C560,4 640,32 720,18 C800,4 880,34 960,20 C1040,6 1120,30 1200,18 C1280,6 1360,28 1440,16"
+    />
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     SECTION 3: HOW IT WORKS
+     Numbered step rows, section-purple background
+     ============================================================ -->
+<section id="how-it-works" aria-label="How It Works">
+  <div id="how-it-works-inner">
+
+    <!-- Section header -->
+    <header id="steps-header">
+      <span id="steps-eyebrow">How It Works</span>
+      <h2 id="steps-headline">Three Data Streams.<br>One Forecast.</h2>
+    </header>
+
+    <!-- Step rows -->
+    <div id="steps-list">
+
+      <div id="step-1" class="step-row">
+        <div class="step-number" aria-hidden="true">01</div>
+        <div class="step-content">
+          <span class="step-tag">NOAA Satellite</span>
+          <h3 class="step-title">Satellite Uplink</h3>
+          <p class="step-body">NOAA ACE satellite feeds real-time solar wind velocity and density, providing the earliest warning signal of incoming geomagnetic disturbances — 30 to 60 minutes before they reach Earth.</p>
+        </div>
+      </div>
+
+      <div id="step-2" class="step-row">
+        <div class="step-number" aria-hidden="true">02</div>
+        <div class="step-content">
+          <span class="step-tag">Ground Network</span>
+          <h3 class="step-title">Magnetometer Network</h3>
+          <p class="step-body">48 ground stations across Norway, Iceland, Canada, and Alaska sample the geomagnetic field every 60 seconds. This dense auroral-zone coverage resolves fine-scale structure that satellite data alone cannot capture.</p>
+        </div>
+      </div>
+
+      <div id="step-3" class="step-row">
+        <div class="step-number" aria-hidden="true">03</div>
+        <div class="step-content">
+          <span class="step-tag">ML Algorithm</span>
+          <h3 class="step-title">Predictive Algorithm</h3>
+          <p class="step-body">Spectra's forecast engine combines 27-day solar rotation models with live solar wind data to predict Kp 1–3 hours ahead. Accuracy degrades gracefully beyond 3 hours — we tell you what we know, and when we're uncertain.</p>
+        </div>
+      </div>
+
+    </div><!-- /steps-list -->
+  </div><!-- /how-it-works-inner -->
+</section>
+
+
+<!-- ============================================================
+     DIVIDER 3: how it works → stations
+     Wave shape: wide amplitude sine with phase shift, teal
+     ============================================================ -->
+<div id="divider-3" class="section-divider" aria-hidden="true">
+  <svg class="divider-wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="divider-path-3" class="divider-path"
+      d="M0,12 C200,36 400,6 600,26 C800,46 1000,4 1200,24 C1320,36 1400,16 1440,22"
+    />
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     SECTION 4: STATIONS PREVIEW
+     Asymmetric bento: featured 1.4fr + 2x2
+     Background: section-teal-dark
+     ============================================================ -->
+<section id="stations-preview" aria-label="Stations Preview">
+  <div id="stations-inner">
+
+    <!-- Section header -->
+    <header id="stations-header">
+      <span id="stations-eyebrow">Auroral Monitoring Network</span>
+      <h2 id="stations-headline">Stations Across<br>the Aurora Oval</h2>
+    </header>
+
+    <!-- Bento grid -->
+    <div id="stations-bento">
+
+      <!-- Featured station -->
+      <article id="station-featured" class="station-card">
+        <div id="station-featured-arc" aria-hidden="true"></div>
+        <div id="station-featured-badge">Primary Reference</div>
+        <h3 class="station-name">Tromsø, Norway</h3>
+        <p class="station-coords">69.6°N — 18.9°E</p>
+        <p class="station-desc">The world's premier aurora observatory, positioned directly beneath the auroral oval at 69.6°N. 14 active instruments including magnetometers, ionospheric radars, and all-sky cameras. Primary reference station for the Spectra network — when Tromsø sees it, the forecast follows.</p>
+        <div class="station-meta-row">
+          <span class="station-instruments">14 instruments</span>
+          <span class="station-live-dot">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span class="live-label">Live</span>
+          </span>
+        </div>
+      </article>
+
+      <!-- 2x2 smaller station cards -->
+      <div id="stations-grid-right">
+
+        <article id="station-fairbanks" class="station-card station-card-sm">
+          <div>
+            <h3 class="station-name station-name-sm">Fairbanks, AK</h3>
+            <p class="station-coords station-coords-sm">64.8°N — 147.7°W</p>
+          </div>
+          <div class="station-meta-row">
+            <span class="station-instruments">8 instruments</span>
+            <span class="station-live-dot">
+              <span class="live-dot" aria-hidden="true"></span>
+              <span class="live-label">Live</span>
+            </span>
+          </div>
+        </article>
+
+        <article id="station-reykjavik" class="station-card station-card-sm">
+          <div>
+            <h3 class="station-name station-name-sm">Reykjavik, IS</h3>
+            <p class="station-coords station-coords-sm">64.1°N — 21.9°W</p>
+          </div>
+          <div class="station-meta-row">
+            <span class="station-instruments">6 instruments</span>
+            <span class="station-live-dot">
+              <span class="live-dot" aria-hidden="true"></span>
+              <span class="live-label">Live</span>
+            </span>
+          </div>
+        </article>
+
+        <article id="station-yellowknife" class="station-card station-card-sm">
+          <div>
+            <h3 class="station-name station-name-sm">Yellowknife, CA</h3>
+            <p class="station-coords station-coords-sm">62.5°N — 114.4°W</p>
+          </div>
+          <div class="station-meta-row">
+            <span class="station-instruments">7 instruments</span>
+            <span class="station-live-dot">
+              <span class="live-dot" aria-hidden="true"></span>
+              <span class="live-label">Live</span>
+            </span>
+          </div>
+        </article>
+
+        <article id="station-mcmurdo" class="station-card station-card-sm">
+          <div>
+            <h3 class="station-name station-name-sm">McMurdo Station</h3>
+            <p class="station-coords station-coords-sm">−77.8°S — 166.7°E</p>
+          </div>
+          <div class="station-meta-row">
+            <span class="station-instruments">5 instruments</span>
+            <span class="station-live-dot">
+              <span class="live-dot" aria-hidden="true"></span>
+              <span class="live-label">Live</span>
+            </span>
+          </div>
+        </article>
+
+      </div><!-- /stations-grid-right -->
+    </div><!-- /stations-bento -->
+
+    <!-- CTA link -->
+    <div id="stations-cta-row">
+      <a href="stations.html" id="stations-cta-link">Explore All 48 Stations →</a>
+    </div>
+
+  </div><!-- /stations-inner -->
+</section>
+
+
+<!-- ============================================================
+     DIVIDER 4: stations → science
+     Wave shape: compressed double ripple, lime
+     ============================================================ -->
+<div id="divider-4" class="section-divider" aria-hidden="true">
+  <svg class="divider-wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="divider-path-4" class="divider-path"
+      d="M0,20 C100,4 200,36 300,22 C400,8 500,34 600,18 C700,2 800,38 900,22 C1000,6 1100,30 1200,16 C1300,2 1380,26 1440,20"
+    />
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     SECTION 5: SCIENCE TEASER
+     3fr 2fr asymmetric split
+     Background: dark navy #161d25
+     ============================================================ -->
+<section id="science-teaser" aria-label="The Science">
+  <div id="science-inner">
+
+    <span id="science-eyebrow">The Science</span>
+
+    <div id="science-grid">
+
+      <!-- Left column: body copy -->
+      <div id="science-left">
+        <h2 id="science-headline">Aurora Is Charged<br>Particle Physics</h2>
+
+        <p id="science-body">
+          The solar wind — a continuous stream of charged particles from the Sun — travels outward at hundreds of kilometres per second. When it reaches Earth's magnetosphere, it interacts with the magnetic field in ways that depend critically on the orientation of the interplanetary magnetic field (IMF). A southward-pointing IMF drives magnetic reconnection, allowing solar energy to pour into the polar regions.
+        </p>
+
+        <blockquote id="science-pullquote">
+          <p id="science-pullquote-text">"400 km/s — average solar wind velocity that triggers G1 conditions and sets the auroral oval glowing."</p>
+        </blockquote>
+
+        <p id="science-body-2">
+          In the upper atmosphere, electrons accelerate downward along field lines and collide with oxygen and nitrogen atoms. The colour of the aurora depends on which atoms are excited and at what altitude: green from oxygen at 100–150 km, red from oxygen above 200 km, violet and blue from nitrogen at lower altitudes. Spectra's predictive model traces this chain from solar source to optical emission.
+        </p>
+      </div>
+
+      <!-- Right column: aurora spectrum display -->
+      <div id="science-right">
+        <span id="science-spectrum-label">Aurora Emission Spectrum</span>
+
+        <!-- Full gradient bar -->
+        <div id="science-spectrum-bar" aria-hidden="true"></div>
+
+        <!-- Wavelength rows -->
+        <div id="science-spectrum-rows">
+
+          <div id="spectrum-row-teal" class="spectrum-row">
+            <div class="spectrum-bar-wrap">
+              <div class="spectrum-bar-fill spectrum-bar-fill--teal"></div>
+            </div>
+            <div class="spectrum-row-meta">
+              <span class="spectrum-wavelength">558 nm</span>
+              <span class="spectrum-element">Oxygen — Green</span>
+            </div>
+          </div>
+
+          <div id="spectrum-row-violet" class="spectrum-row">
+            <div class="spectrum-bar-wrap">
+              <div class="spectrum-bar-fill spectrum-bar-fill--violet"></div>
+            </div>
+            <div class="spectrum-row-meta">
+              <span class="spectrum-wavelength">630 nm</span>
+              <span class="spectrum-element">Oxygen — Red</span>
+            </div>
+          </div>
+
+          <div id="spectrum-row-lime" class="spectrum-row">
+            <div class="spectrum-bar-wrap">
+              <div class="spectrum-bar-fill spectrum-bar-fill--lime"></div>
+            </div>
+            <div class="spectrum-row-meta">
+              <span class="spectrum-wavelength">391 nm</span>
+              <span class="spectrum-element">Nitrogen — Violet</span>
+            </div>
+          </div>
+
+          <div id="spectrum-row-white" class="spectrum-row">
+            <div class="spectrum-bar-wrap">
+              <div class="spectrum-bar-fill spectrum-bar-fill--white"></div>
+            </div>
+            <div class="spectrum-row-meta">
+              <span class="spectrum-wavelength">557 nm</span>
+              <span class="spectrum-element">Helium — Lime</span>
+            </div>
+          </div>
+
+        </div><!-- /science-spectrum-rows -->
+      </div><!-- /science-right -->
+
+    </div><!-- /science-grid -->
+  </div><!-- /science-inner -->
+</section>
+
+
+<!-- ============================================================
+     DIVIDER 5: science → CTA band
+     Wave shape: long lazy S-curve, violet
+     ============================================================ -->
+<div id="divider-5" class="section-divider" aria-hidden="true">
+  <svg class="divider-wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="divider-path-5" class="divider-path"
+      d="M0,30 C240,10 480,40 720,20 C960,0 1200,30 1440,14"
+    />
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     SECTION 6: CTA BAND
+     Centered, aurora gradient mesh
+     ============================================================ -->
+<section id="cta-band" aria-label="Begin Tracking">
+
+  <!-- Aurora mesh background -->
+  <div id="cta-band-bg" aria-hidden="true">
+    <div id="cta-blob-1" class="cta-blob"></div>
+    <div id="cta-blob-2" class="cta-blob"></div>
+    <div id="cta-blob-3" class="cta-blob"></div>
+  </div>
+
+  <div id="cta-band-inner">
+    <div id="cta-band-content">
+      <span id="cta-band-eyebrow">Get Started</span>
+      <h2 id="cta-band-headline">Begin Tracking Aurora Events</h2>
+      <p id="cta-band-sub">
+        Join thousands of aurora chasers and researchers who rely on Spectra for accurate, science-backed geomagnetic forecasts.
+      </p>
+    </div>
+    <div id="cta-band-buttons">
+      <a href="forecast.html" class="btn-primary-lime">Start Free Forecast</a>
+      <a href="stations.html" class="btn-ghost-teal">View Stations</a>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer id="site-footer">
+  <div id="footer-inner">
+
+    <div id="footer-left">
+      <a href="index.html" id="footer-logo">SPECTRA</a>
+      <p id="footer-tagline">Geomagnetic monitoring for aurora observers worldwide.</p>
+      <span id="footer-copyright">&copy; 2026 Spectra Inc. All rights reserved.</span>
+    </div>
+
+    <div id="footer-right">
+      <ul id="footer-nav">
+        <li><a href="forecast.html" class="footer-nav-link">Forecast</a></li>
+        <li><a href="stations.html" class="footer-nav-link">Stations</a></li>
+        <li><a href="science.html" class="footer-nav-link">Science</a></li>
+      </ul>
+      <div id="footer-status">
+        <span id="footer-status-dot" aria-hidden="true"></span>
+        All 48 stations online
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     GSAP Animations
+     ============================================================ -->
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Read motion token values from CSS custom properties
+  const rootStyle = getComputedStyle(document.documentElement);
+  const EASE_PRIMARY = rootStyle.getPropertyValue('--ease-primary').trim() || 'power3.out';
+  const EASE_SPRING  = rootStyle.getPropertyValue('--ease-spring').trim()  || 'back.out(1.4)';
+
+  // ─────────────────────────────────────────────
+  // 1. HERO: on-load word clip-path reveal stagger
+  //    Uses gsap.set() first to own the initial
+  //    clip-path state — no CSS opacity:0 on words
+  // ─────────────────────────────────────────────
+  const heroWords = gsap.utils.toArray('.hero-word');
+  gsap.set(heroWords, { clipPath: 'inset(0 100% 0 0)', opacity: 0 });
+  gsap.to(heroWords, {
+    clipPath: 'inset(0 0% 0 0)',
+    opacity: 1,
+    stagger: 0.12,
+    duration: 1.4,
+    ease: 'power3.out',
+    delay: 0.3
+  });
+
+  // Hero badge: slide in from below on load
+  gsap.set('#hero-kp-badge', { y: 20, opacity: 0 });
+  gsap.to('#hero-kp-badge', {
+    y: 0,
+    opacity: 1,
+    duration: 0.8,
+    ease: EASE_SPRING,
+    delay: 0.1
+  });
+
+  // Hero subheadline fade + rise (load, not scroll)
+  gsap.set('#hero-sub', { y: 16, opacity: 0 });
+  gsap.to('#hero-sub', {
+    y: 0,
+    opacity: 1,
+    duration: 0.9,
+    ease: 'power2.out',
+    delay: 1.0
+  });
+
+  // Hero CTA row scale from center
+  gsap.set('#hero-cta-row', { scale: 0.95, opacity: 0 });
+  gsap.to('#hero-cta-row', {
+    scale: 1,
+    opacity: 1,
+    duration: 0.7,
+    ease: EASE_SPRING,
+    delay: 1.3
+  });
+
+  // ─────────────────────────────────────────────
+  // 2. LIVE STATS: bento card stagger on scroll
+  //    scale + y rise — no initial CSS opacity:0
+  // ─────────────────────────────────────────────
+  const statCards = gsap.utils.toArray('#stats-card-kp, #stats-card-stations, #stats-card-storm');
+  gsap.set(statCards, { scale: 0.9, y: 30 });
+  gsap.to(statCards, {
+    scrollTrigger: {
+      trigger: '#live-stats',
+      start: 'top 80%',
+      once: true
+    },
+    scale: 1,
+    y: 0,
+    stagger: 0.1,
+    duration: 0.9,
+    ease: 'power3.out'
+  });
+
+  // Stats header reveal
+  gsap.set('#stats-header', { y: 20 });
+  gsap.to('#stats-header', {
+    scrollTrigger: { trigger: '#live-stats', start: 'top 85%', once: true },
+    y: 0,
+    duration: 0.7,
+    ease: EASE_PRIMARY
+  });
+
+  // ─────────────────────────────────────────────
+  // 3. HOW IT WORKS: step rows cosmicReveal
+  //    clip-path wipe from left, stagger 200ms
+  // ─────────────────────────────────────────────
+  const stepRows = gsap.utils.toArray('.step-row');
+  gsap.set(stepRows, { clipPath: 'inset(0 100% 0 0)' });
+  stepRows.forEach(function(row, i) {
+    gsap.to(row, {
+      scrollTrigger: {
+        trigger: row,
+        start: 'top 82%',
+        once: true
+      },
+      clipPath: 'inset(0 0% 0 0)',
+      duration: 1.2,
+      delay: i * 0.08,
+      ease: 'power3.out'
+    });
+  });
+
+  // Steps headline letter-spacing bloom
+  gsap.set('#steps-headline', { letterSpacing: '0em', y: 16 });
+  gsap.to('#steps-headline', {
+    scrollTrigger: { trigger: '#steps-header', start: 'top 80%', once: true },
+    letterSpacing: '0.02em',
+    y: 0,
+    duration: 0.9,
+    ease: 'power2.out'
+  });
+
+  // ─────────────────────────────────────────────
+  // 4. STATIONS: rotation + y rise stagger
+  // ─────────────────────────────────────────────
+  const stationCards = gsap.utils.toArray('#station-featured, #station-fairbanks, #station-reykjavik, #station-yellowknife, #station-mcmurdo');
+  gsap.set(stationCards, { rotation: 2, y: 40 });
+  gsap.to(stationCards, {
+    scrollTrigger: {
+      trigger: '#stations-preview',
+      start: 'top 78%',
+      once: true
+    },
+    rotation: 0,
+    y: 0,
+    stagger: 0.12,
+    duration: 1.0,
+    ease: 'power3.out'
+  });
+
+  // Stations headline: x slide from left
+  gsap.set('#stations-headline', { x: -30 });
+  gsap.to('#stations-headline', {
+    scrollTrigger: { trigger: '#stations-header', start: 'top 82%', once: true },
+    x: 0,
+    duration: 0.9,
+    ease: EASE_PRIMARY
+  });
+
+  // ─────────────────────────────────────────────
+  // 5. SCIENCE: divergent x slides
+  //    Left column slides from left (-60px)
+  //    Right column slides from right (+60px)
+  // ─────────────────────────────────────────────
+  gsap.set('#science-left', { x: -60 });
+  gsap.to('#science-left', {
+    scrollTrigger: { trigger: '#science-grid', start: 'top 80%', once: true },
+    x: 0,
+    duration: 1.1,
+    ease: 'power3.out'
+  });
+
+  gsap.set('#science-right', { x: 60 });
+  gsap.to('#science-right', {
+    scrollTrigger: { trigger: '#science-grid', start: 'top 80%', once: true },
+    x: 0,
+    duration: 1.1,
+    ease: 'power3.out'
+  });
+
+  // Spectrum bars: width draw from 0% → 100%
+  const spectrumFills = gsap.utils.toArray('.spectrum-bar-fill');
+  gsap.set(spectrumFills, { width: '0%' });
+  gsap.to(spectrumFills, {
+    scrollTrigger: {
+      trigger: '#science-spectrum-rows',
+      start: 'top 82%',
+      once: true
+    },
+    width: '100%',
+    stagger: 0.12,
+    duration: 1.0,
+    ease: 'power2.out'
+  });
+
+  // ─────────────────────────────────────────────
+  // 6. CTA BAND: y rise on enter
+  // ─────────────────────────────────────────────
+  gsap.set('#cta-band-content', { y: 30 });
+  gsap.to('#cta-band-content', {
+    scrollTrigger: { trigger: '#cta-band', start: 'top 80%', once: true },
+    y: 0,
+    duration: 1.0,
+    ease: 'power3.out'
+  });
+
+  gsap.set('#cta-band-buttons', { y: 20 });
+  gsap.to('#cta-band-buttons', {
+    scrollTrigger: { trigger: '#cta-band', start: 'top 78%', once: true },
+    y: 0,
+    duration: 0.8,
+    ease: EASE_SPRING,
+    delay: 0.2
+  });
+
+  // ─────────────────────────────────────────────
+  // 7. SVG WAVE DIVIDERS: stroke-dashoffset draw
+  //    GSAP reads dashoffset attr, animates to 0
+  // ─────────────────────────────────────────────
+  var dividerPaths = [
+    { path: '#divider-path-1', trigger: '#divider-1' },
+    { path: '#divider-path-2', trigger: '#divider-2' },
+    { path: '#divider-path-3', trigger: '#divider-3' },
+    { path: '#divider-path-4', trigger: '#divider-4' },
+    { path: '#divider-path-5', trigger: '#divider-5' }
+  ];
+
+  dividerPaths.forEach(function(item) {
+    var el = document.querySelector(item.path);
+    if (!el) return;
+    gsap.to(el, {
+      scrollTrigger: {
+        trigger: item.trigger,
+        start: 'top 90%',
+        once: true
+      },
+      strokeDashoffset: 0,
+      duration: 1.4,
+      ease: 'power3.out'
+    });
+  });
+
+</script>
+
+</body>
+</html>

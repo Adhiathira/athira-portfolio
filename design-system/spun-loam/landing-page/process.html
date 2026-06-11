@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process — Forma Calibration</title>
+  <meta name="description" content="Forma's four-stage calibration process: intake assessment, reference standard selection, measurement execution, and accredited certificate issuance.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/footer.css">
+
+  <style>
+    /* ── Process Page Hero ── */
+    #process-hero {
+      min-height: 52vh;
+      display: flex;
+      align-items: flex-end;
+      padding-top: 32px;
+      padding-bottom: 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #process-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    #process-hero-bg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #process-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(34, 33, 31, 0.78) 0%,
+        rgba(34, 33, 31, 0.3) 60%,
+        rgba(34, 33, 31, 0.55) 100%
+      );
+      pointer-events: none;
+    }
+
+    #process-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      width: 100%;
+    }
+
+    #process-hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245, 242, 238, 0.5);
+      margin-bottom: 16px;
+    }
+
+    #process-hero-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-cta-primary-text);
+      margin: 0 0 16px;
+      line-height: 1.05;
+    }
+
+    #process-hero-sub {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: rgba(245, 242, 238, 0.55);
+      margin: 0;
+      max-width: 500px;
+      line-height: 1.65;
+    }
+
+    /* ── Four Stages ── */
+    #stages-section {
+      background: var(--color-page-bg);
+      padding: var(--space-section-top) 0 var(--space-section-bottom);
+    }
+
+    #stages-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+    }
+
+    #stages-header {
+      margin-bottom: 64px;
+    }
+
+    #stages-rule {
+      width: 32px;
+      height: 1px;
+      background: var(--color-heading);
+      margin-bottom: 20px;
+    }
+
+    #stages-heading {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 16px;
+    }
+
+    #stages-sub {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      margin: 0;
+      max-width: 480px;
+      line-height: 1.65;
+    }
+
+    /* Numbered step rows — single-column, horizontal two-col each */
+    #stages-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .stage-item {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 0 48px;
+      padding: 48px 0;
+      border-top: 1px solid var(--color-border-subtle);
+      align-items: start;
+    }
+
+    .stage-item:last-child {
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .stage-number {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--color-border-subtle);
+      line-height: 1;
+      padding-top: 4px;
+    }
+
+    .stage-content {}
+
+    .stage-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      margin: 0 0 16px;
+    }
+
+    .stage-desc {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: var(--color-body-text);
+      margin: 0 0 20px;
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    .stage-outputs {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stage-tag {
+      font-family: var(--font-body);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+      border: 1px solid var(--color-border-subtle);
+      padding: 4px 10px;
+      border-radius: var(--space-btn-radius);
+    }
+
+    /* ── Methodology dark band ── */
+    #methodology-band {
+      background: var(--color-dark-surface);
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #methodology-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    #methodology-left h2 {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-cta-primary-text);
+      margin: 0 0 24px;
+      line-height: 1.08;
+    }
+
+    #methodology-left p {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: rgba(245, 242, 238, 0.55);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    #methodology-right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-top: 8px;
+    }
+
+    .methodology-point {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .methodology-point-marker {
+      width: 6px;
+      height: 6px;
+      background: rgba(245, 242, 238, 0.4);
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .methodology-point-text {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: rgba(245, 242, 238, 0.65);
+      line-height: 1.6;
+    }
+
+    /* ── Accreditation section ── */
+    #accreditation-section {
+      background: linear-gradient(180deg, var(--color-surface-soft) 0%, var(--color-page-bg) 100%);
+      padding: var(--space-section-top) 0 var(--space-section-bottom);
+    }
+
+    #accreditation-inner {
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    #accreditation-label {
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      font-weight: 700;
+      letter-spacing: var(--font-letter-spacing-heading);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      line-height: 1.08;
+      margin: 0;
+    }
+
+    #accreditation-detail {}
+
+    .accred-item {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+    }
+
+    .accred-item:first-child {
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .accred-key {
+      font-family: var(--font-body);
+      font-size: var(--type-small);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted-text);
+    }
+
+    .accred-value {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: 500;
+      letter-spacing: var(--font-letter-spacing-body);
+      text-transform: uppercase;
+      color: var(--color-heading);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .stage-item {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .stage-number {
+        font-size: 1.5rem;
+        color: var(--color-border-subtle);
+      }
+      #methodology-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      #accreditation-inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .accred-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #stages-section {
+        padding: 48px 0;
+      }
+      .stage-item {
+        padding: 32px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Forma</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="process.html" class="nav-link--active">Process</a></li>
+        <li><a href="clients.html">Clients</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="process.html">Process</a>
+    <a href="clients.html">Clients</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <!-- Hero -->
+  <section id="process-hero">
+    <div id="process-hero-bg">
+      <img
+        id="process-hero-bg-img"
+        src="assets/process-hero.jpeg"
+        alt="Forma laboratory technician at the calibration bench reviewing reference documentation"
+        style="width:100%;height:100%;object-fit:cover;"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      >
+      <div
+        id="process-hero-bg-placeholder"
+        style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:var(--color-dark-surface);color:rgba(245,242,238,0.3);font-family:var(--font-body);font-size:0.85rem;"
+      >→ assets/process-hero.jpeg</div>
+      <div id="process-hero-overlay"></div>
+    </div>
+    <div id="process-hero-content">
+      <div id="process-hero-eyebrow">Methodology</div>
+      <h1 id="process-hero-heading">The Forma Process</h1>
+      <p id="process-hero-sub">Four stages. Every instrument. Every time. No deviations — because a calibration that shortcuts the methodology is not a calibration.</p>
+    </div>
+  </section>
+
+  <!-- Four Stages -->
+  <section id="stages-section">
+    <div id="stages-inner">
+      <div id="stages-header">
+        <div id="stages-rule"></div>
+        <h2 id="stages-heading">Four Stages to Traceability</h2>
+        <p id="stages-sub">From the moment an instrument arrives to the moment the accredited certificate is issued, every step is documented, witnessed, and retained in our quality management system.</p>
+      </div>
+
+      <ol id="stages-list">
+        <li class="stage-item" id="stage-1">
+          <div class="stage-number">01</div>
+          <div class="stage-content">
+            <h3 class="stage-title">Intake &amp; Assessment</h3>
+            <p class="stage-desc">Each instrument is received, condition-photographed, logged into the Forma LIMS, and assessed against the requested calibration scope. Out-of-tolerance pre-inspection readings are recorded as-found data. No repairs are performed — only calibration. If an instrument cannot be safely calibrated, the client is notified before any measurement is taken.</p>
+            <div class="stage-outputs">
+              <span class="stage-tag">Intake Form</span>
+              <span class="stage-tag">As-Found Record</span>
+              <span class="stage-tag">Scope Confirmation</span>
+            </div>
+          </div>
+        </li>
+        <li class="stage-item" id="stage-2">
+          <div class="stage-number">02</div>
+          <div class="stage-content">
+            <h3 class="stage-title">Reference Standard Selection</h3>
+            <p class="stage-desc">The calibration method and reference standard are selected from Forma's accredited scope. Every reference standard carries a current NVLAP-accredited calibration certificate with uncertainty budget. The uncertainty ratio between the reference standard and the instrument under test is confirmed to be ≥ 4:1 before measurement proceeds.</p>
+            <div class="stage-outputs">
+              <span class="stage-tag">Method Selection Record</span>
+              <span class="stage-tag">Reference Certificate</span>
+              <span class="stage-tag">4:1 Ratio Verification</span>
+            </div>
+          </div>
+        </li>
+        <li class="stage-item" id="stage-3">
+          <div class="stage-number">03</div>
+          <div class="stage-content">
+            <h3 class="stage-title">Measurement Execution</h3>
+            <p class="stage-desc">Measurements are performed per the applicable ISO, ASTM, or OIML standard, or Forma's internally-developed and peer-reviewed SOPs where standards do not exist. Repeatability readings and environmental conditions (temperature, humidity, barometric pressure) are recorded for every calibration. Raw data is retained for ten years in Forma's document control system.</p>
+            <div class="stage-outputs">
+              <span class="stage-tag">Raw Data Worksheet</span>
+              <span class="stage-tag">Environmental Log</span>
+              <span class="stage-tag">Repeatability Data</span>
+            </div>
+          </div>
+        </li>
+        <li class="stage-item" id="stage-4">
+          <div class="stage-number">04</div>
+          <div class="stage-content">
+            <h3 class="stage-title">Certificate Issuance</h3>
+            <p class="stage-desc">The calibration certificate is generated from measured data — never from nominal values. Certificates include as-found and as-left readings, expanded uncertainty (k=2, 95% confidence), environmental conditions, method references, and technician identification. Certificates are issued only by Forma staff designated as authorized signatories in our quality management system.</p>
+            <div class="stage-outputs">
+              <span class="stage-tag">Accredited Certificate</span>
+              <span class="stage-tag">Uncertainty Statement</span>
+              <span class="stage-tag">As-Left Data</span>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Methodology Band (dark) -->
+  <section id="methodology-band">
+    <div id="methodology-inner">
+      <div id="methodology-left">
+        <h2>Measurement Uncertainty — Not Just a Footnote</h2>
+        <p>Every Forma certificate includes a full expanded uncertainty statement calculated per JCGM 100:2008 (GUM). This is not a compliance checkbox. Measurement uncertainty is the language your quality system uses to determine whether an instrument actually meets its specification — without it, a calibration result is just a number.</p>
+      </div>
+      <div id="methodology-right">
+        <div class="methodology-point" id="meth-1">
+          <div class="methodology-point-marker"></div>
+          <p class="methodology-point-text">Uncertainty budgets include: reference standard uncertainty, repeatability, resolution, thermal drift, and measurement system bias. Each source is quantified, not estimated.</p>
+        </div>
+        <div class="methodology-point" id="meth-2">
+          <div class="methodology-point-marker"></div>
+          <p class="methodology-point-text">Guard-band methodology applied to all pass/fail decisions. An instrument reading within tolerance but outside the guard-band is flagged — not passed — because the measurement uncertainty allows for OOT.</p>
+        </div>
+        <div class="methodology-point" id="meth-3">
+          <div class="methodology-point-marker"></div>
+          <p class="methodology-point-text">Uncertainty ratios are reviewed annually as reference standard uncertainties are updated. If a ratio degrades below 4:1, affected calibrations are re-evaluated before the next cycle.</p>
+        </div>
+        <div class="methodology-point" id="meth-4">
+          <div class="methodology-point-marker"></div>
+          <p class="methodology-point-text">All uncertainty calculations are available for client review upon request. Forma does not treat measurement uncertainty as proprietary — your quality decision deserves the full picture.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accreditation Section -->
+  <section id="accreditation-section">
+    <div id="accreditation-inner">
+      <div id="accreditation-label-wrap">
+        <h2 id="accreditation-label">Accreditation &amp; Traceability</h2>
+      </div>
+      <div id="accreditation-detail">
+        <div class="accred-item" id="accred-1">
+          <span class="accred-key">Accreditation Body</span>
+          <span class="accred-value">NVLAP (National Voluntary Laboratory Accreditation Program)</span>
+        </div>
+        <div class="accred-item" id="accred-2">
+          <span class="accred-key">Standard</span>
+          <span class="accred-value">ISO/IEC 17025:2017</span>
+        </div>
+        <div class="accred-item" id="accred-3">
+          <span class="accred-key">Lab Code</span>
+          <span class="accred-value">500812-0</span>
+        </div>
+        <div class="accred-item" id="accred-4">
+          <span class="accred-key">Traceability Chain</span>
+          <span class="accred-value">NIST SI via NVLAP-accredited secondary reference laboratories</span>
+        </div>
+        <div class="accred-item" id="accred-5">
+          <span class="accred-key">Last Assessment</span>
+          <span class="accred-value">March 2024 — Zero Non-Conformances</span>
+        </div>
+        <div class="accred-item" id="accred-6">
+          <span class="accred-key">Next Surveillance</span>
+          <span class="accred-value">September 2025</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="site-footer">
+    <div id="footer-inner">
+      <div id="footer-brand">
+        <div id="footer-logo">Forma</div>
+        <p id="footer-tagline">Precision. Traceability. Confidence.</p>
+        <p id="footer-address">114 Industrial Parkway, Suite 8<br>Ann Arbor, MI 48108</p>
+      </div>
+      <div id="footer-nav-col-1" class="footer-nav-col">
+        <p class="footer-col-heading">Services</p>
+        <ul class="footer-nav-list">
+          <li><a href="services.html">Gravimetric</a></li>
+          <li><a href="services.html">Thermal</a></li>
+          <li><a href="services.html">Volumetric</a></li>
+          <li><a href="services.html">Pressure &amp; Electrical</a></li>
+          <li><a href="services.html">Dimensional</a></li>
+        </ul>
+      </div>
+      <div id="footer-nav-col-2" class="footer-nav-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-nav-list">
+          <li><a href="process.html">Process</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div id="footer-contact-col" class="footer-nav-col">
+        <p class="footer-col-heading">Contact</p>
+        <ul class="footer-nav-list">
+          <li><a href="mailto:intake@forma-cal.com">intake@forma-cal.com</a></li>
+          <li><a href="tel:+17342001847">+1 734 200 1847</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <div id="footer-bottom-inner">
+        <span id="footer-copyright">© 2024 Forma Calibration Services LLC</span>
+        <span id="footer-accred">ISO/IEC 17025:2017 Accredited · NVLAP Lab Code 500812-0</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="behaviors/nav.js"></script>
+  <script>
+    const lenis = new Lenis({ lerp: 0.08 });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    const BASE_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-base')) || 0.4;
+
+    // Hero entrance
+    gsap.from('#process-hero-eyebrow', { y: 6, duration: 0.3, ease: 'power2.inOut', delay: 0.2 });
+    gsap.from('#process-hero-heading', { y: 10, duration: 0.4, ease: 'power2.inOut', delay: 0.32 });
+    gsap.from('#process-hero-sub', { y: 8, duration: 0.35, ease: 'power2.inOut', delay: 0.5 });
+
+    // Section rule
+    gsap.from('#stages-rule', {
+      scaleX: 0, transformOrigin: 'left center', duration: 0.6, ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#stages-section', start: 'top 80%' }
+    });
+
+    // Stage items — rotate + rise scattered assembly
+    document.querySelectorAll('.stage-item').forEach((item, i) => {
+      gsap.from(item, {
+        rotation: i % 2 === 0 ? 0.8 : -0.8,
+        y: 20 + i * 4,
+        duration: 0.45,
+        ease: 'power2.inOut',
+        scrollTrigger: { trigger: item, start: 'top 85%' }
+      });
+    });
+
+    // Stage tags — stagger
+    gsap.from('.stage-tag', {
+      scale: 0.88,
+      duration: 0.3,
+      stagger: 0.04,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: '#stages-list', start: 'top 80%' }
+    });
+
+    // Methodology: divergent left/right entry
+    gsap.from('#methodology-left', {
+      x: -60, duration: 0.55, ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#methodology-band', start: 'top 78%' }
+    });
+    gsap.from('.methodology-point', {
+      x: 50, duration: 0.4, stagger: 0.1, ease: 'power2.inOut',
+      scrollTrigger: { trigger: '#methodology-right', start: 'top 80%' }
+    });
+
+    // Accreditation rows — clip-path sequential wipe
+    document.querySelectorAll('.accred-item').forEach((item, i) => {
+      gsap.from(item, {
+        clipPath: 'inset(0 100% 0 0)',
+        duration: 0.5,
+        ease: 'power3.inOut',
+        delay: i * 0.08,
+        scrollTrigger: { trigger: '#accreditation-detail', start: 'top 82%' }
+      });
+      gsap.set(item, { clipPath: 'inset(0 0% 0 0)' });
+    });
+  </script>
+</body>
+</html>

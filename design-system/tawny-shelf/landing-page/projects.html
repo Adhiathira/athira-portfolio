@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Foliant</title>
+  <meta name="description" content="Heritage restoration projects powered by Foliant's rare materials archive. Case studies from conservation architecture across the United Kingdom and Europe.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/hero.css">
+  <link rel="stylesheet" href="components/sections.css">
+  <style>
+    /* ── Page hero ── */
+    .page-hero-medium {
+      position: relative;
+      width: 100%;
+      height: 48vh;
+      min-height: 320px;
+      max-height: 560px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: var(--color-heading);
+    }
+    #page-hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to top, rgba(24,63,38,0.88) 0%, rgba(24,63,38,0.25) 100%);
+    }
+    #page-hero-img-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    #page-hero-img-bg img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+    }
+    #page-hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: var(--grid-max-width);
+      margin: 0 auto;
+      padding: 0 var(--grid-container-padding) 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .page-hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--type-nav);
+      font-weight: var(--weight-nav);
+      letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin: 0;
+    }
+    .page-hero-title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h1);
+      font-weight: var(--weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      line-height: var(--line-height-heading);
+      color: var(--color-white);
+      margin: 0;
+    }
+    .page-hero-subtitle {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      color: rgba(255,255,255,0.7);
+      margin: 0;
+      max-width: 52ch;
+      letter-spacing: var(--font-letter-spacing-body);
+    }
+
+    /* ── Projects grid — editorial asymmetric ── */
+    #projects-section {
+      background: var(--color-page-bg);
+      padding: var(--space-section-y) 0;
+    }
+    #projects-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2.5rem var(--grid-gap, 16.8px);
+    }
+    /* Feature project spans full width */
+    .project-card-feature {
+      grid-column: 1 / 3;
+    }
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      will-change: transform, opacity;
+    }
+    .project-img {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-surface);
+    }
+    .project-card-feature .project-img {
+      aspect-ratio: 16 / 7;
+    }
+    .project-card:not(.project-card-feature) .project-img {
+      aspect-ratio: 4 / 3;
+    }
+    .project-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+      transition: transform var(--duration-slow) var(--ease-in-out);
+    }
+    .project-card:hover .project-img img {
+      transform: scale(1.03);
+    }
+    .project-img-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem 1.5rem 1.5rem;
+      background: linear-gradient(to top, rgba(24,63,38,0.7) 0%, transparent 100%);
+    }
+    .project-type {
+      font-family: var(--font-body);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-nav);
+      letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin: 0 0 0.25rem 0;
+    }
+    .project-name {
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      font-weight: var(--weight-heading);
+      letter-spacing: var(--font-letter-spacing-heading);
+      color: var(--color-white);
+      margin: 0;
+      line-height: var(--line-height-heading);
+    }
+    .project-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .project-location {
+      font-family: var(--font-body);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-body);
+      color: var(--color-muted);
+      margin: 0;
+      letter-spacing: var(--font-letter-spacing-body);
+    }
+    .project-summary {
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      font-weight: var(--weight-body);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-body-text);
+      margin: 0;
+      letter-spacing: var(--font-letter-spacing-body);
+      max-width: 60ch;
+    }
+    .project-materials-used {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+    .material-tag {
+      font-family: var(--font-body);
+      font-size: var(--type-caption);
+      font-weight: var(--weight-nav);
+      letter-spacing: var(--font-letter-spacing-nav);
+      text-transform: uppercase;
+      color: var(--color-heading);
+      background: transparent;
+      border: 1px solid var(--color-border);
+      border-radius: 50px;
+      padding: 0.2rem 0.7rem;
+    }
+
+    @media (max-width: 900px) {
+      #projects-grid { grid-template-columns: 1fr; }
+      .project-card-feature { grid-column: 1; }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-text">Foliant</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="materials.html">Materials</a></li>
+      <li><a href="projects.html" class="nav-link--active">Projects</a></li>
+      <li><a href="methods.html">Methods</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="materials.html">Materials</a>
+  <a href="projects.html" class="nav-link--active">Projects</a>
+  <a href="methods.html">Methods</a>
+  <a href="about.html">About</a>
+</div>
+
+<!-- PAGE HERO -->
+<section id="page-hero" class="page-hero-medium">
+  <div id="page-hero-overlay"></div>
+  <div id="page-hero-img-bg" aria-hidden="true">
+    <img src="assets/projects-hero.jpeg" alt="Restored stone facade, conservation scaffolding"
+      onerror="this.style.display='none'">
+  </div>
+  <div id="page-hero-content">
+    <p class="page-hero-eyebrow">Case Studies</p>
+    <h1 class="page-hero-title">Projects</h1>
+    <p class="page-hero-subtitle">Heritage restorations where Foliant's archive provided provenance-grade materials from survey to specification.</p>
+  </div>
+</section>
+
+<!-- PROJECTS SECTION -->
+<section id="projects-section">
+  <div class="section-inner">
+    <div id="projects-grid">
+
+      <!-- Feature project -->
+      <article class="project-card project-card-feature">
+        <div class="project-img">
+          <img src="assets/project-wool-exchange.jpeg" alt="Bradford Wool Exchange restoration, Victorian Gothic facade"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:#c5bfb7;font-size:0.75rem;font-family:var(--font-body);color:#888;">→ project-wool-exchange.jpeg</div>
+          <div class="project-img-overlay">
+            <p class="project-type">Featured · Stone Restoration</p>
+            <h2 class="project-name">Bradford Wool Exchange — Victorian Gothic Facade</h2>
+          </div>
+        </div>
+        <div class="project-meta">
+          <p class="project-location">Bradford, West Yorkshire · 2021–2023</p>
+          <p class="project-summary">A Grade I listed Victorian Gothic trading hall requiring like-for-like replacement of failed sandstone dressings. Foliant sourced 340 m² of matching Morley Moor sandstone with petrographic confirmation and provided full chain-of-custody documentation acceptable to Historic England and Bradford Council's conservation officer.</p>
+          <div class="project-materials-used">
+            <span class="material-tag">Millstone Grit</span>
+            <span class="material-tag">Lime Mortar NHL 2</span>
+            <span class="material-tag">Sandstone Dressings</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Standard projects -->
+      <article class="project-card">
+        <div class="project-img">
+          <img src="assets/project-clerkenwell-warehouse.jpeg" alt="Victorian warehouse brick restoration"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:#c9b99c;font-size:0.75rem;font-family:var(--font-body);color:#888;">→ project-clerkenwell.jpeg</div>
+          <div class="project-img-overlay">
+            <p class="project-type">Masonry</p>
+            <h3 class="project-name">Clerkenwell Warehouse Conversion</h3>
+          </div>
+        </div>
+        <div class="project-meta">
+          <p class="project-location">London, EC1M · 2022</p>
+          <p class="project-summary">Selective repointing and brick replacement for a Grade II* warehouse conversion. 4,200 hand-matched London Stock Brick units sourced from a demolished Kent brewery of the same firing period.</p>
+          <div class="project-materials-used">
+            <span class="material-tag">London Stock Brick</span>
+            <span class="material-tag">Lime Putty Mortar</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-img">
+          <img src="assets/project-malt-house.jpeg" alt="Suffolk malt house, oak structural repair"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;width:100%;height:100%;background:#b5a08a;font-size:0.75rem;font-family:var(--font-body);color:#888;">→ project-malt-house.jpeg</div>
+          <div class="project-img-overlay">
+            <p class="project-type">Timber</p>
+            <h3 class="project-name">Framlingham Malt House Roof</h3>
+          </div>
+        </div>
+        <div class="project-meta">
+          <p class="project-location">Framlingham, Suffolk · 2020</p>
+          <p class="project-summary">Structural oak frame repair to a 17th-century malt house roof. Dendrochronologically dated English Oak sourced and matched to felling period 1680–1710, accepted under SPAB repair philosophy.</p>
+          <div class="project-materials-used">
+            <span class="material-tag">English Oak</span>
+            <span class="material-tag">Dendrochronology</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- WAVE DIVIDER -->
+<div class="section-divider" style="margin-top:0;">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,15 1440,20 L1440,60 L0,60 Z" fill="#2a5c3a"/>
+  </svg>
+</div>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div id="footer-inner">
+    <div id="footer-brand">
+      <div id="footer-logo">Foliant</div>
+      <p id="footer-tagline">The archive that builds.</p>
+      <p id="footer-address">Foliant Archive Ltd<br>12 Clerkenwell Road, London EC1M 5PQ</p>
+    </div>
+    <nav id="footer-nav">
+      <div class="footer-col">
+        <p class="footer-col-heading">Archive</p>
+        <ul class="footer-links">
+          <li><a href="materials.html">Materials</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="methods.html">Methods</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html#team">Team</a></li>
+          <li><a href="about.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Standards</p>
+        <ul class="footer-links">
+          <li><a href="#">ICOMOS</a></li>
+          <li><a href="#">Historic England</a></li>
+          <li><a href="#">NBS Format</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div id="footer-bottom" class="footer-copyright">
+    <p id="footer-legal">&copy; 2024 Foliant Archive Ltd. All rights reserved.</p>
+    <p id="footer-legal-links"><a href="#">Privacy</a> · <a href="#">Terms</a></p>
+  </div>
+</footer>
+
+<script src="behaviors/nav.js"></script>
+<script>
+(function() {
+  'use strict';
+  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(time => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Page hero — divergent entrance
+  gsap.from('.page-hero-eyebrow', { x: -60, autoAlpha: 0, duration: 0.65, ease: 'expo.out', delay: 0.3 });
+  gsap.from('.page-hero-title',   { x: -80, autoAlpha: 0, duration: 0.65, ease: 'expo.out', delay: 0.42 });
+  gsap.from('.page-hero-subtitle',{ x: -50, autoAlpha: 0, duration: 0.65, ease: 'expo.out', delay: 0.54 });
+
+  // Feature project — clip-path reveal
+  ScrollTrigger.create({
+    trigger: '.project-card-feature',
+    start: 'top 75%',
+    once: true,
+    onEnter: () => {
+      gsap.fromTo('.project-card-feature .project-img',
+        { clipPath: 'inset(0 100% 0 0)' },
+        { clipPath: 'inset(0 0% 0 0)', duration: 1.0, ease: 'power3.inOut' }
+      );
+      gsap.from('.project-card-feature .project-meta > *', {
+        y: 20, autoAlpha: 0, duration: 0.65, stagger: 0.08, ease: 'expo.out', delay: 0.5
+      });
+    }
+  });
+
+  // Standard cards — rotate + rise
+  gsap.from('.project-card:not(.project-card-feature)', {
+    scrollTrigger: { trigger: '#projects-grid', start: 'top 80%', once: true },
+    rotation: 2,
+    y: 40,
+    autoAlpha: 0,
+    duration: 0.65,
+    stagger: 0.12,
+    ease: 'expo.out'
+  });
+
+  // Footer iris bloom
+  ScrollTrigger.create({
+    trigger: '#footer',
+    start: 'top 90%',
+    once: true,
+    onEnter: () => {
+      gsap.fromTo('#footer',
+        { clipPath: 'ellipse(0% 0% at 50% 100%)' },
+        { clipPath: 'ellipse(150% 150% at 50% 100%)', duration: 0.91, ease: 'power3.inOut' }
+      );
+    }
+  });
+})();
+</script>
+</body>
+</html>

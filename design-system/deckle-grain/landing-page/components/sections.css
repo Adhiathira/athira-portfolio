@@ -1,0 +1,463 @@
+/* ═══════════════════════════════════════════════════
+   SECTIONS — Shared section component styles
+   Targets elements INSIDE .book-page-content only.
+   NEVER set position/overflow/visibility on .book-page.
+
+   All content must fit within 100vh page height.
+   Use compact spacing and flex-based sizing.
+   ═══════════════════════════════════════════════════ */
+
+/* ── Title Page / Frontispiece ── */
+.title-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  gap: var(--space-lg);
+}
+
+.title-page-device {
+  width: 48px;
+  height: 1px;
+  background: var(--color-text-heading);
+  opacity: 0.2;
+  margin-bottom: var(--space-md);
+}
+
+.title-page-name {
+  font-family: var(--font-edito);
+  font-size: var(--font-size-hero);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-heading);
+}
+
+.title-page-subtitle {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  max-width: 360px;
+}
+
+.title-page-year {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-body-xs);
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+.title-page-location {
+  font-family: var(--font-edito);
+  font-size: var(--font-size-body-lg);
+  font-style: italic;
+  color: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.title-page-video-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.title-page-video-bg video,
+.title-page-video-bg .video-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.12;
+}
+
+.title-page-video-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--book-page-bg) 0%,
+    rgba(245,240,232,0.85) 40%,
+    rgba(245,240,232,0.9) 100%
+  );
+}
+
+.title-page-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Chapter Opening ── */
+.chapter-opening {
+  max-width: 600px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.chapter-heading {
+  font-family: var(--font-edito);
+  font-size: var(--font-size-h2);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-heading);
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-lg);
+}
+
+.chapter-body {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  color: var(--color-text-primary);
+  max-width: 520px;
+}
+
+.chapter-body p {
+  margin-bottom: var(--space-md);
+}
+
+.chapter-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Plate Section (portfolio items) ── */
+/* Horizontal 3-column layout to fit within a single page */
+.plate-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+  flex: 1;
+  min-height: 0;
+  align-content: start;
+}
+
+.plate-item {
+  text-align: center;
+}
+
+.plate-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--color-surface-cream);
+  margin-bottom: var(--space-md);
+  overflow: hidden;
+  border: 1px solid var(--color-surface-bone);
+}
+
+.plate-frame img,
+.plate-frame .video-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plate-frame .plate-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-surface-cream), var(--book-page-bg));
+  font-family: var(--font-mono);
+  font-size: var(--font-size-body-xs);
+  color: var(--color-text-muted);
+  opacity: 0.4;
+}
+
+.plate-title {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-heading);
+  margin-bottom: 4px;
+}
+
+.plate-caption {
+  font-family: var(--font-edito);
+  font-size: var(--font-size-body-sm);
+  font-style: italic;
+  line-height: var(--line-height-body);
+  color: var(--color-text-muted);
+}
+
+.plate-number {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-body-xs);
+  color: var(--color-text-muted);
+  opacity: 0.4;
+  margin-top: 4px;
+  display: block;
+}
+
+/* ── Endorsements Page ── */
+.endorsements {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+  padding: var(--space-lg) 0;
+  flex: 1;
+  justify-content: center;
+  min-height: 0;
+}
+
+.endorsement-item {
+  text-align: center;
+  max-width: 480px;
+}
+
+.endorsement-quote {
+  font-family: var(--font-edito);
+  font-size: var(--font-size-h4);
+  font-style: italic;
+  font-weight: 400;
+  line-height: var(--line-height-body);
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-sm);
+}
+
+.endorsement-quote::before {
+  content: '\201C';
+  display: block;
+  font-size: 2rem;
+  line-height: 0.5;
+  margin-bottom: var(--space-sm);
+  color: var(--color-text-muted);
+  opacity: 0.3;
+}
+
+.endorsement-attribution {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-nav);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.endorsement-attribution::before {
+  content: '\2014\00a0';
+}
+
+/* ── Colophon ── */
+.colophon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+  flex: 1;
+  justify-content: center;
+}
+
+.colophon-heading {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.colophon-body {
+  font-family: var(--font-edito);
+  font-size: var(--font-size-body-lg);
+  font-style: italic;
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+  max-width: 440px;
+}
+
+.colophon-contact {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-body-sm);
+  color: var(--color-accent);
+  letter-spacing: 0.02em;
+  margin-top: var(--space-sm);
+}
+
+.colophon-contact a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Numbered Steps ── */
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  max-width: 560px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.step-item {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: var(--space-md);
+  align-items: start;
+}
+
+.step-number {
+  font-family: var(--font-edito);
+  font-size: var(--font-size-h3);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--color-text-muted);
+  opacity: 0.3;
+  line-height: 1;
+  padding-top: 2px;
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.step-title {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--color-text-heading);
+}
+
+.step-body {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-body);
+  color: var(--color-text-muted);
+}
+
+/* ── Rate Card / Services ── */
+.rate-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 520px;
+}
+
+.rate-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-surface-bone);
+}
+
+.rate-name {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-heading);
+}
+
+.rate-detail {
+  font-family: var(--font-edito);
+  font-size: var(--font-size-body);
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+/* ── Correspondence Page (Contact) ── */
+.correspondence {
+  max-width: 440px;
+}
+
+.correspondence-address {
+  font-family: var(--font-edito);
+  font-size: var(--font-size-body-lg);
+  font-style: italic;
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.correspondence-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.correspondence-line {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-body-sm);
+  color: var(--color-text-muted);
+  display: flex;
+  gap: var(--space-md);
+}
+
+.correspondence-label {
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-nav);
+  text-transform: uppercase;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+/* ── Video placeholder (onerror fallback) ── */
+.video-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-surface-cream) 0%, var(--color-surface-bone) 100%);
+  color: var(--color-text-muted);
+  opacity: 0.5;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-body-xs);
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .plate-section {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .endorsement-quote {
+    font-size: var(--font-size-h5);
+  }
+
+  .step-item {
+    grid-template-columns: 32px 1fr;
+    gap: var(--space-sm);
+  }
+
+  .rate-item {
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-page-name {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .chapter-heading {
+    font-size: clamp(1.25rem, 5vw, 2rem);
+  }
+
+  .endorsements {
+    gap: var(--space-lg);
+  }
+}

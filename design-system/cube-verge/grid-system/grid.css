@@ -1,0 +1,69 @@
+:root {
+  --grid-columns: 12;
+  --grid-gutter: 48px;
+  --grid-padding-inline: 48px;
+  --grid-max-width: 1440px;
+
+  /* Isometric grid overlay */
+  --iso-grid: repeat(3, 1fr);
+  --iso-offset: 24px;
+  --iso-gutter: 48px;
+  --iso-depth: 16px;
+}
+
+/* ─── Base Container ─── */
+.container {
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  padding-inline: var(--grid-padding-inline);
+}
+
+/* ─── Standard 12-Column Grid ─── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  gap: var(--grid-gutter);
+}
+
+/* ─── Isometric 3-Column Grid ─── */
+.iso-grid {
+  display: grid;
+  grid-template-columns: var(--iso-grid);
+  gap: var(--iso-gutter);
+}
+
+/* Row-level stagger for isometric offset effect */
+.iso-row--staggered > *:nth-child(even) {
+  transform: translateX(var(--iso-offset));
+}
+
+/* Depth offset — push element back on iso z-axis */
+.iso-depth-offset {
+  transform: translateY(calc(var(--iso-depth) * -1));
+}
+
+/* ─── Responsive Breakpoints ─── */
+@media (max-width: 1024px) {
+  :root {
+    --grid-columns: 6;
+    --grid-gutter: 32px;
+    --grid-padding-inline: 32px;
+    --iso-grid: repeat(2, 1fr);
+    --iso-offset: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --grid-columns: 4;
+    --grid-gutter: 16px;
+    --grid-padding-inline: 20px;
+    --iso-grid: 1fr;
+    --iso-offset: 0px;
+  }
+
+  .iso-row--staggered > *:nth-child(even) {
+    transform: none;
+  }
+}

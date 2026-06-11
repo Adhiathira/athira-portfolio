@@ -1,0 +1,167 @@
+/* Services Strip — Forma / Spun Loam */
+/* 6-card grid, numbered, warm linen bg, column-stagger entry */
+
+#services-strip {
+  background: linear-gradient(180deg, var(--color-page-bg) 0%, var(--color-surface-soft) 100%);
+  padding: var(--space-section-top) 0 var(--space-section-bottom);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+#services-strip-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-gutter);
+}
+
+#services-strip-header {
+  margin-bottom: 48px;
+}
+
+#services-section-rule {
+  width: 48px;
+  height: 1px;
+  background-color: var(--color-heading);
+  margin-bottom: 20px;
+  transform-origin: left center;
+}
+
+#services-strip-heading {
+  font-family: var(--font-heading);
+  font-size: var(--type-h2);
+  font-weight: 700;
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0 0 12px;
+  /* clip-path initial state managed by GSAP; set visible fallback */
+  clip-path: inset(0 0% 0 0);
+}
+
+#services-strip-sub {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  font-weight: 500;
+  letter-spacing: var(--font-letter-spacing-body);
+  color: var(--color-muted-text);
+  margin: 0;
+  max-width: 460px;
+  text-transform: uppercase;
+  line-height: 1.7;
+}
+
+/* 6-column grid with asymmetric featured first card */
+#services-strip-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1px;
+  background-color: var(--color-border-subtle);
+}
+
+.service-card {
+  background: var(--color-page-bg);
+  padding: 36px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: background-color var(--hover-transition);
+  cursor: default;
+}
+
+.service-card:hover {
+  background: var(--color-surface-soft);
+}
+
+/* Featured first card spans 2 rows */
+#service-card-1 {
+  grid-row: span 2;
+  background: var(--color-dark-surface);
+}
+
+#service-card-1 .service-card-number,
+#service-card-1 .service-card-title,
+#service-card-1 .service-card-body,
+#service-card-1 .service-card-link {
+  color: var(--color-cta-primary-text);
+}
+
+#service-card-1:hover {
+  background: #2e2d2a;
+}
+
+#service-card-1 .service-card-link {
+  color: rgba(245, 242, 238, 0.65);
+  margin-top: auto;
+}
+
+.service-card-number {
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+  margin-bottom: 24px;
+}
+
+.service-card-title {
+  font-family: var(--font-heading);
+  font-size: var(--type-h3);
+  font-weight: 700;
+  letter-spacing: var(--font-letter-spacing-heading);
+  text-transform: uppercase;
+  color: var(--color-heading);
+  margin: 0 0 14px;
+}
+
+.service-card-body {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  font-weight: 500;
+  letter-spacing: var(--font-letter-spacing-body);
+  color: var(--color-body-text);
+  margin: 0 0 auto;
+  line-height: 1.65;
+  text-transform: uppercase;
+  padding-bottom: 24px;
+}
+
+.service-card-link {
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-link);
+  text-decoration: none;
+  transition: opacity var(--hover-transition);
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.service-card-link:hover {
+  opacity: var(--hover-opacity);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  #services-strip-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  #service-card-1 {
+    grid-row: span 1;
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  #services-strip-grid {
+    grid-template-columns: 1fr;
+  }
+  #service-card-1 {
+    grid-column: span 1;
+  }
+  .service-card {
+    padding: 28px 20px 24px;
+  }
+}

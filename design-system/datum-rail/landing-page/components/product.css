@@ -1,0 +1,265 @@
+/* ============================================================
+   PRODUCT PAGE COMPONENTS — Datum Rail
+   ============================================================ */
+
+/* ---- Page Hero (compact, surface background) ---- */
+
+.page-hero {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-16) 0 var(--space-10);
+}
+
+.page-hero-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.page-hero-tag {
+  font-family: var(--font-mono);
+  font-size: var(--type-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+.page-hero-title {
+  font-family: var(--font-sans);
+  font-size: var(--type-h1);
+  font-weight: var(--weight-bold);
+  color: var(--color-heading);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  max-width: 720px;
+  margin-bottom: var(--space-4);
+}
+
+.page-hero-body {
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  color: var(--color-body);
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+/* ---- Feature Detail Section (alternating) ---- */
+
+.feature-detail {
+  padding: var(--spacing-section) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.feature-detail:nth-child(even) {
+  background: var(--color-surface);
+}
+
+.feature-detail-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.feature-detail-inner.reverse {
+  grid-template-columns: 2fr 3fr;
+}
+
+.feature-detail-inner.reverse .feature-detail-visual {
+  order: -1;
+}
+
+.feature-detail-tag {
+  font-family: var(--font-mono);
+  font-size: var(--type-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+.feature-detail-title {
+  font-family: var(--font-sans);
+  font-size: var(--type-h2);
+  font-weight: var(--weight-semibold);
+  color: var(--color-heading);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: var(--space-4);
+}
+
+.feature-detail-body {
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  color: var(--color-body);
+  line-height: 1.6;
+  margin-bottom: var(--space-6);
+}
+
+.feature-detail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.feature-detail-list li {
+  font-family: var(--font-sans);
+  font-size: var(--type-sm);
+  color: var(--color-body);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.feature-detail-list li::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-accent-tint);
+  border: 1.5px solid var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+}
+
+.feature-detail-list li::after {
+  display: none;
+}
+
+/* Override: checkmark inside circle via separate span */
+.check-item::before {
+  content: '✓';
+  font-size: 9px;
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Visual panel for feature */
+.feature-detail-visual {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+}
+
+/* Dependency graph mock */
+.dep-graph {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.dep-service {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.dep-service-node {
+  font-family: var(--font-mono);
+  font-size: var(--type-xs);
+  font-weight: var(--weight-bold);
+  color: var(--color-white);
+  background: var(--color-accent);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dep-service-node.ok { background: var(--color-success); }
+.dep-service-node.slow { background: var(--color-warning); color: var(--color-heading); }
+.dep-service-node.err { background: var(--color-error); }
+
+.dep-arrow {
+  font-family: var(--font-mono);
+  font-size: var(--type-xs);
+  color: var(--color-muted);
+}
+
+.dep-latency {
+  font-family: var(--font-mono);
+  font-size: var(--type-xs);
+  color: var(--color-muted);
+  margin-left: auto;
+}
+
+.dep-latency.slow { color: var(--color-warning); }
+.dep-latency.err { color: var(--color-error); }
+
+/* Integration logos */
+.integrations-section {
+  padding: var(--spacing-section) 0;
+  background: var(--color-page-bg);
+}
+
+.integrations-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.integration-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-card);
+  background: var(--color-page-bg);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--motion-base) var(--motion-ease);
+}
+
+.integration-card:hover {
+  border-color: var(--color-accent);
+}
+
+.integration-icon {
+  font-size: 24px;
+  margin-bottom: var(--space-3);
+  display: block;
+}
+
+.integration-name {
+  font-family: var(--font-sans);
+  font-size: var(--type-h4);
+  font-weight: var(--weight-semibold);
+  color: var(--color-heading);
+  margin-bottom: var(--space-1);
+}
+
+.integration-desc {
+  font-family: var(--font-sans);
+  font-size: var(--type-xs);
+  color: var(--color-muted);
+}
+
+@media (max-width: 1024px) {
+  .feature-detail-inner,
+  .feature-detail-inner.reverse {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  .feature-detail-inner.reverse .feature-detail-visual {
+    order: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .integrations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

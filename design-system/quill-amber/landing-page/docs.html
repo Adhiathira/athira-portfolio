@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs — Lōmen Acoustic Modeling</title>
+  <meta name="description" content="Lōmen developer documentation — API reference, room object schema, material library endpoints, and quick-start guides for all four analysis modules.">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="components/nav.css">
+  <link rel="stylesheet" href="components/docs.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<nav id="site-nav">
+  <a href="index.html" class="nav-logo" aria-label="Lōmen home">
+    <span class="nav-logo-text">L<span class="logo-accent">ō</span>men</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="platform.html">Platform</a></li>
+    <li><a href="solutions.html">Solutions</a></li>
+    <li><a href="docs.html" class="nav-link--active">Docs</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-cta-group">
+    <a href="about.html" class="nav-signin">Sign in</a>
+    <a href="index.html#cta-section" class="nav-cta-btn">Get Early Access</a>
+  </div>
+  <button class="nav-mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div id="nav-mobile-menu" role="dialog" aria-modal="true">
+  <a href="platform.html">Platform</a>
+  <a href="solutions.html">Solutions</a>
+  <a href="docs.html">Docs</a>
+  <a href="about.html">About</a>
+  <a href="index.html#cta-section" class="nav-mobile-cta">Get Early Access</a>
+</div>
+
+<!-- Page header -->
+<header id="docs-header">
+  <div id="docs-header-inner">
+    <p id="docs-label">Documentation</p>
+    <h1 id="docs-title">Everything you need<br>to build with Lōmen.</h1>
+    <p id="docs-desc">API reference, room schemas, material library access, and integration guides for all four analysis modules — plus ready-to-run code examples in JavaScript and Python.</p>
+  </div>
+</header>
+
+<!-- SVG divider -->
+<div class="wave-divider" aria-hidden="true" style="background:#f9f7f3;">
+  <svg viewBox="0 0 1440 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,50 Q360,0 720,30 Q1080,55 1440,10 L1440,50 L0,50 Z" fill="#f2efe9"/>
+  </svg>
+</div>
+
+<!-- Quick start guide cards -->
+<section id="docs-quickstart" aria-labelledby="docs-quickstart-title">
+  <div id="docs-quickstart-inner">
+    <p id="docs-quickstart-label">Start here</p>
+    <h2 id="docs-quickstart-title">Get running<br>in minutes.</h2>
+
+    <div id="docs-cards-grid">
+      <a href="#section-room" class="docs-card">
+        <div class="docs-card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+        </div>
+        <h3 class="docs-card-title">Room Object</h3>
+        <p class="docs-card-desc">Define your room geometry — width, length, height — plus surface assignments and speaker positions.</p>
+        <span class="docs-card-arrow">Read guide →</span>
+      </a>
+      <a href="#section-rt60" class="docs-card">
+        <div class="docs-card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3,18 9,12 13,16 21,6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </div>
+        <h3 class="docs-card-title">RT60 Analysis</h3>
+        <p class="docs-card-desc">Run Sabine and Eyring calculations across all 7 octave bands. Returns decay curves and compliance flags.</p>
+        <span class="docs-card-arrow">Read guide →</span>
+      </a>
+      <a href="#section-modal" class="docs-card">
+        <div class="docs-card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/><ellipse cx="12" cy="12" rx="4" ry="9"/></svg>
+        </div>
+        <h3 class="docs-card-title">Modal Analysis</h3>
+        <p class="docs-card-desc">Axial, tangential, and oblique mode calculation with 3D node positions and clustering detection.</p>
+        <span class="docs-card-arrow">Read guide →</span>
+      </a>
+      <a href="#section-materials" class="docs-card">
+        <div class="docs-card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        </div>
+        <h3 class="docs-card-title">Material Library</h3>
+        <p class="docs-card-desc">Query 628 ISO 354-validated material profiles by name, category, or absorption coefficient range.</p>
+        <span class="docs-card-arrow">Read guide →</span>
+      </a>
+      <a href="#section-sbir" class="docs-card">
+        <div class="docs-card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="docs-card-title">SBIR Prediction</h3>
+        <p class="docs-card-desc">Speaker boundary interference: pass positions, get low-frequency cancellation null curves at the listening point.</p>
+        <span class="docs-card-arrow">Read guide →</span>
+      </a>
+      <a href="#section-export" class="docs-card">
+        <div class="docs-card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <h3 class="docs-card-title">Export &amp; Reports</h3>
+        <p class="docs-card-desc">PDF, CSV, and JSON response formats. ISO 3382-compatible report structure ready for contractor handoff.</p>
+        <span class="docs-card-arrow">Read guide →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Reference documentation: sidebar + content -->
+<section id="docs-reference" aria-label="API reference documentation">
+  <div id="docs-reference-inner">
+
+    <!-- Category tabs -->
+    <div id="docs-nav-tabs" role="tablist">
+      <button class="docs-tab is-active" role="tab" aria-selected="true">Getting Started</button>
+      <button class="docs-tab" role="tab" aria-selected="false">Room Schema</button>
+      <button class="docs-tab" role="tab" aria-selected="false">Analysis API</button>
+      <button class="docs-tab" role="tab" aria-selected="false">Materials</button>
+    </div>
+
+    <div id="docs-reference-body">
+      <!-- Sidebar -->
+      <aside id="docs-sidebar" aria-label="Documentation navigation">
+        <div class="docs-sidebar-group">
+          <p class="docs-sidebar-group-label">Overview</p>
+          <a href="#section-auth" class="docs-sidebar-link is-active">Authentication</a>
+          <a href="#section-room" class="docs-sidebar-link">Room Object</a>
+          <a href="#section-limits" class="docs-sidebar-link">Rate Limits</a>
+        </div>
+        <div class="docs-sidebar-group">
+          <p class="docs-sidebar-group-label">Analysis</p>
+          <a href="#section-rt60" class="docs-sidebar-link">RT60 — POST /analyze/rt60</a>
+          <a href="#section-modal" class="docs-sidebar-link">Modal — POST /analyze/modal</a>
+          <a href="#section-sbir" class="docs-sidebar-link">SBIR — POST /analyze/sbir</a>
+        </div>
+        <div class="docs-sidebar-group">
+          <p class="docs-sidebar-group-label">Resources</p>
+          <a href="#section-materials" class="docs-sidebar-link">Materials — GET /materials</a>
+          <a href="#section-export" class="docs-sidebar-link">Export — GET /export</a>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div id="docs-content-area">
+
+        <div class="docs-section" id="section-auth">
+          <h3 class="docs-section-title">Authentication</h3>
+          <p class="docs-section-body">All Lōmen API requests are authenticated using a Bearer token. Pass your API key in the <code style="font-family:monospace;font-size:0.85em;background:rgba(212,207,200,0.3);padding:1px 5px;border-radius:3px;">Authorization</code> header with every request.</p>
+          <div class="docs-code-block">
+            <pre><span class="token-comment"># Example: curl request with API key</span>
+curl -X POST https://api.lomen.io/v1/analyze/rt60 \
+  -H <span class="token-string">"Authorization: Bearer lmn_live_xxxxxxxxxxxx"</span> \
+  -H <span class="token-string">"Content-Type: application/json"</span> \
+  -d @room.json</pre>
+          </div>
+        </div>
+
+        <div class="docs-section" id="section-room">
+          <h3 class="docs-section-title">Room Object Schema</h3>
+          <p class="docs-section-body">Every analysis endpoint accepts a room object in the request body. Dimensions are in metres; surface assignments reference material IDs from the library endpoint.</p>
+          <div class="docs-code-block">
+            <pre>{
+  <span class="token-key">"dimensions"</span>: {
+    <span class="token-key">"width"</span>: <span class="token-value">5.2</span>,
+    <span class="token-key">"length"</span>: <span class="token-value">6.8</span>,
+    <span class="token-key">"height"</span>: <span class="token-value">2.7</span>
+  },
+  <span class="token-key">"surfaces"</span>: {
+    <span class="token-key">"floor"</span>: <span class="token-string">"mat_carpet_medium"</span>,
+    <span class="token-key">"ceiling"</span>: <span class="token-string">"mat_gypsum_plain"</span>,
+    <span class="token-key">"walls"</span>: <span class="token-string">"mat_concrete_painted"</span>
+  },
+  <span class="token-key">"speakers"</span>: [
+    { <span class="token-key">"x"</span>: <span class="token-value">1.0</span>, <span class="token-key">"y"</span>: <span class="token-value">0.0</span>, <span class="token-key">"z"</span>: <span class="token-value">1.1</span> },
+    { <span class="token-key">"x"</span>: <span class="token-value">4.2</span>, <span class="token-key">"y"</span>: <span class="token-value">0.0</span>, <span class="token-key">"z"</span>: <span class="token-value">1.1</span> }
+  ],
+  <span class="token-key">"listening_position"</span>: { <span class="token-key">"x"</span>: <span class="token-value">2.6</span>, <span class="token-key">"y"</span>: <span class="token-value">4.0</span>, <span class="token-key">"z"</span>: <span class="token-value">1.2</span> }
+}</pre>
+          </div>
+          <table class="docs-param-table" style="margin-top:2rem;">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="param-name">dimensions</span></td>
+                <td><span class="param-type">object</span></td>
+                <td>Room width, length, height in metres. All three required.</td>
+              </tr>
+              <tr>
+                <td><span class="param-name">surfaces</span></td>
+                <td><span class="param-type">object</span></td>
+                <td>Material ID strings for each surface. Use <code style="font-family:monospace;font-size:0.85em;">GET /materials</code> to list available IDs.</td>
+              </tr>
+              <tr>
+                <td><span class="param-name">speakers</span></td>
+                <td><span class="param-type">array</span></td>
+                <td>XYZ coordinates in metres. Required for SBIR analysis. Optional for RT60 and modal.</td>
+              </tr>
+              <tr>
+                <td><span class="param-name">listening_position</span></td>
+                <td><span class="param-type">object</span></td>
+                <td>XYZ of the listener. Required for SBIR. Defaults to room centre if omitted.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="docs-section" id="section-rt60">
+          <h3 class="docs-section-title">RT60 Analysis — POST /v1/analyze/rt60</h3>
+          <p class="docs-section-body">Returns Sabine and Eyring reverberation time values at all 7 octave bands (63 Hz through 8 kHz), along with ISO 3382 compliance flags for common room types.</p>
+          <div class="docs-code-block">
+            <pre><span class="token-comment"># Response shape</span>
+{
+  <span class="token-key">"method"</span>: <span class="token-string">"sabine+eyring"</span>,
+  <span class="token-key">"bands"</span>: [<span class="token-value">63</span>, <span class="token-value">125</span>, <span class="token-value">250</span>, <span class="token-value">500</span>, <span class="token-value">1000</span>, <span class="token-value">2000</span>, <span class="token-value">4000</span>],
+  <span class="token-key">"rt60_sabine"</span>: [<span class="token-value">0.72</span>, <span class="token-value">0.58</span>, <span class="token-value">0.41</span>, <span class="token-value">0.35</span>, <span class="token-value">0.31</span>, <span class="token-value">0.28</span>, <span class="token-value">0.25</span>],
+  <span class="token-key">"rt60_eyring"</span>: [<span class="token-value">0.68</span>, <span class="token-value">0.54</span>, <span class="token-value">0.38</span>, <span class="token-value">0.33</span>, <span class="token-value">0.30</span>, <span class="token-value">0.27</span>, <span class="token-value">0.24</span>],
+  <span class="token-key">"compliance"</span>: {
+    <span class="token-key">"iso3382_studio"</span>: <span class="token-string">"pass"</span>,
+    <span class="token-key">"iso3382_broadcast"</span>: <span class="token-string">"fail"</span>,
+    <span class="token-key">"recommendation"</span>: <span class="token-string">"Add 8m² broadband absorption at 63 Hz"</span>
+  },
+  <span class="token-key">"analysis_time_ms"</span>: <span class="token-value">340</span>
+}</pre>
+          </div>
+        </div>
+
+        <div class="docs-section" id="section-materials">
+          <h3 class="docs-section-title">Material Library — GET /v1/materials</h3>
+          <p class="docs-section-body">Query the 628-profile material library. Filter by category, name substring, or minimum absorption coefficient at a target frequency band.</p>
+          <table class="docs-param-table">
+            <thead>
+              <tr>
+                <th>Query param</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="param-name">category</span></td>
+                <td><span class="param-type">string</span></td>
+                <td>Filter by category: carpet, gypsum, glass, concrete, wood, foam, fabric.</td>
+              </tr>
+              <tr>
+                <td><span class="param-name">name</span></td>
+                <td><span class="param-type">string</span></td>
+                <td>Partial name match, case-insensitive.</td>
+              </tr>
+              <tr>
+                <td><span class="param-name">min_alpha</span></td>
+                <td><span class="param-type">float</span></td>
+                <td>Minimum absorption coefficient (0.0–1.0) at the specified band.</td>
+              </tr>
+              <tr>
+                <td><span class="param-name">band</span></td>
+                <td><span class="param-type">integer</span></td>
+                <td>Octave band for min_alpha filter. One of: 63, 125, 250, 500, 1000, 2000, 4000.</td>
+              </tr>
+              <tr>
+                <td><span class="param-name">limit</span></td>
+                <td><span class="param-type">integer</span></td>
+                <td>Max results (default 20, max 100).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div><!-- /#docs-content-area -->
+    </div><!-- /#docs-reference-body -->
+  </div>
+</section>
+
+<!-- SVG divider: page-bg → dark -->
+<div class="wave-divider" aria-hidden="true" style="background:#f2efe9;">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 L0,20 Q240,55 480,15 Q720,0 960,30 Q1200,55 1440,15 L1440,60 Z" fill="#1a1a14"/>
+  </svg>
+</div>
+
+<!-- Dark API reference panel -->
+<section id="docs-api" aria-labelledby="docs-api-title">
+  <div id="docs-api-inner">
+    <p id="docs-api-label">API endpoints</p>
+    <h2 id="docs-api-title">Complete endpoint<br>reference.</h2>
+
+    <div class="api-endpoint-list">
+      <div class="api-endpoint" id="section-rt60-endpoint">
+        <span class="api-method api-method--post">POST</span>
+        <div>
+          <p class="api-path">/v1/analyze/rt60</p>
+          <p class="api-desc">Run Sabine and Eyring RT60 analysis. Returns 7-band decay times and ISO 3382 compliance flags. Completes in under 400 ms for standard room geometry.</p>
+        </div>
+      </div>
+      <div class="api-endpoint" id="section-modal-endpoint">
+        <span class="api-method api-method--post">POST</span>
+        <div>
+          <p class="api-path">/v1/analyze/modal</p>
+          <p class="api-desc">Calculate axial, tangential, and oblique room modes using the Rayleigh method. Returns mode frequencies, XYZ node positions, and clustering warnings below 300 Hz.</p>
+        </div>
+      </div>
+      <div class="api-endpoint" id="section-sbir-endpoint">
+        <span class="api-method api-method--post">POST</span>
+        <div>
+          <p class="api-path">/v1/analyze/sbir</p>
+          <p class="api-desc">Speaker boundary interference response prediction. Requires speaker coordinates and listening position. Returns null-frequency curves and severity flags at each cancellation point.</p>
+        </div>
+      </div>
+      <div class="api-endpoint">
+        <span class="api-method api-method--get">GET</span>
+        <div>
+          <p class="api-path">/v1/materials</p>
+          <p class="api-desc">Query the material library. Filter by category, name, or minimum absorption coefficient. Returns absorption coefficients at all 7 octave bands plus ISO 354 reference data.</p>
+        </div>
+      </div>
+      <div class="api-endpoint">
+        <span class="api-method api-method--get">GET</span>
+        <div>
+          <p class="api-path">/v1/export/{analysis_id}</p>
+          <p class="api-desc">Export a completed analysis as PDF, CSV, or JSON. PDF output follows ISO 3382 report structure. Accepts ?format=pdf|csv|json query parameter.</p>
+        </div>
+      </div>
+      <div class="api-endpoint">
+        <span class="api-method api-method--get">GET</span>
+        <div>
+          <p class="api-path">/v1/rooms/{room_id}</p>
+          <p class="api-desc">Retrieve a saved room object and its analysis history. Rooms are persisted across sessions within your workspace.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SVG divider: dark → page-bg -->
+<div class="wave-divider" aria-hidden="true" style="background:#1a1a14;">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,70 L0,35 Q360,0 720,40 Q1080,70 1440,20 L1440,70 Z" fill="#f2efe9"/>
+  </svg>
+</div>
+
+<!-- Footer -->
+<footer id="site-footer" aria-label="Site footer" style="background:var(--color-page-bg);padding:40px var(--grid-gutter);">
+  <div style="max-width:var(--grid-max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1px solid var(--color-divider);padding-top:2rem;">
+    <a href="index.html" style="font-family:var(--font-heading);font-size:1rem;font-weight:800;color:var(--color-heading);text-decoration:none;">L<span style="color:var(--color-accent);">ō</span>men</a>
+    <p style="font-family:var(--font-body);font-size:0.75rem;font-weight:300;color:var(--color-muted-text);margin:0;">© 2026 Lōmen Technologies Ltd.</p>
+    <nav aria-label="Footer links" style="display:flex;gap:1.5rem;">
+      <a href="index.html" style="font-family:var(--font-body);font-size:0.8125rem;font-weight:400;color:var(--color-body-text);text-decoration:none;">Home</a>
+      <a href="platform.html" style="font-family:var(--font-body);font-size:0.8125rem;font-weight:400;color:var(--color-body-text);text-decoration:none;">Platform</a>
+      <a href="solutions.html" style="font-family:var(--font-body);font-size:0.8125rem;font-weight:400;color:var(--color-body-text);text-decoration:none;">Solutions</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const nav = document.getElementById('site-nav');
+  const mobileMenu = document.getElementById('nav-mobile-menu');
+  const toggle = nav ? nav.querySelector('.nav-mobile-toggle') : null;
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
+    nav.classList.add('scrolled');
+  }
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('is-open');
+      nav.classList.toggle('nav-mobile-open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('is-open');
+        nav.classList.remove('nav-mobile-open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  // Tab interaction (visual only — single-page for now)
+  document.querySelectorAll('.docs-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.docs-tab').forEach(t => {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
+    });
+  });
+
+  // Sidebar active link tracking
+  const sidebarLinks = document.querySelectorAll('.docs-sidebar-link');
+  const sections = document.querySelectorAll('.docs-section');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sidebarLinks.forEach(link => {
+          link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px' });
+  sections.forEach(s => observer.observe(s));
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger);
+  const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+  // Header entrance
+  gsap.from('#docs-header-inner > *', {
+    y: 30, duration: 0.88, stagger: 0.12, ease: EASE, delay: 0.2
+  });
+
+  // Quick-start cards: rotate + rise stagger
+  gsap.from('.docs-card', {
+    scrollTrigger: { trigger: '#docs-cards-grid', start: 'top 85%' },
+    y: 40, rotation: 1.5, scale: 0.96,
+    duration: 0.66, stagger: 0.08, ease: EASE
+  });
+
+  // API endpoint rows: horizontal sweep from left
+  document.querySelectorAll('.api-endpoint').forEach((ep, i) => {
+    gsap.from(ep, {
+      scrollTrigger: { trigger: ep, start: 'top 92%' },
+      x: -50, duration: 0.55, delay: i * 0.05, ease: EASE
+    });
+  });
+
+  // Documentation sections: clip-path reveal downward
+  document.querySelectorAll('.docs-section').forEach((section, i) => {
+    gsap.from(section, {
+      scrollTrigger: { trigger: section, start: 'top 88%' },
+      clipPath: 'inset(0 0 100% 0)',
+      duration: 0.55, ease: EASE
+    });
+  });
+
+  // Tab underline
+  gsap.from('#docs-nav-tabs .docs-tab', {
+    scrollTrigger: { trigger: '#docs-nav-tabs', start: 'top 90%' },
+    y: 10, duration: 0.44, stagger: 0.06, ease: EASE
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+{
+  "cssAnimations": {
+    "keyframes": [
+      {
+        "name": "pin-drop",
+        "steps": [
+          { "offset": "0%",   "properties": { "transform": "translateY(-40px) rotate(-3deg)", "opacity": "0" } },
+          { "offset": "70%",  "properties": { "transform": "translateY(4px) rotate(0.5deg)", "opacity": "1" } },
+          { "offset": "85%",  "properties": { "transform": "translateY(-2px) rotate(-0.5deg)" } },
+          { "offset": "100%", "properties": { "transform": "translateY(0) rotate(0deg)" } }
+        ],
+        "notes": "Element drops from above with a slight bounce — pins landing on a board"
+      },
+      {
+        "name": "tape-reveal",
+        "steps": [
+          { "offset": "0%",   "properties": { "transform": "translateX(-30px) skewX(-8deg)", "opacity": "0" } },
+          { "offset": "100%", "properties": { "transform": "translateX(0) skewX(0deg)", "opacity": "1" } }
+        ],
+        "notes": "Element slides in from corner with skew — like peeling tape"
+      },
+      {
+        "name": "tilt-jiggle",
+        "steps": [
+          { "offset": "0%",   "properties": { "transform": "rotate(-4deg) scale(0.95)", "opacity": "0" } },
+          { "offset": "60%",  "properties": { "transform": "rotate(1.5deg) scale(1.02)", "opacity": "1" } },
+          { "offset": "80%",  "properties": { "transform": "rotate(-0.5deg) scale(0.99)" } },
+          { "offset": "100%", "properties": { "transform": "rotate(0deg) scale(1)" } }
+        ],
+        "notes": "Small rotation oscillation settling to final angle — card being placed"
+      },
+      {
+        "name": "peel-back",
+        "steps": [
+          { "offset": "0%",   "properties": { "transform": "perspective(400px) rotateX(0deg)", "borderRadius": "2px" } },
+          { "offset": "50%",  "properties": { "transform": "perspective(400px) rotateX(-12deg)", "borderRadius": "2px 2px 0 0" } },
+          { "offset": "100%", "properties": { "transform": "perspective(400px) rotateX(0deg)", "borderRadius": "2px" } }
+        ],
+        "notes": "Corner peel effect — element lifts at corner as if on paper"
+      }
+    ],
+    "transitionElements": [
+      {
+        "selector": ".collage-card",
+        "transition": {
+          "property": "transform, box-shadow",
+          "duration": "0.3s",
+          "timingFunction": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+        },
+        "notes": "Spring easing — card straightens with bounce on hover"
+      },
+      {
+        "selector": ".btn, button",
+        "transition": {
+          "property": "background-color, transform, box-shadow",
+          "duration": "0.3s",
+          "timingFunction": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+        }
+      },
+      {
+        "selector": ".tape-strip",
+        "transition": {
+          "property": "transform, opacity",
+          "duration": "0.4s",
+          "timingFunction": "ease-out"
+        }
+      }
+    ],
+    "timingTokens": {
+      "durations": [
+        "0.3s",
+        "0.35s",
+        "0.4s",
+        "0.5s"
+      ],
+      "easings": [
+        "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "ease-out",
+        "cubic-bezier(0.22, 1, 0.36, 1)"
+      ],
+      "springEasing": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+    }
+  },
+  "scrollAnimations": {
+    "libraries": ["GSAP 3.12.5", "ScrollTrigger"],
+    "elements": [
+      {
+        "selector": ".collage-card",
+        "animation": "pin-drop",
+        "trigger": "scroll",
+        "stagger": 0.1,
+        "once": true
+      },
+      {
+        "selector": ".feature-item",
+        "animation": "tilt-jiggle",
+        "trigger": "scroll",
+        "stagger": 0.08,
+        "once": true
+      },
+      {
+        "selector": ".sticky-note",
+        "animation": "tape-reveal",
+        "trigger": "scroll",
+        "stagger": 0.12,
+        "once": true
+      }
+    ],
+    "patterns": [
+      "Elements enter with tilt/rotation and settle to final position",
+      "Staggered entrance — pieces of a collage being added one by one",
+      "Hover: element straightens (rotates to 0deg) and lifts slightly",
+      "Spring easing on all interactions — physical paper feel"
+    ]
+  },
+  "microInteractions": {
+    "buttonTransitions": [
+      {
+        "selector": "button, .btn",
+        "hoverTransform": "scale(1.03)",
+        "activeTransform": "scale(0.97)",
+        "transition": "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      }
+    ],
+    "cardHover": {
+      "transform": "rotate(0deg) translateY(-4px)",
+      "boxShadow": "6px 6px 16px rgba(0, 0, 0, 0.18)",
+      "transition": "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease"
+    },
+    "customCursor": false,
+    "reducedMotionSupport": true
+  },
+  "_twist": {
+    "sourceSystem": "custom",
+    "twistApplied": "Scrapbook motion system — pin-drop bounce, tape-reveal skew slide, tilt-jiggle settle, peel-back corner lift. All transitions use spring easing (0.34, 1.56, 0.64, 1). Physical paper metaphor throughout — elements land, bounce, straighten."
+  }
+}

@@ -1,0 +1,327 @@
+/* ============================================================
+   Featured Stations — SPECTRA
+   Bento masonry layout, glass cards, teal status dots
+   ============================================================ */
+
+#featured-stations {
+  position: relative;
+  background: var(--color-surface);
+  padding: var(--space-section-top) 0 var(--space-section-bottom);
+  overflow: hidden;
+}
+
+/* Subtle depth gradient */
+#featured-stations::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(33, 243, 182, 0.03) 0%,
+    transparent 40%,
+    rgba(146, 72, 228, 0.04) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Section header ── */
+#featured-stations-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-padding-inline);
+}
+
+#featured-stations-header {
+  margin-bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+#featured-stations-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+}
+
+#featured-stations-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 60px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* ── Bento masonry grid ── */
+#featured-stations-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ── Station card — base glass treatment ── */
+.station-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.station-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.station-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(146, 72, 228, 0.45);
+  box-shadow:
+    0 0 30px rgba(146, 72, 228, 0.25),
+    0 0 80px rgba(146, 72, 228, 0.10),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Card column placement ── */
+#station-card-tromso {
+  grid-column: 1;
+  grid-row: span 2;
+}
+
+#station-card-fairbanks {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+#station-card-reykjavik {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+#station-card-mcmurdo {
+  grid-column: 3;
+  grid-row: span 2;
+}
+
+#station-card-yellowknife {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+/* Longyearbyen fills after yellowknife in natural flow, but we want col 2 row 3 or rearrange */
+#station-card-longyearbyen {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+/* ── Card content pieces ── */
+.station-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.station-card-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.station-card-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-accent-teal);
+  flex-shrink: 0;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 4px rgba(33, 243, 182, 0.6),
+      0 0 8px rgba(33, 243, 182, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(33, 243, 182, 1.0),
+      0 0 20px rgba(33, 243, 182, 0.6),
+      0 0 36px rgba(33, 243, 182, 0.25);
+  }
+}
+
+.status-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+}
+
+.station-card-coords {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(200, 205, 212, 0.55);
+}
+
+.station-card-role {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-primary-action);
+  line-height: 1.3;
+}
+
+.station-card-desc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--color-muted-text);
+  margin: 0;
+}
+
+.station-card-instruments {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(200, 205, 212, 0.6);
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.station-card-instruments-count {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: rgba(33, 243, 182, 0.7);
+  line-height: 1;
+}
+
+.station-card-instruments-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(200, 205, 212, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Northernmost station badge */
+.station-badge-northernmost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(226, 255, 101, 0.08);
+  border: 1px solid rgba(226, 255, 101, 0.25);
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-primary-action);
+  margin-top: 4px;
+  align-self: flex-start;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1080px) {
+  #featured-stations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #station-card-tromso {
+    grid-column: 1;
+    grid-row: span 2;
+  }
+
+  #station-card-fairbanks {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  #station-card-reykjavik {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  #station-card-mcmurdo {
+    grid-column: 1;
+    grid-row: span 2;
+  }
+
+  #station-card-yellowknife {
+    grid-column: 2;
+    grid-row: auto;
+  }
+
+  #station-card-longyearbyen {
+    grid-column: 2;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  #featured-stations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #station-card-tromso,
+  #station-card-mcmurdo {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .station-card {
+    padding: 24px 20px;
+  }
+}
