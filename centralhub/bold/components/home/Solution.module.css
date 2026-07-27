@@ -1,0 +1,496 @@
+/* Solution — faint gray panel field (#f0f0f4) to differentiate from the white
+   problem section above. Centered heading, hub-and-spoke diagram with depth. */
+.solution {
+  background: #f0f0f4;
+  border-bottom: 1px solid #cccce1;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.head {
+  max-width: 40rem;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: 'JetBrains Mono', Menlo, Courier, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  color: #2b8a80;
+  margin-bottom: 20px;
+}
+
+.heading {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #1b1b37;
+}
+
+.body {
+  margin: 22px 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: #4a5058;
+}
+
+/* Diagram -------------------------------------------------------------------- */
+/* On desktop the wrap is wide enough to seat definition cards in the margins on
+   either side of the diagram, plus a band above it for the CRM card. The stage is
+   the square that exactly matches the rendered SVG, so cards (pinned to its edges)
+   and connectors (drawn in SVG space) always line up as the diagram scales. */
+.diagramWrap {
+  position: relative;
+  width: 100%;
+  max-width: 1080px;
+  margin: 56px auto 0;
+  padding-top: 168px;
+}
+
+.diagramStage {
+  position: relative;
+  width: 54%;
+  max-width: 583px;
+  margin: 0 auto;
+  overflow: visible;
+  /* Soft radial teal wash so the diagram sits in space, not on flat gray. */
+  background: radial-gradient(circle at 50% 46%, rgba(43, 138, 128, 0.16), rgba(43, 138, 128, 0) 62%);
+}
+
+.diagram {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* Card leader lines — teal callout leaders. Round joins keep the elbow soft. */
+.connector {
+  fill: none;
+  stroke: rgba(43, 138, 128, 0.5);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Small teal dot where each leader line meets its node rim. */
+.connectorDot {
+  fill: rgba(43, 138, 128, 0.7);
+}
+
+/* Definition cards --------------------------------------------------------- */
+.cardLeft,
+.cardRight,
+.cardTop {
+  position: absolute;
+  z-index: 2;
+}
+
+.cardLeft {
+  right: 100%;
+  margin-right: 3%;
+  transform: translateY(-50%);
+}
+
+.cardRight {
+  left: 100%;
+  margin-left: 3%;
+  transform: translateY(-50%);
+}
+
+.cardTop {
+  /* horizontal center comes from an inline left (per-card leftPct) */
+  bottom: 100%;
+  margin-bottom: 3%;
+  transform: translateX(-50%);
+}
+
+.defCard {
+  width: 212px;
+  max-width: 212px;
+  background: #ffffff;
+  border: 1px solid #e4e7ee;
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(27, 42, 58, 0.06),
+    0 10px 28px rgba(27, 42, 58, 0.12);
+  padding: 14px 16px;
+}
+
+.cardTop .defCard {
+  width: 238px;
+  max-width: 238px;
+}
+
+/* Term header with a hairline divider beneath it for a tighter hierarchy. */
+.defTerm {
+  display: block;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #1b1b37;
+  padding-bottom: 8px;
+  margin-bottom: 9px;
+  border-bottom: 1px solid #ececf3;
+}
+
+/* Definition body — a full-text ghost reserves the height and feeds screen
+   readers; an absolutely-positioned overlay is the typewriter target so growing
+   text never reflows the card. Both share type metrics so wrapping matches. */
+.defBodyWrap {
+  position: relative;
+}
+
+.defBodyGhost,
+.defBodyType {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #7d8794;
+}
+
+/* The ghost is a pure layout spacer: it reserves the final height but is fully
+   invisible during typing (visibility: hidden, not opacity) and out of the a11y
+   tree. Screen readers read the .srOnly copy instead; reduced motion flips the
+   ghost back to visible for a static, complete definition. */
+.defBodyGhost {
+  visibility: hidden;
+}
+
+.defBodyType {
+  position: absolute;
+  inset: 0;
+}
+
+/* The characters typed so far. pre-wrap keeps spacing honest mid-word. */
+.defTyped {
+  white-space: pre-wrap;
+}
+
+/* Accessible full-text copy (visually hidden, always in the a11y tree). */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Underscore-style caret: a short horizontal teal bar sitting on the baseline
+   after the last typed character, like a terminal cursor. Blinks and persists. */
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 2px;
+  margin-left: 2px;
+  vertical-align: -0.08em;
+  background: rgba(43, 138, 128, 0.9);
+  animation: ch-caret-blink 1.05s steps(1) infinite;
+}
+
+@keyframes ch-caret-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Legend — the same definitions, shown only on narrow screens under the diagram. */
+.legend {
+  display: none;
+  list-style: none;
+  margin: 34px auto 0;
+  padding: 0;
+  width: 100%;
+  max-width: 460px;
+}
+
+.legendRow {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid #e4e4ee;
+}
+
+.legendRow:first-child {
+  border-top: none;
+}
+
+.legendTerm {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1b1b37;
+}
+
+.legendBody {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #7d8794;
+}
+
+/* Connection lines — gradient stroke, teal at the core fading toward each node. */
+.spokeLine {
+  stroke: url(#ch-line);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Perimeter — module-to-module chords. Thinner and fainter than the core spokes
+   so the hub links stay dominant; nodes still read as interconnected. */
+.perimeter {
+  fill: none;
+  stroke: url(#ch-perimeter);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Group wrappers — must exist as exported classes so the JS animation targets
+   (styles.node / styles.core / styles.ringGroup / styles.aiLabel / styles.pulse)
+   resolve. fill-box keeps GSAP's scale-from-center honest on SVG groups. */
+.node,
+.core {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Spoke nodes — milled white discs ----------------------------------------- */
+.nodeCircle {
+  fill: url(#ch-node);
+  stroke: #c4c9d6;
+  stroke-width: 1;
+  filter: url(#ch-shadow);
+}
+
+/* Inner highlight ring — a faint bevel just inside the rim so the disc reads
+   like a precision-milled button rather than a flat circle. */
+.nodeInner {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 1.4;
+  opacity: 0.7;
+}
+
+/* Line-art module icons — one uniform stroke language across all five. */
+.nodeIcon {
+  fill: none;
+  stroke: #2b8a80;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nodeIconDot {
+  fill: #2b8a80;
+  stroke: none;
+}
+
+.nodeLabel {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  fill: #26263f;
+}
+
+/* Core sphere -------------------------------------------------------------- */
+.coreHalo {
+  fill: url(#ch-core-halo);
+}
+
+.coreCircle {
+  fill: url(#ch-core);
+  stroke: #1f6b63;
+  stroke-width: 1;
+}
+
+.coreHighlight {
+  fill: #ffffff;
+  opacity: 0.3;
+  filter: url(#ch-soft);
+}
+
+.coreLabel {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.01em;
+  fill: #ffffff;
+  filter: drop-shadow(0 1px 1.5px rgba(16, 60, 40, 0.35));
+}
+
+/* AI rings ----------------------------------------------------------------- */
+.aiRingBase {
+  fill: none;
+  stroke: #cccce1;
+  stroke-width: 1;
+  opacity: 0.7;
+}
+
+.aiRingDash {
+  fill: none;
+  stroke: #2b8a80;
+  stroke-width: 1.4;
+  stroke-dasharray: 4 9;
+  opacity: 0.6;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ch-ring-spin 44s linear infinite;
+}
+
+@keyframes ch-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* AI badge ----------------------------------------------------------------- */
+.aiPillGlow {
+  fill: #2b8a80;
+  opacity: 0.4;
+  filter: url(#ch-soft);
+}
+
+.aiPill {
+  fill: #1b1b37;
+}
+
+.aiPillText {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  fill: #ffffff;
+}
+
+/* Traveling pulses --------------------------------------------------------- */
+/* Default opacity 0 so that under reduced motion (JS bails, no GSAP) they stay
+   hidden and only the static diagram remains. */
+.pulse {
+  opacity: 0;
+}
+
+.pulseGlow {
+  fill: #2b8a80;
+  filter: url(#ch-pulse-glow);
+}
+
+.pulseCore {
+  fill: #d6f6f0;
+}
+
+/* Perimeter pulses — smaller and softer than the core-spoke pulses. Hidden by
+   default so reduced motion (JS bails) leaves only the static perimeter. */
+.perimeterPulse {
+  opacity: 0;
+}
+
+.perimeterPulseGlow {
+  fill: #2b8a80;
+  filter: url(#ch-pulse-glow);
+}
+
+.perimeterPulseCore {
+  fill: #d6f6f0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aiRingDash {
+    animation: none;
+  }
+  .pulse,
+  .perimeterPulse {
+    opacity: 0;
+  }
+  /* Static full text (the ghost stays visible), no typing and no caret. */
+  .defBodyGhost {
+    visibility: visible;
+  }
+  .defBodyType {
+    display: none;
+  }
+}
+
+/* Below ~1000px there isn't room to seat cards beside the ring: hide the floating
+   cards and their connectors, restore the full-size centered diagram, and let the
+   definitions reflow as a legend list under it. */
+@media (max-width: 1000px) {
+  .diagramWrap {
+    max-width: 560px;
+    padding-top: 0;
+  }
+  .diagramStage {
+    width: 100%;
+    max-width: 560px;
+  }
+  .cardLeft,
+  .cardRight,
+  .cardTop,
+  .connectors,
+  .connectorDots {
+    display: none;
+  }
+  .legend {
+    display: block;
+  }
+}
+
+@media (max-width: 900px) {
+  .inner {
+    padding: 88px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .inner {
+    padding: 72px 18px;
+  }
+  .diagramWrap {
+    max-width: 100%;
+  }
+}
+
+/* Crisp type rendering for all SVG text in the diagram */
+.diagramSvgText,
+.nodeLabel,
+.coreLabel,
+.aiPillText {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.titleLead {
+  margin: 0 auto 18px;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #1b1b37;
+  text-align: center;
+}

@@ -1,0 +1,206 @@
+/*
+  FeatureDeepDive — even-keel LIGHT (Attio-grade precision)
+  White / #f0f0f4 surface, near-black ink, single blue signal (#2b8a80),
+  hairline structure. Numbered deep-dive module: bracketed mono index,
+  text/media split, feature items as hairline-separated rows.
+*/
+
+.section {
+  position: relative;
+  background: var(--ds-color-page-bg, #ffffff);
+  padding-block: clamp(72px, 9vw, 132px);
+  /* Boundaries between feature rows are drawn by the squiggle dividers in the
+     page, so no straight hairline here. */
+}
+
+/* Alternate panel background for adjacent-section rhythm. */
+.surface {
+  background: var(--ds-color-panel, #f0f0f4);
+}
+
+.inner {
+  max-width: var(--ds-grid-max-width, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--ds-container-pad, clamp(20px, 5vw, 48px));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+  align-items: center;
+  gap: clamp(40px, 6vw, 88px);
+}
+
+/* media-left / text-right variant */
+.flip .inner {
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+}
+.flip .copy {
+  order: 2;
+}
+.flip .mediaWrap {
+  order: 1;
+}
+
+/* ── Copy column ── */
+.copy {
+  max-width: 560px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--ds-font-mono, 'JetBrains Mono', Menlo, monospace);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ds-color-accent, #2b8a80);
+}
+
+.heading {
+  margin-top: 22px;
+  font-family: var(--ds-font-sans, Inter, sans-serif);
+  font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ds-color-heading, #1b1b37);
+}
+
+.body {
+  margin-top: 20px;
+  font-family: var(--ds-font-sans, Inter, sans-serif);
+  font-size: clamp(1.02rem, 1.25vw, 1.1875rem);
+  line-height: 1.6;
+  color: var(--ds-color-muted, #7d8794);
+  max-width: 46ch;
+}
+
+/* ── Feature rows (hairline-separated) ── */
+.features {
+  list-style: none;
+  margin: 34px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--ds-color-border-subtle, #cccce1);
+}
+
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 2px;
+  border-bottom: 1px solid var(--ds-color-border-subtle, #cccce1);
+}
+
+/* Standard teal circled checkmark — identical across the site's proof lists. */
+.check {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.checkRing {
+  fill: rgba(43, 138, 128, 0.08);
+  stroke: rgba(43, 138, 128, 0.35);
+  stroke-width: 1;
+}
+.checkTick {
+  fill: none;
+  stroke: #2b8a80;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.featureText {
+  font-family: var(--ds-font-sans, Inter, sans-serif);
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  color: var(--ds-color-heading, #1b1b37);
+  font-weight: 450;
+}
+
+/* ── Media column ── */
+.mediaWrap {
+  position: relative;
+}
+
+.mediaFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--ds-color-panel, #f0f0f4);
+  border: 1px solid var(--ds-color-border, #cccce1);
+  box-shadow: 0 24px 60px -34px rgba(26, 28, 32, 0.28);
+}
+/* On a surface section, lift the frame onto pure white for contrast. */
+.surface .mediaFrame {
+  background: var(--ds-color-page-bg, #ffffff);
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mediaHidden {
+  display: none;
+}
+
+/* Light placeholder (asset not yet generated) — names the missing file. */
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background:
+    linear-gradient(180deg, var(--ds-color-page-bg, #ffffff) 0%, var(--ds-color-panel, #f0f0f4) 100%);
+  color: var(--ds-color-muted, #7d8794);
+}
+.placeholderShown {
+  display: flex;
+}
+.placeholderDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ds-color-accent, #2b8a80);
+  box-shadow: 0 0 0 6px rgba(43, 138, 128, 0.12);
+}
+.placeholderPath {
+  font-family: var(--ds-font-mono, 'JetBrains Mono', Menlo, monospace);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: var(--ds-color-muted, #7d8794);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .inner,
+  .flip .inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .flip .copy {
+    order: 1;
+  }
+  .flip .mediaWrap {
+    order: 2;
+  }
+  .copy {
+    max-width: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .heading {
+    font-size: 1.75rem;
+  }
+  .mediaFrame {
+    aspect-ratio: 3 / 2;
+  }
+}

@@ -1,0 +1,89 @@
+/*
+  ProductHero — even-keel LIGHT, Feature archetype (medium hero ~52vh).
+  White field softened by a faint periwinkle wash (#f0f0f4) at low opacity.
+  Clears the fixed nav via padding-top on the section.
+*/
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 52vh;
+  display: flex;
+  align-items: center;
+  margin-top: -72px;
+  padding-top: 128px;
+  padding-bottom: clamp(48px, 7vw, 96px);
+  background: var(--ds-color-page-bg, #ffffff);
+}
+
+/* Soft periwinkle-to-white wash — depth without darkness. */
+.wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 15% 0%, rgba(228, 244, 241, 0.55) 0%, rgba(228, 244, 241, 0) 60%),
+    linear-gradient(180deg, rgba(228, 244, 241, 0.28) 0%, rgba(255, 255, 255, 0) 44%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--ds-grid-max-width, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--ds-container-pad, clamp(20px, 5vw, 48px));
+}
+
+.content {
+  max-width: 900px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--ds-font-mono, 'JetBrains Mono', Menlo, monospace);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--ds-color-accent, #2b8a80);
+}
+
+.heading {
+  margin-top: 26px;
+  font-family: var(--ds-font-sans, Inter, sans-serif);
+  font-size: clamp(2.5rem, 5.4vw, 4.1rem);
+  line-height: 1.04;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--ds-color-heading, #1b1b37);
+  /* No ch cap on the display heading — the 900px content column governs wrap. */
+}
+
+.body {
+  margin-top: 26px;
+  font-family: var(--ds-font-sans, Inter, sans-serif);
+  font-size: clamp(1.1rem, 1.5vw, 1.375rem);
+  line-height: 1.55;
+  font-weight: 400;
+  color: var(--ds-color-muted, #7d8794);
+  max-width: 60ch;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 44vh;
+    padding-top: 48px;
+  }
+  .heading {
+    max-width: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding-top: 40px;
+  }
+  .heading {
+    font-size: 2.2rem;
+  }
+}

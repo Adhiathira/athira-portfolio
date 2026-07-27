@@ -1,0 +1,91 @@
+/* paste-board — Grid System */
+/* 1280px container, collage masonry, pinboard absolute, card rotations */
+/* TWIST (grid-system, intensity 3): Gap value scaling (expand) x1.4 — standard gutter 24px -> 34px, card gutter 28px -> 39px. Wider, more confident editorial gutters. No color changes. */
+
+:root {
+  --container-max:    1280px;
+  --container-pad:    40px;
+  --gap-standard:     34px;
+  --gap-section:      80px;
+  --gap-card:         39px;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+/* 12-column body grid */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gap-standard);
+}
+
+/* Masonry collage grid */
+.grid-collage {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  gap: var(--gap-standard);
+}
+
+/* Card rotations — alternating via :nth-child */
+.collage-card:nth-child(3n+1) { transform: rotate(-1.5deg); }
+.collage-card:nth-child(3n+2) { transform: rotate(1deg); }
+.collage-card:nth-child(3n+3) { transform: rotate(-0.5deg); }
+.collage-card:nth-child(4n)   { transform: rotate(2deg); }
+
+/* Pinboard — absolute layout for hero section */
+.pinboard {
+  position: relative;
+  min-height: 520px;
+}
+
+.pinboard__item {
+  position: absolute;
+}
+
+/* Card stack — responsive auto-fit */
+.card-stack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--gap-standard);
+}
+
+/* Overlap class — negative top for collage layering */
+.collage-overlap { margin-top: -28px; }
+.collage-overlap-lg { margin-top: -44px; }
+
+/* Section spacing */
+.section {
+  padding-block: var(--gap-section);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  :root {
+    --container-pad: 24px;
+  }
+  .grid-collage {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-12 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (max-width: 375px) {
+  :root {
+    --container-pad: 20px;
+  }
+  .grid-collage,
+  .grid-12 {
+    grid-template-columns: 1fr;
+  }
+  .collage-overlap,
+  .collage-overlap-lg {
+    margin-top: 0;
+  }
+}

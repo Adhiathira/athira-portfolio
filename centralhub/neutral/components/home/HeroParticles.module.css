@@ -1,0 +1,31 @@
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Dim the sky behind the copy column (left) so text stays dominant;
+     full strength toward the right and edges. */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.24) 0%,
+    rgba(0, 0, 0, 0.3) 40%,
+    rgba(0, 0, 0, 0.75) 60%,
+    rgba(0, 0, 0, 1) 78%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.24) 0%,
+    rgba(0, 0, 0, 0.3) 40%,
+    rgba(0, 0, 0, 0.75) 60%,
+    rgba(0, 0, 0, 1) 78%
+  );
+}
+
+@media (max-width: 900px) {
+  /* single-column layout: text spans full width, dim uniformly */
+  .canvas {
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.6) 100%);
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.6) 100%);
+  }
+}

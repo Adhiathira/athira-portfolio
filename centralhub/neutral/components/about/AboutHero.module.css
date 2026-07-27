@@ -1,0 +1,104 @@
+/*
+  AboutHero — even-keel, light Attio-grade editorial header.
+  Tokens: --color-page-bg (#fff ground), --color-heading / --color-body-text
+  (#1b1b37 ink), --color-accent (#2b8a80 blue signal), the periwinkle hero wash
+  from the concept (#f0f0f4). Headings set in Inter (fonts unified).
+  Archetype: About = information page -> compact header, not a full-viewport hero.
+*/
+
+.section {
+  position: relative;
+  background: var(--color-page-bg, #ffffff);
+  /* nav is fixed (~72px); clear it, then breathe */
+  padding: clamp(140px, 18vh, 200px) 0 clamp(64px, 9vh, 104px);
+  /* No straight hairline: the hero flows into the founder letter (same white
+     ground) with no boundary line. */
+  overflow: hidden;
+}
+
+/* Faint periwinkle wash — depth without darkness (concept hero softening) */
+.wash {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 60vw;
+  max-width: 760px;
+  height: 120%;
+  background: radial-gradient(
+    ellipse at 70% 30%,
+    var(--ds-color-hero-wash, #f0f0f4) 0%,
+    rgba(228, 244, 241, 0.28) 42%,
+    rgba(228, 244, 241, 0) 72%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--ds-grid-max-width, 1200px);
+  margin: 0 auto;
+  padding: 0 var(--ds-grid-gutter, 24px);
+}
+
+/* Eyebrow — instrument-panel callout: mono, uppercase, tracked */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 28px;
+  font-family: var(--ds-font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--color-muted, #7d8794);
+}
+
+.tick {
+  display: inline-block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-accent, #2b8a80);
+}
+
+/* Heading — the serif, inscribed rather than shouted (light weight, large) */
+.title {
+  max-width: 15ch;
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.5rem, 5.2vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+  color: var(--color-heading, #1b1b37);
+}
+
+/* Lede — quiet Inter, slate, comfortable measure */
+.lede {
+  max-width: 52ch;
+  margin: 28px 0 0;
+  font-family: var(--font-body, Inter, -apple-system, sans-serif);
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--color-muted, #7d8794);
+}
+
+@media (max-width: 900px) {
+  .title {
+    max-width: 18ch;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    margin-top: -72px;
+  padding-top: 120px;
+  }
+  .title {
+    max-width: none;
+  }
+  .lede {
+    max-width: none;
+  }
+}

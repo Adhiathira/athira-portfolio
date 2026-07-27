@@ -1,0 +1,130 @@
+/*
+  ProductCta — closing conversion band, DARK. The single dark section on this
+  page, echoing the home FinalCta language: near-black ink ground, a faint teal
+  radial glow, solid teal primary and hairline ghost secondary. Buttons animate
+  as one aligned group.
+*/
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background: #1b1b37;
+  color: rgba(246, 247, 248, 0.9);
+  padding-block: clamp(96px, 13vw, 168px);
+}
+
+.wash {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  width: 900px;
+  height: 520px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(43, 138, 128, 0.28) 0%, rgba(43, 138, 128, 0) 62%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--ds-grid-max-width, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--ds-container-pad, clamp(20px, 5vw, 48px));
+}
+
+.content {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heading {
+  font-family: var(--ds-font-sans, Inter, sans-serif);
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  max-width: 34rem; /* rem measure, not ch — comfortable centered wrap, no letterform clipping */
+  margin: 0 auto;
+}
+
+.body {
+  margin: 22px auto 0;
+  font-family: var(--ds-font-sans, Inter, sans-serif);
+  font-size: clamp(1.05rem, 1.4vw, 1.3125rem);
+  line-height: 1.6;
+  color: #9a9aad;
+  max-width: 56ch;
+}
+
+.actions {
+  margin-top: 38px;
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-family: var(--ds-font-sans, Inter, sans-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.primary {
+  background: var(--ds-color-accent, #2b8a80);
+  color: #f0f0f4;
+  border: 1px solid var(--ds-color-accent, #2b8a80);
+}
+.primary:hover {
+  background: #1f6b63;
+  border-color: #1f6b63;
+  transform: translateY(-2px);
+}
+.primary:active {
+  background: #1f6b63;
+  color: #f0f0f4;
+  transform: translateY(0);
+}
+
+.ghost {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #3c4149;
+}
+.ghost:hover {
+  background: rgba(246, 247, 248, 0.04);
+  color: #ffffff;
+  border-color: #7d8794;
+  transform: translateY(-2px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ds-color-accent, #2b8a80);
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .heading {
+    font-size: 2rem;
+  }
+  .actions {
+    flex-direction: column;
+  }
+  .btn {
+    width: 100%;
+  }
+}

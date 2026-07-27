@@ -1,0 +1,183 @@
+/* ============================================================
+   Pricing — Tiers (3 cards on a surface panel)
+   Bordered white cards sit on a faint #f0f0f4 ground — depth from
+   surface contrast, not shadow weight. Growth is subtly elevated
+   with a brand-blue keyline and a raised resting shadow.
+   ============================================================ */
+
+.section {
+  position: relative;
+  background: var(--color-surface, #f0f0f4);
+  /* Boundaries are drawn by the squiggle dividers in the page, not straight rules. */
+  padding: clamp(80px, 10vw, 132px) 0;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: clamp(24px, 5vw, 48px);
+}
+
+/* ---------- Head ---------- */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 34ch;
+  margin-bottom: clamp(48px, 6vw, 72px);
+}
+
+.eyebrow {
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--color-accent, #2b8a80);
+}
+
+.heading {
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--color-heading, #1b1b37);
+  margin: 0;
+}
+
+/* ---------- Grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.4vw, 32px);
+  align-items: start;
+}
+
+/* ---------- Card ---------- */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 340px;
+  padding: clamp(28px, 3vw, 40px);
+  background: var(--color-page-bg, #ffffff);
+  border: 1px solid var(--color-border, #cccce1);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(26, 28, 32, 0.04);
+  overflow: hidden;
+}
+
+/* Growth — elevated: blue keyline, lifted, stronger resting shadow */
+.cardFeatured {
+  border-color: var(--color-accent, #2b8a80);
+  margin-top: -12px;
+  box-shadow: 0 18px 48px -24px rgba(43, 138, 128, 0.4), 0 2px 8px rgba(26, 28, 32, 0.05);
+}
+
+.keyline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-accent, #2b8a80);
+}
+
+.tierName {
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-heading, #1b1b37);
+  margin: 0;
+}
+
+.rule {
+  height: 1px;
+  background: var(--color-border, #cccce1);
+  margin: 22px 0 20px;
+}
+
+.tierBody {
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--color-muted, #7d8794);
+  margin: 0 0 32px;
+  flex: 1 1 auto;
+}
+
+/* ---------- CTA buttons ---------- */
+.cta {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 13px 24px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
+
+.ctaPrimary {
+  background-color: var(--color-accent, #2b8a80);
+  color: #f0f0f4;
+  border-color: var(--color-accent, #2b8a80);
+}
+
+.ctaPrimary:hover {
+  background-color: #f0f0f4;
+  color: var(--color-accent, #2b8a80);
+  border-color: var(--color-accent, #2b8a80);
+}
+
+.ctaPrimary:active {
+  background-color: var(--ds-color-accent-hover, #1f6b63);
+  color: #f0f0f4;
+  border-color: var(--ds-color-accent-hover, #1f6b63);
+}
+
+.ctaGhost {
+  background-color: transparent;
+  color: var(--color-heading, #1b1b37);
+  border-color: var(--color-border, #cccce1);
+}
+
+.ctaGhost:hover {
+  background-color: var(--color-heading, #1b1b37);
+  color: #f0f0f4;
+  border-color: var(--color-heading, #1b1b37);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--color-accent, #2b8a80);
+  outline-offset: 2px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 520px;
+  }
+  .cardFeatured {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    min-height: 0;
+  }
+  .cta {
+    width: 100%;
+    align-self: stretch;
+  }
+}

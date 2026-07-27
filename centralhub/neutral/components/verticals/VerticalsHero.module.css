@@ -1,0 +1,188 @@
+/* Verticals hero — medium light header with a faint periwinkle wash and a
+   quiet row of four vertical motifs. Not full-viewport: the content below is
+   the point, so the hero orients rather than dominates. */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-page-bg, #ffffff);
+  margin-top: -72px;
+  padding-top: 128px;
+  padding-bottom: 76px;
+  /* No straight hairline: the hero flows into the first vertical block (same
+     white ground) with no boundary line. */
+}
+
+/* Periwinkle wash — a soft top-anchored gradient, never a flat block. */
+.wash {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 78%;
+  background:
+    radial-gradient(120% 82% at 50% -18%, var(--color-wash, #f0f0f4) 0%, rgba(228, 244, 241, 0) 62%),
+    linear-gradient(180deg, rgba(228, 244, 241, 0.28) 0%, rgba(228, 244, 241, 0) 100%);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--grid-max-width, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--grid-gutter, 24px);
+}
+
+.copy {
+  max-width: 760px;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  font-family: var(--font-mono, 'JetBrains Mono', Menlo, monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--color-accent, #2b8a80);
+}
+
+.heading {
+  margin: 0 0 22px;
+  font-family: var(--font-sans, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 5.2vw, 3.7rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: var(--color-heading, #1b1b37);
+}
+
+.body {
+  margin: 0;
+  max-width: 620px;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.62;
+  color: var(--color-muted, #7d8794);
+}
+
+/* Motif row — four hairline glyphs in slim framed panels. */
+.motifs {
+  list-style: none;
+  margin: 56px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.motif {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.motifLink {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.motifFrame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 22px;
+  background: var(--color-surface, #f0f0f4);
+  border: 1px solid var(--color-border-subtle, #cccce1);
+  border-radius: 12px;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.motifLink:hover .motifFrame {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px -24px rgba(26, 28, 32, 0.28);
+  border-color: var(--color-border, #cccce1);
+}
+
+.motifLink:focus-visible {
+  outline: 2px solid var(--color-accent, #2b8a80);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.motifFrame :global(svg) {
+  width: 92px;
+  max-width: 100%;
+}
+
+.motifName {
+  font-family: var(--font-mono, 'JetBrains Mono', Menlo, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink, #1b1b37);
+}
+
+.closing {
+  margin: 48px 0 0;
+  padding-top: 26px;
+  border-top: 1px solid var(--color-border-subtle, #cccce1);
+  max-width: 640px;
+  font-family: var(--font-sans, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 1.6vw, 1.32rem);
+  line-height: 1.5;
+  color: var(--color-ink, #1b1b37);
+}
+
+/* Responsive ---------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .hero {
+    padding-top: 48px;
+    padding-bottom: 60px;
+  }
+  .motifs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding-top: 40px;
+  }
+  .motifs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .motifFrame {
+    padding: 16px;
+  }
+  .motifFrame :global(svg) {
+    width: 66px;
+  }
+}
+
+.motifImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}
+
+.motifGlyphFallback {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}

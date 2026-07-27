@@ -101,6 +101,32 @@ node runner.js --only color-system  # run a single extractor (by slug)
 **Local static site server (for testing generated output):**
 - Port **9876**: `python3 -m http.server 9876`
 
+## CentralHub Marketing Sites
+
+Two production Next.js sites for the CentralHub product live in `centralhub/`:
+
+| Folder | Variant | Port |
+|---|---|---|
+| `centralhub/bold/` | Original voice (punchy hero and problem copy) | **3014** |
+| `centralhub/neutral/` | Same design, softened neutral-tone copy | **3015** |
+
+Both use Next.js 14 (pages router) + CSS Modules + GSAP, built on the `calm-harbor` design system (`design-system/calm-harbor/`) with the locked deep-teal accent `#2b8a80`.
+
+**Setup and run (each site):**
+```
+cd centralhub/bold        # or centralhub/neutral
+npm install
+npm run build
+nohup npm start -- --port 3014 > /tmp/bold-server.log 2>&1 & disown   # 3015 for neutral
+```
+
+**Notes:**
+- Kill a server by port: `kill $(lsof -ti :3014)` — `pkill` by name misses `next-server`
+- Assets added to `public/` after a build require a rebuild to be served
+- Demo-form submissions are stored in `data/demo-requests.json` (gitignored) and viewable at `/requests`
+- Public tunnels: ngrok multi-tunnel config at `/tmp/ngrok-tunnels.yml`, started with `ngrok start --all --config ~/Library/'Application Support'/ngrok/ngrok.yml --config /tmp/ngrok-tunnels.yml` (free tier allows one agent session)
+- Port 3002 hosts an unrelated app — never use or kill it
+
 ## Task Tracker Workflow
 
 **⚠️ IMPORTANT: You do NOT have permission to create new tasks unless I explicitly say so.**

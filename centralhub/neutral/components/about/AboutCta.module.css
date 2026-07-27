@@ -1,0 +1,138 @@
+/*
+  AboutCta — calm DARK close that bookends the page. The single dark section on
+  this page, echoing the home FinalCta language: near-black ink ground, a faint
+  teal radial glow, a serif line in white, solid teal primary, ghost secondary.
+  Buttons keep their languid inversion on hover (0.35s).
+*/
+
+.section {
+  position: relative;
+  background: #1b1b37;
+  color: rgba(246, 247, 248, 0.9);
+  padding: clamp(96px, 15vh, 160px) 0;
+  overflow: hidden;
+}
+
+/* Teal glow rising from the base — depth against the near-black ground */
+.wash {
+  position: absolute;
+  left: 50%;
+  bottom: -30%;
+  width: 90vw;
+  max-width: 1000px;
+  height: 150%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at 50% 80%,
+    rgba(43, 138, 128, 0.28) 0%,
+    rgba(43, 138, 128, 0.1) 40%,
+    rgba(43, 138, 128, 0) 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--ds-grid-max-width, 1200px);
+  margin: 0 auto;
+  padding: 0 var(--ds-grid-gutter, 24px);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(32px, 5vh, 48px);
+  max-width: 40rem;
+}
+
+.title {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.25rem, 4.6vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.014em;
+  color: #ffffff;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* Shared button geometry */
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body, Inter, -apple-system, sans-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 15px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* Primary — solid teal, deepens on hover */
+.primary {
+  background-color: var(--color-accent, #2b8a80);
+  color: var(--color-surface, #f0f0f4);
+  border: 1px solid var(--color-accent, #2b8a80);
+}
+
+.primary:hover {
+  background-color: #1f6b63;
+  border-color: #1f6b63;
+}
+
+.primary:active {
+  background-color: #1f6b63;
+  color: var(--color-surface, #f0f0f4);
+  border-color: #1f6b63;
+}
+
+/* Secondary — ghost with a faint light hairline, subtle wash on hover */
+.secondary {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #3c4149;
+}
+
+.secondary:hover {
+  border-color: #7d8794;
+  background-color: rgba(246, 247, 248, 0.04);
+  color: #ffffff;
+}
+
+.primary:focus-visible,
+.secondary:focus-visible {
+  outline: 2px solid var(--color-accent, #2b8a80);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+  }
+  .primary,
+  .secondary {
+    width: 100%;
+  }
+}

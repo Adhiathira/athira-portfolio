@@ -1,0 +1,140 @@
+/* ============================================================
+   Pricing — Closing CTA (deep-ink contrast beat)
+   The page runs bright throughout; it closes on a single dark
+   band for weight. Explicit light text over ink — never inherited
+   tokens. The blue rule is the one point of chroma.
+   ============================================================ */
+
+.section {
+  position: relative;
+  background: var(--ds-color-ink, #1b1b37);
+  padding: clamp(96px, 12vw, 160px) 0;
+  overflow: hidden;
+}
+
+/* faint depth wash so the band is not a flat solid */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(90% 120% at 15% 0%, rgba(43, 138, 128, 0.16) 0%, rgba(43, 138, 128, 0) 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 30%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-inline: clamp(24px, 5vw, 48px);
+  text-align: center;
+}
+
+.heading {
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size: clamp(2rem, 4.4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0 auto;
+  max-width: 20ch;
+}
+
+.rule {
+  width: 64px;
+  height: 3px;
+  margin: 28px auto 0;
+  background: var(--color-accent, #2b8a80);
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.body {
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 28px auto 0;
+  max-width: 52ch;
+}
+
+/* ---------- Actions ---------- */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 40px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
+
+.ctaPrimary {
+  background-color: var(--color-accent, #2b8a80);
+  color: #f0f0f4;
+  border-color: var(--color-accent, #2b8a80);
+}
+
+.ctaPrimary:hover {
+  background-color: #ffffff;
+  color: var(--ds-color-ink, #1b1b37);
+  border-color: #ffffff;
+}
+
+.ctaPrimary:active {
+  background-color: var(--ds-color-accent-hover, #1f6b63);
+  color: #f0f0f4;
+  border-color: var(--ds-color-accent-hover, #1f6b63);
+}
+
+.ctaGhost {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.ctaGhost:hover {
+  background-color: #ffffff;
+  color: var(--ds-color-ink, #1b1b37);
+  border-color: #ffffff;
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--color-accent, #2b8a80);
+  outline-offset: 3px;
+}
+
+.closing {
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 28px auto 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cta {
+    width: 100%;
+  }
+}

@@ -1,0 +1,61 @@
+/*
+  OneSystem — a calm light statement beat on the panel ground. The single dark
+  section on this page is the pre-footer CTA; this section stays light to keep
+  that rule. Earns the page's one expressive moment: a letter-spacing bloom on
+  the heading. Teal appears only as a faint horizon wash.
+*/
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background: var(--ds-color-panel, #f0f0f4);
+  padding-block: clamp(96px, 14vw, 176px);
+}
+
+/* Faint horizon glow, on-brand teal at very low intensity — depth, not decoration. */
+.section::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -40%;
+  width: 120%;
+  height: 90%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 100%, rgba(43, 138, 128, 0.1) 0%, rgba(43, 138, 128, 0) 62%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--ds-grid-max-width, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--ds-container-pad, clamp(20px, 5vw, 48px));
+  text-align: center;
+}
+
+.heading {
+  font-family: var(--ds-font-sans, Inter, sans-serif);
+  font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ds-color-heading, #1b1b37);
+  max-width: 38rem; /* rem measure, not ch — keeps a comfortable centered wrap without clipping */
+  margin: 0 auto;
+}
+
+.body {
+  margin: 26px auto 0;
+  font-family: var(--ds-font-sans, Inter, sans-serif);
+  font-size: clamp(1.05rem, 1.4vw, 1.3125rem);
+  line-height: 1.6;
+  color: #4a5058;
+  max-width: 62ch;
+}
+
+@media (max-width: 600px) {
+  .heading {
+    font-size: 1.95rem;
+  }
+}
